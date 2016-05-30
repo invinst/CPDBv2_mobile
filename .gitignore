@@ -28,3 +28,11 @@ node_modules
 
 # Bower
 bower_components/
+.idea/.name
+.idea/CPDBv2_mobile.iml
+.idea/encodings.xml
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
