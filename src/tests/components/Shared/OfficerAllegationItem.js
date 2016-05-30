@@ -26,8 +26,7 @@ describe('OfficerAllegationItemComponent', () => {
     });
     const firstOfficerAllegation = officerAllegations[0];
 
-    var officerAllegationItem = ReactTestUtils.renderIntoDocument(
-    var officerAllegationItem = ReactTestUtils.renderIntoDocument(
+    const officerAllegationItem = ReactTestUtils.renderIntoDocument(
       <OfficerAllegationItem officerAllegation={ firstOfficerAllegation }
         allegation={ allegation } officerAllegations={ officerAllegations }/>
     );
@@ -64,7 +63,6 @@ describe('OfficerAllegationItemComponent', () => {
     mockAppHistory.expects('pushState').once().withArgs(null, expectedUrl).returns(null);
     mockComplaintPageAction.expects('resetState').once().returns(null);
 
-    officerAllegationItem = ReactTestUtils.renderIntoDocument(
     officerAllegationItem = ReactTestUtils.renderIntoDocument(
       <OfficerAllegationItem officerAllegation={ officerAllegation } allegation={ allegation }
         officerAllegations={ [officerAllegation] }/>

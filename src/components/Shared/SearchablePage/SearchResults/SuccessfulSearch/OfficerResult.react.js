@@ -8,6 +8,7 @@ import OfficerPresenter from 'presenters/OfficerPresenter';
 import AppHistory from 'utils/History';
 import style from 'styles/Shared/SearchablePage/SearchResults/SuccessfulSearch/OfficerResult.sass';
 
+
 const OfficerResult = React.createClass({
   propTypes: {
     term: React.PropTypes.string,

@@ -1,7 +1,6 @@
 import AppDispatcher from 'components/Dispatcher';
 import AppConstants from 'constants/AppConstants';
 
-
 const ComplaintPageActions = {
   toggleOpen() {
     AppDispatcher.dispatch({
