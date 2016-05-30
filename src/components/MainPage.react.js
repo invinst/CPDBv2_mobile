@@ -6,6 +6,8 @@ import MainPageContent from 'components/MainPage/MainPageContent.react';
 import MainPageStore from 'stores/MainPageStore';
 import HelperUtil from 'utils/HelperUtil';
 import SuggestionAPI from 'utils/SuggestionAPI';
+import cx from 'classnames';
+import style from 'styles/MainPage.sass';
 
 
 const MainPage = React.createClass(objectAssign(Base(MainPageStore), {
@@ -30,7 +32,7 @@ const MainPage = React.createClass(objectAssign(Base(MainPageStore), {
     const isSearchFocused = this.state.isSearchFocused;
 
     return (
-      <div className='main-page content'>
+      <div className={ cx('content', style.mainPage) }>
         <MainPageContent topLeft={ isSearchFocused } />
         <About topLeft={ isSearchFocused }/>
       </div>

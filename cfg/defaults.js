@@ -1,7 +1,7 @@
 'use strict';
 const path = require('path');
 const srcPath = path.join(__dirname, '/../src');
-const dfltPort = 8000;
+const dfltPort = 9000;
 function getDefaultModules() {
   return {
     preLoaders: [{
@@ -16,7 +16,8 @@ function getDefaultModules() {
       },
       {
         test: /\.sass/,
-        loader: 'style-loader!css-loader!postcss-loader!sass-loader?outputStyle=expanded&indentedSyntax'
+        loader: 'style-loader!css-loader?camelCase&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' +
+        '!sass-loader?outputStyle=expanded&indentedSyntax'
       },
       {
         test: /\.scss/,

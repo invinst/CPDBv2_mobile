@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import HashUtil from 'utils/HashUtil';
 import f from 'utils/tests/f';
 import u from 'utils/HelperUtil';
-//import AppHistory from 'utils/History';
+import AppHistory from 'utils/History';
 import OfficerAllegationItem from 'components/Shared/OfficerAllegationItem.react';
 import ComplaintPageActions from 'actions/ComplaintPage/ComplaintPageActions';
 
@@ -58,10 +58,10 @@ describe('OfficerAllegationItemComponent', () => {
     const allegation = f.create('Allegation', {'crid': crid});
     const officerAllegation = f.create('OfficerAllegation', {'cat': category});
 
-    //const mockAppHistory = sinon.mock(AppHistory);
+    const mockAppHistory = sinon.mock(AppHistory);
     const mockComplaintPageAction = sinon.mock(ComplaintPageActions);
 
-    //mockAppHistory.expects('pushState').once().withArgs(null, expectedUrl).returns(null);
+    mockAppHistory.expects('pushState').once().withArgs(null, expectedUrl).returns(null);
     mockComplaintPageAction.expects('resetState').once().returns(null);
 
     officerAllegationItem = ReactTestUtils.renderIntoDocument(
@@ -73,8 +73,8 @@ describe('OfficerAllegationItemComponent', () => {
 
     ReactTestUtils.Simulate.click(node);
 
-    //mockAppHistory.verify();
-    //mockComplaintPageAction.verify();
+    mockAppHistory.verify();
+    mockComplaintPageAction.verify();
 
     mockAppHistory.restore();
     mockComplaintPageAction.restore();

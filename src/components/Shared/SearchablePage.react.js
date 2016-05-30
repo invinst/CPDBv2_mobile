@@ -6,6 +6,7 @@ import SearchBar from 'components/Shared/SearchablePage/SearchBar.react';
 import SearchablePageStore from 'stores/Shared/SearchablePageStore';
 import SearchResults from 'components/Shared/SearchablePage/SearchResults.react';
 
+import style from 'styles/Shared/SearchablePage.sass';
 
 const SearchablePage = React.createClass(objectAssign(Base(SearchablePageStore, 'SearchablePage'), {
   getInitialState() {
@@ -20,7 +21,7 @@ const SearchablePage = React.createClass(objectAssign(Base(SearchablePageStore, 
     const searchResultClassName = cx('result-content', {'invisible': !focus});
 
     return (
-      <div className='searchable-page'>
+      <div className={ style.searchablePage }>
         <SearchBar />
         <div className={ searchResultClassName }>
           <SearchResults />

@@ -5,6 +5,7 @@ import Base from 'components/Base.react';
 import SuggestionAPI from 'utils/SuggestionAPI';
 import SearchBarActions from 'actions/MainPage/SearchBarActions';
 import SearchBarStore from 'stores/MainPage/SearchBarStore';
+import style from 'styles/Shared/SearchablePage/SearchBar.sass';
 
 
 const SearchBar = React.createClass(objectAssign(Base(SearchBarStore), {
@@ -55,7 +56,7 @@ const SearchBar = React.createClass(objectAssign(Base(SearchBarStore), {
       'icon-close': status == 'focus'
     });
     return (
-      <div className='search-bar animation'>
+      <div className={ cx(style.searchBar, 'animation') }>
         <input className='input-text' placeholder='Search officers or complaints'
           onChange={ this._onInputChange }
           onFocus={ this._onFocus }

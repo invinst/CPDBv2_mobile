@@ -205,11 +205,11 @@ export default {
   OFFICER_COMPLAINT_COUNT_RANGE: [20, 9, 3, 2, 0],
 
   // API endpoints
-  ALLEGATION_API_ENDPOINT: '/mobile/api/allegation/',
-  OFFICER_API_ENDPOINT: '/mobile/api/officer/',
-  SUGGESTION_API_ENDPOINT: '/mobile/api/suggestion/',
-  REQUEST_EMAIL_API_EMAIL: '/mobile/api/request_email/',
-  INTERFACE_TEXT_API_ENDPOINT: '/mobile/api/interface_text/',
+  ALLEGATION_API_ENDPOINT: 'http://m.lvh.me:8000/mobile/api/allegation/',
+  OFFICER_API_ENDPOINT: 'http://m.lvh.me:8000/mobile/api/officer/',
+  SUGGESTION_API_ENDPOINT: 'http://m.lvh.me:8000/mobile/api/suggestion/',
+  REQUEST_EMAIL_API_EMAIL: 'http://m.lvh.me:8000/mobile/api/request_email/',
+  INTERFACE_TEXT_API_ENDPOINT: 'http://m.lvh.me:8000/mobile/api/interface_text/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',

@@ -3,6 +3,7 @@ import OfficerResult from 'components/Shared/SearchablePage/SearchResults/Succes
 import ComplaintResult from 'components/Shared/SearchablePage/SearchResults/SuccessfulSearch/ComplaintResult.react';
 import SuggestionPresenter from 'presenters/SuggestionPresenter';
 
+import style from 'styles/Shared/SearchablePage/SearchResults/SuccessfulSearch.sass'
 
 const SuccessfulSearch = React.createClass({
   propTypes: {
@@ -32,7 +33,7 @@ const SuccessfulSearch = React.createClass({
 
   render() {
     return (
-      <div className='success-search'>
+      <div className={ style.successfulSearch}>
         { this.renderSuggestionItem() }
       </div>
     );

@@ -36,3 +36,6 @@ bower_components/
 .idea/modules.xml
 .idea/vcs.xml
 .idea/workspace.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/watcherTasks.xml

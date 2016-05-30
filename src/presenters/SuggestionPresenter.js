@@ -1,7 +1,7 @@
 import HelperUtil from 'utils/HelperUtil';
 
 
-const SuggestionPresenter = suggestion => {
+const SuggestionPresenter = function (suggestion) {
 
   const text = () => HelperUtil.fetch(suggestion, 'text', '');
 

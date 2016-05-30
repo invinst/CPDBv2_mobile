@@ -1,8 +1,10 @@
+import cx from 'classnames';
 import React from 'react';
 import CollectionUtil from 'utils/CollectionUtil';
 import SuggestionPresenter from 'presenters/SuggestionPresenter';
 import ComplaintResultPresenter from 'presenters/Page/ComplaintResultPresenter';
 import OfficerAllegationItem from 'components/Shared/OfficerAllegationItem.react';
+import style from 'styles/Shared/SearchablePage/SearchResults/SuccessfulSearch/ComplaintResult.sass'
 
 
 const ComplaintResult = React.createClass({
@@ -43,9 +45,10 @@ const ComplaintResult = React.createClass({
     const complaint = this.props.suggestions[0];
     const presenter = SuggestionPresenter(complaint);
     const complaintResultPresenter = ComplaintResultPresenter(presenter.meta);
+    // FIXME: Fix `suggestion-list` bad convention
     return (
       <ul className='suggestion-list'>
-        <li className='complaint-results outer-glow' onClick={ this._onClick }>
+        <li className={ cx(style.complaintResult, 'outer-glow') } onClick={ this._onClick }>
           { this.renderComplaintResultItem(complaintResultPresenter.groupByCategory, presenter.meta) }
         </li>
       </ul>
