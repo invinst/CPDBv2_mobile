@@ -1,5 +1,6 @@
 import React from 'react';
 import DistributionCurve from 'components/OfficerPage/SummaryTab/OfficerAnalyticSection/DistributionCurve.react';
+import style from 'styles/OfficerPage/SummaryTab/OfficerAnalyticSection.sass';
 
 
 const OfficerAnalyticSection = React.createClass({
@@ -10,7 +11,7 @@ const OfficerAnalyticSection = React.createClass({
 
   render() {
     return (
-      <div className='officer-analytic-section'>
+      <div className={ style.officerAnalyticSection }>
         <div className='section-header'>
           <span className='pad'>
             <span className='section-title bold'>Officer analytics</span>

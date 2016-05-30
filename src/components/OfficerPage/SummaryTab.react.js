@@ -1,6 +1,7 @@
 import React from 'react';
 import OfficerSummarySection from 'components/OfficerPage/SummaryTab/OfficerSummarySection.react';
 import OfficerAnalyticSection from 'components/OfficerPage/SummaryTab/OfficerAnalyticSection.react';
+import style from 'styles/OfficerPage/SummaryTab.sass'
 
 
 const SummaryTab = React.createClass({
@@ -14,7 +15,7 @@ const SummaryTab = React.createClass({
     const distribution = this.props.distribution;
 
     return (
-      <div className='summary-tab'>
+      <div className={ style.summaryTab }>
         <OfficerSummarySection officer={ officer } />
         <OfficerAnalyticSection officer={ officer } distribution={ distribution } />
       </div>

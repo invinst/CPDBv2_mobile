@@ -1,5 +1,7 @@
+import cx from 'classnames';
 import React from 'react';
 import DataTypeUtil from 'utils/DataTypeUtil';
+import style from 'styles/Shared/SearchablePage/SearchResults/FailedSearch.sass';
 
 
 const FailedSearch = React.createClass({
@@ -16,7 +18,7 @@ const FailedSearch = React.createClass({
     }
 
     return (
-      <div className='failed-search pad'>{ textMessage }</div>
+      <div className={ cx(style.failedSearch, 'pad') }>{ textMessage }</div>
     );
   }
 });

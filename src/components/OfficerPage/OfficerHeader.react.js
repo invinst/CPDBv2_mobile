@@ -1,5 +1,6 @@
 import React from 'react';
 import OfficerPresenter from 'presenters/OfficerPresenter';
+import style from 'styles/OfficerPage/OfficerHeader.sass';
 
 
 const OfficerHeader = React.createClass({
@@ -11,7 +12,7 @@ const OfficerHeader = React.createClass({
     const officerPresenter = OfficerPresenter(this.props.officer);
 
     return (
-      <div className='officer-header'>
+      <div className={ style.officerHeader }>
         <div className='pad'>
           <div className='badge-info'>
             <span className='badge-label'>Badge &nbsp;</span>

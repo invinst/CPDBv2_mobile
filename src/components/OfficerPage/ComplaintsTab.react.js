@@ -1,7 +1,7 @@
 import React from 'react';
 import u from 'utils/HelperUtil';
 import OfficerAllegationItem from 'components/Shared/OfficerAllegationItem.react';
-
+import style from 'styles/OfficerPage/ComplaintsTab.sass';
 
 
 const ComplaintsTab = React.createClass({

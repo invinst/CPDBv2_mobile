@@ -1,6 +1,7 @@
 import React from 'react';
 import Wrapper from 'components/Shared/Wrapper.react';
 import OfficerPresenter from 'presenters/OfficerPresenter';
+import style from 'styles/OfficerPage/SummaryTab/OfficerSummarySection.sass';
 
 
 const OfficerSummarySection = React.createClass({
@@ -23,7 +24,7 @@ const OfficerSummarySection = React.createClass({
     const officerPresenter = OfficerPresenter(this.props.officer);
 
     return (
-      <Wrapper visible={ officerPresenter.hasSummarySection } wrapperClass='officer-summary-section'>
+      <Wrapper visible={ officerPresenter.hasSummarySection } wrapperClass={ style.officerSummarySection }>
         <div className='pad'>
           { this.renderSummaryInfoItem('Rank', officerPresenter.rank) }
           { this.renderSummaryInfoItem('Unit', officerPresenter.unit) }

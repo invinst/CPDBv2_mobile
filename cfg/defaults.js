@@ -32,7 +32,7 @@ function getDefaultModules() {
         loader: 'style-loader!css-loader!postcss-loader!stylus-loader'
       },
       {
-        test: /\.(png|jpg|gif|woff|woff2)$/,
+        test: /\.(png|jpg|gif|eot|ttf|woff|woff2)$/,
         loader: 'url-loader?limit=8192'
       },
       {

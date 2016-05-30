@@ -7,7 +7,6 @@ import SearchBarActions from 'actions/MainPage/SearchBarActions';
 import SearchBarStore from 'stores/MainPage/SearchBarStore';
 import style from 'styles/Shared/SearchablePage/SearchBar.sass';
 
-
 const SearchBar = React.createClass(objectAssign(Base(SearchBarStore), {
   getInitialState() {
     return {

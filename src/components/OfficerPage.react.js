@@ -13,6 +13,7 @@ import OfficerPageServerActions from 'actions/OfficerPage/OfficerPageServerActio
 import OfficerResourceUtil from 'utils/OfficerResourceUtil';
 import OfficerPageStore from 'stores/OfficerPage/OfficerPageStore';
 import OfficerPagePresenter from 'presenters/Page/OfficerPagePresenter';
+import style from 'styles/OfficerPage.sass'
 
 
 const OfficerPage = React.createClass(objectAssign(Base(OfficerPageStore), {
@@ -30,7 +31,7 @@ const OfficerPage = React.createClass(objectAssign(Base(OfficerPageStore), {
 
   componentWillReceiveProps(nextProps) {
     const id = nextProps.params.id || '';
-    ga('send', 'event', 'officer', 'view_detail', location.pathname);
+    //ga('send', 'event', 'officer', 'view_detail', location.pathname);
     OfficerResourceUtil.get(id);
     // The way react-router handle the same resource url leads to the issue that this React component is not remount
     // again, so we need to put this action here. It's not a cool solution anyway.
@@ -39,7 +40,7 @@ const OfficerPage = React.createClass(objectAssign(Base(OfficerPageStore), {
 
   componentDidMount() {
     const id = this.props.params.id || '';
-    ga('send', 'event', 'officer', 'view_detail', location.pathname);
+    //ga('send', 'event', 'officer', 'view_detail', location.pathname);
     OfficerPageStore.addChangeListener(this._onChange);
     OfficerResourceUtil.get(id);
   },
@@ -65,9 +66,11 @@ const OfficerPage = React.createClass(objectAssign(Base(OfficerPageStore), {
 
     return (
       <SearchablePage>
-        <div className='officer-page'>
+        <div className={ style.officerPage }>
           <div className='content'>
-            <OfficerHeader officer={ presenter.officerDetail } />
+            <div className='officer-header'>
+              <OfficerHeader officer={ presenter.officerDetail } />
+            </div>
             <div className='tabs'>
               <SimpleTab navigation={ true }>
                 <div>

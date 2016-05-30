@@ -5,7 +5,7 @@ import OfficerCard from 'components/Shared/OfficerCard.react';
 import HighlightText from 'components/Shared/HighlightText.react';
 import SuggestionPresenter from 'presenters/SuggestionPresenter';
 import OfficerPresenter from 'presenters/OfficerPresenter';
-// const AppHistory = require('utils/History');
+import AppHistory from 'utils/History';
 import style from 'styles/Shared/SearchablePage/SearchResults/SuccessfulSearch/OfficerResult.sass';
 
 const OfficerResult = React.createClass({
@@ -15,9 +15,9 @@ const OfficerResult = React.createClass({
   },
 
   _onClick: function (presenter) {
-    // const officerPresenter = OfficerPresenter(presenter.meta);
+     const officerPresenter = OfficerPresenter(presenter.meta);
     // ga('send', 'event', 'filter', presenter.resource, presenter.text);
-    // AppHistory.pushState(null, officerPresenter.url);
+     AppHistory.pushState(null, officerPresenter.url);
   },
 
   renderOfficerCard: function (suggestion) {

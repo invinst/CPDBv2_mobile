@@ -3,6 +3,7 @@ import HelperUtil from 'utils/HelperUtil';
 import CollectionUtil from 'utils/CollectionUtil';
 import OfficerUtil from 'utils/OfficerUtil';
 import SvgUtil from 'utils/SvgUtil';
+import style from 'styles/OfficerPage/SummaryTab/OfficerAnalyticSection/DistributionCurve.sass';
 
 
 const DistributionCurve = React.createClass({
@@ -58,7 +59,7 @@ const DistributionCurve = React.createClass({
     const lineY = maxOfYAxis * scaleY - redLineDifferentToMaxOfData;
 
     const areaChartPoints = this.getAreaPoints(data, scaleX, scaleY);
-    const style = {
+    const distributionCurveWrapperStyle = {
       'paddingTop': wrapperHeightSize,
       'width': wrapperWidthSize
     };
@@ -70,8 +71,8 @@ const DistributionCurve = React.createClass({
     const strokeClass = OfficerUtil.getColorLevelClass('stroke', allegationsCount);
 
     return (
-      <div className='distribution-curve'>
-        <div className='distribution-curve-wrapper' style={ style }>
+      <div className={ style.distributionCurve }>
+        <div className='distribution-curve-wrapper' style={ distributionCurveWrapperStyle }>
           <svg x='0px' y='0px' viewBox={ viewBox }>
             <g transform={ translate }>
               <g transform='scale(1, -1)'>

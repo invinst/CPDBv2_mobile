@@ -2,6 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import HelperUtil from 'utils/HelperUtil';
 import Wrapper from 'components/Shared/Wrapper.react';
+import style from 'styles/Shared/SimpleTab.sass';
 
 
 const SimpleTab = React.createClass({
