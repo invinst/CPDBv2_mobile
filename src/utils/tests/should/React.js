@@ -5,8 +5,7 @@ import should from 'should';
 import u from 'utils/HelperUtil';
 
 
-should.Assertion.add('renderable', () => {
-  var element = ReactTestUtils.renderIntoDocument(React.createElement(this.obj));
+should.Assertion.add('renderable', function () {
   var element = ReactTestUtils.renderIntoDocument(React.createElement(this.obj));
 
   element.should.be.ok();

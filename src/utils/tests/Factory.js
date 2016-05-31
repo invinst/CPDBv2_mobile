@@ -14,10 +14,10 @@ const Factory = () => {
 
   const create = (name, override) => {
     const obj = {};
-    const key = '';
     const schema = schemas[name];
 
-    for (key in schema) {
+    // FIXME: Change this to an ES6 syntax
+    for (var key in schema) {
       if (override && key in override) {
         obj[key] = override[key];
       } else {

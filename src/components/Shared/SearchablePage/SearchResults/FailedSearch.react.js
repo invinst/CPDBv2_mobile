@@ -18,7 +18,7 @@ const FailedSearch = React.createClass({
     }
 
     return (
-      <div className={ cx(style.failedSearch, 'pad') }>{ textMessage }</div>
+      <div className={ cx(style.failedSearch, 'failed-search pad') }>{ textMessage }</div>
     );
   }
 });

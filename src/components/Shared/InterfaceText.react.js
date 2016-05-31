@@ -35,7 +35,7 @@ const InterfaceText = React.createClass(objectAssign(Base(InterfaceTextStore), {
     const identifier = u.fetch(this.props, 'identifier', '');
     const haveInterfaceText = !!this.state.interfaceTexts && (identifier in this.state.interfaceTexts);
     const text = u.fetch(this.state.interfaceTexts, identifier, S('x').repeat(+placeholderLength).s);
-    const classNames = cx(style.interfaceText, {
+    const classNames = cx(style.interfaceText, 'interface-text', {
       'blurry-text': !this.state.loaded || !haveInterfaceText
     });
 

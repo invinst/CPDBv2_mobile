@@ -39,7 +39,7 @@ const OfficerAllegationItem = React.createClass({
     const crid = allegationPresenter.crid;
 
     return (
-      <div className={ style.officerAllegationItem } onClick={ this._onClick.bind(this, crid, firstOfficerAllegation) }>
+      <div className={ style.officerAllegationItem, 'officer-allegation-item' } onClick={ this._onClick.bind(this, crid, firstOfficerAllegation) }>
         <div className='crid-info pad'>
           <div className='inline-block half-width align-left'>
             <span className='crid-title'>CRID &nbsp;</span>
