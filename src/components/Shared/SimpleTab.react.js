@@ -51,7 +51,7 @@ const SimpleTab = React.createClass({
 
     if (index != -1) {
       this.setActiveTab(index);
-      window.history.pushState(null, '', tabIdentifier);
+      window.history.pushState(null, '', window.location.pathname + tabIdentifier);
     }
   },
 

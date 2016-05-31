@@ -1,7 +1,7 @@
 import React from 'react';
 import u from 'utils/HelperUtil';
 import CollectionUtil from 'utils/CollectionUtil';
-//import AppHistory from 'utils/History';
+import AppHistory from 'utils/History';
 import ComplaintPageActions from 'actions/ComplaintPage/ComplaintPageActions';
 import AllegationPresenter from 'presenters/AllegationPresenter';
 import OfficerAllegationPresenter from 'presenters/OfficerAllegationPresenter';
@@ -19,8 +19,8 @@ const OfficerAllegationItem = React.createClass({
 
   _onClick(crid, firstOfficerAllegation) {
     const presenter = OfficerAllegationPresenter(firstOfficerAllegation);
-    //AppHistory.pushState(null, presenter.url(crid));
-    //ComplaintPageActions.resetState();
+    AppHistory.push(presenter.url(crid));
+    ComplaintPageActions.resetState();
   },
 
   render() {

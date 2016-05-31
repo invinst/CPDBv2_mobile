@@ -19,8 +19,10 @@ const MainPageContent = React.createClass({
     return (
       <div className={ projectSummaryClassNames }>
         <ProjectSummary topLeft={ topLeft } />
-        <div className={ searchBarWrapperClassNames }>
-          <SearchBar />
+        <div className='holder'>
+          <div className={ searchBarWrapperClassNames }>
+            <SearchBar />
+          </div>
         </div>
         <SearchResults />
       </div>

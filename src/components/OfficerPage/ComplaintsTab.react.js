@@ -27,7 +27,7 @@ const ComplaintsTab = React.createClass({
     const complaints = this.props.complaints;
 
     return (
-      <div className='complaints-tab'>
+      <div className={ style.complaintsTab }>
         { complaints.map(this.renderComplaintItem) }
       </div>
     );
