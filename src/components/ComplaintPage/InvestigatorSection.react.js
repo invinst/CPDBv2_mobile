@@ -1,6 +1,7 @@
 import React from 'react';
 import Wrapper from 'components/Shared/Wrapper.react';
 import HelperUtil from 'utils/HelperUtil';
+import style from 'styles/ComplaintPage/InvestigatorSection.sass'
 
 const InvestigatorSection = React.createClass({
   propTypes: {
@@ -31,7 +32,7 @@ const InvestigatorSection = React.createClass({
     const investigator = HelperUtil.fetch(this.props.allegation, 'investigator', false);
 
     return (
-      <Wrapper wrapperClass='investigator-section' visible={ !!investigator }>
+      <Wrapper wrapperClass={ style.investigatorSection } visible={ !!investigator }>
         <div className='row section-header'>
           <span className='section-title bold pad'>Investigator</span>
         </div>

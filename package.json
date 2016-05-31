@@ -23,7 +23,6 @@
   "keywords": [],
   "author": "Your name here",
   "devDependencies": {
-    "alt-utils": "^1.0.0",
     "babel-core": "^6.0.0",
     "babel-eslint": "^6.0.0",
     "babel-loader": "^6.0.0",
@@ -40,6 +39,7 @@
     "file-loader": "^0.8.4",
     "glob": "^7.0.0",
     "isparta-instrumenter-loader": "^1.0.0",
+    "json-loader": "^0.5.4",
     "karma": "^0.13.9",
     "karma-chai": "^0.1.0",
     "karma-coverage": "^0.5.3",
@@ -66,11 +66,11 @@
     "webpack-dev-server": "^1.12.0"
   },
   "dependencies": {
-    "alt": "^0.18.4",
-    "alt-container": "^1.0.2",
     "classnames": "^2.2.5",
     "core-js": "^2.0.0",
+    "flux": "^2.1.1",
     "hashids": "^1.0.2",
+    "mapbox.js": "^2.4.0",
     "moment": "^2.13.0",
     "normalize.css": "^4.0.0",
     "react": "^15.0.0",

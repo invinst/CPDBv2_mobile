@@ -3,6 +3,7 @@ import u from 'utils/HelperUtil';
 import AllegationPresenter from 'presenters/AllegationPresenter';
 import Map from 'components/ComplaintPage/Location/Map.react';
 import Wrapper from 'components/Shared/Wrapper.react';
+import style from 'styles/ComplaintPage/Location.sass';
 
 
 const Location = React.createClass({
@@ -25,7 +26,7 @@ const Location = React.createClass({
     const point = u.fetch(allegation, 'point', '');
 
     return (
-      <Wrapper wrapperClass='location' visible={ presenter.hasLocation }>
+      <Wrapper wrapperClass={ style.location } visible={ presenter.hasLocation }>
         <div className='section-header bold'>
           <div className='section-title pad'>Location</div>
         </div>

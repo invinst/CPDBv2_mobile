@@ -8,6 +8,7 @@ import RequestEmailResourceUtil from 'utils/RequestEmailResourceUtil.js';
 import RequestDocumentErrorPresenter from 'presenters/RequestDocumentErrorPresenter';
 import InterfaceText from 'components/Shared/InterfaceText.react';
 import TickIcon from 'components/Shared/TickIcon';
+import style from 'styles/ComplaintPage/DocumentSection/DocumentCard/RequestModalContent.sass';
 
 
 const RequestModalContent = React.createClass(objectAssign(Base(RequestStore), {
@@ -43,7 +44,7 @@ const RequestModalContent = React.createClass(objectAssign(Base(RequestStore), {
 
     return (
       <div>
-        <div className='request-modal-content'>
+        <div className={ style.requestModalContent }>
           <div className='modal-content content'>
             <div className='modal-header'>
             </div>

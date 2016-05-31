@@ -4,6 +4,7 @@ import u from 'utils/HelperUtil';
 import AllegationPresenter from 'presenters/AllegationPresenter';
 import MapFacade from 'utils/MapFacade';
 import Wrapper from 'components/Shared/Wrapper.react';
+import style from 'styles/ComplaintPage/Location/Map.sass';
 
 
 const Map = React.createClass({
@@ -32,7 +33,7 @@ const Map = React.createClass({
     const point = u.fetch(this.props.allegation, 'point', '');
 
     return (
-      <Wrapper wrapperClass='map' visible={ (!!point) } />
+      <Wrapper wrapperClass={ style.map } visible={ (!!point) } />
     );
   }
 });

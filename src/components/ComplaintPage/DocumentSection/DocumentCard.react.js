@@ -4,6 +4,7 @@ import u from 'utils/HelperUtil';
 import DocumentPresenter from 'presenters/DocumentPresenter';
 import RequestModalContent from 'components/ComplaintPage/DocumentSection/DocumentCard/RequestModalContent.react';
 import Modal from 'components/Lib/Modal.react';
+import style from 'styles/ComplaintPage/DocumentSection/DocumentCard.sass';
 
 
 const DocumentCard = React.createClass({
@@ -34,7 +35,7 @@ const DocumentCard = React.createClass({
     const modalName = u.format('requestModal-{id}',{'id': u.fetch(document, 'id', '')});
 
     return (
-      <div className='document-card row'>
+      <div className={ cx(style.documentCard, 'row') }>
         <div className='one column circle-wrapper center'>
           <div className='small-circle background-black circle'></div>
         </div>

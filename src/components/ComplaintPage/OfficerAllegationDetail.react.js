@@ -1,8 +1,10 @@
+import cx from 'classnames';
 import React from 'react';
 import pluralize from 'pluralize';
 import OfficerAllegationPresenter from 'presenters/OfficerAllegationPresenter';
 import AllegationPresenter from 'presenters/AllegationPresenter';
 import ComplaintPageActions from 'actions/ComplaintPage/ComplaintPageActions';
+import style from 'styles/ComplaintPage/OfficerAllegationDetail.sass';
 
 
 const OfficerAllegationDetail = React.createClass({
@@ -22,7 +24,7 @@ const OfficerAllegationDetail = React.createClass({
     const currentOfficerAllegationPresenter = OfficerAllegationPresenter(this.props.currentOfficerAllegation);
 
     return (
-      <div className='officer-allegation-detail pad'>
+      <div className={ cx(style.officerAllegationDetail, 'pad')}>
         <div className='headline row'>
           <span className='crid-info one-half column align-left'>
             <span className='crid-title'>CRID</span>

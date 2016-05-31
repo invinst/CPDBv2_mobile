@@ -1,6 +1,7 @@
 import React from 'react';
 import ComplainingWitnessPresenter from 'presenters/ComplainingWitnessPresenter';
 import Wrapper from 'components/Shared/Wrapper.react';
+import style from 'styles/ComplaintPage/ComplainingWitness.sass';
 
 
 const ComplainingWitness = React.createClass({
@@ -33,7 +34,7 @@ const ComplainingWitness = React.createClass({
     const numberOfComplainingWitness = complainingWitnesses.length;
 
     return (
-      <Wrapper visible={ numberOfComplainingWitness > 0 } wrapperClass='complaining-witness'>
+      <Wrapper visible={ numberOfComplainingWitness > 0 } wrapperClass={ style.complainingWitness }>
         <div className='section-header'>
           <span className='pad'>
             <span className='section-title bold'>Complaining Witness&nbsp;</span>

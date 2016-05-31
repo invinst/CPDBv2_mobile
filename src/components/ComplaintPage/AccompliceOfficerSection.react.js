@@ -5,6 +5,7 @@ import OfficerCard from 'components/Shared/OfficerCard.react';
 import u from 'utils/HelperUtil';
 import OfficerPresenter from 'presenters/OfficerPresenter';
 import AppHistory from 'utils/History';
+import style from 'styles/ComplaintPage/AccompliceOfficerSection.sass';
 
 
 const AccompliceOfficerSection = React.createClass({
@@ -45,7 +46,7 @@ const AccompliceOfficerSection = React.createClass({
     const numberOfOfficerAllegations = officerAllegations.length;
 
     return (
-      <Wrapper wrapperClass='accomplice-officer-section' visible={ numberOfOfficerAllegations > 0 }>
+      <Wrapper wrapperClass={ style.accompliceOfficerSection } visible={ numberOfOfficerAllegations > 0 }>
         <div className='row section-header'>
           <span className='pad'>
             <span className='section-title bold'>

@@ -1,11 +1,9 @@
-let AppConstants, MapFacade;
-
-require('mapbox.js');
-
-AppConstants = require('constants/AppConstants');
+import 'mapbox.js';
+import style from 'mapbox.js/theme/style.css'
+import AppConstants from 'constants/AppConstants';
 
 
-MapFacade = {
+const MapFacade = {
   map: null,
   center: null,
 

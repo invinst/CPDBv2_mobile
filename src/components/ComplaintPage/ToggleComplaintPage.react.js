@@ -5,6 +5,7 @@ import ComplaintPageActions from 'actions/ComplaintPage/ComplaintPageActions';
 import OfficerAllegationItem from 'components/Shared/OfficerAllegationItem.react';
 import ToggleComplaintPagePresenter from 'presenters/Page/ToggleComplaintPagePresenter';
 import AllegationPresenter from 'presenters/AllegationPresenter';
+import style from 'styles/ComplaintPage/ToggleComplaintPage.sass';
 
 
 const ToggleComplaintPage = React.createClass({
@@ -47,7 +48,7 @@ const ToggleComplaintPage = React.createClass({
     const allegationPresenter = AllegationPresenter(this.props.allegation);
 
     return (
-      <div className='toggle-complaint-page'>
+      <div className={ style.toggleComplaintPage }>
         <div className='headline-container'>
           <div className='row'>
             <div className='crid-container align-left'>
