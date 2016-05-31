@@ -7,6 +7,7 @@ import u from 'utils/HelperUtil';
 import InterfaceTextStore from 'stores/Shared/InterfaceTextStore';
 import InterfaceTextResourceUtil from 'utils/InterfaceTextResourceUtil';
 import InterfaceTextUtil from 'utils/InterfaceTextUtil';
+import style from 'styles/Shared/InterfaceText.sass';
 
 
 const InterfaceText = React.createClass(objectAssign(Base(InterfaceTextStore), {
@@ -34,7 +35,7 @@ const InterfaceText = React.createClass(objectAssign(Base(InterfaceTextStore), {
     const identifier = u.fetch(this.props, 'identifier', '');
     const haveInterfaceText = !!this.state.interfaceTexts && (identifier in this.state.interfaceTexts);
     const text = u.fetch(this.state.interfaceTexts, identifier, S('x').repeat(+placeholderLength).s);
-    const classNames = cx('interface-text', {
+    const classNames = cx(style.interfaceText, {
       'blurry-text': !this.state.loaded || !haveInterfaceText
     });
 

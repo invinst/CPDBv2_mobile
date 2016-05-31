@@ -1,4 +1,3 @@
-import cx from 'classnames';
 import React from 'react';
 import pluralize from 'pluralize';
 import OfficerAllegationPresenter from 'presenters/OfficerAllegationPresenter';
@@ -24,7 +23,7 @@ const OfficerAllegationDetail = React.createClass({
     const currentOfficerAllegationPresenter = OfficerAllegationPresenter(this.props.currentOfficerAllegation);
 
     return (
-      <div className={ cx(style.officerAllegationDetail, 'pad')}>
+      <div className={ style.officerAllegationDetail }>
         <div className='headline row'>
           <span className='crid-info one-half column align-left'>
             <span className='crid-title'>CRID</span>

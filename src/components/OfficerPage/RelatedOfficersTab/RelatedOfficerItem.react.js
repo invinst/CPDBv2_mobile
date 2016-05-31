@@ -16,7 +16,7 @@ const RelatedOfficerItem = React.createClass({
   _onClick() {
     const officer = this.props.officer;
     const presenter = OfficerPresenter(officer);
-    AppHistory.pushState(null, presenter.url);
+    AppHistory.push(presenter.url);
   },
 
   render() {

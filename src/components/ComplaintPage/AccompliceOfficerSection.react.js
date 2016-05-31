@@ -14,7 +14,7 @@ const AccompliceOfficerSection = React.createClass({
   },
 
   _onClick(officerPresenter) {
-    AppHistory.pushState(null, officerPresenter.url);
+    AppHistory.push(officerPresenter.url);
   },
 
   renderOfficerRow(officerAllegation) {
