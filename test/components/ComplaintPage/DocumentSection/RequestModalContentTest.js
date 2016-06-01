@@ -1,17 +1,15 @@
-let RequestModalContent, RequestEmailResourceUtil, InterfaceTextResourceUtil;
-
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import ReactStubContext from 'react-stub-context';
 import sinon from 'sinon';
 
-require('should');
+import should from 'should';
 
-require('utils/tests/should/React');
+import shouldReact from 'utils/tests/should/React';
 
-RequestModalContent = require('components/ComplaintPage/DocumentSection/DocumentCard/RequestModalContent.react');
-RequestEmailResourceUtil = require('utils/RequestEmailResourceUtil.js');
-InterfaceTextResourceUtil = require('utils/InterfaceTextResourceUtil');
+import RequestModalContent from 'components/ComplaintPage/DocumentSection/DocumentCard/RequestModalContent.react';
+import RequestEmailResourceUtil from 'utils/RequestEmailResourceUtil';
+import InterfaceTextResourceUtil from 'utils/InterfaceTextResourceUtil';
 
 
 describe('RequestModalContentComponent', () => {
@@ -38,7 +36,6 @@ describe('RequestModalContentComponent', () => {
     RequestModalContentStub = ReactStubContext(RequestModalContent, context);
 
     requestModal = ReactTestUtils.renderIntoDocument(
-    requestModal = ReactTestUtils.renderIntoDocument(
       <RequestModalContentStub />
     );
 
@@ -59,7 +56,6 @@ describe('RequestModalContentComponent', () => {
     RequestModalContentStub = ReactStubContext(RequestModalContent, context);
 
     requestModal = ReactTestUtils.renderIntoDocument(
-    requestModal = ReactTestUtils.renderIntoDocument(
       <RequestModalContentStub />
     );
 
@@ -75,7 +71,6 @@ describe('RequestModalContentComponent', () => {
     mock.expects('post').once();
 
     requestModal = ReactTestUtils.renderIntoDocument(
-    requestModal = ReactTestUtils.renderIntoDocument(
       <RequestModalContent/>
     );
     submitBtn = ReactTestUtils.findRenderedDOMComponentWithClass(requestModal, 'btn-submit');
@@ -88,7 +83,6 @@ describe('RequestModalContentComponent', () => {
   it('should render `hide` style for request form if requested state is true', () => {
     let requestForm;
     var requestModal = ReactTestUtils.renderIntoDocument(
-    var requestModal = ReactTestUtils.renderIntoDocument(
       <RequestModalContent/>
     );
     requestModal.setState({'requested': true});
@@ -99,7 +93,6 @@ describe('RequestModalContentComponent', () => {
 
   it('should render `hide` style for `thank-you` if requested state is false', () => {
     let thankYouNode;
-    var requestModal = ReactTestUtils.renderIntoDocument(
     var requestModal = ReactTestUtils.renderIntoDocument(
       <RequestModalContent/>
     );
@@ -112,7 +105,6 @@ describe('RequestModalContentComponent', () => {
   it('should render `hide` style for error message if not submit', () => {
     let errorNode;
     var requestModal = ReactTestUtils.renderIntoDocument(
-    var requestModal = ReactTestUtils.renderIntoDocument(
       <RequestModalContent />
     );
     requestModal.setState({'submitFailed': false});
@@ -122,7 +114,6 @@ describe('RequestModalContentComponent', () => {
 
   it('should not render `hide` style for error message if submit failed', () => {
     let errorNode;
-    var requestModal = ReactTestUtils.renderIntoDocument(
     var requestModal = ReactTestUtils.renderIntoDocument(
       <RequestModalContent />
     );

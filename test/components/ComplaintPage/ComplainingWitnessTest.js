@@ -1,18 +1,16 @@
-let f, ComplainingWitness;
-
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 
-require('should');
+import should from 'should';
 
-f = require('utils/tests/f');
-require('utils/tests/should/React');
+import f from 'utils/tests/f';
+import shouldReact from 'utils/tests/should/React';
 
-ComplainingWitness = require('components/ComplaintPage/ComplainingWitness.react');
+import ComplainingWitness from 'components/ComplaintPage/ComplainingWitness.react';
 
 
 describe('ComplainingWitnessComponent', () => {
-  let complainingWitness;
+  let complainingWitnessNode;
 
   it('should be renderable', () => {
     ComplainingWitness.should.be.renderable();
@@ -21,75 +19,68 @@ describe('ComplainingWitnessComponent', () => {
   it('should show number of complaining witness', () => {
     const numberOfWiness = 2;
     const witnesses = f.createBatch(numberOfWiness, 'ComplainingWitness');
-    complainingWitness = ReactTestUtils.renderIntoDocument(
-    complainingWitness = ReactTestUtils.renderIntoDocument(
+    complainingWitnessNode = ReactTestUtils.renderIntoDocument(
       <ComplainingWitness complainingWitnesses={ witnesses }/>
     );
-    ReactTestUtils.findRenderedDOMComponentWithClass(complainingWitness, 'title-count')
+    ReactTestUtils.findRenderedDOMComponentWithClass(complainingWitnessNode, 'title-count')
       .textContent.should.containEql(numberOfWiness);
   });
 
   it('should render complaining witness list', () => {
     const numberOfWiness = 2;
     const witnesses = f.createBatch(numberOfWiness, 'ComplainingWitness');
-    complainingWitness = ReactTestUtils.renderIntoDocument(
-    complainingWitness = ReactTestUtils.renderIntoDocument(
+    complainingWitnessNode = ReactTestUtils.renderIntoDocument(
       <ComplainingWitness complainingWitnesses={ witnesses }/>
     );
-    ReactTestUtils.scryRenderedDOMComponentsWithClass(complainingWitness, 'complaining-witness-row')
+    ReactTestUtils.scryRenderedDOMComponentsWithClass(complainingWitnessNode, 'complaining-witness-row')
       .length.should.be.equal(numberOfWiness);
   });
 
   it('should render nothing when there is no complaining witness', () => {
-    complainingWitness = ReactTestUtils.renderIntoDocument(
-    complainingWitness = ReactTestUtils.renderIntoDocument(
+    complainingWitnessNode = ReactTestUtils.renderIntoDocument(
       <ComplainingWitness />
     );
-    complainingWitness.should.renderNothing();
+    complainingWitnessNode.should.renderNothing();
   });
 
   it('should show information about witness\'s gender, race, age', () => {
     const complainingWitness = f.create('ComplainingWitness', {'gender': 'M', 'race': 'Black', 'age': 40});
     const expectedDescription = 'Male, Black, Age 40';
 
-    complainingWitness = ReactTestUtils.renderIntoDocument(
-    complainingWitness = ReactTestUtils.renderIntoDocument(
+    complainingWitnessNode = ReactTestUtils.renderIntoDocument(
       <ComplainingWitness complainingWitnesses={ [complainingWitness] }/>
     );
-    ReactTestUtils.findRenderedDOMComponentWithClass(complainingWitness, 'complaining-witness-list')
+    ReactTestUtils.findRenderedDOMComponentWithClass(complainingWitnessNode, 'complaining-witness-list')
       .textContent.should.containEql(expectedDescription);
   });
 
   it('should show `Gender unknown` if there is no gender', () => {
     const complainingWitness = f.create('ComplainingWitness', {'gender': ''});
 
-    complainingWitness = ReactTestUtils.renderIntoDocument(
-    complainingWitness = ReactTestUtils.renderIntoDocument(
+    complainingWitnessNode = ReactTestUtils.renderIntoDocument(
       <ComplainingWitness complainingWitnesses={ [complainingWitness] }/>
     );
-    ReactTestUtils.findRenderedDOMComponentWithClass(complainingWitness, 'complaining-witness-list')
+    ReactTestUtils.findRenderedDOMComponentWithClass(complainingWitnessNode, 'complaining-witness-list')
       .textContent.should.containEql('Gender unknown');
   });
 
   it('should show `Age unknown` if there is no age', () => {
     const complainingWitness = f.create('ComplainingWitness', {'age': ''});
 
-    complainingWitness = ReactTestUtils.renderIntoDocument(
-    complainingWitness = ReactTestUtils.renderIntoDocument(
+    complainingWitnessNode = ReactTestUtils.renderIntoDocument(
       <ComplainingWitness complainingWitnesses={ [complainingWitness] }/>
     );
-    ReactTestUtils.findRenderedDOMComponentWithClass(complainingWitness, 'complaining-witness-list')
+    ReactTestUtils.findRenderedDOMComponentWithClass(complainingWitnessNode, 'complaining-witness-list')
       .textContent.should.containEql('Age unknown');
   });
 
   it('should show `Race unknown` if there is no race', () => {
     const complainingWitness = f.create('ComplainingWitness', {'race': ''});
 
-    complainingWitness = ReactTestUtils.renderIntoDocument(
-    complainingWitness = ReactTestUtils.renderIntoDocument(
+    complainingWitnessNode = ReactTestUtils.renderIntoDocument(
       <ComplainingWitness complainingWitnesses={ [complainingWitness] }/>
     );
-    ReactTestUtils.findRenderedDOMComponentWithClass(complainingWitness, 'complaining-witness-list')
+    ReactTestUtils.findRenderedDOMComponentWithClass(complainingWitnessNode, 'complaining-witness-list')
       .textContent.should.containEql('Race unknown');
   });
 

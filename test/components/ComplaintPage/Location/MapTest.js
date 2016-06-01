@@ -1,16 +1,14 @@
-let ReactTestUtils, Map, MapFacade, f, sinon;
-
 import React from 'react';
-ReactTestUtils = require('react-addons-test-utils');
+import ReactTestUtils from 'react-addons-test-utils';
 
-sinon = require('sinon');
-require('should');
+import sinon from 'sinon';
+import should from 'should';
 
-f = require('utils/tests/f');
+import f from 'utils/tests/f';
 
-MapFacade = require('utils/MapFacade');
+import MapFacade from 'utils/MapFacade';
 
-Map = require('components/ComplaintPage/Location/Map.react');
+import Map from 'components/ComplaintPage/Location/Map.react';
 
 
 describe('MapComponent', () => {
@@ -33,7 +31,6 @@ describe('MapComponent', () => {
   it('should render nothing if point is empty', () => {
     const allegation = f.create('Allegation', {'point': ''});
     ReactTestUtils.renderIntoDocument(
-    ReactTestUtils.renderIntoDocument(
       <Map allegation={ allegation } />
     );
 
@@ -44,7 +41,6 @@ describe('MapComponent', () => {
     const point = f.create('Point');
     const allegation = f.create('Allegation', {'point': point, 'add1': 'add1', 'add2': 'add2'});
 
-    ReactTestUtils.renderIntoDocument(
     ReactTestUtils.renderIntoDocument(
       <Map allegation={ allegation } />
     );
@@ -58,7 +54,6 @@ describe('MapComponent', () => {
     const point = f.create('Point');
     const allegation = f.create('Allegation', {'point': point, 'add1': '', 'add2': ''});
 
-    ReactTestUtils.renderIntoDocument(
     ReactTestUtils.renderIntoDocument(
       <Map allegation={ allegation } />
     );

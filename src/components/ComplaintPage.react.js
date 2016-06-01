@@ -2,7 +2,7 @@ import React from 'react';
 import objectAssign from 'object-assign';
 import Base from 'components/Base.react';
 import u from 'utils/HelperUtil';
-//import GaUtil from 'utils/GaUtil';
+import GaUtil from 'utils/GaUtil';
 import AllegationPresenter from 'presenters/AllegationPresenter';
 import AccompliceOfficerSection from 'components/ComplaintPage/AccompliceOfficerSection.react';
 import AgainstSection from 'components/ComplaintPage/AgainstSection.react';
@@ -38,7 +38,7 @@ const ComplaintPage = React.createClass(objectAssign(Base(ComplaintPageStore), {
   componentDidMount() {
     const crid = u.fetch(this.props, 'params.crid', 0);
 
-    //GaUtil.track('event', 'allegation', 'view_detail', location.pathname);
+    GaUtil.track('event', 'allegation', 'view_detail', location.pathname);
     AllegationResourceUtil.get(crid);
     ComplaintPageStore.addChangeListener(this._onChange);
   },

@@ -1,17 +1,15 @@
-let AccompliceOfficerSection, OfficerCard, AppHistory, f;
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
-require('should');
+import should from 'should';
 
-f = require('utils/tests/f');
-require('utils/tests/should/React');
+import f from 'utils/tests/f';
+import shouldReact from 'utils/tests/should/React';
 
-AccompliceOfficerSection = require('components/ComplaintPage/AccompliceOfficerSection.react');
-OfficerCard = require('components/Shared/OfficerCard.react');
-AppHistory = require('utils/History');
+import AccompliceOfficerSection from 'components/ComplaintPage/AccompliceOfficerSection.react';
+import OfficerCard from 'components/Shared/OfficerCard.react';
+import AppHistory from 'utils/History';
 
 
 describe('AccompliceOfficerSectionComponent', () => {
@@ -24,7 +22,6 @@ describe('AccompliceOfficerSectionComponent', () => {
   it('should be render OfficerCard as sub-component', () => {
     const officerAllegations = f.createBatch(2, 'OfficerAllegation');
 
-    accompliceOfficerSection = ReactTestUtils.renderIntoDocument(
     accompliceOfficerSection = ReactTestUtils.renderIntoDocument(
       <AccompliceOfficerSection officerAllegations={ officerAllegations } />
     );
@@ -45,7 +42,6 @@ describe('AccompliceOfficerSectionComponent', () => {
     const officerAllegation = f.create('OfficerAllegation', {'officer': officer});
 
     accompliceOfficerSection = ReactTestUtils.renderIntoDocument(
-    accompliceOfficerSection = ReactTestUtils.renderIntoDocument(
       <AccompliceOfficerSection officerAllegations={ [officerAllegation] } />
     );
 
@@ -64,7 +60,6 @@ describe('AccompliceOfficerSectionComponent', () => {
     const officerAllegation = f.create('OfficerAllegation', {'officer': officer});
 
     accompliceOfficerSection = ReactTestUtils.renderIntoDocument(
-    accompliceOfficerSection = ReactTestUtils.renderIntoDocument(
       <AccompliceOfficerSection officerAllegations={ [officerAllegation] } />
     );
 
@@ -81,9 +76,8 @@ describe('AccompliceOfficerSectionComponent', () => {
     let OfficerNode;
 
     const mock = sinon.mock(AppHistory);
-    mock.expects('pushState').once().withArgs(null, expectedUrl).returns(null);
+    mock.expects('push').once().withArgs(expectedUrl).returns(null);
 
-    accompliceOfficerSection = ReactTestUtils.renderIntoDocument(
     accompliceOfficerSection = ReactTestUtils.renderIntoDocument(
       <AccompliceOfficerSection officerAllegations={ [officerAllegation] } />
     );
@@ -97,7 +91,6 @@ describe('AccompliceOfficerSectionComponent', () => {
   });
 
   it('should be hidden when there\'s no officer allegations', () => {
-    accompliceOfficerSection = ReactTestUtils.renderIntoDocument(
     accompliceOfficerSection = ReactTestUtils.renderIntoDocument(
       <AccompliceOfficerSection />
     );

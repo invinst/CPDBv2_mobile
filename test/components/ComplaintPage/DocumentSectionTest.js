@@ -1,16 +1,14 @@
-let DocumentSection, DocumentCard, f, InterfaceTextResourceUtil;
-
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
-require('should');
+import should from 'should';
 
-f = require('utils/tests/f');
-require('utils/tests/should/React');
+import f from 'utils/tests/f';
+import shouldReact from 'utils/tests/should/React';
 
-DocumentSection = require('components/ComplaintPage/DocumentSection.react');
-DocumentCard = require('components/ComplaintPage/DocumentSection/DocumentCard.react');
-InterfaceTextResourceUtil = require('utils/InterfaceTextResourceUtil');
+import DocumentSection from 'components/ComplaintPage/DocumentSection.react';
+import DocumentCard from 'components/ComplaintPage/DocumentSection/DocumentCard.react';
+import InterfaceTextResourceUtil from 'utils/InterfaceTextResourceUtil';
 
 
 describe('DocumentSectionComponent', () => {
@@ -31,7 +29,6 @@ describe('DocumentSectionComponent', () => {
 
   it('should render nothing if there is no documents', () => {
     documentSection = ReactTestUtils.renderIntoDocument(
-    documentSection = ReactTestUtils.renderIntoDocument(
       <DocumentSection/>
     );
     documentSection.should.renderNothing();
@@ -40,7 +37,6 @@ describe('DocumentSectionComponent', () => {
   it('should show number of documents', () => {
     let headerNode;
     const documents = f.createBatch(2, 'Document');
-    documentSection = ReactTestUtils.renderIntoDocument(
     documentSection = ReactTestUtils.renderIntoDocument(
       <DocumentSection documents={ documents } />
     );
@@ -52,7 +48,6 @@ describe('DocumentSectionComponent', () => {
   it('should render list of DocumentCard', () => {
     const documents = f.createBatch(2, 'Document');
 
-    documentSection = ReactTestUtils.renderIntoDocument(
     documentSection = ReactTestUtils.renderIntoDocument(
       <DocumentSection documents={ documents } />
     );

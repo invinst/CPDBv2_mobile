@@ -1,16 +1,14 @@
-let f, AgainstSection, AgainstCard, InvestigationTimeline;
-
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 
-require('should');
+import should from 'should';
 
-f = require('utils/tests/f');
-require('utils/tests/should/React');
+import f from 'utils/tests/f';
+import shouldReact from 'utils/tests/should/React';
 
-AgainstCard = require('components/ComplaintPage/AgainstSection/AgainstCard.react');
-AgainstSection = require('components/ComplaintPage/AgainstSection.react');
-InvestigationTimeline = require('components/ComplaintPage/AgainstSection/AgainstCard/InvestigationTimeline.react');
+import AgainstCard from 'components/ComplaintPage/AgainstSection/AgainstCard.react';
+import AgainstSection from 'components/ComplaintPage/AgainstSection.react';
+import InvestigationTimeline from 'components/ComplaintPage/AgainstSection/AgainstCard/InvestigationTimeline.react';
 
 
 describe('AgainstSectionComponent', () => {
@@ -24,7 +22,6 @@ describe('AgainstSectionComponent', () => {
     const officerAllegations = f.createBatch(1, 'OfficerAllegation');
 
     againstSection = ReactTestUtils.renderIntoDocument(
-    againstSection = ReactTestUtils.renderIntoDocument(
       <AgainstSection officerAllegations={ officerAllegations } />
     );
 
@@ -37,7 +34,6 @@ describe('AgainstSectionComponent', () => {
       {'start_date': '2012-01-19', 'end_date': '2012-01-19'});
 
     againstSection = ReactTestUtils.renderIntoDocument(
-    againstSection = ReactTestUtils.renderIntoDocument(
       <AgainstSection officerAllegations={ officerAllegations } />
     );
 
@@ -48,7 +44,6 @@ describe('AgainstSectionComponent', () => {
     let againstCard;
     const officerAllegations = f.createBatch(1, 'OfficerAllegation');
 
-    againstSection = ReactTestUtils.renderIntoDocument(
     againstSection = ReactTestUtils.renderIntoDocument(
       <AgainstSection officerAllegations={ officerAllegations } />
     );

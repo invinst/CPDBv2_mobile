@@ -1,5 +1,6 @@
 import pluralize from 'pluralize';
 import React from 'react';
+import cx from 'classnames';
 import Wrapper from 'components/Shared/Wrapper.react';
 import OfficerCard from 'components/Shared/OfficerCard.react';
 import u from 'utils/HelperUtil';
@@ -46,7 +47,8 @@ const AccompliceOfficerSection = React.createClass({
     const numberOfOfficerAllegations = officerAllegations.length;
 
     return (
-      <Wrapper wrapperClass={ style.accompliceOfficerSection } visible={ numberOfOfficerAllegations > 0 }>
+      <Wrapper wrapperClass={ cx(style.accompliceOfficerSection, 'accomplice-officer-section') }
+        visible={ numberOfOfficerAllegations > 0 }>
         <div className='row section-header'>
           <span className='pad'>
             <span className='section-title bold'>

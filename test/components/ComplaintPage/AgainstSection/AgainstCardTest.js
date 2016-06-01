@@ -1,24 +1,21 @@
-let f, AgainstCard, InvestigationTimeline, OfficerCard, AppHistory;
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
-require('should');
+import should from 'should';
 
-f = require('utils/tests/f');
+import f from 'utils/tests/f';
 
-AgainstCard = require('components/ComplaintPage/AgainstSection/AgainstCard.react');
-AppHistory = require('utils/History');
-InvestigationTimeline = require('components/ComplaintPage/AgainstSection/AgainstCard/InvestigationTimeline.react');
-OfficerCard = require('components/Shared/OfficerCard.react');
+import AgainstCard from 'components/ComplaintPage/AgainstSection/AgainstCard.react';
+import AppHistory from 'utils/History';
+import InvestigationTimeline from 'components/ComplaintPage/AgainstSection/AgainstCard/InvestigationTimeline.react';
+import OfficerCard from 'components/Shared/OfficerCard.react';
 
 
 describe('AgainstCardComponent', () => {
   let againstCard;
 
   it('should be renderable', () => {
-    againstCard = ReactTestUtils.renderIntoDocument(
     againstCard = ReactTestUtils.renderIntoDocument(
       <AgainstCard />
     );
@@ -30,7 +27,6 @@ describe('AgainstCardComponent', () => {
     const officerAllegation = f.create('OfficerAllegation');
 
     againstCard = ReactTestUtils.renderIntoDocument(
-    againstCard = ReactTestUtils.renderIntoDocument(
       <AgainstCard officerAllegation={ officerAllegation } />
     );
 
@@ -41,7 +37,6 @@ describe('AgainstCardComponent', () => {
     const officerAllegation = f.create('OfficerAllegation');
 
     againstCard = ReactTestUtils.renderIntoDocument(
-    againstCard = ReactTestUtils.renderIntoDocument(
       <AgainstCard officerAllegation={ officerAllegation } />
     );
 
@@ -51,7 +46,6 @@ describe('AgainstCardComponent', () => {
   it('should not render `InvestigationTimeline` as sub-component if useSameTimeline is true', () => {
     const officerAllegation = f.create('OfficerAllegation');
 
-    againstCard = ReactTestUtils.renderIntoDocument(
     againstCard = ReactTestUtils.renderIntoDocument(
       <AgainstCard officerAllegation={ officerAllegation } shouldRenderTimelineOutside={ true } />
     );
@@ -68,7 +62,6 @@ describe('AgainstCardComponent', () => {
     const officerAllegation = f.create('OfficerAllegation', {'officer': officer});
 
     againstCard = ReactTestUtils.renderIntoDocument(
-    againstCard = ReactTestUtils.renderIntoDocument(
       <AgainstCard officerAllegations={ officerAllegation } />
     );
 
@@ -84,9 +77,8 @@ describe('AgainstCardComponent', () => {
     let OfficerNode;
 
     const mock = sinon.mock(AppHistory);
-    mock.expects('pushState').once().withArgs(null, expectedUrl).returns(null);
+    mock.expects('push').once().withArgs(expectedUrl).returns(null);
 
-    againstCard = ReactTestUtils.renderIntoDocument(
     againstCard = ReactTestUtils.renderIntoDocument(
       <AgainstCard officerAllegation={ officerAllegation } />
     );

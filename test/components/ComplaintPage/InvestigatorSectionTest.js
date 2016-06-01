@@ -1,14 +1,12 @@
-let f, InvestigatorSection;
-
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 
-require('should');
+import should from 'should';
 
-require('utils/tests/should/React');
-f = require('utils/tests/f');
+import shouldReact from 'utils/tests/should/React';
+import f from 'utils/tests/f';
 
-InvestigatorSection = require('components/ComplaintPage/InvestigatorSection.react');
+import InvestigatorSection from 'components/ComplaintPage/InvestigatorSection.react';
 
 
 describe('InvestigatorSection component', () => {
@@ -23,7 +21,6 @@ describe('InvestigatorSection component', () => {
     const allegation = f.create('Allegation', {'investigator' : investigator});
 
     investigatorSection = ReactTestUtils.renderIntoDocument(
-    investigatorSection = ReactTestUtils.renderIntoDocument(
       <InvestigatorSection allegation={ allegation }/>
     );
 
@@ -32,7 +29,6 @@ describe('InvestigatorSection component', () => {
 
   it('should not show anything if there is no investigator', () => {
 
-    investigatorSection = ReactTestUtils.renderIntoDocument(
     investigatorSection = ReactTestUtils.renderIntoDocument(
       <InvestigatorSection />
     );
@@ -44,7 +40,6 @@ describe('InvestigatorSection component', () => {
     const investigator = f.create('Investigator', {'name': 'John', 'current_rank': 'SERGEANT OF POLICE'});
     const allegation = f.create('Allegation', {'investigator' : investigator});
 
-    investigatorSection = ReactTestUtils.renderIntoDocument(
     investigatorSection = ReactTestUtils.renderIntoDocument(
       <InvestigatorSection allegation={ allegation }/>
     );
@@ -59,7 +54,6 @@ describe('InvestigatorSection component', () => {
     const investigator = f.create('Investigator', {'current_rank': ''});
     const allegation = f.create('Allegation', {'investigator' : investigator});
 
-    investigatorSection = ReactTestUtils.renderIntoDocument(
     investigatorSection = ReactTestUtils.renderIntoDocument(
       <InvestigatorSection allegation={ allegation }/>
     );

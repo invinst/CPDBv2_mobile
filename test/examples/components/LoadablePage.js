@@ -10,8 +10,7 @@ SharedExample.define('a loadable page', function () {
   const self = this;
 
   it('should render loading page if loading is true', () => {
-    var element = ReactTestUtils.renderIntoDocument(
-    var element = ReactTestUtils.renderIntoDocument(
+    const element = ReactTestUtils.renderIntoDocument(
       React.createElement(self.obj)
     );
 
@@ -23,8 +22,7 @@ SharedExample.define('a loadable page', function () {
   });
 
   it('should render not matched page if data is not found', () => {
-    var element = ReactTestUtils.renderIntoDocument(
-    var element = ReactTestUtils.renderIntoDocument(
+    const element = ReactTestUtils.renderIntoDocument(
       React.createElement(self.obj)
     );
 

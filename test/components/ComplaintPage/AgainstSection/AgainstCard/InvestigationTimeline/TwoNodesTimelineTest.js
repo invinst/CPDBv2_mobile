@@ -1,13 +1,11 @@
-let TwoNodesTimeline;
-
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import should from 'should';
 import f from 'utils/tests/f';
-require('utils/tests/should/React');
+import shouldReact from 'utils/tests/should/React';
 
-TwoNodesTimeline =
-  require('components/ComplaintPage/AgainstSection/AgainstCard/InvestigationTimeline/TwoNodesTimeline.react');
+import TwoNodesTimeline from
+  'components/ComplaintPage/AgainstSection/AgainstCard/InvestigationTimeline/TwoNodesTimeline.react';
 
 
 describe('TwoNodesTimelineComponent', () => {
@@ -28,7 +26,6 @@ describe('TwoNodesTimelineComponent', () => {
     });
 
     twoNodesTimeline = ReactTestUtils.renderIntoDocument(
-    twoNodesTimeline = ReactTestUtils.renderIntoDocument(
       <TwoNodesTimeline allegation={ allegation } officerAllegation={ officerAllegation } />
     );
 
@@ -48,7 +45,6 @@ describe('TwoNodesTimelineComponent', () => {
     });
 
     twoNodesTimeline = ReactTestUtils.renderIntoDocument(
-    twoNodesTimeline = ReactTestUtils.renderIntoDocument(
       <TwoNodesTimeline officerAllegation={ officerAllegation } />
     );
     ReactTestUtils.findRenderedDOMComponentWithClass(twoNodesTimeline, 'event-title status')
@@ -58,7 +54,6 @@ describe('TwoNodesTimelineComponent', () => {
   it('should be show dashline style if open investigation', () => {
     let line;
     const officerAllegation = f.create('OfficerAllegation', { 'final_outcome_class': 'open-investigation' });
-    twoNodesTimeline = ReactTestUtils.renderIntoDocument(
     twoNodesTimeline = ReactTestUtils.renderIntoDocument(
       <TwoNodesTimeline officerAllegation={ officerAllegation } />
     );
@@ -70,7 +65,6 @@ describe('TwoNodesTimelineComponent', () => {
   it('should be show no style if not open investigation', () => {
     let line;
     const officerAllegation = f.create('OfficerAllegation', { 'final_outcome_class': 'not-sustained' });
-    twoNodesTimeline = ReactTestUtils.renderIntoDocument(
     twoNodesTimeline = ReactTestUtils.renderIntoDocument(
       <TwoNodesTimeline officerAllegation={ officerAllegation } />
     );
@@ -84,7 +78,6 @@ describe('TwoNodesTimelineComponent', () => {
     const incidentDate = '';
     const allegation = f.create('Allegation', {'incident_date': incidentDate});
 
-    twoNodesTimeline = ReactTestUtils.renderIntoDocument(
     twoNodesTimeline = ReactTestUtils.renderIntoDocument(
       <TwoNodesTimeline allegation={ allegation } />
     );

@@ -1,13 +1,11 @@
-let ThreeNodesTimeline;
-
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import should from 'should';
 import f from 'utils/tests/f';
-require('utils/tests/should/React');
+import shouldReact from 'utils/tests/should/React';
 
-ThreeNodesTimeline = require(
-  'components/ComplaintPage/AgainstSection/AgainstCard/InvestigationTimeline/ThreeNodesTimeline.react');
+import ThreeNodesTimeline from
+  'components/ComplaintPage/AgainstSection/AgainstCard/InvestigationTimeline/ThreeNodesTimeline.react';
 
 
 describe('ThreeNodesTimelineComponent', () => {
@@ -30,7 +28,6 @@ describe('ThreeNodesTimelineComponent', () => {
         'final_outcome_class': 'open-investigation'
       });
     threeNodesTimeline = ReactTestUtils.renderIntoDocument(
-    threeNodesTimeline = ReactTestUtils.renderIntoDocument(
       <ThreeNodesTimeline allegation={ allegation } officerAllegation={ officerAllegation } />
     );
 
@@ -48,7 +45,6 @@ describe('ThreeNodesTimelineComponent', () => {
     let line;
     const officerAllegation = f.create('OfficerAllegation', { 'final_outcome_class': 'open-investigation' });
     threeNodesTimeline = ReactTestUtils.renderIntoDocument(
-    threeNodesTimeline = ReactTestUtils.renderIntoDocument(
       <ThreeNodesTimeline officerAllegation={ officerAllegation } />
     );
 
@@ -59,7 +55,6 @@ describe('ThreeNodesTimelineComponent', () => {
   it('should be show no style for second line if not open investigation', () => {
     let line;
     const officerAllegation = f.create('OfficerAllegation', { 'final_outcome_class': 'not-sustained' });
-    threeNodesTimeline = ReactTestUtils.renderIntoDocument(
     threeNodesTimeline = ReactTestUtils.renderIntoDocument(
       <ThreeNodesTimeline officerAllegation={ officerAllegation } />
     );
@@ -73,7 +68,6 @@ describe('ThreeNodesTimelineComponent', () => {
     const incidentDate = '2012-10-07T07:30:00';
     const allegation = f.create('Allegation', {'incident_date': incidentDate});
     threeNodesTimeline = ReactTestUtils.renderIntoDocument(
-    threeNodesTimeline = ReactTestUtils.renderIntoDocument(
       <ThreeNodesTimeline allegation={ allegation } />
     );
 
@@ -83,7 +77,6 @@ describe('ThreeNodesTimelineComponent', () => {
 
   it('should be show no style for first line if there is no incident date', () => {
     let line;
-    threeNodesTimeline = ReactTestUtils.renderIntoDocument(
     threeNodesTimeline = ReactTestUtils.renderIntoDocument(
       <ThreeNodesTimeline />
     );
@@ -97,7 +90,6 @@ describe('ThreeNodesTimelineComponent', () => {
     const incidentDate = '';
     const allegation = f.create('Allegation', {'incident_date': incidentDate});
 
-    threeNodesTimeline = ReactTestUtils.renderIntoDocument(
     threeNodesTimeline = ReactTestUtils.renderIntoDocument(
       <ThreeNodesTimeline allegation={ allegation } />
     );
