@@ -23,6 +23,7 @@ import Wrapper from 'components/Shared/Wrapper.react';
 import cx from 'classnames';
 import style from 'styles/ComplaintPage.sass'
 
+
 const ComplaintPage = React.createClass(objectAssign(Base(ComplaintPageStore), {
   getInitialState() {
     return {

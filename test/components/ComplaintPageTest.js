@@ -87,12 +87,12 @@ describe('ComplaintPageComponent', () => {
   });
 
   it('should be tracked by google analytics', () => {
-    const mock = sinon.mock(GaUtil);
     restoreForComplaintPage();
+    const mock = sinon.mock(GaUtil);
     sinon.stub(AllegationResourceUtil, 'get', () => {
     });
 
-    mock.expects('track').once().withArgs('event', 'allegation', 'view_detail', '/').returns('anything');
+    mock.expects('track').once().withArgs('event', 'allegation', 'view_detail', sinon.match.any).returns('anything');
 
     complaintPage = ReactTestUtils.renderIntoDocument(
       <ComplaintPage />

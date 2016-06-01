@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import u from 'utils/HelperUtil';
 import CollectionUtil from 'utils/CollectionUtil';
 import AppHistory from 'utils/History';
@@ -39,7 +40,7 @@ const OfficerAllegationItem = React.createClass({
     const crid = allegationPresenter.crid;
 
     return (
-      <div className={ style.officerAllegationItem, 'officer-allegation-item' } onClick={ this._onClick.bind(this, crid, firstOfficerAllegation) }>
+      <div className={ cx(style.officerAllegationItem, 'officer-allegation-item') } onClick={ this._onClick.bind(this, crid, firstOfficerAllegation) }>
         <div className='crid-info pad'>
           <div className='inline-block half-width align-left'>
             <span className='crid-title'>CRID &nbsp;</span>
