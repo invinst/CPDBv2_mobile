@@ -20,11 +20,6 @@ const RelatedOfficersTab = React.createClass({
   render() {
     const coAccused = this.props.coAccused;
 
-    if (!coAccused) {
-      return (<div></div>);
-      return (<div></div>);
-    }
-
     if (coAccused.length == 0) {
       return (
         <div>
@@ -42,5 +37,9 @@ const RelatedOfficersTab = React.createClass({
     );
   }
 });
+
+RelatedOfficersTab.defaultProps = {
+  'coAccused': []
+};
 
 export default RelatedOfficersTab;

@@ -7,11 +7,6 @@ import style from 'styles/OfficerPage/SummaryTab/OfficerAnalyticSection/Distribu
 
 
 const DistributionCurve = React.createClass({
-  propTypes: {
-    officer: React.PropTypes.object,
-    distribution: React.PropTypes.array
-  },
-
   renderOfficerLine(numberOfComplaints, scaleX, scaleY) {
     return HelperUtil.format('{x},{y}', {'x': numberOfComplaints * scaleX / 70, 'y': scaleY});
   },
@@ -100,5 +95,15 @@ const DistributionCurve = React.createClass({
     );
   }
 });
+
+DistributionCurve.propsTypes = {
+  officer: React.PropTypes.object,
+  distribution: React.PropTypes.array
+};
+
+DistributionCurve.defaultProps = {
+  officer: {},
+  distribution: []
+};
 
 export default DistributionCurve;

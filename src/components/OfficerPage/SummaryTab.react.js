@@ -23,4 +23,10 @@ const SummaryTab = React.createClass({
   }
 });
 
+
+SummaryTab.defaultProps = {
+  'officer': {},
+  'distribution': []
+};
+
 export default SummaryTab;

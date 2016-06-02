@@ -4,11 +4,6 @@ import style from 'styles/OfficerPage/SummaryTab/OfficerAnalyticSection.sass';
 
 
 const OfficerAnalyticSection = React.createClass({
-  propTypes: {
-    officer: React.PropTypes.object,
-    distribution: React.PropTypes.array
-  },
-
   render() {
     return (
       <div className={ style.officerAnalyticSection }>
@@ -22,5 +17,15 @@ const OfficerAnalyticSection = React.createClass({
     );
   }
 });
+
+OfficerAnalyticSection.propTypes = {
+  officer: React.PropTypes.object,
+  distribution: React.PropTypes.array
+};
+
+OfficerAnalyticSection.defaultProps = {
+  officer: {},
+  distribution: []
+};
 
 export default OfficerAnalyticSection;

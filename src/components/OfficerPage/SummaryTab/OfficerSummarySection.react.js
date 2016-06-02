@@ -1,6 +1,7 @@
 import React from 'react';
 import Wrapper from 'components/Shared/Wrapper.react';
 import OfficerPresenter from 'presenters/OfficerPresenter';
+import OfficerSummaryItem from 'components/OfficerPage/SummaryTab/OfficerSummarySection/OfficerSummaryItem.react';
 import style from 'styles/OfficerPage/SummaryTab/OfficerSummarySection.sass';
 
 
@@ -9,28 +10,23 @@ const OfficerSummarySection = React.createClass({
     officer: React.PropTypes.object
   },
 
-  renderSummaryInfoItem(label, data) {
-    const presenter = OfficerPresenter(this.props.officer);
-
-    return (
-      <Wrapper visible={ presenter.hasData(label) }>
-        <span className='label'>{ label } </span>
-        <span className='value'>{ data }</span>
-      </Wrapper>
-    );
-  },
-
   render() {
-    const officerPresenter = OfficerPresenter(this.props.officer);
-
+    const officer = this.props.officer;
+    const officerPresenter = OfficerPresenter(officer);
+    const labelToMethodMap = {
+      'Rank': 'rank',
+      'Unit': 'unit',
+      'Joined': 'joinedDate',
+      'Sex': 'gender',
+      'Race': 'race'
+    };
     return (
       <Wrapper visible={ officerPresenter.hasSummarySection } wrapperClass={ style.officerSummarySection }>
         <div className='pad'>
-          { this.renderSummaryInfoItem('Rank', officerPresenter.rank) }
-          { this.renderSummaryInfoItem('Unit', officerPresenter.unit) }
-          { this.renderSummaryInfoItem('Joined', officerPresenter.joinedDate) }
-          { this.renderSummaryInfoItem('Sex', officerPresenter.gender) }
-          { this.renderSummaryInfoItem('Race', officerPresenter.race) }
+          { Object.keys(labelToMethodMap).map( (label) => (
+            <OfficerSummaryItem officer={ officer }
+              label={ label } data={ officerPresenter[labelToMethodMap[label]] } />
+          )) }
         </div>
       </Wrapper>
     );

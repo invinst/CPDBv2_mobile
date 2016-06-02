@@ -43,11 +43,10 @@ const OfficerPresenter = officer => {
   const hasDataIn = (officer, field, collection) => {
     const datum = u.fetch(officer, field, false);
     return (collection.indexOf(datum) > 0);
-    return (collection.indexOf(datum) > 0);
   };
 
   const hasData = label => {
-    const field = AppConstants.OFFICER_SUMMARY_MAP[label];
+    const field = AppConstants.OFFICER_SUMMARY_MAP[label] || '';
     const checkers = {
       'race': has(officer, field),
       'unit': hasDataIn(officer, field, Object.keys(AppConstants.UNITS)),
