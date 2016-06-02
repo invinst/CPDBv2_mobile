@@ -7,7 +7,7 @@ const RequestEmailResourceUtil = {
   post(email, documentId) {
 
     request.post(AppConstants.REQUEST_EMAIL_API_EMAIL)
-      .send({'email': email, 'document_id': documentId})
+      .send({ 'email': email, 'document_id': documentId })
       .end((err, res) => {
         if (res.ok) {
           RequestActions.requestSuccess();

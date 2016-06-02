@@ -2,7 +2,9 @@ import cx from 'classnames';
 import React from 'react';
 import HelperUtil from 'utils/HelperUtil';
 import Wrapper from 'components/Shared/Wrapper.react';
+/*eslint-disable no-unused-vars*/
 import style from 'styles/Shared/SimpleTab.sass';
+/*eslint-enable no-unused-vars*/
 
 
 const SimpleTab = React.createClass({
@@ -47,7 +49,7 @@ const SimpleTab = React.createClass({
     const node = e.target;
     const parentChildren = node.parentNode.children;
     const index = this.getIndexOfNav(parentChildren, node);
-    const tabIdentifier = HelperUtil.format('#{tabId}', {'tabId': this.getTabIds()[index]});
+    const tabIdentifier = HelperUtil.format('#{tabId}', { 'tabId': this.getTabIds()[index] });
 
     if (index != -1) {
       this.setActiveTab(index);
@@ -59,7 +61,7 @@ const SimpleTab = React.createClass({
     const self = this;
 
     return items.props.children.map((item, i) => {
-      const itemKey = HelperUtil.format('{prefix}-{i}', {'prefix': prefix, 'i': i});
+      const itemKey = HelperUtil.format('{prefix}-{i}', { 'prefix': prefix, 'i': i });
       const classNames = cx(item.props.className, prefix, {
         'active': (i == self.state.activeIndex),
         'no-animation': (self.state.previousIndex == -1),

@@ -32,8 +32,8 @@ describe('InvestigationTimelineComponent', function () {
   it('should render TwoNodesTimeline as sub-component if investigation start at incident date', function () {
     const date = '2012-01-19';
     const incidentDate = '2012-01-19T07:30:00';
-    const officerAllegation = f.create('OfficerAllegation', {'start_date': date});
-    const allegation = f.create('Allegation', {'incident_date': incidentDate});
+    const officerAllegation = f.create('OfficerAllegation', { 'start_date': date });
+    const allegation = f.create('Allegation', { 'incident_date': incidentDate });
 
     investigaionTimeline = ReactTestUtils.renderIntoDocument(
       <InvestigationTimeline officerAllegation={ officerAllegation } allegation={ allegation }/>
@@ -45,8 +45,8 @@ describe('InvestigationTimelineComponent', function () {
   it('should render ThreeNodesTimeline as sub-component if investigation start at incident date', function () {
     const incidentDate = '2012-10-07T07:30:00';
     const date = '2012-01-19';
-    const officerAllegation = f.create('OfficerAllegation', {'start_date': date});
-    const allegation = f.create('Allegation', {'incident_date': incidentDate});
+    const officerAllegation = f.create('OfficerAllegation', { 'start_date': date });
+    const allegation = f.create('Allegation', { 'incident_date': incidentDate });
 
     investigaionTimeline = ReactTestUtils.renderIntoDocument(
       <InvestigationTimeline officerAllegation={ officerAllegation } allegation={ allegation }/>

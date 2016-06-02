@@ -121,7 +121,7 @@ describe('AllegationPresenter', () => {
   describe('#beat', () => {
     it('should return beat name', () => {
       const beatName = 'beatName';
-      const allegation = f.create('Allegation', { 'beat': { 'name': beatName} });
+      const allegation = f.create('Allegation', { 'beat': { 'name': beatName } });
       const presenter = AllegationPresenter(allegation);
 
       presenter.beat.should.be.equal(beatName);

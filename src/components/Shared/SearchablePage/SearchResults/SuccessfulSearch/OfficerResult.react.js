@@ -1,5 +1,5 @@
-import React from 'react'
-import cx from 'classnames'
+import React from 'react';
+import cx from 'classnames';
 
 import OfficerCard from 'components/Shared/OfficerCard.react';
 import HighlightText from 'components/Shared/HighlightText.react';
@@ -16,15 +16,15 @@ const OfficerResult = React.createClass({
   },
 
   _onClick: function (presenter) {
-     const officerPresenter = OfficerPresenter(presenter.meta);
+    const officerPresenter = OfficerPresenter(presenter.meta);
     // ga('send', 'event', 'filter', presenter.resource, presenter.text);
-     AppHistory.push(officerPresenter.url);
+    AppHistory.push(officerPresenter.url);
   },
 
   renderOfficerCard: function (suggestion) {
     const presenter = SuggestionPresenter(suggestion);
     const displayName = (<HighlightText fullText={ presenter.text } textToFind={ this.props.term } />);
-    const badgeClassName = cx('badge-value', {'highlight': this.props.term == presenter.meta.badge});
+    const badgeClassName = cx('badge-value', { 'highlight': this.props.term == presenter.meta.badge });
     const officerPresenter = OfficerPresenter(presenter.meta);
 
     return (

@@ -21,7 +21,7 @@ import SearchablePage from 'components/Shared/SearchablePage.react';
 import ToggleComplaintPage from 'components/ComplaintPage/ToggleComplaintPage.react';
 import Wrapper from 'components/Shared/Wrapper.react';
 import cx from 'classnames';
-import style from 'styles/ComplaintPage.sass'
+import style from 'styles/ComplaintPage.sass';
 
 
 const ComplaintPage = React.createClass(objectAssign(Base(ComplaintPageStore), {
@@ -52,7 +52,7 @@ const ComplaintPage = React.createClass(objectAssign(Base(ComplaintPageStore), {
     const categoryHashId = u.fetch(this.props, 'params.categoryHashId', 0);
     const presenter = ComplaintPagePresenter(data, categoryHashId);
     const toggle = this.state.toggle;
-    const classNames = cx('toggle-page', {'content': toggle}, {'animate': !toggle});
+    const classNames = cx('toggle-page', { 'content': toggle }, { 'animate': !toggle });
     const allegationPresenter = AllegationPresenter(presenter.allegation);
 
     // TODO: Think about refactoring this later

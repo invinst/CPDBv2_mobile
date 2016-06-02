@@ -17,8 +17,8 @@ const SearchablePage = React.createClass(objectAssign(Base(SearchablePageStore, 
 
   render() {
     const focus = this.state.focus;
-    const childrenClassName = cx('child-content', {'invisible': focus});
-    const searchResultClassName = cx('result-content', {'invisible': !focus});
+    const childrenClassName = cx('child-content', { 'invisible': focus });
+    const searchResultClassName = cx('result-content', { 'invisible': !focus });
 
     return (
       <div className={ style.searchablePage }>

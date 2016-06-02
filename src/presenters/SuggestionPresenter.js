@@ -13,7 +13,9 @@ const SuggestionPresenter = function (suggestion) {
 
   const getMeta = () => HelperUtil.fetch(suggestion, 'meta', '');
 
-  const uniqueKey = () => HelperUtil.format('{resource}-{resourceKey}', {'resource': resource(), 'resourceKey': resourceKey() });
+  const uniqueKey = () => HelperUtil.format('{resource}-{resourceKey}',
+    { 'resource': resource(), 'resourceKey': resourceKey() }
+  );
 
   return {
     text: text(),

@@ -15,11 +15,11 @@ describe('ComplaintPagePresenter', () => {
   beforeEach(() => {
     categoryId = 123;
     categoryHashId = HashUtil.encode(categoryId);
-    category = f.create('Category', {'id': categoryId});
-    officerAllegation = f.create('OfficerAllegation', {'cat': category});
+    category = f.create('Category', { 'id': categoryId });
+    officerAllegation = f.create('OfficerAllegation', { 'cat': category });
     officerAllegations = f.createBatch(2, 'OfficerAllegation', officerAllegation);
-    allegation = f.create('Allegation', {'officer_allegation_set': officerAllegations});
-    data = f.create('ComplaintPageData', {'allegation': allegation});
+    allegation = f.create('Allegation', { 'officer_allegation_set': officerAllegations });
+    data = f.create('ComplaintPageData', { 'allegation': allegation });
   });
 
   describe('#accompliceOfficerAllegation', () => {
@@ -39,7 +39,7 @@ describe('ComplaintPagePresenter', () => {
   describe('#allegation', () => {
     it('should return allegation', () => {
       const allegation = f.create('Allegation');
-      const data = f.create('ComplaintPageData', {'allegation': allegation});
+      const data = f.create('ComplaintPageData', { 'allegation': allegation });
 
       const presenter = ComplaintPagePresenter(data, '');
       presenter.allegation.should.be.equal(allegation);
@@ -49,7 +49,7 @@ describe('ComplaintPagePresenter', () => {
   describe('#complainingWitnesses', () => {
     it('should return complaining Witnesses', () => {
       const witnesses = f.createBatch(2, 'ComplainingWitness');
-      const data = f.create('ComplaintPageData', {'complaining_witnesses': witnesses});
+      const data = f.create('ComplaintPageData', { 'complaining_witnesses': witnesses });
 
       const presenter = ComplaintPagePresenter(data, '');
       presenter.complainingWitnesses.should.have.length(2);
@@ -73,12 +73,12 @@ describe('ComplaintPagePresenter', () => {
 
     it('should return officer allegations sorted by allegations count', () => {
       let presenter;
-      const officer1 = f.create('Officer', {'allegations_count': 1});
-      const officer2 = f.create('Officer', {'allegations_count': 2});
-      const officer3 = f.create('Officer', {'allegations_count': 3});
-      const officerAllegation1 = f.create('OfficerAllegation', {'officer': officer1});
-      const officerAllegation2 = f.create('OfficerAllegation', {'officer': officer2});
-      const officerAllegation3 = f.create('OfficerAllegation', {'officer': officer3});
+      const officer1 = f.create('Officer', { 'allegations_count': 1 });
+      const officer2 = f.create('Officer', { 'allegations_count': 2 });
+      const officer3 = f.create('Officer', { 'allegations_count': 3 });
+      const officerAllegation1 = f.create('OfficerAllegation', { 'officer': officer1 });
+      const officerAllegation2 = f.create('OfficerAllegation', { 'officer': officer2 });
+      const officerAllegation3 = f.create('OfficerAllegation', { 'officer': officer3 });
       allegation = f.create('Allegation', {
         'officer_allegation_set': [officerAllegation2, officerAllegation1, officerAllegation3]
       });

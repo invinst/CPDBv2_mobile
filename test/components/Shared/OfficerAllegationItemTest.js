@@ -14,10 +14,10 @@ describe('OfficerAllegationItemComponent', () => {
     const crid = 1234;
     const date = '2012-01-19T09:11:00';
     const expectedDate = 'Jan 19, 2012';
-    const category = f.create('Category', {'category': 'cat 1', 'allegation_name': 'allegation name'});
+    const category = f.create('Category', { 'category': 'cat 1', 'allegation_name': 'allegation name' });
 
-    const allegation = f.create('Allegation', {'crid': crid, 'incident_date': date});
-    const officer = f.create('Officer', {'officer_first': 'John', 'officer_last': 'Terry'});
+    const allegation = f.create('Allegation', { 'crid': crid, 'incident_date': date });
+    const officer = f.create('Officer', { 'officer_first': 'John', 'officer_last': 'Terry' });
     // sorry for laziness
     const officerAllegations = f.createBatch(2, 'OfficerAllegation', {
       'officer': officer,
@@ -51,11 +51,11 @@ describe('OfficerAllegationItemComponent', () => {
     let officerAllegationItem, node;
     const crid = 1234;
     const categoryHashId = HashUtil.encode(1);
-    const category = f.create('Category', {id: 1, 'allegation_name': 'category name'});
+    const category = f.create('Category', { id: 1, 'allegation_name': 'category name' });
 
-    const expectedUrl = u.format('/complaint/1234/category-name/{categoryHash}', {'categoryHash': categoryHashId});
-    const allegation = f.create('Allegation', {'crid': crid});
-    const officerAllegation = f.create('OfficerAllegation', {'cat': category});
+    const expectedUrl = u.format('/complaint/1234/category-name/{categoryHash}', { 'categoryHash': categoryHashId });
+    const allegation = f.create('Allegation', { 'crid': crid });
+    const officerAllegation = f.create('OfficerAllegation', { 'cat': category });
 
     const mockAppHistory = sinon.mock(AppHistory);
     const mockComplaintPageAction = sinon.mock(ComplaintPageActions);

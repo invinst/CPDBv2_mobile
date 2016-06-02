@@ -18,7 +18,7 @@ describe('ComplaintsTabComponent', () => {
 
   it('should render `OfficerAllegationItem` as its subcomponents with correct data', () => {
     const officer = f.create('Officer');
-    const officerAllegation = f.create('OfficerAllegation', {'officer': officer});
+    const officerAllegation = f.create('OfficerAllegation', { 'officer': officer });
     const otherOfficerAllegation = f.create('OfficerAllegation');
 
     const allegations = f.create('Allegation', {
@@ -32,5 +32,5 @@ describe('ComplaintsTabComponent', () => {
       'officerAllegations': [officerAllegation, otherOfficerAllegation],
       'officerAllegation': officerAllegation
     });
-  })
+  });
 });

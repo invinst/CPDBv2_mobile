@@ -17,7 +17,7 @@ const Factory = () => {
     const schema = schemas[name];
 
     // FIXME: Change this to an ES6 syntax
-    for (var key in schema) {
+    for (let key in schema) {
       if (override && key in override) {
         obj[key] = override[key];
       } else {
@@ -29,10 +29,9 @@ const Factory = () => {
   };
 
   const createBatch = (numberOfObjects, name, override) => {
-    let i = 0;
     const results = [];
 
-    for (i = 0; i < numberOfObjects; i++) {
+    for (let i = 0; i < numberOfObjects; i++) {
       results.push(create(name, override));
     }
 

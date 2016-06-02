@@ -13,16 +13,19 @@ const ComplaintPagePresenter = (data, categoryHashId) => {
     return officerAllegations;
   };
 
-  const getAgainstOfficerAllegations = () => officerAllegations().filter(officerAllegation => u.fetch(officerAllegation, 'cat.id', 0) == categoryId);
+  const getAgainstOfficerAllegations = () => officerAllegations().filter(officerAllegation =>
+    u.fetch(officerAllegation, 'cat.id', 0) == categoryId);
 
-  const getAccompliceOfficerAllegations = () => officerAllegations().filter(officerAllegation => u.fetch(officerAllegation, 'cat.id', 0) != categoryId);
+  const getAccompliceOfficerAllegations = () => officerAllegations().filter(officerAllegation =>
+    u.fetch(officerAllegation, 'cat.id', 0) != categoryId);
 
   const currentOfficerAllegation = () => {
     const againstOfficerAllegations = getAgainstOfficerAllegations();
     return againstOfficerAllegations && againstOfficerAllegations[0];
   };
 
-  const numberOfOfficerAllegations = () => Object.keys(CollectionUtil.groupBy(officerAllegations(), officerAllegation => u.fetch(officerAllegation, 'cat.id'))).length;
+  const numberOfOfficerAllegations = () => Object.keys(CollectionUtil.groupBy(officerAllegations(),
+    officerAllegation => u.fetch(officerAllegation, 'cat.id'))).length;
 
   return {
     accompliceOfficerAllegation: getAccompliceOfficerAllegations(),

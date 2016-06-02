@@ -12,7 +12,7 @@ describe('DataTypeUtil', () => {
       const crid = 123456;
 
       for (i = 0; i < templates.length; i++) {
-        query = u.format(templates[i], {'crid': crid});
+        query = u.format(templates[i], { 'crid': crid });
         DataTypeUtil.isValidCridQueryFormat(query).should.be.true();
       }
     });
@@ -23,7 +23,7 @@ describe('DataTypeUtil', () => {
       const crid = 123456;
 
       for (i = 0; i < templates.length; i++) {
-        query = u.format(templates[i], {'crid': crid});
+        query = u.format(templates[i], { 'crid': crid });
         DataTypeUtil.isValidCridQueryFormat(query).should.be.false();
       }
     });

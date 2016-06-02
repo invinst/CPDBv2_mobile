@@ -13,7 +13,7 @@ const OfficerUtil = {
     // FIXME: Refactor this function
     for (i = 0; i < AppConstants.OFFICER_COMPLAINT_COUNT_RANGE.length; i++) {
       if (allegationCount >= AppConstants.OFFICER_COMPLAINT_COUNT_RANGE[i]) {
-        return HelperUtil.format('{prefix}-{id}', {'id': i, prefix});
+        return HelperUtil.format('{prefix}-{id}', { 'id': i, prefix });
       }
     }
   }
