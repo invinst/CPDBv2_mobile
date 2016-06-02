@@ -17,6 +17,7 @@
     "serve:dist": "node server.js --env=dist",
     "start": "node server.js --env=dev",
     "test": "karma start",
+    "ci-test": "karma start --reporters mocha,coverage,coveralls",
     "test:watch": "karma start --autoWatch=true --singleRun=false"
   },
   "repository": "",
@@ -45,6 +46,7 @@
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^0.5.3",
+    "karma-coveralls": "^1.1.2",
     "karma-mocha": "^0.2.0",
     "karma-mocha-reporter": "^2.0.0",
     "karma-phantomjs-launcher": "^1.0.0",

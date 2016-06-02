@@ -15,6 +15,4 @@ dependencies:
 test:
   override:
     - eslint src/
-    - npm test
-#  post:
-#    - cat lcov.info | ./node_modules/coveralls/bin/coveralls.js
+    - npm run ci-test
