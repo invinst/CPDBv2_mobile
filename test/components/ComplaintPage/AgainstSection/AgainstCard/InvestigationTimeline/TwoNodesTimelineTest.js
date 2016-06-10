@@ -19,7 +19,7 @@ describe('TwoNodesTimelineComponent', () => {
     const incidentDate = '2012-10-07T07:30:00';
     const endDate = '2012-01-19';
     const expectedDate = 'Oct 07, 2012';
-    const allegation = f.create('Allegation', {'incident_date': incidentDate});
+    const allegation = f.create('Allegation', { 'incident_date': incidentDate });
     const officerAllegation = f.create('OfficerAllegation', {
       'end_date': endDate,
       'final_outcome_class': 'open-investigation'
@@ -76,7 +76,7 @@ describe('TwoNodesTimelineComponent', () => {
   it('should show `Unknown date` if incident date is empty', () => {
     let line;
     const incidentDate = '';
-    const allegation = f.create('Allegation', {'incident_date': incidentDate});
+    const allegation = f.create('Allegation', { 'incident_date': incidentDate });
 
     twoNodesTimeline = ReactTestUtils.renderIntoDocument(
       <TwoNodesTimeline allegation={ allegation } />

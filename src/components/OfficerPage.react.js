@@ -13,7 +13,7 @@ import OfficerPageServerActions from 'actions/OfficerPage/OfficerPageServerActio
 import OfficerResourceUtil from 'utils/OfficerResourceUtil';
 import OfficerPageStore from 'stores/OfficerPage/OfficerPageStore';
 import OfficerPagePresenter from 'presenters/Page/OfficerPagePresenter';
-import style from 'styles/OfficerPage.sass'
+import style from 'styles/OfficerPage.sass';
 
 
 const OfficerPage = React.createClass(objectAssign(Base(OfficerPageStore), {

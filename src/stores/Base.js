@@ -1,5 +1,5 @@
 import objectAssign from 'object-assign';
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 import AppConstants from '../constants/AppConstants';
 
 

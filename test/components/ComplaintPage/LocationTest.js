@@ -35,8 +35,8 @@ describe('LocationComponent', () => {
   });
 
   it('should render Map as sub-component if allegation has point data', () => {
-    const point = {'x': '-87.725233', 'y': '41.854405'};
-    const allegation = f.create('Allegation', {'point': point});
+    const point = { 'x': '-87.725233', 'y': '41.854405' };
+    const allegation = f.create('Allegation', { 'point': point });
 
     location = ReactTestUtils.renderIntoDocument(
       <Location allegation={ allegation }/>
@@ -48,7 +48,7 @@ describe('LocationComponent', () => {
   it('should show full address, beat, location type, city', () => {
     const add1 = 'add1';
     const add2 = 'add2';
-    const beat = {'name': '0512'};
+    const beat = { 'name': '0512' };
     const allegation = f.create('Allegation', {
       'add1': add1, 'add2': add2, 'beat': beat, 'city': 'CHICAGO IL', 'location': '17'
     });

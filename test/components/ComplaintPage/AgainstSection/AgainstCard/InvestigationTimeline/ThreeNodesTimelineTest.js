@@ -20,7 +20,7 @@ describe('ThreeNodesTimelineComponent', () => {
     const startDate = '2012-01-18';
     const endDate = '2012-01-19';
     const expectedDate = 'Oct 07, 2012';
-    const allegation = f.create('Allegation', {'incident_date': incidentDate});
+    const allegation = f.create('Allegation', { 'incident_date': incidentDate });
     const officerAllegation = f.create('OfficerAllegation',
       {
         'start_date': startDate,
@@ -66,7 +66,7 @@ describe('ThreeNodesTimelineComponent', () => {
   it('should be show dashLine style for first line if there is incident date', () => {
     let line;
     const incidentDate = '2012-10-07T07:30:00';
-    const allegation = f.create('Allegation', {'incident_date': incidentDate});
+    const allegation = f.create('Allegation', { 'incident_date': incidentDate });
     threeNodesTimeline = ReactTestUtils.renderIntoDocument(
       <ThreeNodesTimeline allegation={ allegation } />
     );
@@ -88,7 +88,7 @@ describe('ThreeNodesTimelineComponent', () => {
   it('should show `Unknown date` if incident date is empty', () => {
     let line;
     const incidentDate = '';
-    const allegation = f.create('Allegation', {'incident_date': incidentDate});
+    const allegation = f.create('Allegation', { 'incident_date': incidentDate });
 
     threeNodesTimeline = ReactTestUtils.renderIntoDocument(
       <ThreeNodesTimeline allegation={ allegation } />

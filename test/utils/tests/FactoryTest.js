@@ -42,7 +42,7 @@ describe('Factory', () => {
 
     factory.create('schema', {
       'property': 2
-    }).should.be.eql({'property': 2});
+    }).should.be.eql({ 'property': 2 });
   });
 
   it('should return an object with key null if we override it with null value', () => {
@@ -55,7 +55,7 @@ describe('Factory', () => {
 
     factory.create('schema', {
       'property': null
-    }).should.be.eql({'property': null});
+    }).should.be.eql({ 'property': null });
   });
 
   it('should return multiple objects when calling create as batch', () => {
@@ -66,7 +66,7 @@ describe('Factory', () => {
       }
     });
 
-    factory.createBatch(2, 'schema').should.be.eql([{'property': 1}, {'property': 1}]);
+    factory.createBatch(2, 'schema').should.be.eql([{ 'property': 1 }, { 'property': 1 }]);
   });
 
   it('#sequence(): should return a sequence', () => {

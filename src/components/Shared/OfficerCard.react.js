@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import HelperUtil from 'utils/HelperUtil';
 import OfficerUtil from 'utils/OfficerUtil';
-import style from 'styles/Shared/OfficerCard.sass'
+import style from 'styles/Shared/OfficerCard.sass';
 
 
 const OfficerCard = React.createClass({
@@ -15,7 +15,7 @@ const OfficerCard = React.createClass({
 
   render() {
     // FIXME: Make this component to be more general that we could use it in better way later
-    const officerClassname = HelperUtil.format('officer-{id}', {'id': this.props.officerId});
+    const officerClassname = HelperUtil.format('officer-{id}', { 'id': this.props.officerId });
     const classNames = cx(style.officerCard, 'pad', officerClassname);
     const circleClassNames = cx('circle', OfficerUtil.getColorLevelClass('circle', this.props.allegationsCount));
 

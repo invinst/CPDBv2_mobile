@@ -23,4 +23,9 @@ const OfficerAnalyticSection = React.createClass({
   }
 });
 
+OfficerAnalyticSection.defaultProps = {
+  officer: {},
+  distribution: []
+};
+
 export default OfficerAnalyticSection;

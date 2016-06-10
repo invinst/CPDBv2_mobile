@@ -7,6 +7,7 @@ import OfficerUtil from 'utils/OfficerUtil';
 import HelperUtil from 'utils/HelperUtil';
 import style from 'styles/OfficerPage/RelatedOfficersTab/RelatedOfficerItem.sass';
 
+
 const RelatedOfficerItem = React.createClass({
   propTypes: {
     officer: React.PropTypes.object,
@@ -26,7 +27,7 @@ const RelatedOfficerItem = React.createClass({
     const numberOfAllegations = officer['num_allegations'];
     const presenter = OfficerPresenter(officer);
     const relatedOfficerClassName = cx(style.relatedOfficerItem,
-      HelperUtil.format('officer-{index}', {'index': presenter.id})
+      HelperUtil.format('officer-{index}', { 'index': presenter.id })
     );
 
     return (
@@ -37,13 +38,18 @@ const RelatedOfficerItem = React.createClass({
           </div>
           <div className='eleven columns'>
             <div className='name bold'>{ presenter.displayName }</div>
-            <div className='gender'>{ presenter.description }</div>
-            <div className='description'>{ type } in { pluralize('case', numberOfAllegations, true) }</div>
+            <div className='officer-description'>{ presenter.description }</div>
+            <div className='related-description'>{ type } in { pluralize('case', numberOfAllegations, true) }</div>
           </div>
         </div>
       </div>
     );
   }
 });
+
+RelatedOfficerItem.defaultProps = {
+  officer: {},
+  type: ''
+};
 
 export default RelatedOfficerItem;

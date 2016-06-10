@@ -1,7 +1,7 @@
 import React from 'react';
 import Wrapper from 'components/Shared/Wrapper.react';
 import HelperUtil from 'utils/HelperUtil';
-import style from 'styles/ComplaintPage/InvestigatorSection.sass'
+import style from 'styles/ComplaintPage/InvestigatorSection.sass';
 
 const InvestigatorSection = React.createClass({
   propTypes: {

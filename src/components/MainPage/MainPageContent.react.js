@@ -3,7 +3,7 @@ import React from 'react';
 import SearchBar from 'components/Shared/SearchablePage/SearchBar.react';
 import SearchResults from 'components/Shared/SearchablePage/SearchResults.react';
 import ProjectSummary from 'components/MainPage/ProjectSummary.react';
-import style from 'styles/MainPage/MainPageContent.sass'
+import style from 'styles/MainPage/MainPageContent.sass';
 
 
 const MainPageContent = React.createClass({
@@ -13,8 +13,8 @@ const MainPageContent = React.createClass({
 
   render() {
     const topLeft = this.props.topLeft;
-    const searchBarWrapperClassNames = cx('search-wrapper animation', {'top-left': topLeft});
-    const projectSummaryClassNames = cx(style.mainPageContent, {'top-left': topLeft});
+    const searchBarWrapperClassNames = cx('search-wrapper animation', { 'top-left': topLeft });
+    const projectSummaryClassNames = cx(style.mainPageContent, { 'top-left': topLeft });
 
     return (
       <div className={ projectSummaryClassNames }>

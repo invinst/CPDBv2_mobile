@@ -20,7 +20,7 @@ const OfficerPresenter = officer => {
 
   const gender = () => GenderPresenter(u.fetch(officer, 'gender')).humanReadable;
 
-  const description = () => u.format('{gender} ({race})', {'gender': gender(), 'race': race()});
+  const description = () => u.format('{gender} ({race})', { 'gender': gender(), 'race': race() });
 
   const badge = () => u.fetch(officer, 'star', 'Unknown');
 
@@ -43,11 +43,10 @@ const OfficerPresenter = officer => {
   const hasDataIn = (officer, field, collection) => {
     const datum = u.fetch(officer, field, false);
     return (collection.indexOf(datum) > 0);
-    return (collection.indexOf(datum) > 0);
   };
 
   const hasData = label => {
-    const field = AppConstants.OFFICER_SUMMARY_MAP[label];
+    const field = AppConstants.OFFICER_SUMMARY_MAP[label] || '';
     const checkers = {
       'race': has(officer, field),
       'unit': hasDataIn(officer, field, Object.keys(AppConstants.UNITS)),
@@ -67,7 +66,7 @@ const OfficerPresenter = officer => {
 
   const coAccusedWith = numberOfCoAccusedOfficers => {
     const theOthers = pluralize('other', numberOfCoAccusedOfficers, true);
-    const withSomeOfficers = u.format(' and {theOthers}', {'theOthers': theOthers});
+    const withSomeOfficers = u.format(' and {theOthers}', { 'theOthers': theOthers });
     const withNoOfficer = '';
 
     const coAccusedInformation = numberOfCoAccusedOfficers ? withSomeOfficers : withNoOfficer;
