@@ -7,7 +7,7 @@ import sinon from 'sinon';
 
 import f from 'utils/tests/f';
 import GaUtil from 'utils/GaUtil';
-import HashUtil from'utils/HashUtil';
+import HashUtil from 'utils/HashUtil';
 import MapFacade from 'utils/MapFacade';
 import sharedExample from 'utils/tests/should/SharedExample';
 import loadablePageSharedExample from 'examples/components/LoadablePage';
@@ -109,11 +109,11 @@ describe('ComplaintPageComponent', () => {
 
     beforeEach(() => {
       const categoryId = 123;
-      category = f.create('Category', {'id': categoryId});
+      category = f.create('Category', { 'id': categoryId });
 
-      officerAllegation = f.create('OfficerAllegation', {'cat': category});
-      allegation = f.create('Allegation', {'officer_allegation_set': [officerAllegation]});
-      data = f.create('ComplaintPageData', {'allegation': allegation});
+      officerAllegation = f.create('OfficerAllegation', { 'cat': category });
+      allegation = f.create('Allegation', { 'officer_allegation_set': [officerAllegation] });
+      data = f.create('ComplaintPageData', { 'allegation': allegation });
       params = {
         'categoryHashId': HashUtil.encode(categoryId)
       };
@@ -122,7 +122,7 @@ describe('ComplaintPageComponent', () => {
         <ComplaintPage params={ params }/>
       );
 
-      complaintPage.setState({'loading': false, 'found': true, 'data': data});
+      complaintPage.setState({ 'loading': false, 'found': true, 'data': data });
     });
 
     it('should render a list of sub-component', () => {
@@ -132,30 +132,30 @@ describe('ComplaintPageComponent', () => {
     });
 
     it('should render component with correct data for `AgainstSection` and `AccompliceOfficerSection`', () => {
-      const otherCategory = f.create('Category', {'id': 456});
-      const otherOfficerAllegation = f.create('OfficerAllegation', {'cat': otherCategory});
-      allegation = f.create('Allegation', {'officer_allegation_set': [officerAllegation, otherOfficerAllegation]});
-      data = f.create('ComplaintPageData', {'allegation': allegation});
+      const otherCategory = f.create('Category', { 'id': 456 });
+      const otherOfficerAllegation = f.create('OfficerAllegation', { 'cat': otherCategory });
+      allegation = f.create('Allegation', { 'officer_allegation_set': [officerAllegation, otherOfficerAllegation] });
+      data = f.create('ComplaintPageData', { 'allegation': allegation });
 
       complaintPage = ReactTestUtils.renderIntoDocument(
         <ComplaintPage params={ params }/>
       );
 
-      complaintPage.setState({'loading': false, 'found': true, 'data': data});
-      complaintPage.should.renderWithProps(AgainstSection, {'officerAllegations': [officerAllegation]});
-      complaintPage.should.renderWithProps(AccompliceOfficerSection, {'officerAllegations': [otherOfficerAllegation]});
+      complaintPage.setState({ 'loading': false, 'found': true, 'data': data });
+      complaintPage.should.renderWithProps(AgainstSection, { 'officerAllegations': [officerAllegation] });
+      complaintPage.should.renderWithProps(AccompliceOfficerSection, { 'officerAllegations': [otherOfficerAllegation] });
     });
 
     it('should render component with sorted data for `AccompliceOfficerSection`', () => {
-      const otherCategory = f.create('Category', {'id': 456});
+      const otherCategory = f.create('Category', { 'id': 456 });
 
-      const officer1 = f.create('Officer', {'allegations_count': 1});
-      const officer2 = f.create('Officer', {'allegations_count': 2});
-      const officer3 = f.create('Officer', {'allegations_count': 3});
+      const officer1 = f.create('Officer', { 'allegations_count': 1 });
+      const officer2 = f.create('Officer', { 'allegations_count': 2 });
+      const officer3 = f.create('Officer', { 'allegations_count': 3 });
 
-      const officerAllegation1 = f.create('OfficerAllegation', {'cat': otherCategory, 'officer': officer1});
-      const officerAllegation2 = f.create('OfficerAllegation', {'cat': otherCategory, 'officer': officer2});
-      const officerAllegation3 = f.create('OfficerAllegation', {'cat': otherCategory, 'officer': officer3});
+      const officerAllegation1 = f.create('OfficerAllegation', { 'cat': otherCategory, 'officer': officer1 });
+      const officerAllegation2 = f.create('OfficerAllegation', { 'cat': otherCategory, 'officer': officer2 });
+      const officerAllegation3 = f.create('OfficerAllegation', { 'cat': otherCategory, 'officer': officer3 });
       allegation = f.create('Allegation', {
         'officer_allegation_set': [officerAllegation, officerAllegation3,
           officerAllegation1, officerAllegation2]
@@ -169,8 +169,8 @@ describe('ComplaintPageComponent', () => {
         <ComplaintPage params={ params }/>
       );
 
-      complaintPage.setState({'loading': false, 'found': true, 'data': data});
-      complaintPage.should.renderWithProps(AgainstSection, {'officerAllegations': [officerAllegation]});
+      complaintPage.setState({ 'loading': false, 'found': true, 'data': data });
+      complaintPage.should.renderWithProps(AgainstSection, { 'officerAllegations': [officerAllegation] });
       complaintPage.should.renderWithProps(AccompliceOfficerSection, {
         'officerAllegations': [officerAllegation3,
           officerAllegation2, officerAllegation1]
@@ -178,17 +178,17 @@ describe('ComplaintPageComponent', () => {
     });
 
     it('should render component with sorted data for `AgainstOfficerSection`', () => {
-      const otherCategory = f.create('Category', {'id': 456});
+      const otherCategory = f.create('Category', { 'id': 456 });
 
-      const officer1 = f.create('Officer', {'allegations_count': 1});
-      const officer2 = f.create('Officer', {'allegations_count': 2});
-      const officer3 = f.create('Officer', {'allegations_count': 3});
+      const officer1 = f.create('Officer', { 'allegations_count': 1 });
+      const officer2 = f.create('Officer', { 'allegations_count': 2 });
+      const officer3 = f.create('Officer', { 'allegations_count': 3 });
 
-      const officerAllegation1 = f.create('OfficerAllegation', {'cat': category, 'officer': officer1});
-      const officerAllegation2 = f.create('OfficerAllegation', {'cat': category, 'officer': officer2});
-      const officerAllegation3 = f.create('OfficerAllegation', {'cat': category, 'officer': officer3});
+      const officerAllegation1 = f.create('OfficerAllegation', { 'cat': category, 'officer': officer1 });
+      const officerAllegation2 = f.create('OfficerAllegation', { 'cat': category, 'officer': officer2 });
+      const officerAllegation3 = f.create('OfficerAllegation', { 'cat': category, 'officer': officer3 });
 
-      const otherOfficerAllegation = f.create('OfficerAllegation', {'cat': otherCategory, 'officer': officer3});
+      const otherOfficerAllegation = f.create('OfficerAllegation', { 'cat': otherCategory, 'officer': officer3 });
       allegation = f.create('Allegation', {
         'officer_allegation_set': [otherOfficerAllegation, officerAllegation3,
           officerAllegation1, officerAllegation2]
@@ -201,8 +201,8 @@ describe('ComplaintPageComponent', () => {
         <ComplaintPage params={ params }/>
       );
 
-      complaintPage.setState({'loading': false, 'found': true, 'data': data});
-      complaintPage.should.renderWithProps(AccompliceOfficerSection, {'officerAllegations': [otherOfficerAllegation]});
+      complaintPage.setState({ 'loading': false, 'found': true, 'data': data });
+      complaintPage.should.renderWithProps(AccompliceOfficerSection, { 'officerAllegations': [otherOfficerAllegation] });
       complaintPage.should.renderWithProps(AgainstSection, {
         'officerAllegations': [officerAllegation3,
           officerAllegation2, officerAllegation1]
@@ -214,7 +214,7 @@ describe('ComplaintPageComponent', () => {
         <ComplaintPage params={ params }/>
       );
 
-      complaintPage.setState({'loading': false, 'found': true, 'toggle': true, 'data': data});
+      complaintPage.setState({ 'loading': false, 'found': true, 'toggle': true, 'data': data });
       ReactTestUtils.scryRenderedDOMComponentsWithClass(complaintPage, 'toggle-page content').should.have.length(1);
       ReactTestUtils.scryRenderedComponentsWithType(complaintPage, SearchablePage).should.have.length(0);
     });
@@ -224,7 +224,7 @@ describe('ComplaintPageComponent', () => {
         <ComplaintPage params={ params }/>
       );
 
-      complaintPage.setState({'loading': false, 'found': true, 'toggle': false, 'data': data});
+      complaintPage.setState({ 'loading': false, 'found': true, 'toggle': false, 'data': data });
       ReactTestUtils.scryRenderedDOMComponentsWithClass(complaintPage, 'toggle-page content').should.have.length(0);
       ReactTestUtils.scryRenderedComponentsWithType(complaintPage, SearchablePage).should.have.length(1);
     });
@@ -234,7 +234,7 @@ describe('ComplaintPageComponent', () => {
         complaintPage = ReactTestUtils.renderIntoDocument(
           <ComplaintPage params={ params }/>
         );
-        complaintPage.setState({'loading': false, 'found': true, 'toggle': false});
+        complaintPage.setState({ 'loading': false, 'found': true, 'toggle': false });
         return complaintPage;
       }).should.behaveLike('a searchable page');
     });

@@ -5,8 +5,8 @@ describe('CollectionUtil', () => {
   describe('pluck', () => {
     it('should pluck field of array of object', () => {
       const items = [
-        {'key': 1},
-        {'key': 2}
+        { 'key': 1 },
+        { 'key': 2 }
       ];
 
       const pluckedByKey = CollectionUtil.pluck(items, 'key');
@@ -18,9 +18,9 @@ describe('CollectionUtil', () => {
   describe('#isSameField', () => {
     it('should return true if collection has the same field value', () => {
       const items = [
-        {'field': 1},
-        {'field': 1},
-        {'field': 1}
+        { 'field': 1 },
+        { 'field': 1 },
+        { 'field': 1 }
       ];
 
       const isSame = CollectionUtil.isSameField(items, 'field');
@@ -29,9 +29,9 @@ describe('CollectionUtil', () => {
 
     it('should return false if collection has different field value', () => {
       const items = [
-        {'field': 1},
-        {'field': 1},
-        {'field': 2}
+        { 'field': 1 },
+        { 'field': 1 },
+        { 'field': 2 }
       ];
 
       const isSame = CollectionUtil.isSameField(items, 'field');
@@ -43,8 +43,8 @@ describe('CollectionUtil', () => {
   describe('#isSameAllFields', () => {
     it('should return true if collection has the same value for all specified fields', () => {
       const items = [
-        {'field1': 1, 'field2': 2},
-        {'field1': 1, 'field2': 2}
+        { 'field1': 1, 'field2': 2 },
+        { 'field1': 1, 'field2': 2 }
       ];
 
       const isSame = CollectionUtil.isSameAllFields(items, ['field1', 'field2']);
@@ -53,8 +53,8 @@ describe('CollectionUtil', () => {
 
     it('should return false if collection has any different value in specified fields', () => {
       const items = [
-        {'field1': 1, 'field2': 1},
-        {'field1': 1, 'field2': 2}
+        { 'field1': 1, 'field2': 1 },
+        { 'field1': 1, 'field2': 2 }
       ];
 
       const isSame = CollectionUtil.isSameAllFields(items, ['field1', 'field2']);
@@ -80,7 +80,7 @@ describe('CollectionUtil', () => {
     it('should group items by specify function', () => {
       const items = [1, 1, 2];
       const result = CollectionUtil.groupBy(items, item => item);
-      result.should.be.deepEqual({1: [1,1], 2: [2]});
+      result.should.be.deepEqual({ 1: [1, 1], 2: [2] });
     });
   });
 

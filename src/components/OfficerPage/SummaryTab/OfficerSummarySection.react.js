@@ -25,7 +25,7 @@ const OfficerSummarySection = React.createClass({
         <div className='pad'>
           { Object.keys(labelToMethodMap).map( (label) => (
             <OfficerSummaryItem officer={ officer }
-              label={ label } data={ officerPresenter[labelToMethodMap[label]] } />
+              label={ label } data={ officerPresenter[labelToMethodMap[label]] } key={ label } />
           )) }
         </div>
       </Wrapper>

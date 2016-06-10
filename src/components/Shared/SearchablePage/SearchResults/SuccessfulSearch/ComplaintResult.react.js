@@ -4,7 +4,7 @@ import CollectionUtil from 'utils/CollectionUtil';
 import SuggestionPresenter from 'presenters/SuggestionPresenter';
 import ComplaintResultPresenter from 'presenters/Page/ComplaintResultPresenter';
 import OfficerAllegationItem from 'components/Shared/OfficerAllegationItem.react';
-import style from 'styles/Shared/SearchablePage/SearchResults/SuccessfulSearch/ComplaintResult.sass'
+import style from 'styles/Shared/SearchablePage/SearchResults/SuccessfulSearch/ComplaintResult.sass';
 
 
 const ComplaintResult = React.createClass({

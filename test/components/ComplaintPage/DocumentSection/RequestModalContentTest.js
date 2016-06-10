@@ -85,7 +85,7 @@ describe('RequestModalContentComponent', () => {
     var requestModal = ReactTestUtils.renderIntoDocument(
       <RequestModalContent/>
     );
-    requestModal.setState({'requested': true});
+    requestModal.setState({ 'requested': true });
 
     requestForm = ReactTestUtils.findRenderedDOMComponentWithClass(requestModal, 'request-form');
     requestForm.getAttribute('class').should.containEql('hide');
@@ -96,7 +96,7 @@ describe('RequestModalContentComponent', () => {
     var requestModal = ReactTestUtils.renderIntoDocument(
       <RequestModalContent/>
     );
-    requestModal.setState({'requested': false});
+    requestModal.setState({ 'requested': false });
 
     thankYouNode = ReactTestUtils.findRenderedDOMComponentWithClass(requestModal, 'thank-you');
     thankYouNode.getAttribute('class').should.containEql('hide');
@@ -107,7 +107,7 @@ describe('RequestModalContentComponent', () => {
     var requestModal = ReactTestUtils.renderIntoDocument(
       <RequestModalContent />
     );
-    requestModal.setState({'submitFailed': false});
+    requestModal.setState({ 'submitFailed': false });
     errorNode = ReactTestUtils.findRenderedDOMComponentWithClass(requestModal, 'error');
     errorNode.getAttribute('class').should.containEql('hide');
   });
@@ -117,7 +117,7 @@ describe('RequestModalContentComponent', () => {
     var requestModal = ReactTestUtils.renderIntoDocument(
       <RequestModalContent />
     );
-    requestModal.setState({'submitFailed': true});
+    requestModal.setState({ 'submitFailed': true });
     errorNode = ReactTestUtils.findRenderedDOMComponentWithClass(requestModal, 'error');
     errorNode.getAttribute('class').should.not.containEql('hide');
   });

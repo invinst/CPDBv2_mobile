@@ -15,7 +15,7 @@ describe('Modal', () => {
       <Modal />
     );
 
-    modal.setState({'open': 0});
+    modal.setState({ 'open': 0 });
 
     modal.should.renderNothing();
   });
@@ -25,7 +25,7 @@ describe('Modal', () => {
       <Modal>children</Modal>
     );
 
-    modal.setState({'open': 1});
+    modal.setState({ 'open': 1 });
 
     ReactDOM.findDOMNode(modal).textContent.should.be.eql('children');
   });

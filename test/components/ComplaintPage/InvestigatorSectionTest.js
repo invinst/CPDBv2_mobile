@@ -18,7 +18,7 @@ describe('InvestigatorSection component', () => {
 
   it('should show investigator', () => {
     const investigator = f.create('Investigator');
-    const allegation = f.create('Allegation', {'investigator' : investigator});
+    const allegation = f.create('Allegation', { 'investigator' : investigator });
 
     investigatorSection = ReactTestUtils.renderIntoDocument(
       <InvestigatorSection allegation={ allegation }/>
@@ -37,8 +37,8 @@ describe('InvestigatorSection component', () => {
   });
 
   it('should show investigator name and current rank', () => {
-    const investigator = f.create('Investigator', {'name': 'John', 'current_rank': 'SERGEANT OF POLICE'});
-    const allegation = f.create('Allegation', {'investigator' : investigator});
+    const investigator = f.create('Investigator', { 'name': 'John', 'current_rank': 'SERGEANT OF POLICE' });
+    const allegation = f.create('Allegation', { 'investigator' : investigator });
 
     investigatorSection = ReactTestUtils.renderIntoDocument(
       <InvestigatorSection allegation={ allegation }/>
@@ -51,8 +51,8 @@ describe('InvestigatorSection component', () => {
   });
 
   it('should show current rank `Rank unknown` if current rank is empty', () => {
-    const investigator = f.create('Investigator', {'current_rank': ''});
-    const allegation = f.create('Allegation', {'investigator' : investigator});
+    const investigator = f.create('Investigator', { 'current_rank': '' });
+    const allegation = f.create('Allegation', { 'investigator' : investigator });
 
     investigatorSection = ReactTestUtils.renderIntoDocument(
       <InvestigatorSection allegation={ allegation }/>

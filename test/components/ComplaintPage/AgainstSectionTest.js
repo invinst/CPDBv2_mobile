@@ -31,7 +31,7 @@ describe('AgainstSectionComponent', () => {
   it('should render `InvestigationTimeline` as sub-component if more than one officer ' +
     'allegation have the same timeline', () => {
     const officerAllegations = f.createBatch(2, 'OfficerAllegation',
-      {'start_date': '2012-01-19', 'end_date': '2012-01-19'});
+      { 'start_date': '2012-01-19', 'end_date': '2012-01-19' });
 
     againstSection = ReactTestUtils.renderIntoDocument(
       <AgainstSection officerAllegations={ officerAllegations } />

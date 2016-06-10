@@ -20,7 +20,7 @@ should.Assertion.add('render', function (components) {
     component = components[i];
     componentDisplayName = component.displayName;
 
-    failedMessage = u.format('{component} is not rendered', {'component': componentDisplayName});
+    failedMessage = u.format('{component} is not rendered', { 'component': componentDisplayName });
 
     ReactTestUtils.scryRenderedComponentsWithType(this.obj, component).length
       .should.be.above(0, failedMessage);
@@ -36,7 +36,7 @@ should.Assertion.add('renderWithProps', function (component, props) {
   const renderedComponent = ReactTestUtils.findRenderedComponentWithType(this.obj, component);
 
   for (prop in props) {
-    failedMessage = u.format('Prop {prop} got unexpected values', {'prop': prop});
+    failedMessage = u.format('Prop {prop} got unexpected values', { 'prop': prop });
     componentProps = u.fetch(renderedComponent, 'props', {});
     currentPropValue = u.fetch(componentProps, prop, null);
     should(currentPropValue).be.eql(props[prop], failedMessage);

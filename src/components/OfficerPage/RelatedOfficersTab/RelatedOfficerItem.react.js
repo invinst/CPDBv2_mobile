@@ -9,6 +9,11 @@ import style from 'styles/OfficerPage/RelatedOfficersTab/RelatedOfficerItem.sass
 
 
 const RelatedOfficerItem = React.createClass({
+  propTypes: {
+    officer: React.PropTypes.object,
+    type: React.PropTypes.string
+  },
+
   _onClick() {
     const officer = this.props.officer;
     const presenter = OfficerPresenter(officer);
@@ -22,7 +27,7 @@ const RelatedOfficerItem = React.createClass({
     const numberOfAllegations = officer['num_allegations'];
     const presenter = OfficerPresenter(officer);
     const relatedOfficerClassName = cx(style.relatedOfficerItem,
-      HelperUtil.format('officer-{index}', {'index': presenter.id})
+      HelperUtil.format('officer-{index}', { 'index': presenter.id })
     );
 
     return (
@@ -41,11 +46,6 @@ const RelatedOfficerItem = React.createClass({
     );
   }
 });
-
-RelatedOfficerItem.propTypes = {
-  officer: React.PropTypes.object,
-  type: React.PropTypes.string
-};
 
 RelatedOfficerItem.defaultProps = {
   officer: {},

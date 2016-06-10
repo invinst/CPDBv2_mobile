@@ -17,7 +17,6 @@ const Wrapper = React.createClass({
       );
     }
     return (<div></div>);
-    return (<div></div>);
   }
 });
 

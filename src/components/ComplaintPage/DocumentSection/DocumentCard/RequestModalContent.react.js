@@ -36,9 +36,9 @@ const RequestModalContent = React.createClass(objectAssign(Base(RequestStore), {
   },
 
   render() {
-    const requestFormClass = cx('request-form', {'hide': this.state.requested});
-    const thankYouClass = cx('thank-you', {'hide': !this.state.requested });
-    const errorMsgClass = cx('error', {'hide': !this.state.submitFailed });
+    const requestFormClass = cx('request-form', { 'hide': this.state.requested });
+    const thankYouClass = cx('thank-you', { 'hide': !this.state.requested });
+    const errorMsgClass = cx('error', { 'hide': !this.state.submitFailed });
     const modalAction = u.fetch(this.context, 'action', () => {});
     const errorPresenter = RequestDocumentErrorPresenter(this.state.errors);
 

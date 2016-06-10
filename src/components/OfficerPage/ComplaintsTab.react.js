@@ -5,6 +5,11 @@ import style from 'styles/OfficerPage/ComplaintsTab.sass';
 
 
 const ComplaintsTab = React.createClass({
+  propTypes: {
+    officer: PropTypes.object,
+    complaints: PropTypes.array
+  },
+
   renderComplaintItem(complaint) {
     const officerAllegations = u.fetch(complaint, 'officer_allegation_set', []);
     const officer = this.props.officer;
@@ -29,11 +34,6 @@ const ComplaintsTab = React.createClass({
     );
   }
 });
-
-ComplaintsTab.propTypes = {
-  officer: PropTypes.object,
-  complaints: PropTypes.array
-};
 
 ComplaintsTab.defaultProps = {
   officer: {},

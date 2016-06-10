@@ -59,7 +59,7 @@ describe('AgainstCardComponent', () => {
       'gender': '',
       'race': ''
     });
-    const officerAllegation = f.create('OfficerAllegation', {'officer': officer});
+    const officerAllegation = f.create('OfficerAllegation', { 'officer': officer });
 
     againstCard = ReactTestUtils.renderIntoDocument(
       <AgainstCard officerAllegations={ officerAllegation } />
@@ -71,8 +71,8 @@ describe('AgainstCardComponent', () => {
   });
 
   it('should push officerUrl to AppHistory', () => {
-    const officer = f.create('Officer', {'officer_first': 'first', 'officer_last': 'last'});
-    const officerAllegation = f.create('OfficerAllegation', {'officer': officer});
+    const officer = f.create('Officer', { 'officer_first': 'first', 'officer_last': 'last' });
+    const officerAllegation = f.create('OfficerAllegation', { 'officer': officer });
     const expectedUrl = `/officer/first-last/${officerAllegation.officer.id}`;
     let OfficerNode;
 

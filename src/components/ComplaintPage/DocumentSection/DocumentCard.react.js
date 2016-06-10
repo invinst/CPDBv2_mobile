@@ -31,8 +31,8 @@ const DocumentCard = React.createClass({
     const document = this.props.document;
     const presenter = DocumentPresenter(document);
     const isBlur = presenter.documentStatus != 'Available';
-    const className = cx('document-name', {'blur': isBlur});
-    const modalName = u.format('requestModal-{id}',{'id': u.fetch(document, 'id', '')});
+    const className = cx('document-name', { 'blur': isBlur });
+    const modalName = u.format('requestModal-{id}', { 'id': u.fetch(document, 'id', '') });
 
     return (
       <div className={ cx(style.documentCard, 'row') }>

@@ -27,10 +27,10 @@ describe('ToggleComplaintPageComponent', () => {
   });
 
   it('should render `OfficerAllegationItem` with correct officer allegation group', () => {
-    const cat1 = f.create('Category', {'id': 123});
-    const cat2 = f.create('Category', {'id': 456});
-    const officerAllegations = f.createBatch(2, 'OfficerAllegation', {'cat': cat1});
-    const otherOfficerAllegations = f.createBatch(1, 'OfficerAllegation', {'cat': cat2});
+    const cat1 = f.create('Category', { 'id': 123 });
+    const cat2 = f.create('Category', { 'id': 456 });
+    const officerAllegations = f.createBatch(2, 'OfficerAllegation', { 'cat': cat1 });
+    const otherOfficerAllegations = f.createBatch(1, 'OfficerAllegation', { 'cat': cat2 });
 
     var toggleComplaintPage = ReactTestUtils.renderIntoDocument(
       <ToggleComplaintPage officerAllegations={ officerAllegations.concat(otherOfficerAllegations) }/>
@@ -60,7 +60,7 @@ describe('ToggleComplaintPageComponent', () => {
   it('should show crid and number of allegation on header', () => {
     const numberOfAllegations = 3;
     const crid = 123;
-    const allegation = f.create('Allegation', {'crid': crid});
+    const allegation = f.create('Allegation', { 'crid': crid });
     var toggleComplaintPage = ReactTestUtils.renderIntoDocument(
       <ToggleComplaintPage numberOfAllegations={ numberOfAllegations } allegation={ allegation }/>
     );

@@ -29,7 +29,7 @@ describe('MapComponent', () => {
   });
 
   it('should render nothing if point is empty', () => {
-    const allegation = f.create('Allegation', {'point': ''});
+    const allegation = f.create('Allegation', { 'point': '' });
     ReactTestUtils.renderIntoDocument(
       <Map allegation={ allegation } />
     );
@@ -39,7 +39,7 @@ describe('MapComponent', () => {
 
   it('should render exact location if have any', () => {
     const point = f.create('Point');
-    const allegation = f.create('Allegation', {'point': point, 'add1': 'add1', 'add2': 'add2'});
+    const allegation = f.create('Allegation', { 'point': point, 'add1': 'add1', 'add2': 'add2' });
 
     ReactTestUtils.renderIntoDocument(
       <Map allegation={ allegation } />
@@ -52,7 +52,7 @@ describe('MapComponent', () => {
 
   it('should show a popup if there\'s no exact location', () => {
     const point = f.create('Point');
-    const allegation = f.create('Allegation', {'point': point, 'add1': '', 'add2': ''});
+    const allegation = f.create('Allegation', { 'point': point, 'add1': '', 'add2': '' });
 
     ReactTestUtils.renderIntoDocument(
       <Map allegation={ allegation } />
