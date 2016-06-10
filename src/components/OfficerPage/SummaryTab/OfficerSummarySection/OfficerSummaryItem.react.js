@@ -4,6 +4,12 @@ import OfficerPresenter from 'presenters/OfficerPresenter';
 
 
 const OfficerSummarySection = React.createClass({
+  propTypes: {
+    'officer': React.PropTypes.object,
+    'label': React.PropTypes.string,
+    'data': React.PropTypes.string
+  },
+
   render() {
     const presenter = OfficerPresenter(this.props.officer);
     const label = this.props.label;
@@ -15,12 +21,6 @@ const OfficerSummarySection = React.createClass({
     );
   }
 });
-
-OfficerSummarySection.propsTypes = {
-  'officer': React.PropTypes.object,
-  'label': React.PropTypes.string,
-  'data': React.PropTypes.string
-};
 
 OfficerSummarySection.defaultProps = {
   'officer': {},

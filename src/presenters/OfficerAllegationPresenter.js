@@ -14,7 +14,7 @@ const OfficerAllegationPresenter = officerAllegation => {
   };
 
   const finalStatus = () => {
-    const closedStatus = u.format('Investigation Closed ({finalFinding})', {'finalFinding': finalFinding()});
+    const closedStatus = u.format('Investigation Closed ({finalFinding})', { 'finalFinding': finalFinding() });
     return isOpenInvestigation() ? 'Open Investigation' : closedStatus;
   };
 

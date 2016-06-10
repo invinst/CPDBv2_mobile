@@ -8,7 +8,7 @@ import AllegationPresenter from 'presenters/AllegationPresenter';
 import OfficerAllegationPresenter from 'presenters/OfficerAllegationPresenter';
 import OfficerPresenter from 'presenters/OfficerPresenter';
 import CircleList from 'components/Shared/OfficerAllegationItem/CircleList.react';
-import style from 'styles/Shared/OfficerAllegationItem.sass'
+import style from 'styles/Shared/OfficerAllegationItem.sass';
 
 
 const OfficerAllegationItem = React.createClass({
@@ -40,7 +40,8 @@ const OfficerAllegationItem = React.createClass({
     const crid = allegationPresenter.crid;
 
     return (
-      <div className={ cx(style.officerAllegationItem, 'officer-allegation-item') } onClick={ this._onClick.bind(this, crid, firstOfficerAllegation) }>
+      <div className={ cx(style.officerAllegationItem, 'officer-allegation-item') }
+        onClick={ this._onClick.bind(this, crid, firstOfficerAllegation) }>
         <div className='crid-info pad'>
           <div className='inline-block half-width align-left'>
             <span className='crid-title'>CRID &nbsp;</span>

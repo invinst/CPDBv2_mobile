@@ -13,7 +13,7 @@ const SuggestionAPI = {
     }
 
     ajax = request.get(AppConstants.SUGGESTION_API_ENDPOINT)
-      .query({query})
+      .query({ query })
       .end((err, res) => {
         if (res.ok) {
           MainPageServerActions.received(res.body, query);

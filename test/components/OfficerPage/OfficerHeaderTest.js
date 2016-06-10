@@ -15,7 +15,7 @@ describe('OfficerHeaderComponent', () => {
 
   it('should render officer badge number and officer name', () => {
     const badgeNumber = 123;
-    const officer = f.create('Officer', {'star': badgeNumber, 'officer_first': 'first', 'officer_last': 'last'});
+    const officer = f.create('Officer', { 'star': badgeNumber, 'officer_first': 'first', 'officer_last': 'last' });
     const fullName = 'first last';
     const officerHeader = renderIntoDocument(
       <OfficerHeader officer={ officer } />

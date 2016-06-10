@@ -9,11 +9,11 @@ import OfficerAllegationFactory from 'factories/AllegationFactory';
 describe('ToggleComplaintPagePresenter', () => {
   describe('#groupByCategory', () => {
     it('should return the officer allegations which are sorted by category', () => {
-      const cat1 = f.create('Category', {'id': 123});
-      const cat2 = f.create('Category', {'id': 456});
+      const cat1 = f.create('Category', { 'id': 123 });
+      const cat2 = f.create('Category', { 'id': 456 });
 
-      const cat1OfficerAllegations = f.create('OfficerAllegation', {'cat': cat1});
-      const cat2OfficerAllegations = f.create('OfficerAllegation', {'cat': cat2});
+      const cat1OfficerAllegations = f.create('OfficerAllegation', { 'cat': cat1 });
+      const cat2OfficerAllegations = f.create('OfficerAllegation', { 'cat': cat2 });
       const officerAllegations = [cat1OfficerAllegations, cat2OfficerAllegations];
 
       const presenter = ToggleComplaintPagePresenter(officerAllegations);

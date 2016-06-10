@@ -19,7 +19,7 @@ describe('RequestStore', () => {
   });
 
   it('should update submitFailed to true if request document fail', () => {
-    const errors = {'errorType': 'errorMsg'};
+    const errors = { 'errorType': 'errorMsg' };
     RequestStore.updateState('submitFailed', false);
 
     callback({

@@ -26,7 +26,7 @@ describe('RelatedOfficerItemComponent', () => {
     const type = 'Co-accused';
 
     const relatedOfficerItem = renderIntoDocument(
-      <RelatedOfficerItem officer={officer} type={ type }/>
+      <RelatedOfficerItem officer={ officer } type={ type }/>
     );
 
     findRenderedDOMComponentWithClass(relatedOfficerItem, 'name').textContent.should.containEql(fullName);

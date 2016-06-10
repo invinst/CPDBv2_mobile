@@ -1,5 +1,9 @@
+
 import 'mapbox.js';
-import style from 'mapbox.js/theme/style.css'
+
+/*eslint-disable no-unused-vars*/
+import style from 'mapbox.js/theme/style.css';
+/*eslint-enable no-unused-vars*/
 import AppConstants from 'constants/AppConstants';
 
 

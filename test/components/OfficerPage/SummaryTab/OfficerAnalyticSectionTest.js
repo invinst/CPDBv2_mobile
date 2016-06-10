@@ -16,7 +16,7 @@ describe('OfficerAnalyticSectionComponent', () => {
 
   it('should render `DistributionCurve` as its sub-component', () => {
     const officer = f.create('Officer');
-    const distribution = [1,2,3];
+    const distribution = [1, 2, 3];
     const officerAnalyticSection = renderIntoDocument(
       <OfficerAnalyticSection officer={ officer } distribution={ distribution } />
     );

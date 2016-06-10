@@ -27,7 +27,7 @@ describe('DocumentCardComponent', () => {
   });
 
   it('should render document name', () => {
-    const document = f.create('Document', {'type': 'CR'});
+    const document = f.create('Document', { 'type': 'CR' });
 
     const documentCard = ReactTestUtils.renderIntoDocument(
       <DocumentCard document={ document } />
@@ -38,7 +38,7 @@ describe('DocumentCardComponent', () => {
   });
 
   it('should render document status', () => {
-    const document = f.create('Document', {'documentcloud_id': 'something'});
+    const document = f.create('Document', { 'documentcloud_id': 'something' });
 
     const documentCard = ReactTestUtils.renderIntoDocument(
       <DocumentCard document={ document } />
@@ -49,18 +49,18 @@ describe('DocumentCardComponent', () => {
   });
 
   it('should render request modal', () => {
-    const document = f.create('Document', {'documentcloud_id': 'something'});
-    const modalName = u.format('requestModal-{id}', {'id': document.id});
+    const document = f.create('Document', { 'documentcloud_id': 'something' });
+    const modalName = u.format('requestModal-{id}', { 'id': document.id });
     const documentCard = ReactTestUtils.renderIntoDocument(
       <DocumentCard document={ document } />
     );
 
-    documentCard.should.renderWithProps(Modal, {'name': modalName});
+    documentCard.should.renderWithProps(Modal, { 'name': modalName });
   });
 
   describe('document name css', () => {
     it('should have blur css if the document is not available', () => {
-      const document = f.create('Document', {'documentcloud_id': ''});
+      const document = f.create('Document', { 'documentcloud_id': '' });
       const documentCard = ReactTestUtils.renderIntoDocument(
         <DocumentCard document={ document } />
       );
@@ -71,7 +71,7 @@ describe('DocumentCardComponent', () => {
     });
 
     it('should not have blur css if the document is available', () => {
-      const document = f.create('Document', {'documentcloud_id': 'something'});
+      const document = f.create('Document', { 'documentcloud_id': 'something' });
       const documentCard = ReactTestUtils.renderIntoDocument(
         <DocumentCard document={ document } />
       );
@@ -84,7 +84,7 @@ describe('DocumentCardComponent', () => {
 
   describe('Multiple document', () => {
     it('should show View action if the document is available', () => {
-      const document = f.create('Document', {'documentcloud_id': '12345', 'normalized_title': 'cr-123456'});
+      const document = f.create('Document', { 'documentcloud_id': '12345', 'normalized_title': 'cr-123456' });
       const documentUrl = 'http://documentcloud.org/documents/12345-cr-123456.html';
 
       const documentCard = ReactTestUtils.renderIntoDocument(
@@ -97,8 +97,8 @@ describe('DocumentCardComponent', () => {
     });
 
     it('should show follow action if the document is requested but the document is still not available ', () => {
-      const document = f.create('Document', {'requested': true, 'documentcloud_id': ''});
-      const modalName = u.format('requestModal-{id}', {'id': document.id});
+      const document = f.create('Document', { 'requested': true, 'documentcloud_id': '' });
+      const modalName = u.format('requestModal-{id}', { 'id': document.id });
       const mock = sinon.mock(Modal.eventSystem);
       mock.expects('dispatch').once().withArgs(modalName, 'open');
 
@@ -115,8 +115,8 @@ describe('DocumentCardComponent', () => {
     });
 
     it('should show request action if the  document is still not available and not requested yet', () => {
-      const document = f.create('Document', {'requested': false, 'documentcloud_id': ''});
-      const modalName = u.format('requestModal-{id}', {'id': document.id});
+      const document = f.create('Document', { 'requested': false, 'documentcloud_id': '' });
+      const modalName = u.format('requestModal-{id}', { 'id': document.id });
 
       const mock = sinon.mock(Modal.eventSystem);
       mock.expects('dispatch').once().withArgs(modalName, 'open');
@@ -136,7 +136,7 @@ describe('DocumentCardComponent', () => {
 
   describe('Document is available', () => {
     it('should show the link to html page of DocumentCloud if the current device is not iOS one', () => {
-      const document = f.create('Document', {'documentcloud_id': '12345', 'normalized_title': 'cr-123456'});
+      const document = f.create('Document', { 'documentcloud_id': '12345', 'normalized_title': 'cr-123456' });
       const expectedLink = 'http://documentcloud.org/documents/12345-cr-123456.html';
 
       sinon.stub(DeviceUtil, 'isiOSDevice', () => false);
@@ -150,7 +150,7 @@ describe('DocumentCardComponent', () => {
     });
 
     it('should show the link to pdf page of DocumentCloud if the current device is iOS one', () => {
-      const document = f.create('Document', {'documentcloud_id': '12345', 'normalized_title': 'cr-123456'});
+      const document = f.create('Document', { 'documentcloud_id': '12345', 'normalized_title': 'cr-123456' });
       const expectedLink = 'http://documentcloud.org/documents/12345-cr-123456.pdf';
 
       sinon.stub(DeviceUtil, 'isiOSDevice', () => true);

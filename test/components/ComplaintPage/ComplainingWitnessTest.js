@@ -44,7 +44,7 @@ describe('ComplainingWitnessComponent', () => {
   });
 
   it('should show information about witness\'s gender, race, age', () => {
-    const complainingWitness = f.create('ComplainingWitness', {'gender': 'M', 'race': 'Black', 'age': 40});
+    const complainingWitness = f.create('ComplainingWitness', { 'gender': 'M', 'race': 'Black', 'age': 40 });
     const expectedDescription = 'Male, Black, Age 40';
 
     complainingWitnessNode = ReactTestUtils.renderIntoDocument(
@@ -55,7 +55,7 @@ describe('ComplainingWitnessComponent', () => {
   });
 
   it('should show `Gender unknown` if there is no gender', () => {
-    const complainingWitness = f.create('ComplainingWitness', {'gender': ''});
+    const complainingWitness = f.create('ComplainingWitness', { 'gender': '' });
 
     complainingWitnessNode = ReactTestUtils.renderIntoDocument(
       <ComplainingWitness complainingWitnesses={ [complainingWitness] }/>
@@ -65,7 +65,7 @@ describe('ComplainingWitnessComponent', () => {
   });
 
   it('should show `Age unknown` if there is no age', () => {
-    const complainingWitness = f.create('ComplainingWitness', {'age': ''});
+    const complainingWitness = f.create('ComplainingWitness', { 'age': '' });
 
     complainingWitnessNode = ReactTestUtils.renderIntoDocument(
       <ComplainingWitness complainingWitnesses={ [complainingWitness] }/>
@@ -75,7 +75,7 @@ describe('ComplainingWitnessComponent', () => {
   });
 
   it('should show `Race unknown` if there is no race', () => {
-    const complainingWitness = f.create('ComplainingWitness', {'race': ''});
+    const complainingWitness = f.create('ComplainingWitness', { 'race': '' });
 
     complainingWitnessNode = ReactTestUtils.renderIntoDocument(
       <ComplainingWitness complainingWitnesses={ [complainingWitness] }/>

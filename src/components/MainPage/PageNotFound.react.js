@@ -8,7 +8,7 @@ const PageNotFound = React.createClass({
   },
 
   render() {
-    const classNames = cx('animation', 'pad', {'top-left': this.props.topLeft});
+    const classNames = cx('animation', 'pad', { 'top-left': this.props.topLeft });
 
     return (
       <div id='page-not-found' className={ classNames }>

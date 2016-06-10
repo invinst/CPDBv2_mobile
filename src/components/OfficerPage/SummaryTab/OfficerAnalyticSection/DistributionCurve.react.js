@@ -7,15 +7,20 @@ import style from 'styles/OfficerPage/SummaryTab/OfficerAnalyticSection/Distribu
 
 
 const DistributionCurve = React.createClass({
+  propTypes: {
+    officer: React.PropTypes.object,
+    distribution: React.PropTypes.array
+  },
+
   renderOfficerLine(numberOfComplaints, scaleX, scaleY) {
-    return HelperUtil.format('{x},{y}', {'x': numberOfComplaints * scaleX / 70, 'y': scaleY});
+    return HelperUtil.format('{x},{y}', { 'x': numberOfComplaints * scaleX / 70, 'y': scaleY });
   },
 
   getAreaPoints(data, scaleX, scaleY) {
     // Area chart is drawn as a polygon with first point is 0,0
     const maxOfXAxis = data.length; // number of complaints
     const firstPoint = '0,0'; // first point of poly line should be 0, 0
-    const lastPoint = HelperUtil.format('{x},{y}',{'x': maxOfXAxis * scaleX, 'y':0});
+    const lastPoint = HelperUtil.format('{x},{y}', { 'x': maxOfXAxis * scaleX, 'y': 0 });
     const points = [firstPoint, SvgUtil.arrayToPoints(data, scaleX, scaleY), lastPoint].join(' ');
 
     return points;
@@ -59,8 +64,10 @@ const DistributionCurve = React.createClass({
       'width': wrapperWidthSize
     };
 
-    const viewBox = HelperUtil.format('0 0 {width} {height}', {'width': wrapperWidthSize, 'height': wrapperHeightSize});
-    const translate = HelperUtil.format('translate(36, {y})', {'y': availableHeightForDistributionChart + 36});
+    const viewBox = HelperUtil.format('0 0 {width} {height}', {
+      'width': wrapperWidthSize, 'height': wrapperHeightSize
+    });
+    const translate = HelperUtil.format('translate(36, {y})', { 'y': availableHeightForDistributionChart + 36 });
     const numberOfOfficerTextX = -wrapperHeightSize / 2;
     const fillClass = OfficerUtil.getColorLevelClass('fill', allegationsCount);
     const strokeClass = OfficerUtil.getColorLevelClass('stroke', allegationsCount);
@@ -95,11 +102,6 @@ const DistributionCurve = React.createClass({
     );
   }
 });
-
-DistributionCurve.propsTypes = {
-  officer: React.PropTypes.object,
-  distribution: React.PropTypes.array
-};
 
 DistributionCurve.defaultProps = {
   officer: {},

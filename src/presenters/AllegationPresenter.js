@@ -21,7 +21,7 @@ const AllegationPresenter = complaint => {
 
   const locationType = () => u.fetch(complaint, 'location', '');
 
-  const url = () => u.format('/complaint/{crid}', {'crid': crid()});
+  const url = () => u.format('/complaint/{crid}', { 'crid': crid() });
 
   const hasLocation = () => u.hasAnyProperties(complaint, ['beat', 'location', 'add1', 'add2', 'city', 'point']);
 

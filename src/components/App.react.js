@@ -1,6 +1,6 @@
 import React from 'react';
-import Route from 'react-router/lib/Route'
-import Router from 'react-router/lib/Router'
+import Route from 'react-router/lib/Route';
+import Router from 'react-router/lib/Router';
 
 import AppHistory from 'utils/History';
 
@@ -9,12 +9,13 @@ import MainPage from 'components/MainPage.react';
 import NoMatch from 'components/NoMatch.react';
 import OfficerPage from 'components/OfficerPage.react';
 
+/*eslint-disable no-unused-vars*/
 import style from 'styles/Style.sass';
 import fonts from 'styles/Fonts.sass';
 import grid from 'styles/Grid.sass';
 import helper from 'styles/Helper.sass';
-import icon from 'styles/Ratchicons.sass'
-
+import icon from 'styles/Ratchicons.sass';
+/*eslint-enable no-unused-vars*/
 
 const App = React.createClass({
   render() {

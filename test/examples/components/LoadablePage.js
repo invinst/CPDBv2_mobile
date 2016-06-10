@@ -14,7 +14,7 @@ SharedExample.define('a loadable page', function () {
       React.createElement(self.obj)
     );
 
-    element.setState({'loading': true});
+    element.setState({ 'loading': true });
 
     element.should.render([LoadingPage]);
 
@@ -26,7 +26,7 @@ SharedExample.define('a loadable page', function () {
       React.createElement(self.obj)
     );
 
-    element.setState({'found': false, 'loading': false});
+    element.setState({ 'found': false, 'loading': false });
 
     element.should.render([NotMatchedComplaintPage]);
 

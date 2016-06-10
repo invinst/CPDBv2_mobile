@@ -1,15 +1,13 @@
 import React from 'react';
-// import MainPage from 'components/MainPage.react';
+import MainPage from 'components/MainPage.react';
 
 
 const NoMatch = React.createClass({
   render() {
     return (
-        <div>No match page</div>
+      <MainPage showError={ true } />
     );
   }
 });
 
 export default NoMatch;
-
-// <MainPage showError={ true } />
