@@ -5,7 +5,7 @@ import ReactTestUtils from 'react-addons-test-utils';
 import should from 'should';
 import shouldReact from 'utils/tests/should/React';
 
-import OfficerCard from 'components/Shared/OfficerCard.react';
+import OfficerCard from 'components/Shared/OfficerCard';
 
 
 describe('officerCard component', () => {

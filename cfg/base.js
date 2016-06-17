@@ -20,7 +20,7 @@ module.exports = {
     publicPath: `.${defaultSettings.publicPath}`
   },
   devServer: {
-    contentBase: './src/',
+    contentBase: './src_redux/',
     historyApiFallback: true,
     hot: true,
     port: defaultSettings.port,
@@ -37,7 +37,10 @@ module.exports = {
       styles: `${defaultSettings.srcPath}/styles/`,
       utils: `${defaultSettings.srcPath}/utils/`,
       constants: `${defaultSettings.srcPath}/constants/`,
+      reducers: `${defaultSettings.srcPath}/reducers/`,
+      middleware: `${defaultSettings.srcPath}/middleware/`,
       presenters: `${defaultSettings.srcPath}/presenters/`,
+      containers: `${defaultSettings.srcPath}/containers/`,
       config: `${defaultSettings.srcPath}/config/` + process.env.REACT_WEBPACK_ENV
     }
   },

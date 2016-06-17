@@ -5,8 +5,8 @@ import HashUtil from 'utils/HashUtil';
 import f from 'utils/tests/f';
 import u from 'utils/HelperUtil';
 import AppHistory from 'utils/History';
-import OfficerAllegationItem from 'components/Shared/OfficerAllegationItem.react';
-import ComplaintPageActions from 'actions/ComplaintPage/ComplaintPageActions';
+import OfficerAllegationItem from 'components/Shared/OfficerAllegationItem';
+// import ComplaintPageActions from 'actions/ComplaintPage/ComplaintPageActions';
 
 
 describe('OfficerAllegationItemComponent', () => {
@@ -58,10 +58,10 @@ describe('OfficerAllegationItemComponent', () => {
     const officerAllegation = f.create('OfficerAllegation', { 'cat': category });
 
     const mockAppHistory = sinon.mock(AppHistory);
-    const mockComplaintPageAction = sinon.mock(ComplaintPageActions);
+    // const mockComplaintPageAction = sinon.mock(ComplaintPageActions);
 
     mockAppHistory.expects('push').once().withArgs(expectedUrl).returns(null);
-    mockComplaintPageAction.expects('resetState').once().returns(null);
+    // mockComplaintPageAction.expects('resetState').once().returns(null);
 
     officerAllegationItem = ReactTestUtils.renderIntoDocument(
       <OfficerAllegationItem officerAllegation={ officerAllegation } allegation={ allegation }
@@ -72,9 +72,9 @@ describe('OfficerAllegationItemComponent', () => {
     ReactTestUtils.Simulate.click(node);
 
     mockAppHistory.verify();
-    mockComplaintPageAction.verify();
+    // mockComplaintPageAction.verify();
 
     mockAppHistory.restore();
-    mockComplaintPageAction.restore();
+    // mockComplaintPageAction.restore();
   });
 });

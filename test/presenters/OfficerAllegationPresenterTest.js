@@ -2,7 +2,7 @@ import f from 'utils/tests/f';
 import u from 'utils/HelperUtil';
 import HashUtil from 'utils/HashUtil';
 import OfficerAllegationPresenter from 'presenters/OfficerAllegationPresenter';
-import AppConstants from 'constants/AppConstants';
+import AppConstants from 'constants';
 import moment from 'moment';
 
 import factories from 'factories/OfficerAllegationFactory';
