@@ -9,13 +9,12 @@ import MainPage from 'components/MainPage.react';
 import NoMatch from 'components/NoMatch.react';
 import OfficerPage from 'components/OfficerPage.react';
 
-/*eslint-disable no-unused-vars*/
-import style from 'styles/Style.sass';
-import fonts from 'styles/Fonts.sass';
-import grid from 'styles/Grid.sass';
-import helper from 'styles/Helper.sass';
-import icon from 'styles/Ratchicons.sass';
-/*eslint-enable no-unused-vars*/
+import 'styles/Style.sass';
+import 'styles/Fonts.sass';
+import 'styles/Grid.sass';
+import 'styles/Helper.sass';
+import 'styles/Ratchicons.sass';
+
 
 const App = React.createClass({
   render() {
