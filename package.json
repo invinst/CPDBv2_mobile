@@ -78,7 +78,7 @@
     "core-js": "^2.0.0",
     "flux": "^2.1.1",
     "hashids": "^1.0.2",
-    "history": "^3.0.0",
+    "history": "^2.0.0",
     "mapbox.js": "^2.4.0",
     "moment": "^2.13.0",
     "normalize.css": "^4.0.0",
