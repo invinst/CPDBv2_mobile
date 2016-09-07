@@ -16,7 +16,7 @@ const OfficerResult = React.createClass({
     suggestions: React.PropTypes.array
   },
 
-  _onClick: function (presenter) {
+  onClick: function (presenter) {
     const officerPresenter = OfficerPresenter(presenter.meta);
     GaUtil.track('event', 'filter', presenter.resource, presenter.text);
     AppHistory.push(officerPresenter.url);
@@ -30,7 +30,7 @@ const OfficerResult = React.createClass({
 
     return (
       <li className={ cx(style.officerResult, 'outer-glow') } key={ presenter.uniqueKey }>
-        <div className='link officer officer-name-result-item' onClick={ this._onClick.bind(this, presenter) }>
+        <div className='link officer officer-name-result-item' onClick={ this.onClick.bind(this, presenter) }>
           <div className='officer-header pad'>
             <span className='officer-label'> Officer<span className='dot-bullet'>&#8226;</span></span>
             <span className='badge-title'>Badge</span>

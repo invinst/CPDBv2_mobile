@@ -11,5 +11,3 @@ describe('OfficerUtil', () => {
     OfficerUtil.getColorLevelClass('prefix', -1).should.be.equal('')
   });
 });
-
-
