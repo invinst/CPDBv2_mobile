@@ -9,7 +9,7 @@ dependencies:
     - npm install -g eslint@2.8.0
     - npm install -g eslint-plugin-react@5.0.1
     - npm install -g babel-eslint@6.0.3
-    - npm install -g phantomjs
+    - npm install -g phantomjs-prebuilt
     - npm install
   cache_directories:
     - "node_modules"
