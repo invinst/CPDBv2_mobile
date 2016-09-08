@@ -5,6 +5,7 @@ import Router from 'react-router/lib/Router';
 import AppHistory from 'utils/History';
 
 import MainPageContainer from 'containers/MainPageContainer';
+import OfficerPageContainer from 'containers/OfficerPageContainer';
 
 import 'styles/Style.sass';
 import 'styles/Fonts.sass';
@@ -17,6 +18,7 @@ const App = React.createClass({
   render() {
     return (
       <Router history={ AppHistory }>
+        <Route path='/officer/:slug/:id' component={ OfficerPageContainer } />
         <Route path='/s/:query' component={ MainPageContainer } />
         <Route path='/q/:query' component={ MainPageContainer } />
         <Route path='/' component={ MainPageContainer } />

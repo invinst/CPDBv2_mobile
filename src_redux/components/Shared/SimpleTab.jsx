@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import HelperUtil from 'utils/HelperUtil';
-import Wrapper from 'components/Shared/Wrapper.react';
+import Wrapper from './Wrapper';
 /*eslint-disable no-unused-vars*/
 import style from 'styles/Shared/SimpleTab.sass';
 /*eslint-enable no-unused-vars*/

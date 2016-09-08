@@ -1,14 +1,13 @@
 import cx from 'classnames';
-import objectAssign from 'object-assign';
 import React from 'react';
-import Base from 'components/Base.react';
-import SearchBar from 'components/Shared/SearchablePage/SearchBar.react';
-import SearchablePageStore from 'stores/Shared/SearchablePageStore';
-import SearchResults from 'components/Shared/SearchablePage/SearchResults.react';
+
+import SearchBarContainer from 'containers/Shared/SearchBarContainer';
+import SearchResultsContainer from 'containers/Shared/SearchResultsContainer';
 
 import style from 'styles/Shared/SearchablePage.sass';
 
-const SearchablePage = React.createClass(objectAssign(Base(SearchablePageStore, 'SearchablePage'), {
+
+const SearchablePage = React.createClass({
   getInitialState() {
     return {
       'focus': 0
@@ -22,9 +21,9 @@ const SearchablePage = React.createClass(objectAssign(Base(SearchablePageStore, 
 
     return (
       <div className={ style.searchablePage }>
-        <SearchBar />
+        <SearchBarContainer />
         <div className={ searchResultClassName }>
-          <SearchResults />
+          <SearchResultsContainer />
         </div>
         <div className={ childrenClassName }>
           { this.props.children }
@@ -32,6 +31,6 @@ const SearchablePage = React.createClass(objectAssign(Base(SearchablePageStore, 
       </div>
     );
   }
-}));
+});
 
 export default SearchablePage;

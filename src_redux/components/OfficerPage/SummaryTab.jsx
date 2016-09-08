@@ -10,6 +10,11 @@ const SummaryTab = React.createClass({
     distribution: React.PropTypes.array
   },
 
+  defaultProps: {
+    'officer': {},
+    'distribution': []
+  },
+
   render() {
     const officer = this.props.officer;
     const distribution = this.props.distribution;
@@ -22,11 +27,5 @@ const SummaryTab = React.createClass({
     );
   }
 });
-
-
-SummaryTab.defaultProps = {
-  'officer': {},
-  'distribution': []
-};
 
 export default SummaryTab;

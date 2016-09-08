@@ -9,13 +9,13 @@ import MainPageContent from 'components/MainPage/MainPageContent';
 
 import { spy } from 'sinon';
 
+
 const mockStore = configureStore();
 const store = mockStore({
   suggestionApp: {
     query: 'query'
   }
 });
-
 
 describe('MainPage component', function () {
   it('should render', function () {
