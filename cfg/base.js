@@ -25,7 +25,7 @@ module.exports = {
     hot: true,
     port: defaultSettings.port,
     publicPath: defaultSettings.publicPath,
-    noInfo: false
+    noInfo: true
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],

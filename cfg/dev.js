@@ -14,6 +14,9 @@ let config = Object.assign({}, baseConfig, {
     'webpack/hot/only-dev-server',
     './src_redux/index'
   ],
+  devServer: {
+    noInfo: false
+  },
   cache: true,
   devtool: 'eval-source-map',
   plugins: [
