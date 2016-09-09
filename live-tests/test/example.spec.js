@@ -23,13 +23,15 @@ describe('MainPageTest', function () {
 
     client
       .url('http://localhost:9001')
-      .waitForElementVisible('body', 1000)
+      .waitForElementVisible('body', 10000)
+      .waitForElementVisible('.cpdb-logo', 10000)
       .assert.visible('.cpdb-logo')
       .assert.containsText('.cpdb-logo', 'CPDP')
       .setValue('.search-wrapper .input-text', 'K')
-      .waitForElementVisible('.suggestion-list', 1000)
+      .waitForElementVisible('.suggestion-list', 10000)
       .assert.visible('.suggestion-list')
-      .assert.containsText('.suggestion-list', 'Kevin');
+      .waitForElementVisible('.suggestion-list li .officer', 20000)
+      .assert.containsText('.suggestion-list li .officer', 'Keith');
 
     mock.reset();
   });
