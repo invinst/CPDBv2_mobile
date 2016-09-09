@@ -27,8 +27,13 @@ describe('MainPageTest', function () {
       .waitForElementVisible('.cpdb-logo', 10000)
       .assert.visible('.cpdb-logo')
       .assert.containsText('.cpdb-logo', 'CPDP')
-      .setValue('.search-wrapper .input-text', 'K')
-      .waitForElementVisible('.suggestion-list', 10000)
+      .assert.visible('.search-wrapper .input-text')
+      .setValue('.search-wrapper .input-text', 'K');
+
+    client.saveScreenshot('abc.jpg').getLog('browser', function(result) {
+        console.log(result);
+      })
+    client.waitForElementVisible('#search-results', 50000)
       .assert.visible('.suggestion-list')
       .waitForElementVisible('.suggestion-list li .officer', 20000)
       .assert.containsText('.suggestion-list li .officer', 'Keith');
