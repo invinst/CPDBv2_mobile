@@ -1,6 +1,5 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { mock, match } from 'sinon';
 
 import f from 'utils/tests/f';
@@ -32,7 +31,7 @@ describe('OfficerResult component', function () {
     mockGaUtil.expects('track').once()
       .withArgs('event', 'filter', 'officer_allegation', match.any).returns('anything');
     mockAppHistory.expects('push').once();
-    const wrapper = shallow(<OfficerResult suggestions={ [suggestion] }/>);
+    const wrapper = shallow(<OfficerResult suggestions={ [suggestion] } reset={ () => {} }/>);
 
     wrapper.find('.suggestion-list .officer').first().simulate('click');
     mockGaUtil.verify();

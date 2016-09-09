@@ -12,15 +12,6 @@ const DistributionCurve = React.createClass({
     distribution: React.PropTypes.array
   },
 
-  defaultProps: {
-    officer: {},
-    distribution: []
-  },
-
-  renderOfficerLine(numberOfComplaints, scaleX, scaleY) {
-    return HelperUtil.format('{x},{y}', { 'x': numberOfComplaints * scaleX / 70, 'y': scaleY });
-  },
-
   getAreaPoints(data, scaleX, scaleY) {
     // Area chart is drawn as a polygon with first point is 0,0
     const maxOfXAxis = data.length; // number of complaints
@@ -107,5 +98,10 @@ const DistributionCurve = React.createClass({
     );
   }
 });
+
+DistributionCurve.defaultProps = {
+  officer: {},
+  distribution: []
+};
 
 export default DistributionCurve;

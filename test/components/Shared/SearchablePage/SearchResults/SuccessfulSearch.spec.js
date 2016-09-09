@@ -4,7 +4,7 @@ import { mount, shallow } from 'enzyme';
 import { mock, match } from 'sinon';
 
 import f from 'utils/tests/f';
-import OfficerResult from 'components/Shared/SearchablePage/SearchResults/SuccessfulSearch/OfficerResult';
+import OfficerResultContainer from 'containers/Shared/SearchablePage/SearchResults/SuccessfulSearch/OfficerResultContainer';
 import ComplaintResult from 'components/Shared/SearchablePage/SearchResults/SuccessfulSearch/ComplaintResult';
 import SuccessfulSearch from 'components/Shared/SearchablePage/SearchResults/SuccessfulSearch';
 import 'factories/SuggestionFactory';
@@ -21,7 +21,7 @@ describe('SuccessfulSearch component', function () {
     const wrapper = shallow(
       <SuccessfulSearch suggestions={ [suggestion] }/>
     );
-    wrapper.find(OfficerResult).should.have.length(1);
+    wrapper.find(OfficerResultContainer).should.have.length(1);
   });
 
   it('should render ComplaintResult when getting officer_allegation result', function () {

@@ -12,13 +12,16 @@ import GaUtil from 'utils/GaUtil';
 
 const OfficerResult = React.createClass({
   propTypes: {
+    reset: React.PropTypes.func,
     term: React.PropTypes.string,
     suggestions: React.PropTypes.array
   },
 
   onClick: function (presenter) {
+    const { reset } = this.props;
     const officerPresenter = OfficerPresenter(presenter.meta);
     GaUtil.track('event', 'filter', presenter.resource, presenter.text);
+    reset();
     AppHistory.push(officerPresenter.url);
   },
 

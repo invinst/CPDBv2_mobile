@@ -8,14 +8,8 @@ import style from 'styles/Shared/SearchablePage.sass';
 
 
 const SearchablePage = React.createClass({
-  getInitialState() {
-    return {
-      'focus': 0
-    };
-  },
-
   render() {
-    const focus = this.state.focus;
+    const { focus } = this.props;
     const childrenClassName = cx('child-content', { 'invisible': focus });
     const searchResultClassName = cx('result-content', { 'invisible': !focus });
 

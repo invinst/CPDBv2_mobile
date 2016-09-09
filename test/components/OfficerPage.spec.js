@@ -11,7 +11,7 @@ import SimpleTab from 'components/Shared/SimpleTab';
 import ComplaintsTab from 'components/OfficerPage/ComplaintsTab';
 import SummaryTab from 'components/OfficerPage/SummaryTab';
 import RelatedOfficersTab from 'components/OfficerPage/RelatedOfficersTab';
-import SearchablePage from 'components/Shared/SearchablePage';
+import SearchablePageContainer from 'containers/Shared/SearchablePageContainer';
 import OfficerHeader from 'components/OfficerPage/OfficerHeader';
 import GaUtil from 'utils/GaUtil';
 
@@ -41,7 +41,7 @@ describe('<OfficerPage />', function () {
 
   it('should render an officer page that\'s searchable', function () {
     const wrapper = shallow(<OfficerPage loading={ false } found={ true }/>);
-    wrapper.find(SearchablePage).should.have.length(1);
+    wrapper.find(SearchablePageContainer).should.have.length(1);
     wrapper.find(OfficerHeader).should.have.length(1);
     wrapper.find(SimpleTab).should.have.length(1);
     wrapper.find(SummaryTab).should.have.length(1);
@@ -60,5 +60,5 @@ describe('<OfficerPage />', function () {
     );
     mockGaUtil.verify();
     mockGaUtil.restore()
-  })
+  });
 });

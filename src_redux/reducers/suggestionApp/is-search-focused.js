@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import { SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR } from 'actions/suggestion';
+import { SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_RESET } from 'actions/suggestion';
 
 
 export default handleActions({
@@ -11,6 +11,9 @@ export default handleActions({
     return 0;
   },
   [SEARCH_CLEAR]: (state, action) => {
+    return 0;
+  },
+  [SEARCH_RESET]: (state, action) => {
     return 0;
   }
 }, 0);

@@ -9,11 +9,6 @@ const OfficerAnalyticSection = React.createClass({
     distribution: React.PropTypes.array
   },
 
-  defaultProps: {
-    officer: {},
-    distribution: []
-  },
-
   render() {
     return (
       <div className={ style.officerAnalyticSection }>
@@ -27,5 +22,10 @@ const OfficerAnalyticSection = React.createClass({
     );
   }
 });
+
+OfficerAnalyticSection.defaultProps = {
+  officer: {},
+  distribution: []
+};
 
 export default OfficerAnalyticSection;

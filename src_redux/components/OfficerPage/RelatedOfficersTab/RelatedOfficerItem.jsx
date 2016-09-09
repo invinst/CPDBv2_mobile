@@ -14,7 +14,7 @@ const RelatedOfficerItem = React.createClass({
     type: React.PropTypes.string
   },
 
-  _onClick() {
+  onClick() {
     const officer = this.props.officer;
     const presenter = OfficerPresenter(officer);
     AppHistory.push(presenter.url);
@@ -31,7 +31,7 @@ const RelatedOfficerItem = React.createClass({
     );
 
     return (
-      <div className={ relatedOfficerClassName } onClick={ this._onClick }>
+      <div className={ relatedOfficerClassName } onClick={ this.onClick }>
         <div className='row'>
           <div className='one column circle-wrapper center'>
             <span className={ cx('circle', OfficerUtil.getColorLevelClass('circle', presenter.allegationsCount)) } />
