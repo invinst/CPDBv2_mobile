@@ -15,6 +15,11 @@ let config = Object.assign({}, baseConfig, {
     './src_redux/index'
   ],
   devServer: {
+    contentBase: './src_redux/',
+    historyApiFallback: true,
+    hot: true,
+    port: defaultSettings.port,
+    publicPath: defaultSettings.publicPath,
     noInfo: false
   },
   cache: true,

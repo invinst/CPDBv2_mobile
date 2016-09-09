@@ -31,10 +31,10 @@
       "silent": true,
       "screenshots" : {
         "enabled" : false,
-        "path" : ""
+        "path" : "./screenshots"
       },
       "desiredCapabilities" : {
-        "browserName" : "phantomjs",
+        "browserName" : "chrome",
         "javascriptEnabled" : true,
         "acceptSslCerts" : true
       }

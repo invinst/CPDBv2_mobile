@@ -25,6 +25,7 @@
   "keywords": [],
   "author": "CPDB Team",
   "devDependencies": {
+    "axios-mock-adapter": "^1.6.1",
     "babel-core": "^6.0.0",
     "babel-eslint": "^6.0.0",
     "babel-loader": "^6.0.0",
