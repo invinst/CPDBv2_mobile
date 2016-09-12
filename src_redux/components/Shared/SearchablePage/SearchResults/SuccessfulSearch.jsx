@@ -1,6 +1,8 @@
 import React from 'react';
-import OfficerResultContainer from 'containers/Shared/SearchablePage/SearchResults/SuccessfulSearch/OfficerResultContainer';
-import ComplaintResult from 'components/Shared/SearchablePage/SearchResults/SuccessfulSearch/ComplaintResult';
+import OfficerResultContainer
+  from 'containers/Shared/SearchablePage/SearchResults/SuccessfulSearch/OfficerResultContainer';
+import ComplaintResultContainer
+  from 'containers/Shared/SearchablePage/SearchResults/SuccessfulSearch/ComplaintResultContainer';
 import SuggestionPresenter from 'presenters/SuggestionPresenter';
 
 import style from 'styles/Shared/SearchablePage/SearchResults/SuccessfulSearch.sass';
@@ -14,7 +16,7 @@ const SuccessfulSearch = React.createClass({
   getSubComponentFor(type) {
     const subComponentMapper = {
       'officer': OfficerResultContainer,
-      'officer_allegation': ComplaintResult
+      'officer_allegation': ComplaintResultContainer
     };
 
     return subComponentMapper[type];

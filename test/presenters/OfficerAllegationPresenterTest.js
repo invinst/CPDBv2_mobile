@@ -79,7 +79,7 @@ describe('OfficerAllegationPresenter', () => {
       presenter.startInvestigatingAt(incidentDate).should.be.equal(true);
     });
 
-    it('should return true if start date is same with incident date', () => {
+    it('should return false if start date is not the same with incident date', () => {
       const date = '2012-01-20';
       const officerAllegation = f.create('OfficerAllegation', { 'start_date': date });
       const incidentDate = moment('2012-01-19', AppConstants.SIMPLE_SERVER_DATE_FORMAT);

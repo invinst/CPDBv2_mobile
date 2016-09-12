@@ -3,7 +3,7 @@ import React from 'react';
 import CollectionUtil from 'utils/CollectionUtil';
 import SuggestionPresenter from 'presenters/SuggestionPresenter';
 import ComplaintResultPresenter from 'presenters/Page/ComplaintResultPresenter';
-import OfficerAllegationItem from 'components/Shared/OfficerAllegationItem';
+import OfficerAllegationItemContainer from 'containers/Shared/OfficerAllegationItemContainer';
 import style from 'styles/Shared/SearchablePage/SearchResults/SuccessfulSearch/ComplaintResult.sass';
 import GaUtil from 'utils/GaUtil';
 
@@ -13,10 +13,9 @@ const ComplaintResult = React.createClass({
     suggestions: React.PropTypes.array
   },
 
-  _onClick() {
+  onClick() {
     const complaint = this.props.suggestions[0];
     const presenter = SuggestionPresenter(complaint);
-    console.log(GaUtil);
     GaUtil.track('event', 'filter', presenter.resource, presenter.text);
   },
 
@@ -25,7 +24,9 @@ const ComplaintResult = React.createClass({
 
     return (
       <div key={ categoryId }>
-        <OfficerAllegationItem officerAllegation={ firstOfficerAllegation } officerAllegations={ officerAllegations }
+        <OfficerAllegationItemContainer
+          officerAllegation={ firstOfficerAllegation }
+          officerAllegations={ officerAllegations }
           allegation={ allegation }/>
       </div>
     );
@@ -51,7 +52,7 @@ const ComplaintResult = React.createClass({
     // FIXME: Fix `suggestion-list` bad convention
     return (
       <ul className='suggestion-list'>
-        <li className={ cx(style.complaintResult, 'outer-glow') } onClick={ this._onClick }>
+        <li className={ cx(style.complaintResult, 'outer-glow') } onClick={ this.onClick }>
           { this.renderComplaintResultItem(complaintResultPresenter.groupByCategory, presenter.meta) }
         </li>
       </ul>

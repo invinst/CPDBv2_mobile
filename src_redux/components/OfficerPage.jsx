@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import SimpleTab from 'components/Shared/SimpleTab';
 import ComplaintsTab from 'components/OfficerPage/ComplaintsTab';
@@ -15,6 +15,14 @@ import style from 'styles/OfficerPage.sass';
 
 
 const OfficerPage = React.createClass({
+  propTypes: {
+    getOfficer: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
+    found: PropTypes.bool,
+    pk: PropTypes.number,
+    officer: PropTypes.object
+  },
+
   componentDidMount() {
     const { getOfficer, pk } = this.props;
     getOfficer({ pk: pk });

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import u from 'utils/HelperUtil';
-import OfficerAllegationItem from 'components/Shared/OfficerAllegationItem';
+import OfficerAllegationItemContainer from 'containers/Shared/OfficerAllegationItemContainer';
 import style from 'styles/OfficerPage/ComplaintsTab.sass';
 
 
@@ -18,7 +18,9 @@ const ComplaintsTab = React.createClass({
 
     return (
       <div key={ complaint['crid'] }>
-        <OfficerAllegationItem officerAllegation={ officerAllegation } officerAllegations={ officerAllegations }
+        <OfficerAllegationItemContainer
+          officerAllegation={ officerAllegation }
+          officerAllegations={ officerAllegations }
           allegation={ complaint }/>
       </div>
     );

@@ -6,6 +6,6 @@ import { OFFICER_PAGE_REQUEST_SUCCESS, OFFICER_PAGE_REQUEST_FAILURE } from 'acti
 const isSuccess = handleActions({
   [OFFICER_PAGE_REQUEST_SUCCESS]: (state, action) => (true),
   [OFFICER_PAGE_REQUEST_FAILURE]: (state, action) => (false)
-}, false);
+}, true);
 
 export default isSuccess;

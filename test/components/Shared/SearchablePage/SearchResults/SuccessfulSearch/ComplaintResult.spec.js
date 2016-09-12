@@ -1,12 +1,11 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { mock, match } from 'sinon';
 
 import f from 'utils/tests/f';
 import GaUtil from 'utils/GaUtil';
 import ComplaintResult from 'components/Shared/SearchablePage/SearchResults/SuccessfulSearch/ComplaintResult';
-import OfficerAllegationItem from 'components/Shared/OfficerAllegationItem';
+import OfficerAllegationItemContainer from 'containers/Shared/OfficerAllegationItemContainer';
 import 'factories/SuggestionFactory';
 
 
@@ -23,14 +22,14 @@ describe('ComplaintResult component', function () {
       meta: {
         'officer_allegations': [
           f.create('OfficerAllegation', { cat: cat1 }),
-          f.create('OfficerAllegation', { cat: cat2 }),
+          f.create('OfficerAllegation', { cat: cat2 })
         ]
       }
     });
     const wrapper = shallow(
       <ComplaintResult suggestions={ [suggestion] }/>
     );
-    wrapper.find(OfficerAllegationItem).should.have.length(2);
+    wrapper.find(OfficerAllegationItemContainer).should.have.length(2);
   });
 
   it('should send google analytic event on click suggestion item', function () {

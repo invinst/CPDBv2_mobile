@@ -16,9 +16,9 @@ describe('suggestions actions', function () {
             url: constants.SUGGESTION_API_ENDPOINT,
             adapter: undefined,
             params: undefined
+          }
         }
-        }
-      })
+      });
     });
   });
 

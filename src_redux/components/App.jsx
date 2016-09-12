@@ -6,6 +6,7 @@ import AppHistory from 'utils/History';
 
 import MainPageContainer from 'containers/MainPageContainer';
 import OfficerPageContainer from 'containers/OfficerPageContainer';
+import ComplaintPageContainer from 'containers/ComplaintPageContainer';
 
 import 'styles/Style.sass';
 import 'styles/Fonts.sass';
@@ -18,6 +19,7 @@ const App = React.createClass({
   render() {
     return (
       <Router history={ AppHistory }>
+        <Route path='/complaint/:crid/:slug/:categoryHashId' component={ ComplaintPageContainer } />
         <Route path='/officer/:slug/:id' component={ OfficerPageContainer } />
         <Route path='/s/:query' component={ MainPageContainer } />
         <Route path='/q/:query' component={ MainPageContainer } />

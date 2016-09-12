@@ -15,13 +15,15 @@ const OfficerAllegationItem = React.createClass({
   propTypes: {
     officerAllegation: React.PropTypes.object,
     allegation: React.PropTypes.object,
-    officerAllegations: React.PropTypes.array
+    officerAllegations: React.PropTypes.array,
+    reset: React.PropTypes.func
   },
 
-  _onClick(crid, firstOfficerAllegation) {
+  onClick(crid, firstOfficerAllegation) {
+    const { reset } = this.props;
     const presenter = OfficerAllegationPresenter(firstOfficerAllegation);
     AppHistory.push(presenter.url(crid));
-    // ComplaintPageActions.resetState();
+    reset();
   },
 
   render() {
@@ -41,7 +43,7 @@ const OfficerAllegationItem = React.createClass({
 
     return (
       <div className={ cx(style.officerAllegationItem, 'officer-allegation-item') }
-        onClick={ this._onClick.bind(this, crid, firstOfficerAllegation) }>
+        onClick={ this.onClick.bind(this, crid, firstOfficerAllegation) }>
         <div className='crid-info pad'>
           <div className='inline-block half-width align-left'>
             <span className='crid-title'>CRID &nbsp;</span>
