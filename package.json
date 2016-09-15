@@ -102,6 +102,7 @@
     "redux": "^3.5.2",
     "redux-actions": "^0.10.0",
     "redux-axios-middleware": "^1.0.0",
+    "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0",
     "string": "^3.3.1",
     "superagent": "^2.0.0"
