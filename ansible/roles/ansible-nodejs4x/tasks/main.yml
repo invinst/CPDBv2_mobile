@@ -21,10 +21,12 @@
   with_items:
     - 'deb https://deb.nodesource.com/node_4.x'
     - 'deb-src https://deb.nodesource.com/node_4.x'
-  sudo: yes
+  become: yes
+  become_user: root
 
 - name: Install Node.js
   apt: name={{ item }} update_cache=yes state=present
   with_items:
     - nodejs
-  sudo: yes
+  become: yes
+  become_user: root
