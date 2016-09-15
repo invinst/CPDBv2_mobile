@@ -4,6 +4,11 @@ import configuredAxiosMiddleware from 'middleware/configured-axios-middleware';
 
 import rootReducer from 'reducers/root-reducer';
 
+import createLogger from 'redux-logger';
+const logger = createLogger({
+  diff: true,
+  stateTransformer: (obj) => (JSON.stringify(obj))
+});
 
 export default function configureStore(initialState) {
   /* istanbul ignore next */
@@ -11,7 +16,7 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     compose(
-      applyMiddleware(thunk, configuredAxiosMiddleware),
+      applyMiddleware(thunk, configuredAxiosMiddleware, logger),
       window.devToolsExtension ? window.devToolsExtension() : f => f
     )
   );

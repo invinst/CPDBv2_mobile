@@ -13,6 +13,7 @@ const port = 9001;
 let config = Object.assign({}, baseConfig, {
   port: port,
   entry: [
+    'babel-polyfill',
     'webpack-dev-server/client?http://127.0.0.1:' + port,
     'webpack/hot/only-dev-server',
     './src_redux/index'

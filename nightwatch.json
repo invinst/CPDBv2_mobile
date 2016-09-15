@@ -34,7 +34,7 @@
         "path" : "./screenshots"
       },
       "desiredCapabilities" : {
-        "browserName" : "firefox",
+        "browserName" : "phantomjs",
         "javascriptEnabled" : true,
         "acceptSslCerts" : true
       }
