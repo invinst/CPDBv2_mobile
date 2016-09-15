@@ -1,4 +1,4 @@
-import AppConstants from 'constants/AppConstants';
+import AppConstants from 'constants';
 import S from 'string';
 import DateUtil from 'utils/DateUtil';
 import HashUtil from 'utils/HashUtil';
