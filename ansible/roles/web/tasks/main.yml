@@ -1,0 +1,7 @@
+---
+
+- include: install_packages.yml
+
+- include: setup_nginx.yml
+
+- include: build.yml
