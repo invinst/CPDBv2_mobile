@@ -1,8 +1,7 @@
-import should from 'should';
+import 'should';
 import f from 'utils/tests/f';
 
 import AllegationPresenter from 'presenters/AllegationPresenter';
-import AllegationFactory from 'factories/AllegationFactory';
 
 
 describe('AllegationPresenter', () => {
