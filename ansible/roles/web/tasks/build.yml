@@ -6,7 +6,7 @@
   tags: setup
 
 - name: Pull code from frontend repo
-  git: repo=git@github.com:EastAgile/CPDBv2_frontend.git
+  git: repo=git@github.com:EastAgile/CPDBv2_mobile.git
     dest={{ application_root_path }}
     accept_hostkey=True
     version={{ branch }}
