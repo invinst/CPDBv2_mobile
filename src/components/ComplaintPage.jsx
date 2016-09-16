@@ -16,7 +16,6 @@ import ComplainingWitness from 'components/ComplaintPage/ComplainingWitness';
 import AccompliceOfficerSection from 'components/ComplaintPage/AccompliceOfficerSection';
 import InvestigatorSection from 'components/ComplaintPage/InvestigatorSection';
 import Location from 'components/ComplaintPage/Location';
-// import DocumentSection from 'components/ComplaintPage/DocumentSection';
 import style from 'styles/ComplaintPage.sass';
 
 
@@ -39,6 +38,13 @@ const ComplaintPage = React.createClass({
       loading: true,
       toggle: false
     };
+  },
+
+  componentWillReceiveProps (newProps) {
+    if (newProps.crid != this.props.crid) {
+      const { getComplaint } = this.props;
+      getComplaint({ crid: newProps.crid });
+    }
   },
 
   componentDidMount() {
