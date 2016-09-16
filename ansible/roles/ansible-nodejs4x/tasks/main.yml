@@ -6,7 +6,8 @@
     - python-apt
     - python-pycurl
     - apt-transport-https
-  sudo: yes
+  become: yes
+  become_user: root
 
 - name: Add the Nodesource apt key
   shell: wget -qO - https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
