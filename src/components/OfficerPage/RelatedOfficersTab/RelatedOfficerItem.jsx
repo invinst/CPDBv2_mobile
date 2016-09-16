@@ -18,6 +18,7 @@ const RelatedOfficerItem = React.createClass({
     const officer = this.props.officer;
     const presenter = OfficerPresenter(officer);
     AppHistory.push(presenter.url);
+    // TODO: Fix bug when click moving from `OfficerPage` to another `OfficerPage`
   },
 
   render() {

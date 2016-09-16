@@ -3,7 +3,7 @@ import cx from 'classnames';
 import u from 'utils/HelperUtil';
 import CollectionUtil from 'utils/CollectionUtil';
 import AppHistory from 'utils/History';
-// import ComplaintPageActions from 'actions/ComplaintPage/ComplaintPageActions';
+
 import AllegationPresenter from 'presenters/AllegationPresenter';
 import OfficerAllegationPresenter from 'presenters/OfficerAllegationPresenter';
 import OfficerPresenter from 'presenters/OfficerPresenter';
