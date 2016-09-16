@@ -29,12 +29,15 @@
   file: path=/var/www state=directory owner={{ deploy_user }} group={{ deploy_group }}
   become: yes
   become_user: root
+  tags: deploy
 
-- name: Clean old disk 1
+- name: Clean old nginx dist build
   file: path={{ nginx_dist_path }} state=absent
+  tags: deploy
 
-- name: Clean old disk 2
+- name: Clean old build
   file: path={{ application_dist_path }}/dist state=absent
+  tags: deploy
 
 - name: Build everything
   command: npm run dist
@@ -43,3 +46,4 @@
 
 - name: Move file to dist
   command: mv {{ application_dist_path }}/dist {{ nginx_dist_path }}
+  tags: deploy

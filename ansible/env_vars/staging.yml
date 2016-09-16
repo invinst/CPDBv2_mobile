@@ -4,12 +4,12 @@ update_apt_cache: yes
 application_root_path: /CPDB/CPDBv2_mobile
 nginx_dist_path: /var/www/dist_mobile
 nginx_configuration_name: cpdb-mobile
-deploy_user: vagrant
-deploy_group: vagrant
+deploy_user: deploy
+deploy_group: deploy
 application_dist_path: "{{ application_root_path }}"
 nginx_access_log_file: "{{ application_root_path }}/logs/access_log"
 nginx_error_log_file: "{{ application_root_path }}/logs/error_log"
-nginx_server_name: m.cpdb.me
-branch: master
+nginx_server_name: ms.cpdp.co
+branch: chore/production-deploy-stuff
 pull_code_from_git: yes
 nginx_template: nginx_site_config

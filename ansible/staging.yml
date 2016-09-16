@@ -1,6 +1,6 @@
 ---
 - hosts: default
-  vars:
+  vars_files:
     - env_vars/staging.yml
   roles:
     - base
