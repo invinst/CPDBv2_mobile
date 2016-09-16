@@ -4,8 +4,8 @@ update_apt_cache: yes
 application_root_path: /CPDB/CPDBv2_mobile
 nginx_dist_path: /var/www/dist_mobile
 nginx_configuration_name: cpdb-mobile
-deploy_user: deploy
-deploy_group: deploy
+deploy_user: ansible
+deploy_group: ansible
 application_dist_path: "{{ application_root_path }}"
 nginx_access_log_file: "{{ application_root_path }}/logs/access_log"
 nginx_error_log_file: "{{ application_root_path }}/logs/error_log"
