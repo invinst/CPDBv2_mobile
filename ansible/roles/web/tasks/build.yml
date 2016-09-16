@@ -11,7 +11,7 @@
     accept_hostkey=True
     version={{ branch }}
     key_file=/home/ansible/.ssh/khoi_github
-  when: pull_code_from_git == "yes"
+  when: pull_code_from_git
   tags: deploy
 
 - name : Install packages based on package.json.

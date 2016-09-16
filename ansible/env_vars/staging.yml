@@ -11,5 +11,5 @@ nginx_access_log_file: "{{ application_root_path }}/logs/access_log"
 nginx_error_log_file: "{{ application_root_path }}/logs/error_log"
 nginx_server_name: ms.cpdp.co
 branch: chore/production-deploy-stuff
-pull_code_from_git: yes
+pull_code_from_git: true
 nginx_template: nginx_site_config
