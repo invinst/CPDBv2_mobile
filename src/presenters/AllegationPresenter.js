@@ -27,7 +27,12 @@ const AllegationPresenter = complaint => {
 
   const hasFullAddress = () => !!(add1() && add2());
 
-  const documents = () => u.fetch(complaint, 'documents', []);
+  const attachmentFiles = function (type) {
+    const mediaItems = u.fetch(complaint, 'attachment_files', []);
+    return mediaItems.filter(function (item) {
+      return item['file_type'] == type;
+    });
+  };
 
   return {
     crid: crid(),
@@ -37,7 +42,9 @@ const AllegationPresenter = complaint => {
     city: u.fetch(complaint, 'city', ''),
     locationType: locationType(),
     beat: u.fetch(complaint, 'beat.name', ''),
-    documents: documents(),
+    documents: attachmentFiles('document'),
+    videos: attachmentFiles('video'),
+    audios: attachmentFiles('audio'),
     hasLocation: hasLocation(),
     hasFullAddress: hasFullAddress(),
     url: url()

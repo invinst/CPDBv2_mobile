@@ -1,5 +1,10 @@
 import React from 'react';
-import 'cx';
+import cx from 'classnames';
+
+import u from 'utils/HelperUtil';
+import MediaPresenter from 'presenters/MediaPresenter';
+import style from 'styles/ComplaintPage/MediaSection/MediaCard.sass';
+
 
 const MediaCard = React.createClass({
   propTypes: {
@@ -12,7 +17,7 @@ const MediaCard = React.createClass({
     const iconClassName = cx('media-icon', u.format('{type}-icon', { type: presenter.type }));
 
     return (
-      <div className='media-card row'>
+      <div className={ cx(style.mediaCard, 'media-card row') }>
         <a href={ presenter.url } target='_blank'>
           <div className='one column icon-wrapper center'>
             <div className={ iconClassName }></div>

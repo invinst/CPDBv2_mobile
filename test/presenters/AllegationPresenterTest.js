@@ -2,6 +2,7 @@ import 'should';
 import f from 'utils/tests/f';
 
 import AllegationPresenter from 'presenters/AllegationPresenter';
+import 'factories/MediaFactory';
 
 
 describe('AllegationPresenter', () => {
@@ -136,11 +137,36 @@ describe('AllegationPresenter', () => {
 
   describe('#documents', () => {
     it('should return documents ', () => {
-      const documents = f.createBatch(2, 'Document');
-      const allegation = f.create('Allegation', { 'documents': documents });
+      const media = f.createBatch(2, 'Media', { 'file_type': 'document' });
+      const allegation = f.create('Allegation', { 'attachment_files': media });
+      const presenter = AllegationPresenter(allegation);
+      presenter.documents.should.have.length(2);
+      presenter.videos.should.have.length(0);
+      presenter.audios.should.have.length(0);
+    });
+  });
+
+  describe('#videos', () => {
+    it('should return videos ', () => {
+      const media = f.createBatch(2, 'Media', { 'file_type': 'video' });
+      const allegation = f.create('Allegation', { 'attachment_files': media });
       const presenter = AllegationPresenter(allegation);
 
-      presenter.documents.should.have.length(2);
+      presenter.documents.should.have.length(0);
+      presenter.videos.should.have.length(2);
+      presenter.audios.should.have.length(0);
+    });
+  });
+
+  describe('#audios', () => {
+    it('should return audios ', () => {
+      const media = f.createBatch(2, 'Media', { 'file_type': 'audio' });
+      const allegation = f.create('Allegation', { 'attachment_files': media });
+      const presenter = AllegationPresenter(allegation);
+
+      presenter.documents.should.have.length(0);
+      presenter.videos.should.have.length(0);
+      presenter.audios.should.have.length(2);
     });
   });
 
