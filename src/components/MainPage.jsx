@@ -12,10 +12,10 @@ import About from 'components/Shared/About';
 class MainPage extends Component {
   componentDidMount() {
     const { suggestTerm, query } = this.props;
-    const santinizedQuery = query.replace(/\+|\-|\_/g, ' ');
+    const sanitizedQuery = query.replace(/\+|\-|\_/g, ' ');
 
-    if (santinizedQuery) {
-      suggestTerm({ query: santinizedQuery });
+    if (sanitizedQuery) {
+      suggestTerm({ query: sanitizedQuery });
     }
   }
 
