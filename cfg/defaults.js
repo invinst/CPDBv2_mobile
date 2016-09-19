@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path');
-const srcPath = path.join(__dirname, '/../src_redux');
+const srcPath = path.join(__dirname, '/../src');
 const dfltPort = 9000;
 function getDefaultModules() {
   return {

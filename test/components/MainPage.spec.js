@@ -36,7 +36,7 @@ describe('MainPage component', function () {
         <MainPage suggestTerm={ suggestTerm } query='something not empty' />
       </Provider>
     );
-    suggestTerm.called.should.be.true()
+    suggestTerm.called.should.be.true();
   });
 
   it('should not call the api if the term is specified', function () {
@@ -46,6 +46,6 @@ describe('MainPage component', function () {
         <MainPage suggestTerm={ suggestTerm } query='' />
       </Provider>
     );
-    suggestTerm.called.should.be.false()
+    suggestTerm.called.should.be.false();
   });
 });

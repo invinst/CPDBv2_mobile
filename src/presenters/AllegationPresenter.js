@@ -1,6 +1,6 @@
 import u from 'utils/HelperUtil';
 import DateUtil from 'utils/DateUtil';
-import AppConstants from 'constants/AppConstants';
+import AppConstants from 'constants';
 
 
 const AllegationPresenter = complaint => {
