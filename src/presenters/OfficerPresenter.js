@@ -1,6 +1,6 @@
 import pluralize from 'pluralize';
 import S from 'string';
-import AppConstants from 'constants/AppConstants';
+import AppConstants from 'constants';
 import u from 'utils/HelperUtil';
 import CollectionUtil from 'utils/CollectionUtil';
 import GenderPresenter from 'presenters/GenderPresenter';

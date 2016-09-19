@@ -16,3 +16,4 @@ test:
   override:
     - eslint src/
     - npm run ci-test
+    - npm run live-test

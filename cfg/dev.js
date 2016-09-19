@@ -12,8 +12,16 @@ let config = Object.assign({}, baseConfig, {
   entry: [
     'webpack-dev-server/client?http://127.0.0.1:' + defaultSettings.port,
     'webpack/hot/only-dev-server',
-    './src_redux/index'
+    './src/index'
   ],
+  devServer: {
+    contentBase: './src/',
+    historyApiFallback: true,
+    hot: true,
+    port: defaultSettings.port,
+    publicPath: defaultSettings.publicPath,
+    noInfo: false
+  },
   cache: true,
   devtool: 'eval-source-map',
   plugins: [
@@ -32,7 +40,7 @@ config.module.loaders.push({
   loader: 'react-hot!babel-loader',
   include: [].concat(
     config.additionalPaths,
-    [path.join(__dirname, '/../src_redux')]
+    [path.join(__dirname, '/../src')]
   )
 });
 

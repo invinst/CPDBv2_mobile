@@ -1,4 +1,4 @@
-import { SEARCH_INPUT_CHANGED, SEARCH_CLEAR } from 'actions/suggestion';
+import { SEARCH_INPUT_CHANGED, SEARCH_CLEAR, SEARCH_RESET } from 'actions/suggestion';
 import query from 'reducers/suggestionApp/query';
 
 
@@ -19,6 +19,12 @@ describe('query reducer', function () {
   it('should handle SEARCH_CLEAR', function () {
     query('query', {
       type: SEARCH_CLEAR
+    }).should.eql('');
+  });
+
+  it('should handle SEARCH_RESET', function () {
+    query('query', {
+      type: SEARCH_RESET
     }).should.eql('');
   });
 });

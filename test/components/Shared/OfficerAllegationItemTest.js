@@ -9,7 +9,7 @@ import OfficerAllegationItem from 'components/Shared/OfficerAllegationItem';
 // import ComplaintPageActions from 'actions/ComplaintPage/ComplaintPageActions';
 
 
-describe('OfficerAllegationItemComponent', () => {
+describe('OfficerAllegationItem component', () => {
   it('should show correct information', () => {
     const crid = 1234;
     const date = '2012-01-19T09:11:00';
@@ -65,7 +65,7 @@ describe('OfficerAllegationItemComponent', () => {
 
     officerAllegationItem = ReactTestUtils.renderIntoDocument(
       <OfficerAllegationItem officerAllegation={ officerAllegation } allegation={ allegation }
-        officerAllegations={ [officerAllegation] }/>
+        officerAllegations={ [officerAllegation] } reset={ () => {} }/>
     );
     node = ReactTestUtils.findRenderedDOMComponentWithClass(officerAllegationItem, 'officer-allegation-item');
 

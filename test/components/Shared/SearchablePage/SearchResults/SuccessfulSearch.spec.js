@@ -1,11 +1,11 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import { mount, shallow } from 'enzyme';
-import { mock, match } from 'sinon';
+import { shallow } from 'enzyme';
 
 import f from 'utils/tests/f';
-import OfficerResult from 'components/Shared/SearchablePage/SearchResults/SuccessfulSearch/OfficerResult';
-import ComplaintResult from 'components/Shared/SearchablePage/SearchResults/SuccessfulSearch/ComplaintResult';
+import OfficerResultContainer
+  from 'containers/Shared/SearchablePage/SearchResults/SuccessfulSearch/OfficerResultContainer';
+import ComplaintResultContainer
+  from 'containers/Shared/SearchablePage/SearchResults/SuccessfulSearch/ComplaintResultContainer';
 import SuccessfulSearch from 'components/Shared/SearchablePage/SearchResults/SuccessfulSearch';
 import 'factories/SuggestionFactory';
 
@@ -16,19 +16,19 @@ describe('SuccessfulSearch component', function () {
     wrapper.should.be.ok();
   });
 
-  it('should render OfficerResult when getting officer result', function () {
+  it('should render OfficerResultContainer when getting officer result', function () {
     const suggestion = f.create('Suggestion', { resource: 'officer' });
     const wrapper = shallow(
       <SuccessfulSearch suggestions={ [suggestion] }/>
     );
-    wrapper.find(OfficerResult).should.have.length(1);
+    wrapper.find(OfficerResultContainer).should.have.length(1);
   });
 
-  it('should render ComplaintResult when getting officer_allegation result', function () {
+  it('should render ComplaintResultContainer when getting officer_allegation result', function () {
     const suggestion = f.create('Suggestion', { resource: 'officer_allegation' });
     const wrapper = shallow(
       <SuccessfulSearch suggestions={ [suggestion] }/>
     );
-    wrapper.find(ComplaintResult).should.have.length(1);
+    wrapper.find(ComplaintResultContainer).should.have.length(1);
   });
 });
