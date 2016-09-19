@@ -31,5 +31,4 @@ bower_components/
 
 .idea/
 .vagrant/
-vagrant.retry
-ansible/staging.retry
+ansible/*.retry
