@@ -16,6 +16,7 @@ import AgainstSection from 'components/ComplaintPage/AgainstSection';
 import ComplainingWitness from 'components/ComplaintPage/ComplainingWitness';
 import AccompliceOfficerSection from 'components/ComplaintPage/AccompliceOfficerSection';
 import InvestigatorSection from 'components/ComplaintPage/InvestigatorSection';
+import MediaSection from 'components/ComplaintPage/MediaSection';
 import Location from 'components/ComplaintPage/Location';
 import HashUtil from 'utils/HashUtil';
 import GaUtil from 'utils/GaUtil';
@@ -85,6 +86,7 @@ describe('ComplaintPage component', function () {
     wrapper.find(AccompliceOfficerSection).should.have.length(1);
     wrapper.find(InvestigatorSection).should.have.length(1);
     wrapper.find(Location).should.have.length(1);
+    wrapper.find(MediaSection).should.have.length(3);
   });
 
   it('should be tracked by Google Analytics when mounted', function () {

@@ -1,9 +1,9 @@
 import faker from 'faker';
 import f from 'utils/tests/f';
 
-import DocumentFactory from 'factories/DocumentFactory';
-import InvestigatorFactory from 'factories/InvestigatorFactory';
-import PointFactory from 'factories/PointFactory';
+import 'factories/MediaFactory';
+import 'factories/InvestigatorFactory';
+import 'factories/PointFactory';
 
 
 f.define('Allegation', {
@@ -43,8 +43,8 @@ f.define('Allegation', {
     return f.create('Point');
   },
 
-  'documents'() {
-    return f.createBatch(2, 'Document');
+  'attachment_files': function () {
+    return f.createBatch(2, 'Media');
   },
 
   'officer_allegation_set'() {

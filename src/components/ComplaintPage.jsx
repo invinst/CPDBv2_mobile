@@ -17,6 +17,8 @@ import AccompliceOfficerSection from 'components/ComplaintPage/AccompliceOfficer
 import InvestigatorSection from 'components/ComplaintPage/InvestigatorSection';
 import Location from 'components/ComplaintPage/Location';
 import style from 'styles/ComplaintPage.sass';
+import AllegationPresenter from 'presenters/AllegationPresenter';
+import MediaSection from 'components/ComplaintPage/MediaSection';
 
 
 const ComplaintPage = React.createClass({
@@ -60,6 +62,7 @@ const ComplaintPage = React.createClass({
     const categoryHashId = u.fetch(this.props, 'params.categoryHashId', 0);
     const presenter = ComplaintPagePresenter(complaint, categoryHashId);
     const classNames = cx('toggle-page', { 'content': toggle }, { 'animate': !toggle });
+    const allegationPresenter = AllegationPresenter(presenter.allegation);
 
     // TODO: Think about refactoring this later
     if (loading) {
@@ -104,6 +107,9 @@ const ComplaintPage = React.createClass({
                     <ComplainingWitness complainingWitnesses={ presenter.complainingWitnesses }/>
                     <AccompliceOfficerSection officerAllegations={ presenter.accompliceOfficerAllegation }/>
                     <InvestigatorSection allegation={ presenter.allegation }/>
+                    <MediaSection media={ allegationPresenter.documents } header={ 'Documents' }/>
+                    <MediaSection media={ allegationPresenter.videos } header={ 'Video' }/>
+                    <MediaSection media={ allegationPresenter.audios } header={ 'Audio' }/>
                     <Location allegation={ presenter.allegation }/>
                   </div>
                 </div>
