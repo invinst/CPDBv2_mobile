@@ -16,7 +16,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         loader: 'isparta-instrumenter-loader',
         include: [
-          path.join(__dirname, '/../src_redux')
+          path.join(__dirname, '/../src')
         ]
       },
       {
