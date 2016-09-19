@@ -25,7 +25,7 @@ module.exports = {
     hot: true,
     port: defaultSettings.port,
     publicPath: defaultSettings.publicPath,
-    noInfo: false
+    noInfo: true
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -37,7 +37,10 @@ module.exports = {
       styles: `${defaultSettings.srcPath}/styles/`,
       utils: `${defaultSettings.srcPath}/utils/`,
       constants: `${defaultSettings.srcPath}/constants/`,
+      reducers: `${defaultSettings.srcPath}/reducers/`,
+      middleware: `${defaultSettings.srcPath}/middleware/`,
       presenters: `${defaultSettings.srcPath}/presenters/`,
+      containers: `${defaultSettings.srcPath}/containers/`,
       config: `${defaultSettings.srcPath}/config/` + process.env.REACT_WEBPACK_ENV
     }
   },

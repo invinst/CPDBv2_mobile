@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
-import Searchable from 'components/Shared/SearchablePage.react';
+import Searchable from 'components/Shared/SearchablePage';
 import SearchablePageStore from 'stores/Shared/SearchablePageStore';
 import SharedExample from 'utils/tests/SharedExample';
 import SuggestionAPI from 'utils/SuggestionAPI';

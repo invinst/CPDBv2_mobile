@@ -1,4 +1,4 @@
-import AppConstants from 'constants/AppConstants';
+import AppConstants from 'constants';
 import DeviceUtil from 'utils/DeviceUtil';
 import u from 'utils/HelperUtil';
 

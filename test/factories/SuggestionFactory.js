@@ -19,10 +19,6 @@ f.define('Suggestion', {
   },
 
   'meta'() {
-    if (faker.random.number(10) % 2 == 0) {
-      return f.create('AllegationFactory');
-    } else {
-      return f.create('OfficerFactory');
-    }
+    return f.create('AllegationFactory');
   }
 });

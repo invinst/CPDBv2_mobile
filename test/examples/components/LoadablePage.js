@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-addons-test-utils';
-import LoadingPage from 'components/Shared/LoadingPage.react';
-import NotMatchedComplaintPage from 'components/ComplaintPage/NotMatchedComplaintPage.react';
+import LoadingPage from 'components/Shared/LoadingPage';
+import NotMatchedComplaintPage from 'components/ComplaintPage/NotMatchedComplaintPage';
 import SharedExample from 'utils/tests/SharedExample';
 
 

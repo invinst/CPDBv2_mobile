@@ -16,8 +16,13 @@ module.exports = {
         test: /\.(js|jsx)$/,
         loader: 'isparta-instrumenter-loader',
         include: [
-          path.join(__dirname, '/../src')
+          path.join(__dirname, '/../src_redux')
         ]
+      },
+      {
+        test: /\.(js|jsx)$/,
+        include: srcPath,
+        loader: 'eslint-loader'
       }
     ],
     loaders: [
@@ -47,6 +52,9 @@ module.exports = {
       factories: path.join(__dirname, '/../test/factories'),
       components: srcPath + 'components/',
       presenters: srcPath + 'presenters/',
+      reducers: srcPath + 'reducers/',
+      middleware: srcPath + 'middleware/',
+      containers: srcPath + 'containers/',
       stores: srcPath + 'stores/',
       utils: srcPath + 'utils/',
       constants: srcPath + 'constants/',
@@ -58,5 +66,11 @@ module.exports = {
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
     })
-  ]
+  ],
+  externals: {
+    'cheerio': 'window',
+    'react/addons': true,
+    'react/lib/ExecutionEnvironment': true,
+    'react/lib/ReactContext': true
+  }
 };

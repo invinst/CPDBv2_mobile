@@ -3,7 +3,7 @@ var webpackCfg = require('./webpack.config');
 module.exports = function (config) {
   config.set({
     basePath: '',
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
     files: [
       'test/loadtests.js'
     ],

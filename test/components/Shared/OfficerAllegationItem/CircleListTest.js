@@ -4,7 +4,7 @@ import ReactTestUtils from 'react-addons-test-utils';
 import should from 'should';
 import shouldReact from 'utils/tests/should/React';
 
-import CircleList from 'components/Shared/OfficerAllegationItem/CircleList.react';
+import CircleList from 'components/Shared/OfficerAllegationItem/CircleList';
 
 
 describe('CircleListComponent', () => {

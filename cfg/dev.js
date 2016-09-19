@@ -14,6 +14,14 @@ let config = Object.assign({}, baseConfig, {
     'webpack/hot/only-dev-server',
     './src/index'
   ],
+  devServer: {
+    contentBase: './src/',
+    historyApiFallback: true,
+    hot: true,
+    port: defaultSettings.port,
+    publicPath: defaultSettings.publicPath,
+    noInfo: false
+  },
   cache: true,
   devtool: 'eval-source-map',
   plugins: [
