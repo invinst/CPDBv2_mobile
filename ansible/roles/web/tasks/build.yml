@@ -31,6 +31,10 @@
   become_user: root
   tags: deploy
 
+- name: Make sure logs directory is available
+  file: path={{ application_logs_path }} state=directory owner={{ deploy_user }} group={{ deploy_group }} mode=0774
+  tags: deploy
+
 - name: Clean old nginx dist build
   file: path={{ nginx_dist_path }} state=absent
   tags: deploy

@@ -29,6 +29,5 @@ node_modules
 # Bower
 bower_components/
 .idea/
-.vagrant/*
-.idea/
+.vagrant/
 ansible/*.retry

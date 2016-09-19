@@ -6,6 +6,9 @@ server {
     gzip_types text/html application/javascript application/x-javascript text/javascript text/css ;
     client_max_body_size 4G;
 
+    access_log {{ nginx_access_log_file }};
+    error_log {{ nginx_error_log_file }};
+
     root {{ nginx_dist_path }};
 
     location = / {
