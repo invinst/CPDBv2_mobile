@@ -1,0 +1,45 @@
+---
+- name: Creates CPDB directory for deployment
+  become: yes
+  become_user: root
+  file: path=/CPDB state=directory owner={{ deploy_user }} group={{ deploy_group }}
+  tags: setup
+
+- name: Pull code from frontend repo
+  git: repo=git@github.com:EastAgile/CPDBv2_frontend.git
+    dest={{ application_root_path }}
+    accept_hostkey=True
+    version={{ branch }}
+    key_file=/home/ansible/.ssh/khoi_github
+  when: pull_code_from_git == "yes"
+  tags: deploy
+
+- name : Install packages based on package.json.
+  command: npm install
+    chdir={{ application_root_path }}
+  tags: deploy
+
+- name: Clean static root
+  become: yes
+  become_user: root
+  file: path={{ nginx_dist_path }} state=absent
+  tags: deploy
+
+- name: Make sure `/var/www` is available
+  file: path=/var/www state=directory owner={{ deploy_user }} group={{ deploy_group }}
+  become: yes
+  become_user: root
+
+- name: Clean old disk 1
+  file: path={{ nginx_dist_path }} state=absent
+
+- name: Clean old disk 2
+  file: path={{ application_dist_path }}/dist state=absent
+
+- name: Build everything
+  command: npm run dist
+    chdir={{ application_root_path }}
+  tags: deploy
+
+- name: Move file to dist
+  command: mv {{ application_dist_path }}/dist {{ nginx_dist_path }}
