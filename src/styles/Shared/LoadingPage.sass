@@ -1,4 +1,6 @@
-.loading-page
+@import '../Variables'
+
+:local(.loading-page)
   padding: 5%
   .loader
     position: relative
@@ -25,6 +27,7 @@
     stroke-dashoffset: 0
     animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite
     stroke-linecap: round
+
 @keyframes rotate
   100%
     transform: rotate(360deg)

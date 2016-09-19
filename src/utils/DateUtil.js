@@ -1,5 +1,5 @@
 import moment from 'moment';
-import AppConstants from 'constants/AppConstants';
+import AppConstants from 'constants';
 
 
 const DateUtil = {

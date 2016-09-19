@@ -20,7 +20,7 @@ module.exports = {
     publicPath: `.${defaultSettings.publicPath}`
   },
   devServer: {
-    contentBase: './src_redux/',
+    contentBase: './src/',
     historyApiFallback: true,
     hot: true,
     port: defaultSettings.port,

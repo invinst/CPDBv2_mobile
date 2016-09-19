@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import ReactDOM from 'react-dom';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils, { renderIntoDocument } from 'react-addons-test-utils';
 import should from 'should';
 import u from 'utils/HelperUtil';
+import { Provider } from 'react-redux';
 
 
-should.Assertion.add('renderable', function () {
-  var element = ReactTestUtils.renderIntoDocument(React.createElement(this.obj));
+should.Assertion.add('renderable', function (props) {
+  let element;
+  if (props && props.store) {
+    const { store, ...otherProps } = props;
+    element = renderIntoDocument(
+      <Provider store={ store }>
+        { createElement(this.obj, otherProps) }
+      </Provider>
+    );
+  } else {
+    element = renderIntoDocument(createElement(this.obj, props));
+  }
 
   element.should.be.ok();
 
