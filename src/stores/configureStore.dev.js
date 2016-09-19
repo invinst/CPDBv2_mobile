@@ -5,9 +5,9 @@ import configuredAxiosMiddleware from 'middleware/configured-axios-middleware';
 import rootReducer from 'reducers/root-reducer';
 
 import createLogger from 'redux-logger';
+
 const logger = createLogger({
-  diff: true,
-  stateTransformer: (obj) => (JSON.stringify(obj))
+  diff: true
 });
 
 export default function configureStore(initialState) {

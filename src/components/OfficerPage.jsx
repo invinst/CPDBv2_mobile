@@ -23,6 +23,13 @@ const OfficerPage = React.createClass({
     officer: PropTypes.object
   },
 
+  componentWillReceiveProps (newProps) {
+    if (newProps.pk != this.props.pk) {
+      const { getOfficer } = this.props;
+      getOfficer({ pk: newProps.pk });
+    }
+  },
+
   componentDidMount() {
     const { getOfficer, pk } = this.props;
     getOfficer({ pk: pk });

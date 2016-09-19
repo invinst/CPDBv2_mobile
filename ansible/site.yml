@@ -1,7 +1,0 @@
----
-- hosts: webservers
-  roles:
-    - frontend_server
-  vars:
-    - deploy_user: ansible
-    - deploy_group: ansible
