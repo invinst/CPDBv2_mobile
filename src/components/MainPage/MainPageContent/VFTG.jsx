@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 
 import style from 'styles/MainPage/MainPageContent/VFTG.sass';
+import mediumIcon from 'img/medium-icon.svg'
 
 
 const VFTG = React.createClass({
@@ -20,7 +21,7 @@ const VFTG = React.createClass({
         </div>
         <div className='news'>Complaints against Chicago Police rarely result in discipline data shows.</div>
         <div className='most-recent'>
-          <div><img src='../../../img/medium-icon.svg' /></div>
+          <div><img src={ mediumIcon } /></div>
           <div className='most-recent-email'>Most Recent Email</div>
         </div>
         <div className='clearfix'></div>
