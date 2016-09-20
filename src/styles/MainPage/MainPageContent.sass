@@ -6,9 +6,52 @@
   color: $logo-text-color
   background-color: $logo-background
   padding-bottom: 20px
+
   &.top-left
     background-color: transparent
     padding-bottom: 0
+
+    .wrapper
+      margin-top: 0px
+
+  .search-bar
+    background-color: $white
+    color: $search-bar-color
+    font-size: 15px
+    border: solid 1px #d8d8d8
+    height: 51px
+    line-height: 51px
+
+    .input-text
+      background-color: $white
+      color: $black
+      width: calc(100% - 30px)
+      font-weight: 300
+
+    ::-webkit-input-placeholder
+      color: black
+
+    :-moz-placeholder
+      color: $search-bar-color
+
+    ::-moz-placeholder
+      color: $search-bar-color
+
+    :-ms-input-placeholder
+      color: $search-bar-color
+
+  .wrapper
+    margin-top: 140px
+
+  .search-description
+    padding: 21px 11px 0 11px
+    font-size: 13px
+    font-weight: normal
+    font-style: normal
+    font-stretch: normal
+    letter-spacing: 0
+    color: rgba(0, 0, 0, 0.5)
+
   .search-wrapper
     position: relative
     width: 100%
@@ -17,5 +60,7 @@
       margin-top: 0
       position: relative
       padding: 0
+
   .search-results
     color: $search-results-text-color
+

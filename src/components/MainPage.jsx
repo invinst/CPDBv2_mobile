@@ -6,7 +6,6 @@ import cx from 'classnames';
 import style from 'styles/MainPage.sass';
 
 import MainPageContent from 'components/MainPage/MainPageContent';
-import About from 'components/Shared/About';
 
 
 class MainPage extends Component {
@@ -25,7 +24,6 @@ class MainPage extends Component {
     return (
       <div className={ cx('content', style.mainPage) }>
         <MainPageContent topLeft={ isSearchFocused }/>
-        <About topLeft={ isSearchFocused }/>
       </div>
     );
   }

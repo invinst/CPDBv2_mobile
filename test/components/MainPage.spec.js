@@ -4,7 +4,6 @@ import { mount, shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 
 import MainPage from 'components/MainPage';
-import About from 'components/Shared/About';
 import MainPageContent from 'components/MainPage/MainPageContent';
 
 import { spy } from 'sinon';
@@ -23,9 +22,8 @@ describe('MainPage component', function () {
     wrapper.should.be.ok();
   });
 
-  it('should render MainPageContent and About as subcomponents', function () {
+  it('should render MainPageContent as subcomponents', function () {
     let wrapper = shallow(<MainPage />);
-    wrapper.find(About).should.have.length(1);
     wrapper.find(MainPageContent).should.have.length(1);
   });
 

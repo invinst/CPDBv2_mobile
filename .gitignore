@@ -31,3 +31,5 @@ bower_components/
 .idea/
 .vagrant/
 ansible/*.retry
+ngrok
+ngrok-stable-darwin-amd64.zip
