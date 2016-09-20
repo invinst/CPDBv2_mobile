@@ -3,6 +3,7 @@ import React from 'react';
 import SearchBarContainer from 'containers/Shared/SearchBarContainer';
 import SearchResultsContainer from 'containers/Shared/SearchResultsContainer';
 import Header from 'components/MainPage/MainPageContent/Header';
+import VFTG from 'components/MainPage/MainPageContent/VFTG';
 import style from 'styles/MainPage/MainPageContent.sass';
 
 
@@ -31,6 +32,7 @@ const MainPageContent = React.createClass({
         </div>
 
         <SearchResultsContainer />
+        <VFTG topLeft={ topLeft } />
       </div>
     );
   }
