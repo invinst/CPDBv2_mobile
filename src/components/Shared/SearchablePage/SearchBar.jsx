@@ -45,10 +45,10 @@ const SearchBar = React.createClass({
     });
 
     return (
-      <div className={ cx(style.searchBar, 'animation') }>
+      <div className={ cx(style.searchBar, 'search-bar animation') }>
         <input
           className='input-text'
-          placeholder='Search officers or complaints'
+          placeholder='Search'
           ref='input'
           onChange={ this.onInputChange }
           onFocus={ this.onFocus }

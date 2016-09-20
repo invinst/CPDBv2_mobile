@@ -28,8 +28,8 @@ node_modules
 
 # Bower
 bower_components/
-
 .idea/
 .vagrant/
-vagrant.retry
-ansible/staging.retry
+ansible/*.retry
+ngrok
+ngrok-stable-darwin-amd64.zip
