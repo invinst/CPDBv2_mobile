@@ -59,6 +59,7 @@ module.exports = {
       utils: srcPath + 'utils/',
       constants: srcPath + 'constants/',
       styles: srcPath + 'styles/',
+      img: `${defaultSettings.srcPath}/img/`,
       config: srcPath + 'config/' + process.env.REACT_WEBPACK_ENV
     }
   },
