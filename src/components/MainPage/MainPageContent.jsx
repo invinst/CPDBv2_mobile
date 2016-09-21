@@ -9,13 +9,15 @@ import style from 'styles/MainPage/MainPageContent.sass';
 
 const MainPageContent = React.createClass({
   propTypes: {
-    topLeft: React.PropTypes.number
+    topLeft: React.PropTypes.number,
+    query: React.PropTypes.string,
   },
 
   render() {
-    const topLeft = this.props.topLeft;
+    const { topLeft, query } = this.props;
     const searchBarWrapperClassNames = cx('search-wrapper animation', { 'top-left': topLeft });
     const headerClassNames = cx(style.mainPageContent, { 'top-left': topLeft });
+    const searchDescriptionClassNames = cx('search-description', { 'hidden': !!query });
 
     return (
       <div className={ headerClassNames }>
@@ -26,7 +28,7 @@ const MainPageContent = React.createClass({
               <SearchBarContainer />
             </div>
           </div>
-          <div className='search-description'>Type the name of a police officer, badge number, or CRID number.</div>
+          <div className={ searchDescriptionClassNames }>Type the name of a police officer, badge number, or CRID number.</div>
         </div>
 
         <SearchResultsContainer />

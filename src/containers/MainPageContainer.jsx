@@ -7,7 +7,8 @@ import { suggestTerm } from 'actions/suggestion';
 
 function mapStateToProps(state, ownProps) {
   return {
-    query: ownProps.params.query,
+    urlQuery: ownProps.params.query,
+    query: state.suggestionApp.query,
     isSearchFocused: state.suggestionApp.isSearchFocused
   };
 }

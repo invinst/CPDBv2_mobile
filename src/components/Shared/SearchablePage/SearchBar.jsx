@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import cx from 'classnames';
 
 import style from 'styles/Shared/SearchablePage/SearchBar.sass';
+import searchIcon from 'img/ic-audio.svg';
 
 
 const SearchBar = React.createClass({
@@ -12,7 +13,7 @@ const SearchBar = React.createClass({
     inputChanged: PropTypes.func.isRequired,
     suggestTerm: PropTypes.func.isRequired,
     isSearchFocused: PropTypes.number,
-    query: PropTypes.string
+    query: PropTypes.string,
   },
 
   onInputChange(event) {
@@ -39,13 +40,13 @@ const SearchBar = React.createClass({
 
   render() {
     const { isSearchFocused, query } = this.props;
-    const iconClassName = cx('icon', {
-      'icon-search': !isSearchFocused,
-      'icon-close': isSearchFocused
+    const iconClassName = cx('search-icon', {
+      'hidden': !isSearchFocused
     });
 
     return (
       <div className={ cx(style.searchBar, 'search-bar animation') }>
+        <img src={ searchIcon } className={ iconClassName } onClick={ this.onSearchIconClick } />
         <input
           className='input-text'
           placeholder='Search'
@@ -54,7 +55,6 @@ const SearchBar = React.createClass({
           onFocus={ this.onFocus }
           value={ query }
           onBlur={ this.onBlur }/>
-        <span className={ iconClassName } onClick={ this.onSearchIconClick }/>
       </div>
     );
   }
