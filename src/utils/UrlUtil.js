@@ -6,12 +6,12 @@ export const v1Url = function (endpoint) {
   return S('{{baseUrl}}{{endpoint}}').template({
     'baseUrl': config.baseUrlV1,
     'endpoint': endpoint
-  }).s
+  }).s;
 };
 
 export const v2Url = function (endpoint) {
   return S('{{baseUrl}}{{endpoint}}').template({
     'baseUrl': config.baseUrlV2,
     'endpoint': endpoint
-  }).s
+  }).s;
 };

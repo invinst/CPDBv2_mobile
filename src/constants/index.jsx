@@ -210,6 +210,7 @@ export default {
   SUGGESTION_API_ENDPOINT: '/api/suggestion/',
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
+  VFTG_API_ENDPOINT: '/vftg',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',

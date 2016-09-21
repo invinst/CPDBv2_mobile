@@ -1,17 +1,30 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
+import S from 'string';
 
 import style from 'styles/MainPage/MainPageContent/VFTG.sass';
-import mediumIcon from 'img/medium-icon.svg'
+import mediumIcon from 'img/medium-icon.svg';
 
 
-const VFTG = React.createClass({
-  propTypes: {
-    topLeft: React.PropTypes.number
-  },
+export default class VFTG extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    const { subscribeEmail } = this.props;
+
+    console.log(this.emailInput.value);
+
+    if (!S(this.emailInput.value).isEmpty()) {
+      subscribeEmail(this.emailInput.value);
+    }
+  }
 
   render() {
-    const topLeft = this.props.topLeft;
+    const topLeft = this.props.isSearchFocused;
 
     return (
       <div className={ cx(style.vftg, 'vftg row animation', { 'top-left': topLeft }) }>
@@ -28,18 +41,21 @@ const VFTG = React.createClass({
 
         <div className='email-box'>
           <input
+            ref={ el => { this.emailInput = el; } }
             className='email-input'
             placeholder='Enter your email'
-            ref='input'
             />
         </div>
 
         <div className='subscribe'>
-          <div className='btn btn-subscribe'>Subscribe</div>
+          <div onClick={ this.handleClick } className='btn btn-subscribe'>Subscribe</div>
         </div>
       </div>
     );
   }
-});
+}
 
-export default VFTG;
+VFTG.proTypes = {
+  topLeft: React.PropTypes.number,
+  subscribeEmail: React.PropTypes.func
+};
