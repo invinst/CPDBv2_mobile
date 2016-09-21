@@ -4,6 +4,7 @@ import S from 'string';
 
 import style from 'styles/MainPage/MainPageContent/VFTG.sass';
 import mediumIcon from 'img/medium-icon.svg';
+import Spinner from 'components/Shared/Spinner';
 
 
 export default class VFTG extends Component {

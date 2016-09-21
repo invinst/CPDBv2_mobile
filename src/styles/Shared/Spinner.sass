@@ -1,0 +1,19 @@
+@keyframes rotation
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)
+
+:local(.spinner)
+  animation: rotation 1s linear infinite
+  width: 20px
+  height: 20px
+  margin: 0 auto
+
+  .path-style
+    opacity: 1
+    stroke: #000
+    stroke-width: 4
+    fill: none
+    stroke-dashoffset: 110.244
+    stroke-dasharray: 204.244
