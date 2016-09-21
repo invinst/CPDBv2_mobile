@@ -31,7 +31,7 @@ describe('MainPage component', function () {
     const suggestTerm = spy();
     mount(
       <Provider store={ store }>
-        <MainPage suggestTerm={ suggestTerm } query='something not empty' />
+        <MainPage suggestTerm={ suggestTerm } urlQuery='something not empty' />
       </Provider>
     );
     suggestTerm.called.should.be.true();
@@ -41,7 +41,7 @@ describe('MainPage component', function () {
     const suggestTerm = spy();
     mount(
       <Provider store={ store }>
-        <MainPage suggestTerm={ suggestTerm } query='' />
+        <MainPage suggestTerm={ suggestTerm } urlQuery='' />
       </Provider>
     );
     suggestTerm.called.should.be.false();

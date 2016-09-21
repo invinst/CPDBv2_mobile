@@ -19,4 +19,12 @@ describe('<MainPageContent />', function () {
     wrapper.find(SearchBarContainer).should.have.length(1);
     wrapper.find(SearchResultsContainer).should.have.length(1);
   });
+
+  it('should hide search description when searching', function () {
+    let wrapper = shallow(<MainPageContent query='something not empty' />);
+    wrapper.find('.search-description .hidden').should.have.length(1);
+
+    wrapper = shallow(<MainPageContent query='' />);
+    wrapper.find('.search-description .hidden').should.have.length(0);
+  });
 });

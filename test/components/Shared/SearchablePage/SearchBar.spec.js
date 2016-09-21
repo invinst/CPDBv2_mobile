@@ -54,7 +54,7 @@ describe('SearchBar component', function () {
     const clearSpy = spy();
 
     const wrapper = shallow(<SearchBar clear={ clearSpy }/>);
-    wrapper.find('span').simulate('click');
+    wrapper.find('.search-icon').simulate('click');
 
     clearSpy.called.should.be.true();
   });

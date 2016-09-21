@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import SearchBar from 'components/Shared/SearchablePage/SearchResults';
+import SearchResults from 'components/Shared/SearchablePage/SearchResults';
 import { focus, blur, clear, inputChanged, suggestTerm } from 'actions/suggestion';
 
 
@@ -17,4 +17,4 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = {
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);
