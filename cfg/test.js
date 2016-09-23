@@ -27,7 +27,7 @@ module.exports = {
     ],
     loaders: [
       {
-        test: /\.(png|jpg|gif|woff|woff2|css|sass|scss|less|styl|json)$/,
+        test: /\.(svg|png|jpg|gif|woff|woff2|css|sass|scss|less|styl|json)$/,
         loader: 'null-loader'
       },
       {
@@ -59,6 +59,7 @@ module.exports = {
       utils: srcPath + 'utils/',
       constants: srcPath + 'constants/',
       styles: srcPath + 'styles/',
+      img: srcPath + 'img/',
       config: srcPath + 'config/' + process.env.REACT_WEBPACK_ENV
     }
   },
