@@ -19,10 +19,13 @@
     .time
       color: rgba(38, 38, 38, 0.5)
   .news
-    font-size: 20px
-    font-weight: 300
-    color: $thunder
     padding-left: 11px
+    a
+      font-size: 20px
+      font-weight: 300
+      color: $thunder
+      text-decoration: none
+      text-indent: 0
   .most-recent
     padding: 19px 0 44px 11px
     div
@@ -58,3 +61,8 @@
       border: solid 1px $alto-solid
       font-weight: 500
       background-color: transparent
+      padding: 8px
+    .subscribe-loading, .subscribe-success
+      opacity: 0.65
+    .subscribe-failure
+      border-color: $red

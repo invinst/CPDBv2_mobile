@@ -9,16 +9,28 @@
   font-size: 15px
   height: 60px
   line-height: 60px
+
   .input-text
-    background-color: $search-bar-background-color
-    color: $search-bar-color
-    width: calc(100% - 30px)
     border: 0
-    font-size: 15px
+    font-size: 16px
+    padding-left: 13px
+    letter-spacing: 0px
+
+    &.no-pad
+      padding-left: 0px
+
   .input-text:focus
     outline: 0
+
   .search-icon
-    padding: 0 13px 0 4px
+    padding: 3px 6px
+    width: 24px
+    height: 24px
+    background-color: $wild-sand
+
+    img
+      object-fit: contain
+
   ::-webkit-input-placeholder
     color: black
   :-moz-placeholder

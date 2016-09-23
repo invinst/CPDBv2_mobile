@@ -4,6 +4,7 @@ import {
   SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_INPUT_CHANGED
 } from 'actions/suggestion';
 import constants from 'constants';
+import { v1Url } from 'utils/UrlUtil';
 
 
 describe('suggestions actions', function () {
@@ -13,7 +14,7 @@ describe('suggestions actions', function () {
         types: [SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE],
         payload: {
           request: {
-            url: constants.SUGGESTION_API_ENDPOINT,
+            url: v1Url(constants.SUGGESTION_API_ENDPOINT),
             adapter: undefined,
             params: undefined
           }

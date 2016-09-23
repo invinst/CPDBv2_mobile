@@ -5,12 +5,18 @@ import configureStore from 'redux-mock-store';
 
 import MainPage from 'components/MainPage';
 import MainPageContent from 'components/MainPage/MainPageContent';
+import configuredAxiosMiddleware from 'middleware/configured-axios-middleware';
 
 import { spy } from 'sinon';
 
 
-const mockStore = configureStore();
+const mockStore = configureStore([configuredAxiosMiddleware]);
 const store = mockStore({
+  landingPage: {
+    date: '',
+    contentText: '',
+    contentLink: ''
+  },
   suggestionApp: {
     query: 'query'
   }

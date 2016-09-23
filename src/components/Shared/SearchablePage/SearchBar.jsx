@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import cx from 'classnames';
 
 import style from 'styles/Shared/SearchablePage/SearchBar.sass';
-import searchIcon from 'img/ic-audio.svg';
+import searchIcon from 'img/arrow.svg';
 
 
 const SearchBar = React.createClass({
@@ -40,15 +40,16 @@ const SearchBar = React.createClass({
 
   render() {
     const { isSearchFocused, query } = this.props;
-    const iconClassName = cx('search-icon', {
-      'hidden': !isSearchFocused
-    });
+    const isHiddenClass = cx({ 'hidden': !isSearchFocused });
+    const inputClass = cx('input-text', { 'no-pad': !isSearchFocused });
 
     return (
       <div className={ cx(style.searchBar, 'search-bar animation') }>
-        <img src={ searchIcon } className={ iconClassName } onClick={ this.onSearchIconClick } />
+        <span className={ cx('search-icon', isHiddenClass) }  onClick={ this.onSearchIconClick }>
+          <img src={ searchIcon } className={ isHiddenClass } />
+        </span>
         <input
-          className='input-text'
+          className={ inputClass }
           placeholder='Search'
           ref='input'
           onChange={ this.onInputChange }
