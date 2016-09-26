@@ -5,6 +5,10 @@ import MainPageContent from 'components/MainPage/MainPageContent';
 import Header from 'components/MainPage/MainPageContent/Header';
 import SearchBarContainer from 'containers/Shared/SearchBarContainer';
 import SearchResultsContainer from 'containers/Shared/SearchResultsContainer';
+import VFTGContainer from 'containers/MainPage/MainPageContent/VFTGContainer';
+import About from 'components/MainPage/MainPageContent/About';
+import Collaborate from 'components/MainPage/MainPageContent/Collaborate';
+import Footer from 'components/MainPage/MainPageContent/Footer';
 
 
 describe('<MainPageContent />', function () {
@@ -18,6 +22,10 @@ describe('<MainPageContent />', function () {
     wrapper.find(Header).should.have.length(1);
     wrapper.find(SearchBarContainer).should.have.length(1);
     wrapper.find(SearchResultsContainer).should.have.length(1);
+    wrapper.find(VFTGContainer).should.have.length(1);
+    wrapper.find(About).should.have.length(1);
+    wrapper.find(Collaborate).should.have.length(1);
+    wrapper.find(Footer).should.have.length(1);
   });
 
   it('should hide search description when searching', function () {

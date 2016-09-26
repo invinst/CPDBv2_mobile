@@ -2,8 +2,11 @@ import cx from 'classnames';
 import React, { Component } from 'react';
 import SearchBarContainer from 'containers/Shared/SearchBarContainer';
 import SearchResultsContainer from 'containers/Shared/SearchResultsContainer';
-import Header from 'components/MainPage/MainPageContent/Header';
 import VFTGContainer from 'containers/MainPage/MainPageContent/VFTGContainer';
+import Header from 'components/MainPage/MainPageContent/Header';
+import About from 'components/MainPage/MainPageContent/About';
+import Collaborate from 'components/MainPage/MainPageContent/Collaborate';
+import Footer from 'components/MainPage/MainPageContent/Footer';
 import style from 'styles/MainPage/MainPageContent.sass';
 
 
@@ -34,6 +37,9 @@ export default class MainPageContent extends Component {
 
         <SearchResultsContainer />
         <VFTGContainer />
+        <About />
+        <Collaborate />
+        <Footer />
       </div>
     );
   }
