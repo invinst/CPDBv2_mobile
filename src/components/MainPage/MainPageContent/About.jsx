@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import style from 'styles/MainPage/MainPageContent/LandingSection.sass';
+import cx from 'classnames';
+
+import style from 'styles/MainPage/MainPageContent/About.sass';
 
 
 export default class About extends Component {
@@ -9,7 +11,7 @@ export default class About extends Component {
 
   render() {
     return (
-      <div className={ style.landingSection }>
+      <div className={ cx(style.about, 'landing-section') }>
         <div className='landing-section-header'>
           <p className='landing-section-title'>About</p>
         </div>
