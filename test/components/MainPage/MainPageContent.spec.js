@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { spy } from 'sinon';
 
 import MainPageContent from 'components/MainPage/MainPageContent';
 import Header from 'components/MainPage/MainPageContent/Header';
@@ -13,12 +14,12 @@ import Footer from 'components/MainPage/MainPageContent/Footer';
 
 describe('<MainPageContent />', function () {
   it('should render', function () {
-    let wrapper = shallow(<MainPageContent />);
+    let wrapper = shallow(<MainPageContent requestLandingPage={ spy() } />);
     wrapper.should.be.ok();
   });
 
   it('should render subcomponents', function () {
-    let wrapper = shallow(<MainPageContent />);
+    let wrapper = shallow(<MainPageContent requestLandingPage={ spy() } />);
     wrapper.find(Header).should.have.length(1);
     wrapper.find(SearchBarContainer).should.have.length(1);
     wrapper.find(SearchResultsContainer).should.have.length(1);
@@ -29,10 +30,10 @@ describe('<MainPageContent />', function () {
   });
 
   it('should hide search description when searching', function () {
-    let wrapper = shallow(<MainPageContent query='something not empty' />);
+    let wrapper = shallow(<MainPageContent requestLandingPage={ spy() } query='something not empty' />);
     wrapper.find('.search-description .hidden').should.have.length(1);
 
-    wrapper = shallow(<MainPageContent query='' />);
+    wrapper = shallow(<MainPageContent requestLandingPage={ spy() } query='' />);
     wrapper.find('.search-description .hidden').should.have.length(0);
   });
 });
