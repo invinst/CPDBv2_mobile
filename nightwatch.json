@@ -34,7 +34,7 @@
         "path" : "./screenshots"
       },
       "desiredCapabilities" : {
-        "browserName" : "phantomjs",
+        "browserName" : "chrome",
         "javascriptEnabled" : true,
         "acceptSslCerts" : true
       }

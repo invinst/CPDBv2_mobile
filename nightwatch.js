@@ -8,6 +8,7 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const config = require('./webpack.config');
 const open = require('open');
+var spawn = require('cross-spawn');
 
 const server = new WebpackDevServer(webpack(config), config.devServer);
 
@@ -25,7 +26,6 @@ if (opts.indexOf('--config') === -1) {
   opts = opts.concat(['--config', 'nightwatch.conf.js']);
 }
 
-var spawn = require('cross-spawn');
 var runner = spawn('./node_modules/.bin/nightwatch', opts, { stdio: 'inherit' });
 
 runner.on('exit', function (code) {

@@ -1,3 +1,6 @@
+'use strict';
+
+
 describe('MainPageTest', function () {
   it('should return suggestions for officer name', function (client) {
     client.maximizeWindow();
