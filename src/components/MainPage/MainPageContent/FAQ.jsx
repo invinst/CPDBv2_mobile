@@ -18,7 +18,6 @@ export default class FAQ extends Component {
 
   render() {
     const topLeft = this.props.isSearchFocused;
-    console.log('props', this.props);
     const { faqs } = this.props.faqSection;
 
     return (
@@ -38,6 +37,10 @@ export default class FAQ extends Component {
   }
 }
 
-FAQ.proTypes = {
+FAQ.propTypes = {
   faqSection: React.PropTypes.object
+};
+
+FAQ.defaultProps = {
+  faqSection: []
 };
