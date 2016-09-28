@@ -21,7 +21,7 @@ export default class FAQ extends Component {
     const { faqs } = this.props.faqSection;
 
     return (
-      <div className={ cx(style.faq, 'landing-section faq animation', {'top-left': topLeft}) }>
+      <div className={ cx(style.faq, 'landing-section faq animation', {'hidden': topLeft}) }>
         <div className='row'>
           <div className='landing-section-header left'>
             <p className='landing-section-title'>FAQ</p>
@@ -42,5 +42,6 @@ FAQ.propTypes = {
 };
 
 FAQ.defaultProps = {
-  faqSection: []
+  faqSection: [],
+  isSearchFocused: false
 };

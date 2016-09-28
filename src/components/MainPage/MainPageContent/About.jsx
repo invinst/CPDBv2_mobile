@@ -17,10 +17,11 @@ export default class About extends Component {
   }
 
   render() {
+    const isSearchFocused = this.props.isSearchFocused;
     const {aboutHeader, aboutContent} = this.props.aboutSection;
 
     return (
-      <div className={ cx(style.about, 'about landing-section') }>
+      <div className={ cx(style.about, 'about landing-section', { hidden: isSearchFocused }) }>
         <div className='landing-section-header'>
           <p className='landing-section-title'> { aboutHeader } </p>
         </div>
@@ -37,7 +38,8 @@ About.defaultProps = {
   aboutSection: {
     aboutHeader: '',
     aboutContent: ''
-  }
+  },
+  isSearchFocused: false
 };
 
 About.proTypes = {

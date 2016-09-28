@@ -43,11 +43,11 @@ export default class MainPageContent extends Component {
         </div>
 
         <SearchResultsContainer />
-        <FAQ faqSection={ faqSection }/>
+        <FAQ faqSection={ faqSection } isSearchFocused={ topLeft }/>
         <VFTGContainer />
-        <About aboutSection={ aboutSection } />
-        <Collaborate collaborateSection={ collaborateSection } />
-        <Footer />
+        <About aboutSection={ aboutSection } isSearchFocused={ topLeft }/>
+        <Collaborate collaborateSection={ collaborateSection } isSearchFocused={ topLeft } />
+        <Footer isSearchFocused={ topLeft } />
       </div>
     );
   }

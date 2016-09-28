@@ -5,7 +5,7 @@ import { LANDING_PAGE_REQUEST_SUCCESS, LANDING_PAGE_REQUEST_FAILURE } from 'acti
 
 export default handleActions({
   [LANDING_PAGE_REQUEST_SUCCESS]: (state, action) => ({
-    faqs: action.payload['faqs'] || '',
+    faqs: action.payload['faqs'] || ''
   }),
   [LANDING_PAGE_REQUEST_FAILURE]: (state, action) => ({})
 }, {});
