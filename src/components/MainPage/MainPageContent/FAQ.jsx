@@ -1,16 +1,25 @@
 import React, {Component, PropTypes} from 'react';
+import { map } from 'lodash';
 
 import cx from 'classnames';
 
 import style from 'styles/MainPage/MainPageContent/FAQ.sass';
 
-export default class VFTG extends Component {
+export default class FAQ extends Component {
   constructor(props) {
     super(props);
   }
 
+  renderContent(faqs) {
+    return map(faqs, (question, key) => (
+      <p className='faq-paragraph' key={ key }>{ question.title }</p>
+    ));
+  }
+
   render() {
     const topLeft = this.props.isSearchFocused;
+    console.log('props', this.props);
+    const { faqs } = this.props.faqSection;
 
     return (
       <div className={ cx(style.faq, 'landing-section faq animation', {'top-left': topLeft}) }>
@@ -22,11 +31,13 @@ export default class VFTG extends Component {
         </div>
 
         <div className='faq-content'>
-          <p className="faq-paragraph">How accurate is the data?</p>
-          <p className="faq-paragraph">How current is the data?</p>
-          <p className="faq-paragraph last">What are the Moore and Bond datasets and how do they affect the data?</p>
+          { this.renderContent(faqs) }
         </div>
       </div>
     );
   }
 }
+
+FAQ.proTypes = {
+  faqSection: React.PropTypes.object
+};

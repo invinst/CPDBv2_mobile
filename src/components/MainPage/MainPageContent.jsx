@@ -18,7 +18,8 @@ export default class MainPageContent extends Component {
   }
 
   render() {
-    const { topLeft, query, aboutSection, collaborateSection } = this.props;
+    console.log('Main Page', this.props);
+    const { topLeft, query, aboutSection, collaborateSection, faqSection } = this.props;
     const searchBarWrapperClassNames = cx('search-wrapper animation', { 'top-left': topLeft });
     const headerClassNames = cx(style.mainPageContent, { 'top-left': topLeft });
 
@@ -42,7 +43,7 @@ export default class MainPageContent extends Component {
         </div>
 
         <SearchResultsContainer />
-        <FAQ />
+        <FAQ faqSection={ faqSection }/>
         <VFTGContainer />
         <About aboutSection={ aboutSection } />
         <Collaborate collaborateSection={ collaborateSection } />

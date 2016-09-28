@@ -9,7 +9,8 @@ function mapStateToProps(state, ownProps) {
     isSearchFocused: state.suggestionApp.isSearchFocused,
     vftgSection: state.landingPage.vftgSection,
     aboutSection: state.landingPage.aboutSection,
-    collaborateSection: state.landingPage.collaborateSection
+    collaborateSection: state.landingPage.collaborateSection,
+    faqSection: state.landingPage.faqSection
   };
 }
 
