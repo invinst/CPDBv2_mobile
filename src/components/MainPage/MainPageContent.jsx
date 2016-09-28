@@ -50,6 +50,10 @@ export default class MainPageContent extends Component {
   }
 };
 
+MainPageContent.defaultProps = {
+  requestLandingPage: () => {}
+};
+
 MainPageContent.propTypes = {
     topLeft: React.PropTypes.number,
     query: React.PropTypes.string,

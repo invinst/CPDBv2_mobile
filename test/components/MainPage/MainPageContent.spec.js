@@ -14,12 +14,12 @@ import Footer from 'components/MainPage/MainPageContent/Footer';
 
 describe('<MainPageContent />', function () {
   it('should render', function () {
-    let wrapper = shallow(<MainPageContent requestLandingPage={ spy() } />);
+    let wrapper = shallow(<MainPageContent />);
     wrapper.should.be.ok();
   });
 
   it('should render subcomponents', function () {
-    let wrapper = shallow(<MainPageContent requestLandingPage={ spy() } />);
+    let wrapper = shallow(<MainPageContent />);
     wrapper.find(Header).should.have.length(1);
     wrapper.find(SearchBarContainer).should.have.length(1);
     wrapper.find(SearchResultsContainer).should.have.length(1);
@@ -30,10 +30,10 @@ describe('<MainPageContent />', function () {
   });
 
   it('should hide search description when searching', function () {
-    let wrapper = shallow(<MainPageContent requestLandingPage={ spy() } query='something not empty' />);
+    let wrapper = shallow(<MainPageContent query='something not empty' />);
     wrapper.find('.search-description .hidden').should.have.length(1);
 
-    wrapper = shallow(<MainPageContent requestLandingPage={ spy() } query='' />);
+    wrapper = shallow(<MainPageContent query='' />);
     wrapper.find('.search-description .hidden').should.have.length(0);
   });
 });
