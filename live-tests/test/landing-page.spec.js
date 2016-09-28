@@ -104,4 +104,35 @@ describe('Landing Page', function () {
         .assert.containsText('.collaborate .section-description', 'If you have documents or datasets you would like to publish, please ');
     });
   });
+
+  context('FAQ', function () {
+    it('should show the FAQ section information', function (client) {
+      api.mock('GET', '/landing-page/', 200, {
+        'faqs': [
+          {
+            'id': 93,
+            'title': 'How accurate is the data?',
+            'body': []
+          },
+          {
+            'id': 91,
+            'title': 'How current is the data?',
+            'body': []
+          },
+          {
+            'id': 95,
+            'title': 'What are the Moore and Bond datasets and how do they affect the data?',
+            'body': []
+          }
+        ],
+      });
+
+      client
+        .url('http://localhost:9001')
+        .waitForElementVisible('body', 10000)
+        .assert.containsText('.faq-title', 'How accurate is the data?')
+        .assert.containsText('.faq-title', 'How current is the data?')
+        .assert.containsText('.faq-title', 'What are the Moore and Bond datasets and how do they affect the data?');
+    });
+  });
 });

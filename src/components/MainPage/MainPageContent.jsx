@@ -4,6 +4,7 @@ import SearchBarContainer from 'containers/Shared/SearchBarContainer';
 import SearchResultsContainer from 'containers/Shared/SearchResultsContainer';
 import VFTGContainer from 'containers/MainPage/MainPageContent/VFTGContainer';
 import Header from 'components/MainPage/MainPageContent/Header';
+import FAQ from 'components/MainPage/MainPageContent/FAQ';
 import About from 'components/MainPage/MainPageContent/About';
 import Collaborate from 'components/MainPage/MainPageContent/Collaborate';
 import Footer from 'components/MainPage/MainPageContent/Footer';
@@ -41,6 +42,7 @@ export default class MainPageContent extends Component {
         </div>
 
         <SearchResultsContainer />
+        <FAQ />
         <VFTGContainer />
         <About aboutSection={ aboutSection } />
         <Collaborate collaborateSection={ collaborateSection } />
