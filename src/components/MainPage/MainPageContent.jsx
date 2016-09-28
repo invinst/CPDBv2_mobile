@@ -18,7 +18,6 @@ export default class MainPageContent extends Component {
   }
 
   render() {
-    console.log('Main Page', this.props);
     const { topLeft, query, aboutSection, collaborateSection, faqSection } = this.props;
     const searchBarWrapperClassNames = cx('search-wrapper animation', { 'top-left': topLeft });
     const headerClassNames = cx(style.mainPageContent, { 'top-left': topLeft });
