@@ -37,11 +37,14 @@ export default class About extends Component {
 About.defaultProps = {
   aboutSection: {
     aboutHeader: '',
-    aboutContent: ''
+    aboutContent: []
   },
   isSearchFocused: false
 };
 
 About.proTypes = {
-  aboutSection: React.PropTypes.object
+  aboutSection: React.PropTypes.shape({
+    aboutHeader: React.PropTypes.string,
+    aboutContent: React.PropTypes.array
+  })
 };
