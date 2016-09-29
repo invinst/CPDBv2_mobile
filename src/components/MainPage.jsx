@@ -5,7 +5,7 @@ import React, {
 import cx from 'classnames';
 import style from 'styles/MainPage.sass';
 
-import MainPageContent from 'components/MainPage/MainPageContent';
+import MainPageContentContainer from 'containers/MainPage/MainPageContentContainer';
 
 
 class MainPage extends Component {
@@ -23,7 +23,7 @@ class MainPage extends Component {
 
     return (
       <div className={ cx('content', style.mainPage, { gray: isSearchFocused }) }>
-        <MainPageContent topLeft={ isSearchFocused } query={ query }/>
+        <MainPageContentContainer topLeft={ isSearchFocused } query={ query }/>
       </div>
     );
   }

@@ -2,6 +2,7 @@ var recursiveReadSync = require('recursive-readdir-sync'),
   files = recursiveReadSync('./live-tests/test');
 
 var path = require('path');
+var server = require(__dirname + '/mock-server');
 
 function importTest(name, path) {
   describe(name, function () {
@@ -12,7 +13,9 @@ function importTest(name, path) {
 describe('CPDBv2_mobile', function () {
   after(function (client, done) {
     client.end(function () {
-      done();
+      server.close(function () {
+        done();
+      });
     });
   });
 

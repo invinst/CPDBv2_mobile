@@ -4,13 +4,19 @@ import { mount, shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 
 import MainPage from 'components/MainPage';
-import MainPageContent from 'components/MainPage/MainPageContent';
+import MainPageContentContainer from 'containers/MainPage/MainPageContentContainer';
+import configuredAxiosMiddleware from 'middleware/configured-axios-middleware';
 
 import { spy } from 'sinon';
 
 
-const mockStore = configureStore();
+const mockStore = configureStore([configuredAxiosMiddleware]);
 const store = mockStore({
+  landingPage: {
+    date: '',
+    contentText: '',
+    contentLink: ''
+  },
   suggestionApp: {
     query: 'query'
   }
@@ -22,9 +28,9 @@ describe('MainPage component', function () {
     wrapper.should.be.ok();
   });
 
-  it('should render MainPageContent as subcomponents', function () {
+  it('should render MainPageContentContainer as subcomponents', function () {
     let wrapper = shallow(<MainPage />);
-    wrapper.find(MainPageContent).should.have.length(1);
+    wrapper.find(MainPageContentContainer).should.have.length(1);
   });
 
   it('should call the api if the term is specified', function () {

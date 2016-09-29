@@ -1,6 +1,8 @@
 import { createAction } from 'redux-actions';
 import { get } from 'actions/common/async-action';
+import { v1Url } from 'utils/UrlUtil';
 import constants from 'constants';
+
 
 export const SUGGESTION_REQUEST_START = 'SUGGESTION_REQUEST_START';
 export const SUGGESTION_REQUEST_SUCCESS = 'SUGGESTION_REQUEST_SUCCESS';
@@ -14,7 +16,8 @@ export const SEARCH_RESET = 'SEARCH_RESET';
 
 
 export const suggestTerm = get(
-  constants.SUGGESTION_API_ENDPOINT, [SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE]
+  v1Url(constants.SUGGESTION_API_ENDPOINT), [SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS,
+    SUGGESTION_REQUEST_FAILURE]
 );
 export const focus = createAction(SEARCH_FOCUS);
 export const blur = createAction(SEARCH_BLUR);
