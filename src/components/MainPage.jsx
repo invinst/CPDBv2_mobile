@@ -5,14 +5,13 @@ import React, {
 import cx from 'classnames';
 import style from 'styles/MainPage.sass';
 
-import MainPageContent from 'components/MainPage/MainPageContent';
-import About from 'components/Shared/About';
+import MainPageContentContainer from 'containers/MainPage/MainPageContentContainer';
 
 
 class MainPage extends Component {
   componentDidMount() {
-    const { suggestTerm, query } = this.props;
-    const sanitizedQuery = query.replace(/\+|\-|\_/g, ' ');
+    const { suggestTerm, urlQuery } = this.props;
+    const sanitizedQuery = urlQuery.replace(/\+|\-|\_/g, ' ');
 
     if (sanitizedQuery) {
       suggestTerm({ query: sanitizedQuery });
@@ -20,12 +19,11 @@ class MainPage extends Component {
   }
 
   render() {
-    const { isSearchFocused } = this.props;
+    const { isSearchFocused, query } = this.props;
 
     return (
-      <div className={ cx('content', style.mainPage) }>
-        <MainPageContent topLeft={ isSearchFocused }/>
-        <About topLeft={ isSearchFocused }/>
+      <div className={ cx('content', style.mainPage, { gray: isSearchFocused }) }>
+        <MainPageContentContainer topLeft={ isSearchFocused } query={ query }/>
       </div>
     );
   }
@@ -34,12 +32,14 @@ class MainPage extends Component {
 MainPage.propTypes = {
   suggestTerm: PropTypes.func.isRequired,
   query: PropTypes.string,
+  urlQuery: PropTypes.string,
   isSearchFocused: PropTypes.bool
 };
 
 MainPage.defaultProps = {
   isSearchFocused: false,
-  query: ''
+  query: '',
+  urlQuery: ''
 };
 
 export default MainPage;

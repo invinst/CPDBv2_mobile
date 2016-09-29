@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import cx from 'classnames';
 
 import style from 'styles/Shared/SearchablePage/SearchBar.sass';
+import searchIcon from 'img/arrow.svg';
 
 
 const SearchBar = React.createClass({
@@ -12,7 +13,7 @@ const SearchBar = React.createClass({
     inputChanged: PropTypes.func.isRequired,
     suggestTerm: PropTypes.func.isRequired,
     isSearchFocused: PropTypes.number,
-    query: PropTypes.string
+    query: PropTypes.string,
   },
 
   onInputChange(event) {
@@ -39,22 +40,22 @@ const SearchBar = React.createClass({
 
   render() {
     const { isSearchFocused, query } = this.props;
-    const iconClassName = cx('icon', {
-      'icon-search': !isSearchFocused,
-      'icon-close': isSearchFocused
-    });
+    const isHiddenClass = cx({ 'hidden': !isSearchFocused });
+    const inputClass = cx('input-text', { 'no-pad': !isSearchFocused });
 
     return (
-      <div className={ cx(style.searchBar, 'animation') }>
+      <div className={ cx(style.searchBar, 'search-bar animation') }>
+        <span className={ cx('search-icon', isHiddenClass) }  onClick={ this.onSearchIconClick }>
+          <img src={ searchIcon } className={ isHiddenClass } />
+        </span>
         <input
-          className='input-text'
-          placeholder='Search officers or complaints'
+          className={ inputClass }
+          placeholder='Search'
           ref='input'
           onChange={ this.onInputChange }
           onFocus={ this.onFocus }
           value={ query }
           onBlur={ this.onBlur }/>
-        <span className={ iconClassName } onClick={ this.onSearchIconClick }/>
       </div>
     );
   }
