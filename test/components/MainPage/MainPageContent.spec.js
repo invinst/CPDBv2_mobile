@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { spy } from 'sinon';
 
 import MainPageContent from 'components/MainPage/MainPageContent';
 import Header from 'components/MainPage/MainPageContent/Header';

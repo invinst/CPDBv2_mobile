@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux';
 
-import landingPage from './request-landing-page';
+import vftgSection from './vftg-section';
+import aboutSection from './about-section';
+import collaborateSection from './collaborate-section';
 
 export default combineReducers({
-  landingPage
+  vftgSection,
+  aboutSection,
+  collaborateSection
 });

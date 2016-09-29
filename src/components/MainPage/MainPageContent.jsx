@@ -11,8 +11,13 @@ import style from 'styles/MainPage/MainPageContent.sass';
 
 
 export default class MainPageContent extends Component {
+
+  componentWillMount() {
+    this.props.requestLandingPage();
+  }
+
   render() {
-    const { topLeft, query } = this.props;
+    const { topLeft, query, aboutSection, collaborateSection } = this.props;
     const searchBarWrapperClassNames = cx('search-wrapper animation', { 'top-left': topLeft });
     const headerClassNames = cx(style.mainPageContent, { 'top-left': topLeft });
 
@@ -37,15 +42,22 @@ export default class MainPageContent extends Component {
 
         <SearchResultsContainer />
         <VFTGContainer />
-        <About />
-        <Collaborate />
+        <About aboutSection={ aboutSection } />
+        <Collaborate collaborateSection={ collaborateSection } />
         <Footer />
       </div>
     );
   }
 };
 
+MainPageContent.defaultProps = {
+  requestLandingPage: () => {}
+};
+
 MainPageContent.propTypes = {
     topLeft: React.PropTypes.number,
     query: React.PropTypes.string,
+    aboutSection: React.PropTypes.object,
+    collaborateSection: React.PropTypes.object,
+    requestLandingPage: React.PropTypes.func
 };

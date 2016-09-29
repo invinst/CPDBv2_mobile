@@ -1,23 +1,14 @@
-import { post, get } from 'actions/common/async-action';
+import { post } from 'actions/common/async-action';
 import { v2Url } from 'utils/UrlUtil';
 import constants from 'constants';
 
 
 export const MAIL_CHIMP_URL = constants.VFTG_API_ENDPOINT;
-export const LANDING_PAGE_API_URL = constants.LANDING_PAGE_API_ENDPOINT;
 
 export const SUBSCRIBE_EMAIL_REQUEST = 'SUBSCRIBE_EMAIL_REQUEST';
 export const SUBSCRIBE_EMAIL_SUCCESS = 'SUBSCRIBE_EMAIL_SUCCESS';
 export const SUBSCRIBE_EMAIL_FAILURE = 'SUBSCRIBE_EMAIL_FAILURE';
 
-export const LANDING_PAGE_REQUEST_START = 'LANDING_PAGE_REQUEST_START';
-export const LANDING_PAGE_REQUEST_SUCCESS = 'LANDING_PAGE_REQUEST_SUCCESS';
-export const LANDING_PAGE_REQUEST_FAILURE = 'LANDING_PAGE_REQUEST_FAILURE';
-
 export const subscribeEmail = (email) => (post(v2Url(MAIL_CHIMP_URL), [
   SUBSCRIBE_EMAIL_REQUEST, SUBSCRIBE_EMAIL_SUCCESS, SUBSCRIBE_EMAIL_FAILURE
 ])({ email }));
-
-export const requestLandingPage = () => (get(v2Url(LANDING_PAGE_API_URL), [
-  LANDING_PAGE_REQUEST_START, LANDING_PAGE_REQUEST_SUCCESS, LANDING_PAGE_REQUEST_FAILURE]
-)());
