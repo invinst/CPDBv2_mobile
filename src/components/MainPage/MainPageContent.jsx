@@ -2,14 +2,22 @@ import cx from 'classnames';
 import React, { Component } from 'react';
 import SearchBarContainer from 'containers/Shared/SearchBarContainer';
 import SearchResultsContainer from 'containers/Shared/SearchResultsContainer';
-import Header from 'components/MainPage/MainPageContent/Header';
 import VFTGContainer from 'containers/MainPage/MainPageContent/VFTGContainer';
+import Header from 'components/MainPage/MainPageContent/Header';
+import About from 'components/MainPage/MainPageContent/About';
+import Collaborate from 'components/MainPage/MainPageContent/Collaborate';
+import Footer from 'components/MainPage/MainPageContent/Footer';
 import style from 'styles/MainPage/MainPageContent.sass';
 
 
 export default class MainPageContent extends Component {
+
+  componentWillMount() {
+    this.props.requestLandingPage();
+  }
+
   render() {
-    const { topLeft, query } = this.props;
+    const { topLeft, query, aboutSection, collaborateSection } = this.props;
     const searchBarWrapperClassNames = cx('search-wrapper animation', { 'top-left': topLeft });
     const headerClassNames = cx(style.mainPageContent, { 'top-left': topLeft });
 
@@ -34,12 +42,22 @@ export default class MainPageContent extends Component {
 
         <SearchResultsContainer />
         <VFTGContainer />
+        <About aboutSection={ aboutSection } />
+        <Collaborate collaborateSection={ collaborateSection } />
+        <Footer />
       </div>
     );
   }
 };
 
+MainPageContent.defaultProps = {
+  requestLandingPage: () => {}
+};
+
 MainPageContent.propTypes = {
     topLeft: React.PropTypes.number,
     query: React.PropTypes.string,
+    aboutSection: React.PropTypes.object,
+    collaborateSection: React.PropTypes.object,
+    requestLandingPage: React.PropTypes.func
 };

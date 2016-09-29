@@ -17,10 +17,6 @@ export default class VFTG extends Component {
     };
   }
 
-  componentWillMount() {
-    this.props.requestLandingPage();
-  }
-
   handleInputChange() {
     this.setState({
       formState: constants.SUBSCRIBE_FORM_INITIAL
@@ -68,7 +64,7 @@ export default class VFTG extends Component {
   render() {
     const topLeft = this.props.isSearchFocused;
     const subscribeStateClassName = this.stateToClass(this.state.formState);
-    const { date, contentText, contentLink } = this.props.landingPage;
+    const { date, contentText, contentLink } = this.props.vftgSection;
 
     return (
       <div className={ cx(style.vftg, 'vftg row animation', { 'top-left': topLeft }) }>
@@ -105,17 +101,17 @@ export default class VFTG extends Component {
 }
 
 VFTG.defaultProps = {
-  landingPage: {
+  vftgSection: {
     date: '',
     contentText: '',
     contentLink: ''
   },
   isSearchFocused: false
-}
+};
 
 VFTG.proTypes = {
   subscribeEmail: React.PropTypes.func,
   requestLandingPage: React.PropTypes.func,
   isSearchFocused: React.PropTypes.number,
-  landingPage: React.PropTypes.object
+  vftgSection: React.PropTypes.object
 };
