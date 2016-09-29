@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import f from 'utils/tests/f';
-import 'factories/FAQFactory';
 
 import FAQ from 'components/MainPage/MainPageContent/FAQ';
 

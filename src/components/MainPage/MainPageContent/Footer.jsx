@@ -13,7 +13,7 @@ export default class Footer extends Component {
     const isSearchFocused = this.props.isSearchFocused;
 
     return (
-      <div className={cx(style.footer, { hidden: isSearchFocused })}>
+      <div className={cx(style.footer, 'footer', { hidden: isSearchFocused })}>
         <a className='footer-link'>Legal Disclaimer</a>
         <a className='footer-link'>Glossary</a>
         <a className='footer-link'>Complaints Process</a>
