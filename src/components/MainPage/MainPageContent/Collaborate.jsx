@@ -17,10 +17,11 @@ export default class Collaborate extends Component {
   }
 
   render() {
+    const isSearchFocused = this.props.isSearchFocused;
     const {collaborateHeader, collaborateContent} = this.props.collaborateSection;
 
     return (
-      <div className={ cx(style.collaborate, 'collaborate landing-section') }>
+      <div className={ cx(style.collaborate, 'collaborate landing-section', { hidden: isSearchFocused }) }>
         <div className='landing-section-header'>
           <p className='landing-section-title'> { collaborateHeader } </p>
         </div>
@@ -37,7 +38,8 @@ Collaborate.defaultProps = {
   collaborateSection: {
     collaborateHeader: '',
     collaborateContent: ''
-  }
+  },
+  isSearchFocused: false
 };
 
 Collaborate.proTypes = {

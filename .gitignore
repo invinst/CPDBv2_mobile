@@ -33,3 +33,4 @@ bower_components/
 ansible/*.retry
 ngrok
 dist/
+live-tests/local-mock-server.js

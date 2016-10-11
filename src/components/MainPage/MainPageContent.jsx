@@ -4,6 +4,7 @@ import SearchBarContainer from 'containers/Shared/SearchBarContainer';
 import SearchResultsContainer from 'containers/Shared/SearchResultsContainer';
 import VFTGContainer from 'containers/MainPage/MainPageContent/VFTGContainer';
 import Header from 'components/MainPage/MainPageContent/Header';
+import FAQ from 'components/MainPage/MainPageContent/FAQ';
 import About from 'components/MainPage/MainPageContent/About';
 import Collaborate from 'components/MainPage/MainPageContent/Collaborate';
 import Footer from 'components/MainPage/MainPageContent/Footer';
@@ -17,7 +18,7 @@ export default class MainPageContent extends Component {
   }
 
   render() {
-    const { topLeft, query, aboutSection, collaborateSection } = this.props;
+    const { topLeft, query, aboutSection, collaborateSection, faqSection } = this.props;
     const searchBarWrapperClassNames = cx('search-wrapper animation', { 'top-left': topLeft });
     const headerClassNames = cx(style.mainPageContent, { 'top-left': topLeft });
 
@@ -41,10 +42,11 @@ export default class MainPageContent extends Component {
         </div>
 
         <SearchResultsContainer />
+        <FAQ faqSection={ faqSection } isSearchFocused={ topLeft }/>
         <VFTGContainer />
-        <About aboutSection={ aboutSection } />
-        <Collaborate collaborateSection={ collaborateSection } />
-        <Footer />
+        <About aboutSection={ aboutSection } isSearchFocused={ topLeft }/>
+        <Collaborate collaborateSection={ collaborateSection } isSearchFocused={ topLeft } />
+        <Footer isSearchFocused={ topLeft } />
       </div>
     );
   }
