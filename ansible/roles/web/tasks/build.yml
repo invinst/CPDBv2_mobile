@@ -15,7 +15,7 @@
   tags: deploy
 
 - name : Install packages based on package.json.
-  command: npm install
+  command: yarn install
     chdir={{ application_root_path }}
   tags: deploy
 
@@ -44,7 +44,7 @@
   tags: deploy
 
 - name: Build everything
-  command: npm run dist
+  command: yarn run dist
     chdir={{ application_root_path }}
   tags: deploy
 

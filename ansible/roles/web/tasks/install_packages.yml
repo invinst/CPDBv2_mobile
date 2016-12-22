@@ -5,8 +5,26 @@
   become_user: root
   tags: setup
 
-- name: Update npm
-  npm: name=npm version=3.8.7 global=yes
+- name: Add Yarn repo key
+  apt_key:
+    url: "https://dl.yarnpkg.com/debian/pubkey.gpg"
+    state: present
+  become: yes
+  become_user: root
+  tags: setup
+
+- name: Add Yarn repo
+  apt_repository:
+    repo: deb https://dl.yarnpkg.com/debian/ stable main
+    state: present
+  become: yes
+  become_user: root
+  tags: setup
+
+- name: Install Yarn
+  apt:
+    name: yarn
+    update_cache: yes
   become: yes
   become_user: root
   tags: setup
