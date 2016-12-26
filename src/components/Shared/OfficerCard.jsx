@@ -9,7 +9,7 @@ const OfficerCard = React.createClass({
   propTypes: {
     officerId: React.PropTypes.string,
     allegationsCount: React.PropTypes.number,
-    displayName: React.PropTypes.string,
+    displayName: React.PropTypes.object,
     description: React.PropTypes.string
   },
 

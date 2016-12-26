@@ -1,10 +1,10 @@
 import cx from 'classnames';
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import SearchBarContainer from 'containers/Shared/SearchBarContainer';
 import SearchResultsContainer from 'containers/Shared/SearchResultsContainer';
 import VFTGContainer from 'containers/MainPage/MainPageContent/VFTGContainer';
 import Header from 'components/MainPage/MainPageContent/Header';
-import FAQ from 'components/MainPage/MainPageContent/FAQ';
+import Faq from 'components/MainPage/MainPageContent/FAQ';
 import About from 'components/MainPage/MainPageContent/About';
 import Collaborate from 'components/MainPage/MainPageContent/Collaborate';
 import Footer from 'components/MainPage/MainPageContent/Footer';
@@ -42,7 +42,7 @@ export default class MainPageContent extends Component {
         </div>
 
         <SearchResultsContainer />
-        <FAQ faqSection={ faqSection } isSearchFocused={ topLeft }/>
+        <Faq faqSection={ faqSection } isSearchFocused={ topLeft }/>
         <VFTGContainer />
         <About aboutSection={ aboutSection } isSearchFocused={ topLeft }/>
         <Collaborate collaborateSection={ collaborateSection } isSearchFocused={ topLeft } />
@@ -50,16 +50,17 @@ export default class MainPageContent extends Component {
       </div>
     );
   }
-};
+}
 
 MainPageContent.defaultProps = {
   requestLandingPage: () => {}
 };
 
 MainPageContent.propTypes = {
-    topLeft: React.PropTypes.number,
-    query: React.PropTypes.string,
-    aboutSection: React.PropTypes.object,
-    collaborateSection: React.PropTypes.object,
-    requestLandingPage: React.PropTypes.func
+  topLeft: PropTypes.number,
+  query: PropTypes.string,
+  aboutSection: PropTypes.object,
+  collaborateSection: PropTypes.object,
+  requestLandingPage: PropTypes.func,
+  faqSection: PropTypes.object
 };

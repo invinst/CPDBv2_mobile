@@ -8,6 +8,11 @@ import style from 'styles/Shared/SearchablePage.sass';
 
 
 const SearchablePage = React.createClass({
+  propTypes: {
+    children: React.PropTypes.node,
+    focus: React.PropTypes.number
+  },
+
   render() {
     const { focus } = this.props;
     const childrenClassName = cx('child-content', { 'invisible': focus });

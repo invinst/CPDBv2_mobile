@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { map } from 'lodash';
 import cx from 'classnames';
 
@@ -12,13 +12,13 @@ export default class About extends Component {
 
   renderContent(aboutContent) {
     return map(aboutContent, (paragraph, key) => (
-      <p className="paragraph" key={ key }>{ paragraph.value }</p>
+      <p className='paragraph' key={ key }>{ paragraph.value }</p>
     ));
   }
 
   render() {
     const isSearchFocused = this.props.isSearchFocused;
-    const {aboutHeader, aboutContent} = this.props.aboutSection;
+    const { aboutHeader, aboutContent } = this.props.aboutSection;
 
     return (
       <div className={ cx(style.about, 'about landing-section', { hidden: isSearchFocused }) }>
@@ -30,7 +30,7 @@ export default class About extends Component {
           { this.renderContent(aboutContent) }
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -39,12 +39,13 @@ About.defaultProps = {
     aboutHeader: '',
     aboutContent: []
   },
-  isSearchFocused: false
+  isSearchFocused: 0
 };
 
-About.proTypes = {
-  aboutSection: React.PropTypes.shape({
-    aboutHeader: React.PropTypes.string,
-    aboutContent: React.PropTypes.array
-  })
+About.propTypes = {
+  aboutSection: PropTypes.shape({
+    aboutHeader: PropTypes.string,
+    aboutContent: PropTypes.array
+  }),
+  isSearchFocused: PropTypes.number
 };

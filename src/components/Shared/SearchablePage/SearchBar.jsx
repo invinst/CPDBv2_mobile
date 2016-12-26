@@ -13,7 +13,7 @@ const SearchBar = React.createClass({
     inputChanged: PropTypes.func.isRequired,
     suggestTerm: PropTypes.func.isRequired,
     isSearchFocused: PropTypes.number,
-    query: PropTypes.string,
+    query: PropTypes.string
   },
 
   onInputChange(event) {
@@ -45,7 +45,7 @@ const SearchBar = React.createClass({
 
     return (
       <div className={ cx(style.searchBar, 'search-bar animation') }>
-        <span className={ cx('search-icon', isHiddenClass) }  onClick={ this.onSearchIconClick }>
+        <span className={ cx('search-icon', isHiddenClass) } onClick={ this.onSearchIconClick }>
           <img src={ searchIcon } className={ isHiddenClass } />
         </span>
         <input
