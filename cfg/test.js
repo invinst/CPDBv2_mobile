@@ -55,6 +55,7 @@ module.exports = {
       reducers: srcPath + 'reducers/',
       middleware: srcPath + 'middleware/',
       containers: srcPath + 'containers/',
+      selectors: srcPath + 'selectors/',
       stores: srcPath + 'stores/',
       utils: srcPath + 'utils/',
       constants: srcPath + 'constants/',

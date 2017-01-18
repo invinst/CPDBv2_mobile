@@ -5,7 +5,8 @@ import baseConfig from './base';
 let config = {
   appEnv: 'dev',  // feel free to remove the appEnv property here
   baseUrlV1: 'http://m.cpdb.co',
-  baseUrlV2: 'http://localhost:9000/api/v1'
+  baseUrlV2: 'http://localhost:9000/api/v1',
+  baseUrlV2V2: 'http://localhost:9000/api/v2'
 };
 
 export default Object.freeze(Object.assign({}, baseConfig, config));

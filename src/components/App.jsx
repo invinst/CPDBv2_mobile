@@ -1,12 +1,15 @@
 import React from 'react';
-import Route from 'react-router/lib/Route';
-import Router from 'react-router/lib/Router';
+
+import { Router, Route } from 'react-router';
 
 import AppHistory from 'utils/History';
+import constants from 'constants';
 
 import MainPageContainer from 'containers/MainPageContainer';
 import OfficerPageContainer from 'containers/OfficerPageContainer';
 import ComplaintPageContainer from 'containers/ComplaintPageContainer';
+import ReportingPageContainer from 'containers/ReportingPageContainer';
+import ReportingDetailContainer from 'containers/ReportingPage/ReportingDetailContainer';
 
 import 'styles/Style.sass';
 import 'styles/Fonts.sass';
@@ -23,7 +26,11 @@ const App = React.createClass({
         <Route path='/officer/:slug/:id' component={ OfficerPageContainer } />
         <Route path='/s/:query' component={ MainPageContainer } />
         <Route path='/q/:query' component={ MainPageContainer } />
-        <Route path='/' component={ MainPageContainer } />
+        <Route path='/' component={ MainPageContainer }>
+          <Route path={ constants.REPORTING_PATH } component={ ReportingPageContainer }>
+            <Route path={ constants.REPORTING_PATH + '/:id' } component={ ReportingDetailContainer } />
+          </Route>
+        </Route>
       </Router>
     );
   }

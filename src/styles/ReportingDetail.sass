@@ -1,0 +1,33 @@
+@import 'Variables'
+
+$vertical-margin: 50px
+$padding: $header-logo-padding-x
+
+:local(.reporting-detail)
+
+  overflow-y: auto
+  height: 100%
+
+  .report-title
+    font-size: 30px
+    color: inherit
+    padding: 95px $padding 32px $padding
+
+  .report-body
+    padding: $padding
+
+  .metadata
+    width: 100%
+    margin-bottom: 31px
+
+    td
+      padding: 11px 0
+
+      &:first-child
+        color: $dusty-gray
+
+    tr
+      border-bottom: 1px solid $alto-solid
+
+      &:first-child
+        border-top: 1px solid $alto-solid

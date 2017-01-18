@@ -41,6 +41,7 @@ module.exports = {
       middleware: `${defaultSettings.srcPath}/middleware/`,
       presenters: `${defaultSettings.srcPath}/presenters/`,
       containers: `${defaultSettings.srcPath}/containers/`,
+      selectors: `${defaultSettings.srcPath}/selectors/`,
       img: `${defaultSettings.srcPath}/img/`,
       config: `${defaultSettings.srcPath}/config/` + process.env.REACT_WEBPACK_ENV
     }

@@ -10,6 +10,6 @@ describe('MainPageTest', function () {
       .waitForElementVisible('body', 10000)
       .waitForElementVisible('.cpdb-logo', 10000)
       .assert.visible('.cpdb-logo')
-      .assert.containsText('.cpdb-logo', 'CPDP');
+      .assert.containsText('.cpdb-logo', 'cpdp');
   });
 });
