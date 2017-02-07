@@ -23,7 +23,7 @@
 
 - name: Install Yarn
   apt:
-    name: yarn
+    name: yarn=0.19.1-1
     update_cache: yes
   become: yes
   become_user: root
