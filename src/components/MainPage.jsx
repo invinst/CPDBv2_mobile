@@ -33,7 +33,7 @@ MainPage.propTypes = {
   suggestTerm: PropTypes.func.isRequired,
   query: PropTypes.string,
   urlQuery: PropTypes.string,
-  isSearchFocused: PropTypes.bool
+  isSearchFocused: PropTypes.number
 };
 
 MainPage.defaultProps = {

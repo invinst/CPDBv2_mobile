@@ -37,20 +37,20 @@ export default class VFTG extends Component {
           formState: constants.SUBSCRIBE_FORM_SUCCESS
         });
       }).catch((err) => {
-      this.setState({
-        formState: constants.SUBSCRIBE_FORM_FAILURE
+        this.setState({
+          formState: constants.SUBSCRIBE_FORM_FAILURE
+        });
       });
-    });
     }
   }
 
-  isSubscribeButtonEnable(){
+  isSubscribeButtonEnable() {
     // the subscribe button is enabled if in INITIAL or FAILURE states
     return [constants.SUBSCRIBE_FORM_INITIAL, constants.SUBSCRIBE_FORM_FAILURE]
               .indexOf(this.state.formState) !== -1;
   }
 
-  stateToClass(state){
+  stateToClass(state) {
     let stateMap = {};
 
     stateMap[constants.SUBSCRIBE_FORM_INITIAL] = '';
@@ -109,9 +109,9 @@ VFTG.defaultProps = {
   isSearchFocused: false
 };
 
-VFTG.proTypes = {
-  subscribeEmail: React.PropTypes.func,
-  requestLandingPage: React.PropTypes.func,
-  isSearchFocused: React.PropTypes.number,
-  vftgSection: React.PropTypes.object
+VFTG.propTypes = {
+  subscribeEmail: PropTypes.func,
+  requestLandingPage: PropTypes.func,
+  isSearchFocused: PropTypes.number,
+  vftgSection: PropTypes.object
 };

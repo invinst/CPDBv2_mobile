@@ -42,12 +42,6 @@ const ComplaintPage = React.createClass({
     };
   },
 
-  componentWillReceiveProps (newProps) {
-    if (newProps.crid != this.props.crid) {
-      const { getComplaint } = this.props;
-      getComplaint({ crid: newProps.crid });
-    }
-  },
 
   componentDidMount() {
     const { crid, getComplaint } = this.props;
@@ -56,6 +50,12 @@ const ComplaintPage = React.createClass({
     getComplaint({ crid: crid });
   },
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.crid != this.props.crid) {
+      const { getComplaint } = this.props;
+      getComplaint({ crid: newProps.crid });
+    }
+  },
 
   render() {
     const { loading, found, complaint, crid, toggle } = this.props;

@@ -7,12 +7,12 @@ import { subscribeEmail } from 'actions/vftg';
 function mapStateToProps(state, ownProps) {
   return {
     isSearchFocused: state.suggestionApp.isSearchFocused,
-    vftgSection: state.landingPage.vftgSection,
+    vftgSection: state.landingPage.vftgSection
   };
 }
 
 const mapDispatchToProps = {
-  subscribeEmail,
+  subscribeEmail
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VFTG);

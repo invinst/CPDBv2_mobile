@@ -19,21 +19,21 @@ const OfficerPage = React.createClass({
     getOfficer: PropTypes.func.isRequired,
     loading: PropTypes.bool,
     found: PropTypes.bool,
-    pk: PropTypes.number,
+    pk: PropTypes.string,
     officer: PropTypes.object
-  },
-
-  componentWillReceiveProps (newProps) {
-    if (newProps.pk != this.props.pk) {
-      const { getOfficer } = this.props;
-      getOfficer({ pk: newProps.pk });
-    }
   },
 
   componentDidMount() {
     const { getOfficer, pk } = this.props;
     getOfficer({ pk: pk });
     GaUtil.track('event', 'officer', 'view_detail', location.pathname);
+  },
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.pk != this.props.pk) {
+      const { getOfficer } = this.props;
+      getOfficer({ pk: newProps.pk });
+    }
   },
 
   render() {

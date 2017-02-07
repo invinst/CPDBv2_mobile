@@ -9,7 +9,9 @@ const OfficerCard = React.createClass({
   propTypes: {
     officerId: React.PropTypes.string,
     allegationsCount: React.PropTypes.number,
-    displayName: React.PropTypes.string,
+    // sometimes displayName is a string. TODO: investigate when time allows
+    // https://github.com/EastAgile/CPDBv2_mobile/pull/23/files#r96479821
+    displayName: React.PropTypes.object,
     description: React.PropTypes.string
   },
 

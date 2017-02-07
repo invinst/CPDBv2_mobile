@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import cx from 'classnames';
 
@@ -13,7 +13,7 @@ export default class Footer extends Component {
     const isSearchFocused = this.props.isSearchFocused;
 
     return (
-      <div className={cx(style.footer, 'footer', { hidden: isSearchFocused })}>
+      <div className={ cx(style.footer, 'footer', { hidden: isSearchFocused }) }>
         <a className='footer-link'>Legal Disclaimer</a>
         <a className='footer-link'>Glossary</a>
         <a className='footer-link'>Complaints Process</a>
@@ -24,4 +24,8 @@ export default class Footer extends Component {
 
 Footer.defaultProps = {
   isSearchFocused: false
+};
+
+Footer.propTypes = {
+  isSearchFocused: PropTypes.number
 };

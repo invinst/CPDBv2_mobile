@@ -6,6 +6,14 @@ import LoadingPage from 'components/Shared/LoadingPage';
 
 
 const SearchResults = React.createClass({
+  propTypes: {
+    isRequesting: React.PropTypes.bool,
+    query: React.PropTypes.string,
+    suggestions: React.PropTypes.array,
+    isSuccess: React.PropTypes.bool,
+    isSearchFocused: React.PropTypes.number
+  },
+
   render() {
     const { isRequesting, query, suggestions, isSuccess, isSearchFocused } = this.props;
 
@@ -24,7 +32,7 @@ const SearchResults = React.createClass({
     }
 
     return (
-      <Wrapper wrapperClass='search-results' visible={ isSearchFocused && !!query }>
+      <Wrapper wrapperClass='search-results' visible={ !!isSearchFocused && !!query }>
         <SuccessfulSearch term={ query } suggestions={ suggestions } />
       </Wrapper>
     );

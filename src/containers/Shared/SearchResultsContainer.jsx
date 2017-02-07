@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import SearchResults from 'components/Shared/SearchablePage/SearchResults';
-import { focus, blur, clear, inputChanged, suggestTerm } from 'actions/suggestion';
 
 
 function mapStateToProps(state, ownProps) {
