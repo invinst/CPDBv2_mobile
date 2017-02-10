@@ -2,8 +2,8 @@ import { find } from 'lodash';
 import moment from 'moment';
 
 
-export const getRichTextValueAsArray = (report, fieldName) => {
-  const field = find(report.fields, { 'type': 'rich_text', 'name': fieldName });
+export const getRichTextValueAsArray = (data, fieldName) => {
+  const field = find(data.fields, { 'type': 'rich_text', 'name': fieldName });
   if (!field) {
     return [];
   }
@@ -11,8 +11,8 @@ export const getRichTextValueAsArray = (report, fieldName) => {
 };
 
 
-export const getStringValue = (report, fieldName) => {
-  const field = find(report.fields, { 'type': 'string', 'name': fieldName });
+export const getStringValue = (data, fieldName) => {
+  const field = find(data.fields, { 'type': 'string', 'name': fieldName });
   if (!field) {
     return '';
   }
@@ -20,8 +20,8 @@ export const getStringValue = (report, fieldName) => {
 };
 
 
-export const getDateValueAsString = (report, fieldName) => {
-  const field = find(report.fields, { 'type': 'date', 'name': fieldName });
+export const getDateValueAsString = (data, fieldName) => {
+  const field = find(data.fields, { 'type': 'date', 'name': fieldName });
   if (!field) {
     return '';
   }

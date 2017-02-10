@@ -211,8 +211,9 @@ export default {
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
   VFTG_API_ENDPOINT: '/vftg/',
-  LANDING_PAGE_API_ENDPOINT: '/landing-page/',
+  LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
   REPORTING_API_ENDPOINT: '/reports/',
+  FAQ_API_ENDPOINT: '/faqs/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
@@ -234,5 +235,7 @@ export default {
   SUBSCRIBE_FORM_FAILURE: 'SUBSCRIBE_FORM_FAILURE',
 
   // Router paths
-  REPORTING_PATH: '/reporting'
+  REPORTING_PATH: '/reporting',
+  FAQ_PATH: '/faq',
+  ABOUT_PATH: '/about'
 };

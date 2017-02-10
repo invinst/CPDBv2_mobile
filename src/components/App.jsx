@@ -10,6 +10,9 @@ import OfficerPageContainer from 'containers/OfficerPageContainer';
 import ComplaintPageContainer from 'containers/ComplaintPageContainer';
 import ReportingPageContainer from 'containers/ReportingPageContainer';
 import ReportingDetailContainer from 'containers/ReportingPage/ReportingDetailContainer';
+import FAQPageContainer from 'containers/FAQPageContainer';
+import FAQDetailContainer from 'containers/FAQPage/FAQDetailContainer';
+import AboutPageContainer from 'containers/AboutPageContainer';
 
 import 'styles/Style.sass';
 import 'styles/Fonts.sass';
@@ -30,6 +33,10 @@ const App = React.createClass({
           <Route path={ constants.REPORTING_PATH } component={ ReportingPageContainer }>
             <Route path={ constants.REPORTING_PATH + '/:id' } component={ ReportingDetailContainer } />
           </Route>
+          <Route path={ constants.FAQ_PATH } component={ FAQPageContainer }>
+            <Route path={ constants.FAQ_PATH + '/:id' } component={ FAQDetailContainer } />
+          </Route>
+          <Route path={ constants.ABOUT_PATH } component={ AboutPageContainer } />
         </Route>
       </Router>
     );
