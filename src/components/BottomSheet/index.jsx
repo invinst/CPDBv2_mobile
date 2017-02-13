@@ -30,8 +30,6 @@ A concrete example:
   + Sheet shows ReportingDetail's content
 */
 
-const TRANSITION_DURATION = 200;
-
 export default class BottomSheet extends Component {
 
   renderBackground() {
@@ -88,13 +86,15 @@ export default class BottomSheet extends Component {
   }
 
   render() {
+    const { transitionDuration } = this.props;
+
     return (
       <div className={ style.bottomSheet }>
         <ReactCSSTransitionGroup
           component='div'
           transitionName='bottom-sheet-background'
-          transitionEnterTimeout={ TRANSITION_DURATION }
-          transitionLeaveTimeout={ TRANSITION_DURATION }
+          transitionEnterTimeout={ transitionDuration }
+          transitionLeaveTimeout={ transitionDuration }
         >
           { this.renderBackground() }
         </ReactCSSTransitionGroup>
@@ -102,8 +102,8 @@ export default class BottomSheet extends Component {
         <ReactCSSTransitionGroup
           component='div'
           transitionName='bottom-sheet-overlay'
-          transitionEnterTimeout={ TRANSITION_DURATION }
-          transitionLeaveTimeout={ TRANSITION_DURATION }
+          transitionEnterTimeout={ transitionDuration }
+          transitionLeaveTimeout={ transitionDuration }
         >
           { this.renderOverlay() }
         </ReactCSSTransitionGroup>
@@ -111,8 +111,8 @@ export default class BottomSheet extends Component {
         <ReactCSSTransitionGroup
           component='div'
           transitionName='bottom-sheet'
-          transitionEnterTimeout={ TRANSITION_DURATION }
-          transitionLeaveTimeout={ TRANSITION_DURATION }
+          transitionEnterTimeout={ transitionDuration }
+          transitionLeaveTimeout={ transitionDuration }
         >
           { this.renderSheet() }
         </ReactCSSTransitionGroup>
@@ -125,5 +125,6 @@ export default class BottomSheet extends Component {
 BottomSheet.propTypes = {
   children: PropTypes.object,
   router: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
+  transitionDuration: PropTypes.number
 };

@@ -1,7 +1,11 @@
 @import 'Variables'
 
-$top-margin: 58px
+
 $transition-duration: 200ms
+@if $env == live-test or $env == test
+  $transition-duration: 1ms
+
+$top-margin: 58px
 $padding: $header-logo-padding-x
 $background-logo-padding-top: $header-logo-padding-y - $padding
 $overlay-opacity: .7

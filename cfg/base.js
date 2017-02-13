@@ -46,5 +46,10 @@ module.exports = {
       config: `${defaultSettings.srcPath}/config/` + process.env.REACT_WEBPACK_ENV
     }
   },
+
+  sassLoader: {
+    data: `$env: ${process.env.REACT_WEBPACK_ENV}\n`
+  },
+
   module: {}
 };
