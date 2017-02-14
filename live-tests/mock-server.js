@@ -8,7 +8,7 @@ var port = process.env.MOCK_SERVER_PORT || 9002;
 // FIXME: Refactor the path here
 var api = require(__dirname + '/mock-api');
 
-console.log('API Server had been started at port 9002');
+console.log(`API Server has been started at port ${port}`);
 
 var server = http.createServer(app);
 

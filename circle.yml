@@ -1,4 +1,6 @@
 machine:
+  java:
+    version: 'oraclejdk8'
   node:
     version: 4.1.0
   environment:
