@@ -15,3 +15,10 @@ export const v2Url = function (endpoint) {
     'endpoint': endpoint
   }).s;
 };
+
+export const v2v2Url = function (endpoint) {
+  return S('{{baseUrl}}{{endpoint}}').template({
+    'baseUrl': config.baseUrlV2V2,
+    'endpoint': endpoint
+  }).s;
+};

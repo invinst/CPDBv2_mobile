@@ -11,7 +11,8 @@ server {
 
     root {{ nginx_dist_path }};
 
-    location = / {
-        index index.html /index.html;
+    location / {
+        try_files $uri $uri/index.html /index.html;
     }
+
 }

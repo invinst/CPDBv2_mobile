@@ -14,10 +14,6 @@ dependencies:
     - yarn global add eslint-plugin-react@5.0.1
     - yarn global add babel-eslint@6.0.3
     - yarn install
-  cache_directories:
-    - "node_modules"
-    - ~/.yarn-cache
-    - ~/.yarn
 test:
   override:
     - eslint src/

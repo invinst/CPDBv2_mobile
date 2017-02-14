@@ -1,0 +1,22 @@
+@import 'Variables'
+
+$vertical-margin: 50px
+
+:local(.reporting-page)
+
+  .reporting-item-row
+    // Reset <a>'s hyperlink style
+    text-decoration: none
+    color: inherit
+    display: block
+
+    padding-top: $vertical-margin
+    padding-bottom: $vertical-margin
+    border-bottom: 2px solid $alto-solid
+
+    .publish-date
+      color: rgba($black, 0.5)
+      margin-left: 10px
+
+    .title
+      font-size: 20px

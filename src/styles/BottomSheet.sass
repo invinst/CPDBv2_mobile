@@ -1,0 +1,105 @@
+@import 'Variables'
+
+
+$transition-duration: 200ms
+@if $env == live-test or $env == test
+  $transition-duration: 1ms
+
+$top-margin: 58px
+$padding: $header-logo-padding-x
+$background-logo-padding-top: $header-logo-padding-y - $padding
+$overlay-opacity: .7
+$sheet-header-height: 65px
+
+:local(.bottom-sheet)
+  .header
+    font-size: 30px
+    font-style: normal
+    color: $thunder
+
+  .background
+    background-color: $white
+    position: fixed
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+    z-index: 99
+    padding: $padding
+
+
+  .bottom-sheet-background-enter
+    padding-top: $background-logo-padding-top
+
+    &.bottom-sheet-background-enter-active
+      padding-top: $padding
+      transition: padding-top ease-out $transition-duration
+
+  .bottom-sheet-background-leave
+    padding-top: $padding
+
+    &.bottom-sheet-background-leave-active
+      padding-top: $background-logo-padding-top
+      transition: padding-top ease-out $transition-duration
+
+
+  .overlay
+    background-color: $black
+    opacity: $overlay-opacity
+    position: fixed
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+    z-index: 100
+
+
+  .bottom-sheet-overlay-leave
+    opacity: $overlay-opacity
+
+    &.bottom-sheet-overlay-leave-active
+      opacity: 0
+      transition: opacity ease-out $transition-duration
+
+  .bottom-sheet-overlay-enter
+    opacity: 0
+
+    &.bottom-sheet-overlay-enter-active
+      opacity: $overlay-opacity
+      transition: opacity ease-in $transition-duration
+
+  .sheet
+    background-color: $white
+    position: fixed
+    bottom: 0
+    top: $top-margin
+    width: 100%
+    z-index: 100
+    overflow-wrap: break-word
+
+  .sheet-header
+      height: $sheet-header-height
+      padding: $padding
+      border-bottom: 1px solid $alto
+      color: rgba($black, 0.5)
+
+  .sheet-body
+    height: calc(100vh - #{$top-margin} - #{$sheet-header-height})
+    overflow-y: auto
+    padding: 0 $padding $padding $padding
+
+
+  .bottom-sheet-leave
+    transform: translate3d(0, 0, 0)
+
+    &.bottom-sheet-leave-active
+      transform: translate3d(0, 100%, 0)
+      transition: transform ease-out $transition-duration
+
+
+  .bottom-sheet-enter
+    transform: translate3d(0, 100%, 0)
+
+    &.bottom-sheet-enter-active
+      transform: translate3d(0, 0, 0)
+      transition: transform ease-in $transition-duration

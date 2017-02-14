@@ -14,12 +14,7 @@ const Header = React.createClass({
 
     return (
       <div className={ cx(style.header, 'row animation', { 'top-left': topLeft }) }>
-        <div className='cpdb-logo one-half column align-left'>CPDP</div>
-        <div className='cpdb-menu-holder one-half column align-right'>
-          <div className='btn'>
-            <div className='cpdb-menu'>Menu</div>
-          </div>
-        </div>
+        <div className='cpdb-logo one-half column align-left'>cpdp</div>
       </div>
     );
   }

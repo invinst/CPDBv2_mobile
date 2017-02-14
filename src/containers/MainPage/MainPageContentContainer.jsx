@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 
 import MainPageContent from 'components/MainPage/MainPageContent';
 import { requestLandingPage } from 'actions/landing-page';
+import { requestReportingPage } from 'actions/reporting-page';
 
 
 function mapStateToProps(state, ownProps) {
@@ -15,7 +16,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  requestLandingPage
+  requestLandingPage,
+  requestReportingPage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPageContent);
