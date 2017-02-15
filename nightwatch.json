@@ -18,6 +18,9 @@
 
   "test_settings" : {
     "default" : {
+      "globals": {
+        "clientUrl": "http://localhost:9001"
+      },
       "test_runner" : {
         "type" : "mocha",
         "options" : {

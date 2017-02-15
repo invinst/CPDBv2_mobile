@@ -83,7 +83,7 @@ describe('FAQPageTest', function () {
     });
 
     client
-      .url('http://localhost:9001')
+      .url(client.globals.clientUrl)
       .waitForElementVisible('a[href="/faq"]', 10000);
 
     client.click('a[href="/faq"]');
@@ -108,7 +108,7 @@ describe('FAQPageTest', function () {
     api.mock('GET', '/faqs/31/', 200, mockFAQ);
 
     client
-      .url('http://localhost:9001/faq')
+      .url(`${client.globals.clientUrl}/faq`)
       .waitForElementVisible('.sheet', 4000);
 
     client.expect.element('.sheet-header').to.be.visible;

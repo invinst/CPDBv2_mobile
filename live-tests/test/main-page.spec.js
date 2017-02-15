@@ -3,7 +3,7 @@
 describe('MainPageTest', function () {
   it('should show homepage with logo and navigation links', function (client) {
     client
-      .url('http://localhost:9001')
+      .url(client.globals.clientUrl)
       .waitForElementVisible('body', 10000)
       .waitForElementVisible('.cpdb-logo', 10000);
 
