@@ -1,21 +1,27 @@
 machine:
+  java:
+    version: 'oraclejdk8'
   node:
     version: 4.1.0
   environment:
     NODE_ENV: development
 dependencies:
   pre:
-    - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
-    - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-    - sudo apt-get update -qq
-    - sudo apt-get install -y -qq yarn=0.19.1-1
+    - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+    - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    - sudo apt-get update
+    - sudo apt-get install -y yarn=0.19.1-1
   override:
-    - yarn global add eslint@2.8.0
-    - yarn global add eslint-plugin-react@5.0.1
-    - yarn global add babel-eslint@6.0.3
-    - yarn install
+    # explicit executive path to make sure circleci's old preloaded yarn doesn't take precedence
+    - /usr/bin/yarn global add eslint@2.8.0
+    - /usr/bin/yarn global add eslint-plugin-react@5.0.1
+    - /usr/bin/yarn global add babel-eslint@6.0.3
+    - /usr/bin/yarn install
+
 test:
   override:
     - eslint src/
-    - yarn run ci-test
-    - yarn run live-test
+    - /usr/bin/yarn run ci-test
+    - /usr/bin/yarn run live-test
+  post:
+    - rm -rf ~/CPDBv2_mobile/node_modules

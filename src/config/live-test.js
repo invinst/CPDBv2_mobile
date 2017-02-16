@@ -6,7 +6,8 @@ import baseConfig from './base';
 let config = {
   appEnv: 'test',  // don't remove the appEnv property here
   baseUrlV1: 'http://localhost:9002',
-  baseUrlV2: 'http://localhost:9002', // just placeholder, in test env, all of them should be mocked
+  baseUrlV2: 'http://localhost:9002',
+  baseUrlV2V2: 'http://localhost:9002',
 
   bottomSheet: {
     transitionDuration: 1

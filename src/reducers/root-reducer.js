@@ -5,6 +5,7 @@ import officerPage from './officerPage';
 import complaintPage from './complaintPage';
 import landingPage from './landingPage';
 import reportingPage from './reportingPage';
+import faqPage from './faqPage';
 
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   officerPage,
   complaintPage,
   landingPage,
-  reportingPage
+  reportingPage,
+  faqPage
 });

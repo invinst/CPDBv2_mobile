@@ -9,19 +9,19 @@ describe('isRequesting reducer', function () {
     isRequesting(undefined, {}).should.be.false();
   });
 
-  it('should handle OFFICER_PAGE_REQUEST_START', function () {
+  it('should handle REPORTING_PAGE_REQUEST_START', function () {
     isRequesting(false, {
       type: REPORTING_PAGE_REQUEST_START
     }).should.be.true();
   });
 
-  it('should handle OFFICER_PAGE_REQUEST_SUCCESS', function () {
+  it('should handle REPORTING_PAGE_REQUEST_SUCCESS', function () {
     isRequesting(true, {
       type: REPORTING_PAGE_REQUEST_SUCCESS
     }).should.be.false();
   });
 
-  it('should handle OFFICER_PAGE_REQUEST_FAILURE', function () {
+  it('should handle REPORTING_PAGE_REQUEST_FAILURE', function () {
     isRequesting(true, {
       type: REPORTING_PAGE_REQUEST_FAILURE
     }).should.be.false();
