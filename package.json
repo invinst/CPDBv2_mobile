@@ -107,6 +107,7 @@
     "react-infinite-scroller": "^1.0.4",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
+    "react-sticky": "^5.0.5",
     "redux": "^3.5.2",
     "redux-actions": "^0.10.0",
     "redux-axios-middleware": "^1.0.0",

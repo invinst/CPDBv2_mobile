@@ -3,6 +3,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import style from 'styles/BottomSheet.sass';
 import { goUp } from 'utils/NavigationUtil';
 import { hasChildren, hasGrandchildren } from 'utils/ComponentUtil';
+import { StickyContainer } from 'react-sticky';
 
 /*
 This is a not-too-pretty hack to achieve "nested bottom sheet" with animations.
@@ -89,7 +90,7 @@ export default class BottomSheet extends Component {
     const { transitionDuration } = this.props;
 
     return (
-      <div className={ style.bottomSheet }>
+      <StickyContainer className={ style.bottomSheet }>
         <ReactCSSTransitionGroup
           component='div'
           transitionName='bottom-sheet-background'
@@ -117,7 +118,7 @@ export default class BottomSheet extends Component {
           { this.renderSheet() }
         </ReactCSSTransitionGroup>
 
-      </div>
+      </StickyContainer>
     );
   }
 }
