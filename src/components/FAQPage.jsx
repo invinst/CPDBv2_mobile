@@ -6,6 +6,7 @@ import { map } from 'lodash';
 import { hasChildren } from 'utils/ComponentUtil';
 import style from 'styles/FAQPage.sass';
 import { Sticky } from 'react-sticky';
+import { scrollToTop } from 'utils/NavigationUtil';
 
 
 export default class FAQPage extends Component {
@@ -44,7 +45,7 @@ export default class FAQPage extends Component {
 
     return (
       <div className={ style.faqPage }>
-      <Sticky><h1 className='sheet-header header'>FAQ</h1></Sticky>
+        <Sticky><h1 onClick={ scrollToTop } className='sheet-header header'>FAQ</h1></Sticky>
         <div className='sheet-body'>
           <InfiniteScroll loadMore={ () => loadMore(nextParams) } hasMore={ hasMore } useWindow={ false }>
             { this.renderFAQItems(pagination.faqs) }

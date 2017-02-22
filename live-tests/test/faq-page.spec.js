@@ -126,4 +126,28 @@ describe('FAQPageTest', function () {
 
     client.end();
   });
+
+  it('should have sticky header', function (client) {
+    // Make sure that are so many FAQ items that scrolling down is possible
+    const mockResults = (new Array(50)).fill(mockFAQ)
+      .map((value, index) => Object.assign({}, value, { id: index }));
+
+    api.mock('GET', '/faqs/', 200, {
+      'count': 14,
+      'next': null,
+      'previous': null,
+      'results': mockResults
+    });
+
+    client
+      .url(`${client.globals.clientUrl}/faq`)
+      .waitForElementVisible('.sheet', 4000);
+
+    client.execute('scrollTo(0, document.body.scrollHeight);');
+    client.expect.element('.sticky').to.have.css('position').which.equal('fixed');
+
+    client.click('.sheet-header');
+    client.pause(500);
+    client.expect.element('.sticky').to.be.not.present;
+  });
 });
