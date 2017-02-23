@@ -13,6 +13,7 @@ describe('MainPageTest', function () {
     client.expect.element('a[href="/reporting"]').to.be.visible;
     client.expect.element('a[href="/faq"]').to.be.visible;
     client.expect.element('a[href="/about"]').to.be.visible;
+    client.expect.element('a[href="/search"]').to.be.visible;
 
     client.end();
   });

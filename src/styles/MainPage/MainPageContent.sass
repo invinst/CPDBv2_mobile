@@ -16,24 +16,21 @@
       top: 0
 
   .search-bar
+    display: block
     background-color: $white
+    text-decoration: none
     color: $search-bar-color
     font-size: 18px
+    border: 0
     border-bottom: solid 2px $alto
     height: 42px
     line-height: 42px
     padding: 0
+    margin: 0 $header-logo-padding-x
+    width: calc(100% - #{$header-logo-padding-x} * 2)
+    outline: none
+    font-weight: 200
 
-    .input-text
-      background-color: $white
-      color: $black
-      width: calc(100% - 30px)
-      font-weight: 300
-
-    @include placeholder
-      color: $search-bar-color
-      font-weight: 200
-      font-size: 18px
 
   .wrapper
     position: absolute
@@ -45,16 +42,6 @@
     font-size: 13px
     letter-spacing: 0
     color: rgba(0, 0, 0, 0.5)
-
-  .search-wrapper
-    width: 100%
-    padding: 0 11px
-    &.top-left
-      margin-top: 0
-      padding: 0
-
-  .search-results
-    color: $search-results-text-color
 
   .full-height-wrapper
     position: relative

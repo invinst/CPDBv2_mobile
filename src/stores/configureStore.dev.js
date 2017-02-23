@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import persistState from 'redux-localstorage';
 import thunk from 'redux-thunk';
-import configuredAxiosMiddleware from 'middleware/configured-axios-middleware';
-
-import rootReducer from 'reducers/root-reducer';
-
 import createLogger from 'redux-logger';
+import configuredAxiosMiddleware from 'middleware/configured-axios-middleware';
+import rootReducer from 'reducers/root-reducer';
+import localStorageConfig from './localStorageConfig';
 
 const logger = createLogger({
   diff: true
@@ -17,6 +17,7 @@ export default function configureStore(initialState) {
     initialState,
     compose(
       applyMiddleware(thunk, configuredAxiosMiddleware, logger),
+      persistState(()=>{}, localStorageConfig),
       window.devToolsExtension ? window.devToolsExtension() : f => f
     )
   );

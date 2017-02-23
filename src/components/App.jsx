@@ -13,6 +13,7 @@ import ReportingDetailContainer from 'containers/ReportingPage/ReportingDetailCo
 import FAQPageContainer from 'containers/FAQPageContainer';
 import FAQDetailContainer from 'containers/FAQPage/FAQDetailContainer';
 import AboutPageContainer from 'containers/AboutPageContainer';
+import SearchPageContainer from 'containers/SearchPageContainer';
 
 import 'styles/Style.sass';
 import 'styles/Fonts.sass';
@@ -33,10 +34,19 @@ const App = React.createClass({
           <Route path={ constants.REPORTING_PATH } component={ ReportingPageContainer }>
             <Route path={ constants.REPORTING_PATH + '/:id' } component={ ReportingDetailContainer } />
           </Route>
+
           <Route path={ constants.FAQ_PATH } component={ FAQPageContainer }>
             <Route path={ constants.FAQ_PATH + '/:id' } component={ FAQDetailContainer } />
           </Route>
+
           <Route path={ constants.ABOUT_PATH } component={ AboutPageContainer } />
+
+          <Route path={ constants.SEARCH_PATH } component={ SearchPageContainer }>
+            <Route path={ constants.SEARCH_PATH + '/:query' } component={ SearchPageContainer } />
+          </Route>
+
+
+
         </Route>
       </Router>
     );

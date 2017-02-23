@@ -207,7 +207,7 @@ export default {
   // API endpoints
   ALLEGATION_API_ENDPOINT: '/api/allegation/',
   OFFICER_API_ENDPOINT: '/api/officer/',
-  SUGGESTION_API_ENDPOINT: '/api/suggestion/',
+  SUGGESTION_API_ENDPOINT: '/search-mobile/',
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
   VFTG_API_ENDPOINT: '/vftg/',
@@ -237,5 +237,30 @@ export default {
   // Router paths
   REPORTING_PATH: '/reporting',
   FAQ_PATH: '/faq',
-  ABOUT_PATH: '/about'
+  ABOUT_PATH: '/about',
+  SEARCH_PATH: '/search',
+
+
+  SEARCH_CATEGORIES: [
+    {
+      name: 'Officers',
+      id: 'officers',
+      path: 'OFFICER'
+    },
+    {
+      name: 'CRs',
+      id: 'crs',
+      path: 'CRS'
+    },
+    {
+      name: 'FAQ',
+      id: 'faqs',
+      path: 'FAQ'
+    },
+    {
+      name: 'Reports',
+      id: 'reports',
+      path: 'REPORT'
+    }
+  ]
 };

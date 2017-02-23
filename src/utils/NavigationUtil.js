@@ -35,3 +35,18 @@ export function scrollToTop(ast=animatedScrollTo) {
     ast(document.body, 0, 100);
   };
 }
+
+
+export function scrollToElement(targetElementSelector, offsetElementSelector) {
+  const targetElement = document.querySelector(targetElementSelector);
+  if (!targetElement) {
+    return;
+  }
+  const offsetElement = document.querySelector(offsetElementSelector);
+
+  let offset = 0;
+  if (offsetElement) {
+    offset = offsetElement.offsetHeight;
+  }
+  document.body.scrollTop = targetElement.offsetTop - offset;
+}
