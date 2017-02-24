@@ -10,14 +10,22 @@ export const goUp = function (router, currentPathName) {
 
 
 export function scrollTo(element, to, duration) {
-  if (duration <= 0) return;
+  if (duration <= 0) {
+    return;
+  }
   const difference = to - element.scrollTop;
   const perTick = difference / duration * 10;
 
+  if (Math.abs(perTick) < 0.5) {
+    element.scrollTop = to;
+    return;
+  }
+
   setTimeout(() => {
     element.scrollTop = element.scrollTop + perTick;
-    if (element.scrollTop === to) return;
-    scrollTo(element, to, duration - 10);
+    if (element.scrollTop !== to) {
+      scrollTo(element, to, duration - 10);
+    }
   }, 10);
 }
 
