@@ -5,26 +5,33 @@ $padding: $header-logo-padding-x
 
 :local(.reporting-detail)
 
-  overflow-y: auto
-  height: 100%
-
   .report-title
     font-size: 30px
     color: inherit
     padding: 95px $padding 32px $padding
+    weight: 400
 
   .report-body
     padding: $padding
+    font-size: 20px
+    font-weight: 300
 
   .metadata
     width: 100%
     margin-bottom: 31px
+    font-size: 14px
+    font-weight: 400
 
     td
       padding: 11px 0
 
       &:first-child
+        font-weight: 300
         color: $dusty-gray
+
+      &:second-child
+        color: $metadata-black
+
 
     tr
       border-bottom: 1px solid $alto-solid

@@ -32,6 +32,7 @@ class MainPage extends Component {
             })
           }
         </BottomSheetContainer>
+        <div className='bottom-padding'></div>
       </div>
     );
   }

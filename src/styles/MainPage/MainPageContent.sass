@@ -1,4 +1,5 @@
 @import '../Variables'
+@import '../Mixins'
 
 :local(.main-page-content)
   position: relative
@@ -17,10 +18,11 @@
   .search-bar
     background-color: $white
     color: $search-bar-color
-    font-size: 15px
-    border: solid 1px $alto
-    height: 51px
-    line-height: 51px
+    font-size: 18px
+    border-bottom: solid 2px $alto
+    height: 42px
+    line-height: 42px
+    padding: 0
 
     .input-text
       background-color: $white
@@ -28,17 +30,10 @@
       width: calc(100% - 30px)
       font-weight: 300
 
-    ::-webkit-input-placeholder
-      color: black
-
-    :-moz-placeholder
+    @include placeholder
       color: $search-bar-color
-
-    ::-moz-placeholder
-      color: $search-bar-color
-
-    :-ms-input-placeholder
-      color: $search-bar-color
+      font-weight: 200
+      font-size: 18px
 
   .wrapper
     position: absolute

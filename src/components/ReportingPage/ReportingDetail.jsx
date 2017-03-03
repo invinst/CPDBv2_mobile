@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import style from 'styles/ReportingDetail.sass';
+import { scrollToTop } from 'utils/NavigationUtil';
+import { Sticky } from 'react-sticky';
 
 
 export default class ReportingDetail extends Component {
@@ -45,6 +47,9 @@ export default class ReportingDetail extends Component {
 
     return (
       <div className={ style.reportingDetail }>
+        <Sticky>
+          <div onClick={ scrollToTop() } className='empty sheet-header header'></div>
+        </Sticky>
         <h1 className='report-title'>{ report.title.join('. ') }</h1>
         <div className='report-body'>
           { this.renderMetadataTable(publication, publishDate, author) }
