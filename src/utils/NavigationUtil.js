@@ -30,6 +30,6 @@ export function scrollTo(element, to, duration) {
 }
 
 
-export function scrollToTop() {
+export function scrollToTop(scrollTo=scrollTo) {
   scrollTo(document.body, 0, 100);
 }
