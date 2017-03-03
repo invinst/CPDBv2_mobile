@@ -25,7 +25,7 @@ export default class FAQDetail extends Component {
     return (
       <div className={ style.faqDetail }>
         <Sticky>
-          <div onClick={ scrollToTop } className='empty sheet-header header'></div>
+          <div onClick={ scrollToTop() } className='empty sheet-header header'></div>
         </Sticky>
         <h1 className='question'>{ question.join(' - ') }</h1>
         <div className='answer'>

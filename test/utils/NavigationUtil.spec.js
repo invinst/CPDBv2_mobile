@@ -1,5 +1,5 @@
 import should from 'should'; // eslint-disable-line no-unused-vars
-import { spy, useFakeTimers } from 'sinon';
+import { spy, stub, useFakeTimers } from 'sinon';
 import * as NavigationUtil from 'utils/NavigationUtil';
 
 describe('NavigationUtil', () => {
@@ -35,19 +35,19 @@ describe('NavigationUtil', () => {
 
       it('should do nothing if duration <= 0', function () {
         const element = { scrollTop: 99 };
-        NavigationUtil.scrollTo(element, 3, 0);
+        NavigationUtil.animatedScrollTo(element, 3, 0);
         element.scrollTop.should.be.eql(99);
       });
 
       it('should immediately scroll to top if next scroll step is too short', function () {
         const element = { scrollTop: 1 };
-        NavigationUtil.scrollTo(element, 0, 1000);
+        NavigationUtil.animatedScrollTo(element, 0, 1000);
         element.scrollTop.should.be.eql(0);
       });
 
       it('should scroll correctly each tick', function () {
         const element = { scrollTop: 500 };
-        NavigationUtil.scrollTo(element, 0, 500);
+        NavigationUtil.animatedScrollTo(element, 0, 500);
         element.scrollTop.should.be.eql(500);
         this.clock.tick(10);
         element.scrollTop.should.be.eql(490);
@@ -58,10 +58,10 @@ describe('NavigationUtil', () => {
 
     describe('scrollToTop', () => {
       it('should call scrollTop with appropriate params', function () {
-        spy(NavigationUtil, 'scrollTo');
-        NavigationUtil.scrollToTop(NavigationUtil.scrollTo);
-        NavigationUtil.scrollTo.called.should.be.true();
-        NavigationUtil.scrollTo.restore();
+        const animatedScrollTo = spy(NavigationUtil, 'animatedScrollTo');
+        NavigationUtil.scrollToTop(animatedScrollTo)();
+        animatedScrollTo.called.should.be.true();
+        animatedScrollTo.restore();
       });
     });
   });

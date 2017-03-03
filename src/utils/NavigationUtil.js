@@ -9,7 +9,7 @@ export const goUp = function (router, currentPathName) {
 };
 
 
-export function scrollTo(element, to, duration) {
+export function animatedScrollTo(element, to, duration) {
   if (duration <= 0) {
     return;
   }
@@ -24,12 +24,14 @@ export function scrollTo(element, to, duration) {
   setTimeout(() => {
     element.scrollTop = element.scrollTop + perTick;
     if (element.scrollTop !== to) {
-      scrollTo(element, to, duration - 10);
+      animatedScrollTo(element, to, duration - 10);
     }
   }, 10);
 }
 
 
-export function scrollToTop(scrollTo=scrollTo) {
-  scrollTo(document.body, 0, 100);
+export function scrollToTop(ast=animatedScrollTo) {
+  return () => {
+    ast(document.body, 0, 100);
+  };
 }

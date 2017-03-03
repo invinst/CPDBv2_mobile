@@ -48,7 +48,7 @@ export default class ReportingDetail extends Component {
     return (
       <div className={ style.reportingDetail }>
         <Sticky>
-          <div onClick={ scrollToTop } className='empty sheet-header header'></div>
+          <div onClick={ scrollToTop() } className='empty sheet-header header'></div>
         </Sticky>
         <h1 className='report-title'>{ report.title.join('. ') }</h1>
         <div className='report-body'>

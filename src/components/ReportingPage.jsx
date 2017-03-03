@@ -46,7 +46,7 @@ export default class ReportingPage extends Component {
     return (
       <div className={ style.reportingPage }>
         <Sticky>
-          <h1 onClick={ scrollToTop } className='sheet-header header'>Reporting</h1>
+          <h1 onClick={ scrollToTop() } className='sheet-header header'>Reporting</h1>
         </Sticky>
         <div className='sheet-body'>
           <InfiniteScroll loadMore={ () => loadMore(nextParams) } hasMore={ hasMore } useWindow={ true }>
