@@ -1,15 +1,8 @@
 import React, { PropTypes } from 'react';
 
-import SimpleTab from 'components/Shared/SimpleTab';
-import ComplaintsTab from 'components/OfficerPage/ComplaintsTab';
-import SummaryTab from 'components/OfficerPage/SummaryTab';
-import RelatedOfficersTab from 'components/OfficerPage/RelatedOfficersTab';
-import SearchablePageContainer from 'containers/Shared/SearchablePageContainer';
-import OfficerHeader from 'components/OfficerPage/OfficerHeader';
-import NotMatchedOfficerPage from 'components/OfficerPage/NotMatchedOfficerPage';
-import LoadingPage from 'components/Shared/LoadingPage';
-import OfficerPagePresenter from 'presenters/Page/OfficerPagePresenter';
 import GaUtil from 'utils/GaUtil';
+import LoadingPage from 'components/Shared/LoadingPage';
+import NotMatchedOfficerPage from 'components/OfficerPage/NotMatchedOfficerPage';
 
 import style from 'styles/OfficerPage.sass';
 
@@ -29,16 +22,9 @@ const OfficerPage = React.createClass({
     GaUtil.track('event', 'officer', 'view_detail', location.pathname);
   },
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.pk != this.props.pk) {
-      const { getOfficer } = this.props;
-      getOfficer({ pk: newProps.pk });
-    }
-  },
 
   render() {
     const { loading, found, officer, pk } = this.props;
-    const presenter = OfficerPagePresenter(officer);
 
     if (loading) {
       return (
@@ -53,35 +39,9 @@ const OfficerPage = React.createClass({
     }
 
     return (
-      <SearchablePageContainer>
-        <div className={ style.officerPage }>
-          <div className='content'>
-            <div className='officer-header'>
-              <OfficerHeader officer={ presenter.officerDetail } />
-            </div>
-            <div className='tabs'>
-              <SimpleTab navigation={ true }>
-                <div>
-                  <div className='tab-summary' tabIdentifier='summary'>Summary</div>
-                  <div className='tab-complaints' tabIdentifier='complaints'>Complaints</div>
-                  <div className='tab-co-accused' tabIdentifier='coaccused'>Co-accused</div>
-                </div>
-                <div className='officer-page-content'>
-                  <div>
-                    <SummaryTab officer={ presenter.officerDetail } distribution={ presenter.distribution } />
-                  </div>
-                  <div>
-                    <ComplaintsTab officer={ presenter.officerDetail } complaints={ presenter.complaints } />
-                  </div>
-                  <div>
-                    <RelatedOfficersTab coAccused={ presenter.coAccused } />
-                  </div>
-                </div>
-              </SimpleTab>
-            </div>
-          </div>
-        </div>
-      </SearchablePageContainer>
+      <div>
+        { JSON.stringify(officer) }
+      </div>
     );
   }
 });
