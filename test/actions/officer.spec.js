@@ -1,22 +1,44 @@
 import {
-  getOfficer,
-  OFFICER_PAGE_REQUEST_START, OFFICER_PAGE_REQUEST_SUCCESS, OFFICER_PAGE_REQUEST_FAILURE
+  getOfficerSummary,
+  getOfficerTimeline,
+  OFFICER_SUMMARY_REQUEST_START,
+  OFFICER_SUMMARY_REQUEST_SUCCESS,
+  OFFICER_SUMMARY_REQUEST_FAILURE,
+  OFFICER_TIMELINE_REQUEST_START,
+  OFFICER_TIMELINE_REQUEST_SUCCESS,
+  OFFICER_TIMELINE_REQUEST_FAILURE
 } from 'actions/officer';
 import constants from 'constants';
-import { v1Url } from 'utils/UrlUtil';
+import { v2v2Url } from 'utils/UrlUtil';
 
 
-describe('suggestions actions', function () {
-  describe('getOfficer', function () {
+describe('officer actions', function () {
+  describe('getOfficerSummary', function () {
     it('should return right action', function () {
 
-      getOfficer().should.eql({
-        types: [OFFICER_PAGE_REQUEST_START, OFFICER_PAGE_REQUEST_SUCCESS, OFFICER_PAGE_REQUEST_FAILURE],
+      getOfficerSummary(11).should.eql({
+        types: [OFFICER_SUMMARY_REQUEST_START, OFFICER_SUMMARY_REQUEST_SUCCESS, OFFICER_SUMMARY_REQUEST_FAILURE],
         payload: {
           request: {
-            url: v1Url(constants.OFFICER_API_ENDPOINT),
+            url: `${v2v2Url(constants.OFFICER_API_ENDPOINT)}11/summary/`,
             adapter: undefined,
-            params: undefined
+            params: {}
+          }
+        }
+      });
+    });
+  });
+
+  describe('getOfficerTimeline', function () {
+    it('should return right action', function () {
+
+      getOfficerTimeline(11).should.eql({
+        types: [OFFICER_TIMELINE_REQUEST_START, OFFICER_TIMELINE_REQUEST_SUCCESS, OFFICER_TIMELINE_REQUEST_FAILURE],
+        payload: {
+          request: {
+            url: `${v2v2Url(constants.OFFICER_API_ENDPOINT)}11/timeline/`,
+            adapter: undefined,
+            params: {}
           }
         }
       });

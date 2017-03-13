@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import OfficerPage from 'components/OfficerPage';
+import OfficerSummary from 'components/OfficerPage/OfficerSummary';
 import { getOfficerSummary } from 'actions/officer';
 import { officerSummarySelector } from 'selectors/officer-page';
 
@@ -17,8 +17,8 @@ function mapStateToProps(state, ownProps) {
   };
 
   return {
-    loadingSummary: state.officerPage.summaries.isRequesting,
-    foundSummary: state.officerPage.summaries.isSuccess,
+    loading: state.officerPage.summaries.isRequesting,
+    found: state.officerPage.summaries.isSuccess,
     summary: officerSummarySelector(state, props),
     pk: pk
   };
@@ -28,4 +28,4 @@ const mapDispatchToProps = {
   getOfficerSummary
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OfficerPage));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OfficerSummary));

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
 class OfficerSearchResult extends Component {
   render() {
@@ -11,10 +12,10 @@ class OfficerSearchResult extends Component {
     });
 
     return (
-      <a href={ officer.url } target='_blank' className='row' onClick={ onClick }>
+      <Link to={ officer.url } className='row' onClick={ onClick }>
         <p>{ officer.name }</p>
         <p className='officer-badge-number'>{ officer.extraInfo }</p>
-      </a>
+      </Link>
     );
   }
 }

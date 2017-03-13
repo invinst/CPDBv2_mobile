@@ -16,7 +16,7 @@ export const officersSelector = createSelector(
         id: officer.id,
         name: officer.name,
         extraInfo: officer.extra_info,
-        url: `${constants.OFFICER_PATH}/${officer.id}`
+        url: `${constants.OFFICER_PATH}/${officer.id}/summary`
       }))
     };
   }

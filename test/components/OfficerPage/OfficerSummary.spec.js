@@ -4,7 +4,7 @@ import { mount, shallow } from 'enzyme';
 import { mock, match } from 'sinon';
 import configureStore from 'redux-mock-store';
 
-import OfficerPage from 'components/OfficerPage';
+import OfficerSummary from 'components/OfficerPage/OfficerSummary';
 import LoadingPage from 'components/Shared/LoadingPage';
 import NotMatchedOfficerPage from 'components/OfficerPage/NotMatchedOfficerPage';
 import GaUtil from 'utils/GaUtil';
@@ -17,19 +17,30 @@ const store = mockStore({
   }
 });
 
-describe('<OfficerPage />', function () {
+describe('<OfficerSummary />', function () {
   it('should be renderable', function () {
-    const wrapper = shallow(<OfficerPage />);
+    const wrapper = shallow(<OfficerSummary />);
     wrapper.should.be.ok();
   });
 
   it('should render LoadingPage if loading', function () {
-    const wrapper = shallow(<OfficerPage loading={ true }/>);
-    wrapper.find(LoadingPage).should.have.length(1)
+    const wrapper = shallow(
+      <OfficerSummary
+        loading={ true }
+        found={ false }
+        />
+    );
+    wrapper.find(LoadingPage).should.have.length(1);
   });
 
   it('should render NotMatchedOfficerPage if not found', function () {
-    const wrapper = shallow(<OfficerPage loading={ false } found={ false }/>);
+    const wrapper = shallow(
+      <OfficerSummary
+        loading={ false }
+        found={ false }
+        getOfficerSummary={ () => {} }
+        />
+    );
     wrapper.find(NotMatchedOfficerPage).should.have.length(1);
   });
 
@@ -39,10 +50,10 @@ describe('<OfficerPage />', function () {
       .withArgs('event', 'officer', 'view_detail', match.any).returns('anything');
     mount(
       <Provider store={ store }>
-        <OfficerPage loading={ false } found={ true } getOfficer={ () => {} }/>
+        <OfficerSummary loading={ false } found={ false } getOfficerSummary={ () => {} }/>
       </Provider>
     );
     mockGaUtil.verify();
-    mockGaUtil.restore()
+    mockGaUtil.restore();
   });
 });

@@ -140,7 +140,7 @@ describe('SearchPageTest', function () {
       .text.to.contain('Lorem Ipsum Report');
 
     client.expect
-      .element('a[href="https://beta.cpdb.co/officer/dummy/john-wang"]')
+      .element('a[href="/officer/9876/summary"]')
       .text.to.contain('John Wang');
 
     client.end();

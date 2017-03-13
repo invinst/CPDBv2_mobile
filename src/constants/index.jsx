@@ -206,7 +206,7 @@ export default {
 
   // API endpoints
   ALLEGATION_API_ENDPOINT: '/api/allegation/',
-  OFFICER_API_ENDPOINT: '/api/officer/',
+  OFFICER_API_ENDPOINT: '/officers/',
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',

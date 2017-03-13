@@ -1,0 +1,36 @@
+@import '../Variables'
+
+$gray-border: 2px solid $alto-solid
+
+:local(.stats-section)
+
+  .total
+    padding: 12px $horizontal-padding 10px $horizontal-padding
+    border-bottom: $gray-border
+
+    .total-title
+      display: inline-block
+      width: 128px - $horizontal-padding
+      color: $dusty-gray
+
+  .facet
+    border-bottom: $gray-border
+
+    .facet-name
+      padding: $horizontal-padding $horizontal-padding 13px $horizontal-padding
+      color: $dusty-gray
+
+    .facet-entry
+      padding: $horizontal-padding $horizontal-padding $horizontal-padding 0
+      margin-left: $horizontal-padding
+      border-bottom: $gray-border
+
+      &:last-child
+        border-bottom: 0
+
+      .facet-entry-count
+        display: inline-block
+        width: 32px
+
+      .facet-entry-name
+        color: $dusty-gray
