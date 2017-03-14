@@ -32,6 +32,13 @@ describe('NavigationUtil', () => {
       router.push.calledWith('').should.be.true();
     });
 
+    it('should go to straight root if current path is /officer/<id>/summary', () => {
+      const router = { push: spy() };
+      NavigationUtil.goUp(router, '/officer/11/summary');
+
+      router.push.calledWith('').should.be.true();
+    });
+
     describe('scrollTo', () => {
       beforeEach(function () {
         this.clock = useFakeTimers();

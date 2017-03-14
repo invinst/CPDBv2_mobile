@@ -9,7 +9,13 @@ export const goUp = function (router, currentPathName) {
   const newPathName = currentPathName.split('/').slice(0, -1).join('/');
 
   // Skip nonexistent routes
-  if (constants.NONEXISTENT_ROUTES.indexOf(newPathName) !== -1) {
+  let isSkipped = false;
+  constants.NONEXISTENT_ROUTES.forEach((pattern) => {
+    if (newPathName.match(pattern)) {
+      isSkipped = true;
+    }
+  });
+  if (isSkipped) {
     return goUp(router, newPathName);
   }
 

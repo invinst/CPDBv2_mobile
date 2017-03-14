@@ -244,7 +244,8 @@ export default {
   // Routes that don't have their corresponding component.
   // NavigationUtil.goUp() skips all of these.
   NONEXISTENT_ROUTES: [
-    '/officer'
+    /^\/officer$/,
+    /^\/officer\/\d+\/?$/
   ],
 
 
