@@ -67,7 +67,7 @@ describe('<SearchCategory />', () => {
 
   describe('renderOfficer', () => {
     it('should render officer correctly', () => {
-      const spyClicked = spy();
+      const spySaveToRecent = spy();
       const officer = {
         name: 'John',
         url: 'http://localhost',
@@ -78,7 +78,7 @@ describe('<SearchCategory />', () => {
         <SearchCategory
           items={ [officer] }
           categoryId='officers'
-          clicked={ spyClicked }
+          saveToRecent={ spySaveToRecent }
         />
       );
 
@@ -99,7 +99,7 @@ describe('<SearchCategory />', () => {
         <SearchCategory
           items={ [faq] }
           categoryId='faqs'
-          clicked={ () => {} }
+          saveToRecent={ () => {} }
         />
       );
 
@@ -112,8 +112,8 @@ describe('<SearchCategory />', () => {
       faqLink.text().should.eql('foo');
     });
 
-    it('should dispatch "clicked" action when clicked', () => {
-      const spyClicked = spy();
+    it('should dispatch "saveToRecent" action when clicked', () => {
+      const spySaveToRecent = spy();
       const faq = {
         id: '3',
         question: 'foo'
@@ -123,13 +123,13 @@ describe('<SearchCategory />', () => {
         <SearchCategory
           items={ [faq] }
           categoryId='faqs'
-          clicked={ spyClicked }
+          saveToRecent={ spySaveToRecent }
         />
       );
       const faqLink = wrapper.find('Link');
 
       faqLink.simulate('click');
-      spyClicked.calledWith({
+      spySaveToRecent.calledWith({
         type: 'FAQ',
         title: 'foo',
         url: `${constants.FAQ_PATH}/3`
@@ -150,7 +150,7 @@ describe('<SearchCategory />', () => {
         <SearchCategory
           items={ [report] }
           categoryId='reports'
-          clicked={ () => {} }
+          saveToRecent={ () => {} }
         />
       );
 
@@ -163,8 +163,8 @@ describe('<SearchCategory />', () => {
       reportLink.text().should.eql('NYTwheneverfoo');
     });
 
-    it('should dispatch "clicked" action when clicked', () => {
-      const spyClicked = spy();
+    it('should dispatch "saveToRecent" action when clicked', () => {
+      const spySaveToRecent = spy();
       const report = {
         id: '3',
         title: 'foo',
@@ -176,13 +176,13 @@ describe('<SearchCategory />', () => {
         <SearchCategory
           items={ [report] }
           categoryId='reports'
-          clicked={ spyClicked }
+          saveToRecent={ spySaveToRecent }
         />
       );
       const reportLink = wrapper.find('Link');
 
       reportLink.simulate('click');
-      spyClicked.calledWith({
+      spySaveToRecent.calledWith({
         type: 'Report',
         title: 'foo',
         url: `${constants.REPORTING_PATH}/3`
@@ -202,7 +202,7 @@ describe('<SearchCategory />', () => {
         <SearchCategory
           items={ [item] }
           categoryId='recent'
-          clicked={ () => {} }
+          saveToRecent={ () => {} }
         />
       );
       const itemLink = wrapper.find('Link');
@@ -213,8 +213,8 @@ describe('<SearchCategory />', () => {
       itemLink.text().should.eql('recentWhatever');
     });
 
-    it('should dispatch "clicked" action when clicked', () => {
-      const spyClicked = spy();
+    it('should dispatch "saveToRecent" action when clicked', () => {
+      const spySaveToRecent = spy();
       const item = {
         url: 'localhost',
         type: 'recent',
@@ -225,13 +225,13 @@ describe('<SearchCategory />', () => {
         <SearchCategory
           items={ [item] }
           categoryId='recent'
-          clicked={ spyClicked }
+          saveToRecent={ spySaveToRecent }
         />
       );
       const itemLink = wrapper.find('Link');
 
       itemLink.simulate('click');
-      spyClicked.calledWith(item).should.be.true();
+      spySaveToRecent.calledWith(item).should.be.true();
     });
   });
 

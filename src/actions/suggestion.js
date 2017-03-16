@@ -16,12 +16,14 @@ export const SUGGEST_EMPTY_TERM_REQUEST_START = 'SUGGEST_EMPTY_TERM_REQUEST_STAR
 export const SUGGEST_EMPTY_TERM_REQUEST_SUCCESS = 'SUGGEST_EMPTY_TERM_REQUEST_SUCCESS';
 export const SUGGEST_EMPTY_TERM_REQUEST_FAILURE = 'SUGGEST_EMPTY_TERM_REQUEST_FAILURE';
 
+export const SEARCH_SAVE_TO_RECENT = 'SEARCH_SAVE_TO_RECENT';
+
 export const SEARCH_FOCUS = 'SEARCH_FOCUS';
 export const SEARCH_BLUR = 'SEARCH_BLUR';
 export const SEARCH_CLEAR = 'SEARCH_CLEAR';
 export const SEARCH_INPUT_CHANGED = 'SEARCH_INPUT_CHANGED';
 export const SEARCH_RESET = 'SEARCH_RESET';
-export const SEARCH_CLICKED = 'SEARCH_CLICKED';
+
 
 
 export const suggestTerm = get(
@@ -55,9 +57,10 @@ export const suggestEmptyTerm = () => {
   return suggest({}, undefined, '');
 };
 
+export const saveToRecent = createAction(SEARCH_SAVE_TO_RECENT);
+
 export const focus = createAction(SEARCH_FOCUS);
 export const blur = createAction(SEARCH_BLUR);
 export const clear = createAction(SEARCH_CLEAR);
 export const inputChanged = createAction(SEARCH_INPUT_CHANGED);
 export const reset = createAction(SEARCH_RESET);
-export const clicked = createAction(SEARCH_CLICKED);

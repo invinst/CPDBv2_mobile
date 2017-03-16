@@ -4,7 +4,7 @@ import constants from 'constants';
 import {
   SUGGEST_EMPTY_TERM_REQUEST_SUCCESS,
   SUGGEST_EMPTY_TERM_REQUEST_FAILURE,
-  SEARCH_CLICKED
+  SEARCH_SAVE_TO_RECENT
 } from 'actions/suggestion';
 
 const defaultState = {
@@ -58,7 +58,7 @@ export default handleActions({
     return defaultState;
   },
 
-  [SEARCH_CLICKED]: (state, action) => {
+  [SEARCH_SAVE_TO_RECENT]: (state, action) => {
     const newData = state.recent.data.filter((datum) => {
       return datum.type !== action.payload.type;
     });

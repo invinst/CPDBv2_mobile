@@ -59,13 +59,9 @@ export default class SearchPage extends Component {
         title={ cat.name }
         isShowingAll={ this.props[cat.id].isShowingAll }
         items={ this.props[cat.id].data }
-        clicked={ this.props.clicked }
+        saveToRecent={ this.props.saveToRecent }
         />
     ));
-  }
-
-  renderInitialCategories(categories) {
-
   }
 
   render() {
@@ -127,5 +123,5 @@ SearchPage.propTypes = {
   faqs: PropTypes.object,
   suggestAllFromCategory: PropTypes.func,
   categories: PropTypes.array,
-  clicked: PropTypes.func
+  saveToRecent: PropTypes.func
 };

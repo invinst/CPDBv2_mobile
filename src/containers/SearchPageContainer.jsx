@@ -1,7 +1,13 @@
 import { connect } from 'react-redux';
 
 import SearchPage from 'components/SearchPage';
-import { inputChanged, suggestTerm, suggestAllFromCategory, suggestEmptyTerm, clicked } from 'actions/suggestion';
+import {
+  inputChanged,
+  suggestTerm,
+  suggestAllFromCategory,
+  suggestEmptyTerm,
+  saveToRecent
+} from 'actions/suggestion';
 import {
   officersSelector,
   faqsSelector,
@@ -27,7 +33,7 @@ const mapDispatchToProps = {
   suggestTerm,
   suggestAllFromCategory,
   suggestEmptyTerm,
-  clicked
+  saveToRecent
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

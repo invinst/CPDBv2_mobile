@@ -1,9 +1,9 @@
 import {
-  suggestTerm, suggestAllFromCategory, suggestEmptyTerm, focus, blur, clear, inputChanged, reset, clicked,
+  suggestTerm, suggestAllFromCategory, suggestEmptyTerm, focus, blur, clear, inputChanged, reset, saveToRecent,
   SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE,
   SUGGEST_ALL_REQUEST_START, SUGGEST_ALL_REQUEST_SUCCESS, SUGGEST_ALL_REQUEST_FAILURE,
   SUGGEST_EMPTY_TERM_REQUEST_START, SUGGEST_EMPTY_TERM_REQUEST_SUCCESS, SUGGEST_EMPTY_TERM_REQUEST_FAILURE,
-  SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_INPUT_CHANGED, SEARCH_RESET, SEARCH_CLICKED
+  SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_INPUT_CHANGED, SEARCH_RESET, SEARCH_SAVE_TO_RECENT
 } from 'actions/suggestion';
 import constants from 'constants';
 import { v2v2Url } from 'utils/UrlUtil';
@@ -46,7 +46,11 @@ describe('suggestions actions', function () {
   describe('suggestEmptyTerm', function () {
     it('should return right action', function () {
       suggestEmptyTerm().should.eql({
-        types: [SUGGEST_EMPTY_TERM_REQUEST_START, SUGGEST_EMPTY_TERM_REQUEST_SUCCESS, SUGGEST_EMPTY_TERM_REQUEST_FAILURE],
+        types: [
+          SUGGEST_EMPTY_TERM_REQUEST_START,
+          SUGGEST_EMPTY_TERM_REQUEST_SUCCESS,
+          SUGGEST_EMPTY_TERM_REQUEST_FAILURE
+        ],
         payload: {
           request: {
             url: v2v2Url(constants.SUGGESTION_API_ENDPOINT),
@@ -102,8 +106,8 @@ describe('suggestions actions', function () {
 
   describe('reset', function () {
     it('should return right action', function () {
-      clicked().should.eql({
-        type: SEARCH_CLICKED
+      saveToRecent().should.eql({
+        type: SEARCH_SAVE_TO_RECENT
       });
     });
   });

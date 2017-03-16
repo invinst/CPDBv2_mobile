@@ -7,7 +7,7 @@ const DEFAULT_CATEGORY_LENGTH = 10;
 
 export default class SearchCategory extends Component {
   renderOfficer(officer, index) {
-    const onClick = this.props.clicked.bind(this, {
+    const onClick = this.props.saveToRecent.bind(this, {
       type: 'Officer',
       title: officer.name,
       url: officer.url
@@ -22,7 +22,7 @@ export default class SearchCategory extends Component {
   }
 
   renderFaq(faq, index) {
-    const onClick = this.props.clicked.bind(this, {
+    const onClick = this.props.saveToRecent.bind(this, {
       type: 'FAQ',
       title: faq.question,
       url: `${constants.FAQ_PATH}/${faq.id}`
@@ -37,7 +37,7 @@ export default class SearchCategory extends Component {
   }
 
   renderReport(report, index) {
-    const onClick = this.props.clicked.bind(this, {
+    const onClick = this.props.saveToRecent.bind(this, {
       type: 'Report',
       title: report.title,
       url: `${constants.REPORTING_PATH}/${report.id}`
@@ -60,7 +60,7 @@ export default class SearchCategory extends Component {
 
   renderSuggested(item, index) {
     const { url, type, title } = item;
-    const onClick = this.props.clicked.bind(this, { url, type, title });
+    const onClick = this.props.saveToRecent.bind(this, { url, type, title });
 
     return (
       <Link className='row suggested' to={ url } onClick={ onClick } key={ index }>
@@ -118,5 +118,5 @@ SearchCategory.propTypes = {
   categoryId: PropTypes.string,
   isShowingAll: PropTypes.bool,
   requestAll: PropTypes.func,
-  clicked: PropTypes.func
+  saveToRecent: PropTypes.func
 };

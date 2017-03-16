@@ -44,9 +44,6 @@ const App = React.createClass({
           <Route path={ constants.SEARCH_PATH } component={ SearchPageContainer }>
             <Route path={ constants.SEARCH_PATH + '/:query' } component={ SearchPageContainer } />
           </Route>
-
-
-
         </Route>
       </Router>
     );
