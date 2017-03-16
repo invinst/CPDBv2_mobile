@@ -239,6 +239,13 @@ export default {
   FAQ_PATH: '/faq',
   ABOUT_PATH: '/about',
   SEARCH_PATH: '/search',
+  OFFICER_PATH: '/officer',
+
+  // Routes that don't have their corresponding component.
+  // NavigationUtil.goUp() skips all of these.
+  NONEXISTENT_ROUTES: [
+    '/officer'
+  ],
 
 
   SEARCH_CATEGORIES: [

@@ -36,7 +36,7 @@ export default handleActions({
             case 'OFFICER':
               type = 'Officer';
               title = data.name;
-              url = '/search';
+              url = `${constants.OFFICER_PATH}/${data.id}`;
               break;
             case 'REPORT':
               type = 'Report';

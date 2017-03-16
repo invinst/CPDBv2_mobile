@@ -27,7 +27,6 @@ const App = React.createClass({
     return (
       <Router history={ AppHistory }>
         <Route path='/complaint/:crid/:slug/:categoryHashId' component={ ComplaintPageContainer } />
-        <Route path='/officer/:slug/:id' component={ OfficerPageContainer } />
         <Route path='/s/:query' component={ MainPageContainer } />
         <Route path='/q/:query' component={ MainPageContainer } />
         <Route path='/' component={ MainPageContainer }>
@@ -44,6 +43,8 @@ const App = React.createClass({
           <Route path={ constants.SEARCH_PATH } component={ SearchPageContainer }>
             <Route path={ constants.SEARCH_PATH + '/:query' } component={ SearchPageContainer } />
           </Route>
+
+          <Route path='/officer/:id' component={ OfficerPageContainer } />
         </Route>
       </Router>
     );

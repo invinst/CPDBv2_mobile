@@ -53,11 +53,11 @@ describe('<SearchCategory />', () => {
       const spySaveToRecent = spy();
       const officer = {
         name: 'John',
-        url: 'http://localhost',
+        url: '/officer/1',
         extraInfo: 'Badge #1'
       };
 
-      const wrapper = shallow(
+      const wrapper = mount(
         <SearchCategory
           items={ [officer] }
           categoryId='officers'
@@ -69,6 +69,7 @@ describe('<SearchCategory />', () => {
       officerElement.exists().should.be.true();
       officerElement.prop('officer').should.be.eql(officer);
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+
     });
   });
 
