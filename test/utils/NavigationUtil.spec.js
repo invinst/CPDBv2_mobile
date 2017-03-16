@@ -64,5 +64,22 @@ describe('NavigationUtil', () => {
         animatedScrollTo.restore();
       });
     });
+
+    describe('scrollToElement', () => {
+      it('should set appropriate scrollTop value', function () {
+        const stubQuerySelector = stub(document, 'querySelector');
+        stubQuerySelector.withArgs('#target').returns({ offsetTop: 200 });
+        stubQuerySelector.withArgs('#offset').returns({ offsetHeight: 50 });
+        // Have to set body size it that it can actually scroll
+        document.body.style.height = '9999px';
+        document.body.style.width = '99px';
+
+        NavigationUtil.scrollToElement('#target', '#offset');
+
+        document.body.scrollTop.should.be.eql(150);
+
+        stubQuerySelector.restore();
+      });
+    });
   });
 });
