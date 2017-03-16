@@ -10,6 +10,9 @@ import BottomSheetContainer from 'containers/BottomSheetContainer';
 
 
 class MainPage extends Component {
+  componentDidMount() {
+    this.props.fetchSuggestedSearchItems();
+  }
 
   render() {
     const { isSearchFocused, query, children } = this.props;
@@ -31,7 +34,7 @@ class MainPage extends Component {
 }
 
 MainPage.propTypes = {
-  suggestTerm: PropTypes.func.isRequired,
+  fetchSuggestedSearchItems: PropTypes.func.isRequired,
   query: PropTypes.string,
   urlQuery: PropTypes.string,
   children: PropTypes.object,

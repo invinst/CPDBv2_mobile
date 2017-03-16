@@ -60,6 +60,7 @@ export const suggestedSelector = createSelector(
   (suggested) => suggested
 );
 
+
 export const recentSelector = createSelector(
   (state) => state.suggestionApp.initialSuggestions.recent,
   (recent) => recent

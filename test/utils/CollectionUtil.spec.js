@@ -1,7 +1,20 @@
 import CollectionUtil from 'utils/CollectionUtil';
 import should from 'should';
+import { spy } from 'sinon';
 
 describe('CollectionUtil', () => {
+  describe('all', () => {
+    it('should return true if all elements are truthy', () => {
+      const items = [true, 1, 'asdf', []];
+      CollectionUtil.all(items).should.be.true();
+    });
+
+    it('should return false if at least 1 element is falsy', () => {
+      const items = [true, 1, 'asdf', [], false];
+      CollectionUtil.all(items).should.be.false();
+    });
+  });
+
   describe('pluck', () => {
     it('should pluck field of array of object', () => {
       const items = [
@@ -85,5 +98,3 @@ describe('CollectionUtil', () => {
   });
 
 });
-
-

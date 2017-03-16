@@ -2,7 +2,6 @@ import should from 'should';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
-import constants from 'constants';
 
 import SearchCategory from 'components/SearchPage/SearchCategory';
 
@@ -115,7 +114,6 @@ describe('<SearchCategory />', () => {
         />
       );
 
-      const href = `${constants.REPORTING_PATH}/2`;
       const reportLink = wrapper.find('ReportSearchResult');
 
       reportLink.exists().should.be.true();

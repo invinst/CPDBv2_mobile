@@ -2,8 +2,8 @@ import { handleActions } from 'redux-actions';
 import constants from 'constants';
 
 import {
-  SUGGEST_EMPTY_TERM_REQUEST_SUCCESS,
-  SUGGEST_EMPTY_TERM_REQUEST_FAILURE,
+  FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS,
+  FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
   SEARCH_SAVE_TO_RECENT
 } from 'actions/suggestion';
 
@@ -18,7 +18,7 @@ const defaultState = {
 
 
 export default handleActions({
-  [SUGGEST_EMPTY_TERM_REQUEST_SUCCESS]: (state, action) => {
+  [FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS]: (state, action) => {
     const categories = Object.keys(action.payload);
     return {
       ...state,
@@ -54,7 +54,7 @@ export default handleActions({
       }
     };
   },
-  [SUGGEST_EMPTY_TERM_REQUEST_FAILURE]: (state, action) => {
+  [FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE]: (state, action) => {
     return defaultState;
   },
 

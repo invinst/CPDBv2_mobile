@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import MainPage from 'components/MainPage';
-import { suggestTerm } from 'actions/suggestion';
+import { fetchSuggestedSearchItems } from 'actions/suggestion';
 
 
 function mapStateToProps(state, ownProps) {
@@ -14,7 +14,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  suggestTerm
+  fetchSuggestedSearchItems
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainPage));

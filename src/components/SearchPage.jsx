@@ -8,7 +8,6 @@ import constants from 'constants';
 export default class SearchPage extends Component {
   componentDidMount() {
     this.inputElement.focus();
-    this.props.suggestEmptyTerm();
   }
 
   onInputChange(event) {
@@ -122,7 +121,6 @@ SearchPage.propTypes = {
   query: PropTypes.string,
   inputChanged: PropTypes.func,
   suggestTerm: PropTypes.func,
-  suggestEmptyTerm: PropTypes.func,
   officers: PropTypes.object,
   faqs: PropTypes.object,
   suggestAllFromCategory: PropTypes.func,
