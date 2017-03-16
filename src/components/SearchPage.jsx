@@ -14,12 +14,16 @@ export default class SearchPage extends Component {
   onInputChange(event) {
     const { suggestTerm, inputChanged } = this.props;
     const query = event.currentTarget.value;
-    if (typeof query === 'string') {
-      if (query.length >= 2) {
-        suggestTerm({}, undefined, query + '/');
-      }
+
+    if (this.isLongEnoughQuery(query)) {
+      suggestTerm({}, undefined, query + '/');
     }
+
     inputChanged(query);
+  }
+
+  isLongEnoughQuery(query) {
+    return typeof query === 'string' && query.length >= 2;
   }
 
   scrollToCategory(categoryId) {
@@ -68,7 +72,7 @@ export default class SearchPage extends Component {
     const { query } = this.props;
     let categoryLinks, categoryDetails;
 
-    if (query.length < 2) {
+    if (!this.isLongEnoughQuery(query)) {
       const categories = [
         {
           name: 'Recent',
