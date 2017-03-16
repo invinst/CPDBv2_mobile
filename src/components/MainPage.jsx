@@ -10,14 +10,6 @@ import BottomSheetContainer from 'containers/BottomSheetContainer';
 
 
 class MainPage extends Component {
-  componentDidMount() {
-    const { suggestTerm, urlQuery } = this.props;
-    const sanitizedQuery = urlQuery.replace(/\+|\-|\_/g, ' ');
-
-    if (sanitizedQuery) {
-      suggestTerm({ query: sanitizedQuery });
-    }
-  }
 
   render() {
     const { isSearchFocused, query, children } = this.props;

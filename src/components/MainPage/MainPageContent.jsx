@@ -1,10 +1,10 @@
 import cx from 'classnames';
 import React, { Component, PropTypes } from 'react';
-import SearchBarContainer from 'containers/Shared/SearchBarContainer';
-import SearchResultsContainer from 'containers/Shared/SearchResultsContainer';
 import Header from 'components/MainPage/MainPageContent/Header';
 import Footer from 'components/MainPage/MainPageContent/Footer';
 import style from 'styles/MainPage/MainPageContent.sass';
+import { Link } from 'react-router';
+import constants from 'constants';
 
 
 export default class MainPageContent extends Component {
@@ -15,7 +15,6 @@ export default class MainPageContent extends Component {
 
   render() {
     const { topLeft, query, reportSection, children } = this.props;
-    const searchBarWrapperClassNames = cx('search-wrapper animation', { 'top-left': topLeft });
     const headerClassNames = cx(style.mainPageContent, { 'top-left': topLeft });
 
     const searchDescriptionClassNames = cx('search-description', { 'hidden': !!query });
@@ -27,9 +26,9 @@ export default class MainPageContent extends Component {
           <Header topLeft={ topLeft } />
           <div className='wrapper animation'>
             <div className='holder'>
-              <div className={ searchBarWrapperClassNames }>
-                <SearchBarContainer />
-              </div>
+              <Link className='search-bar' to={ constants.SEARCH_PATH }>
+                Search
+              </Link>
             </div>
             <div
               className={ searchDescriptionClassNames }>Type the name of a police officer, badge number, or CRID number.
@@ -38,8 +37,6 @@ export default class MainPageContent extends Component {
           </div>
 
         </div>
-
-        <SearchResultsContainer />
 
         { children }
 

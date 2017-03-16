@@ -1,8 +1,8 @@
-export const get = (url, types) => ((params, adapter) => ({
+export const get = (url, types) => ((params, adapter, urlSuffix='') => ({
   types,
   payload: {
     request: {
-      url,
+      url: url + urlSuffix,
       params,
       adapter
     }
