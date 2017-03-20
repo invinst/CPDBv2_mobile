@@ -31,17 +31,17 @@ export default handleActions({
             case 'FAQ':
               type = 'FAQ';
               title = data.question;
-              url = `${constants.FAQ_PATH}/${data.id}`;
+              url = `${constants.FAQ_PATH}${data.id}/`;
               break;
             case 'OFFICER':
               type = 'Officer';
               title = data.name;
-              url = `${constants.OFFICER_PATH}/${data.id}/summary`;
+              url = `${constants.OFFICER_PATH}${data.id}/`;
               break;
             case 'REPORT':
               type = 'Report';
               title = data.title;
-              url = `${constants.REPORTING_PATH}/${data.id}`;
+              url = `${constants.REPORTING_PATH}${data.id}/`;
               break;
           }
 

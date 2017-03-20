@@ -21,7 +21,7 @@ export default class FAQPage extends Component {
       const blocks = faq.question.map((q, index) => <p className='question' key={ index }>{ q }</p>);
 
       return (
-        <Link className='row' key={ faq.id } to={ cs.FAQ_PATH + '/' + faq.id }>
+        <Link className='row' key={ faq.id } to={ `${cs.FAQ_PATH}${faq.id}/` }>
         { blocks }
         </Link>
       );

@@ -23,7 +23,7 @@ describe('<ReportSearchResult />', () => {
       />
     );
 
-    const href = `${constants.REPORTING_PATH}/2`;
+    const href = `${constants.REPORTING_PATH}2/`;
     const reportLink = wrapper.find('Link');
 
     reportLink.exists().should.be.true();
@@ -52,7 +52,7 @@ describe('<ReportSearchResult />', () => {
     spySaveToRecent.calledWith({
       type: 'Report',
       title: 'foo',
-      url: `${constants.REPORTING_PATH}/3`
+      url: `${constants.REPORTING_PATH}3/`
     }).should.be.true();
   });
 

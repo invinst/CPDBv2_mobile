@@ -10,34 +10,28 @@ describe('NavigationUtil', () => {
       router.push.called.should.be.false();
     });
 
-    it('should go to /reporting if currently at /reporting/<id>', () => {
+    it('should go to /reporting/ if currently at /reporting/<id>/', () => {
       const router = { push: spy() };
-      NavigationUtil.goUp(router, '/reporting/1');
+      NavigationUtil.goUp(router, '/reporting/1/');
 
-      router.push.calledWith('/reporting').should.be.true();
+      router.push.calledWith('/reporting/').should.be.true();
     });
 
-    it('should go to root if currently at /reporting', () => {
+    it('should go to root if currently at /reporting/', () => {
       const router = { push: spy() };
-      NavigationUtil.goUp(router, '/reporting');
+      NavigationUtil.goUp(router, '/reporting/');
 
-      router.push.calledWith('').should.be.true();
+      router.push.calledWith('/').should.be.true();
     });
 
 
-    it('should go to straight root if current path is /officer/<id>', () => {
+    it('should go to straight root if current path is /officer/<id>/', () => {
       const router = { push: spy() };
-      NavigationUtil.goUp(router, '/officer/11');
+      NavigationUtil.goUp(router, '/officer/11/');
 
-      router.push.calledWith('').should.be.true();
+      router.push.calledWith('/').should.be.true();
     });
 
-    it('should go to straight root if current path is /officer/<id>/summary', () => {
-      const router = { push: spy() };
-      NavigationUtil.goUp(router, '/officer/11/summary');
-
-      router.push.calledWith('').should.be.true();
-    });
 
     describe('scrollTo', () => {
       beforeEach(function () {

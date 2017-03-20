@@ -33,7 +33,7 @@ describe('search-page selectors', () => {
         id: 1,
         name: 'Name',
         extraInfo: 'Extra',
-        url: `${constants.OFFICER_PATH}/1/summary`
+        url: `${constants.OFFICER_PATH}1/`
       };
 
       const state = {

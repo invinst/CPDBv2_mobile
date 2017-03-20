@@ -8,8 +8,13 @@ import style from 'styles/OfficerPage/OfficerTopLinks.sass';
 
 
 class OfficerTopLinks extends Component {
-  renderLink(id, target, activePath) {
+  renderLink(id, target, activePath, customTargetPath) {
     const text = startCase(target);
+    let targetPath = target + '/';
+
+    if (typeof customTargetPath !== 'undefined') {
+      targetPath = customTargetPath;
+    }
 
     if (target === activePath) {
       return (
@@ -18,7 +23,7 @@ class OfficerTopLinks extends Component {
     } else {
       return (
         <Link
-          to={ `${constants.OFFICER_PATH}/${id}/${target}` }
+          to={ `${constants.OFFICER_PATH}${id}/${targetPath}` }
           className='officer-link'>
           { text }
         </Link>
@@ -32,7 +37,7 @@ class OfficerTopLinks extends Component {
     return (
       <div className={ style.officerTopLinks }>
 
-        { this.renderLink(id, 'summary', currentPath) }
+        { this.renderLink(id, 'summary', currentPath, '') }
         { this.renderLink(id, 'timeline', currentPath) }
         { this.renderLink(id, 'social-graph', currentPath) }
 

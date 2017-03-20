@@ -72,7 +72,7 @@ var mockFAQ = {
 
 
 describe('FAQPageTest', function () {
-  it('should navigate to /faq when user clicks on its link', function (client) {
+  it('should navigate to /faq/ when user clicks on its link', function (client) {
     api.mock('GET', '/faqs/', 200, {
       'count': 14,
       'next': null,
@@ -84,9 +84,9 @@ describe('FAQPageTest', function () {
 
     client
       .url(client.globals.clientUrl)
-      .waitForElementVisible('a[href="/faq"]', 10000);
+      .waitForElementVisible('a[href="/faq/"]', 10000);
 
-    client.click('a[href="/faq"]');
+    client.click('a[href="/faq/"]');
     client.waitForElementVisible('.sheet', 4000);
 
     client.expect.element('.sheet-header').to.be.visible;
@@ -108,16 +108,16 @@ describe('FAQPageTest', function () {
     api.mock('GET', '/faqs/31/', 200, mockFAQ);
 
     client
-      .url(`${client.globals.clientUrl}/faq`)
+      .url(`${client.globals.clientUrl}/faq/`)
       .waitForElementVisible('.sheet', 4000);
 
     client.expect.element('.sheet-header').to.be.visible;
     client.expect.element('.sheet-header').text.to.contain('FAQ');
 
-    client.expect.element('.row[href="/faq/31"]').to.be.visible;
-    client.expect.element('.row[href="/faq/31"] > .question').text.to.contain('What can I type into the search box?');
+    client.expect.element('.row[href="/faq/31/"]').to.be.visible;
+    client.expect.element('.row[href="/faq/31/"] > .question').text.to.contain('What can I type into the search box?');
 
-    client.click('.row[href="/faq/31"]');
+    client.click('.row[href="/faq/31/"]');
 
     client.expect.element('.header').text.to.contain('FAQ');
     client.expect.element('.question').text.to.contain('What can I type into the search box?');
@@ -140,7 +140,7 @@ describe('FAQPageTest', function () {
     });
 
     client
-      .url(`${client.globals.clientUrl}/faq`)
+      .url(`${client.globals.clientUrl}/faq/`)
       .waitForElementVisible('.sheet', 4000);
 
     client.execute('scrollTo(0, document.body.scrollHeight);');

@@ -1,6 +1,6 @@
 import should from 'should'; // eslint-disable-line no-unused-vars
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import OfficerTopLinks from 'components/OfficerPage/OfficerTopLinks';
 import constants from 'constants';
@@ -24,7 +24,7 @@ describe('OfficerTopLinks component', function () {
     const link = wrapper.find('Link.officer-link').filterWhere(
       (w) => w.prop('children') === 'Summary'
     );
-    link.prop('to').should.be.eql(`${constants.OFFICER_PATH}/111/summary`);
+    link.prop('to').should.be.eql(`${constants.OFFICER_PATH}111/`);
   });
 
   it('should render timeline link', function () {
@@ -37,7 +37,7 @@ describe('OfficerTopLinks component', function () {
     const link = wrapper.find('Link.officer-link').filterWhere(
       (w) => w.prop('children') === 'Timeline'
     );
-    link.prop('to').should.be.eql(`${constants.OFFICER_PATH}/111/timeline`);
+    link.prop('to').should.be.eql(`${constants.OFFICER_PATH}111/timeline/`);
   });
 
   it('should render social-graph link', function () {
@@ -50,7 +50,7 @@ describe('OfficerTopLinks component', function () {
     const link = wrapper.find('Link.officer-link').filterWhere(
       (w) => w.prop('children') === 'Social Graph'
     );
-    link.prop('to').should.be.eql(`${constants.OFFICER_PATH}/111/social-graph`);
+    link.prop('to').should.be.eql(`${constants.OFFICER_PATH}111/social-graph/`);
   });
 
   it('should render active path as a non-link <a> tag with `active` classname', function () {

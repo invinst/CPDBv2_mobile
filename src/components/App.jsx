@@ -32,21 +32,21 @@ const App = React.createClass({
         <Route path='/q/:query' component={ MainPageContainer } />
         <Route path='/' component={ MainPageContainer }>
           <Route path={ constants.REPORTING_PATH } component={ ReportingPageContainer }>
-            <Route path={ constants.REPORTING_PATH + '/:id' } component={ ReportingDetailContainer } />
+            <Route path={ constants.REPORTING_PATH + ':id' } component={ ReportingDetailContainer } />
           </Route>
 
           <Route path={ constants.FAQ_PATH } component={ FAQPageContainer }>
-            <Route path={ constants.FAQ_PATH + '/:id' } component={ FAQDetailContainer } />
+            <Route path={ constants.FAQ_PATH + ':id' } component={ FAQDetailContainer } />
           </Route>
 
           <Route path={ constants.ABOUT_PATH } component={ AboutPageContainer } />
 
           <Route path={ constants.SEARCH_PATH } component={ SearchPageContainer }>
-            <Route path={ constants.SEARCH_PATH + '/:query' } component={ SearchPageContainer } />
+            <Route path={ constants.SEARCH_PATH + ':query' } component={ SearchPageContainer } />
           </Route>
 
-          <Route path={ `${constants.OFFICER_PATH}/:id/summary` } component={ OfficerSummaryContainer } />
-          <Route path={ `${constants.OFFICER_PATH}/:id/timeline` } component={ OfficerTimelineContainer } />
+          <Route path={ `${constants.OFFICER_PATH}:id/` } component={ OfficerSummaryContainer } />
+          <Route path={ `${constants.OFFICER_PATH}:id/timeline/` } component={ OfficerTimelineContainer } />
 
         </Route>
       </Router>
