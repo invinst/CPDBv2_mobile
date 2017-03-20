@@ -2,12 +2,6 @@ import u from 'utils/HelperUtil';
 
 
 const CollectionUtil = {
-  all(items) {
-    return items.reduce((p, v) => {
-      return (p && !!v);
-    }, true);
-  },
-
   any(items) {
     return items.reduce((p, v) => {
       return (p || v);
