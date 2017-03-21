@@ -206,7 +206,7 @@ export default {
 
   // API endpoints
   ALLEGATION_API_ENDPOINT: '/api/allegation/',
-  OFFICER_API_ENDPOINT: '/api/officer/',
+  OFFICER_API_ENDPOINT: '/officers/',
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
@@ -235,10 +235,18 @@ export default {
   SUBSCRIBE_FORM_FAILURE: 'SUBSCRIBE_FORM_FAILURE',
 
   // Router paths
-  REPORTING_PATH: '/reporting',
-  FAQ_PATH: '/faq',
-  ABOUT_PATH: '/about',
-  SEARCH_PATH: '/search',
+  REPORTING_PATH: '/reporting/',
+  FAQ_PATH: '/faq/',
+  ABOUT_PATH: '/about/',
+  SEARCH_PATH: '/search/',
+  OFFICER_PATH: '/officer/',
+
+  // Routes that don't have their corresponding component.
+  // NavigationUtil.goUp() skips all of these.
+  NONEXISTENT_ROUTES: [
+    /^\/officer\/$/,
+    /^\/officer\/\d+\/?$/
+  ],
 
 
   SEARCH_CATEGORIES: [

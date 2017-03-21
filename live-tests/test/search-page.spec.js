@@ -65,9 +65,9 @@ describe('SearchPageTest', function () {
 
     client
       .url(client.globals.clientUrl)
-      .waitForElementVisible('a[href="/search"]', 10000);
+      .waitForElementVisible('a[href="/search/"]', 10000);
 
-    client.click('a[href="/search"]');
+    client.click('a[href="/search/"]');
     client.waitForElementVisible('.sheet', 4000);
 
     client.expect.element('.sheet-header').to.be.visible;
@@ -75,11 +75,11 @@ describe('SearchPageTest', function () {
 
     client.expect.element('#search-category-suggested').text.to.equal('Suggested');
 
-    client.expect.element('.suggested[href="/reporting/54"]').to.be.present;
+    client.expect.element('.suggested[href="/reporting/54/"]').to.be.present;
     client.expect.element('.sheet').text.to.contain('Report');
     client.expect.element('.sheet').text.to.contain('Molestiae impedit rerum tempora nulla aliquid eius.');
 
-    client.expect.element('.suggested[href="/faq/18"]').to.be.present;
+    client.expect.element('.suggested[href="/faq/18/"]').to.be.present;
     client.expect.element('.sheet').text.to.contain('FAQ');
     client.expect.element('.sheet').text.to.contain('How accurate is the data?');
 
@@ -95,15 +95,15 @@ describe('SearchPageTest', function () {
 
     client
       .url(client.globals.clientUrl)
-      .waitForElementVisible('a[href="/search"]', 10000);
+      .waitForElementVisible('a[href="/search/"]', 10000);
 
-    client.click('a[href="/search"]') ;
+    client.click('a[href="/search/"]') ;
     client.waitForElementVisible('.sheet', 4000);
 
-    client.click('.suggested[href="/reporting/54"]');
+    client.click('.suggested[href="/reporting/54/"]');
     // this report items should now be added into "recent" list
 
-    client.url(client.globals.clientUrl + '/search').waitForElementVisible('.sheet', 4000);
+    client.url(client.globals.clientUrl + '/search/').waitForElementVisible('.sheet', 4000);
     client.expect.element('#search-category-recent').to.be.present;
     client.expect.element('.body.recent').text.to.contain('Molestiae impedit rerum tempora nulla aliquid eius');
 
@@ -116,7 +116,7 @@ describe('SearchPageTest', function () {
     api.mock('GET', '/search-mobile/wh/', 200, mockSearchQueryResponse);
 
     client
-      .url(client.globals.clientUrl + '/search')
+      .url(client.globals.clientUrl + '/search/')
       .waitForElementVisible('.sheet', 4000);
 
     client
@@ -128,19 +128,19 @@ describe('SearchPageTest', function () {
     client.expect.element('#search-category-reports').text.to.equal('Reports');
 
     client.expect
-      .element('a[href="/faq/24"]')
+      .element('a[href="/faq/24/"]')
       .text.to.contain('Where is the glossary?');
 
     client.expect
-      .element('a[href="/faq/27"]')
+      .element('a[href="/faq/27/"]')
       .text.to.contain('How does this interact with the IPRA Portal?');
 
     client.expect
-      .element('a[href="/reporting/70"]')
+      .element('a[href="/reporting/70/"]')
       .text.to.contain('Lorem Ipsum Report');
 
     client.expect
-      .element('a[href="https://beta.cpdb.co/officer/dummy/john-wang"]')
+      .element('a[href="/officer/9876/"]')
       .text.to.contain('John Wang');
 
     client.end();

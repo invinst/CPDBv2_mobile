@@ -5,7 +5,6 @@ import {
   inputChanged,
   suggestTerm,
   suggestAllFromCategory,
-  suggestEmptyTerm,
   saveToRecent
 } from 'actions/suggestion';
 import {
@@ -32,7 +31,6 @@ const mapDispatchToProps = {
   inputChanged,
   suggestTerm,
   suggestAllFromCategory,
-  suggestEmptyTerm,
   saveToRecent
 };
 

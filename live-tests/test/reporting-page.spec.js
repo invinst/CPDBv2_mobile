@@ -105,9 +105,9 @@ describe('ReportingPageTest', function () {
 
     client
       .url(client.globals.clientUrl)
-      .waitForElementVisible('a[href="/reporting"]', 10000);
+      .waitForElementVisible('a[href="/reporting/"]', 10000);
 
-    client.click('a[href="/reporting"]');
+    client.click('a[href="/reporting/"]');
     client.waitForElementVisible('.sheet', 4000);
 
     client.expect.element('.sheet-header').to.be.visible;
@@ -129,18 +129,18 @@ describe('ReportingPageTest', function () {
     api.mock('GET', '/reports/215/', 200, mockReport);
 
     client
-      .url(`${client.globals.clientUrl}/reporting`)
+      .url(`${client.globals.clientUrl}/reporting/`)
       .waitForElementVisible('.sheet', 4000);
 
     client.expect.element('.sheet-header').to.be.visible;
     client.expect.element('.sheet-header').text.to.contain('Reporting');
 
-    client.expect.element('.reporting-item-row[href="/reporting/215"]').to.be.visible;
+    client.expect.element('.reporting-item-row[href="/reporting/215/"]').to.be.visible;
     client.expect.element('.reporting-item-row > .title').text.to.contain('Should appear on');
     client.expect.element('.reporting-item-row .publication').text.to.contain('The Publication');
     client.expect.element('.reporting-item-row .publish-date').text.to.contain('Nov 30, 2016');
 
-    client.click('.reporting-item-row[href="/reporting/215"]');
+    client.click('.reporting-item-row[href="/reporting/215/"]');
 
     client.expect.element('.header').text.to.contain('Reporting');
     client.expect.element('.report-title').text.to.contain('Should appear on');

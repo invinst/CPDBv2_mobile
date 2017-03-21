@@ -1,8 +1,8 @@
 import {
-  suggestTerm, suggestAllFromCategory, suggestEmptyTerm, focus, blur, clear, inputChanged, reset, saveToRecent,
+  suggestTerm, suggestAllFromCategory, fetchSuggestedSearchItems, focus, blur, clear, inputChanged, reset, saveToRecent,
   SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE,
   SUGGEST_ALL_REQUEST_START, SUGGEST_ALL_REQUEST_SUCCESS, SUGGEST_ALL_REQUEST_FAILURE,
-  SUGGEST_EMPTY_TERM_REQUEST_START, SUGGEST_EMPTY_TERM_REQUEST_SUCCESS, SUGGEST_EMPTY_TERM_REQUEST_FAILURE,
+  FETCH_SUGGESTED_SEARCH_ITEMS_START, FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS, FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
   SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_INPUT_CHANGED, SEARCH_RESET, SEARCH_SAVE_TO_RECENT
 } from 'actions/suggestion';
 import constants from 'constants';
@@ -43,13 +43,13 @@ describe('suggestions actions', function () {
     });
   });
 
-  describe('suggestEmptyTerm', function () {
+  describe('fetchSuggestedSearchItems', function () {
     it('should return right action', function () {
-      suggestEmptyTerm().should.eql({
+      fetchSuggestedSearchItems().should.eql({
         types: [
-          SUGGEST_EMPTY_TERM_REQUEST_START,
-          SUGGEST_EMPTY_TERM_REQUEST_SUCCESS,
-          SUGGEST_EMPTY_TERM_REQUEST_FAILURE
+          FETCH_SUGGESTED_SEARCH_ITEMS_START,
+          FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS,
+          FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE
         ],
         payload: {
           request: {

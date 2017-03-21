@@ -9,11 +9,11 @@ class FaqSearchResult extends Component {
     const onClick = saveToRecent.bind(this, {
       type: 'FAQ',
       title: faq.question,
-      url: `${constants.FAQ_PATH}/${faq.id}`
+      url: `${constants.FAQ_PATH}${faq.id}/`
     });
     return (
       <div className='row'>
-        <Link className='faq' to={ constants.FAQ_PATH + '/' + faq.id } onClick={ onClick }>
+        <Link className='faq' to={ `${constants.FAQ_PATH}${faq.id}/` } onClick={ onClick }>
           { faq.question }
         </Link>
       </div>

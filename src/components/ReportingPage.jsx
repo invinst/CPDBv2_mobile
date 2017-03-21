@@ -18,7 +18,7 @@ export default class ReportingPage extends Component {
 
   renderReportingItems(reports) {
     return map(reports, (report) => (
-      <Link className='reporting-item-row' key={ report.id } to={ cs.REPORTING_PATH + '/' + report.id }>
+      <Link className='reporting-item-row' key={ report.id } to={ `${cs.REPORTING_PATH}${report.id}/` }>
         <div>
           <span className='publication'>{ report.publication }</span>
           <span className='publish-date'>{ report.publishDate }</span>

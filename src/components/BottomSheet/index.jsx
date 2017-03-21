@@ -37,7 +37,6 @@ export default class BottomSheet extends Component {
     if (!hasChildren(this)) {
       return null;
     }
-
     if (hasGrandchildren(this)) {
       return (
         <div className='background'>

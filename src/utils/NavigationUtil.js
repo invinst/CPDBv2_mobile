@@ -1,10 +1,29 @@
+import constants from 'constants';
+import { endsWith } from 'lodash';
+
 // Go up 1 level in path
 export const goUp = function (router, currentPathName) {
   if (currentPathName === '/') {
     return;
   }
 
-  const newPathName = currentPathName.split('/').slice(0, -1).join('/');
+  if (endsWith(currentPathName, '/')) {
+    currentPathName = currentPathName.slice(0, -1);
+  }
+
+  const newPathName = currentPathName.split('/').slice(0, -1).join('/') + '/';
+
+  // Skip nonexistent routes
+  let isSkipped = false;
+  constants.NONEXISTENT_ROUTES.forEach((pattern) => {
+    if (newPathName.match(pattern)) {
+      isSkipped = true;
+    }
+  });
+  if (isSkipped) {
+    return goUp(router, newPathName);
+  }
+
   router.push(newPathName);
 };
 

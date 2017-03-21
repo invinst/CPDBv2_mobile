@@ -2,18 +2,6 @@ import u from 'utils/HelperUtil';
 
 
 const CollectionUtil = {
-  getMax(items) {
-    return items.reduce((p, v) => {
-      return ( p > v ? p : v );
-    }, 0);
-  },
-
-  all(items) {
-    return items.reduce((p, v) => {
-      return (p && !!v);
-    }, true);
-  },
-
   any(items) {
     return items.reduce((p, v) => {
       return (p || v);

@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
+import constants from 'constants';
 
 
 export const officersSelector = createSelector(
@@ -15,7 +16,7 @@ export const officersSelector = createSelector(
         id: officer.id,
         name: officer.name,
         extraInfo: officer.extra_info,
-        url: officer.url
+        url: `${constants.OFFICER_PATH}${officer.id}/`
       }))
     };
   }
@@ -58,6 +59,7 @@ export const suggestedSelector = createSelector(
   (state) => state.suggestionApp.initialSuggestions.suggested,
   (suggested) => suggested
 );
+
 
 export const recentSelector = createSelector(
   (state) => state.suggestionApp.initialSuggestions.recent,

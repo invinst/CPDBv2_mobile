@@ -1,8 +1,7 @@
 import should from 'should';
 import React from 'react';
-// Since SearchPage uses <Sticky>, it must be render inside a <StickyContainer>
-import { StickyContainer } from 'react-sticky';
-import { mount, shallow } from 'enzyme';
+
+import { shallow } from 'enzyme';
 import { stub, spy } from 'sinon';
 
 import * as NavigationUtil from 'utils/NavigationUtil';
@@ -14,18 +13,6 @@ describe('<SearchPage />', () => {
   it('should be renderable', () => {
     const wrapper = shallow(<SearchPage query={ '' } />);
     wrapper.should.be.ok();
-  });
-
-  it('should call suggestEmptyTerm on mount', () => {
-    const suggestEmptyTerm = spy();
-    mount(
-      <StickyContainer>
-        <SearchPage
-          query={ '' }
-          suggestEmptyTerm={ suggestEmptyTerm }
-        />
-      </StickyContainer>);
-    suggestEmptyTerm.calledOnce.should.be.true();
   });
 
   it('should render categories returned by getCategoriesWithSuggestions when it has query', () => {
@@ -89,7 +76,6 @@ describe('<SearchPage />', () => {
     it('should call scrollToElement with a correct selector', () => {
       const stubScrollToElement = stub(NavigationUtil, 'scrollToElement');
       const wrapper = shallow(<SearchPage query={ '' } />);
-      const instance = wrapper.instance();
       wrapper.instance().scrollToCategory('an-id');
 
       stubScrollToElement.calledWith('#search-category-an-id',

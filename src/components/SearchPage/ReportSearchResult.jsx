@@ -9,12 +9,12 @@ class ReportSearchResult extends Component {
     const onClick = saveToRecent.bind(this, {
       type: 'Report',
       title: report.title,
-      url: `${constants.REPORTING_PATH}/${report.id}`
+      url: `${constants.REPORTING_PATH}${report.id}/`
     });
 
     return (
       <Link
-        to={ `${constants.REPORTING_PATH}/${report.id}` }
+        to={ `${constants.REPORTING_PATH}${report.id}/` }
         className='row report-row'
         onClick={ onClick }>
         <p className='report-publication'>

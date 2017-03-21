@@ -1,6 +1,6 @@
 import should from 'should';
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { spy } from 'sinon';
 
 import OfficerSearchResult from 'components/SearchPage/OfficerSearchResult';
@@ -15,15 +15,16 @@ describe('<OfficerSearchResult />', () => {
       extraInfo: 'Badge #1'
     };
 
-    const wrapper = shallow(
+    const wrapper = mount(
       <OfficerSearchResult
         officer={ officer }
         saveToRecent={ spySaveToRecent }
       />
     );
 
-    const officerElement = wrapper.find('a[href="/officer/1"]');
+    const officerElement = wrapper.find('Link');
     officerElement.exists().should.be.true();
+    officerElement.prop('to').should.be.eql('/officer/1');
     officerElement.text().should.eql('JohnBadge #1');
   });
 

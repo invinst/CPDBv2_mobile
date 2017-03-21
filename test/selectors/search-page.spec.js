@@ -1,3 +1,5 @@
+import constants from 'constants';
+
 import {
   officersSelector,
   faqsSelector,
@@ -31,7 +33,7 @@ describe('search-page selectors', () => {
         id: 1,
         name: 'Name',
         extraInfo: 'Extra',
-        url: 'url'
+        url: `${constants.OFFICER_PATH}1/`
       };
 
       const state = {

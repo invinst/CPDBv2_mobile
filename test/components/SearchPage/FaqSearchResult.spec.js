@@ -21,7 +21,7 @@ describe('<FaqSearchResult />', () => {
       />
     );
 
-    const href = `${constants.FAQ_PATH}/2`;
+    const href = `${constants.FAQ_PATH}2/`;
     const faqLink = wrapper.find('Link');
 
     faqLink.exists().should.be.true();
@@ -49,7 +49,7 @@ describe('<FaqSearchResult />', () => {
     spySaveToRecent.calledWith({
       type: 'FAQ',
       title: 'foo',
-      url: `${constants.FAQ_PATH}/3`
+      url: `${constants.FAQ_PATH}3/`
     }).should.be.true();
   });
 
