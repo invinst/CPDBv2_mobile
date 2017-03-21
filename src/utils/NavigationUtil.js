@@ -52,6 +52,7 @@ export function animatedScrollTo(element, to, duration) {
 export function scrollToTop(ast=animatedScrollTo) {
   return () => {
     ast(document.body, 0, 100);
+    ast(document.documentElement, 0, 100);
   };
 }
 
@@ -67,5 +68,8 @@ export function scrollToElement(targetElementSelector, offsetElementSelector) {
   if (offsetElement) {
     offset = offsetElement.offsetHeight;
   }
-  document.body.scrollTop = targetElement.offsetTop - offset;
+
+  const newPosition = targetElement.offsetTop - offset;
+  document.body.scrollTop = newPosition; // Chrome
+  document.documentElement.scrollTop = newPosition; // Firefox
 }
