@@ -8,6 +8,12 @@ let defaultSettings = require('./defaults');
 // Add needed plugins here
 let BowerWebpackPlugin = require('bower-webpack-plugin');
 
+let envarPlugin = new webpack.DefinePlugin({
+  'process.env': {
+    CPDB_API_HOST: JSON.stringify(process.env.CPDB_API_HOST)
+  }
+});
+
 let config = Object.assign({}, baseConfig, {
   entry: [
     'webpack-dev-server/client?http://127.0.0.1:' + defaultSettings.port,
@@ -29,7 +35,8 @@ let config = Object.assign({}, baseConfig, {
     new webpack.NoErrorsPlugin(),
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
-    })
+    }),
+    envarPlugin
   ],
   module: defaultSettings.getDefaultModules()
 });
