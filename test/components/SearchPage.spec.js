@@ -1,8 +1,9 @@
 import should from 'should';
 import React from 'react';
 
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
+import { StickyContainer } from 'react-sticky';
 
 import * as NavigationUtil from 'utils/NavigationUtil';
 import SearchPage from 'components/SearchPage';
@@ -11,7 +12,11 @@ import constants from 'constants';
 
 describe('<SearchPage />', () => {
   it('should be renderable', () => {
-    const wrapper = shallow(<SearchPage query={ '' } />);
+    const wrapper = mount(
+      <StickyContainer>
+        <SearchPage query={ '' } />
+      </StickyContainer>
+    );
     wrapper.should.be.ok();
   });
 
@@ -136,5 +141,47 @@ describe('<SearchPage />', () => {
       instance.onInputChange({ currentTarget: { value: 'f' } });
       spySuggestTerm.called.should.be.false();
     });
+  });
+
+  describe('blurSearchInput', () => {
+    it('should blur the sticky input element', () => {
+      const wrapper = shallow(<SearchPage />);
+      const instance = wrapper.instance();
+      const spyBlur = spy();
+
+      instance.inputElement = {
+        blur: spyBlur
+      };
+      instance.blurSearchInput(true);
+
+      spyBlur.calledOnce.should.be.true();
+    });
+
+    it('should not blur the non-sticky input element', () => {
+      const wrapper = shallow(<SearchPage />);
+      const instance = wrapper.instance();
+      const spyBlur = spy();
+
+      instance.inputElement = {
+        blur: spyBlur
+      };
+      instance.blurSearchInput(false);
+
+      spyBlur.called.should.be.false();
+    });
+  });
+
+  it('should focus the input element when mounted', () => {
+    const wrapper = shallow(<SearchPage />);
+    const instance = wrapper.instance();
+    const spyFocus = spy();
+
+
+    instance.inputElement = {
+      focus: spyFocus
+    };
+    instance.componentDidMount();
+
+    spyFocus.calledOnce.should.be.true();
   });
 });
