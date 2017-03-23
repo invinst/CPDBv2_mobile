@@ -24,6 +24,11 @@ class MainPage extends Component {
   render() {
     const { isSearchFocused, query, children } = this.props;
 
+    let bottomPaddingElement = null;
+    if (this.props.location.pathname === '/') {
+      bottomPaddingElement = <div className='bottom-padding'></div>;
+    }
+
     return (
       <div className={ cx('content', style.mainPage, { gray: isSearchFocused }) }>
         <MainPageContentContainer topLeft={ isSearchFocused } query={ query } />
@@ -34,7 +39,7 @@ class MainPage extends Component {
             })
           }
         </BottomSheetContainer>
-        <div className='bottom-padding'></div>
+        { bottomPaddingElement }
       </div>
     );
   }
@@ -45,13 +50,17 @@ MainPage.propTypes = {
   query: PropTypes.string,
   urlQuery: PropTypes.string,
   children: PropTypes.object,
-  isSearchFocused: PropTypes.number
+  isSearchFocused: PropTypes.number,
+  location: PropTypes.object
 };
 
 MainPage.defaultProps = {
   isSearchFocused: false,
   query: '',
-  urlQuery: ''
+  urlQuery: '',
+  location: {
+    pathname: ''
+  }
 };
 
 export default MainPage;

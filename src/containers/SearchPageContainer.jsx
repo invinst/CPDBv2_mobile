@@ -5,7 +5,8 @@ import {
   inputChanged,
   suggestTerm,
   suggestAllFromCategory,
-  saveToRecent
+  saveToRecent,
+  updateActiveCategory
 } from 'actions/suggestion';
 import {
   officersSelector,
@@ -23,7 +24,8 @@ function mapStateToProps(state, ownProps) {
     faqs: faqsSelector(state),
     reports: reportsSelector(state),
     recent: recentSelector(state),
-    suggested: suggestedSelector(state)
+    suggested: suggestedSelector(state),
+    activeCategory: state.suggestionApp.activeCategory
   };
 }
 
@@ -31,7 +33,8 @@ const mapDispatchToProps = {
   inputChanged,
   suggestTerm,
   suggestAllFromCategory,
-  saveToRecent
+  saveToRecent,
+  updateActiveCategory
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

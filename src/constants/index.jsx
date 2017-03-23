@@ -270,5 +270,9 @@ export default {
       id: 'reports',
       path: 'REPORT'
     }
-  ]
+  ],
+
+  // These should match their SASS counterparts in styles/Variables.sass
+  SHEET_HEADER_HEIGHT: 62,
+  SEARCH_CATEGORY_LINKS_HEIGHT: 37
 };

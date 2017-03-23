@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import cx from 'classnames';
 import style from 'styles/SearchPage.sass';
 import { Sticky } from 'react-sticky';
 import SearchCategory from 'components/SearchPage/SearchCategory';
@@ -53,16 +54,29 @@ export default class SearchPage extends Component {
   }
 
   renderCategoryLinks(categories) {
+    let { activeCategory } = this.props;
+
+    // Make first category active by default
+    if (!activeCategory && categories.length > 0) {
+      activeCategory = categories[0].id;
+    }
 
     const links = categories.map(
-      (category, index) => (
-        <button key={ index }
-          onClick={ this.scrollToCategory.bind(this, category.id) }
-          className='category-link'
-          >
-          { category.name }
-        </button>
-      )
+      (category, index) => {
+        const classNames = cx(
+          'category-link',
+          { 'active': activeCategory === category.id }
+        );
+
+        return (
+          <button key={ index }
+            onClick={ this.scrollToCategory.bind(this, category.id) }
+            className={ classNames }
+            >
+            { category.name }
+          </button>
+        );
+      }
     );
 
     return (
@@ -93,20 +107,58 @@ export default class SearchPage extends Component {
     );
   }
 
+  assignLastCategoryRef(lastCategory) {
+    if (lastCategory) {
+      this.lastCategory = lastCategory.domNode;
+    }
+  }
+
   renderCategories(categories) {
     const { suggestAllFromCategory, query } = this.props;
 
-    return categories.map((cat) => (
-      <SearchCategory
-        key={ cat.id }
-        categoryId={ cat.id }
-        requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
-        title={ cat.name }
-        isShowingAll={ this.props[cat.id].isShowingAll }
-        items={ this.props[cat.id].data }
-        saveToRecent={ this.props.saveToRecent }
-        />
-    ));
+    return categories.map((cat, index) => {
+      if (index === categories.length - 1) {
+
+        return (
+          <SearchCategory
+            ref={ this.assignLastCategoryRef.bind(this) }
+            key={ cat.id }
+            categoryId={ cat.id }
+            requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
+            title={ cat.name }
+            isShowingAll={ this.props[cat.id].isShowingAll }
+            items={ this.props[cat.id].data }
+            saveToRecent={ this.props.saveToRecent }
+            updateActiveCategory={ this.props.updateActiveCategory }
+            activeCategory={ this.props.activeCategory }
+            />
+          );
+      }
+
+      return (
+        <SearchCategory
+          key={ cat.id }
+          categoryId={ cat.id }
+          requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
+          title={ cat.name }
+          isShowingAll={ this.props[cat.id].isShowingAll }
+          items={ this.props[cat.id].data }
+          saveToRecent={ this.props.saveToRecent }
+          updateActiveCategory={ this.props.updateActiveCategory }
+          activeCategory={ this.props.activeCategory }
+          />
+      );
+    });
+  }
+
+  calculateBottomPaddingStyle() {
+    let lastCategoryHeight = 103;
+    if (this.lastCategory) {
+      lastCategoryHeight = this.lastCategory.clientHeight;
+    }
+    const bottomPaddingOffset = constants.SHEET_HEADER_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + lastCategoryHeight;
+    const height = `calc(100vh - ${bottomPaddingOffset}px)`;
+    return { height };
   }
 
   render() {
@@ -160,7 +212,7 @@ export default class SearchPage extends Component {
 
         { categoryDetails }
 
-        <div className='bottom-padding'></div>
+        <div style={ this.calculateBottomPaddingStyle() } className='bottom-padding'></div>
       </div>
     );
   }
@@ -174,5 +226,7 @@ SearchPage.propTypes = {
   faqs: PropTypes.object,
   suggestAllFromCategory: PropTypes.func,
   categories: PropTypes.array,
-  saveToRecent: PropTypes.func
+  saveToRecent: PropTypes.func,
+  activeCategory: PropTypes.string,
+  updateActiveCategory: PropTypes.func
 };
