@@ -52,17 +52,22 @@ export default class SearchPage extends Component {
   }
 
   renderCategoryLinks(categories) {
-    return categories.map(
+
+    const links = categories.map(
       (category, index) => (
-        <a
-          id='search-input'
+        <button key={ index }
           onClick={ this.scrollToCategory.bind(this, category.id) }
           className='category-link'
-          key={ index }
           >
           { category.name }
-        </a>
+        </button>
       )
+    );
+
+    return (
+      <div className='categories'>
+        { links }
+      </div>
     );
   }
 
@@ -122,9 +127,8 @@ export default class SearchPage extends Component {
             ref={ (inputElement) => { this.inputElement = inputElement; } }
             onChange={ this.onInputChange.bind(this) }
             />
-          <div className='categories'>
-            { categoryLinks }
-          </div>
+
+          { categoryLinks }
         </Sticky>
 
         { categoryDetails }
