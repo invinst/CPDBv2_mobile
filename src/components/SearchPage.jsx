@@ -4,6 +4,7 @@ import { Sticky } from 'react-sticky';
 import SearchCategory from 'components/SearchPage/SearchCategory';
 import { scrollToElement } from 'utils/NavigationUtil';
 import constants from 'constants';
+import clearIcon from 'img/ic-clear.svg';
 
 export default class SearchPage extends Component {
   componentDidMount() {
@@ -71,6 +72,27 @@ export default class SearchPage extends Component {
     );
   }
 
+  clearQuery() {
+    this.props.inputChanged('');
+    this.inputElement.focus();
+  }
+
+  renderClearIcon() {
+    const { query } = this.props;
+
+    if (!query) {
+      return null;
+    }
+
+    return (
+      <img
+        className='clear-icon'
+        src={ clearIcon }
+        onClick={ this.clearQuery.bind(this) }
+        />
+    );
+  }
+
   renderCategories(categories) {
     const { suggestAllFromCategory, query } = this.props;
 
@@ -120,13 +142,18 @@ export default class SearchPage extends Component {
           id='search-page-header'
           onStickyStateChange={ this.blurSearchInput.bind(this) }
           >
-          <input
-            className='sheet-header header query-input'
-            value={ query }
-            placeholder='Search'
-            ref={ (inputElement) => { this.inputElement = inputElement; } }
-            onChange={ this.onInputChange.bind(this) }
-            />
+
+          <div className='query-input-container'>
+            <input
+              className='sheet-header header query-input'
+              value={ query }
+              placeholder='Search'
+              ref={ (inputElement) => { this.inputElement = inputElement; } }
+              onChange={ this.onInputChange.bind(this) }
+              />
+            { this.renderClearIcon() }
+          </div>
+
 
           { categoryLinks }
         </Sticky>
