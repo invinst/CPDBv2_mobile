@@ -79,7 +79,7 @@ describe('NavigationUtil', () => {
         const stubQuerySelector = stub(document, 'querySelector');
         stubQuerySelector.withArgs('#target').returns({ offsetTop: 200 });
         stubQuerySelector.withArgs('#offset').returns({ offsetHeight: 50 });
-        // Have to set body size it that it can actually scroll
+        // Have to set body size so that it can actually scroll
         document.body.style.height = '9999px';
         document.body.style.width = '99px';
 
@@ -88,6 +88,21 @@ describe('NavigationUtil', () => {
         document.body.scrollTop.should.be.eql(150);
 
         stubQuerySelector.restore();
+      });
+    });
+
+    describe ('instantScrollToTop', () => {
+      it('should scroll whole body to top', function () {
+        // Have to set body size so that it can actually scroll
+        document.body.style.height = '9999px';
+        document.body.style.width = '99px';
+
+        document.body.scrollTop = 11;
+        document.body.scrollTop.should.be.eql(11);
+
+        NavigationUtil.instantScrollToTop();
+
+        document.body.scrollTop.should.be.eql(0);
       });
     });
   });

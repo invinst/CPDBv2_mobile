@@ -10,6 +10,20 @@ export default class SearchPage extends Component {
     this.inputElement.focus();
   }
 
+  blurSearchInput(isSticky) {
+    /*
+      iOS Safari has a bug: if a focused <input> tag has `position: fixed`, it
+      will jump around (in our case: disappear from viewport). Because sticky
+      header relies on `position: fixed` to work, we'll have to manually
+      unfocus our search input tag whenever it becomes sticky to avoid this
+      bug.
+    */
+    if (isSticky) {
+      this.inputElement.blur();
+    }
+
+  }
+
   onInputChange(event) {
     const { suggestTerm, inputChanged } = this.props;
     const query = event.currentTarget.value;
@@ -41,6 +55,7 @@ export default class SearchPage extends Component {
     return categories.map(
       (category, index) => (
         <a
+          id='search-input'
           onClick={ this.scrollToCategory.bind(this, category.id) }
           className='category-link'
           key={ index }
@@ -96,7 +111,10 @@ export default class SearchPage extends Component {
 
     return (
       <div className={ style.searchPage }>
-        <Sticky id='search-page-header'>
+        <Sticky
+          id='search-page-header'
+          onStickyStateChange={ this.blurSearchInput.bind(this) }
+          >
           <input
             className='sheet-header header query-input'
             value={ query }

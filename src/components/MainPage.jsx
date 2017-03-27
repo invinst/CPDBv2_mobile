@@ -7,11 +7,18 @@ import style from 'styles/MainPage.sass';
 
 import MainPageContentContainer from 'containers/MainPage/MainPageContentContainer';
 import BottomSheetContainer from 'containers/BottomSheetContainer';
+import { instantScrollToTop } from 'utils/NavigationUtil';
 
 
 class MainPage extends Component {
   componentDidMount() {
     this.props.fetchSuggestedSearchItems();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      instantScrollToTop();
+    }
   }
 
   render() {

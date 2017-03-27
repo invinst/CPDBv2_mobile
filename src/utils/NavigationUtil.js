@@ -73,3 +73,8 @@ export function scrollToElement(targetElementSelector, offsetElementSelector) {
   document.body.scrollTop = newPosition; // Chrome
   document.documentElement.scrollTop = newPosition; // Firefox
 }
+
+export function instantScrollToTop() {
+  document.body.scrollTop = 0; // Chrome
+  document.documentElement.scrollTop = 0; // Firefox
+}
