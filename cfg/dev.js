@@ -9,7 +9,7 @@ let defaultSettings = require('./defaults');
 let BowerWebpackPlugin = require('bower-webpack-plugin');
 
 let envarPlugin = new webpack.DefinePlugin({
-  'process.env': {
+  'ENV_VARS': {
     CPDB_API_HOST: JSON.stringify(process.env.CPDB_API_HOST)
   }
 });

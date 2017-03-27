@@ -1,8 +1,9 @@
+/* globals ENV_VARS */
 'use strict';
 
 import baseConfig from './base';
 
-const apiHost = process.env.CPDB_API_HOST || 'localhost:9000';
+const apiHost = ENV_VARS.CPDB_API_HOST || 'localhost:9000';
 
 let config = {
   appEnv: 'dev',  // feel free to remove the appEnv property here
