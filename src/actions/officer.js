@@ -35,5 +35,5 @@ export const getOfficerTimeline = (id) => {
     ]
   );
 
-  return getFunc({}, undefined, `${id}/timeline/`);
+  return getFunc({}, undefined, `${id}/timeline/`, { id });
 };

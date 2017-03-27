@@ -40,6 +40,9 @@ describe('officer actions', function () {
             adapter: undefined,
             params: {}
           }
+        },
+        meta: {
+          id: 11
         }
       });
     });
