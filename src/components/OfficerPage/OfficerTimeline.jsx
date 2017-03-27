@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import { Sticky } from 'react-sticky';
 
 import GaUtil from 'utils/GaUtil';
 import LoadingPage from 'components/Shared/LoadingPage';
@@ -40,9 +41,11 @@ class OfficerTimeline extends Component {
 
     return (
       <div className={ style.officerPage }>
-        <h1 className='sheet-header header' onClick={ scrollToTop }>
-          { summary.name }
-        </h1>
+        <Sticky>
+          <h1 className='sheet-header header' onClick={ scrollToTop() }>
+            { summary.name }
+          </h1>
+        </Sticky>
         <OfficerTopLinks id={ pk } currentPath='timeline' />
       </div>
     );
