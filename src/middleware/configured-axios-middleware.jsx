@@ -7,7 +7,12 @@ import axiosClient from 'utils/axios-client';
 export const getErrorMessage = (url, status) => (`Request to ${url} failed with status code ${status}.`);
 
 export const onSuccess = ({ action, next, response }, options) => {
-  const nextAction = createAction(getActionTypes(action, options)[1])(response.data);
+  const nextActionCreator = createAction(
+    getActionTypes(action, options)[1],
+    payload => payload,
+    _ => action.meta
+  );
+  const nextAction = nextActionCreator(response.data);
   next(nextAction);
   return nextAction;
 };

@@ -6,7 +6,7 @@ const timelines = handleActions({
   [OFFICER_TIMELINE_REQUEST_SUCCESS]: (state, action) => {
     return {
       ...state,
-      [action.payload.id]: action.payload
+      [action.meta.id]: action.payload
     };
   },
   [OFFICER_TIMELINE_REQUEST_FAILURE]: (state, action) => state
