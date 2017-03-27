@@ -81,6 +81,16 @@ $transition-length: 30px
     width: 100%
     overflow-wrap: break-word
     min-height: calc(100vh - #{$top-margin})
+    padding-bottom: $bottom-padding
+    position: relative
+
+    .sheet-bottom-padding
+      height: $bottom-padding
+      background-color: $wild-sand
+      position: absolute
+      bottom: 0
+      left: 0
+      right: 0
 
   .sheet-header
       height: $sheet-header-height

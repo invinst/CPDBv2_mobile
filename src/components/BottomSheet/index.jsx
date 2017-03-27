@@ -74,6 +74,7 @@ export default class BottomSheet extends Component {
       return (
         <div className='sheet'>
           { React.Children.map(this.props.children, (child) => child.props.children) }
+          <div className='sheet-bottom-padding'></div>
         </div>
       );
     }
@@ -81,6 +82,7 @@ export default class BottomSheet extends Component {
     return (
       <div className='sheet'>
         { this.props.children }
+        <div className='sheet-bottom-padding'></div>
       </div>
     );
   }
