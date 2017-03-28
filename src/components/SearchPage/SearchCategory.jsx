@@ -4,10 +4,39 @@ import OfficerSearchResult from 'components/SearchPage/OfficerSearchResult';
 import FaqSearchResult from 'components/SearchPage/FaqSearchResult';
 import ReportSearchResult from 'components/SearchPage/ReportSearchResult';
 import SuggestedSearchResult from 'components/SearchPage/SuggestedSearchResult';
+import { getCurrentScrollPosition } from 'utils/NavigationUtil';
+import constants from 'constants';
+
+const fixedHeaderHeight = constants.SHEET_HEADER_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT;
 
 const DEFAULT_CATEGORY_LENGTH = 10;
 
 export default class SearchCategory extends Component {
+
+  componentDidMount() {
+    const watchActiveState = this.watchActiveState.bind(this);
+    window.addEventListener('scroll', watchActiveState);
+    this.unwatchActiveState = () => {
+      window.removeEventListener('scroll', watchActiveState);
+    };
+  }
+
+  componentWillUnmount() {
+    this.unwatchActiveState();
+  }
+
+  watchActiveState() {
+    // Don't need to do anything if this category is already active
+    if (this.props.activeCategory === this.props.categoryId) {
+      return;
+    }
+    const { offsetTop, scrollHeight } = this.domNode;
+    const scrollPosition = getCurrentScrollPosition();
+    const fixedHeaderScrollPosition = scrollPosition + fixedHeaderHeight;
+    if (offsetTop <= fixedHeaderScrollPosition && fixedHeaderScrollPosition < offsetTop + scrollHeight) {
+      this.props.updateActiveCategory(this.props.categoryId);
+    }
+  }
 
   renderAllButton(isShowingAll, itemsLength, requestAll) {
     // FIXME: API server should return some kind of `hasMore` value so that we
@@ -50,7 +79,7 @@ export default class SearchCategory extends Component {
     const results = this.renderResults();
 
     return (
-      <div className={ style.searchCategory }>
+      <div className={ style.searchCategory } ref={ (domNode) => { this.domNode = domNode; } }>
         <div className='title' id={ 'search-category-' + categoryId }>
           { title }
         </div>
@@ -71,5 +100,8 @@ SearchCategory.propTypes = {
   categoryId: PropTypes.string,
   isShowingAll: PropTypes.bool,
   requestAll: PropTypes.func,
-  saveToRecent: PropTypes.func
+  saveToRecent: PropTypes.func,
+  activeCategory: PropTypes.string,
+  updateActiveCategory: PropTypes.func,
+  fixedHeaderHeight: PropTypes.number
 };

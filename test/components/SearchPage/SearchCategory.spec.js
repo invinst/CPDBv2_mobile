@@ -2,8 +2,13 @@ import should from 'should';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
+import * as NavigationUtil from 'utils/NavigationUtil';
 
 import SearchCategory from 'components/SearchPage/SearchCategory';
+import constants from 'constants';
+
+const fixedHeaderHeight = constants.SHEET_HEADER_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT;
+
 
 describe('<SearchCategory />', () => {
   it('should be renderable', () => {
@@ -15,6 +20,72 @@ describe('<SearchCategory />', () => {
       />
     );
     wrapper.should.be.ok();
+  });
+
+  it('should add scroll listener when mounted', () => {
+    const wrapper = shallow(
+      <SearchCategory
+        title='foo'
+        items={ [] }
+        categoryId='faqs'
+      />
+    );
+    const instance = wrapper.instance();
+
+    const stubAddEventListener = stub(window, 'addEventListener');
+    const stubWatchActiveStateBind = stub(instance.watchActiveState, 'bind').returns(instance.watchActiveState);
+
+    instance.componentDidMount();
+
+    stubAddEventListener.calledWith('scroll', instance.watchActiveState).should.be.true();
+
+    stubAddEventListener.restore();
+    stubWatchActiveStateBind.restore();
+  });
+
+  it('should define function to remove scroll listener', () => {
+    const wrapper = shallow(
+      <SearchCategory
+        title='foo'
+        items={ [] }
+        categoryId='faqs'
+      />
+    );
+    const instance = wrapper.instance();
+
+    const stubAddEventListener = stub(window, 'addEventListener');
+    const stubRemoveEventListener = stub(window, 'removeEventListener');
+    const stubWatchActiveStateBind = stub(instance.watchActiveState, 'bind').returns(instance.watchActiveState);
+
+    instance.componentDidMount();
+
+    (typeof instance.unwatchActiveState).should.be.eql('function');
+
+    instance.unwatchActiveState();
+
+    stubRemoveEventListener.calledWith('scroll', instance.watchActiveState).should.be.true();
+
+    stubAddEventListener.restore();
+    stubRemoveEventListener.restore();
+    stubWatchActiveStateBind.restore();
+  });
+
+  it('should unwatch active state when unmounted', () => {
+    const wrapper = shallow(
+      <SearchCategory
+        title='foo'
+        items={ [] }
+        categoryId='faqs'
+      />
+    );
+    const instance = wrapper.instance();
+
+    const spyUnwatchActiveState = spy();
+    instance.unwatchActiveState = spyUnwatchActiveState;
+
+
+    instance.componentWillUnmount();
+    spyUnwatchActiveState.calledWith().should.be.true();
   });
 
   it('should render title', () => {
@@ -192,6 +263,122 @@ describe('<SearchCategory />', () => {
       showAllButton.exists().should.be.false();
 
       stubRenderFunc.restore();
+    });
+  });
+
+  describe('renderResults', () => {
+    it('should return null if given invalid category id', () => {
+
+      const wrapper = shallow(
+        <SearchCategory
+          items={ [] }
+          categoryId='invalid'
+        />
+      );
+
+      const result = wrapper.instance().renderResults();
+      should.equal(result, null);
+    });
+  });
+
+  describe('watchActiveState', () => {
+    it('should not do anything if category is already active', () => {
+      const spyGetCurrentScrollPosition = spy(NavigationUtil, 'getCurrentScrollPosition');
+      const spyUpdateActiveCategory = spy();
+      const wrapper = shallow(
+        <SearchCategory
+          title='foo'
+          items={ [] }
+          activeCategory='faqs'
+          categoryId='faqs'
+          updateActiveCategory={ spyUpdateActiveCategory }
+        />
+      );
+      const instance = wrapper.instance();
+
+      instance.watchActiveState();
+
+      spyGetCurrentScrollPosition.called.should.be.false();
+      spyUpdateActiveCategory.called.should.be.false();
+
+      spyGetCurrentScrollPosition.restore();
+    });
+
+    it('should not set active if category is above header bottom', () => {
+      const stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
+      stubGetCurrentScrollPosition.returns(900);
+      const spyUpdateActiveCategory = spy();
+      const wrapper = shallow(
+        <SearchCategory
+          title='foo'
+          items={ [] }
+          activeCategory='reports'
+          categoryId='faqs'
+          updateActiveCategory={ spyUpdateActiveCategory }
+        />
+      );
+      const instance = wrapper.instance();
+      instance.domNode = {
+        offsetTop: 100,
+        scrollHeight: 200
+      };
+
+      instance.watchActiveState();
+
+      spyUpdateActiveCategory.called.should.be.false();
+
+      stubGetCurrentScrollPosition.restore();
+    });
+
+    it('should not set active if category is below header bottom', () => {
+      const stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
+      stubGetCurrentScrollPosition.returns(900);
+      const spyUpdateActiveCategory = spy();
+      const wrapper = shallow(
+        <SearchCategory
+          title='foo'
+          items={ [] }
+          activeCategory='reports'
+          categoryId='faqs'
+          updateActiveCategory={ spyUpdateActiveCategory }
+        />
+      );
+      const instance = wrapper.instance();
+      instance.domNode = {
+        offsetTop: 900 + fixedHeaderHeight + 1
+      };
+
+      instance.watchActiveState();
+
+      spyUpdateActiveCategory.called.should.be.false();
+
+      stubGetCurrentScrollPosition.restore();
+    });
+
+    it('should set active if category has touched header bottom', () => {
+      const stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
+      stubGetCurrentScrollPosition.returns(900);
+      const spyUpdateActiveCategory = spy();
+      const wrapper = shallow(
+        <SearchCategory
+          title='foo'
+          items={ [] }
+          activeCategory='reports'
+          categoryId='faqs'
+          updateActiveCategory={ spyUpdateActiveCategory }
+        />
+      );
+      const instance = wrapper.instance();
+      instance.domNode = {
+        offsetTop: 900,
+        scrollHeight: fixedHeaderHeight + 1
+      };
+
+      instance.watchActiveState();
+
+      spyUpdateActiveCategory.calledWith('faqs').should.be.true();
+
+      stubGetCurrentScrollPosition.restore();
     });
   });
 
