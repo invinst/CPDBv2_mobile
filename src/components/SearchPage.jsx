@@ -6,6 +6,7 @@ import SearchCategory from 'components/SearchPage/SearchCategory';
 import { scrollToElement } from 'utils/NavigationUtil';
 import constants from 'constants';
 import clearIcon from 'img/ic-clear.svg';
+import ReactHeight from 'react-height';
 
 export default class SearchPage extends Component {
   componentDidMount() {
@@ -107,10 +108,9 @@ export default class SearchPage extends Component {
     );
   }
 
-  assignLastCategoryRef(lastCategory) {
-    if (lastCategory) {
-      this.lastCategory = lastCategory.domNode;
-    }
+  updateLastCategoryHeight(newHeight) {
+    this.lastCategoryHeight = newHeight;
+    this.forceUpdate();
   }
 
   renderCategories(categories) {
@@ -120,18 +120,18 @@ export default class SearchPage extends Component {
       if (index === categories.length - 1) {
 
         return (
-          <SearchCategory
-            ref={ this.assignLastCategoryRef.bind(this) }
-            key={ cat.id }
-            categoryId={ cat.id }
-            requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
-            title={ cat.name }
-            isShowingAll={ this.props[cat.id].isShowingAll }
-            items={ this.props[cat.id].data }
-            saveToRecent={ this.props.saveToRecent }
-            updateActiveCategory={ this.props.updateActiveCategory }
-            activeCategory={ this.props.activeCategory }
-            />
+          <ReactHeight key={ cat.id } onHeightReady={ this.updateLastCategoryHeight.bind(this) }>
+            <SearchCategory
+              categoryId={ cat.id }
+              requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
+              title={ cat.name }
+              isShowingAll={ this.props[cat.id].isShowingAll }
+              items={ this.props[cat.id].data }
+              saveToRecent={ this.props.saveToRecent }
+              updateActiveCategory={ this.props.updateActiveCategory }
+              activeCategory={ this.props.activeCategory }
+              />
+          </ReactHeight>
           );
       }
 
@@ -151,13 +151,14 @@ export default class SearchPage extends Component {
     });
   }
 
-  calculateBottomPaddingStyle() {
-    let lastCategoryHeight = 103;
-    if (this.lastCategory) {
-      lastCategoryHeight = this.lastCategory.clientHeight;
-    }
-    const bottomPaddingOffset = constants.SHEET_HEADER_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + lastCategoryHeight;
-    const height = `calc(100vh - ${bottomPaddingOffset}px)`;
+  calculateDynamicBottomPaddingStyle() {
+    const lastCategoryHeight = this.lastCategoryHeight || 0;
+    const dynamicBottomPaddingOffset = (
+      constants.SHEET_HEADER_HEIGHT +
+      constants.SEARCH_CATEGORY_LINKS_HEIGHT +
+      lastCategoryHeight
+    );
+    const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
     return { height };
   }
 
@@ -210,9 +211,11 @@ export default class SearchPage extends Component {
           { categoryLinks }
         </Sticky>
 
-        { categoryDetails }
+        <div className='category-details-container'>
+          { categoryDetails }
+        </div>
 
-        <div style={ this.calculateBottomPaddingStyle() } className='bottom-padding'></div>
+        <div style={ this.calculateDynamicBottomPaddingStyle() } className='bottom-padding'></div>
       </div>
     );
   }

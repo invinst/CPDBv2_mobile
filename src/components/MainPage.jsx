@@ -32,7 +32,7 @@ class MainPage extends Component {
     return (
       <div className={ cx('content', style.mainPage, { gray: isSearchFocused }) }>
         <MainPageContentContainer topLeft={ isSearchFocused } query={ query } />
-        <BottomSheetContainer>
+        <BottomSheetContainer location={ this.props.location }>
           {
             children && React.cloneElement(children, {
               key: location.pathname

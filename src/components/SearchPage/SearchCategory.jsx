@@ -30,10 +30,10 @@ export default class SearchCategory extends Component {
     if (this.props.activeCategory === this.props.categoryId) {
       return;
     }
-    const { offsetTop, scrollHeight } = this.domNode;
+    const { offsetTop, clientHeight } = this.domNode;
     const scrollPosition = getCurrentScrollPosition();
     const fixedHeaderScrollPosition = scrollPosition + fixedHeaderHeight;
-    if (offsetTop <= fixedHeaderScrollPosition && fixedHeaderScrollPosition < offsetTop + scrollHeight) {
+    if (offsetTop <= fixedHeaderScrollPosition && fixedHeaderScrollPosition < offsetTop + clientHeight) {
       this.props.updateActiveCategory(this.props.categoryId);
     }
   }

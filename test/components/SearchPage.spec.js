@@ -4,6 +4,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
 import { StickyContainer } from 'react-sticky';
+import ReactHeight from 'react-height';
 
 import * as NavigationUtil from 'utils/NavigationUtil';
 import SearchPage from 'components/SearchPage';
@@ -45,24 +46,12 @@ describe('<SearchPage />', () => {
 
   describe('getCategoriesWithSuggestions', () => {
     it('should return defined categories with data from props', () => {
-      constants.SEARCH_CATEGORIES = [
-        {
-          id: 'defined_1',
-          name: 'Define 1',
-          path: 'DEFINED_1'
-        },
-        {
-          id: 'defined_2',
-          name: 'Define 2',
-          path: 'DEFINED_2'
-        }
-      ];
       const wrapper = shallow(
         <SearchPage
           query={ 'ab' }
           suggestAllFromCategory={ () => {} }
-          defined_1={ { data: [1] } }
-          defined_2={ { data: [] } }
+          officers={ { data: [1] } }
+          faqs={ { data: [] } }
           undefined={ { data: [1] } }
           inputChanged={ () => {} }
          />
@@ -71,9 +60,9 @@ describe('<SearchPage />', () => {
 
       instance.getCategoriesWithSuggestions().should.eql([
         {
-          id: 'defined_1',
-          name: 'Define 1',
-          path: 'DEFINED_1'
+          id: 'officers',
+          name: 'Officers',
+          path: 'OFFICER'
         }
       ]);
     });
@@ -214,7 +203,6 @@ describe('<SearchPage />', () => {
   it('should empty search query when user taps "clear text" button', () => {
     const spyInputChanged = spy();
     const spyFocus = spy();
-
     const wrapper = shallow(
       <SearchPage
         query={ 'delete me' }
@@ -228,5 +216,98 @@ describe('<SearchPage />', () => {
 
     spyInputChanged.calledWith('').should.be.true();
     spyFocus.calledWith().should.be.true();
+  });
+
+  describe('updateLastCategoryHeight', () => {
+    it('should run correctly', () => {
+      const wrapper = shallow(
+        <SearchPage />
+      );
+      const instance = wrapper.instance();
+      const spyForceUpdate = spy(instance, 'forceUpdate');
+
+      instance.updateLastCategoryHeight(1);
+
+      instance.lastCategoryHeight.should.eql(1);
+      spyForceUpdate.called.should.be.true();
+
+      spyForceUpdate.restore();
+    });
+  });
+
+  describe('calculateDynamicBottomPaddingStyle', () => {
+    it('should return correct height when there is no last category', () => {
+      const wrapper = shallow(
+        <SearchPage />
+      );
+      const instance = wrapper.instance();
+      instance.lastCategoryHeight = null;
+
+      const result = instance.calculateDynamicBottomPaddingStyle();
+      const dynamicBottomPaddingOffset = (
+        constants.SHEET_HEADER_HEIGHT +
+        constants.SEARCH_CATEGORY_LINKS_HEIGHT
+      );
+      const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
+
+      result.should.eql({
+        height
+      });
+    });
+
+    it('should return correct height when there is category', () => {
+      const wrapper = shallow(
+        <SearchPage />
+      );
+      const instance = wrapper.instance();
+      instance.lastCategoryHeight = 1;
+
+      const result = instance.calculateDynamicBottomPaddingStyle();
+      const dynamicBottomPaddingOffset = (
+        constants.SHEET_HEADER_HEIGHT +
+        constants.SEARCH_CATEGORY_LINKS_HEIGHT +
+        1
+      );
+      const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
+
+      result.should.eql({
+        height
+      });
+    });
+  });
+
+  describe('renderCategories()', () => {
+    it('should render SearchCategory components', () => {
+      const stubBoundCallback = stub(SearchPage.prototype.updateLastCategoryHeight, 'bind');
+      stubBoundCallback.returns(SearchPage.prototype.updateLastCategoryHeight);
+
+      const officersProp = {
+        data: ['data']
+      };
+      const reportsProp = {
+        data: ['data']
+      };
+
+      const wrapper = shallow(
+        <SearchPage
+          saveToRecent={ () => {} }
+          query='qa'
+          officers={ officersProp }
+          reports={ reportsProp }
+          suggestAllFromCategory={ () => {} }/>
+      );
+
+      const categoryDetails = wrapper.find('.category-details-container').children();
+
+      categoryDetails.should.have.length(2);
+      categoryDetails.at(0).type().should.be.eql(SearchCategory);
+
+      // Last component should be wrapped inside ReactHeight:
+      const lastCategory = categoryDetails.at(1);
+      lastCategory.type().should.be.eql(ReactHeight);
+      lastCategory.prop('onHeightReady').should.be.eql(SearchPage.prototype.updateLastCategoryHeight);
+
+      stubBoundCallback.restore();
+    });
   });
 });

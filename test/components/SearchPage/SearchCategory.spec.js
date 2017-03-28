@@ -320,7 +320,7 @@ describe('<SearchCategory />', () => {
       const instance = wrapper.instance();
       instance.domNode = {
         offsetTop: 100,
-        scrollHeight: 200
+        clientHeight: 200
       };
 
       instance.watchActiveState();
@@ -371,7 +371,7 @@ describe('<SearchCategory />', () => {
       const instance = wrapper.instance();
       instance.domNode = {
         offsetTop: 900,
-        scrollHeight: fixedHeaderHeight + 1
+        clientHeight: fixedHeaderHeight + 1
       };
 
       instance.watchActiveState();

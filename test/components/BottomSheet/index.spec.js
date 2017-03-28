@@ -4,6 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import BottomSheet from 'components/BottomSheet';
+import constants from 'constants';
 
 describe('<BottomSheet />', () => {
   it('should be renderable', () => {
@@ -92,6 +93,68 @@ describe('<BottomSheet />', () => {
       wrapper.find('.sheet').children().first().is('#child')
         .should.be.false();
     });
+  });
+
+  describe('calculateSheetStyle', () => {
+    it('should returns correct values when path name is not \'search\'', () => {
+      const location = {
+        pathname: 'somepath'
+      };
+      const wrapper = shallow(
+        <BottomSheet location={ location }/>
+      );
+      const instance = wrapper.instance();
+      const result = instance.calculateSheetStyle();
+
+      result.should.be.eql({
+        minHeight: `calc(100vh - ${constants.TOP_MARGIN - constants.BOTTOM_PADDING}px)`,
+        paddingBottom: `${constants.BOTTOM_PADDING}px`
+      });
+    });
+
+    it('should returns correct values when path name is \'search\'', () => {
+      const location = {
+        pathname: 'search/'
+      };
+      const wrapper = shallow(
+        <BottomSheet location={ location }/>
+      );
+      const instance = wrapper.instance();
+      const result = instance.calculateSheetStyle();
+
+      result.should.be.eql({
+        minHeight: `calc(100vh - ${constants.TOP_MARGIN}px)`,
+        paddingBottom: '0px'
+      });
+    });
+  });
+
+  describe('renderSheetBottomPadding', () => {
+    it('should returns null when path name is \'search\'', () => {
+      const location = {
+        pathname: 'search/'
+      };
+      const wrapper = shallow(
+        <BottomSheet location={ location }/>
+      );
+      const instance = wrapper.instance();
+      const result = instance.renderSheetBottomPadding();
+
+      should(result).null();
+    });
+  });
+
+  it('should returns correct values when path name is not \'search\'', () => {
+    const location = {
+      pathname: 'somepath'
+    };
+    const wrapper = shallow(
+      <BottomSheet location={ location }/>
+    );
+    const instance = wrapper.instance();
+    const result = instance.renderSheetBottomPadding();
+
+    result.should.be.eql(<div className='sheet-bottom-padding'></div>);
   });
 
 });
