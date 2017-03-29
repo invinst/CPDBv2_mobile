@@ -7,17 +7,19 @@ import style from 'styles/MainPage.sass';
 
 import MainPageContentContainer from 'containers/MainPage/MainPageContentContainer';
 import BottomSheetContainer from 'containers/BottomSheetContainer';
-import { instantScrollToTop } from 'utils/NavigationUtil';
 
 
 class MainPage extends Component {
   componentDidMount() {
-    this.props.fetchSuggestedSearchItems();
+    const { fetchSuggestedSearchItems, routeChanged, location } = this.props;
+    fetchSuggestedSearchItems();
+    routeChanged(location.pathname);
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
-      instantScrollToTop();
+    const { location, routeChanged } = this.props;
+    if (location.pathname !== prevProps.location.pathname) {
+      routeChanged(location.pathname);
     }
   }
 
@@ -51,7 +53,8 @@ MainPage.propTypes = {
   urlQuery: PropTypes.string,
   children: PropTypes.object,
   isSearchFocused: PropTypes.number,
-  location: PropTypes.object
+  location: PropTypes.object,
+  routeChanged: PropTypes.func
 };
 
 MainPage.defaultProps = {
@@ -60,7 +63,9 @@ MainPage.defaultProps = {
   urlQuery: '',
   location: {
     pathname: ''
-  }
+  },
+  routeChanged: () => {},
+  fetchSuggestedSearchItems: () => {}
 };
 
 export default MainPage;

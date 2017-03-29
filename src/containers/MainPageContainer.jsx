@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-
+import { routeChanged } from 'actions/navigation';
 import MainPage from 'components/MainPage';
 import { fetchSuggestedSearchItems } from 'actions/suggestion';
 
@@ -14,7 +14,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  fetchSuggestedSearchItems
+  fetchSuggestedSearchItems,
+  routeChanged
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainPage));

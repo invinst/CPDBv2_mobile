@@ -70,15 +70,17 @@ export function scrollToElement(targetElementSelector, offsetElementSelector) {
   }
 
   const newPosition = targetElement.offsetTop - offset;
-  document.body.scrollTop = newPosition; // Chrome
-  document.documentElement.scrollTop = newPosition; // Firefox
+  window.scrollTo(0, newPosition);
 }
 
 export function instantScrollToTop() {
-  document.body.scrollTop = 0; // Chrome
-  document.documentElement.scrollTop = 0; // Firefox
+  window.scrollTo(0, 0);
 }
 
 export function getCurrentScrollPosition() {
   return document.body.scrollTop || document.documentElement.scrollTop;
+}
+
+export function instantScrollTo(y) {
+  window.scrollTo(0, y);
 }
