@@ -17,8 +17,8 @@ function mapStateToProps(state, ownProps) {
   };
 
   return {
-    loading: state.officerPage.summaries.isRequesting,
-    found: state.officerPage.summaries.isSuccess,
+    loading: state.officerPage.timelines.isRequesting,
+    found: state.officerPage.timelines.isSuccess,
     timeline: officerTimelineSelector(state, props),
     summary: officerSummarySelector(state, props),
     pk: pk

@@ -52,9 +52,23 @@ export const officerSummarySelector = createSelector(
   }
 );
 
-const getOfficerTimeline = (state, props) => (
-  state.officerPage.timelines.data[props.params.id] || null
-);
+
+const getOfficerTimeline = (state, props) => {
+  const timeline = state.officerPage.timelines.data[props.params.id];
+  if (!timeline) {
+    return null;
+  }
+
+  const results = timeline.results.map((result) => ({
+    ...result,
+    date: moment(result.date).format(constants.SIMPLE_DATE_FORMAT)
+  }));
+
+  return {
+    ...timeline,
+    results: results
+  };
+};
 
 export const officerTimelineSelector = createSelector(
   [getOfficerTimeline],

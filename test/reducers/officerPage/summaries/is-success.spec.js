@@ -8,13 +8,13 @@ import isSuccess from 'reducers/officerPage/summaries/is-success';
 
 describe('isSuccess reducer', function () {
   it('should return initial state', function () {
-    isSuccess(undefined, {}).should.be.false();
+    isSuccess(undefined, {}).should.be.true();
   });
 
   it('should handle OFFICER_SUMMARY_REQUEST_START', function () {
     isSuccess(false, {
       type: OFFICER_SUMMARY_REQUEST_START
-    }).should.be.false();
+    }).should.be.true();
   });
 
   it('should handle OFFICER_SUMMARY_REQUEST_SUCCESS', function () {
