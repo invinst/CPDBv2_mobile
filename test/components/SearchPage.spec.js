@@ -300,7 +300,7 @@ describe('<SearchPage />', () => {
       const categoryDetails = wrapper.find('.category-details-container').children();
 
       categoryDetails.should.have.length(2);
-      categoryDetails.at(0).type().should.be.eql(SearchCategory);
+      categoryDetails.at(0).childAt(0).type().should.be.eql(SearchCategory);
 
       // Last component should be wrapped inside ReactHeight:
       const lastCategory = categoryDetails.at(1);

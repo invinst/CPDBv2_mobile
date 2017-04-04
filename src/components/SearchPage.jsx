@@ -117,27 +117,8 @@ export default class SearchPage extends Component {
     const { suggestAllFromCategory, query } = this.props;
 
     return categories.map((cat, index) => {
-      if (index === categories.length - 1) {
-
-        return (
-          <ReactHeight key={ cat.id } onHeightReady={ this.updateLastCategoryHeight.bind(this) }>
-            <SearchCategory
-              categoryId={ cat.id }
-              requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
-              title={ cat.name }
-              isShowingAll={ this.props[cat.id].isShowingAll }
-              items={ this.props[cat.id].data }
-              saveToRecent={ this.props.saveToRecent }
-              updateActiveCategory={ this.props.updateActiveCategory }
-              activeCategory={ this.props.activeCategory }
-              />
-          </ReactHeight>
-          );
-      }
-
-      return (
+      const searchCategory = (
         <SearchCategory
-          key={ cat.id }
           categoryId={ cat.id }
           requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
           title={ cat.name }
@@ -148,6 +129,16 @@ export default class SearchPage extends Component {
           activeCategory={ this.props.activeCategory }
           />
       );
+
+      if (index === categories.length - 1) {
+        return (
+          <ReactHeight key={ cat.id } onHeightReady={ this.updateLastCategoryHeight.bind(this) }>
+            { searchCategory }
+          </ReactHeight>
+        );
+      }
+
+      return <div key={ cat.id }>{ searchCategory }</div>;
     });
   }
 
@@ -206,7 +197,6 @@ export default class SearchPage extends Component {
               />
             { this.renderClearIcon() }
           </div>
-
 
           { categoryLinks }
         </Sticky>
