@@ -74,3 +74,11 @@ export const officerTimelineSelector = createSelector(
   [getOfficerTimeline],
   (timeline) => timeline
 );
+
+
+const getCurrentTimeline = (state, props) => state.officerPage.timelines.data[props.params.id];
+
+export const hasMoreOfficerTimelineSelector = createSelector(
+  getCurrentTimeline,
+  (timeline) => (!!timeline && !timeline.isRequesting && !!timeline.next)
+);

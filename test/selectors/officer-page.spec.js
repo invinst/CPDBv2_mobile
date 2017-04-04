@@ -1,5 +1,9 @@
 import should from 'should';
-import { officerSummarySelector, officerTimelineSelector } from 'selectors/officer-page';
+import {
+  officerSummarySelector,
+  officerTimelineSelector,
+  hasMoreOfficerTimelineSelector,
+} from 'selectors/officer-page';
 
 describe('officer-page selectors', () => {
   describe('officerSummarySelector', () => {
@@ -223,6 +227,100 @@ describe('officer-page selectors', () => {
       };
 
       should(officerTimelineSelector(state, props)).be.null();
+    });
+  });
+
+  describe('hasMoreOfficerTimelineSelector', function () {
+    it('should return false if timeline with matching ID is not available', function () {
+      const state = {
+        officerPage: {
+          timelines: {
+            data: {
+              2: {
+                isRequesting: true,
+                next: 'some-url'
+              }
+            }
+          }
+        }
+      };
+
+      const props = {
+        params: {
+          id: 2
+        }
+      };
+
+      hasMoreOfficerTimelineSelector(state, props).should.be.false();
+    });
+
+    it('should return false if a timeline request is currently in progress', function () {
+      const state = {
+        officerPage: {
+          timelines: {
+            data: {
+              2: {
+                isRequesting: true,
+                next: 'some-url'
+              }
+            }
+          }
+        }
+      };
+
+      const props = {
+        params: {
+          id: 2
+        }
+      };
+
+      hasMoreOfficerTimelineSelector(state, props).should.be.false();
+    });
+
+    it('should return false if next url does not exist', function () {
+      const state = {
+        officerPage: {
+          timelines: {
+            data: {
+              2: {
+                isRequesting: false,
+                next: null
+              }
+            }
+          }
+        }
+      };
+
+      const props = {
+        params: {
+          id: 2
+        }
+      };
+
+      hasMoreOfficerTimelineSelector(state, props).should.be.false();
+    });
+
+    it('should return true if next url is available', function () {
+      const state = {
+        officerPage: {
+          timelines: {
+            data: {
+              2: {
+                isRequesting: false,
+                next: 'some-url'
+              }
+            }
+          }
+        }
+      };
+
+      const props = {
+        params: {
+          id: 2
+        }
+      };
+
+      hasMoreOfficerTimelineSelector(state, props).should.true();
     });
   });
 });

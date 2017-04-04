@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { Sticky } from 'react-sticky';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import GaUtil from 'utils/GaUtil';
 import LoadingPage from 'components/Shared/LoadingPage';
@@ -16,6 +17,7 @@ import style from 'styles/OfficerPage/OfficerTimeline.sass';
 class OfficerTimeline extends Component {
   componentDidMount() {
     const { timeline, getOfficerTimeline, summary, getOfficerSummary, pk } = this.props;
+
     if (!timeline) {
       getOfficerTimeline(pk);
     }
@@ -93,11 +95,11 @@ class OfficerTimeline extends Component {
   }
 
   render() {
-    const { found, pk } = this.props;
+    const { found, pk, hasMore, timeline, getMoreOfficerTimeline } = this.props;
 
     if (!found) {
       return (
-        <NotMatchedOfficerPage id={ pk } />
+        <NotMatchedOfficerPage id={ pk } three={ 3 } />
       );
     }
 
@@ -107,8 +109,16 @@ class OfficerTimeline extends Component {
     return (
       <div className={ style.officerTimeline }>
         { header }
-        <OfficerTopLinks id={ pk } currentPath='timeline' />
-        { body }
+        <InfiniteScroll
+          hasMore={ hasMore }
+          loadMore={ () => getMoreOfficerTimeline(pk, timeline.next) }
+          useWindow={ true }
+        >
+          <OfficerTopLinks id={ pk } currentPath='timeline' />
+          <div className='officer-timeline-body'>
+            { body }
+          </div>
+        </InfiniteScroll>
       </div>
     );
   }
@@ -117,9 +127,11 @@ class OfficerTimeline extends Component {
 OfficerTimeline.propTypes = {
   pk: PropTypes.number,
   getOfficerTimeline: PropTypes.func.isRequired,
+  getMoreOfficerTimeline: PropTypes.func.isRequired,
   getOfficerSummary: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   found: PropTypes.bool,
+  hasMore: PropTypes.bool,
   timeline: PropTypes.object,
   summary: PropTypes.object,
   children: PropTypes.object

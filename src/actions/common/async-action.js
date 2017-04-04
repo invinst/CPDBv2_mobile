@@ -17,6 +17,18 @@ export const get = (url, types) => ((params, adapter, urlSuffix='', meta) => {
   return action;
 });
 
+export const getUrl = (url, types, meta) => (
+  {
+    types,
+    payload: {
+      request: {
+        url
+      }
+    },
+    meta
+  }
+);
+
 export const post = (url, types) => ((data, adapter) => ({
   types,
   payload: {

@@ -137,4 +137,46 @@ describe('<OfficerTimeline />', function () {
     unitChangeItem.prop('date').should.eql('Jun 01, 2011');
     unitChangeItem.prop('unitName').should.eql('12345');
   });
+
+  it('should have body inside <InfiniteScroll>', function () {
+    const timeline = {
+      results: []
+    };
+
+    const wrapper = shallow(
+      <OfficerTimeline
+        pk={ 12 }
+        found={ true }
+        timeline={ timeline }
+        summary={ {} }
+      />
+    );
+
+    const infiniteScroll = wrapper.find('InfiniteScroll');
+    infiniteScroll.find('OfficerTopLinks').exists().should.be.true();
+    infiniteScroll.find('.officer-timeline-body').exists().should.be.true();
+  });
+
+  it('should load more timeline items when scrolled to bottom', function () {
+    const timeline = {
+      next: '/next-url/',
+      results: []
+    };
+
+    const spyGetMore = spy();
+
+    const wrapper = shallow(
+      <OfficerTimeline
+        pk={ 12 }
+        found={ true }
+        timeline={ timeline }
+        getMoreOfficerTimeline={ spyGetMore }
+        summary={ {} }
+      />
+    );
+
+    const infiniteScroll = wrapper.find('InfiniteScroll');
+    infiniteScroll.prop('loadMore')();
+    spyGetMore.calledWith(12, '/next-url/').should.be.true();
+  });
 });

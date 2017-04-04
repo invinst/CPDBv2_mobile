@@ -1,4 +1,4 @@
-import { get, post } from 'actions/common/async-action';
+import { get, getUrl, post } from 'actions/common/async-action';
 
 
 describe('async-action', function () {
@@ -16,6 +16,24 @@ describe('async-action', function () {
             adapter: undefined
           }
         }
+      });
+    });
+  });
+
+  describe('getUrl', function () {
+    it('should return the right action', function () {
+      const url = 'http://localhost/dummy';
+      const types = ['a', 'b', 'c'];
+      const meta = { foo: 'bar' };
+
+      getUrl(url, types, meta).should.eql({
+        types,
+        payload: {
+          request: {
+            url
+          }
+        },
+        meta
       });
     });
   });
