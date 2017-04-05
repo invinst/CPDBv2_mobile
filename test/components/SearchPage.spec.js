@@ -22,24 +22,29 @@ describe('<SearchPage />', function () {
   });
 
   it('should render categories returned by getCategoriesWithSuggestions when it has query', () => {
-    stub(SearchPage.prototype, 'getCategoriesWithSuggestions').callsFake( () => [
+    const dummyCategories = [
       {
         name: 'Any',
         id: 'any',
         path: 'ANY'
       }
-    ]);
+    ];
+    stub(SearchPage.prototype, 'getCategoriesWithSuggestions').callsFake( () => dummyCategories);
+
     const wrapper = shallow(
       <SearchPage
         query={ 'ab' }
         suggestAllFromCategory={ () => {} }
         any={ { isShowingAll: false } }
         inputChanged={ () => {} }
+        activeCategory='any'
        />
     );
 
-    wrapper.find('.categories').text().should.eql('Any');
-    wrapper.find(SearchCategory).should.have.length(1);
+    const navbar = wrapper.find('SearchNavbar');
+    navbar.prop('categories').should.equal(dummyCategories);
+    navbar.prop('activeCategory').should.be.eql('any');
+    navbar.prop('scrollToCategory').should.equal(wrapper.instance().scrollToCategory);
 
     SearchPage.prototype.getCategoriesWithSuggestions.restore();
   });
@@ -74,8 +79,7 @@ describe('<SearchPage />', function () {
       const wrapper = shallow(<SearchPage query={ '' } />);
       wrapper.instance().scrollToCategory('an-id');
 
-      stubScrollToElement.calledWith('#search-category-an-id',
-                                     '#search-page-header').should.be.true();
+      stubScrollToElement.calledWith('#search-category-an-id', '#search-page-header').should.be.true();
       stubScrollToElement.restore();
     });
   });

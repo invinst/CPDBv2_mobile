@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import cx from 'classnames';
 import style from 'styles/SearchPage.sass';
 import { Sticky } from 'react-sticky';
 import SearchCategory from 'components/SearchPage/SearchCategory';
+import SearchNavbar from 'components/SearchPage/SearchNavbar';
 import ClearableInput from 'components/SearchPage/ClearableInput';
 import { scrollToElement } from 'utils/NavigationUtil';
 import constants from 'constants';
@@ -53,39 +53,6 @@ export default class SearchPage extends Component {
     });
   }
 
-  renderCategoryLinks(categories) {
-    let { activeCategory } = this.props;
-
-    // Make first category active by default
-    if (!activeCategory && categories.length > 0) {
-      activeCategory = categories[0].id;
-    }
-
-    const links = categories.map(
-      (category, index) => {
-        const classNames = cx(
-          'category-link',
-          { 'active': activeCategory === category.id }
-        );
-
-        return (
-          <button key={ index }
-            onClick={ this.scrollToCategory.bind(this, category.id) }
-            className={ classNames }
-            >
-            { category.name }
-          </button>
-        );
-      }
-    );
-
-    return (
-      <div className='categories'>
-        { links }
-      </div>
-    );
-  }
-
   updateLastCategoryHeight(newHeight) {
     this.lastCategoryHeight = newHeight;
     this.forceUpdate();
@@ -94,7 +61,10 @@ export default class SearchPage extends Component {
   renderCategories(categories) {
     const { suggestAllFromCategory, query } = this.props;
 
+    const lastIndex = categories.length - 1;
+
     return categories.map((cat, index) => {
+
       const searchCategory = (
         <SearchCategory
           categoryId={ cat.id }
@@ -108,15 +78,18 @@ export default class SearchPage extends Component {
           />
       );
 
-      if (index === categories.length - 1) {
+      if (index === lastIndex) {
+        // Track last category's DOM element height to use in dynamic bottom padding height calculation
         return (
           <ReactHeight key={ cat.id } onHeightReady={ this.updateLastCategoryHeight.bind(this) }>
             { searchCategory }
           </ReactHeight>
         );
+
+      } else {
+        return <div key={ cat.id }>{ searchCategory }</div>;
       }
 
-      return <div key={ cat.id }>{ searchCategory }</div>;
     });
   }
 
@@ -132,11 +105,11 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query } = this.props;
-    let categoryLinks, categoryDetails;
+    const { query, activeCategory } = this.props;
+    let categories;
 
     if (!this.isLongEnoughQuery(query)) {
-      const categories = [
+      categories = [
         {
           name: 'Recent',
           id: 'recent'
@@ -149,13 +122,9 @@ export default class SearchPage extends Component {
         const suggestions = this.props[cat.id];
         return !!suggestions && suggestions.data.length > 0;
       });
-      categoryLinks = this.renderCategoryLinks(categories);
-      categoryDetails = this.renderCategories(categories);
 
     } else {
-      const categoriesWithSuggestions = this.getCategoriesWithSuggestions();
-      categoryLinks = this.renderCategoryLinks(categoriesWithSuggestions);
-      categoryDetails = this.renderCategories(categoriesWithSuggestions);
+      categories = this.getCategoriesWithSuggestions();
     }
 
     return (
@@ -174,11 +143,15 @@ export default class SearchPage extends Component {
             onClear={ () => { this.props.inputChanged(''); } }
           />
 
-          { categoryLinks }
+          <SearchNavbar
+            categories={ categories }
+            activeCategory={ activeCategory }
+            scrollToCategory={ this.scrollToCategory }
+          />
         </Sticky>
 
         <div className='category-details-container'>
-          { categoryDetails }
+          { this.renderCategories(categories) }
         </div>
 
         <div style={ this.calculateDynamicBottomPaddingStyle() } className='bottom-padding'></div>
