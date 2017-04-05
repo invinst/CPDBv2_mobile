@@ -11,7 +11,7 @@ import SearchPage from 'components/SearchPage';
 import SearchCategory from 'components/SearchPage/SearchCategory';
 import constants from 'constants';
 
-describe('<SearchPage />', () => {
+describe('<SearchPage />', function () {
   it('should be renderable', () => {
     const wrapper = mount(
       <StickyContainer>
@@ -140,8 +140,10 @@ describe('<SearchPage />', () => {
       const instance = wrapper.instance();
       const spyBlur = spy();
 
-      instance.inputElement = {
-        blur: spyBlur
+      instance.searchInput = {
+        inputElement: {
+          blur: spyBlur
+        }
       };
       instance.blurSearchInput(true);
 
@@ -153,8 +155,10 @@ describe('<SearchPage />', () => {
       const instance = wrapper.instance();
       const spyBlur = spy();
 
-      instance.inputElement = {
-        blur: spyBlur
+      instance.searchInput = {
+        inputElement: {
+          blur: spyBlur
+        }
       };
       instance.blurSearchInput(false);
 
@@ -168,54 +172,45 @@ describe('<SearchPage />', () => {
     const spyFocus = spy();
 
 
-    instance.inputElement = {
-      focus: spyFocus
+    instance.searchInput = {
+      inputElement: {
+        focus: spyFocus
+      }
     };
     instance.componentDidMount();
 
     spyFocus.calledOnce.should.be.true();
   });
 
-  it('should not render "clear text" button when query is empty', () => {
-    const wrapper = shallow(
-      <SearchPage
-        query={ '' }
-        inputChanged={ () => {} }
-        suggestTerm={ () => {} }
-      />
-    );
+  describe('<ClearableInput>', function () {
+    beforeEach(function () {
+      this.stubOnInputChange = stub(SearchPage.prototype, 'onInputChange');
+    });
 
-    wrapper.find('.clear-icon').exists().should.be.false();
-  });
+    afterEach(function () {
+      this.stubOnInputChange.restore();
+    });
 
-  it('should render "clear text" button when query is not empty', () => {
-    const wrapper = shallow(
-      <SearchPage
-        query={ 'a' }
-        inputChanged={ () => {} }
-        suggestTerm={ () => {} }
-      />
-    );
+    it('should render ClearableInput component', function () {
+      const spyInputChanged = spy();
 
-    wrapper.find('.clear-icon').exists().should.be.true();
-  });
+      const wrapper = shallow(
+        <SearchPage
+          query={ 'meh' }
+          inputChanged={ spyInputChanged }
+        />
+      );
 
-  it('should empty search query when user taps "clear text" button', () => {
-    const spyInputChanged = spy();
-    const spyFocus = spy();
-    const wrapper = shallow(
-      <SearchPage
-        query={ 'delete me' }
-        inputChanged={ spyInputChanged }
-        suggestTerm={ () => {} }
-      />
-    );
-    wrapper.instance().inputElement = { focus: spyFocus };
+      const clearableInput = wrapper.find('ClearableInput');
+      clearableInput.prop('value').should.be.eql('meh');
+      clearableInput.prop('placeholder').should.be.eql('Search');
 
-    wrapper.find('.clear-icon').simulate('click');
+      clearableInput.prop('onChange')();
+      this.stubOnInputChange.calledOnce.should.be.true();
 
-    spyInputChanged.calledWith('').should.be.true();
-    spyFocus.calledWith().should.be.true();
+      clearableInput.prop('onClear')();
+      spyInputChanged.calledWith('').should.be.true();
+    });
   });
 
   describe('updateLastCategoryHeight', () => {

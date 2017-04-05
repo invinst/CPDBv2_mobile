@@ -3,14 +3,14 @@ import cx from 'classnames';
 import style from 'styles/SearchPage.sass';
 import { Sticky } from 'react-sticky';
 import SearchCategory from 'components/SearchPage/SearchCategory';
+import ClearableInput from 'components/SearchPage/ClearableInput';
 import { scrollToElement } from 'utils/NavigationUtil';
 import constants from 'constants';
-import clearIcon from 'img/ic-clear.svg';
 import ReactHeight from 'react-height';
 
 export default class SearchPage extends Component {
   componentDidMount() {
-    this.inputElement.focus();
+    this.searchInput.inputElement.focus();
   }
 
   blurSearchInput(isSticky) {
@@ -22,9 +22,8 @@ export default class SearchPage extends Component {
       bug.
     */
     if (isSticky) {
-      this.inputElement.blur();
+      this.searchInput.inputElement.blur();
     }
-
   }
 
   onInputChange(event) {
@@ -84,27 +83,6 @@ export default class SearchPage extends Component {
       <div className='categories'>
         { links }
       </div>
-    );
-  }
-
-  clearQuery() {
-    this.props.inputChanged('');
-    this.inputElement.focus();
-  }
-
-  renderClearIcon() {
-    const { query } = this.props;
-
-    if (!query) {
-      return null;
-    }
-
-    return (
-      <img
-        className='clear-icon'
-        src={ clearIcon }
-        onClick={ this.clearQuery.bind(this) }
-        />
     );
   }
 
@@ -184,19 +162,17 @@ export default class SearchPage extends Component {
       <div className={ style.searchPage }>
         <Sticky
           id='search-page-header'
-          onStickyStateChange={ this.blurSearchInput.bind(this) }
+          onStickyStateChange={ (isSticky) => { this.blurSearchInput(isSticky); } }
           >
 
-          <div className='query-input-container'>
-            <input
-              className='sheet-header header query-input'
-              value={ query }
-              placeholder='Search'
-              ref={ (inputElement) => { this.inputElement = inputElement; } }
-              onChange={ this.onInputChange.bind(this) }
-              />
-            { this.renderClearIcon() }
-          </div>
+          <ClearableInput
+            ref={ (instance) => { this.searchInput = instance; } }
+            className='sheet-header header query-input'
+            value={ query }
+            placeholder='Search'
+            onChange={ (e) => { this.onInputChange(e); } }
+            onClear={ () => { this.props.inputChanged(''); } }
+          />
 
           { categoryLinks }
         </Sticky>
@@ -222,4 +198,8 @@ SearchPage.propTypes = {
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
   updateActiveCategory: PropTypes.func
+};
+
+SearchPage.defaultProps = {
+  inputChanged: () => {}
 };
