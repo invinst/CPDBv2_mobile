@@ -1,8 +1,0 @@
----
-- hosts: default
-  vars_files:
-    - env_vars/vagrant.yml
-  roles:
-    - base
-    - ansible-nodejs4x
-    - web
