@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import cx from 'classnames';
 import style from 'styles/SearchPage.sass';
 import { Sticky } from 'react-sticky';
 import SearchCategory from 'components/SearchPage/SearchCategory';
 import { scrollToElement } from 'utils/NavigationUtil';
 import constants from 'constants';
+import clearIcon from 'img/ic-clear.svg';
 
 export default class SearchPage extends Component {
   componentDidMount() {
@@ -52,34 +54,111 @@ export default class SearchPage extends Component {
   }
 
   renderCategoryLinks(categories) {
-    return categories.map(
-      (category, index) => (
-        <a
-          id='search-input'
-          onClick={ this.scrollToCategory.bind(this, category.id) }
-          className='category-link'
-          key={ index }
-          >
-          { category.name }
-        </a>
-      )
+    let { activeCategory } = this.props;
+
+    // Make first category active by default
+    if (!activeCategory && categories.length > 0) {
+      activeCategory = categories[0].id;
+    }
+
+    const links = categories.map(
+      (category, index) => {
+        const classNames = cx(
+          'category-link',
+          { 'active': activeCategory === category.id }
+        );
+
+        return (
+          <button key={ index }
+            onClick={ this.scrollToCategory.bind(this, category.id) }
+            className={ classNames }
+            >
+            { category.name }
+          </button>
+        );
+      }
     );
+
+    return (
+      <div className='categories'>
+        { links }
+      </div>
+    );
+  }
+
+  clearQuery() {
+    this.props.inputChanged('');
+    this.inputElement.focus();
+  }
+
+  renderClearIcon() {
+    const { query } = this.props;
+
+    if (!query) {
+      return null;
+    }
+
+    return (
+      <img
+        className='clear-icon'
+        src={ clearIcon }
+        onClick={ this.clearQuery.bind(this) }
+        />
+    );
+  }
+
+  assignLastCategoryRef(lastCategory) {
+    if (lastCategory) {
+      this.lastCategory = lastCategory.domNode;
+    }
   }
 
   renderCategories(categories) {
     const { suggestAllFromCategory, query } = this.props;
 
-    return categories.map((cat) => (
-      <SearchCategory
-        key={ cat.id }
-        categoryId={ cat.id }
-        requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
-        title={ cat.name }
-        isShowingAll={ this.props[cat.id].isShowingAll }
-        items={ this.props[cat.id].data }
-        saveToRecent={ this.props.saveToRecent }
-        />
-    ));
+    return categories.map((cat, index) => {
+      if (index === categories.length - 1) {
+
+        return (
+          <SearchCategory
+            ref={ this.assignLastCategoryRef.bind(this) }
+            key={ cat.id }
+            categoryId={ cat.id }
+            requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
+            title={ cat.name }
+            isShowingAll={ this.props[cat.id].isShowingAll }
+            items={ this.props[cat.id].data }
+            saveToRecent={ this.props.saveToRecent }
+            updateActiveCategory={ this.props.updateActiveCategory }
+            activeCategory={ this.props.activeCategory }
+            />
+          );
+      }
+
+      return (
+        <SearchCategory
+          key={ cat.id }
+          categoryId={ cat.id }
+          requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
+          title={ cat.name }
+          isShowingAll={ this.props[cat.id].isShowingAll }
+          items={ this.props[cat.id].data }
+          saveToRecent={ this.props.saveToRecent }
+          updateActiveCategory={ this.props.updateActiveCategory }
+          activeCategory={ this.props.activeCategory }
+          />
+      );
+    });
+  }
+
+  calculateBottomPaddingStyle() {
+    let lastCategoryHeight = 103;
+    if (this.lastCategory) {
+      lastCategoryHeight = this.lastCategory.clientHeight;
+    }
+    const bottomPaddingOffset = constants.SHEET_HEADER_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + lastCategoryHeight;
+    const height = `calc(100vh - ${bottomPaddingOffset}px)`;
+    return { height };
   }
 
   render() {
@@ -115,21 +194,25 @@ export default class SearchPage extends Component {
           id='search-page-header'
           onStickyStateChange={ this.blurSearchInput.bind(this) }
           >
-          <input
-            className='sheet-header header query-input'
-            value={ query }
-            placeholder='Search'
-            ref={ (inputElement) => { this.inputElement = inputElement; } }
-            onChange={ this.onInputChange.bind(this) }
-            />
-          <div className='categories'>
-            { categoryLinks }
+
+          <div className='query-input-container'>
+            <input
+              className='sheet-header header query-input'
+              value={ query }
+              placeholder='Search'
+              ref={ (inputElement) => { this.inputElement = inputElement; } }
+              onChange={ this.onInputChange.bind(this) }
+              />
+            { this.renderClearIcon() }
           </div>
+
+
+          { categoryLinks }
         </Sticky>
 
         { categoryDetails }
 
-        <div className='bottom-padding'></div>
+        <div style={ this.calculateBottomPaddingStyle() } className='bottom-padding'></div>
       </div>
     );
   }
@@ -143,5 +226,7 @@ SearchPage.propTypes = {
   faqs: PropTypes.object,
   suggestAllFromCategory: PropTypes.func,
   categories: PropTypes.array,
-  saveToRecent: PropTypes.func
+  saveToRecent: PropTypes.func,
+  activeCategory: PropTypes.string,
+  updateActiveCategory: PropTypes.func
 };

@@ -33,6 +33,7 @@ describe('<SearchPage />', () => {
         query={ 'ab' }
         suggestAllFromCategory={ () => {} }
         any={ { isShowingAll: false } }
+        inputChanged={ () => {} }
        />
     );
 
@@ -63,6 +64,7 @@ describe('<SearchPage />', () => {
           defined_1={ { data: [1] } }
           defined_2={ { data: [] } }
           undefined={ { data: [1] } }
+          inputChanged={ () => {} }
          />
       );
       const instance = wrapper.instance();
@@ -183,5 +185,48 @@ describe('<SearchPage />', () => {
     instance.componentDidMount();
 
     spyFocus.calledOnce.should.be.true();
+  });
+
+  it('should not render "clear text" button when query is empty', () => {
+    const wrapper = shallow(
+      <SearchPage
+        query={ '' }
+        inputChanged={ () => {} }
+        suggestTerm={ () => {} }
+      />
+    );
+
+    wrapper.find('.clear-icon').exists().should.be.false();
+  });
+
+  it('should render "clear text" button when query is not empty', () => {
+    const wrapper = shallow(
+      <SearchPage
+        query={ 'a' }
+        inputChanged={ () => {} }
+        suggestTerm={ () => {} }
+      />
+    );
+
+    wrapper.find('.clear-icon').exists().should.be.true();
+  });
+
+  it('should empty search query when user taps "clear text" button', () => {
+    const spyInputChanged = spy();
+    const spyFocus = spy();
+
+    const wrapper = shallow(
+      <SearchPage
+        query={ 'delete me' }
+        inputChanged={ spyInputChanged }
+        suggestTerm={ () => {} }
+      />
+    );
+    wrapper.instance().inputElement = { focus: spyFocus };
+
+    wrapper.find('.clear-icon').simulate('click');
+
+    spyInputChanged.calledWith('').should.be.true();
+    spyFocus.calledWith().should.be.true();
   });
 });

@@ -78,3 +78,7 @@ export function instantScrollToTop() {
   document.body.scrollTop = 0; // Chrome
   document.documentElement.scrollTop = 0; // Firefox
 }
+
+export function getCurrentScrollPosition() {
+  return document.body.scrollTop || document.documentElement.scrollTop;
+}

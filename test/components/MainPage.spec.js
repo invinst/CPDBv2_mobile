@@ -19,6 +19,18 @@ describe('MainPage component', function () {
     wrapper.find(MainPageContentContainer).should.have.length(1);
   });
 
+  it('should render bottom padding element if at root', function () {
+    const location = { pathname: '/' };
+    let wrapper = shallow(<MainPage location={ location }/>);
+    wrapper.find('.bottom-padding').exists().should.be.true();
+  });
+
+  it('should not render bottom padding element if not at root', function () {
+    const location = { pathname: '/search/' };
+    let wrapper = shallow(<MainPage location={ location }/>);
+    wrapper.find('.bottom-padding').exists().should.be.false();
+  });
+
   it('should fetch suggested search items when mounted', function () {
     const spyFetch = spy();
     const wrapper = shallow(
