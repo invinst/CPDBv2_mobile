@@ -4,10 +4,18 @@ import { stub } from 'sinon';
 import constants from 'constants';
 import * as NavigationUtil from 'utils/NavigationUtil';
 
-describe('scrollPositionMiddleware', () => {
-  it('should do nothing if action is not ROUTE_CHANGED', () => {
-    const stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
-    const stubInstantScrollTo = stub(NavigationUtil, 'instantScrollTo');
+describe('scrollPositionMiddleware', function () {
+  beforeEach(function () {
+    this.stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
+    this.stubInstantScrollTo = stub(NavigationUtil, 'instantScrollTo');
+  });
+
+  afterEach(function () {
+    this.stubInstantScrollTo.restore();
+    this.stubInstantScrollToTop.restore();
+  });
+
+  it('should do nothing if action is not ROUTE_CHANGED', function () {
 
     const store = { foo: 'bar' };
     const next = stub();
@@ -18,44 +26,29 @@ describe('scrollPositionMiddleware', () => {
 
     next.calledWith(action).should.be.true();
     result.should.be.eql(store);
-    stubInstantScrollTo.called.should.be.false();
-    stubInstantScrollToTop.called.should.be.false();
-
-    stubInstantScrollTo.restore();
-    stubInstantScrollToTop.restore();
+    this.stubInstantScrollTo.called.should.be.false();
+    this.stubInstantScrollToTop.called.should.be.false();
   });
 
-  it('should scroll down to hide "cpdp" link if route changed to search/', () => {
-    const stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
-    const stubInstantScrollTo = stub(NavigationUtil, 'instantScrollTo');
-
+  it('should scroll down to hide "cpdp" link if route changed to search/', function () {
     const store = {};
     const next = stub();
     const action = { type: 'ROUTE_CHANGED', payload: 'search/' };
 
     scrollPositionMiddleware(store)(next)(action);
 
-    stubInstantScrollTo.calledWith(constants.TOP_MARGIN).should.be.true();
-    stubInstantScrollToTop.called.should.be.false();
-
-    stubInstantScrollTo.restore();
-    stubInstantScrollToTop.restore();
+    this.stubInstantScrollTo.calledWith(constants.TOP_MARGIN - 1).should.be.true();
+    this.stubInstantScrollToTop.called.should.be.false();
   });
 
-  it('should scroll to top if route changed to anything other than search/', () => {
-    const stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
-    const stubInstantScrollTo = stub(NavigationUtil, 'instantScrollTo');
-
+  it('should scroll to top if route changed to anything other than search/', function () {
     const store = {};
     const next = stub();
     const action = { type: 'ROUTE_CHANGED', payload: 'not-search/' };
 
     scrollPositionMiddleware(store)(next)(action);
 
-    stubInstantScrollTo.called.should.be.false();
-    stubInstantScrollToTop.called.should.be.true();
-
-    stubInstantScrollTo.restore();
-    stubInstantScrollToTop.restore();
+    this.stubInstantScrollTo.called.should.be.false();
+    this.stubInstantScrollToTop.called.should.be.true();
   });
 });

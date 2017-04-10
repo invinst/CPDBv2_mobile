@@ -12,7 +12,10 @@ const scrollPositionMiddleware = store => next => action => {
   if (action.type === ROUTE_CHANGED) {
     const newPathname = action.payload;
     if (newPathname === 'search/') {
-      instantScrollTo(constants.TOP_MARGIN);
+      // Must offset by 1px so that it doesn't activate sticky header on mount,
+      // otherwise there'll be a weird bug:
+      // https://www.pivotaltracker.com/story/show/142282079/comments/167707307
+      instantScrollTo(constants.TOP_MARGIN - 1);
     } else {
       instantScrollToTop();
     }
