@@ -7,7 +7,7 @@ import * as NavigationUtil from 'utils/NavigationUtil';
 import SearchCategory from 'components/SearchPage/SearchCategory';
 import constants from 'constants';
 
-const fixedHeaderHeight = constants.SHEET_HEADER_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT;
+const fixedHeaderHeight = constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT;
 
 
 describe('<SearchCategory />', () => {

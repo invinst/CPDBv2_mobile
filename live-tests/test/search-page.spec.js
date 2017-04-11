@@ -70,8 +70,8 @@ describe('SearchPageTest', function () {
     client.click('a[href="/search/"]');
     client.waitForElementVisible('.sheet', 4000);
 
-    client.expect.element('.sheet-header').to.be.visible;
-    client.expect.element('.sheet-header').to.have.attribute('placeholder', 'Search');
+    client.expect.element('.query-input').to.be.visible;
+    client.expect.element('.query-input').to.have.attribute('placeholder', 'Search');
 
     client.expect.element('#search-category-suggested').text.to.equal('Suggested');
 
@@ -142,6 +142,26 @@ describe('SearchPageTest', function () {
     client.expect
       .element('a[href="/officer/9876/"]')
       .text.to.contain('John Wang');
+
+    client.end();
+  });
+
+  it('should empty query when clear icon is tapped', function (client) {
+
+    api.mock('GET', '/search-mobile/', 200, mockSuggestionResponse);
+    api.mock('GET', '/search-mobile/wh/', 200, mockSearchQueryResponse);
+
+    client
+      .url(client.globals.clientUrl + '/search/')
+      .waitForElementVisible('.sheet', 4000);
+
+    client
+      .setValue('.query-input', 'wh')
+      .waitForElementVisible('#search-category-officers', 4000);
+
+    client.expect.element('.query-input').value.to.equal('wh');
+    client.click('.clear-icon');
+    client.expect.element('.query-input').value.to.equal('');
 
     client.end();
   });

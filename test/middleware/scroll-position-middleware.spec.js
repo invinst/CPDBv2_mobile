@@ -1,7 +1,6 @@
 import should from 'should';
 import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
 import { stub } from 'sinon';
-import constants from 'constants';
 import * as NavigationUtil from 'utils/NavigationUtil';
 
 describe('scrollPositionMiddleware', function () {
@@ -30,21 +29,10 @@ describe('scrollPositionMiddleware', function () {
     this.stubInstantScrollToTop.called.should.be.false();
   });
 
-  it('should scroll down to hide "cpdp" link if route changed to search/', function () {
+  it('should scroll to top if route changed', function () {
     const store = {};
     const next = stub();
     const action = { type: 'ROUTE_CHANGED', payload: 'search/' };
-
-    scrollPositionMiddleware(store)(next)(action);
-
-    this.stubInstantScrollTo.calledWith(constants.TOP_MARGIN - 1).should.be.true();
-    this.stubInstantScrollToTop.called.should.be.false();
-  });
-
-  it('should scroll to top if route changed to anything other than search/', function () {
-    const store = {};
-    const next = stub();
-    const action = { type: 'ROUTE_CHANGED', payload: 'not-search/' };
 
     scrollPositionMiddleware(store)(next)(action);
 

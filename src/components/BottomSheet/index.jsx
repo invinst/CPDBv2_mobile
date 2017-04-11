@@ -34,8 +34,12 @@ A concrete example:
 
 export default class BottomSheet extends Component {
 
+  isSearch() {
+    return this.props.location.pathname === 'search/';
+  }
+
   renderBackground() {
-    if (!hasChildren(this)) {
+    if (!hasChildren(this) || this.isSearch()) {
       return null;
     }
     if (hasGrandchildren(this)) {
@@ -58,9 +62,10 @@ export default class BottomSheet extends Component {
   }
 
   renderOverlay() {
-    if (!hasChildren(this)) {
+    if (!hasChildren(this) || this.isSearch()) {
       return null;
     }
+
     const { router } = this.props;
     return <div className='overlay' onClick={ goUp.bind(this, router, window.location.pathname) }></div>;
   }
@@ -104,7 +109,7 @@ export default class BottomSheet extends Component {
   }
 
   renderSheetBottomPadding() {
-    if (this.props.location.pathname === 'search/') {
+    if (this.isSearch()) {
       return null;
     }
 

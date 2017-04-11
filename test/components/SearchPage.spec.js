@@ -3,7 +3,6 @@ import React from 'react';
 
 import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
-import { StickyContainer } from 'react-sticky';
 import ReactHeight from 'react-height';
 
 import * as NavigationUtil from 'utils/NavigationUtil';
@@ -14,9 +13,7 @@ import constants from 'constants';
 describe('<SearchPage />', function () {
   it('should be renderable', () => {
     const wrapper = mount(
-      <StickyContainer>
-        <SearchPage query={ '' } />
-      </StickyContainer>
+      <SearchPage query={ '' } />
     );
     wrapper.should.be.ok();
   });
@@ -138,38 +135,6 @@ describe('<SearchPage />', function () {
     });
   });
 
-  describe('blurSearchInput', () => {
-    it('should blur the sticky input element', () => {
-      const wrapper = shallow(<SearchPage />);
-      const instance = wrapper.instance();
-      const spyBlur = spy();
-
-      instance.searchInput = {
-        inputElement: {
-          blur: spyBlur
-        }
-      };
-      instance.blurSearchInput(true);
-
-      spyBlur.calledOnce.should.be.true();
-    });
-
-    it('should not blur the non-sticky input element', () => {
-      const wrapper = shallow(<SearchPage />);
-      const instance = wrapper.instance();
-      const spyBlur = spy();
-
-      instance.searchInput = {
-        inputElement: {
-          blur: spyBlur
-        }
-      };
-      instance.blurSearchInput(false);
-
-      spyBlur.called.should.be.false();
-    });
-  });
-
   it('should focus the input element when mounted', () => {
     const wrapper = shallow(<SearchPage />);
     const instance = wrapper.instance();
@@ -244,7 +209,7 @@ describe('<SearchPage />', function () {
 
       const result = instance.calculateDynamicBottomPaddingStyle();
       const dynamicBottomPaddingOffset = (
-        constants.SHEET_HEADER_HEIGHT +
+        constants.QUERY_INPUT_HEIGHT +
         constants.SEARCH_CATEGORY_LINKS_HEIGHT
       );
       const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
@@ -263,7 +228,7 @@ describe('<SearchPage />', function () {
 
       const result = instance.calculateDynamicBottomPaddingStyle();
       const dynamicBottomPaddingOffset = (
-        constants.SHEET_HEADER_HEIGHT +
+        constants.QUERY_INPUT_HEIGHT +
         constants.SEARCH_CATEGORY_LINKS_HEIGHT +
         1
       );

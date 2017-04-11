@@ -95,8 +95,21 @@ describe('<BottomSheet />', () => {
     });
   });
 
+  describe('when at search/ path', () => {
+    it('should not render background or overlay', () => {
+      const wrapper = shallow(
+        <BottomSheet location={ { pathname: 'search/' } }>
+          <hr />
+        </BottomSheet>
+      );
+      wrapper.find('.background').exists().should.be.false();
+      wrapper.find('.overlay').exists().should.be.false();
+      wrapper.find('.sheet').exists().should.be.true();
+    });
+  });
+
   describe('calculateSheetStyle', () => {
-    it('should returns correct values when path name is not \'search\'', () => {
+    it('should return correct values when path name is not \'search\'', () => {
       const location = {
         pathname: 'somepath'
       };
@@ -112,7 +125,7 @@ describe('<BottomSheet />', () => {
       });
     });
 
-    it('should returns correct values when path name is \'search\'', () => {
+    it('should return correct values when path name is \'search\'', () => {
       const location = {
         pathname: 'search/'
       };
@@ -130,7 +143,7 @@ describe('<BottomSheet />', () => {
   });
 
   describe('renderSheetBottomPadding', () => {
-    it('should returns null when path name is \'search\'', () => {
+    it('should return null when path name is \'search\'', () => {
       const location = {
         pathname: 'search/'
       };
@@ -142,19 +155,19 @@ describe('<BottomSheet />', () => {
 
       should(result).null();
     });
-  });
 
-  it('should returns correct values when path name is not \'search\'', () => {
-    const location = {
-      pathname: 'somepath'
-    };
-    const wrapper = shallow(
-      <BottomSheet location={ location }/>
-    );
-    const instance = wrapper.instance();
-    const result = instance.renderSheetBottomPadding();
+    it('should return correct values when path name is not \'search\'', () => {
+      const location = {
+        pathname: 'somepath'
+      };
+      const wrapper = shallow(
+        <BottomSheet location={ location }/>
+      );
+      const instance = wrapper.instance();
+      const result = instance.renderSheetBottomPadding();
 
-    result.should.be.eql(<div className='sheet-bottom-padding'></div>);
+      result.should.be.eql(<div className='sheet-bottom-padding'></div>);
+    });
   });
 
 });

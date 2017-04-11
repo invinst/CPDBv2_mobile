@@ -1,29 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import style from 'styles/SearchPage.sass';
-import { Sticky } from 'react-sticky';
 import SearchCategory from 'components/SearchPage/SearchCategory';
 import SearchNavbar from 'components/SearchPage/SearchNavbar';
 import ClearableInput from 'components/SearchPage/ClearableInput';
-import { scrollToElement } from 'utils/NavigationUtil';
+import { scrollToElement, goUp } from 'utils/NavigationUtil';
 import constants from 'constants';
 import ReactHeight from 'react-height';
 
 export default class SearchPage extends Component {
   componentDidMount() {
     this.searchInput.inputElement.focus();
-  }
-
-  blurSearchInput(isSticky) {
-    /*
-      iOS Safari has a bug: if a focused <input> tag has `position: fixed`, it
-      will jump around (in our case: disappear from viewport). Because sticky
-      header relies on `position: fixed` to work, we'll have to manually
-      unfocus our search input tag whenever it becomes sticky to avoid this
-      bug.
-    */
-    if (isSticky) {
-      this.searchInput.inputElement.blur();
-    }
   }
 
   onInputChange(event) {
@@ -96,7 +82,7 @@ export default class SearchPage extends Component {
   calculateDynamicBottomPaddingStyle() {
     const lastCategoryHeight = this.lastCategoryHeight || 0;
     const dynamicBottomPaddingOffset = (
-      constants.SHEET_HEADER_HEIGHT +
+      constants.QUERY_INPUT_HEIGHT +
       constants.SEARCH_CATEGORY_LINKS_HEIGHT +
       lastCategoryHeight
     );
@@ -105,7 +91,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query, activeCategory } = this.props;
+    const { query, activeCategory, router } = this.props;
     let categories;
 
     if (!this.isLongEnoughQuery(query)) {
@@ -127,28 +113,38 @@ export default class SearchPage extends Component {
       categories = this.getCategoriesWithSuggestions();
     }
 
+
+
     return (
       <div className={ style.searchPage }>
-        <Sticky
+        <div
+          className={ style.sticky }
           id='search-page-header'
-          onStickyStateChange={ (isSticky) => { this.blurSearchInput(isSticky); } }
           >
 
-          <ClearableInput
-            ref={ (instance) => { this.searchInput = instance; } }
-            className='sheet-header header query-input'
-            value={ query }
-            placeholder='Search'
-            onChange={ (e) => { this.onInputChange(e); } }
-            onClear={ () => { this.props.inputChanged(''); } }
-          />
+          <div className='input-container'>
+            <ClearableInput
+              ref={ (instance) => { this.searchInput = instance; } }
+              className='query-input'
+              value={ this.props.query }
+              placeholder='Search'
+              onChange={ (e) => { this.onInputChange(e); } }
+              onClear={ () => { this.props.inputChanged(''); } }
+            />
+
+            <button
+              className='bt-done'
+              onClick={ () => { goUp(router, window.location.pathname); } }>
+              Done
+            </button>
+          </div>
 
           <SearchNavbar
             categories={ categories }
             activeCategory={ activeCategory }
             scrollToCategory={ this.scrollToCategory }
           />
-        </Sticky>
+        </div>
 
         <div className='category-details-container'>
           { this.renderCategories(categories) }
@@ -170,7 +166,8 @@ SearchPage.propTypes = {
   categories: PropTypes.array,
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
-  updateActiveCategory: PropTypes.func
+  updateActiveCategory: PropTypes.func,
+  router: PropTypes.object
 };
 
 SearchPage.defaultProps = {
