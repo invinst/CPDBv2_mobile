@@ -2,7 +2,7 @@ import should from 'should';
 import React from 'react';
 
 import { shallow, mount } from 'enzyme';
-import { stub, spy } from 'sinon';
+import { spy } from 'sinon';
 
 import SearchNavbar from 'components/SearchPage/SearchNavbar';
 
@@ -30,8 +30,8 @@ describe('<SearchNavbar />', function () {
       />
     );
 
-    wrapper.find('button').at(0).hasClass('active').should.be.true()
-    wrapper.find('button').at(1).hasClass('active').should.be.false()
+    wrapper.find('button').at(0).hasClass('active').should.be.true();
+    wrapper.find('button').at(1).hasClass('active').should.be.false();
   });
 
   it('should render all the categories with correct names', () => {
@@ -68,19 +68,25 @@ describe('<SearchNavbar />', function () {
       }
     ];
     const spyScrollToCategory = spy();
+    const spyUpdateActiveCategory = spy();
 
     const wrapper = mount(
       <SearchNavbar
         categories={ categories }
         scrollToCategory={ spyScrollToCategory }
+        updateActiveCategory={ spyUpdateActiveCategory }
       />
     );
 
     wrapper.find('button').at(0).simulate('click');
     spyScrollToCategory.calledWith('officers').should.be.true();
-    spyScrollToCategory.reset()
+    spyUpdateActiveCategory.calledWith('officers').should.be.true();
+
+    spyScrollToCategory.reset();
+    spyUpdateActiveCategory.reset();
 
     wrapper.find('button').at(1).simulate('click');
     spyScrollToCategory.calledWith('faqs').should.be.true();
+    spyUpdateActiveCategory.calledWith('faqs').should.be.true();
   });
 });

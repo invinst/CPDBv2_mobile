@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 export default class SearchNavbar extends Component {
   render() {
-    let { categories, activeCategory, scrollToCategory } = this.props;
+    let { categories, activeCategory, scrollToCategory, updateActiveCategory } = this.props;
 
     // Make first category active by default
     if (!activeCategory && categories.length > 0) {
@@ -19,7 +19,7 @@ export default class SearchNavbar extends Component {
 
         return (
           <button key={ index }
-            onClick={ () => { scrollToCategory(category.id); } }
+            onClick={ () => { scrollToCategory(category.id); updateActiveCategory(category.id); } }
             className={ classNames }>
             { category.name }
           </button>
@@ -38,5 +38,6 @@ export default class SearchNavbar extends Component {
 SearchNavbar.propTypes = {
   categories: PropTypes.array,
   activeCategory: PropTypes.string,
-  scrollToCategory: PropTypes.func
+  scrollToCategory: PropTypes.func,
+  updateActiveCategory: PropTypes.func
 };

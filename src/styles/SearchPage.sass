@@ -11,10 +11,10 @@
     box-shadow: 0 1px 2px #e4e4e4
 
   .category-details-container
-    margin-top: $query-input-height + 2px + $search-category-links-height
+    padding-top: $query-input-height + $search-category-links-height
 
   .input-container
-    border-bottom: 1px solid $alto
+    border-bottom: $divider-weight solid $alto
     border-radius: 0
     background-color: white
     font-size: 14px
@@ -31,7 +31,7 @@
         width: 100%
         border: 0
         -webkit-appearance: none // remove iphone input inner shadow
-        height: $query-input-height
+        height: $query-input-height - $divider-weight
         font-weight: 600
         font: inherit
         color: $thunder

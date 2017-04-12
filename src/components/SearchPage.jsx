@@ -143,6 +143,7 @@ export default class SearchPage extends Component {
             categories={ categories }
             activeCategory={ activeCategory }
             scrollToCategory={ this.scrollToCategory }
+            updateActiveCategory={ this.props.updateActiveCategory }
           />
         </div>
 
