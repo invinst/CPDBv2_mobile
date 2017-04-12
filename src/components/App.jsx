@@ -6,7 +6,6 @@ import AppHistory from 'utils/History';
 import constants from 'constants';
 
 import MainPageContainer from 'containers/MainPageContainer';
-import ComplaintPageContainer from 'containers/ComplaintPageContainer';
 import ReportingPageContainer from 'containers/ReportingPageContainer';
 import ReportingDetailContainer from 'containers/ReportingPage/ReportingDetailContainer';
 import FAQPageContainer from 'containers/FAQPageContainer';
@@ -27,7 +26,6 @@ const App = React.createClass({
   render() {
     return (
       <Router history={ AppHistory }>
-        <Route path='/complaint/:crid/:slug/:categoryHashId' component={ ComplaintPageContainer } />
         <Route path='/s/:query' component={ MainPageContainer } />
         <Route path='/q/:query' component={ MainPageContainer } />
         <Route path='/' component={ MainPageContainer }>
