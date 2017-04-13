@@ -28,7 +28,7 @@ You should now have a backend server running at localhost:8000 .
 
 Unlike backend, we run the frontend devserver directly from host machine.
 
-- Install latest `yarn`
+- Install `npm` v6 and latest `yarn`
 - Run `yarn install`
 - Run `yarn run start` to start devserver at localhost:9967
 

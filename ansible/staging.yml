@@ -4,5 +4,5 @@
     - env_vars/staging.yml
   roles:
     - base
-    - ansible-nodejs4x
+    - ansible-nodejs
     - web
