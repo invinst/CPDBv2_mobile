@@ -14,10 +14,11 @@
   become: yes
   become_user: root
 
-- name: Add Nodesource repository
+# We previously added node v4 repo so now we'll have to clean it up
+- name: Remove outdated Nodesource repository (v4)
   apt_repository: >
     repo='{{ item }} {{ ansible_distribution_release }} main'
-    state=present
+    state=absent
     update_cache=yes
   with_items:
     - 'deb https://deb.nodesource.com/node_4.x'
@@ -25,9 +26,18 @@
   become: yes
   become_user: root
 
-- name: Install Node.js
-  apt: name={{ item }} update_cache=yes state=present
+- name: Add Nodesource repository for v6
+  apt_repository: >
+    repo='{{ item }} {{ ansible_distribution_release }} main'
+    state=present
+    update_cache=yes
   with_items:
-    - nodejs
+    - 'deb https://deb.nodesource.com/node_6.x'
+    - 'deb-src https://deb.nodesource.com/node_6.x'
+  become: yes
+  become_user: root
+
+- name: Install Node.js
+  apt: name=nodejs update_cache=yes state=latest
   become: yes
   become_user: root
