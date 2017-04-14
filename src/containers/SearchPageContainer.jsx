@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import SearchPage from 'components/SearchPage';
 import {
@@ -37,4 +38,4 @@ const mapDispatchToProps = {
   updateActiveCategory
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchPage));

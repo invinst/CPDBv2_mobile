@@ -3,66 +3,57 @@ import React from 'react';
 
 import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
-import { StickyContainer } from 'react-sticky';
+import ReactHeight from 'react-height';
 
 import * as NavigationUtil from 'utils/NavigationUtil';
 import SearchPage from 'components/SearchPage';
 import SearchCategory from 'components/SearchPage/SearchCategory';
 import constants from 'constants';
 
-describe('<SearchPage />', () => {
+describe('<SearchPage />', function () {
   it('should be renderable', () => {
     const wrapper = mount(
-      <StickyContainer>
-        <SearchPage query={ '' } />
-      </StickyContainer>
+      <SearchPage query={ '' } />
     );
     wrapper.should.be.ok();
   });
 
   it('should render categories returned by getCategoriesWithSuggestions when it has query', () => {
-    stub(SearchPage.prototype, 'getCategoriesWithSuggestions').callsFake( () => [
+    const dummyCategories = [
       {
         name: 'Any',
         id: 'any',
         path: 'ANY'
       }
-    ]);
+    ];
+    stub(SearchPage.prototype, 'getCategoriesWithSuggestions').callsFake( () => dummyCategories);
+
     const wrapper = shallow(
       <SearchPage
         query={ 'ab' }
         suggestAllFromCategory={ () => {} }
         any={ { isShowingAll: false } }
         inputChanged={ () => {} }
+        activeCategory='any'
        />
     );
 
-    wrapper.find('.categories').text().should.eql('Any');
-    wrapper.find(SearchCategory).should.have.length(1);
+    const navbar = wrapper.find('SearchNavbar');
+    navbar.prop('categories').should.equal(dummyCategories);
+    navbar.prop('activeCategory').should.be.eql('any');
+    navbar.prop('scrollToCategory').should.equal(wrapper.instance().scrollToCategory);
 
     SearchPage.prototype.getCategoriesWithSuggestions.restore();
   });
 
   describe('getCategoriesWithSuggestions', () => {
     it('should return defined categories with data from props', () => {
-      constants.SEARCH_CATEGORIES = [
-        {
-          id: 'defined_1',
-          name: 'Define 1',
-          path: 'DEFINED_1'
-        },
-        {
-          id: 'defined_2',
-          name: 'Define 2',
-          path: 'DEFINED_2'
-        }
-      ];
       const wrapper = shallow(
         <SearchPage
           query={ 'ab' }
           suggestAllFromCategory={ () => {} }
-          defined_1={ { data: [1] } }
-          defined_2={ { data: [] } }
+          officers={ { data: [1] } }
+          faqs={ { data: [] } }
           undefined={ { data: [1] } }
           inputChanged={ () => {} }
          />
@@ -71,9 +62,9 @@ describe('<SearchPage />', () => {
 
       instance.getCategoriesWithSuggestions().should.eql([
         {
-          id: 'defined_1',
-          name: 'Define 1',
-          path: 'DEFINED_1'
+          id: 'officers',
+          name: 'Officers',
+          path: 'OFFICER'
         }
       ]);
     });
@@ -85,8 +76,7 @@ describe('<SearchPage />', () => {
       const wrapper = shallow(<SearchPage query={ '' } />);
       wrapper.instance().scrollToCategory('an-id');
 
-      stubScrollToElement.calledWith('#search-category-an-id',
-                                     '#search-page-header').should.be.true();
+      stubScrollToElement.calledWith('#search-category-an-id', '#search-page-header').should.be.true();
       stubScrollToElement.restore();
     });
   });
@@ -145,88 +135,143 @@ describe('<SearchPage />', () => {
     });
   });
 
-  describe('blurSearchInput', () => {
-    it('should blur the sticky input element', () => {
-      const wrapper = shallow(<SearchPage />);
-      const instance = wrapper.instance();
-      const spyBlur = spy();
-
-      instance.inputElement = {
-        blur: spyBlur
-      };
-      instance.blurSearchInput(true);
-
-      spyBlur.calledOnce.should.be.true();
-    });
-
-    it('should not blur the non-sticky input element', () => {
-      const wrapper = shallow(<SearchPage />);
-      const instance = wrapper.instance();
-      const spyBlur = spy();
-
-      instance.inputElement = {
-        blur: spyBlur
-      };
-      instance.blurSearchInput(false);
-
-      spyBlur.called.should.be.false();
-    });
-  });
-
   it('should focus the input element when mounted', () => {
     const wrapper = shallow(<SearchPage />);
     const instance = wrapper.instance();
     const spyFocus = spy();
 
 
-    instance.inputElement = {
-      focus: spyFocus
+    instance.searchInput = {
+      inputElement: {
+        focus: spyFocus
+      }
     };
     instance.componentDidMount();
 
     spyFocus.calledOnce.should.be.true();
   });
 
-  it('should not render "clear text" button when query is empty', () => {
-    const wrapper = shallow(
-      <SearchPage
-        query={ '' }
-        inputChanged={ () => {} }
-        suggestTerm={ () => {} }
-      />
-    );
+  describe('<ClearableInput>', function () {
+    beforeEach(function () {
+      this.stubOnInputChange = stub(SearchPage.prototype, 'onInputChange');
+    });
 
-    wrapper.find('.clear-icon').exists().should.be.false();
+    afterEach(function () {
+      this.stubOnInputChange.restore();
+    });
+
+    it('should render ClearableInput component', function () {
+      const spyInputChanged = spy();
+
+      const wrapper = shallow(
+        <SearchPage
+          query={ 'meh' }
+          inputChanged={ spyInputChanged }
+        />
+      );
+
+      const clearableInput = wrapper.find('ClearableInput');
+      clearableInput.prop('value').should.be.eql('meh');
+      clearableInput.prop('placeholder').should.be.eql('Search');
+
+      clearableInput.prop('onChange')();
+      this.stubOnInputChange.calledOnce.should.be.true();
+
+      clearableInput.prop('onClear')();
+      spyInputChanged.calledWith('').should.be.true();
+    });
   });
 
-  it('should render "clear text" button when query is not empty', () => {
-    const wrapper = shallow(
-      <SearchPage
-        query={ 'a' }
-        inputChanged={ () => {} }
-        suggestTerm={ () => {} }
-      />
-    );
+  describe('updateLastCategoryHeight', () => {
+    it('should run correctly', () => {
+      const wrapper = shallow(
+        <SearchPage />
+      );
+      const instance = wrapper.instance();
+      const spyForceUpdate = spy(instance, 'forceUpdate');
 
-    wrapper.find('.clear-icon').exists().should.be.true();
+      instance.updateLastCategoryHeight(1);
+
+      instance.lastCategoryHeight.should.eql(1);
+      spyForceUpdate.called.should.be.true();
+
+      spyForceUpdate.restore();
+    });
   });
 
-  it('should empty search query when user taps "clear text" button', () => {
-    const spyInputChanged = spy();
-    const spyFocus = spy();
+  describe('calculateDynamicBottomPaddingStyle', () => {
+    it('should return correct height when there is no last category', () => {
+      const wrapper = shallow(
+        <SearchPage />
+      );
+      const instance = wrapper.instance();
+      instance.lastCategoryHeight = null;
 
-    const wrapper = shallow(
-      <SearchPage
-        query={ 'delete me' }
-        inputChanged={ spyInputChanged }
-        suggestTerm={ () => {} }
-      />
-    );
-    wrapper.instance().inputElement = { focus: spyFocus };
+      const result = instance.calculateDynamicBottomPaddingStyle();
+      const dynamicBottomPaddingOffset = (
+        constants.QUERY_INPUT_HEIGHT +
+        constants.SEARCH_CATEGORY_LINKS_HEIGHT
+      );
+      const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
 
-    wrapper.find('.clear-icon').simulate('click');
+      result.should.eql({
+        height
+      });
+    });
 
-    spyInputChanged.calledWith('').should.be.true();
-    spyFocus.calledWith().should.be.true();
+    it('should return correct height when there is category', () => {
+      const wrapper = shallow(
+        <SearchPage />
+      );
+      const instance = wrapper.instance();
+      instance.lastCategoryHeight = 1;
+
+      const result = instance.calculateDynamicBottomPaddingStyle();
+      const dynamicBottomPaddingOffset = (
+        constants.QUERY_INPUT_HEIGHT +
+        constants.SEARCH_CATEGORY_LINKS_HEIGHT +
+        1
+      );
+      const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
+
+      result.should.eql({
+        height
+      });
+    });
+  });
+
+  describe('renderCategories()', () => {
+    it('should render SearchCategory components', () => {
+      const stubBoundCallback = stub(SearchPage.prototype.updateLastCategoryHeight, 'bind');
+      stubBoundCallback.returns(SearchPage.prototype.updateLastCategoryHeight);
+
+      const officersProp = {
+        data: ['data']
+      };
+      const reportsProp = {
+        data: ['data']
+      };
+
+      const wrapper = shallow(
+        <SearchPage
+          saveToRecent={ () => {} }
+          query='qa'
+          officers={ officersProp }
+          reports={ reportsProp }
+          suggestAllFromCategory={ () => {} }/>
+      );
+
+      const categoryDetails = wrapper.find('.category-details-container').children();
+
+      categoryDetails.should.have.length(2);
+      categoryDetails.at(0).childAt(0).type().should.be.eql(SearchCategory);
+
+      // Last component should be wrapped inside ReactHeight:
+      const lastCategory = categoryDetails.at(1);
+      lastCategory.type().should.be.eql(ReactHeight);
+      lastCategory.prop('onHeightReady').should.be.eql(SearchPage.prototype.updateLastCategoryHeight);
+
+      stubBoundCallback.restore();
+    });
   });
 });

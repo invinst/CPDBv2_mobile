@@ -13,8 +13,12 @@ $padding: $header-logo-padding-x
 
   .report-body
     padding: $padding
+    padding-right: 0
     font-size: 20px
     font-weight: 300
+
+    p
+      padding-right: $horizontal-padding
 
   .metadata
     width: 100%
@@ -23,7 +27,8 @@ $padding: $header-logo-padding-x
     font-weight: 400
 
     td
-      padding: 11px 0
+      padding: $horizontal-padding
+      padding-left: 0
 
       &:first-child
         font-weight: 300
@@ -34,7 +39,7 @@ $padding: $header-logo-padding-x
 
 
     tr
-      border-bottom: 1px solid $alto-solid
+      border-bottom: $divider-weight solid $alto-solid
 
       &:first-child
-        border-top: 1px solid $alto-solid
+        border-top: $divider-weight solid $alto-solid

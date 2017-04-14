@@ -1,29 +1,15 @@
 import React, { Component, PropTypes } from 'react';
-import cx from 'classnames';
 import style from 'styles/SearchPage.sass';
-import { Sticky } from 'react-sticky';
 import SearchCategory from 'components/SearchPage/SearchCategory';
-import { scrollToElement } from 'utils/NavigationUtil';
+import SearchNavbar from 'components/SearchPage/SearchNavbar';
+import ClearableInput from 'components/SearchPage/ClearableInput';
+import { scrollToElement, goUp } from 'utils/NavigationUtil';
 import constants from 'constants';
-import clearIcon from 'img/ic-clear.svg';
+import ReactHeight from 'react-height';
 
 export default class SearchPage extends Component {
   componentDidMount() {
-    this.inputElement.focus();
-  }
-
-  blurSearchInput(isSticky) {
-    /*
-      iOS Safari has a bug: if a focused <input> tag has `position: fixed`, it
-      will jump around (in our case: disappear from viewport). Because sticky
-      header relies on `position: fixed` to work, we'll have to manually
-      unfocus our search input tag whenever it becomes sticky to avoid this
-      bug.
-    */
-    if (isSticky) {
-      this.inputElement.blur();
-    }
-
+    this.searchInput.inputElement.focus();
   }
 
   onInputChange(event) {
@@ -53,91 +39,20 @@ export default class SearchPage extends Component {
     });
   }
 
-  renderCategoryLinks(categories) {
-    let { activeCategory } = this.props;
-
-    // Make first category active by default
-    if (!activeCategory && categories.length > 0) {
-      activeCategory = categories[0].id;
-    }
-
-    const links = categories.map(
-      (category, index) => {
-        const classNames = cx(
-          'category-link',
-          { 'active': activeCategory === category.id }
-        );
-
-        return (
-          <button key={ index }
-            onClick={ this.scrollToCategory.bind(this, category.id) }
-            className={ classNames }
-            >
-            { category.name }
-          </button>
-        );
-      }
-    );
-
-    return (
-      <div className='categories'>
-        { links }
-      </div>
-    );
-  }
-
-  clearQuery() {
-    this.props.inputChanged('');
-    this.inputElement.focus();
-  }
-
-  renderClearIcon() {
-    const { query } = this.props;
-
-    if (!query) {
-      return null;
-    }
-
-    return (
-      <img
-        className='clear-icon'
-        src={ clearIcon }
-        onClick={ this.clearQuery.bind(this) }
-        />
-    );
-  }
-
-  assignLastCategoryRef(lastCategory) {
-    if (lastCategory) {
-      this.lastCategory = lastCategory.domNode;
-    }
+  updateLastCategoryHeight(newHeight) {
+    this.lastCategoryHeight = newHeight;
+    this.forceUpdate();
   }
 
   renderCategories(categories) {
     const { suggestAllFromCategory, query } = this.props;
 
+    const lastIndex = categories.length - 1;
+
     return categories.map((cat, index) => {
-      if (index === categories.length - 1) {
 
-        return (
-          <SearchCategory
-            ref={ this.assignLastCategoryRef.bind(this) }
-            key={ cat.id }
-            categoryId={ cat.id }
-            requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
-            title={ cat.name }
-            isShowingAll={ this.props[cat.id].isShowingAll }
-            items={ this.props[cat.id].data }
-            saveToRecent={ this.props.saveToRecent }
-            updateActiveCategory={ this.props.updateActiveCategory }
-            activeCategory={ this.props.activeCategory }
-            />
-          );
-      }
-
-      return (
+      const searchCategory = (
         <SearchCategory
-          key={ cat.id }
           categoryId={ cat.id }
           requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
           title={ cat.name }
@@ -148,25 +63,39 @@ export default class SearchPage extends Component {
           activeCategory={ this.props.activeCategory }
           />
       );
+
+      if (index === lastIndex) {
+        // Track last category's DOM element height to use in dynamic bottom padding height calculation
+        return (
+          <ReactHeight key={ cat.id } onHeightReady={ this.updateLastCategoryHeight.bind(this) }>
+            { searchCategory }
+          </ReactHeight>
+        );
+
+      } else {
+        return <div key={ cat.id }>{ searchCategory }</div>;
+      }
+
     });
   }
 
-  calculateBottomPaddingStyle() {
-    let lastCategoryHeight = 103;
-    if (this.lastCategory) {
-      lastCategoryHeight = this.lastCategory.clientHeight;
-    }
-    const bottomPaddingOffset = constants.SHEET_HEADER_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + lastCategoryHeight;
-    const height = `calc(100vh - ${bottomPaddingOffset}px)`;
+  calculateDynamicBottomPaddingStyle() {
+    const lastCategoryHeight = this.lastCategoryHeight || 0;
+    const dynamicBottomPaddingOffset = (
+      constants.QUERY_INPUT_HEIGHT +
+      constants.SEARCH_CATEGORY_LINKS_HEIGHT +
+      lastCategoryHeight
+    );
+    const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
     return { height };
   }
 
   render() {
-    const { query } = this.props;
-    let categoryLinks, categoryDetails;
+    const { query, activeCategory, router } = this.props;
+    let categories;
 
     if (!this.isLongEnoughQuery(query)) {
-      const categories = [
+      categories = [
         {
           name: 'Recent',
           id: 'recent'
@@ -179,40 +108,50 @@ export default class SearchPage extends Component {
         const suggestions = this.props[cat.id];
         return !!suggestions && suggestions.data.length > 0;
       });
-      categoryLinks = this.renderCategoryLinks(categories);
-      categoryDetails = this.renderCategories(categories);
 
     } else {
-      const categoriesWithSuggestions = this.getCategoriesWithSuggestions();
-      categoryLinks = this.renderCategoryLinks(categoriesWithSuggestions);
-      categoryDetails = this.renderCategories(categoriesWithSuggestions);
+      categories = this.getCategoriesWithSuggestions();
     }
+
+
 
     return (
       <div className={ style.searchPage }>
-        <Sticky
+        <div
+          className={ style.sticky }
           id='search-page-header'
-          onStickyStateChange={ this.blurSearchInput.bind(this) }
           >
 
-          <div className='query-input-container'>
-            <input
-              className='sheet-header header query-input'
-              value={ query }
+          <div className='input-container'>
+            <ClearableInput
+              ref={ (instance) => { this.searchInput = instance; } }
+              className='query-input'
+              value={ this.props.query }
               placeholder='Search'
-              ref={ (inputElement) => { this.inputElement = inputElement; } }
-              onChange={ this.onInputChange.bind(this) }
-              />
-            { this.renderClearIcon() }
+              onChange={ (e) => { this.onInputChange(e); } }
+              onClear={ () => { this.props.inputChanged(''); } }
+            />
+
+            <button
+              className='bt-done'
+              onClick={ () => { goUp(router, window.location.pathname); } }>
+              Done
+            </button>
           </div>
 
+          <SearchNavbar
+            categories={ categories }
+            activeCategory={ activeCategory }
+            scrollToCategory={ this.scrollToCategory }
+            updateActiveCategory={ this.props.updateActiveCategory }
+          />
+        </div>
 
-          { categoryLinks }
-        </Sticky>
+        <div className='category-details-container'>
+          { this.renderCategories(categories) }
+        </div>
 
-        { categoryDetails }
-
-        <div style={ this.calculateBottomPaddingStyle() } className='bottom-padding'></div>
+        <div style={ this.calculateDynamicBottomPaddingStyle() } className='bottom-padding'></div>
       </div>
     );
   }
@@ -228,5 +167,10 @@ SearchPage.propTypes = {
   categories: PropTypes.array,
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
-  updateActiveCategory: PropTypes.func
+  updateActiveCategory: PropTypes.func,
+  router: PropTypes.object
+};
+
+SearchPage.defaultProps = {
+  inputChanged: () => {}
 };

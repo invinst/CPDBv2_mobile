@@ -6,7 +6,7 @@ $transition-duration: 200ms
   $transition-duration: 1ms
 
 $top-margin: 58px
-$padding: $header-logo-padding-x
+$padding: $horizontal-padding
 $background-logo-padding-top: $header-logo-padding-y - $padding
 $overlay-opacity: .7
 
@@ -21,6 +21,9 @@ $transition-length: 30px
   background-color: white
   // Full width prevents reflow as the bottom sheet is populated:
   width: 100%
+
+  .sticky
+    box-shadow: 0 1px 2px #e4e4e4
 
   .header
     font-size: 30px
@@ -80,7 +83,14 @@ $transition-length: 30px
     background-color: $white
     width: 100%
     overflow-wrap: break-word
-    min-height: calc(100vh - #{$top-margin})
+
+    .sheet-bottom-padding
+      height: $bottom-padding
+      background-color: $wild-sand
+      position: absolute
+      bottom: 0
+      left: 0
+      right: 0
 
   .sheet-header
       height: $sheet-header-height
@@ -92,7 +102,7 @@ $transition-length: 30px
         height: 20px
 
   .sheet-body
-    padding: 0 $padding $padding $padding
+    padding: 0 0 $padding $padding
 
 
   .bottom-sheet-leave

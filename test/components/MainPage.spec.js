@@ -4,14 +4,26 @@ import { shallow } from 'enzyme';
 
 import MainPage from 'components/MainPage';
 import MainPageContentContainer from 'containers/MainPage/MainPageContentContainer';
-import { spy, stub } from 'sinon';
-import * as NavigationUtil from 'utils/NavigationUtil';
+import { spy } from 'sinon';
 
 
 describe('MainPage component', function () {
   it('should render', function () {
     let wrapper = shallow(<MainPage />);
     wrapper.should.be.ok();
+  });
+
+  it('should dispatch routeChanged action on mount', function () {
+    const spyRouteChanged = spy();
+    const wrapper = shallow(
+      <MainPage
+        routeChanged={ spyRouteChanged }
+        location={ { pathname: 'dummy/' } }
+      />
+    );
+    wrapper.instance().componentDidMount();
+
+    spyRouteChanged.calledWith('dummy/').should.be.true();
   });
 
   it('should render MainPageContentContainer as subcomponents', function () {
@@ -41,42 +53,49 @@ describe('MainPage component', function () {
     spyFetch.calledOnce.should.be.true();
   });
 
-  it('should scroll to top when location changed', function () {
+  it('should dispatch routeChanged action when location changed', function () {
     const currentLocation = {
-      pathname: '/current-url'
+      pathname: 'current-url/'
     };
     const prevLocation = {
-      pathname: '/prev-url'
+      pathname: 'prev-url/'
     };
     const prevProps = {
       location: prevLocation
     };
+    const spyRouteChanged = spy();
+
     const wrapper = shallow(
-      <MainPage location={ currentLocation }/>
+      <MainPage
+        location={ currentLocation }
+        routeChanged={ spyRouteChanged }
+        />
     );
-    const mockInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
 
     wrapper.instance().componentDidUpdate(prevProps);
-    mockInstantScrollToTop.calledOnce.should.be.true();
-
-    mockInstantScrollToTop.restore();
+    spyRouteChanged.calledWith('current-url/').should.be.true();
   });
 
-  it('should not scroll to top if location has not changed', function () {
+  it('should not dispatch routeChaged action if location has not changed', function () {
     const currentLocation = {
-      pathname: '/current-url'
+      pathname: 'same-url/'
+    };
+    const prevLocation = {
+      pathname: 'same-url/'
     };
     const prevProps = {
-      location: currentLocation
+      location: prevLocation
     };
+    const spyRouteChanged = spy();
+
     const wrapper = shallow(
-      <MainPage location={ currentLocation }/>
+      <MainPage
+        location={ currentLocation }
+        routeChanged={ spyRouteChanged }
+        />
     );
-    const mockInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
 
     wrapper.instance().componentDidUpdate(prevProps);
-    mockInstantScrollToTop.calledOnce.should.be.false();
-
-    mockInstantScrollToTop.restore();
+    spyRouteChanged.called.should.be.false();
   });
 });

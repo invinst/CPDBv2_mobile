@@ -4,6 +4,7 @@ import style from 'styles/BottomSheet.sass';
 import { goUp } from 'utils/NavigationUtil';
 import { hasChildren, hasGrandchildren } from 'utils/ComponentUtil';
 import { StickyContainer } from 'react-sticky';
+import constants from 'constants';
 
 /*
 This is a not-too-pretty hack to achieve "nested bottom sheet" with animations.
@@ -33,8 +34,12 @@ A concrete example:
 
 export default class BottomSheet extends Component {
 
+  isSearch() {
+    return this.props.location.pathname === 'search/';
+  }
+
   renderBackground() {
-    if (!hasChildren(this)) {
+    if (!hasChildren(this) || this.isSearch()) {
       return null;
     }
     if (hasGrandchildren(this)) {
@@ -57,9 +62,10 @@ export default class BottomSheet extends Component {
   }
 
   renderOverlay() {
-    if (!hasChildren(this)) {
+    if (!hasChildren(this) || this.isSearch()) {
       return null;
     }
+
     const { router } = this.props;
     return <div className='overlay' onClick={ goUp.bind(this, router, window.location.pathname) }></div>;
   }
@@ -69,20 +75,45 @@ export default class BottomSheet extends Component {
       return null;
     }
 
+    const sheetStyle = this.calculateSheetStyle();
+
     // Render grandchildren instead of children if available
     if (hasGrandchildren(this)) {
       return (
-        <div className='sheet'>
+        <div className='sheet' style={ sheetStyle }>
           { React.Children.map(this.props.children, (child) => child.props.children) }
+          { this.renderSheetBottomPadding() }
         </div>
       );
     }
 
     return (
-      <div className='sheet'>
+      <div className='sheet' style={ sheetStyle }>
         { this.props.children }
+        { this.renderSheetBottomPadding() }
       </div>
     );
+  }
+
+  calculateSheetStyle() {
+    let minHeightOffset = constants.TOP_MARGIN;
+    let paddingBottom = 0;
+    if (this.props.location.pathname !== 'search/') {
+      minHeightOffset -= constants.BOTTOM_PADDING;
+      paddingBottom = constants.BOTTOM_PADDING;
+    }
+    return {
+      minHeight: `calc(100vh - ${minHeightOffset}px)`,
+      paddingBottom: `${paddingBottom}px`
+    };
+  }
+
+  renderSheetBottomPadding() {
+    if (this.isSearch()) {
+      return null;
+    }
+
+    return <div className='sheet-bottom-padding'></div>;
   }
 
   render() {
@@ -127,4 +158,10 @@ BottomSheet.propTypes = {
   router: PropTypes.object,
   location: PropTypes.object,
   transitionDuration: PropTypes.number
+};
+
+BottomSheet.defaultProps = {
+  location: {
+    pathname: ''
+  }
 };

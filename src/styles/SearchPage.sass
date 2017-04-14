@@ -3,27 +3,67 @@
 
 :local(.search-page)
 
-  .query-input-container
-    position: relative
+  :local(.sticky)
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    box-shadow: 0 1px 2px #e4e4e4
 
-    .query-input
+  .category-details-container
+    padding-top: $query-input-height + $search-category-links-height
+
+  .input-container
+    border-bottom: $divider-weight solid $alto
+    border-radius: 0
+    background-color: white
+    font-size: 14px
+
+    .query-input-container
+      position: relative
+      width: 80%
+      display: inline-block
+      vertical-align: middle
+
+      .query-input
+        outline: none
+        padding: 12px 11px
+        width: 100%
+        border: 0
+        -webkit-appearance: none // remove iphone input inner shadow
+        height: $query-input-height - $divider-weight
+        font-weight: 600
+        font: inherit
+        color: $thunder
+
+
+        @include placeholder
+          color: $dusty-gray
+          font: inherit
+
+
+
+      .clear-icon
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        height: 22px
+        width: 22px
+        margin: auto
+        cursor: pointer
+
+    .bt-done
+      background-color: inherit
+      color: $dusty-gray
+      border: none
+      padding: 0 !important
+      font: inherit
       outline: none
-      padding: 12px 11px
-      width: 100%
-      border: 0
-      border-bottom: 1px solid $alto
-      border-radius: 0
-      -webkit-appearance: none // remove iphone input inner shadow
-
-      font-weight: 400
-
-    .clear-icon
-      position: absolute
-      top: 0
-      right: 0
-      height: 100%
-      padding: 21px 8px 19px 8px
-      cursor: pointer
+      display: inline-block
+      width: 20%
+      vertical-align: middle
+      margin-top: 0
 
   .categories
     font-size: 14px
@@ -32,8 +72,6 @@
     height: $search-category-links-height
     padding: 10px 11px 9px 11px
     font-weight: 400
-
-    box-shadow: 0 2px 4px #ddd
 
     button
       background: none !important
@@ -53,5 +91,5 @@
       color: $thunder
 
   .bottom-padding
-    min-height: 133px
+    min-height: 0
     background-color: $wild-sand
