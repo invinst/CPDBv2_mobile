@@ -2,7 +2,7 @@ import should from 'should';
 import {
   officerSummarySelector,
   officerTimelineSelector,
-  hasMoreOfficerTimelineSelector,
+  hasMoreOfficerTimelineSelector
 } from 'selectors/officer-page';
 
 describe('officer-page selectors', () => {
@@ -34,7 +34,7 @@ describe('officer-page selectors', () => {
                       ]
                     },
                     {
-                      'name': 'race',
+                      'name': 'complainant race',
                       'entries': [
                         {
                           'count': 3,
@@ -51,7 +51,7 @@ describe('officer-page selectors', () => {
                       ]
                     },
                     {
-                      'name': 'age',
+                      'name': 'complainant age',
                       'entries': [
                         {
                           'count': 1,
@@ -60,7 +60,7 @@ describe('officer-page selectors', () => {
                       ]
                     },
                     {
-                      'name': 'gender',
+                      'name': 'complainant gender',
                       'entries': [
                         {
                           'count': 4,

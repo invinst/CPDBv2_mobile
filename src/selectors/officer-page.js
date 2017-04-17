@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
+import { startCase } from 'lodash';
 import constants from 'constants';
 
 const getOfficerSummary = (state, props) => (
@@ -22,18 +23,6 @@ export const officerSummarySelector = createSelector(
     }
 
     const complaints = summary.complaint_records;
-    const facetNameMappings = {
-      'category': 'Category',
-      'race': 'Complainant Race',
-      'gender': 'Complainant Gender',
-      'age': 'Complainant Age'
-    };
-    const transformFacet = (facet) => {
-      return {
-        name: facetNameMappings[facet.name],
-        entries: facet.entries
-      };
-    };
 
     return {
       name: summary.full_name,
@@ -46,7 +35,10 @@ export const officerSummarySelector = createSelector(
       sex: summary.gender,
       complaints: {
         count: complaints.count,
-        facets: complaints.facets.map(transformFacet)
+        facets: complaints.facets.map(({ name, entries }) => ({
+          name: startCase(name),
+          entries
+        }))
       }
     };
   }
