@@ -90,6 +90,18 @@ describe('<OfficerTimeline />', function () {
     wrapper.find('.header').text().should.be.eql('Foo Bar');
   });
 
+  it('should render empty header if officer summary has not been fetched yet', function () {
+    const wrapper = shallow(
+      <OfficerTimeline
+        pk={ 12 }
+        found={ true }
+        summary={ null }
+      />
+    );
+
+    wrapper.find('.header').text().should.be.eql('');
+  });
+
   it('should render CRItem', function () {
     const timeline = {
       results: [
