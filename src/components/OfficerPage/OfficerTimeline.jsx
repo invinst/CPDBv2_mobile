@@ -78,6 +78,9 @@ class OfficerTimeline extends Component {
             />
           </div>
         );
+      } else {
+        // skip other timeline item types
+        return null;
       }
     });
 
