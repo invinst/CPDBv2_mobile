@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
+import { startCase } from 'lodash';
 import constants from 'constants';
 
 const getOfficerSummary = (state, props) => (
@@ -22,18 +23,6 @@ export const officerSummarySelector = createSelector(
     }
 
     const complaints = summary.complaint_records;
-    const facetNameMappings = {
-      'category': 'Category',
-      'race': 'Complainant Race',
-      'gender': 'Complainant Gender',
-      'age': 'Complainant Age'
-    };
-    const transformFacet = (facet) => {
-      return {
-        name: facetNameMappings[facet.name],
-        entries: facet.entries
-      };
-    };
 
     return {
       name: summary.full_name,
@@ -46,17 +35,42 @@ export const officerSummarySelector = createSelector(
       sex: summary.gender,
       complaints: {
         count: complaints.count,
-        facets: complaints.facets.map(transformFacet)
+        facets: complaints.facets.map(({ name, entries }) => ({
+          name: startCase(name),
+          entries
+        }))
       }
     };
   }
 );
 
-const getOfficerTimeline = (state, props) => (
-  state.officerPage.timelines.data[props.params.id] || null
-);
+
+const getOfficerTimeline = (state, props) => {
+  const timeline = state.officerPage.timelines.data[props.params.id];
+  if (!timeline) {
+    return null;
+  }
+
+  const results = timeline.results.map((result) => ({
+    ...result,
+    date: moment(result.date).format(constants.SIMPLE_DATE_FORMAT)
+  }));
+
+  return {
+    ...timeline,
+    results: results
+  };
+};
 
 export const officerTimelineSelector = createSelector(
   [getOfficerTimeline],
   (timeline) => timeline
+);
+
+
+const getCurrentTimeline = (state, props) => state.officerPage.timelines.data[props.params.id];
+
+export const hasMoreOfficerTimelineSelector = createSelector(
+  getCurrentTimeline,
+  (timeline) => (!!timeline && !timeline.isRequesting && !!timeline.next)
 );

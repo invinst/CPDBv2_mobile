@@ -1,0 +1,86 @@
+@import '../../Variables'
+
+:local(.cr-item)
+  padding: $horizontal-padding 0 $horizontal-padding $horizontal-padding
+  position: relative
+
+  :local(.crid-container)
+    display: inline-block
+    width: 50%
+    color: $dusty-gray
+
+    :local(.cr)
+      font-weight: 500
+
+    :local(.crid)
+      font-weight: 400
+
+  :local(.date)
+    display: inline-block
+    text-align: right
+    width: 50%
+    color: $dusty-gray
+    padding-right: $horizontal-padding
+
+    img
+      position: relative
+      z-index: 0
+      margin-left: 7px
+      right: -3px
+
+  :local(.category)
+    font-size: 18px
+    font-weight: 500
+    margin-top: 11px
+
+  :local(.subcategory)
+    color: $dusty-gray
+    font-weight: 400
+    width: 100%
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    padding-right: 24px
+
+  :local(.finding)
+    color: black
+    padding: 4px 8px
+
+    &.unfounded
+      background-color: rgba(22, 43, 59, 0.15)
+
+    &.exonerated
+      background-color: rgba(104, 173, 216, 0.15)
+
+    &.not-sustained
+      background-color: rgba(28, 138, 175, 0.15)
+
+    &.sustained
+      background-color: rgba(0, 121, 174, 0.3)
+
+    &.no-cooperation
+      background-color: rgba(165, 180, 190, 0.3)
+
+    &.no-affidavit
+      background-color: rgba(112, 157, 192, 0.3)
+
+    &.discharged
+      background-color: rgba(203, 203, 203, 0.3)
+
+    &.unknown
+      background-color: rgba(152, 152, 152, 0.3)
+
+  :local(.finding-container)
+    margin: 12px 0 15px
+
+  :local(.coaccused)
+    color: $dusty-gray
+    font-weight: 400
+
+  :local(.vertical-line)
+    height: 100%
+    border-right: 2px solid #e9e8e8
+    position: absolute
+    right: $horizontal-padding
+    top: 0
+    bottom: 0

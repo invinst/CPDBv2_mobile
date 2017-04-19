@@ -10,7 +10,7 @@ import SectionRow from 'components/OfficerPage/SectionRow';
 import SummaryStatsSection from 'components/OfficerPage/SummaryStatsSection';
 import { scrollToTop } from 'utils/NavigationUtil';
 
-import style from 'styles/OfficerPage.sass';
+import style from 'styles/OfficerPage/OfficerSummary.sass';
 
 
 class OfficerSummary extends Component {
@@ -20,7 +20,7 @@ class OfficerSummary extends Component {
       getOfficerSummary(pk);
     }
 
-    GaUtil.track('event', 'officer', 'view_detail', location.pathname);
+    GaUtil.track('event', 'officer', 'view_detail', window.location.pathname);
   }
 
 
@@ -40,12 +40,13 @@ class OfficerSummary extends Component {
     }
 
     return (
-      <div className={ style.officerPage }>
+      <div className={ style.officerSummary }>
         <Sticky>
           <h1 className='sheet-header header' onClick={ scrollToTop() }>
             { summary.name }
           </h1>
         </Sticky>
+
         <OfficerTopLinks id={ pk } currentPath='summary' />
 
         <div>

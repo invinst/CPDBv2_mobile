@@ -1,4 +1,4 @@
-import { get } from 'actions/common/async-action';
+import { get, getUrl } from 'actions/common/async-action';
 import { v2v2Url } from 'utils/UrlUtil';
 import constants from 'constants';
 
@@ -37,3 +37,13 @@ export const getOfficerTimeline = (id) => {
 
   return getFunc({}, undefined, `${id}/timeline/`, { id });
 };
+
+export const getMoreOfficerTimeline = (id, url) => getUrl(
+  url,
+  [
+    '_SKIP',
+    OFFICER_TIMELINE_REQUEST_SUCCESS,
+    OFFICER_TIMELINE_REQUEST_FAILURE
+  ],
+  { id }
+);
