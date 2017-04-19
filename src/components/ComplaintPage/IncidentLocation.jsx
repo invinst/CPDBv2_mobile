@@ -37,9 +37,26 @@ export default class IncidentLocation extends Component {
 
   render() {
     const { point, beat, address, location } = this.props;
-    const lat = point.lat;
-    const lng = point.long;
-    const position = [lat, lng];
+
+    // Focus on Chicago by default
+    let lat = 41.8781;
+    let lng = -87.6298;
+    let marker = null;
+
+    if (typeof point === 'object') {
+      lat = point.lat;
+      lng = point.long;
+      marker = <Marker position={ [lat, lng] } icon={ markerIcon } />;
+    }
+
+    let beatText = 'Unknown';
+    let locationText = 'Unknown';
+    if (beat && beat.name) {
+      beatText = beat.name;
+    }
+    if (location) {
+      locationText = location;
+    }
 
     return (
       <div className={ style.incidentLocation }>
@@ -47,7 +64,7 @@ export default class IncidentLocation extends Component {
         <SectionTitle title='Location' />
 
         <Map
-          center={ position }
+          center={ [lat, lng] }
           zoom={ this.state.zoomLevel }
           onClick={ () => { this.switchZoomLevel(); } }
           scrollWheelZoom={ false }
@@ -57,7 +74,7 @@ export default class IncidentLocation extends Component {
           dragging={ false }
         >
           <TileLayer url={ tileUrl } />
-          <Marker position={ position } icon={ markerIcon } />
+          { marker }
         </Map>
 
         <div className='captions'>
@@ -75,12 +92,12 @@ export default class IncidentLocation extends Component {
 
           <div className='row'>
             <span className='title'>Location</span>
-            <span className='value'>{ location }</span>
+            <span className='value'>{ locationText }</span>
           </div>
 
           <div className='row'>
             <span className='title'>Beat</span>
-            <span className='value'>{ beat.name }</span>
+            <span className='value'>{ beatText }</span>
           </div>
         </div>
 
