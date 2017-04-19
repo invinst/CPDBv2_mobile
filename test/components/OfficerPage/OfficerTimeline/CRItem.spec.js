@@ -1,6 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { Link } from 'react-router';
 import CRItem from 'components/OfficerPage/OfficerTimeline/CRItem';
+import constants from 'constants';
 
 
 describe('<CRItem />', function () {
@@ -20,7 +22,7 @@ describe('<CRItem />', function () {
       date: 'Oct 22, 2014'
     };
 
-    const wrapper = shallow(
+    const wrapper = mount(
       <CRItem result={ result }/>
     );
 
@@ -31,6 +33,19 @@ describe('<CRItem />', function () {
     text.should.containEql('Excessive Force / On Duty - No Injury');
     text.should.containEql('Not Sustained');
     text.should.containEql('1 of 1 Coaccused');
+  });
+
+  it('should link to complaint page', function () {
+    const result = {
+      crid: '1044088'
+    };
+
+    const wrapper = shallow(
+      <CRItem result={ result } officerId={ 11 }/>
+    );
+
+    wrapper.type().should.equal(Link);
+    wrapper.prop('to').should.eql(`${constants.COMPLAINT_PATH}1044088/11/`);
   });
 
   describe('getFindingClass', function () {

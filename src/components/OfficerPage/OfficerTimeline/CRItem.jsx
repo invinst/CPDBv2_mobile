@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import style from 'styles/OfficerPage/OfficerTimeline/CRItem.sass';
 import dot from 'img/dot.svg';
+import constants from 'constants';
 
 class CRItem extends Component {
   getFindingClass(finding) {
@@ -11,9 +13,10 @@ class CRItem extends Component {
     const { category, coaccused, crid, date, finding, subcategory } = this.props.result;
 
     const findingClassname = `${style.finding} ${this.getFindingClass(finding)}`;
+    const crUrl = `${constants.COMPLAINT_PATH}${crid}/${this.props.officerId}/`;
 
     return (
-      <div className={ style.crItem }>
+      <Link className={ style.crItem } to={ crUrl }>
         <div className={ style.verticalLine }></div>
         <div className={ style.cridContainer }>
           <span className={ style.cr }>CR </span>
@@ -27,13 +30,14 @@ class CRItem extends Component {
           <span className={ findingClassname }>{ finding }</span>
         </div>
         <div className={ style.coaccused }>1 of { coaccused } Coaccused</div>
-      </div>
+      </Link>
     );
   }
 }
 
 CRItem.propTypes = {
-  result: PropTypes.object
+  result: PropTypes.object,
+  officerId: PropTypes.number
 };
 
 CRItem.defaultProps = {

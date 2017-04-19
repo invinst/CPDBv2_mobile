@@ -3,6 +3,9 @@ import React, { PropTypes } from 'react';
 import style from 'styles/ComplaintPage/Complainants.sass';
 
 const Complainants = ({ complainants }) => {
+  if (!complainants) {
+    return null;
+  }
 
   const rows = complainants.map(
     ({ race, age, gender }, index) => (
