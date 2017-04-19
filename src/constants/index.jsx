@@ -214,6 +214,7 @@ export default {
   LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
   REPORTING_API_ENDPOINT: '/reports/',
   FAQ_API_ENDPOINT: '/faqs/',
+  COMPLAINT_API_ENDPOINT: '/cr/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
@@ -240,12 +241,15 @@ export default {
   ABOUT_PATH: '/about/',
   SEARCH_PATH: '/search/',
   OFFICER_PATH: '/officer/',
+  COMPLAINT_PATH: '/complaint/',
 
   // Routes that don't have their corresponding component.
   // NavigationUtil.goUp() skips all of these.
   NONEXISTENT_ROUTES: [
     /^\/officer\/$/,
-    /^\/officer\/\d+\/?$/
+    /^\/officer\/\d+\/?$/,
+    /^\/complaint\/$/,
+    /^\/complaint\/\d+\/?$/
   ],
 
 

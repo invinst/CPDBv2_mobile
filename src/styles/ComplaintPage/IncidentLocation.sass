@@ -1,0 +1,45 @@
+@import '../Variables'
+
+:local(.incident-location)
+
+  .leaflet-container
+    width: 100%
+    height: 180px
+    z-index: 0
+
+    .marker-icon
+      background-color: #f9001e
+      border-radius: 2px
+
+  .captions
+    padding: 5px 0 0 $horizontal-padding
+
+    .row
+      display: block
+      padding-right: 10px
+      padding-top: 11px
+      text-decoration: none
+      color: inherit
+      padding-bottom: 13px
+      border-bottom: $divider-weight solid $alto
+
+      &:last-child
+        border-bottom: 0
+
+      .google-maps-icon
+        height: 18px
+        padding-right: 11px
+        margin: auto
+        vertical-align: middle
+
+      .address
+        height: 18px
+        vertical-align: middle
+
+      .arrow
+        float: right
+
+      .title
+        width: 40%
+        display: inline-block
+        color: $dusty-gray

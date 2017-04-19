@@ -14,6 +14,7 @@ import AboutPageContainer from 'containers/AboutPageContainer';
 import SearchPageContainer from 'containers/SearchPageContainer';
 import OfficerSummaryContainer from 'containers/OfficerPage/OfficerSummaryContainer';
 import OfficerTimelineContainer from 'containers/OfficerPage/OfficerTimelineContainer';
+import ComplaintPageContainer from 'containers/ComplaintPageContainer';
 
 import 'styles/Style.sass';
 import 'styles/Fonts.sass';
@@ -45,6 +46,11 @@ const App = React.createClass({
 
           <Route path={ `${constants.OFFICER_PATH}:id/` } component={ OfficerSummaryContainer } />
           <Route path={ `${constants.OFFICER_PATH}:id/timeline/` } component={ OfficerTimelineContainer } />
+
+          <Route
+            path={ `${constants.COMPLAINT_PATH}:complaintId/:coaccusedId/` }
+            component={ ComplaintPageContainer }
+          />
 
         </Route>
       </Router>
