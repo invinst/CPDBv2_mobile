@@ -98,7 +98,7 @@ export default class InvestigationTimeline extends Component {
     return (
       <div className={ style.investigationTimeline }>
         <SectionTitle title='Investigation Timeline' />
-        <svg className='svg' x='0px' y='0px' viewBox={ `0 0 320 ${ viewBoxHeight }` }>
+        <svg className='svg' x='0px' y='0px' viewBox={ `0 0 304 ${ viewBoxHeight }` }>
           { this.renderInvestigationTimelineCircles() }
           { this.renderInvestigationTimelineTexts() }
         </svg>
