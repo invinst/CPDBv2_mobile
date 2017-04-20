@@ -1,5 +1,7 @@
 @import '../Variables'
 
+$vertical-line-color: #e9e8e8
+
 :local(.officer-timeline)
   font-size: 14px
 
@@ -10,8 +12,27 @@
     height: 40px
     background-color: $wild-sand
 
-  :local(.vertical-line)
-    height: 100%
-    border-right: 2px solid #e9e8e8
-    float: right
-    margin-right: $horizontal-padding
+  .officer-timeline-body
+    position: relative
+
+    .vertical-line
+      height: 100%
+      border-right: 2px solid $vertical-line-color
+      position: absolute
+      right: $horizontal-padding
+      top: 0
+      bottom: 0
+      z-index: 0
+
+    .last-item
+      z-index: 1
+      position: relative
+
+      &::after
+        content: ''
+        background-color: $vertical-line-color
+        width: 2px
+        position: absolute
+        top: 0
+        right: $horizontal-padding
+        height: $horizontal-padding + 9px

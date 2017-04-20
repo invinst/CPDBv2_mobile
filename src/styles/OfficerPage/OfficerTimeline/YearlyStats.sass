@@ -3,6 +3,8 @@
 $row-height: 40px
 
 :local(.yearly-stats)
+  position: relative
+  z-index: 1
   background-color: $wild-sand
   padding: 12px 0 0 $horizontal-padding
   border-top: $divider-weight solid $alto-solid
@@ -16,6 +18,7 @@ $row-height: 40px
   :local(.row)
     height: $row-height
     border-bottom: $divider-weight solid $alto-solid
+    
     &:last-child
       margin-left: -$horizontal-padding
       padding-left: $horizontal-padding

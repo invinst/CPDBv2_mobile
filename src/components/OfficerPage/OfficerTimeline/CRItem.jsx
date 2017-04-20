@@ -17,12 +17,11 @@ class CRItem extends Component {
 
     return (
       <Link className={ style.crItem } to={ crUrl }>
-        <div className={ style.verticalLine }></div>
         <div className={ style.cridContainer }>
           <span className={ style.cr }>CR </span>
           <span className={ style.crid }>{ crid }</span>
         </div>
-        <div className={ style.date }>{ date } <img src={ dot } /></div>
+        <div className={ style.date }>{ date } <img className='dot' src={ dot } /></div>
 
         <h2 className={ style.category }>{ category }</h2>
         <div className={ style.subcategory }>{ subcategory }</div>
