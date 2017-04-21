@@ -23,12 +23,14 @@ describe('officer-page selectors', () => {
                 'gender': 'Male',
                 'complaint_records': {
                   'count': 20,
+                  'sustained_count': '2',
                   'facets': [
                     {
                       'name': 'category',
                       'entries': [
                         {
                           'count': 11,
+                          'sustained_count': 1,
                           'name': 'Use of Force'
                         }
                       ]
@@ -38,14 +40,17 @@ describe('officer-page selectors', () => {
                       'entries': [
                         {
                           'count': 3,
+                          'sustained_count': 1,
                           'name': 'Black'
                         },
                         {
                           'count': 1,
+                          'sustained_count': 1,
                           'name': 'White'
                         },
                         {
                           'count': 2,
+                          'sustained_count': 1,
                           'name': 'White/Hispanic'
                         }
                       ]
@@ -55,6 +60,7 @@ describe('officer-page selectors', () => {
                       'entries': [
                         {
                           'count': 1,
+                          'sustained_count': 1,
                           'name': '38'
                         }
                       ]
@@ -64,10 +70,12 @@ describe('officer-page selectors', () => {
                       'entries': [
                         {
                           'count': 4,
+                          'sustained_count': 1,
                           'name': 'Male'
                         },
                         {
                           'count': 2,
+                          'sustained_count': 1,
                           'name': 'Female'
                         }
                       ]
@@ -99,12 +107,14 @@ describe('officer-page selectors', () => {
         sex: 'Male',
         complaints: {
           count: 20,
+          sustainedCount: '2',
           facets: [
             {
               name: 'Category',
               entries: [
                 {
                   'count': 11,
+                  'sustained_count': 1,
                   'name': 'Use of Force'
                 }
               ]
@@ -114,14 +124,17 @@ describe('officer-page selectors', () => {
               entries: [
                 {
                   'count': 3,
+                  'sustained_count': 1,
                   'name': 'Black'
                 },
                 {
                   'count': 1,
+                  'sustained_count': 1,
                   'name': 'White'
                 },
                 {
                   'count': 2,
+                  'sustained_count': 1,
                   'name': 'White/Hispanic'
                 }
               ]
@@ -131,6 +144,7 @@ describe('officer-page selectors', () => {
               'entries': [
                 {
                   'count': 1,
+                  'sustained_count': 1,
                   'name': '38'
                 }
               ]
@@ -140,10 +154,12 @@ describe('officer-page selectors', () => {
               entries: [
                 {
                   'count': 4,
+                  'sustained_count': 1,
                   'name': 'Male'
                 },
                 {
                   'count': 2,
+                  'sustained_count': 1,
                   'name': 'Female'
                 }
               ]
