@@ -1,0 +1,52 @@
+@import '../Variables'
+
+:local(.coaccused-dropdown)
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  background-color: white
+  z-index: 1
+  box-shadow: 0 1px 2px #e4e4e4
+
+  .content
+    border-bottom: $divider-weight solid $alto
+    padding-left: $horizontal-padding
+
+    .row
+      // <a> style resets
+      display: block
+      color: inherit
+      line-height: 1
+
+      padding: 13px 8px 13px 0
+      border-bottom: $divider-weight solid $alto
+
+      &:last-child
+        border-bottom: 0
+
+      .fullname
+        margin-right: 8px
+        max-width: 80%
+        overflow: hidden
+        text-overflow: ellipsis
+        display: inline-block
+        white-space: nowrap
+        font-weight: 500
+        vertical-align: middle
+
+      .arrow
+        float: right
+
+    .viewing
+      color: $dusty-gray
+
+      .fullname
+        line-height: 21px
+
+      .viewing-box
+        float: right
+        padding: 3px 8px 2px 8px
+        border: solid 1px $alto-solid
+        vertical-align: top
+        font-weight: 300
