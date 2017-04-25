@@ -1,125 +1,112 @@
-import React, { PropTypes } from 'react';
-import cx from 'classnames';
+import React, { Component, PropTypes } from 'react';
+import { Sticky } from 'react-sticky';
+import { find } from 'lodash';
 
-import u from 'utils/HelperUtil';
-import GaUtil from 'utils/GaUtil';
-import ComplaintPagePresenter from 'presenters/Page/ComplaintPagePresenter';
-import Wrapper from 'components/Shared/Wrapper';
-import LoadingPage from 'components/Shared/LoadingPage';
-import NotMatchedComplaintPage from 'components/ComplaintPage/NotMatchedComplaintPage';
-import NotMatchedCategoryPage from 'components/ComplaintPage/NotMatchedCategoryPage';
-import SearchablePageContainer from 'containers/Shared/SearchablePageContainer';
-import ToggleComplaintPageContainer from 'containers/ComplaintPage/ToggleComplaintPageContainer';
-import OfficerAllegationDetailContainer from 'containers/ComplaintPage/OfficerAllegationDetailContainer';
-import AgainstSection from 'components/ComplaintPage/AgainstSection';
-import ComplainingWitness from 'components/ComplaintPage/ComplainingWitness';
-import AccompliceOfficerSection from 'components/ComplaintPage/AccompliceOfficerSection';
-import InvestigatorSection from 'components/ComplaintPage/InvestigatorSection';
-import Location from 'components/ComplaintPage/Location';
+import { scrollToTop } from 'utils/NavigationUtil';
 import style from 'styles/ComplaintPage.sass';
-import AllegationPresenter from 'presenters/AllegationPresenter';
-import MediaSection from 'components/ComplaintPage/MediaSection';
+import PeopleList from 'components/ComplaintPage/PeopleList';
+import Outcome from 'components/ComplaintPage/Outcome';
+import InvestigationTimeline from 'components/ComplaintPage/InvestigationTimeline';
+import Complainants from 'components/ComplaintPage/Complainants';
+import Involvements from 'components/ComplaintPage/Involvements';
+import IncidentLocation from 'components/ComplaintPage/IncidentLocation';
+import ComplaintCategory from 'components/ComplaintPage/ComplaintCategory';
+import Attachment from 'components/ComplaintPage/Attachment';
+import constants from 'constants';
 
 
-const ComplaintPage = React.createClass({
-  propTypes: {
-    getComplaint: PropTypes.func.isRequired,
-    loading: PropTypes.bool,
-    found: PropTypes.bool,
-    crid: PropTypes.string,
-    complaint: PropTypes.object,
-    toggle: PropTypes.bool
-  },
-
-  getInitialState() {
-    return {
-      'data': {
-        'complaining_witnesses': [],
-        'allegation': {}
-      },
-      loading: true,
-      toggle: false
-    };
-  },
-
-
+export default class ComplaintPage extends Component {
   componentDidMount() {
-    const { crid, getComplaint } = this.props;
-
-    GaUtil.track('event', 'allegation', 'view_detail', location.pathname);
-    getComplaint({ crid: crid });
-  },
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.crid != this.props.crid) {
-      const { getComplaint } = this.props;
-      getComplaint({ crid: newProps.crid });
+    const { complaint, requestComplaint, complaintId } = this.props;
+    if (!complaint) {
+      requestComplaint(complaintId);
     }
-  },
+  }
+
+  getActiveCoaccused() {
+    const { complaint, coaccusedId } = this.props;
+
+    return find(complaint.coaccused, c => c.id === coaccusedId);
+  }
 
   render() {
-    const { loading, found, complaint, crid, toggle } = this.props;
-    const categoryHashId = u.fetch(this.props, 'params.categoryHashId', 0);
-    const presenter = ComplaintPagePresenter(complaint, categoryHashId);
-    const classNames = cx('toggle-page', { 'content': toggle }, { 'animate': !toggle });
-    const allegationPresenter = AllegationPresenter(presenter.allegation);
+    const { complaint } = this.props;
 
-    // TODO: Think about refactoring this later
-    if (loading) {
-      return (
-        <LoadingPage />
-      );
+    if (!complaint) {
+      return null;
     }
 
-    if (!found) {
-      return (
-        <NotMatchedComplaintPage crid={ crid }/>
-      );
-    }
-
-    if (presenter.isInvalidCategory) {
-      return (
-        <NotMatchedCategoryPage />
-      );
-    }
+    const activeCoaccused = this.getActiveCoaccused();
 
     return (
-      <div>
-        <div className={ classNames }>
-          <ToggleComplaintPageContainer
-            officerAllegations={ presenter.officerAllegations }
-            allegation={ presenter.allegation }
-            numberOfAllegations={ presenter.numberOfOfficerAllegations }/>
-        </div>
-        <Wrapper visible={ !toggle }>
-          <div >
-            <SearchablePageContainer>
-              <div className={ style.complaintPage }>
-                <div className='container content'>
-                  <div className='main-content'>
-                    <OfficerAllegationDetailContainer
-                      allegation={ presenter.allegation }
-                      currentOfficerAllegation={ presenter.currentOfficerAllegation }
-                      numberOfAllegations={ presenter.numberOfOfficerAllegations }/>
-                    <AgainstSection
-                      allegation={ presenter.allegation }
-                      officerAllegations={ presenter.againstOfficerAllegations }/>
-                    <ComplainingWitness complainingWitnesses={ presenter.complainingWitnesses }/>
-                    <AccompliceOfficerSection officerAllegations={ presenter.accompliceOfficerAllegation }/>
-                    <InvestigatorSection allegation={ presenter.allegation }/>
-                    <MediaSection media={ allegationPresenter.documents } header={ 'Documents' }/>
-                    <MediaSection media={ allegationPresenter.videos } header={ 'Video' }/>
-                    <MediaSection media={ allegationPresenter.audios } header={ 'Audio' }/>
-                    <Location allegation={ presenter.allegation }/>
-                  </div>
-                </div>
-              </div>
-            </SearchablePageContainer>
+      <div className={ style.complaintPage }>
+        <Sticky className='complaint-header'>
+          <div onClick={ scrollToTop() } className='sheet-header header'>
+            CR { complaint.crid }
+            <span className='subheader'>{ complaint.coaccused.length } coaccused</span>
           </div>
-        </Wrapper>
+          <PeopleList
+            title='Accused'
+            people={ [{
+              content: activeCoaccused.fullName,
+              subcontent: activeCoaccused.gender + ', ' + activeCoaccused.race,
+              url: `${constants.OFFICER_PATH}${activeCoaccused.id}/`
+            }] }
+          />
+        </Sticky>
+        <div>
+
+          <ComplaintCategory
+            category={ activeCoaccused.category }
+            subcategory={ activeCoaccused.subcategory }
+          />
+          <Complainants complainants={ complaint.complainants } />
+
+          <Outcome
+            finalFinding={ activeCoaccused.finalFinding }
+            recommended={ activeCoaccused.reccOutcome }
+            finalOutcome={ activeCoaccused.finalOutcome }
+          />
+
+          <InvestigationTimeline
+            incidentDate={ complaint.incidentDate }
+            startDate={ activeCoaccused.startDate }
+            endDate={ activeCoaccused.endDate }
+          />
+
+          <IncidentLocation
+            address={ complaint.address }
+            point={ complaint.point }
+            beat={ complaint.beat }
+            location={ complaint.location }
+          />
+
+          <Involvements involvements={ complaint.involvements } />
+
+          <Attachment
+            title='Documents'
+            notAvailableMessage='There are no documents publicly available for this incident at this time.'
+          />
+
+          <Attachment
+            title='Audio'
+            notAvailableMessage='There are no audio clips publicly available for this incident at this time.'
+          />
+
+          <Attachment
+            title='Video'
+            notAvailableMessage='There are no video clips publicly available for this incident at this time.'
+          />
+
+        </div>
       </div>
     );
   }
-});
+}
 
-export default ComplaintPage;
+ComplaintPage.propTypes = {
+  requestComplaint: PropTypes.func,
+  complaintId: PropTypes.number,
+  coaccusedId: PropTypes.number,
+  complaint: PropTypes.object
+};

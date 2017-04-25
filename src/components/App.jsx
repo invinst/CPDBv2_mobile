@@ -6,7 +6,6 @@ import AppHistory from 'utils/History';
 import constants from 'constants';
 
 import MainPageContainer from 'containers/MainPageContainer';
-import ComplaintPageContainer from 'containers/ComplaintPageContainer';
 import ReportingPageContainer from 'containers/ReportingPageContainer';
 import ReportingDetailContainer from 'containers/ReportingPage/ReportingDetailContainer';
 import FAQPageContainer from 'containers/FAQPageContainer';
@@ -15,6 +14,7 @@ import AboutPageContainer from 'containers/AboutPageContainer';
 import SearchPageContainer from 'containers/SearchPageContainer';
 import OfficerSummaryContainer from 'containers/OfficerPage/OfficerSummaryContainer';
 import OfficerTimelineContainer from 'containers/OfficerPage/OfficerTimelineContainer';
+import ComplaintPageContainer from 'containers/ComplaintPageContainer';
 
 import 'styles/Style.sass';
 import 'styles/Fonts.sass';
@@ -27,7 +27,6 @@ const App = React.createClass({
   render() {
     return (
       <Router history={ AppHistory }>
-        <Route path='/complaint/:crid/:slug/:categoryHashId' component={ ComplaintPageContainer } />
         <Route path='/s/:query' component={ MainPageContainer } />
         <Route path='/q/:query' component={ MainPageContainer } />
         <Route path='/' component={ MainPageContainer }>
@@ -47,6 +46,11 @@ const App = React.createClass({
 
           <Route path={ `${constants.OFFICER_PATH}:id/` } component={ OfficerSummaryContainer } />
           <Route path={ `${constants.OFFICER_PATH}:id/timeline/` } component={ OfficerTimelineContainer } />
+
+          <Route
+            path={ `${constants.COMPLAINT_PATH}:complaintId/:coaccusedId/` }
+            component={ ComplaintPageContainer }
+          />
 
         </Route>
       </Router>

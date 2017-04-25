@@ -49,7 +49,7 @@ class OfficerTimeline extends Component {
   }
 
   renderTimelineBody() {
-    const { loading, timeline } = this.props;
+    const { loading, timeline, pk } = this.props;
     if (loading || !timeline) {
       return (
         <LoadingPage />
@@ -64,6 +64,7 @@ class OfficerTimeline extends Component {
             { this.renderDivider() }
             <CRItem
               result={ result }
+              officerId={ pk }
             />
           </div>
         );

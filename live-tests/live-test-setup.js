@@ -5,6 +5,7 @@ var path = require('path');
 var server = require(__dirname + '/mock-server');
 
 function importTest(name, path) {
+  console.log('>> importing test:', name);
   describe(name, function () {
     require(path);
   });
