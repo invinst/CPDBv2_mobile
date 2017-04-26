@@ -1,3 +1,4 @@
+import should from 'should';
 import React from 'react';
 import { shallow } from 'enzyme';
 
@@ -24,5 +25,16 @@ describe('Complainants component', function () {
     rows.at(0).text().should.equal('White, Male, Age 18');
     rows.at(1).text().should.equal('Unknown, Unknown');
 
+  });
+
+  it('should return null if complainants are unavailable', function () {
+    const wrapper = shallow(
+      <Complainants
+        complainants={ undefined }
+      />
+    );
+
+    // https://github.com/airbnb/enzyme/issues/52#issuecomment-162223843
+    should(wrapper.get(0)).be.null();
   });
 });
