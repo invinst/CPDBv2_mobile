@@ -109,7 +109,7 @@ describe('NavigationUtil', () => {
   });
 
 
-  describe ('instantScrollToTop', () => {
+  describe('instantScrollToTop', () => {
     it('should scroll whole body to top', function () {
       // Have to set body size so that it can actually scroll
       document.body.style.height = '9999px';
@@ -121,6 +121,40 @@ describe('NavigationUtil', () => {
       NavigationUtil.instantScrollToTop();
 
       document.body.scrollTop.should.be.eql(0);
+    });
+  });
+
+
+  describe('getCurrentScrollPosition', function () {
+    beforeEach(function () {
+      // Set a great height so that body is scrollable
+      this.originalHeight = document.body.style.height;
+      document.body.style.height = '9999px';
+    });
+
+    afterEach(function () {
+      document.body.style.height = this.originalHeight;
+    });
+
+    it('should return correct value', function () {
+      document.body.scrollTop = 12;
+      NavigationUtil.getCurrentScrollPosition().should.eql(12);
+    });
+  });
+
+
+  describe('instantScrollTo', function () {
+    beforeEach(function () {
+      this.stubScrollTo = stub(window, 'scrollTo');
+    });
+
+    afterEach(function () {
+      this.stubScrollTo.restore();
+    });
+
+    it('should call window.scrollTo', function () {
+      NavigationUtil.instantScrollTo(111);
+      this.stubScrollTo.calledWith(0, 111).should.be.true();
     });
   });
 });

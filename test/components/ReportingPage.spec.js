@@ -76,6 +76,8 @@ describe('<ReportingPage />', () => {
       reports: ['foo', 'bar']
     };
 
+    const loadMoreProp = spy();
+
     const stubRenderReportingItems = stub(ReportingPage.prototype, 'renderReportingItems')
       .callsFake((reports) => {
         if (isEqual(reports, ['foo', 'bar'])) {
@@ -86,12 +88,15 @@ describe('<ReportingPage />', () => {
     const wrapper = shallow(
       <ReportingPage
         pagination={ paginationProp }
-        loadMore={ () => {} } />
+        loadMore={ loadMoreProp } />
     );
 
     const infiniteScroll = wrapper.find('.sheet-body').find('InfiniteScroll');
     infiniteScroll.prop('hasMore').should.be.false();
     infiniteScroll.contains('foobar').should.be.true();
+
+    infiniteScroll.prop('loadMore')();
+    loadMoreProp.calledOnce.should.be.true();
 
     stubRenderReportingItems.restore();
   });
