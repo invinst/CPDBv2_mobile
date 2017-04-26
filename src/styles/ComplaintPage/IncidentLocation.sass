@@ -1,5 +1,7 @@
 @import '../Variables'
 
+$marker-color: #f9001e
+
 :local(.incident-location)
 
   .leaflet-container
@@ -8,7 +10,7 @@
     z-index: 0
 
     .marker-icon
-      background-color: #f9001e
+      background-color: $marker-color
       border-radius: 2px
 
   .captions
