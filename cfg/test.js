@@ -51,7 +51,6 @@ module.exports = {
       examples: path.join(__dirname, '/../test/examples'),
       factories: path.join(__dirname, '/../test/factories'),
       components: srcPath + 'components/',
-      presenters: srcPath + 'presenters/',
       reducers: srcPath + 'reducers/',
       middleware: srcPath + 'middleware/',
       containers: srcPath + 'containers/',
