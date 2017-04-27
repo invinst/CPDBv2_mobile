@@ -9,7 +9,7 @@ import {
   FAQ_REQUEST_FAILURE
 } from 'actions/faq-page';
 import constants from 'constants';
-import { v2v2Url } from 'utils/UrlUtil';
+import { v2Url } from 'utils/UrlUtil';
 
 
 describe('faq page actions', function () {
@@ -25,7 +25,7 @@ describe('faq page actions', function () {
         ],
         payload: {
           request: {
-            url: v2v2Url(constants.FAQ_API_ENDPOINT),
+            url: v2Url(constants.FAQ_API_ENDPOINT),
             adapter: undefined,
             params: undefined
           }
@@ -45,7 +45,7 @@ describe('faq page actions', function () {
         ],
         payload: {
           request: {
-            url: v2v2Url(constants.FAQ_API_ENDPOINT + '1/'),
+            url: v2Url(constants.FAQ_API_ENDPOINT + '1/'),
             adapter: undefined,
             params: undefined
           }

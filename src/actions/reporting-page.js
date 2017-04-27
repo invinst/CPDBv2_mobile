@@ -1,5 +1,5 @@
 import { get } from 'actions/common/async-action';
-import { v2v2Url } from 'utils/UrlUtil';
+import { v2Url } from 'utils/UrlUtil';
 import constants from 'constants';
 
 export const REPORTING_PAGE_REQUEST_START = 'REPORTING_PAGE_REQUEST_START';
@@ -7,7 +7,7 @@ export const REPORTING_PAGE_REQUEST_SUCCESS = 'REPORTING_PAGE_REQUEST_SUCCESS';
 export const REPORTING_PAGE_REQUEST_FAILURE = 'REPORTING_PAGE_REQUEST_FAILURE';
 
 export const requestReportingPage = get(
-  v2v2Url(constants.REPORTING_API_ENDPOINT),
+  v2Url(constants.REPORTING_API_ENDPOINT),
   [REPORTING_PAGE_REQUEST_START, REPORTING_PAGE_REQUEST_SUCCESS, REPORTING_PAGE_REQUEST_FAILURE]
 );
 
@@ -15,6 +15,6 @@ export const REPORT_REQUEST_START = 'REPORT_REQUEST_START';
 export const REPORT_REQUEST_SUCCESS = 'REPORT_REQUEST_SUCCESS';
 export const REPORT_REQUEST_FAILURE = 'REPORT_REQUEST_FAILURE';
 
-export const requestReport = (id) => (get(v2v2Url(`${constants.REPORTING_API_ENDPOINT}${id }/`), [
+export const requestReport = (id) => (get(v2Url(`${constants.REPORTING_API_ENDPOINT}${id }/`), [
   REPORT_REQUEST_START, REPORT_REQUEST_SUCCESS, REPORT_REQUEST_FAILURE]
 )());

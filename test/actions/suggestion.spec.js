@@ -6,7 +6,7 @@ import {
   SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_INPUT_CHANGED, SEARCH_RESET, SEARCH_SAVE_TO_RECENT
 } from 'actions/suggestion';
 import constants from 'constants';
-import { v2v2Url } from 'utils/UrlUtil';
+import { v2Url } from 'utils/UrlUtil';
 
 
 describe('suggestions actions', function () {
@@ -16,7 +16,7 @@ describe('suggestions actions', function () {
         types: [SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE],
         payload: {
           request: {
-            url: v2v2Url(constants.SUGGESTION_API_ENDPOINT),
+            url: v2Url(constants.SUGGESTION_API_ENDPOINT),
             adapter: undefined,
             params: undefined
           }
@@ -34,7 +34,7 @@ describe('suggestions actions', function () {
         types: [SUGGEST_ALL_REQUEST_START, SUGGEST_ALL_REQUEST_SUCCESS, SUGGEST_ALL_REQUEST_FAILURE],
         payload: {
           request: {
-            url: v2v2Url(constants.SUGGESTION_API_ENDPOINT + query + '/'),
+            url: v2Url(constants.SUGGESTION_API_ENDPOINT + query + '/'),
             adapter: undefined,
             params: { contentType: categoryPath }
           }
@@ -53,7 +53,7 @@ describe('suggestions actions', function () {
         ],
         payload: {
           request: {
-            url: v2v2Url(constants.SUGGESTION_API_ENDPOINT),
+            url: v2Url(constants.SUGGESTION_API_ENDPOINT),
             adapter: undefined,
             params: {}
           }

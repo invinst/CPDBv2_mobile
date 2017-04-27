@@ -134,7 +134,7 @@ export default class SearchPage extends Component {
 
             <button
               className='bt-done'
-              onClick={ () => { goUp(router, window.location.pathname); } }>
+              onClick={ goUp.bind(this, router, window.location.pathname) }>
               Done
             </button>
           </div>

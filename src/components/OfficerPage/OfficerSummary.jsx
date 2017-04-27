@@ -49,7 +49,7 @@ class OfficerSummary extends Component {
 
         <OfficerTopLinks id={ pk } currentPath='summary' />
 
-        <div>
+        <div className='assignment-detail-section'>
           <SectionHeader text='Assignment Details' />
           <SectionRow label='Unit' value={ summary.unit } />
           <SectionRow label='Rank' value={ summary.rank } />
@@ -61,7 +61,7 @@ class OfficerSummary extends Component {
             extraInfo={ summary.yearsSinceDateOfAppt } />
         </div>
 
-        <div>
+        <div className='demographics-section'>
           <SectionHeader text='Demographics' />
           <SectionRow label='Race' value={ summary.race } />
           <SectionRow label='Sex' value={ summary.sex } />

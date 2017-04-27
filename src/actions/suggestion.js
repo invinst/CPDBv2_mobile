@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions';
 import { get } from 'actions/common/async-action';
-import { v2v2Url } from 'utils/UrlUtil';
+import { v2Url } from 'utils/UrlUtil';
 import constants from 'constants';
 
 
@@ -28,13 +28,13 @@ export const UPDATE_ACTIVE_CATEGORY = 'UPDATE_ACTIVE_CATEGORY';
 
 
 export const suggestTerm = get(
-  v2v2Url(constants.SUGGESTION_API_ENDPOINT), [SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS,
+  v2Url(constants.SUGGESTION_API_ENDPOINT), [SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS,
     SUGGESTION_REQUEST_FAILURE]
 );
 
 export const suggestAllFromCategory = (categoryPath, query) => {
   const suggest = get(
-    v2v2Url(constants.SUGGESTION_API_ENDPOINT),
+    v2Url(constants.SUGGESTION_API_ENDPOINT),
     [
       SUGGEST_ALL_REQUEST_START,
       SUGGEST_ALL_REQUEST_SUCCESS,
@@ -47,7 +47,7 @@ export const suggestAllFromCategory = (categoryPath, query) => {
 
 export const fetchSuggestedSearchItems = () => {
   const suggest = get(
-    v2v2Url(constants.SUGGESTION_API_ENDPOINT),
+    v2Url(constants.SUGGESTION_API_ENDPOINT),
     [
       FETCH_SUGGESTED_SEARCH_ITEMS_START,
       FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS,

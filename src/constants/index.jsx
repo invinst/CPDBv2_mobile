@@ -21,11 +21,6 @@ export default {
   DOCUMENT_REQUEST_SUCCESS: c++,
   DOCUMENT_REQUEST_FAIL: c++,
 
-  //InterfaceText events
-  GET_INTERFACE_TEXT_SUCCESS: c++,
-  GET_INTERFACE_TEXT_FAILED: c++,
-
-
   //OfficerPage events
   OFFICER_PAGE_RECEIVED_DATA: c++,
   OFFICER_PAGE_FAILED_TO_RECEIVED_DATA: c++,
@@ -210,7 +205,6 @@ export default {
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
-  VFTG_API_ENDPOINT: '/vftg/',
   LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
   REPORTING_API_ENDPOINT: '/reports/',
   FAQ_API_ENDPOINT: '/faqs/',

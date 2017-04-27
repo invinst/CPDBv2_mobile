@@ -9,7 +9,7 @@ import {
   REPORT_REQUEST_FAILURE
 } from 'actions/reporting-page';
 import constants from 'constants';
-import { v2v2Url } from 'utils/UrlUtil';
+import { v2Url } from 'utils/UrlUtil';
 
 
 describe('reporting page actions', function () {
@@ -25,7 +25,7 @@ describe('reporting page actions', function () {
         ],
         payload: {
           request: {
-            url: v2v2Url(constants.REPORTING_API_ENDPOINT),
+            url: v2Url(constants.REPORTING_API_ENDPOINT),
             adapter: undefined,
             params: undefined
           }
@@ -45,7 +45,7 @@ describe('reporting page actions', function () {
         ],
         payload: {
           request: {
-            url: v2v2Url(constants.REPORTING_API_ENDPOINT + '1/'),
+            url: v2Url(constants.REPORTING_API_ENDPOINT + '1/'),
             adapter: undefined,
             params: undefined
           }

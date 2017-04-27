@@ -39,7 +39,6 @@ module.exports = {
       constants: `${defaultSettings.srcPath}/constants/`,
       reducers: `${defaultSettings.srcPath}/reducers/`,
       middleware: `${defaultSettings.srcPath}/middleware/`,
-      presenters: `${defaultSettings.srcPath}/presenters/`,
       containers: `${defaultSettings.srcPath}/containers/`,
       selectors: `${defaultSettings.srcPath}/selectors/`,
       img: `${defaultSettings.srcPath}/img/`,
