@@ -55,6 +55,14 @@ brew cask install java
 brew install chromedriver  # or `brew upgrade chromedriver`
 ```
 
+To run single live-test file:
+
+```bash
+yarn run live-test -- --file live-tests/test/complaint-page.spec.js  
+# or
+yarn run live-test -- --file complaint-page
+```
+
 
 
 
