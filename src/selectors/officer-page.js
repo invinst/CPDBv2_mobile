@@ -35,6 +35,7 @@ export const officerSummarySelector = createSelector(
       sex: summary.gender,
       complaints: {
         count: complaints.count,
+        sustainedCount: complaints.sustained_count,
         facets: complaints.facets.map(({ name, entries }) => ({
           name: startCase(name),
           entries
