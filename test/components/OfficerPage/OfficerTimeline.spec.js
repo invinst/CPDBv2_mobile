@@ -125,7 +125,7 @@ describe('<OfficerTimeline />', function () {
     crItem.prop('result').should.eql({ kind: 'CR', foo: 'bar' });
   });
 
-  it('should render UnitChangeItem', function () {
+  it('should render Unit Change item', function () {
     const timeline = {
       results: [
         {
@@ -145,9 +145,65 @@ describe('<OfficerTimeline />', function () {
       />
     );
 
-    const unitChangeItem = wrapper.find('UnitChangeItem');
+    const unitChangeItem = wrapper.find('SimpleEventItem');
     unitChangeItem.prop('date').should.eql('Jun 01, 2011');
-    unitChangeItem.prop('unitName').should.eql('12345');
+    unitChangeItem.prop('title').should.eql('Unit Change');
+    unitChangeItem.prop('content').should.eql('Assigned to Unit 12345');
+  });
+
+  it('should render Joined item', function () {
+    const timeline = {
+      results: [
+        {
+          kind: 'JOINED',
+          date: 'Jun 01, 2111',
+          'unit_name': '12345'
+        }
+      ]
+    };
+
+    const wrapper = shallow(
+      <OfficerTimeline
+        pk={ 12 }
+        found={ true }
+        timeline={ timeline }
+        summary={ {} }
+      />
+    );
+
+    const item = wrapper.find('SimpleEventItem');
+    item.prop('date').should.eql('Jun 01, 2111');
+    item.prop('title').should.eql('Joined CPD');
+  });
+
+  it('should render YearlyStats item', function () {
+    const timeline = {
+      results: [
+        {
+          kind: 'YEAR',
+          year: 2017,
+          crs: 2,
+          trrs: 3,
+          salary: '$111'
+        }
+      ]
+    };
+
+    const wrapper = shallow(
+      <OfficerTimeline
+        pk={ 12 }
+        found={ true }
+        timeline={ timeline }
+        summary={ {} }
+      />
+    );
+
+    const item = wrapper.find('YearlyStats');
+    item.prop('year').should.eql(2017);
+    item.prop('crCount').should.eql(2);
+    item.prop('trrCount').should.eql(3);
+    item.prop('salary').should.eql('$111');
+
   });
 
   it('should have body inside <InfiniteScroll>', function () {

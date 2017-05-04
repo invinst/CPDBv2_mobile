@@ -1,20 +1,21 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import UnitChangeItem from 'components/OfficerPage/OfficerTimeline/UnitChangeItem';
+import SimpleEventItem from 'components/OfficerPage/OfficerTimeline/SimpleEventItem';
 
 
-describe('<UnitChangeItem />', function () {
+describe('<SimpleEventItem />', function () {
 
   it('should be renderable', function () {
-    const wrapper = shallow(<UnitChangeItem />);
+    const wrapper = shallow(<SimpleEventItem />);
     wrapper.should.be.ok();
   });
 
   it('should render data', function () {
     const wrapper = shallow(
-      <UnitChangeItem
+      <SimpleEventItem
         date='Jun 02, 2012'
-        unitName='54321'
+        title='Unit Change'
+        content='Assigned to Unit 54321'
       />
     );
 

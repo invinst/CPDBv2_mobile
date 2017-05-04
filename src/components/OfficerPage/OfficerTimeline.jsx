@@ -8,7 +8,7 @@ import NotMatchedOfficerPage from 'components/OfficerPage/NotMatchedOfficerPage'
 import OfficerTopLinks from 'components/OfficerPage/OfficerTopLinks';
 import YearlyStats from 'components/OfficerPage/OfficerTimeline/YearlyStats';
 import CRItem from 'components/OfficerPage/OfficerTimeline/CRItem';
-import UnitChangeItem from 'components/OfficerPage/OfficerTimeline/UnitChangeItem';
+import SimpleEventItem from 'components/OfficerPage/OfficerTimeline/SimpleEventItem';
 import { scrollToTop } from 'utils/NavigationUtil';
 
 import style from 'styles/OfficerPage/OfficerTimeline.sass';
@@ -43,7 +43,6 @@ class OfficerTimeline extends Component {
   renderDivider() {
     return (
       <div className={ style.divider }>
-        <div className={ style.verticalLine }></div>
       </div>
     );
   }
@@ -56,40 +55,54 @@ class OfficerTimeline extends Component {
       );
     }
 
+    const lastIndex = timeline.results.length - 1;
     const timelineResults = timeline.results.map((result, index) => {
-      // TODO implement more timeline item types
+      let item = null;
       if (result.kind === 'CR') {
-        return (
-          <div key={ index }>
-            { this.renderDivider() }
-            <CRItem
-              result={ result }
-              officerId={ pk }
-            />
-          </div>
+        item = (
+          <CRItem
+            result={ result }
+            officerId={ pk }
+          />
         );
       } else if (result.kind === 'UNIT_CHANGE') {
-        return (
-          <div key={ index }>
-            { this.renderDivider() }
-            <UnitChangeItem
-              date={ result['date'] }
-              unitName={ result['unit_name'] }
-            />
-          </div>
+        item = (
+          <SimpleEventItem
+            date={ result['date'] }
+            title='Unit Change'
+            content={ `Assigned to Unit ${result['unit_name']}` }
+          />
+        );
+      } else if (result.kind === 'YEAR') {
+        item = (
+          <YearlyStats
+            year={ result.year }
+            crCount={ result.crs }
+            trrCount={ result.trrs }
+            salary={ result.salary }
+          />
+        );
+      } else if (result.kind === 'JOINED') {
+        item = (
+          <SimpleEventItem
+            date={ result['date'] }
+            title='Joined CPD'
+          />
         );
       }
+
+      return (
+        <div key={ index }>
+          { this.renderDivider() }
+          <div className={ index === lastIndex ? 'last-item' : null }>
+            { item }
+          </div>
+        </div>
+      );
     });
 
     return (
       <div>
-        { this.renderDivider() }
-        <YearlyStats
-          year={ 2017 }
-          crCount={ 0 }
-          trrCount={ 0 }
-          salary='N/A'
-          />
         { timelineResults }
       </div>
     );
@@ -118,6 +131,7 @@ class OfficerTimeline extends Component {
           <OfficerTopLinks id={ pk } currentPath='timeline' />
           <div className='officer-timeline-body'>
             { body }
+            <div className='vertical-line'></div>
           </div>
         </InfiniteScroll>
       </div>

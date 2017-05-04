@@ -37,7 +37,7 @@ describe('officer actions', function () {
         types: [OFFICER_TIMELINE_REQUEST_START, OFFICER_TIMELINE_REQUEST_SUCCESS, OFFICER_TIMELINE_REQUEST_FAILURE],
         payload: {
           request: {
-            url: `${v2Url(constants.OFFICER_API_ENDPOINT)}11/timeline/`,
+            url: `${v2Url(constants.OFFICER_API_ENDPOINT)}11/timeline-items/`,
             adapter: undefined,
             params: {}
           }

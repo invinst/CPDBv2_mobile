@@ -1,8 +1,12 @@
 @import '../../Variables'
 
-:local(.unit-change-item)
-  padding: $horizontal-padding 0 $horizontal-padding $horizontal-padding
+$date-line-height: 17px
+$top-padding: $horizontal-padding
+
+:local(.simple-event-item)
+  padding: $top-padding 0 $horizontal-padding $horizontal-padding
   position: relative
+  background-color: white
 
   :local(.title)
     display: inline-block
@@ -16,22 +20,15 @@
     width: 50%
     color: $dusty-gray
     padding-right: $horizontal-padding
+    height: $date-line-height
 
-    img
+    .dot
       position: relative
-      z-index: 0
+      z-index: 1
       margin-left: 7px
       right: -3px
 
-  :local(.unit-name)
+  :local(.content)
     color: $dusty-gray
     font-weight: 400
     margin-top: 11px
-
-  :local(.vertical-line)
-    height: 100%
-    border-right: 2px solid #e9e8e8
-    position: absolute
-    right: $horizontal-padding
-    top: 0
-    bottom: 0
