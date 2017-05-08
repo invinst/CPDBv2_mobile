@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Sticky } from 'react-sticky';
 import { find } from 'lodash';
 import cx from 'classnames';
+import ReactHeight from 'react-height';
 
 import { scrollToTop } from 'utils/NavigationUtil';
 import style from 'styles/ComplaintPage.sass';
@@ -23,7 +24,8 @@ export default class ComplaintPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      coaccusedIsExpanded: false
+      coaccusedIsExpanded: false,
+      headerHeight: 0
     };
   }
 
@@ -46,6 +48,12 @@ export default class ComplaintPage extends Component {
     return find(complaint.coaccused, c => c.id === coaccusedId);
   }
 
+  updateHeaderHeight(height) {
+    this.setState({
+      headerHeight: height
+    });
+  }
+
   render() {
     const { complaint } = this.props;
 
@@ -58,19 +66,22 @@ export default class ComplaintPage extends Component {
     return (
       <div className={ style.complaintPage }>
         <Sticky className='complaint-header'>
-          <div className={ cx('sheet-header header', { expanded: this.state.coaccusedIsExpanded }) }>
-            <span onClick={ scrollToTop() }>CR { complaint.crid }</span>
-            <span onClick={ () => { this.toggleCoaccused(); } } className='subheader'>
-              <span className='coaccused-text'>{ complaint.coaccused.length } coaccused</span>
-              <Arrow direction={ this.state.coaccusedIsExpanded ? 'up' : 'down' } />
-            </span>
-          </div>
+          <ReactHeight className='relative' onHeightReady={ this.updateHeaderHeight.bind(this) }>
+            <div className={ cx('sheet-header header', { expanded: this.state.coaccusedIsExpanded }) }>
+              <span onClick={ scrollToTop() }>CR { complaint.crid }</span>
+              <span onClick={ () => { this.toggleCoaccused(); } } className='subheader'>
+                <span className='coaccused-text'>{ complaint.coaccused.length } coaccused</span>
+                <Arrow direction={ this.state.coaccusedIsExpanded ? 'up' : 'down' } />
+              </span>
+            </div>
+          </ReactHeight>
 
           <CoaccusedDropdown
             complaintId={ complaint.crid }
             activeCoaccusedId={ activeCoaccused.id }
             coaccused={ complaint.coaccused }
             isExpanded={ this.state.coaccusedIsExpanded }
+            headerHeight={ this.state.headerHeight }
           />
 
           <PeopleList

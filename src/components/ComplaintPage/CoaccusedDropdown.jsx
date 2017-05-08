@@ -7,7 +7,7 @@ import style from 'styles/ComplaintPage/CoaccusedDropdown.sass';
 
 export default class CoaccusedDropdown extends Component {
   renderContent() {
-    const { coaccused, complaintId, activeCoaccusedId } = this.props;
+    const { coaccused, complaintId, activeCoaccusedId, headerHeight } = this.props;
 
     const rows = coaccused.map(({ fullName, id }, index) => {
       const viewing = <span className='viewing-box'>Viewing</span>;
@@ -25,12 +25,12 @@ export default class CoaccusedDropdown extends Component {
       );
     });
 
-    // Each coaccused's height is 41, but "viewing" coaccused is 7 pixels taller
-    const height = this.props.isExpanded ? coaccused.length * 41 + 7 : 0;
+    // Each coaccused's height is 41, but "viewing" coaccused is 7 pixels taller, also 133px padding because reasons
+    const height = this.props.isExpanded ? coaccused.length * 41 + 7 + 133 : 0;
 
     const animationCSS = {
       height: `${height}px`,
-      maxHeight: 'calc(100vh - 62px)',  // 62px is the sheet header's height
+      maxHeight: `calc(100vh - ${headerHeight}px)`,  // 62px is the sheet header's height
       overflow: height > 0 ? 'scroll' : 'hidden',
       transition: 'height 200ms ease-in'
     };
@@ -40,6 +40,7 @@ export default class CoaccusedDropdown extends Component {
         <div className='content'>
           { rows }
         </div>
+        <div className='dropdown-padding'></div>
       </div>
     );
   }
@@ -59,5 +60,6 @@ CoaccusedDropdown.propTypes = {
   complaintId: PropTypes.string,
   coaccused: PropTypes.array,
   activeCoaccusedId: PropTypes.number,
-  isExpanded: PropTypes.bool
+  isExpanded: PropTypes.bool,
+  headerHeight: PropTypes.number
 };

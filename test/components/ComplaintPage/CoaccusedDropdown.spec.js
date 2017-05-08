@@ -100,7 +100,7 @@ describe('CoaccusedDropdown component', function () {
     });
 
     it('should have correctly calculated height', function () {
-      const height = 2 * 41 + 7;
+      const height = 2 * 41 + 7 + 133;
       this.styleProp.height.should.eql(`${height}px`);
     });
 
