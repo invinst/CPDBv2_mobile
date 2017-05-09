@@ -10,7 +10,7 @@
     dest={{ application_root_path }}
     accept_hostkey=True
     version={{ branch }}
-    key_file=/home/ansible/.ssh/khoi_github
+    key_file=/home/{{ deploy_user }}/.ssh/khoi_github
   when: pull_code_from_git
   tags: deploy
 
@@ -44,7 +44,7 @@
   tags: deploy
 
 - name: Build everything
-  command: yarn run dist
+  command: yarn run {{ yarn_command }}
     chdir={{ application_root_path }}
   tags: deploy
 

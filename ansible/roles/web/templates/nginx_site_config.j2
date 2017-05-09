@@ -1,10 +1,16 @@
 server {
-    listen      80;
+    listen      {{ '443' if enable_https else '80'  }};
     server_name {{ nginx_server_name }};
     gzip on;
     gzip_comp_level 5;
     gzip_types text/html application/javascript application/x-javascript text/javascript text/css ;
     client_max_body_size 4G;
+
+{% if enable_https %}
+    ssl on;
+    ssl_certificate     {{ ssl_cert_file }};
+    ssl_certificate_key {{ ssl_key_file }};
+{% endif %}
 
     access_log {{ nginx_access_log_file }};
     error_log {{ nginx_error_log_file }};
