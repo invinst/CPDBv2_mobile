@@ -86,7 +86,7 @@ export default class SearchPage extends Component {
       constants.SEARCH_CATEGORY_LINKS_HEIGHT +
       lastCategoryHeight
     );
-    const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
+    const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
     return { height };
   }
 

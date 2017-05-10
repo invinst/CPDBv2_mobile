@@ -30,7 +30,7 @@ export default class CoaccusedDropdown extends Component {
 
     const animationCSS = {
       height: `${height}px`,
-      maxHeight: `calc(100vh - ${headerHeight}px)`,  // 62px is the sheet header's height
+      maxHeight: `${window.innerHeight - headerHeight}px`,
       overflow: height > 0 ? 'scroll' : 'hidden',
       transition: 'height 200ms ease-in'
     };

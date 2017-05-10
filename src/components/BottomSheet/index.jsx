@@ -102,8 +102,9 @@ export default class BottomSheet extends Component {
       minHeightOffset -= constants.BOTTOM_PADDING;
       paddingBottom = constants.BOTTOM_PADDING;
     }
+    const minHeight = window.innerHeight - minHeightOffset;
     return {
-      minHeight: `calc(100vh - ${minHeightOffset}px)`,
+      minHeight: `${minHeight}px`,
       paddingBottom: `${paddingBottom}px`
     };
   }
