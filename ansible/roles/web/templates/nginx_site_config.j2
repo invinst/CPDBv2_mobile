@@ -1,3 +1,11 @@
+{% if enable_https %}
+server {
+    listen      80;
+    server_name {{ nginx_server_name }};
+    rewrite     ^ https://$server_name$request_uri? permanent;
+}
+{% endif %}
+
 server {
     listen      {{ '443' if enable_https else '80'  }};
     server_name {{ nginx_server_name }};
