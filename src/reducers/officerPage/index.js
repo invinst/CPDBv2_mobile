@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux';
 
-import isRequesting from './is-requesting';
-import officer from './officer';
-import isSuccess from './is-success';
+import summaries from './summaries/index';
+import timelines from './timelines/index';
 
 
 export default combineReducers({
-  officer,
-  isRequesting,
-  isSuccess
+  summaries,
+  timelines
 });

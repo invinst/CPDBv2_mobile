@@ -15,13 +15,12 @@ let config = Object.assign({}, baseConfig, {
   entry: [
     'babel-polyfill',
     'webpack-dev-server/client?http://127.0.0.1:' + port,
-    'webpack/hot/only-dev-server',
     './src/index'
   ],
   devServer: {
     contentBase: './src/',
     historyApiFallback: true,
-    hot: true,
+    hot: false,
     port: port,
     publicPath: defaultSettings.publicPath,
     noInfo: true
@@ -29,7 +28,6 @@ let config = Object.assign({}, baseConfig, {
   cache: true,
   devtool: 'eval-source-map',
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
@@ -41,7 +39,7 @@ let config = Object.assign({}, baseConfig, {
 // Add needed loaders to the defaults here
 config.module.loaders.push({
   test: /\.(js|jsx)$/,
-  loader: 'react-hot!babel-loader',
+  loader: 'babel-loader',
   include: [].concat(
     config.additionalPaths,
     [path.join(__dirname, '/../src')]

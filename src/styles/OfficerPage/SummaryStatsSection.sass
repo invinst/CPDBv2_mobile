@@ -1,0 +1,74 @@
+@import '../Variables'
+
+$gray-border: 2px solid $alto-solid
+$bright-orange: #ff5f00
+
+$count-width: 32px
+$entry-name-width: calc(100% - #{$count-width * 2})
+
+:local(.stats-section)
+
+  .facet
+    border-bottom: $gray-border
+
+  .facet-name
+    padding: $horizontal-padding $horizontal-padding 13px $horizontal-padding
+    color: $dusty-gray
+
+  .facet-entry
+    padding: $horizontal-padding $horizontal-padding $horizontal-padding 0
+    margin-left: $horizontal-padding
+    border-bottom: $gray-border
+
+    &.total
+      margin-left: 0
+      padding-left: $horizontal-padding
+
+    &:last-child
+      border-bottom: 0
+
+    .facet-entry-count
+      display: inline-block
+      width: $count-width
+      vertical-align: top
+      color: $thunder
+
+      &.sustained
+        color: $bright-orange
+
+        &.zero
+          color: rgba(255, 95, 0, 0.4)
+
+    .facet-entry-name
+      color: $dusty-gray
+
+      width: $entry-name-width
+      display: inline-block
+
+  .complaint-counts
+    margin-left: 10px
+    font-size: 12px
+
+    .count
+      margin-right: 10px
+      transform: translateY(-10px)
+
+      &::before
+        content: ''
+        width: 11px
+        height: 11px
+        display: inline-block
+        border-radius: 5.5px
+        margin-right: 5px
+
+    .total-count
+      color: $thunder
+
+      &::before
+        background-color: $thunder
+
+    .sustained-count
+      color: $bright-orange
+
+      &::before
+        background-color: $bright-orange

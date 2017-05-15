@@ -19,7 +19,7 @@ var buildApi = function () {
   return {
     mock: mock,
     call: call
-  }
+  };
 };
 
 module.exports = buildApi();

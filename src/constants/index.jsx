@@ -21,11 +21,6 @@ export default {
   DOCUMENT_REQUEST_SUCCESS: c++,
   DOCUMENT_REQUEST_FAIL: c++,
 
-  //InterfaceText events
-  GET_INTERFACE_TEXT_SUCCESS: c++,
-  GET_INTERFACE_TEXT_FAILED: c++,
-
-
   //OfficerPage events
   OFFICER_PAGE_RECEIVED_DATA: c++,
   OFFICER_PAGE_FAILED_TO_RECEIVED_DATA: c++,
@@ -206,12 +201,14 @@ export default {
 
   // API endpoints
   ALLEGATION_API_ENDPOINT: '/api/allegation/',
-  OFFICER_API_ENDPOINT: '/api/officer/',
-  SUGGESTION_API_ENDPOINT: '/api/suggestion/',
+  OFFICER_API_ENDPOINT: '/officers/',
+  SUGGESTION_API_ENDPOINT: '/search-mobile/',
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
-  VFTG_API_ENDPOINT: '/vftg/',
-  LANDING_PAGE_API_ENDPOINT: '/landing-page/',
+  LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
+  REPORTING_API_ENDPOINT: '/reports/',
+  FAQ_API_ENDPOINT: '/faqs/',
+  COMPLAINT_API_ENDPOINT: '/cr/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
@@ -230,5 +227,52 @@ export default {
   SUBSCRIBE_FORM_INITIAL: 'SUBSCRIBE_FORM_INITIAL',
   SUBSCRIBE_FORM_LOADING: 'SUBSCRIBE_FORM_LOADING',
   SUBSCRIBE_FORM_SUCCESS: 'SUBSCRIBE_FORM_SUCCESS',
-  SUBSCRIBE_FORM_FAILURE: 'SUBSCRIBE_FORM_FAILURE'
+  SUBSCRIBE_FORM_FAILURE: 'SUBSCRIBE_FORM_FAILURE',
+
+  // Router paths
+  REPORTING_PATH: '/reporting/',
+  FAQ_PATH: '/faq/',
+  ABOUT_PATH: '/about/',
+  SEARCH_PATH: '/search/',
+  OFFICER_PATH: '/officer/',
+  COMPLAINT_PATH: '/complaint/',
+
+  // Routes that don't have their corresponding component.
+  // NavigationUtil.goUp() skips all of these.
+  NONEXISTENT_ROUTES: [
+    /^\/officer\/$/,
+    /^\/officer\/\d+\/?$/,
+    /^\/complaint\/$/,
+    /^\/complaint\/\d+\/?$/
+  ],
+
+
+  SEARCH_CATEGORIES: [
+    {
+      name: 'Officers',
+      id: 'officers',
+      path: 'OFFICER'
+    },
+    {
+      name: 'CRs',
+      id: 'crs',
+      path: 'CRS'
+    },
+    {
+      name: 'FAQ',
+      id: 'faqs',
+      path: 'FAQ'
+    },
+    {
+      name: 'Reports',
+      id: 'reports',
+      path: 'REPORT'
+    }
+  ],
+
+  // These should match their SASS counterparts in styles/Variables.sass
+  QUERY_INPUT_HEIGHT: 44,
+  SEARCH_CATEGORY_LINKS_HEIGHT: 37,
+  BOTTOM_PADDING: 133,
+  TOP_MARGIN: 58
 };

@@ -22,9 +22,26 @@ describe('configured-axios-middleware', function () {
     it('should fire action with response as payload', () => {
       onSuccess({ action, next, response }).should.eql({
         type: getActionTypes(action)[1],
-        payload: response.data
+        payload: response.data,
+        meta: undefined
       });
+    });
 
+    it('should fire action with provided metadata', () => {
+      const actionWithMeta = {
+        ...action,
+        meta: 'foobar'
+      };
+
+      onSuccess({
+        action: actionWithMeta,
+        next,
+        response
+      }).should.eql({
+        type: getActionTypes(action)[1],
+        payload: response.data,
+        meta: 'foobar'
+      });
     });
   });
 

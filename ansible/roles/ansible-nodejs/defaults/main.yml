@@ -1,0 +1,3 @@
+---
+nodejs:
+  deploy_user_home: '/home/{{ deploy_user }}'

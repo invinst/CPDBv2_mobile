@@ -18,6 +18,9 @@
 
   "test_settings" : {
     "default" : {
+      "globals": {
+        "clientUrl": "http://localhost:9001"
+      },
       "test_runner" : {
         "type" : "mocha",
         "options" : {
@@ -36,7 +39,12 @@
       "desiredCapabilities" : {
         "browserName" : "chrome",
         "javascriptEnabled" : true,
-        "acceptSslCerts" : true
+        "acceptSslCerts" : true,
+        "chromeOptions": {
+          "args": [
+            "window-size=375,667"
+          ]
+        }
       }
     }
   }

@@ -1,14 +1,10 @@
 import { combineReducers } from 'redux';
 
-import isRequesting from './is-requesting';
-import complaint from './complaint';
-import isSuccess from './is-success';
-import toggle from './toggle';
+import complaints from './complaints';
+import notFound from './not-found';
 
 
 export default combineReducers({
-  complaint,
-  toggle,
-  isRequesting,
-  isSuccess
+  complaints,
+  notFound
 });

@@ -1,14 +1,21 @@
 @import 'Variables'
 
 :local(.complaint-page)
-  .content
-    background-color: $content-background
-    .timeline
-      background: $timeline-background
-      padding-bottom: 11px
-    .against-section
-      margin-bottom: 11px
-      background: $section-background
-.toggle-page
-  background-color: $content-background
-  position: absolute
+  font-size: 14px
+
+  .header
+    padding-left: 0
+    margin-left: $horizontal-padding
+
+    .subheader
+      font-size: 14px
+      float: right
+      position: relative
+      top: 50%
+      transform: translateY(-60%)
+
+  .sticky
+    background-color: white
+
+    .title
+      display: none

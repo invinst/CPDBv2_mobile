@@ -1,0 +1,30 @@
+@import '../../Variables'
+
+$row-height: 40px
+
+:local(.yearly-stats)
+  position: relative
+  z-index: 1
+  background-color: $wild-sand
+  padding: 12px 0 0 $horizontal-padding
+  border-top: $divider-weight solid $alto-solid
+
+  :local(.year)
+    padding-right: $horizontal-padding
+    text-align: right
+    font-size: 18px
+    font-weight: 500
+
+  :local(.row)
+    height: $row-height
+    border-bottom: $divider-weight solid $alto-solid
+    
+    &:last-child
+      margin-left: -$horizontal-padding
+      padding-left: $horizontal-padding
+
+    :local(.label)
+      display: inline-block
+      color: $dusty-gray
+      width: 114px
+      line-height: $row-height

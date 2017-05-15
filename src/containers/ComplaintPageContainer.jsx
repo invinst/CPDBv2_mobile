@@ -2,21 +2,21 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import ComplaintPage from 'components/ComplaintPage';
-import { getComplaint } from 'actions/complaint';
+import { requestComplaint } from 'actions/complaint-page';
+import { complaintSelector } from 'selectors/complaint-page';
 
-
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
+  const complaintId = Number.parseInt(ownProps.params.complaintId);
+  const coaccusedId = Number.parseInt(ownProps.params.coaccusedId);
   return {
-    loading: state.complaintPage.isRequesting,
-    found: state.complaintPage.isSuccess,
-    toggle: state.complaintPage.toggle,
-    complaint: state.complaintPage.complaint,
-    crid: ownProps.params.crid
+    complaintId,
+    coaccusedId,
+    complaint: complaintSelector(state, ownProps)
   };
-}
+};
 
 const mapDispatchToProps = {
-  getComplaint
+  requestComplaint
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ComplaintPage));

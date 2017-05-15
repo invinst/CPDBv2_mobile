@@ -1,14 +1,10 @@
 import cx from 'classnames';
-import React, { Component } from 'react';
-import SearchBarContainer from 'containers/Shared/SearchBarContainer';
-import SearchResultsContainer from 'containers/Shared/SearchResultsContainer';
-import VFTGContainer from 'containers/MainPage/MainPageContent/VFTGContainer';
+import React, { Component, PropTypes } from 'react';
 import Header from 'components/MainPage/MainPageContent/Header';
-import FAQ from 'components/MainPage/MainPageContent/FAQ';
-import About from 'components/MainPage/MainPageContent/About';
-import Collaborate from 'components/MainPage/MainPageContent/Collaborate';
 import Footer from 'components/MainPage/MainPageContent/Footer';
 import style from 'styles/MainPage/MainPageContent.sass';
+import { Link } from 'react-router';
+import constants from 'constants';
 
 
 export default class MainPageContent extends Component {
@@ -18,8 +14,7 @@ export default class MainPageContent extends Component {
   }
 
   render() {
-    const { topLeft, query, aboutSection, collaborateSection, faqSection } = this.props;
-    const searchBarWrapperClassNames = cx('search-wrapper animation', { 'top-left': topLeft });
+    const { topLeft, query, reportSection, children } = this.props;
     const headerClassNames = cx(style.mainPageContent, { 'top-left': topLeft });
 
     const searchDescriptionClassNames = cx('search-description', { 'hidden': !!query });
@@ -27,39 +22,40 @@ export default class MainPageContent extends Component {
 
     return (
       <div className={ headerClassNames }>
-        <div style={ { height: landingPageHeight } }>
+        <div className='full-height-wrapper' style={ { height: landingPageHeight } }>
           <Header topLeft={ topLeft } />
           <div className='wrapper animation'>
             <div className='holder'>
-              <div className={ searchBarWrapperClassNames }>
-                <SearchBarContainer />
-              </div>
+              <Link className='search-bar' to={ constants.SEARCH_PATH }>
+                Search
+              </Link>
             </div>
             <div
               className={ searchDescriptionClassNames }>Type the name of a police officer, badge number, or CRID number.
             </div>
+            <Footer isSearchFocused={ topLeft } reportSection={ reportSection } />
           </div>
+
         </div>
 
-        <SearchResultsContainer />
-        <FAQ faqSection={ faqSection } isSearchFocused={ topLeft }/>
-        <VFTGContainer />
-        <About aboutSection={ aboutSection } isSearchFocused={ topLeft }/>
-        <Collaborate collaborateSection={ collaborateSection } isSearchFocused={ topLeft } />
-        <Footer isSearchFocused={ topLeft } />
+        { children }
+
       </div>
     );
   }
-};
+}
 
 MainPageContent.defaultProps = {
   requestLandingPage: () => {}
 };
 
 MainPageContent.propTypes = {
-    topLeft: React.PropTypes.number,
-    query: React.PropTypes.string,
-    aboutSection: React.PropTypes.object,
-    collaborateSection: React.PropTypes.object,
-    requestLandingPage: React.PropTypes.func
+  topLeft: PropTypes.number,
+  query: PropTypes.string,
+  aboutSection: PropTypes.object,
+  collaborateSection: PropTypes.object,
+  requestLandingPage: PropTypes.func,
+  faqSection: PropTypes.object,
+  reportSection: PropTypes.object,
+  children: PropTypes.array
 };

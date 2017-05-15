@@ -1,0 +1,45 @@
+@import 'Variables'
+
+$vertical-margin: 50px
+$padding: $header-logo-padding-x
+
+:local(.reporting-detail)
+
+  .report-title
+    font-size: 30px
+    color: inherit
+    padding: 95px $padding 32px $padding
+    weight: 400
+
+  .report-body
+    padding: $padding
+    padding-right: 0
+    font-size: 20px
+    font-weight: 300
+
+    p
+      padding-right: $horizontal-padding
+
+  .metadata
+    width: 100%
+    margin-bottom: 31px
+    font-size: 14px
+    font-weight: 400
+
+    td
+      padding: $horizontal-padding
+      padding-left: 0
+
+      &:first-child
+        font-weight: 300
+        color: $dusty-gray
+
+      &:second-child
+        color: $metadata-black
+
+
+    tr
+      border-bottom: $divider-weight solid $alto-solid
+
+      &:first-child
+        border-top: $divider-weight solid $alto-solid

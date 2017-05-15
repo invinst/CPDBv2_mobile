@@ -1,0 +1,9 @@
+---
+- hosts: default
+  vars_files:
+    - env_vars/base.yml
+    - env_vars/production.yml
+  roles:
+    - base
+    - ansible-nodejs
+    - web

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { map } from 'lodash';
 import cx from 'classnames';
 
@@ -12,13 +12,13 @@ export default class Collaborate extends Component {
 
   renderContent(aboutContent) {
     return map(aboutContent, (paragraph, key) => (
-      <p className="paragraph" key={ key }>{ paragraph.value }</p>
+      <p className='paragraph' key={ key }>{ paragraph.value }</p>
     ));
   }
 
   render() {
     const isSearchFocused = this.props.isSearchFocused;
-    const {collaborateHeader, collaborateContent} = this.props.collaborateSection;
+    const { collaborateHeader, collaborateContent } = this.props.collaborateSection;
 
     return (
       <div className={ cx(style.collaborate, 'collaborate landing-section', { hidden: isSearchFocused }) }>
@@ -30,7 +30,7 @@ export default class Collaborate extends Component {
           { this.renderContent(collaborateContent) }
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -39,9 +39,13 @@ Collaborate.defaultProps = {
     collaborateHeader: '',
     collaborateContent: ''
   },
-  isSearchFocused: false
+  isSearchFocused: 0
 };
 
-Collaborate.proTypes = {
-  collaborateSection: React.PropTypes.object
+Collaborate.propTypes = {
+  collaborateSection: PropTypes.shape({
+    collaborateHeader: PropTypes.string,
+    collaborateContent: PropTypes.array
+  }),
+  isSearchFocused: PropTypes.number
 };

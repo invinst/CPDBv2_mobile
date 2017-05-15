@@ -6,40 +6,66 @@ import cx from 'classnames';
 import style from 'styles/MainPage.sass';
 
 import MainPageContentContainer from 'containers/MainPage/MainPageContentContainer';
+import BottomSheetContainer from 'containers/BottomSheetContainer';
 
 
 class MainPage extends Component {
   componentDidMount() {
-    const { suggestTerm, urlQuery } = this.props;
-    const sanitizedQuery = urlQuery.replace(/\+|\-|\_/g, ' ');
+    const { fetchSuggestedSearchItems, routeChanged, location } = this.props;
+    fetchSuggestedSearchItems();
+    routeChanged(location.pathname);
+  }
 
-    if (sanitizedQuery) {
-      suggestTerm({ query: sanitizedQuery });
+  componentDidUpdate(prevProps) {
+    const { location, routeChanged } = this.props;
+    if (location.pathname !== prevProps.location.pathname) {
+      routeChanged(location.pathname);
     }
   }
 
   render() {
-    const { isSearchFocused, query } = this.props;
+    const { isSearchFocused, query, children } = this.props;
+
+    let bottomPaddingElement = null;
+    if (this.props.location.pathname === '/') {
+      bottomPaddingElement = <div className='bottom-padding'></div>;
+    }
 
     return (
       <div className={ cx('content', style.mainPage, { gray: isSearchFocused }) }>
-        <MainPageContentContainer topLeft={ isSearchFocused } query={ query }/>
+        <MainPageContentContainer topLeft={ isSearchFocused } query={ query } />
+        <BottomSheetContainer location={ this.props.location }>
+          {
+            children && React.cloneElement(children, {
+              key: location.pathname
+            })
+          }
+        </BottomSheetContainer>
+        { bottomPaddingElement }
       </div>
     );
   }
 }
 
 MainPage.propTypes = {
-  suggestTerm: PropTypes.func.isRequired,
+  fetchSuggestedSearchItems: PropTypes.func.isRequired,
   query: PropTypes.string,
   urlQuery: PropTypes.string,
-  isSearchFocused: PropTypes.bool
+  children: PropTypes.object,
+  isSearchFocused: PropTypes.number,
+  location: PropTypes.object,
+  routeChanged: PropTypes.func
 };
 
 MainPage.defaultProps = {
   isSearchFocused: false,
   query: '',
-  urlQuery: ''
+  urlQuery: '',
+  location: {
+    pathname: ''
+  },
+  routeChanged: () => {},
+  fetchSuggestedSearchItems: () => {}
 };
 
 export default MainPage;

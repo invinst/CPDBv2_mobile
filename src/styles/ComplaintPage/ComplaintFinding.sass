@@ -1,0 +1,29 @@
+@import '../Variables'
+
+:local(.complaint-finding)
+  color: $metadata-black
+  padding: 4px 8px
+
+  &.unfounded
+    background-color: rgba(22, 43, 59, 0.15)
+
+  &.exonerated
+    background-color: rgba(104, 173, 216, 0.15)
+
+  &.not-sustained
+    background-color: rgba(28, 138, 175, 0.15)
+
+  &.sustained
+    background-color: rgba(255, 96, 0, 0.3)
+
+  &.no-cooperation
+    background-color: rgba(165, 180, 190, 0.3)
+
+  &.no-affidavit
+    background-color: rgba(112, 157, 192, 0.3)
+
+  &.discharged
+    background-color: rgba(203, 203, 203, 0.3)
+
+  &.unknown
+    background-color: rgba(152, 152, 152, 0.3)

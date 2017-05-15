@@ -1,19 +1,19 @@
 machine:
+  java:
+    version: 'oraclejdk8'
   node:
-    version: 4.1.0
+    version: 6.1.0
   environment:
     NODE_ENV: development
 dependencies:
   override:
-    - npm install -g npm@3.8.7
-    - npm install -g eslint@2.8.0
-    - npm install -g eslint-plugin-react@5.0.1
-    - npm install -g babel-eslint@6.0.3
-    - npm install
-  cache_directories:
-    - "node_modules"
+    - yarn global add eslint@2.8.0
+    - yarn global add eslint-plugin-react@5.0.1
+    - yarn global add babel-eslint@6.0.3
+    - yarn install --force
+
 test:
   override:
     - eslint src/
-    - npm run ci-test
-    - npm run live-test
+    - yarn run ci-test
+    - yarn run live-test

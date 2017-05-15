@@ -1,0 +1,7 @@
+nginx_server_name: mb.cpdp.co
+branch: master
+yarn_command: prod
+enable_https: yes
+# Reusing cert & key from backend.
+ssl_cert_file: /etc/ssl/cpdb.crt
+ssl_key_file: /etc/ssl/cpdb.key

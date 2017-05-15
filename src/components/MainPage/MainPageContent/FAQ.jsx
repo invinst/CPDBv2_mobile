@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { map } from 'lodash';
 
 import cx from 'classnames';
@@ -21,7 +21,7 @@ export default class FAQ extends Component {
     const { faqs } = this.props.faqSection;
 
     return (
-      <div className={ cx(style.faq, 'landing-section faq animation', {'hidden': topLeft}) }>
+      <div className={ cx(style.faq, 'landing-section faq animation', { 'hidden': topLeft }) }>
         <div className='row'>
           <div className='landing-section-header left'>
             <p className='landing-section-title'>FAQ</p>
@@ -38,10 +38,11 @@ export default class FAQ extends Component {
 }
 
 FAQ.propTypes = {
-  faqSection: React.PropTypes.object
+  faqSection: PropTypes.object,
+  isSearchFocused: PropTypes.number
 };
 
 FAQ.defaultProps = {
   faqSection: [],
-  isSearchFocused: false
+  isSearchFocused: 0
 };
