@@ -20,60 +20,15 @@ var mockFAQ = {
           }
         ]
       }
-    },
-    {
-      'type': 'rich_text',
-      'name': 'answer',
-      'value': {
-        'entityMap': {},
-        'blocks': [
-          {
-            'text': 'Officer or Investigator Name or Badge Number',
-            'entityRanges': [],
-            'depth': 0,
-            'key': 'e3u84',
-            'type': 'unstyled',
-            'inlineStyleRanges': [
-              {
-                'style': 'BOLD',
-                'length': 44,
-                'offset': 0
-              }
-            ],
-            'data': {}
-          },
-          {
-            'text': 'Miscellaneous: specific year or month, from a \'FOIA\' request,\
-             whether the investigaor is \'IPRA\' or \'IAD\'',
-            'entityRanges': [],
-            'depth': 0,
-            'key': '9i25f',
-            'type': 'unstyled',
-            'inlineStyleRanges': [
-              {
-                'style': 'BOLD',
-                'length': 14,
-                'offset': 0
-              }
-            ],
-            'data': {}
-          }
-        ]
-      }
     }
   ],
-  'meta': {
-    'starred': false,
-    'order': 13
-  },
   'id': 31
-}
-;
-
+};
 
 describe('FAQPageTest', function () {
-  it('should navigate to /faq/ when user clicks on its link', function (client) {
-    api.mock('GET', '/faqs/', 200, {
+
+  beforeEach(function (client, done) {
+    api.mock('GET', '/api/v2/faqs/', 200, {
       'count': 14,
       'next': null,
       'previous': null,
@@ -81,73 +36,54 @@ describe('FAQPageTest', function () {
         mockFAQ
       ]
     });
+    api.mock('GET', '/api/v2/faqs/31/', 200, mockFAQ);
 
-    client
-      .url(client.globals.clientUrl)
-      .waitForElementVisible('a[href="/faq/"]', 10000);
-
-    client.click('a[href="/faq/"]');
-    client.waitForElementVisible('.sheet', 4000);
-
-    client.expect.element('.sheet-header').to.be.visible;
-    client.expect.element('.sheet-header').text.to.contain('FAQ');
-
-    client.end();
+    this.faqPage = client.page.faq();
+    this.faqPage.navigate();
+    done();
   });
 
-  it('should render FAQ list and detail', function (client) {
-
-    api.mock('GET', '/faqs/', 200, {
-      'count': 14,
-      'next': null,
-      'previous': null,
-      'results': [
-        mockFAQ
-      ]
+  afterEach(function (client, done) {
+    client.end(function () {
+      done();
     });
-    api.mock('GET', '/faqs/31/', 200, mockFAQ);
-
-    client
-      .url(`${client.globals.clientUrl}/faq/`)
-      .waitForElementVisible('.sheet', 4000);
-
-    client.expect.element('.sheet-header').to.be.visible;
-    client.expect.element('.sheet-header').text.to.contain('FAQ');
-
-    client.expect.element('.row[href="/faq/31/"]').to.be.visible;
-    client.expect.element('.row[href="/faq/31/"] > .question').text.to.contain('What can I type into the search box?');
-
-    client.click('.row[href="/faq/31/"]');
-
-    client.expect.element('.header').text.to.contain('FAQ');
-    client.expect.element('.question').text.to.contain('What can I type into the search box?');
-    client.expect.element('.answer').text.to.contain('Officer or Investigator Name or Badge Number');
-    client.expect.element('.answer').text.to.contain('Miscellaneous: specific year or month, from a');
-
-    client.end();
   });
+
+  it('should render FAQ list', function (client) {
+    const faqPage = this.faqPage;
+    faqPage.expect.element('@sheetHeader').text.to.contain('FAQ');
+    faqPage.section.faqRow.expect.element('@question').text.to.contain('What can I type into the search box?');
+  });
+
+  it('should navigate to FAQ detail on click', function (client) {
+    const faqRow = this.faqPage.section.faqRow;
+    const faqDetailPage = client.page.faqDetail();
+
+    faqRow
+      .click()
+      .assert.urlEquals(faqDetailPage.url(31));
+  });
+
 
   it('should have sticky header', function (client) {
     // Make sure that are so many FAQ items that scrolling down is possible
     const mockResults = (new Array(50)).fill(mockFAQ)
       .map((value, index) => Object.assign({}, value, { id: index }));
 
-    api.mock('GET', '/faqs/', 200, {
+    api.mock('GET', '/api/v2/faqs/', 200, {
       'count': 14,
       'next': null,
       'previous': null,
       'results': mockResults
     });
 
-    client
-      .url(`${client.globals.clientUrl}/faq/`)
-      .waitForElementVisible('.sheet', 4000);
+    const faqPage = client.page.faq();
+    faqPage.navigate();
 
     client.execute('scrollTo(0, document.body.scrollHeight);');
-    client.expect.element('.sticky').to.have.css('position').which.equal('fixed');
-
-    client.click('.sheet-header');
+    faqPage.expect.element('@sticky').to.have.css('position').which.equal('fixed');
+    faqPage.click('@sheetHeader');
     client.pause(500);
-    client.expect.element('.sticky').to.be.not.present;
+    faqPage.expect.element('@sticky').to.be.not.present;
   });
 });

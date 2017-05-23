@@ -10,7 +10,7 @@ const YearlyStats = ({ year, crCount, trrCount, salary }) => {
   }
 
   return (
-    <div className={ style.yearlyStats }>
+    <div className={ `${style.yearlyStats} test--yearly-stats-${year}` }>
       <h2 className={ style.year }>{ year }</h2>
       <div className={ style.row }>
         <span className={ style.label }>CRs</span>

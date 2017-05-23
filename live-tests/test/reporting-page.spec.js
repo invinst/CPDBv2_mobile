@@ -93,8 +93,8 @@ var mockReport = {
 
 
 describe('ReportingPageTest', function () {
-  it('should navigate to /reporting when user clicks on its link', function (client) {
-    api.mock('GET', '/reports/', 200, {
+  beforeEach(function (client, done) {
+    api.mock('GET', '/api/v2/reports/', 200, {
       'count': 162,
       'next': 'http:\/\/localhost:9000\/api\/v2\/reports\/?limit=20&offset=20',
       'previous': null,
@@ -102,53 +102,42 @@ describe('ReportingPageTest', function () {
         mockReport
       ]
     });
+    api.mock('GET', '/api/v2/reports/215/', 200, mockReport);
 
-    client
-      .url(client.globals.clientUrl)
-      .waitForElementVisible('a[href="/reporting/"]', 10000);
-
-    client.click('a[href="/reporting/"]');
-    client.waitForElementVisible('.sheet', 4000);
-
-    client.expect.element('.sheet-header').to.be.visible;
-    client.expect.element('.sheet-header').text.to.contain('Reporting');
-
-    client.end();
+    this.reportingPage = client.page.reporting();
+    this.reportingDetailPage = client.page.reportingDetail();
+    done();
   });
 
-  it('should render reporting list and detail', function (client) {
-
-    api.mock('GET', '/reports/', 200, {
-      'count': 162,
-      'next': 'http:\/\/localhost:9000\/api\/v2\/reports\/?limit=20&offset=20',
-      'previous': null,
-      'results': [
-        mockReport
-      ]
+  afterEach(function (client, done) {
+    client.end(function () {
+      done();
     });
-    api.mock('GET', '/reports/215/', 200, mockReport);
+  });
 
-    client
-      .url(`${client.globals.clientUrl}/reporting/`)
-      .waitForElementVisible('.sheet', 4000);
+  it('should render reporting list correctly', function (client) {
+    this.reportingPage.navigate();
+    this.reportingPage.expect.element('@sheetHeader').text.to.contain('Reporting');
 
-    client.expect.element('.sheet-header').to.be.visible;
-    client.expect.element('.sheet-header').text.to.contain('Reporting');
+    const reportingRow = this.reportingPage.section.reportingRow;
+    reportingRow.expect.element('@title').text.to.contain('Should appear on');
+    reportingRow.expect.element('@publication').text.to.contain('The Publication');
+    reportingRow.expect.element('@publishDate').text.to.contain('Nov 30, 2016');
+  });
 
-    client.expect.element('.reporting-item-row[href="/reporting/215/"]').to.be.visible;
-    client.expect.element('.reporting-item-row > .title').text.to.contain('Should appear on');
-    client.expect.element('.reporting-item-row .publication').text.to.contain('The Publication');
-    client.expect.element('.reporting-item-row .publish-date').text.to.contain('Nov 30, 2016');
+  it('should navigate to reporting detail page when its link is tapped', function (client) {
+    this.reportingPage.navigate();
+    this.reportingPage.section.reportingRow.click();
+    client.assert.urlEquals(this.reportingDetailPage.url(215));
+  });
 
-    client.click('.reporting-item-row[href="/reporting/215/"]');
-
-    client.expect.element('.header').text.to.contain('Reporting');
-    client.expect.element('.report-title').text.to.contain('Should appear on');
-    client.expect.element('.metadata').text.to.contain('An Author');
-    client.expect.element('.metadata').text.to.contain('The Publication');
-    client.expect.element('.metadata').text.to.contain('Nov 30, 2016');
-
-
-    client.end();
+  it('should render reporting detail correctly', function (client) {
+    const reportingDetailPage = this.reportingDetailPage;
+    reportingDetailPage.navigate(reportingDetailPage.url(215));
+    reportingDetailPage.expect.element('@header').text.to.contain('Reporting');
+    reportingDetailPage.expect.element('@title').text.to.contain('Should appear on');
+    reportingDetailPage.expect.element('@metadata').text.to.contain('An Author');
+    reportingDetailPage.expect.element('@metadata').text.to.contain('The Publication');
+    reportingDetailPage.expect.element('@metadata').text.to.contain('Nov 30, 2016');
   });
 });

@@ -1,8 +1,7 @@
 {
   "src_folders" : ["live-tests/live-test-setup.js"],
   "output_folder" : "",
-  "custom_assertions_path" : "",
-  "page_objects_path" : "",
+  "page_objects_path" : "./live-tests/page-objects",
 
   "selenium" : {
     "start_process" : true,

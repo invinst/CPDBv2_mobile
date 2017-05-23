@@ -1,20 +1,44 @@
 'use strict';
 
 describe('MainPageTest', function () {
+  beforeEach(function (client, done) {
+    this.mainPage = client.page.main();
+    this.mainPage.navigate();
+    done();
+  });
+
+  afterEach(function (client, done) {
+    client.end(function () {
+      done();
+    });
+  });
+
   it('should show homepage with logo and navigation links', function (client) {
-    client
-      .url(client.globals.clientUrl)
-      .waitForElementVisible('body', 10000)
-      .waitForElementVisible('.cpdb-logo', 10000);
+    const mainPage = this.mainPage;
 
-    client.expect.element('.cpdb-logo').to.be.visible;
-    client.expect.element('.cpdb-logo').text.to.contain('cpdp');
+    mainPage.expect.element('@cpdbLogo').text.to.contain('cpdp');
 
-    client.expect.element('a[href="/reporting/"]').to.be.visible;
-    client.expect.element('a[href="/faq/"]').to.be.visible;
-    client.expect.element('a[href="/about/"]').to.be.visible;
-    client.expect.element('a[href="/search/"]').to.be.visible;
+    mainPage.expect.element('@reportingLink').to.be.visible;
+    mainPage.expect.element('@faqLink').to.be.visible;
+    mainPage.expect.element('@aboutLink').to.be.visible;
+    mainPage.expect.element('@searchLink').to.be.visible;
+  });
 
-    client.end();
+  it('should navigate to FAQ page when user clicks on its link', function (client) {
+    const mainPage = this.mainPage;
+    const faqPage = client.page.faq();
+
+    mainPage
+      .click('@faqLink')
+      .assert.urlEquals(faqPage.url());
+  });
+
+  it('should navigate to Reporting page when user clicks on its link', function (client) {
+    const mainPage = this.mainPage;
+    const reportingPage = client.page.reporting();
+
+    mainPage
+      .click('@reportingLink')
+      .assert.urlEquals(reportingPage.url());
   });
 });

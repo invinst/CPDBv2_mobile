@@ -9,7 +9,7 @@ class SuggestedSearchResult extends Component {
     const onClick = saveToRecent.bind(this, { url, type, title });
 
     return (
-      <Link className='row suggested' to={ url } onClick={ onClick }>
+      <Link className={ `row suggested ${type.toLowerCase()}` } to={ url } onClick={ onClick }>
         <span className='suggested-type'>{ type }</span>
         <span className='suggested-title'>{ title }</span>
       </Link>
