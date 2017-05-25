@@ -119,8 +119,10 @@ describe('<BottomSheet />', () => {
       const instance = wrapper.instance();
       const result = instance.calculateSheetStyle();
 
+      const minHeight = window.innerHeight - (constants.TOP_MARGIN - constants.BOTTOM_PADDING);
+
       result.should.be.eql({
-        minHeight: `calc(100vh - ${constants.TOP_MARGIN - constants.BOTTOM_PADDING}px)`,
+        minHeight: `${minHeight}px`,
         paddingBottom: `${constants.BOTTOM_PADDING}px`
       });
     });
@@ -136,7 +138,7 @@ describe('<BottomSheet />', () => {
       const result = instance.calculateSheetStyle();
 
       result.should.be.eql({
-        minHeight: `calc(100vh - ${constants.TOP_MARGIN}px)`,
+        minHeight: `${window.innerHeight - constants.TOP_MARGIN}px`,
         paddingBottom: '0px'
       });
     });

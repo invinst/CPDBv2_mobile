@@ -212,7 +212,7 @@ describe('<SearchPage />', function () {
         constants.QUERY_INPUT_HEIGHT +
         constants.SEARCH_CATEGORY_LINKS_HEIGHT
       );
-      const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
+      const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
 
       result.should.eql({
         height
@@ -232,7 +232,7 @@ describe('<SearchPage />', function () {
         constants.SEARCH_CATEGORY_LINKS_HEIGHT +
         1
       );
-      const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
+      const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
 
       result.should.eql({
         height
