@@ -28,7 +28,7 @@ You should now have a backend server running at localhost:8000 .
 
 Unlike backend, we run the frontend devserver directly from host machine.
 
-- Install `npm` v6 and latest `yarn`
+- Install `npm` v6 and latest `yarn` (0.27.5 as of now)
 - Run `yarn install`
 - Run `yarn run start` to start devserver at localhost:9967
 
@@ -46,7 +46,7 @@ User either `yarn run test:watch` or `yarn run mocha-watch` to start karma
 server that reruns unit tests automatically on file save. The latter excludes
 coverage report so you can see failed tests more easily.
 
-Run `yarn live-test` for end-to-end tests. Make sure you have java 8 and the
+Run `yarn run live-test` for end-to-end tests. Make sure you have java 8 and the
 latest chromedriver. If on mac:
 
 ```bash
@@ -55,6 +55,8 @@ brew cask install java
 brew install chromedriver  # or `brew upgrade chromedriver`
 ```
 
+(we're using Chrome 59 with chromedriver 2.31 at the time of writing)
+
 To run single live-test file:
 
 ```bash
@@ -62,6 +64,11 @@ yarn run live-test -- --file live-tests/test/complaint-page.spec.js
 # or
 yarn run live-test -- --file complaint-page
 ```
+
+# Misc
+
+You should also `yarn run lint` before pushing. We strongly recommend setting up
+eslint integration for your IDE or text editor.
 
 
 
