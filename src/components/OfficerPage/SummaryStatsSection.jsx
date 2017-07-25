@@ -40,7 +40,7 @@ const SummaryStatsSection = ({ name, data }) => {
   );
 
   return (
-    <div className={ style.statsSection }>
+    <div className={ `${style.statsSection} test--summary-stats-section` }>
       <SectionHeader text={ name } description={ description } />
       <div className='facet-entry total'>
         <span className='facet-entry-count'>{ data.count }</span>

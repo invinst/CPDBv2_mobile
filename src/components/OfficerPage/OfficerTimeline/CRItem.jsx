@@ -16,7 +16,7 @@ class CRItem extends Component {
     const crUrl = `${constants.COMPLAINT_PATH}${crid}/${this.props.officerId}/`;
 
     return (
-      <Link className={ style.crItem } to={ crUrl }>
+      <Link className={ `${style.crItem} test--cr-item-${crid}` } to={ crUrl }>
         <div className={ style.cridContainer }>
           <span className={ style.cr }>CR </span>
           <span className={ style.crid }>{ crid }</span>

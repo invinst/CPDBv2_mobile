@@ -113,8 +113,6 @@ export default class SearchPage extends Component {
       categories = this.getCategoriesWithSuggestions();
     }
 
-
-
     return (
       <div className={ style.searchPage }>
         <div
