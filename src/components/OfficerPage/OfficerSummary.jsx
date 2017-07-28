@@ -5,7 +5,6 @@ import GaUtil from 'utils/GaUtil';
 import LoadingPage from 'components/Shared/LoadingPage';
 import NotMatchedOfficerPage from 'components/OfficerPage/NotMatchedOfficerPage';
 import OfficerTopLinks from 'components/OfficerPage/OfficerTopLinks';
-import SectionHeader from 'components/OfficerPage/SectionHeader';
 import SectionRow from 'components/OfficerPage/SectionRow';
 import SummaryStatsSection from 'components/OfficerPage/SummaryStatsSection';
 import { scrollToTop } from 'utils/NavigationUtil';
@@ -50,19 +49,14 @@ class OfficerSummary extends Component {
         <OfficerTopLinks id={ pk } currentPath='summary' />
 
         <div className='assignment-detail-section'>
-          <SectionHeader text='Assignment Details' />
           <SectionRow label='Unit' value={ summary.unit } />
           <SectionRow label='Rank' value={ summary.rank } />
           <SectionRow label='Badge' value={ summary.badge } />
-          <SectionRow label='2017 Salary' value={ summary.salary /* TODO: API NOT PROVIDED */} />
+          <SectionRow label='2017 Salary' value={ summary.salary /* TODO: API NOT PROVIDED */ } />
           <SectionRow
             label='Date of Apt.'
             value={ summary.dateOfAppt }
             extraInfo={ summary.yearsSinceDateOfAppt } />
-        </div>
-
-        <div className='demographics-section'>
-          <SectionHeader text='Demographics' />
           <SectionRow label='Race' value={ summary.race } />
           <SectionRow label='Sex' value={ summary.sex } />
         </div>

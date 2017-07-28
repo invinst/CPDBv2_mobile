@@ -12,11 +12,11 @@ const SummaryStatsSection = ({ name, data }) => {
 
     const entries = facet.entries.map((entry, index) => (
       <div className='facet-entry' key={ index }>
+        <span className='facet-entry-name'>{ entry.name }</span>
         <span className='facet-entry-count'>{ entry.count }</span>
         <span className={ cx('facet-entry-count sustained', { 'zero': entry['sustained_count'] === 0 }) }>
           { entry['sustained_count'] }
         </span>
-        <span className='facet-entry-name'>{ entry.name }</span>
       </div>
     ));
 
@@ -28,27 +28,20 @@ const SummaryStatsSection = ({ name, data }) => {
     );
   });
 
-  const description = (
+  const text = (
     <span className='complaint-counts'>
       <span className='count total-count'>
-        Total
+        { data.count } Complaint Records (CRs),
       </span>
       <span className='count sustained-count'>
-        Sustained
+        { data.sustainedCount } sustained
       </span>
     </span>
   );
 
   return (
     <div className={ `${style.statsSection} test--summary-stats-section` }>
-      <SectionHeader text={ name } description={ description } />
-      <div className='facet-entry total'>
-        <span className='facet-entry-count'>{ data.count }</span>
-        <span className={ cx('facet-entry-count sustained', { 'zero': data.sustainedCount === 0 }) }>
-          { data.sustainedCount }
-        </span>
-        <span className='facet-entry-name'>Total</span>
-      </div>
+      <SectionHeader text={ text } />
       { facets }
     </div>
   );

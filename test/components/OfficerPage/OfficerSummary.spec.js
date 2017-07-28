@@ -125,19 +125,17 @@ describe('<OfficerSummary />', function () {
 
     it('should render "Assignment Details" section', function () {
       const section = this.wrapper.find('.assignment-detail-section');
-
-      section.find('SectionHeader').props().should.eql({
-        text: 'Assignment Details'
-      });
-
       const rows = section.find('SectionRow');
       const expectedRows = [
         ['Unit', this.summary.unit],
         ['Rank', this.summary.rank],
         ['Badge', this.summary.badge],
         ['2017 Salary', this.summary.salary],
-        ['Date of Apt.', this.summary.dateOfAppt, this.summary.yearsSinceDateOfAppt]
+        ['Date of Apt.', this.summary.dateOfAppt, this.summary.yearsSinceDateOfAppt],
+        ['Race', this.summary.race],
+        ['Sex', this.summary.sex]
       ];
+
       expectedRows.forEach(([label, value, extraInfo], index) => {
         const row = rows.at(index);
         row.prop('label').should.be.eql(label);
@@ -146,18 +144,6 @@ describe('<OfficerSummary />', function () {
           row.prop('extraInfo').should.be.eql(extraInfo);
         }
       });
-    });
-
-    it('should render "Demographics" SectionHeader', function () {
-      const section = this.wrapper.find('.demographics-section');
-
-      section.find('SectionHeader').props().should.eql({
-        text: 'Demographics'
-      });
-
-      const rows = section.find('SectionRow');
-      rows.at(0).props().should.eql({ label: 'Race', value: this.summary.race });
-      rows.at(1).props().should.eql({ label: 'Sex', value: this.summary.sex });
     });
 
     it('should render SummaryStatsSection', function () {
