@@ -40,13 +40,6 @@ class OfficerTimeline extends Component {
     );
   }
 
-  renderDivider() {
-    return (
-      <div className={ style.divider }>
-      </div>
-    );
-  }
-
   renderTimelineBody() {
     const { loading, timeline, pk } = this.props;
     if (loading || !timeline) {
@@ -93,7 +86,6 @@ class OfficerTimeline extends Component {
 
       return (
         <div key={ index }>
-          { this.renderDivider() }
           <div className={ index === lastIndex ? 'last-item' : null }>
             { item }
           </div>
@@ -131,7 +123,6 @@ class OfficerTimeline extends Component {
           <OfficerTopLinks id={ pk } currentPath='timeline' />
           <div className='officer-timeline-body'>
             { body }
-            <div className='vertical-line'></div>
           </div>
         </InfiniteScroll>
       </div>
