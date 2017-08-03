@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import style from 'styles/OfficerPage/OfficerTimeline/CRItem.sass';
-import dot from 'img/dot.svg';
 import constants from 'constants';
 
 class CRItem extends Component {
@@ -21,7 +20,7 @@ class CRItem extends Component {
           <span className={ style.cr }>CR </span>
           <span className={ style.crid }>{ crid }</span>
         </div>
-        <div className={ style.date }>{ date } <img className='dot' src={ dot } /></div>
+        <div className={ style.date }>{ date } </div>
 
         <h2 className={ style.category }>{ category }</h2>
         <div className={ style.subcategory }>{ subcategory }</div>

@@ -290,7 +290,7 @@ describe('OfficerTimeline test', function () {
     const officerTimelinePage = this.officerTimelinePage;
 
     officerTimelinePage.expect.element('@crItem').text.to.contain('CR 309887');
-    officerTimelinePage.expect.element('@crItem').text.to.contain('Nov 28, 2005');
+    officerTimelinePage.expect.element('@crItem').text.to.contain('NOV 28, 2005');
     officerTimelinePage.expect.element('@crItem').text.to.contain('Use of Force');
     officerTimelinePage.expect.element('@crItem').text.to.contain('EXCESSIVE FORCE - OFF DUTY (INCLUDES NEIGHBOR');
     officerTimelinePage.expect.element('@crItem').text.to.contain('Unfounded');
