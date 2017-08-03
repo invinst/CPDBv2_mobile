@@ -131,7 +131,7 @@ describe('<OfficerSummary />', function () {
         ['Rank', this.summary.rank],
         ['Badge', this.summary.badge],
         ['2017 Salary', this.summary.salary],
-        ['Date of Apt.', this.summary.dateOfAppt, this.summary.yearsSinceDateOfAppt],
+        ['Career', this.summary.dateOfAppt, this.summary.yearsSinceDateOfAppt],
         ['Race', this.summary.race],
         ['Sex', this.summary.sex]
       ];
