@@ -129,35 +129,22 @@ describe('OfficerSummary test', function () {
 
   it('should render Assignment Details', function () {
     const officerSummaryPage = this.officerSummaryPage;
-    const assignmentDetailsSection = officerSummaryPage.section.assignmentDetails;
 
-    assignmentDetailsSection.expect.element('@header').text.to.equal('Assignment Details');
     officerSummaryPage.expect.section('@assignmentDetails').text.to.contain('Unit153');
     officerSummaryPage.expect.section('@assignmentDetails').text.to.contain('RankN/A');
     officerSummaryPage.expect.section('@assignmentDetails').text.to.contain('Badge9999');
     officerSummaryPage.expect.section('@assignmentDetails').text.to.contain('SalaryN/A');
-    officerSummaryPage.expect.section('@assignmentDetails').text.to.contain('Date of Apt.DEC 05, 198828 years');
-  });
-
-  it('should render Demographics', function () {
-    const officerSummaryPage = this.officerSummaryPage;
-    const demographicsSection = officerSummaryPage.section.assignmentDetails;
-
-    demographicsSection.expect.element('@header').text.to.equal('Assignment Details');
-    officerSummaryPage.expect.section('@demographics').text.to.contain('RaceWhite');
-    officerSummaryPage.expect.section('@demographics').text.to.contain('SexMale');
+    officerSummaryPage.expect.section('@assignmentDetails').text.to.contain('RaceWhite');
+    officerSummaryPage.expect.section('@assignmentDetails').text.to.contain('SexMale');
   });
 
   it('should render Complaints stats', function () {
     const officerSummaryPage = this.officerSummaryPage;
     const statsSection = officerSummaryPage.section.stats;
 
-    statsSection.expect.element('@header').text.to.equal('Complaints TotalSustained');
-
-    const totalRow = statsSection.section.totalRow;
-    totalRow.expect.element('@totalCount').text.to.equal('68');
-    totalRow.expect.element('@sustainedCount').text.to.equal('4');
-    totalRow.expect.element('@label').text.to.equal('Total');
+    const totalRow = statsSection.section.complaintCounts;
+    totalRow.expect.element('@totalCount').text.to.equal('68 Complaint Records (CRs),');
+    totalRow.expect.element('@sustainedCount').text.to.equal('4 sustained');
 
     // Zero value should have lower opacity
     statsSection.expect.element('@verbalAbuseRow').text.to.equal('0');

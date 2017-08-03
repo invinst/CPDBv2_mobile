@@ -15,24 +15,6 @@ describe('SummaryStatsSection component', function () {
     wrapper.should.be.ok();
   });
 
-  it('should render header and total count', function () {
-    const data = {
-      name: 'Dummy Header',
-      count: 11,
-      sustainedCount: 1,
-      facets: []
-    };
-    const wrapper = shallow(
-      <SummaryStatsSection
-        data={ data }
-      />
-    );
-    const facetEntry = wrapper.find('.facet-entry');
-    facetEntry.find('.facet-entry-name').text().should.be.eql('Total');
-    facetEntry.find('.facet-entry-count').at(0).text().should.be.eql('11');
-    facetEntry.find('.facet-entry-count.sustained').text().should.be.eql('1');
-  });
-
   it('should render facets', function () {
     const data = {
       facets: [
@@ -104,32 +86,5 @@ describe('SummaryStatsSection component', function () {
 
     const facet = wrapper.find('.facet');
     facet.find('.facet-entry-count.sustained.zero').exists().should.be.true();
-  });
-
-  it('should render total entry sustained count with class zero when the sustained_count is 0', function () {
-    const data = {
-      count: 99,
-      sustainedCount: 0,
-      facets: [
-        {
-          name: 'Dummy Facet',
-          entries: [
-            {
-              count: 99,
-              'sustained_count': 0,
-              name: 'Dummy Entry'
-            }
-          ]
-        }
-      ]
-    };
-    const wrapper = shallow(
-      <SummaryStatsSection
-        data={ data }
-      />
-    );
-
-    const facetTotal = wrapper.find('.facet-entry.total');
-    facetTotal.find('.facet-entry-count.sustained.zero').exists().should.be.true();
   });
 });

@@ -9,57 +9,48 @@ $entry-name-width: calc(100% - #{$count-width * 2})
 :local(.stats-section)
 
   .facet
-    border-bottom: $gray-border
+    margin-right: $side-margin
 
-  .facet-name
-    padding: $horizontal-padding $horizontal-padding 13px $horizontal-padding
-    color: $dusty-gray
-
-  .facet-entry
-    padding: $horizontal-padding $horizontal-padding $horizontal-padding 0
-    margin-left: $horizontal-padding
-    border-bottom: $gray-border
-
-    &.total
-      margin-left: 0
-      padding-left: $horizontal-padding
-
-    &:last-child
-      border-bottom: 0
-
-    .facet-entry-count
-      display: inline-block
-      width: $count-width
-      vertical-align: top
-      color: $thunder
-
-      &.sustained
-        color: $bright-orange
-
-        &.zero
-          color: rgba(255, 95, 0, 0.4)
-
-    .facet-entry-name
+    .facet-name
       color: $dusty-gray
+      text-transform: uppercase
+      padding: 18px 0px $side-margin 0px
 
-      width: $entry-name-width
-      display: inline-block
+    .facet-entry
+      padding: 7px 0
+
+      &.total
+        margin-left: 0
+        padding-left: $horizontal-padding
+
+      &:last-child
+        border-bottom: 0
+
+      .facet-entry-count
+        display: inline-block
+        vertical-align: top
+        color: $thunder
+
+        &.sustained
+          color: $bright-orange
+          float: right
+
+          &.zero
+            color: rgba(255, 95, 0, 0.4)
+
+      .facet-entry-name
+        color: $greyish
+        width: $entry-name-width
+        display: inline-block
+        font-weight: 300
 
   .complaint-counts
-    margin-left: 10px
     font-size: 12px
 
     .count
-      margin-right: 10px
+      font-size: 26px
+      margin: 0 10px 16px 0
       transform: translateY(-10px)
-
-      &::before
-        content: ''
-        width: 11px
-        height: 11px
-        display: inline-block
-        border-radius: 5.5px
-        margin-right: 5px
 
     .total-count
       color: $thunder

@@ -2,15 +2,14 @@ import React, { PropTypes } from 'react';
 import style from 'styles/OfficerPage/SectionHeader.sass';
 
 
-const SectionHeader = ({ text, description }) => (
+const SectionHeader = ({ text }) => (
   <div className={ style.sectionHeader }>
-    { text } { description }
+    { text }
   </div>
 );
 
 SectionHeader.propTypes = {
-  text: PropTypes.string,
-  description: PropTypes.object
+  text: PropTypes.object,
 };
 
 export default SectionHeader;
