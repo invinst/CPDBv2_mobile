@@ -54,7 +54,7 @@ class OfficerSummary extends Component {
           <SectionRow label='Badge' value={ summary.badge } />
           <SectionRow label='2017 Salary' value={ summary.salary /* TODO: API NOT PROVIDED */ } />
           <SectionRow
-            label='Date of Apt.'
+            label='Career'
             value={ summary.dateOfAppt }
             extraInfo={ summary.yearsSinceDateOfAppt } />
           <SectionRow label='Race' value={ summary.race } />
