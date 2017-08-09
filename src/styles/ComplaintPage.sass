@@ -2,6 +2,7 @@
 
 :local(.complaint-page)
   font-size: 14px
+  margin: 0 $side-margin
 
   .header
     padding-left: 0
@@ -30,3 +31,9 @@
 
   .relative
     position: relative
+
+  .attachment-request-link
+
+    &, &:hover, &:visited, &:link, &:active
+      text-decoration: none
+      color: $thunder

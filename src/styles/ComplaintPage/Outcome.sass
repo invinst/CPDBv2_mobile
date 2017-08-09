@@ -1,17 +1,19 @@
 @import '../Variables'
 
 :local(.outcome)
-  border-bottom: $divider-weight solid $alto
+  margin-top: 38px
 
   .row
     padding: 13px 0 $horizontal-padding 0
-    margin-left: 13px
-    border-bottom: $divider-weight solid $alto
+    border-bottom: $divider
 
     &:last-child
-      border-bottom: 0
+      border-bottom: none
 
     .title
       width: 40%
       display: inline-block
-      color: $dusty-gray
+      color: $greyish
+
+    .value
+      color: $thunder

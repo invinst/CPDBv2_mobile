@@ -64,6 +64,7 @@ export default class IncidentLocation extends Component {
         <SectionTitle title='Location' />
 
         <Map
+          className='map'
           center={ [lat, lng] }
           zoom={ this.state.zoomLevel }
           onClick={ () => { this.switchZoomLevel(); } }
@@ -85,13 +86,12 @@ export default class IncidentLocation extends Component {
             target='_blank'
             rel='noopener'
           >
-            <img className='google-maps-icon' src={ gmapsIcon } alt='Google Maps' />
+            <span className='title'>Address</span>
             <span className='address'>{ address }</span>
-            <span className='arrow'><Arrow direction='right' /></span>
           </a>
 
           <div className='row'>
-            <span className='title'>Location</span>
+            <span className='title'>Location Type</span>
             <span className='value'>{ locationText }</span>
           </div>
 

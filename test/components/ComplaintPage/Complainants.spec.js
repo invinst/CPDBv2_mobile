@@ -1,8 +1,10 @@
 import should from 'should';
 import React from 'react';
 import { shallow } from 'enzyme';
+// import { spy } from 'sinon';
 
 import Complainants from 'components/ComplaintPage/Complainants';
+// import SectionTitle from 'components/ComplaintPage/SectionTitle';
 
 describe('Complainants component', function () {
 
@@ -16,15 +18,14 @@ describe('Complainants component', function () {
         complainants={ complainants }
       />
     );
-    const title = wrapper.find('.title').text();
+
+    const title = wrapper.find('SectionTitle');
     const rows = wrapper.find('.row');
 
-    title.should.equal('Complainant');
+    title.prop('title').should.equal('Complainant');
     rows.should.have.length(2);
-
-    rows.at(0).text().should.equal('White, Male, Age 18');
-    rows.at(1).text().should.equal('Unknown, Unknown');
-
+    rows.at(0).text().should.equal('White male, age 18');
+    rows.at(1).text().should.equal('Unknown Unknown');
   });
 
   it('should return null if complainants are unavailable', function () {

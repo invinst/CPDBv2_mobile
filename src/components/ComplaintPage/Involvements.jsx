@@ -28,7 +28,6 @@ const Involvements = ({ involvements }) => {
 
   return (
     <div>
-      <SectionTitle title='Involved Members' />
       { rows }
     </div>
   );

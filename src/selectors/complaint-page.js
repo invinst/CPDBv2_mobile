@@ -1,6 +1,6 @@
+import constants from 'constants';
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import constants from 'constants';
 
 const getComplaint = (state, props) => state.complaintPage.complaints[props.params.complaintId];
 
@@ -18,7 +18,7 @@ export const complaintSelector = createSelector(
     return {
       address: complaint.address,
       beat: complaint.beat,
-      complainants: complaint.complainants,
+      complainants: complaint.complainants, //TODO
       crid: complaint.crid,
       incidentDate: formatDate(complaint.incident_date),
       location: complaint.location,
