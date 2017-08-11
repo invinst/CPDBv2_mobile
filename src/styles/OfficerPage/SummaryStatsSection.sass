@@ -1,20 +1,17 @@
 @import '../Variables'
 
 $gray-border: 2px solid $alto-solid
-$bright-orange: #ff5f00
 
 $count-width: 32px
 $entry-name-width: calc(100% - #{$count-width * 2})
 
 :local(.stats-section)
-
   .facet
-    margin-right: $side-margin
-
     .facet-name
-      color: $dusty-gray
+      color: $gandalf-gray
       text-transform: uppercase
       padding: 18px 0px $side-margin 0px
+      font-weight: 400
 
     .facet-entry
       padding: 7px 0
@@ -42,7 +39,7 @@ $entry-name-width: calc(100% - #{$count-width * 2})
         color: $greyish
         width: $entry-name-width
         display: inline-block
-        font-weight: 300
+        font-weight: 400
 
   .complaint-counts
     font-size: 12px
