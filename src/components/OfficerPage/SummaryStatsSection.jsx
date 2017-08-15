@@ -29,14 +29,14 @@ const SummaryStatsSection = ({ name, data }) => {
   });
 
   const text = (
-    <span className='complaint-counts'>
+    <div className='complaint-counts'>
       <span className='count total-count'>
         { data.count } Complaint Records (CRs),
       </span>
       <span className='count sustained-count'>
         { data.sustainedCount } sustained
       </span>
-    </span>
+    </div>
   );
 
   return (
