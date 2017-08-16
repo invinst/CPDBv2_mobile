@@ -45,21 +45,19 @@ $entry-name-width: calc(100% - #{$count-width * 2})
         font-weight: 300
 
   .complaint-counts
-    font-size: 12px
-
-    .count
-      font-size: 26px
-      margin: 0 10px 16px 0
-      transform: translateY(-10px)
+    font-size: 26px
 
     .total-count
       color: $thunder
+      margin-right: 5px
 
       &::before
         background-color: $thunder
 
     .sustained-count
       color: $bright-orange
+      white-space: nowrap
+      display: inline-block
 
       &::before
         background-color: $bright-orange
