@@ -3,12 +3,10 @@ import React, { PropTypes, Component } from 'react';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 
 import constants from 'constants';
-import Arrow from 'components/Shared/Arrow';
 import SectionTitle from 'components/ComplaintPage/SectionTitle';
 
 import 'leaflet/dist/leaflet.css';
 import style from 'styles/ComplaintPage/IncidentLocation.sass';
-import gmapsIcon from 'img/ic-google-maps.svg';
 
 const markerIcon = L.divIcon({
   className: 'marker-icon',
@@ -78,28 +76,31 @@ export default class IncidentLocation extends Component {
           { marker }
         </Map>
 
-        <div className='captions'>
+        <table className='captions'>
 
-          <a
-            className='row'
-            href={ `http://maps.google.com/maps?&z=${this.state.zoomLevel}&q=${lat}+${lng}&ll=${lat}+${lng}` }
-            target='_blank'
-            rel='noopener'
-          >
-            <span className='title'>Address</span>
-            <span className='address'>{ address }</span>
-          </a>
+          <tr className='row'>
+            <td className='title'>Address</td>
+            <td className='address'>
+              <a
+                href={ `http://maps.google.com/maps?&z=${this.state.zoomLevel}&q=${lat}+${lng}&ll=${lat}+${lng}` }
+                target='_blank'
+                rel='noopener'
+              >
+                { address }
+              </a>
+            </td>
+          </tr>
 
-          <div className='row'>
-            <span className='title'>Location Type</span>
-            <span className='value'>{ locationText }</span>
-          </div>
+          <tr className='row'>
+            <td className='title'>Location Type</td>
+            <td className='value'>{ locationText }</td>
+          </tr>
 
-          <div className='row'>
-            <span className='title'>Beat</span>
-            <span className='value'>{ beatText }</span>
-          </div>
-        </div>
+          <tr className='row'>
+            <td className='title'>Beat</td>
+            <td className='value'>{ beatText }</td>
+          </tr>
+        </table>
 
       </div>
     );
