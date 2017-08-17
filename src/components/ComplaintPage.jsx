@@ -95,7 +95,7 @@ export default class ComplaintPage extends Component {
             title='Accused Officer'
             people={ [{
               content: activeCoaccused.fullName,
-              subcontent: [activeCoaccused.gender, activeCoaccused.race].filter(a => Boolean(a)).join(', '),
+              subcontent: activeCoaccused.badge ? `Badge ${activeCoaccused.badge}` : '',
               url: `${constants.OFFICER_PATH}${activeCoaccused.id}/`
             }] }
           />

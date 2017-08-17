@@ -1,6 +1,7 @@
 import constants from 'constants';
 import { createSelector } from 'reselect';
 import moment from 'moment';
+import _ from 'lodash';
 
 const getComplaint = (state, props) => state.complaintPage.complaints[props.params.complaintId];
 
@@ -26,13 +27,14 @@ export const complaintSelector = createSelector(
       coaccused: complaint.coaccused.map(
         (ca) => ({
           category: ca.category,
-          subcategory: ca.subcategory,
+          subcategory: _.capitalize(ca.subcategory),
           startDate: formatDate(ca.start_date),
           endDate: formatDate(ca.end_date),
           finalFinding: ca.final_finding,
           finalOutcome: ca.final_outcome,
           fullName: ca.full_name,
           gender: ca.gender.toLowerCase(),
+          badge: ca.badge,
           id: ca.id,
           race: ca.race.toLowerCase(),
           reccOutcome: ca.recc_outcome
