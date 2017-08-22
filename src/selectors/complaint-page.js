@@ -5,7 +5,12 @@ import _ from 'lodash';
 
 const getComplaint = (state, props) => state.complaintPage.complaints[props.params.complaintId];
 
-const formatDate = date => moment(date).format(constants.SIMPLE_DATE_FORMAT);
+const formatDate = (date) => {
+  if (!date) {
+    return null;
+  }
+  return moment(date).format(constants.SIMPLE_DATE_FORMAT);
+};
 
 export const complaintSelector = createSelector(
   [getComplaint],
