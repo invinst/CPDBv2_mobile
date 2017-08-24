@@ -1,47 +1,48 @@
 @import 'Variables'
 @import 'Mixins'
 
+$query-input-width: 77%
+
 :local(.search-page)
+  margin-left: $side-margin
 
   :local(.sticky)
     position: fixed
     top: 0
     left: 0
     right: 0
-    box-shadow: 0 1px 2px #e4e4e4
 
   .category-details-container
-    padding-top: $query-input-height + $search-category-links-height
+    padding-top: $query-input-height + $search-category-links-height + 2*$new-divider-weight
 
   .input-container
-    border-bottom: $divider-weight solid $alto
     border-radius: 0
     background-color: white
     font-size: 14px
 
     .query-input-container
       position: relative
-      width: 80%
+      width: $query-input-width
       display: inline-block
       vertical-align: middle
 
       .query-input
         outline: none
-        padding: 12px 11px
+        margin: $side-margin
+        padding-left: $side-margin
         width: 100%
         border: 0
+        border-radius: 2px
         -webkit-appearance: none // remove iphone input inner shadow
-        height: $query-input-height - $divider-weight
+        height: $query-input-height - 2*$side-margin
         font-weight: 600
         font: inherit
         color: $thunder
-
+        background-color: $wild-sand
 
         @include placeholder
           color: $dusty-gray
           font: inherit
-
-
 
       .clear-icon
         position: absolute
@@ -61,7 +62,9 @@
       font: inherit
       outline: none
       display: inline-block
-      width: 20%
+      width: calc(#{100% - $query-input-width} - #{$side-margin})
+      text-align: right
+      padding-right: $side-margin
       vertical-align: middle
       margin-top: 0
 
@@ -69,9 +72,11 @@
     font-size: 14px
     background-color: white
     color: $dusty-gray
-    height: $search-category-links-height
-    padding: 10px 11px 9px 11px
+    line-height: 18px
+    padding: 11px $side-margin 11px $side-margin
     font-weight: 400
+    border-top: $new-divider-weight solid $alto-solid
+    border-bottom: $new-divider-weight solid $alto-solid
 
     button
       background: none !important
@@ -92,4 +97,4 @@
 
   .bottom-padding
     min-height: 0
-    background-color: $wild-sand
+    background-color: white

@@ -7,8 +7,9 @@ import * as NavigationUtil from 'utils/NavigationUtil';
 import SearchCategory from 'components/SearchPage/SearchCategory';
 import constants from 'constants';
 
-const fixedHeaderHeight = constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT;
-
+const fixedHeaderHeight = (
+  constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + 2 * constants.NEW_DIVIDER_WEIGHT
+);
 
 describe('<SearchCategory />', () => {
   it('should be renderable', () => {
@@ -281,9 +282,17 @@ describe('<SearchCategory />', () => {
     });
   });
 
-  describe('watchActiveState', () => {
-    it('should not do anything if category is already active', () => {
-      const spyGetCurrentScrollPosition = spy(NavigationUtil, 'getCurrentScrollPosition');
+  describe('watchActiveState', function () {
+    beforeEach(function () {
+      this.stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
+      this.stubGetCurrentScrollPosition.returns(900);
+    });
+
+    afterEach(function () {
+      this.stubGetCurrentScrollPosition.restore();
+    });
+
+    it('should not do anything if category is already active', function () {
       const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
@@ -298,15 +307,11 @@ describe('<SearchCategory />', () => {
 
       instance.watchActiveState();
 
-      spyGetCurrentScrollPosition.called.should.be.false();
+      this.stubGetCurrentScrollPosition.called.should.be.false();
       spyUpdateActiveCategory.called.should.be.false();
-
-      spyGetCurrentScrollPosition.restore();
     });
 
-    it('should not set active if category is above header bottom', () => {
-      const stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
-      stubGetCurrentScrollPosition.returns(900);
+    it('should not set active if category is above header bottom', function () {
       const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
@@ -326,13 +331,9 @@ describe('<SearchCategory />', () => {
       instance.watchActiveState();
 
       spyUpdateActiveCategory.called.should.be.false();
-
-      stubGetCurrentScrollPosition.restore();
     });
 
-    it('should not set active if category is below header bottom', () => {
-      const stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
-      stubGetCurrentScrollPosition.returns(900);
+    it('should not set active if category is below header bottom', function () {
       const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
@@ -351,13 +352,9 @@ describe('<SearchCategory />', () => {
       instance.watchActiveState();
 
       spyUpdateActiveCategory.called.should.be.false();
-
-      stubGetCurrentScrollPosition.restore();
     });
 
-    it('should set active if category has touched header bottom', () => {
-      const stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
-      stubGetCurrentScrollPosition.returns(900);
+    it('should set active if category has touched header bottom', function () {
       const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
@@ -377,8 +374,6 @@ describe('<SearchCategory />', () => {
       instance.watchActiveState();
 
       spyUpdateActiveCategory.calledWith('faqs').should.be.true();
-
-      stubGetCurrentScrollPosition.restore();
     });
   });
 

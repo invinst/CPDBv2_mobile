@@ -210,7 +210,8 @@ describe('<SearchPage />', function () {
       const result = instance.calculateDynamicBottomPaddingStyle();
       const dynamicBottomPaddingOffset = (
         constants.QUERY_INPUT_HEIGHT +
-        constants.SEARCH_CATEGORY_LINKS_HEIGHT
+        constants.SEARCH_CATEGORY_LINKS_HEIGHT +
+        2 * constants.NEW_DIVIDER_WEIGHT
       );
       const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
 
@@ -230,6 +231,7 @@ describe('<SearchPage />', function () {
       const dynamicBottomPaddingOffset = (
         constants.QUERY_INPUT_HEIGHT +
         constants.SEARCH_CATEGORY_LINKS_HEIGHT +
+        2 * constants.NEW_DIVIDER_WEIGHT +
         1
       );
       const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;

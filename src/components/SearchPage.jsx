@@ -84,6 +84,7 @@ export default class SearchPage extends Component {
     const dynamicBottomPaddingOffset = (
       constants.QUERY_INPUT_HEIGHT +
       constants.SEARCH_CATEGORY_LINKS_HEIGHT +
+      2 * constants.NEW_DIVIDER_WEIGHT +
       lastCategoryHeight
     );
     const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
@@ -133,7 +134,7 @@ export default class SearchPage extends Component {
             <button
               className='bt-done'
               onClick={ goUp.bind(this, router, window.location.pathname) }>
-              Done
+              Cancel
             </button>
           </div>
 
@@ -149,7 +150,7 @@ export default class SearchPage extends Component {
           { this.renderCategories(categories) }
         </div>
 
-        <div style={ this.calculateDynamicBottomPaddingStyle() } className='bottom-padding'></div>
+        <div style={ this.calculateDynamicBottomPaddingStyle() } className='bottom-padding' />
       </div>
     );
   }

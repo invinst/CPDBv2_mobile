@@ -7,7 +7,9 @@ import SuggestedSearchResult from 'components/SearchPage/SuggestedSearchResult';
 import { getCurrentScrollPosition } from 'utils/NavigationUtil';
 import constants from 'constants';
 
-const fixedHeaderHeight = constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT;
+const fixedHeaderHeight = (
+  constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + 2 * constants.NEW_DIVIDER_WEIGHT
+);
 
 const DEFAULT_CATEGORY_LENGTH = 10;
 

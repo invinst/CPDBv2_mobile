@@ -82,7 +82,7 @@ describe('SearchPageTest', function () {
     searchPage.expect.element('@queryInput').to.be.visible;
     searchPage.expect.element('@queryInput').to.have.attribute('placeholder', 'Search');
 
-    searchPage.expect.element('@suggestedHeader').text.to.equal('Suggested');
+    searchPage.expect.element('@suggestedHeader').text.to.equal('SUGGESTED');
 
     const suggested = searchPage.section.suggested;
 
@@ -114,9 +114,9 @@ describe('SearchPageTest', function () {
   it('should show results that match search query', function (client) {
     this.searchPage.setValue('@queryInput', 'wh');
 
-    this.searchPage.expect.element('@officersHeader').text.to.equal('Officers');
+    this.searchPage.expect.element('@officersHeader').text.to.equal('OFFICERS');
     this.searchPage.expect.element('@faqsHeader').text.to.equal('FAQ');
-    this.searchPage.expect.element('@reportsHeader').text.to.equal('Reports');
+    this.searchPage.expect.element('@reportsHeader').text.to.equal('REPORTS');
 
     let officers = this.searchPage.section.officers;
     let faqs = this.searchPage.section.faqs;
