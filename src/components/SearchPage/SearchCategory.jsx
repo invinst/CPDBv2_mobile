@@ -6,6 +6,7 @@ import ReportSearchResult from 'components/SearchPage/ReportSearchResult';
 import SuggestedSearchResult from 'components/SearchPage/SuggestedSearchResult';
 import { getCurrentScrollPosition } from 'utils/NavigationUtil';
 import constants from 'constants';
+import cx from 'classnames';
 
 const fixedHeaderHeight = (
   constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + 2 * constants.NEW_DIVIDER_WEIGHT
@@ -77,12 +78,15 @@ export default class SearchCategory extends Component {
   }
 
   render() {
-    const { title, items, categoryId, requestAll, isShowingAll } = this.props;
+    const { title, items, categoryId, activeCategory, requestAll, isShowingAll } = this.props;
     const results = this.renderResults();
 
     return (
       <div className={ style.searchCategory } ref={ (domNode) => { this.domNode = domNode; } }>
-        <div className='title' id={ 'search-category-' + categoryId }>
+        <div
+          className={ cx('title', { active: activeCategory === categoryId }) }
+          id={ 'search-category-' + categoryId }
+        >
           { title }
         </div>
         <div className={ `body ${categoryId}` }>
