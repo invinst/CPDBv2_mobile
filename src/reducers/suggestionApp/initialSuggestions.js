@@ -23,7 +23,7 @@ export default handleActions({
     return {
       ...state,
       suggested: {
-        data: categories.map((category) => {
+        data: categories.filter(category => !!action.payload[category][0]).map((category) => {
           const data = action.payload[category][0];
           let type, title, url;
 
@@ -42,6 +42,11 @@ export default handleActions({
               type = 'Report';
               title = data.title;
               url = `${constants.REPORTING_PATH}${data.id}/`;
+              break;
+            case 'UNIT':
+              type = 'Unit';
+              title = data.text;
+              url = data.url;
               break;
           }
 
