@@ -4,7 +4,7 @@
 $query-input-width: 77%
 
 :local(.search-page)
-  margin-left: $side-margin
+  margin: 0 $side-margin
 
   :local(.sticky)
     position: fixed
@@ -22,9 +22,10 @@ $query-input-width: 77%
 
     .query-input-container
       position: relative
-      width: $query-input-width
+      width: calc(100% - #{$button-done-width} - 2*#{$side-margin})
       display: inline-block
       vertical-align: middle
+      margin-right: 8px
 
       .query-input
         outline: none
@@ -62,7 +63,7 @@ $query-input-width: 77%
       font: inherit
       outline: none
       display: inline-block
-      width: calc(#{100% - $query-input-width} - #{$side-margin})
+      width: $button-done-width
       text-align: right
       padding-right: $side-margin
       vertical-align: middle

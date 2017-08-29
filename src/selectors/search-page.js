@@ -36,6 +36,26 @@ export const faqsSelector = createSelector(
   }
 );
 
+export const unitsSelector = createSelector(
+  (state) => state.suggestionApp.suggestions.UNIT,
+  (units) => {
+    if (!units) {
+      return { data: [] };
+    }
+
+    return {
+      isShowingAll: units.isShowingAll,
+      data: units.data.map((unit) => ({
+        id: unit.id,
+        text: unit.text,
+        url: unit.url,
+        memberCount: unit.member_count,
+        activeMemberCount: unit.active_member_count,
+      }))
+    };
+  }
+);
+
 export const reportsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.REPORT,
   (reports) => {

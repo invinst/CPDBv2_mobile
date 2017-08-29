@@ -119,18 +119,25 @@ describe('<SearchCategory />', () => {
     stubRenderAllButton.restore();
   });
 
-  describe('renderOfficer', () => {
+  describe('render officers', () => {
     it('should render officer correctly', () => {
       const spySaveToRecent = spy();
-      const officer = {
-        name: 'John',
-        url: '/officer/1',
-        extraInfo: 'Badge #1'
-      };
+      const officers = [
+        {
+          name: 'John',
+          url: '/officer/1',
+          extraInfo: 'Badge #1'
+        },
+        {
+          name: 'Snow',
+          url: '/officer/2',
+          extraInfo: 'Badge #2'
+        }
+      ];
 
       const wrapper = mount(
         <SearchCategory
-          items={ [officer] }
+          items={ officers }
           categoryId='officers'
           saveToRecent={ spySaveToRecent }
         />
@@ -138,23 +145,29 @@ describe('<SearchCategory />', () => {
 
       const officerElement = wrapper.find('OfficerSearchResult');
       officerElement.exists().should.be.true();
-      officerElement.prop('officer').should.be.eql(officer);
+      officerElement.prop('officers').should.be.eql(officers);
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
 
     });
   });
 
-  describe('renderFaq', () => {
+  describe('render FAQs', () => {
     it('should render faq correctly', () => {
       const spySaveToRecent = spy();
-      const faq = {
-        id: '2',
-        question: 'foo'
-      };
+      const faqs = [
+        {
+          id: '1',
+          question: 'foo'
+        },
+        {
+          id: '2',
+          question: 'bar'
+        }
+      ];
 
       const wrapper = mount(
         <SearchCategory
-          items={ [faq] }
+          items={ faqs }
           categoryId='faqs'
           saveToRecent={ spySaveToRecent }
         />
@@ -162,7 +175,7 @@ describe('<SearchCategory />', () => {
 
       const faqElement = wrapper.find('FaqSearchResult');
       faqElement.exists().should.be.true();
-      faqElement.prop('faq').should.be.eql(faq);
+      faqElement.prop('faqs').should.be.eql(faqs);
       faqElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
@@ -192,7 +205,37 @@ describe('<SearchCategory />', () => {
       reportLink.prop('report').should.be.eql(report);
       reportLink.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
+  });
 
+  describe('render units', () => {
+    it('should render units correctly', () => {
+      const spySaveToRecent = spy();
+      const units = [
+        {
+          text: '001',
+          memberCount: 2,
+          activeMemberCount: 1
+        },
+        {
+          text: '002',
+          memberCount: 4,
+          activeMemberCount: 3
+        }
+      ];
+
+      const wrapper = mount(
+        <SearchCategory
+          items={ units }
+          categoryId='units'
+          saveToRecent={ spySaveToRecent }
+        />
+      );
+
+      const officerElement = wrapper.find('UnitSearchResult');
+      officerElement.exists().should.be.true();
+      officerElement.prop('units').should.be.eql(units);
+      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+    });
   });
 
   describe('renderSuggested', () => {

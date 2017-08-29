@@ -115,7 +115,7 @@ describe('SearchPageTest', function () {
     this.searchPage.setValue('@queryInput', 'wh');
 
     this.searchPage.expect.element('@officersHeader').text.to.equal('OFFICERS');
-    this.searchPage.expect.element('@faqsHeader').text.to.equal('FAQ');
+    this.searchPage.expect.element('@faqsHeader').text.to.equal('FREQUENTLY ASKED QUESTIONS (FAQS)');
     this.searchPage.expect.element('@reportsHeader').text.to.equal('REPORTS');
 
     let officers = this.searchPage.section.officers;

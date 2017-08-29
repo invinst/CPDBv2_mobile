@@ -4,6 +4,7 @@ import OfficerSearchResult from 'components/SearchPage/OfficerSearchResult';
 import FaqSearchResult from 'components/SearchPage/FaqSearchResult';
 import ReportSearchResult from 'components/SearchPage/ReportSearchResult';
 import SuggestedSearchResult from 'components/SearchPage/SuggestedSearchResult';
+import UnitSearchResult from 'components/SearchPage/UnitSearchResult';
 import { getCurrentScrollPosition } from 'utils/NavigationUtil';
 import constants from 'constants';
 import cx from 'classnames';
@@ -56,17 +57,15 @@ export default class SearchCategory extends Component {
 
     switch (categoryId) {
       case 'officers':
-        return items.map((data, index) => (
-          <OfficerSearchResult officer={ data } key={ index } saveToRecent={ saveToRecent }/>
-        ));
+        return <OfficerSearchResult officers={ items } saveToRecent={ saveToRecent }/>;
       case 'faqs':
-        return items.map((data, index) => (
-          <FaqSearchResult faq={ data } key={ index } saveToRecent={ saveToRecent }/>
-        ));
+        return <FaqSearchResult faqs={ items } saveToRecent={ saveToRecent }/>;
       case 'reports':
         return items.map((data, index) => (
           <ReportSearchResult report={ data } key={ index } saveToRecent={ saveToRecent }/>
         ));
+      case 'units':
+        return <UnitSearchResult units={ items } saveToRecent={ saveToRecent }/>;
       case 'recent':
       case 'suggested':
         return items.map((data, index) => (

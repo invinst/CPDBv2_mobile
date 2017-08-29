@@ -260,6 +260,7 @@ export default {
     },
     {
       name: 'FAQ',
+      longName: 'FREQUENTLY ASKED QUESTIONS (FAQs)',
       id: 'faqs',
       path: 'FAQ'
     },
@@ -267,6 +268,11 @@ export default {
       name: 'Reports',
       id: 'reports',
       path: 'REPORT'
+    },
+    {
+      name: 'Units',
+      id: 'units',
+      path: 'UNIT'
     }
   ],
 

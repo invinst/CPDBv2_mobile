@@ -13,7 +13,8 @@ describe('suggestions reducer', function () {
       CRS: { data: [], isShowingAll: false },
       FAQ: { data: [], isShowingAll: false },
       OFFICER: { data: [], isShowingAll: false },
-      REPORT: { data: [], isShowingAll: false }
+      REPORT: { data: [], isShowingAll: false },
+      UNIT: { data: [], isShowingAll: false },
     });
   });
 
@@ -22,7 +23,8 @@ describe('suggestions reducer', function () {
       CRS: [1, 2],
       FAQ: [3, 4],
       OFFICER: [5, 6],
-      REPORT: [7, 8]
+      REPORT: [7, 8],
+      UNIT: [9, 10],
     };
 
     suggestions({}, {
@@ -32,7 +34,8 @@ describe('suggestions reducer', function () {
       CRS: { data: [1, 2], isShowingAll: false },
       FAQ: { data: [3, 4], isShowingAll: false },
       OFFICER: { data: [5, 6], isShowingAll: false },
-      REPORT: { data: [7, 8], isShowingAll: false }
+      REPORT: { data: [7, 8], isShowingAll: false },
+      UNIT: { data: [9, 10], isShowingAll: false },
     });
   });
 

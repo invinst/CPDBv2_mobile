@@ -1,7 +1,5 @@
-import should from 'should';
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import { spy } from 'sinon';
+import { mount } from 'enzyme';
 import constants from 'constants';
 
 import FaqSearchResult from 'components/SearchPage/FaqSearchResult';
@@ -9,48 +7,50 @@ import FaqSearchResult from 'components/SearchPage/FaqSearchResult';
 describe('<FaqSearchResult />', () => {
 
   it('should render faq correctly', () => {
-    const faq = {
-      id: '2',
-      question: 'foo'
-    };
+    const faqs = [
+      {
+        id: '1',
+        question: 'foo'
+      },
+      {
+        id: '2',
+        question: 'bar'
+      }
+    ];
+
+    const fooUrl = `${constants.FAQ_PATH}1/`;
+    const barUrl = `${constants.FAQ_PATH}2/`;
+    const rows = [
+      {
+        label: 'foo',
+        url: fooUrl,
+        onClick: (() => {}).bind(undefined, {
+          type: 'FAQ',
+          title: 'foo',
+          url: fooUrl
+        })
+      },
+      {
+        label: 'bar',
+        url: barUrl,
+        onClick: (() => {}).bind(undefined, {
+          type: 'FAQ',
+          title: 'bar',
+          url: barUrl
+        })
+      }
+    ];
 
     const wrapper = mount(
       <FaqSearchResult
-        faq={ faq }
+        faqs={ faqs }
         saveToRecent={ () => {} }
       />
     );
 
-    const href = `${constants.FAQ_PATH}2/`;
-    const faqLink = wrapper.find('Link');
+    const simpleList = wrapper.find('SimpleList');
 
-    faqLink.exists().should.be.true();
-    faqLink.hasClass('faq').should.be.true();
-    faqLink.prop('to').should.be.eql(href);
-    faqLink.text().should.eql('foo');
+    simpleList.exists().should.be.true();
+    simpleList.prop('rows').should.be.eql(rows);
   });
-
-  it('should dispatch "saveToRecent" action when clicked', () => {
-    const spySaveToRecent = spy();
-    const faq = {
-      id: '3',
-      question: 'foo'
-    };
-
-    const wrapper = shallow(
-      <FaqSearchResult
-        faq={ faq }
-        saveToRecent={ spySaveToRecent }
-      />
-    );
-    const faqLink = wrapper.find('Link');
-
-    faqLink.simulate('click');
-    spySaveToRecent.calledWith({
-      type: 'FAQ',
-      title: 'foo',
-      url: `${constants.FAQ_PATH}3/`
-    }).should.be.true();
-  });
-
 });

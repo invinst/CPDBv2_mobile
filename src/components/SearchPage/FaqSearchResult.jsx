@@ -1,29 +1,33 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import SimpleList from 'components/Shared/SimpleList';
 import constants from 'constants';
 
 
 class FaqSearchResult extends Component {
   render() {
-    const { faq, saveToRecent } = this.props;
-    const onClick = saveToRecent.bind(this, {
-      type: 'FAQ',
-      title: faq.question,
-      url: `${constants.FAQ_PATH}${faq.id}/`
+    const { faqs, saveToRecent } = this.props;
+
+    const rows = faqs.map((faq) => {
+      const url = `${constants.FAQ_PATH}${faq.id}/`;
+
+      return {
+        label: faq.question,
+        url: url,
+        onClick: saveToRecent.bind(undefined, {
+          type: 'FAQ',
+          title: faq.question,
+          url: url
+        })
+      };
     });
-    return (
-      <div className='row'>
-        <Link className='faq' to={ `${constants.FAQ_PATH}${faq.id}/` } onClick={ onClick }>
-          { faq.question }
-        </Link>
-      </div>
-    );
+
+    return <SimpleList rows={ rows } />;
   }
 }
 
 FaqSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
-  faq: PropTypes.object
+  faqs: PropTypes.array
 };
 
 export default FaqSearchResult;
