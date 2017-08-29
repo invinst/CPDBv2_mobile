@@ -6,15 +6,18 @@ $row-height: 40px
   position: relative
   z-index: 1
   background-color: white
-  padding: 16px $side-margin 0 0
-  margin-bottom: 40px
+  margin-bottom: 56px
 
   :local(.year)
     text-align: right
     font-size: 26px
-    font-weight: 500
+    font-weight: 400
     color: $thunder
-    line-height: 64px
+    // The next 4 lines are to achieve a 64px-height div with the text inside stays 8px to the bottom
+    height: 64px
+    line-height: 26px
+    padding-top: 30px
+    padding-bottom: 8px
 
   :local(.row)
     margin-right: $side-margin
