@@ -9,7 +9,7 @@ const altoColor = '#d8d8d8';
 const mediumGrayColor = '#9b9b9b';
 const hardBlackColor = '#1a1818';
 
-const milestoneDistance = 75;
+const milestoneDistance = 62;
 
 export default class InvestigationTimeline extends Component {
   getTimeLine() {
@@ -41,14 +41,14 @@ export default class InvestigationTimeline extends Component {
     const timeline = this.getTimeLine();
     const lineHeight = this.computeLineHeight(timeline);
     const timelineCircleDisplayProps = [
-      { key: '1', r: '7.5', cx: '9', strokeWidth: '3', stroke: softGrayColor, fill: 'white' },
-      { key: '2', r: '3', cx: '9', fill: softGrayColor },
-      { key: '3', r: '9', cx: '9', fill: softGrayColor }
+      { key: '1', r: '5.5', cx: '9', strokeWidth: '1', stroke: softGrayColor, fill: 'white' },
+      { key: '2', r: '2.5', cx: '9', fill: softGrayColor },
+      { key: '3', r: '5.5', cx: '9', fill: softGrayColor }
     ];
 
     return (
       <g>
-        <line x1='9' y1='1' x2='9' y2={ lineHeight } stroke={ altoColor } strokeWidth={ 2 } />
+        <line x1='9' y1='9' x2='9' y2={ lineHeight + 9 } stroke={ altoColor } strokeWidth={ 1 } />
         {
           map(timeline, ({ events }, index) => {
             return map(events, event => {

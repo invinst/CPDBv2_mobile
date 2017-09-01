@@ -1,46 +1,37 @@
 @import '../Variables'
 
 :local(.people-list)
-  border-bottom: $divider-weight solid $alto
-  margin-top: 11px
-  padding-left: $horizontal-padding
-  padding-bottom: 11px
+  margin-top: 38px
+  table
+    width: 100%
 
-  .title
-    color: $dusty-gray
-    margin-bottom: 14px
+    .row
+      color: inherit
+      text-decoration: none
+      display: block
+      padding: 11px 0
+      border-bottom: $divider-weight solid $alto
+      height: 54px
 
+      &:last-child
+        border-bottom: none
 
-  .url
-    color: inherit
-    text-decoration: none
-    display: block
-    padding: 13px 0
-    border-bottom: $divider-weight solid $alto
+      .threshold
+        width: 32px
+        height: 32px
+        background-color: $alto-solid
 
-    &:last-child
-      border-bottom: 0
-      padding-bottom: 0
+      .content-wrapper
+        padding-left: $side-margin
+        text-align: left
 
-    &:first-child
-      padding-top: 0
+        .content
+          margin-right: 8px
+          overflow: hidden
+          text-overflow: ellipsis
+          white-space: nowrap
+          font-weight: 500
 
-    .content
-      margin-right: 8px
-      max-width: 50%
-      overflow: hidden
-      text-overflow: ellipsis
-      display: inline-block
-      white-space: nowrap
-      font-weight: 500
-
-    .subcontent
-      overflow: hidden
-      display: inline-block
-      color: $dusty-gray
-
-    .arrow
-      overflow: hidden
-      display: inline-block
-      float: right
-      margin-right: $horizontal-padding
+        .subcontent
+          overflow: hidden
+          color: $dusty-gray

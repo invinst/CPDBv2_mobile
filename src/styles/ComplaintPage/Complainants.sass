@@ -1,12 +1,17 @@
 @import '../Variables'
 
 :local(.complainants)
-  border-bottom: $divider-weight solid $alto
-  margin-top: 11px
-  padding-left: $horizontal-padding
-  padding-bottom: 11px
-  padding-right: 8px
+  margin-top: 38px
 
   .title
     color: $dusty-gray
     margin-bottom: 11px
+    text-transform: uppercase
+
+  .row
+    line-height: 40px
+    vertical-align: middle
+    border-bottom: $divider
+
+    &:last-child
+      border-bottom: none

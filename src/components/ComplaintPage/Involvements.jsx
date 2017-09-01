@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 
 import constants from 'constants';
 import PeopleList from 'components/ComplaintPage/PeopleList';
-import SectionTitle from 'components/ComplaintPage/SectionTitle';
 
 const Involvements = ({ involvements }) => {
   if (involvements.length === 0) {
@@ -28,7 +27,6 @@ const Involvements = ({ involvements }) => {
 
   return (
     <div>
-      <SectionTitle title='Involved Members' />
       { rows }
     </div>
   );

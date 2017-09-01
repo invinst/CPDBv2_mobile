@@ -83,15 +83,6 @@ export default class ComplaintPage extends Component {
             isExpanded={ this.state.coaccusedIsExpanded }
             headerHeight={ this.state.headerHeight }
           />
-
-          <PeopleList
-            title='Accused'
-            people={ [{
-              content: activeCoaccused.fullName,
-              subcontent: [activeCoaccused.gender, activeCoaccused.race].filter(a => Boolean(a)).join(', '),
-              url: `${constants.OFFICER_PATH}${activeCoaccused.id}/`
-            }] }
-          />
         </Sticky>
         <div>
 
@@ -99,6 +90,16 @@ export default class ComplaintPage extends Component {
             category={ activeCoaccused.category }
             subcategory={ activeCoaccused.subcategory }
           />
+
+          <PeopleList
+            title='Accused Officer'
+            people={ [{
+              content: activeCoaccused.fullName,
+              subcontent: activeCoaccused.badge ? `Badge ${activeCoaccused.badge}` : '',
+              url: `${constants.OFFICER_PATH}${activeCoaccused.id}/`
+            }] }
+          />
+
           <Complainants complainants={ complaint.complainants } />
 
           <Outcome
@@ -126,6 +127,8 @@ export default class ComplaintPage extends Component {
             title='Documents'
             notAvailableMessage='There are no documents publicly available for this incident at this time.'
           />
+
+          <a className='attachment-request-link'>Request Documents</a>
 
           <Attachment
             title='Audio'

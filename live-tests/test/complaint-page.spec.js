@@ -80,22 +80,6 @@ describe('ComplaintPageTest', function () {
 
     client.expect.element('.sheet-header').text.to.contain('CR 1053667');
     client.expect.element('.sheet-header .subheader').text.to.contain('1 coaccused');
-    client.expect.element('.complaint-header p.title').text.to.contain('Accused');
-
-    client.end();
-  });
-
-  it('should collapse "Accused" title in sticky header', function (client) {
-
-    api.mock('GET', '/api/v2/cr/1053667/', 200, mockComplaint);
-
-    client
-      .url(`${client.globals.clientUrl}/complaint/1053667/6493/`);
-
-    client.execute(function () {
-      window.scrollTo(0, 9999);
-    });
-    client.expect.element('.complaint-header p.title').not.to.be.visible;
 
     client.end();
   });

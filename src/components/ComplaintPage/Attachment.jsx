@@ -9,7 +9,6 @@ const Attachment = ({ title, notAvailableMessage }) => {
       <SectionTitle title={ title } />
       <div className='attachment-content'>
         <p className='not-available-message'>{ notAvailableMessage }</p>
-        <a className='attachment-request-link'>Request</a>
       </div>
     </div>
   );

@@ -1,10 +1,16 @@
+import constants from 'constants';
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import constants from 'constants';
+import _ from 'lodash';
 
 const getComplaint = (state, props) => state.complaintPage.complaints[props.params.complaintId];
 
-const formatDate = date => moment(date).format(constants.SIMPLE_DATE_FORMAT);
+const formatDate = (date) => {
+  if (!date) {
+    return null;
+  }
+  return moment(date).format(constants.SIMPLE_DATE_FORMAT);
+};
 
 export const complaintSelector = createSelector(
   [getComplaint],
@@ -18,7 +24,7 @@ export const complaintSelector = createSelector(
     return {
       address: complaint.address,
       beat: complaint.beat,
-      complainants: complaint.complainants,
+      complainants: complaint.complainants, //TODO
       crid: complaint.crid,
       incidentDate: formatDate(complaint.incident_date),
       location: complaint.location,
@@ -26,13 +32,14 @@ export const complaintSelector = createSelector(
       coaccused: complaint.coaccused.map(
         (ca) => ({
           category: ca.category,
-          subcategory: ca.subcategory,
+          subcategory: _.capitalize(ca.subcategory),
           startDate: formatDate(ca.start_date),
           endDate: formatDate(ca.end_date),
           finalFinding: ca.final_finding,
           finalOutcome: ca.final_outcome,
           fullName: ca.full_name,
           gender: ca.gender.toLowerCase(),
+          badge: ca.badge,
           id: ca.id,
           race: ca.race.toLowerCase(),
           reccOutcome: ca.recc_outcome
