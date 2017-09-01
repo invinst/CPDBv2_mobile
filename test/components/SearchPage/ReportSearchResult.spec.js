@@ -18,7 +18,7 @@ describe('<ReportSearchResult />', () => {
 
     const wrapper = mount(
       <ReportSearchResult
-        report={ report }
+        items={ [report] }
         saveToRecent={ () => {} }
       />
     );
@@ -43,12 +43,12 @@ describe('<ReportSearchResult />', () => {
 
     const wrapper = shallow(
       <ReportSearchResult
-        report={ report }
+        items={ [report] }
         saveToRecent={ spySaveToRecent }
       />
     );
 
-    wrapper.simulate('click');
+    wrapper.find('Link').simulate('click');
     spySaveToRecent.calledWith({
       type: 'Report',
       title: 'foo',

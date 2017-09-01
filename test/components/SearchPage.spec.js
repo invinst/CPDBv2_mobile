@@ -8,11 +8,12 @@ import ReactHeight from 'react-height';
 import * as NavigationUtil from 'utils/NavigationUtil';
 import SearchPage from 'components/SearchPage';
 import SearchCategory from 'components/SearchPage/SearchCategory';
+import ClearableInput from 'components/SearchPage/ClearableInput';
 import constants from 'constants';
 
 describe('<SearchPage />', function () {
   it('should be renderable', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <SearchPage query={ '' } />
     );
     wrapper.should.be.ok();
@@ -180,6 +181,13 @@ describe('<SearchPage />', function () {
       clearableInput.prop('onClear')();
       spyInputChanged.calledWith('').should.be.true();
     });
+
+    it('should set this.searchInput ref to its own instance', function () {
+      const wrapper = mount(<SearchPage />);
+
+      const refInstance = wrapper.instance().searchInput;
+      (typeof refInstance).should.not.eql('undefined');
+    });
   });
 
   describe('updateLastCategoryHeight', () => {
@@ -274,6 +282,78 @@ describe('<SearchPage />', function () {
       lastCategory.prop('onHeightReady').should.be.eql(SearchPage.prototype.updateLastCategoryHeight);
 
       stubBoundCallback.restore();
+    });
+
+    it('should pass correct allButtonClickHandler prop to SearchCategory', () => {
+      const stubBoundCallback = stub(SearchPage.prototype.chooseCategory, 'bind');
+      stubBoundCallback.returns(SearchPage.prototype.chooseCategory);
+
+      const officersProp = {
+        data: ['data']
+      };
+      const reportsProp = {
+        data: ['data']
+      };
+
+      const wrapper = shallow(
+        <SearchPage
+          saveToRecent={ () => {} }
+          query='qa'
+          officers={ officersProp }
+          reports={ reportsProp }
+          suggestAllFromCategory={ () => {} }/>
+      );
+
+      const searchCategory = wrapper.find(SearchCategory).at(0);
+      searchCategory.prop('allButtonClickHandler').should.eql(SearchPage.prototype.chooseCategory);
+
+      stubBoundCallback.restore();
+    });
+  });
+
+  describe('chooseCategory', function () {
+    it('should call suggestAllFromCategory & updateChosenCategory with correct args', function () {
+      const suggestAllFromCategory = spy();
+      const updateChosenCategory = spy();
+
+      const wrapper = shallow(
+        <SearchPage
+          query='wa'
+          suggestAllFromCategory={ suggestAllFromCategory }
+          updateChosenCategory={ updateChosenCategory }
+        />
+      );
+
+      wrapper.instance().chooseCategory({
+        path: 'mypath',
+        id: 'myid'
+      });
+
+      suggestAllFromCategory.calledWith('mypath', 'wa').should.be.true();
+      updateChosenCategory.calledWith('myid').should.be.true();
+    });
+  });
+
+  describe('"view single category" mode', function () {
+    it('should only display search results of the chosen single category', function () {
+      const faqsProp = {
+        data: ['data']
+      };
+      const officersProp = {
+        data: ['data']
+      };
+
+      const wrapper = shallow(
+        <SearchPage
+          query='qa'
+          officers={ officersProp }
+          faqs={ faqsProp }
+          chosenCategory='faqs'
+        />
+      );
+
+      const searchCategories = wrapper.find('SearchCategory');
+      searchCategories.should.have.length(1);
     });
   });
 });

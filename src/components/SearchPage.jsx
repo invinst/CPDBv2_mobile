@@ -44,19 +44,27 @@ export default class SearchPage extends Component {
     this.forceUpdate();
   }
 
-  renderCategories(categories) {
-    const { suggestAllFromCategory, query } = this.props;
+  chooseCategory(category) {
+    const { query, suggestAllFromCategory, updateChosenCategory } = this.props;
+    suggestAllFromCategory(category.path, query);
+    updateChosenCategory(category.id);
+  }
 
+  renderCategories(categories) {
     const lastIndex = categories.length - 1;
 
     return categories.map((cat, index) => {
-
+      const showAllButton = (
+        cat.id !== 'recent' &&
+        cat.id !== 'suggested' &&
+        this.props.chosenCategory === ''
+      );
       const searchCategory = (
         <SearchCategory
           categoryId={ cat.id }
-          requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
+          allButtonClickHandler={ this.chooseCategory.bind(this, cat) }
+          showAllButton={ showAllButton }
           title={ cat.longName || cat.name }
-          isShowingAll={ this.props[cat.id].isShowingAll }
           items={ this.props[cat.id].data }
           saveToRecent={ this.props.saveToRecent }
           updateActiveCategory={ this.props.updateActiveCategory }
@@ -92,7 +100,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query, activeCategory, router } = this.props;
+    const { query, activeCategory, chosenCategory, router } = this.props;
     let categories;
 
     if (!this.isLongEnoughQuery(query)) {
@@ -109,6 +117,9 @@ export default class SearchPage extends Component {
         const suggestions = this.props[cat.id];
         return !!suggestions && suggestions.data.length > 0;
       });
+
+    } else if (chosenCategory !== '') {
+      categories = constants.SEARCH_CATEGORIES.filter(cat => cat.id === chosenCategory);
 
     } else {
       categories = this.getCategoriesWithSuggestions();
@@ -143,14 +154,17 @@ export default class SearchPage extends Component {
             activeCategory={ activeCategory }
             scrollToCategory={ this.scrollToCategory }
             updateActiveCategory={ this.props.updateActiveCategory }
+            chosenCategory={ this.props.chosenCategory }
+            clearChosenCategory={ this.props.updateChosenCategory.bind(this, '') }
           />
+
         </div>
 
         <div className='category-details-container'>
           { this.renderCategories(categories) }
         </div>
 
-        <div style={ this.calculateDynamicBottomPaddingStyle() } className='bottom-padding' />
+        <div style={ this.calculateDynamicBottomPaddingStyle() } className='bottom-padding'/>
       </div>
     );
   }
@@ -166,10 +180,14 @@ SearchPage.propTypes = {
   categories: PropTypes.array,
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
+  chosenCategory: PropTypes.string,
   updateActiveCategory: PropTypes.func,
+  updateChosenCategory: PropTypes.func,
   router: PropTypes.object
 };
 
 SearchPage.defaultProps = {
-  inputChanged: () => {}
+  inputChanged: function () {},
+  updateChosenCategory: function () {},
+  chosenCategory: ''
 };

@@ -43,7 +43,7 @@ describe('<FaqSearchResult />', () => {
 
     const wrapper = mount(
       <FaqSearchResult
-        faqs={ faqs }
+        items={ faqs }
         saveToRecent={ () => {} }
       />
     );

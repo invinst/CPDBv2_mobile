@@ -5,9 +5,9 @@ import constants from 'constants';
 
 class FaqSearchResult extends Component {
   render() {
-    const { faqs, saveToRecent } = this.props;
+    const { items, saveToRecent } = this.props;
 
-    const rows = faqs.map((faq) => {
+    const rows = items.map((faq) => {
       const url = `${constants.FAQ_PATH}${faq.id}/`;
 
       return {
@@ -27,7 +27,7 @@ class FaqSearchResult extends Component {
 
 FaqSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
-  faqs: PropTypes.array
+  items: PropTypes.array
 };
 
 export default FaqSearchResult;
