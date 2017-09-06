@@ -8,7 +8,6 @@ import ReactHeight from 'react-height';
 import * as NavigationUtil from 'utils/NavigationUtil';
 import SearchPage from 'components/SearchPage';
 import SearchCategory from 'components/SearchPage/SearchCategory';
-import ClearableInput from 'components/SearchPage/ClearableInput';
 import constants from 'constants';
 
 describe('<SearchPage />', function () {
@@ -246,6 +245,20 @@ describe('<SearchPage />', function () {
 
       result.should.eql({
         height
+      });
+    });
+
+    it('should return minimum height when lastCategoryHeight is sufficiently large', () => {
+      const wrapper = shallow(
+        <SearchPage />
+      );
+      const instance = wrapper.instance();
+      instance.lastCategoryHeight = 9999;
+
+      const result = instance.calculateDynamicBottomPaddingStyle();
+
+      result.should.eql({
+        height: '133px'
       });
     });
   });

@@ -95,8 +95,10 @@ export default class SearchPage extends Component {
       2 * constants.NEW_DIVIDER_WEIGHT +
       lastCategoryHeight
     );
-    const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
-    return { height };
+    const height = Math.max(constants.BOTTOM_PADDING, window.innerHeight - dynamicBottomPaddingOffset);
+    return {
+      height: `${height}px`
+    };
   }
 
   render() {
