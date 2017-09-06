@@ -302,7 +302,7 @@ describe('<SearchCategory />', function () {
       should.equal(result, null);
     });
 
-    it('should return only the first 10 items if not in single category mode', function () {
+    it('should return only the first 5 items if not in single category mode', function () {
       const items = range(11);
       const wrapper = shallow(
         <SearchCategory
@@ -313,7 +313,7 @@ describe('<SearchCategory />', function () {
       );
 
       const faqSearchResult = wrapper.find('FaqSearchResult');
-      faqSearchResult.prop('items').should.eql(range(10));
+      faqSearchResult.prop('items').should.eql(range(5));
     });
   });
 

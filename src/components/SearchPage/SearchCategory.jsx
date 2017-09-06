@@ -73,7 +73,7 @@ export default class SearchCategory extends Component {
 
     let items = this.props.items;
     if (showAllButton) {
-      items = items.slice(0, 10);
+      items = items.slice(0, 5);
     }
 
     return <ResultComponent items={ items } saveToRecent={ saveToRecent }/>;
