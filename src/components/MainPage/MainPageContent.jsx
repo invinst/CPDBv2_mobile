@@ -8,9 +8,9 @@ import constants from 'constants';
 
 
 export default class MainPageContent extends Component {
-
   componentWillMount() {
     this.props.requestLandingPage();
+    this.height = window.innerHeight;
   }
 
   render() {
@@ -18,11 +18,10 @@ export default class MainPageContent extends Component {
     const headerClassNames = cx(style.mainPageContent, { 'top-left': topLeft });
 
     const searchDescriptionClassNames = cx('search-description', { 'hidden': !!query });
-    const landingPageHeight = document.documentElement.clientHeight;
 
     return (
       <div className={ headerClassNames }>
-        <div className='full-height-wrapper' style={ { height: landingPageHeight } }>
+        <div className='full-height-wrapper' style={ { height: `${this.height}px` } }>
           <Header topLeft={ topLeft } />
           <div className='wrapper animation'>
             <div className='holder'>
