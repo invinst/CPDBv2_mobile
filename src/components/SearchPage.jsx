@@ -55,7 +55,7 @@ export default class SearchPage extends Component {
         <SearchCategory
           categoryId={ cat.id }
           requestAll={ suggestAllFromCategory.bind(this, cat.path, query) }
-          title={ cat.longName ? cat.longName : cat.name }
+          title={ cat.longName || cat.name }
           isShowingAll={ this.props[cat.id].isShowingAll }
           items={ this.props[cat.id].data }
           saveToRecent={ this.props.saveToRecent }
@@ -132,7 +132,7 @@ export default class SearchPage extends Component {
             />
 
             <button
-              className='bt-done'
+              className='bt-cancel'
               onClick={ goUp.bind(this, router, window.location.pathname) }>
               Cancel
             </button>
