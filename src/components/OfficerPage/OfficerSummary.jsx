@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Sticky } from 'react-sticky';
+import { Sticky, StickyContainer } from 'react-sticky';
 
 import GaUtil from 'utils/GaUtil';
 import LoadingPage from 'components/Shared/LoadingPage';
@@ -39,7 +39,7 @@ class OfficerSummary extends Component {
     }
 
     return (
-      <div className={ style.officerSummary }>
+      <StickyContainer className={ style.officerSummary }>
         <Sticky>
           <h1 className='sheet-header header' onClick={ scrollToTop() }>
             { summary.name }
@@ -48,22 +48,25 @@ class OfficerSummary extends Component {
 
         <OfficerTopLinks id={ pk } currentPath='summary' />
 
-        <div className='assignment-detail-section'>
-          <SectionRow label='Unit' value={ summary.unit } />
-          <SectionRow label='Rank' value={ summary.rank } />
-          <SectionRow label='Badge' value={ summary.badge } />
-          <SectionRow label='2017 Salary' value={ summary.salary /* TODO: API NOT PROVIDED */ } />
-          <SectionRow
-            label='Career'
-            value={ summary.dateOfAppt }
-            extraInfo={ summary.yearsSinceDateOfAppt } />
-          <SectionRow label='Race' value={ summary.race } />
-          <SectionRow label='Sex' value={ summary.sex } />
+        <div className='officer-summary-body'>
+          <div className='assignment-detail-section'>
+            <SectionRow label='Unit' value={ summary.unit } />
+            <SectionRow label='Rank' value={ summary.rank } />
+            <SectionRow label='Badge' value={ summary.badge } />
+            <SectionRow label='2017 Salary' value={ summary.salary /* TODO: API NOT PROVIDED */ } />
+            <SectionRow
+              label='Career'
+              value={ summary.dateOfAppt }
+              extraInfo={ summary.yearsSinceDateOfAppt } />
+            <SectionRow label='Race' value={ summary.race } />
+            <SectionRow label='Sex' value={ summary.sex } />
+          </div>
+
+          <SummaryStatsSection name='Complaints' data={ summary.complaints } />
         </div>
 
-        <SummaryStatsSection name='Complaints' data={ summary.complaints } />
 
-      </div>
+      </StickyContainer>
     );
   }
 }

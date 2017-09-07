@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Sticky } from 'react-sticky';
+import { Sticky, StickyContainer } from 'react-sticky';
 import { find } from 'lodash';
 import cx from 'classnames';
 import ReactHeight from 'react-height';
@@ -64,7 +64,7 @@ export default class ComplaintPage extends Component {
     const activeCoaccused = this.getActiveCoaccused();
 
     return (
-      <div className={ style.complaintPage }>
+      <StickyContainer className={ style.complaintPage }>
         <Sticky className='complaint-header'>
           <ReactHeight className='relative' onHeightReady={ this.updateHeaderHeight.bind(this) }>
             <div className={ cx('sheet-header header', { expanded: this.state.coaccusedIsExpanded }) }>
@@ -84,7 +84,7 @@ export default class ComplaintPage extends Component {
             headerHeight={ this.state.headerHeight }
           />
         </Sticky>
-        <div>
+        <div className='complaint-page-body'>
 
           <ComplaintCategory
             category={ activeCoaccused.category }
@@ -141,7 +141,7 @@ export default class ComplaintPage extends Component {
           />
 
         </div>
-      </div>
+      </StickyContainer>
     );
   }
 }
