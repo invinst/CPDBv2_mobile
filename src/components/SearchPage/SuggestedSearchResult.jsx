@@ -25,7 +25,7 @@ class SuggestedSearchResult extends Component {
 
 SuggestedSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
-  items: PropTypes.object,
+  items: PropTypes.array,
   index: PropTypes.number
 };
 

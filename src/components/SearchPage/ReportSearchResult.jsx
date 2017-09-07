@@ -42,7 +42,7 @@ class ReportSearchResult extends Component {
 
 ReportSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
-  items: PropTypes.object
+  items: PropTypes.array
 };
 
 export default ReportSearchResult;
