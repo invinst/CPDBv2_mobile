@@ -101,14 +101,7 @@ describe('FAQDetailPage test', function () {
     this.faqDetailPage.expect.element('@answer').text.to.contain('Miscellaneous: specific year or month, from a');
   });
 
-  it('should have empty header', function (client) {
-    this.faqDetailPage.expect.element('@sheetHeader').text.to.equal('');
-  });
-
-  it('should go to FAQ index page when overlay on top is tapped', function (client) {
-    const faqPage = client.page.faq();
-
-    this.faqDetailPage.click('@topOverlay');
-    client.assert.urlEquals(faqPage.url());
+  it('should have header', function (client) {
+    this.faqDetailPage.expect.element('@sheetHeader').text.to.equal('FAQ');
   });
 });

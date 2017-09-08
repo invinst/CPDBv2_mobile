@@ -7,7 +7,9 @@ import NotMatchedOfficerPage from 'components/OfficerPage/NotMatchedOfficerPage'
 import OfficerTopLinks from 'components/OfficerPage/OfficerTopLinks';
 import SectionRow from 'components/OfficerPage/SectionRow';
 import SummaryStatsSection from 'components/OfficerPage/SummaryStatsSection';
+import NavbarContainer from 'containers/NavbarContainer';
 import { scrollToTop } from 'utils/NavigationUtil';
+import constants from 'constants';
 
 import style from 'styles/OfficerPage/OfficerSummary.sass';
 
@@ -40,6 +42,7 @@ class OfficerSummary extends Component {
 
     return (
       <StickyContainer className={ style.officerSummary }>
+        <NavbarContainer backLink={ constants.SEARCH_PATH } />
         <Sticky>
           <h1 className='sheet-header header' onClick={ scrollToTop() }>
             { summary.name }
@@ -64,7 +67,6 @@ class OfficerSummary extends Component {
 
           <SummaryStatsSection name='Complaints' data={ summary.complaints } />
         </div>
-
 
       </StickyContainer>
     );

@@ -6,6 +6,7 @@ import { map } from 'lodash';
 import { hasChildren } from 'utils/ComponentUtil';
 import style from 'styles/FAQPage.sass';
 import { Sticky, StickyContainer } from 'react-sticky';
+import NavbarContainer from 'containers/NavbarContainer';
 import { scrollToTop } from 'utils/NavigationUtil';
 
 
@@ -50,6 +51,7 @@ export default class FAQPage extends Component {
 
     return (
       <StickyContainer className={ style.faqPage }>
+        <NavbarContainer />
         <Sticky><h1 onClick={ scrollToTop() } className={ headerClassnames }>FAQ</h1></Sticky>
         <div className='sheet-body'>
           { body }

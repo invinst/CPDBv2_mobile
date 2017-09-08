@@ -9,6 +9,8 @@ import OfficerTopLinks from 'components/OfficerPage/OfficerTopLinks';
 import YearlyStats from 'components/OfficerPage/OfficerTimeline/YearlyStats';
 import CRItem from 'components/OfficerPage/OfficerTimeline/CRItem';
 import SimpleEventItem from 'components/OfficerPage/OfficerTimeline/SimpleEventItem';
+import NavbarContainer from 'containers/NavbarContainer';
+import constants from 'constants';
 import { scrollToTop } from 'utils/NavigationUtil';
 
 import style from 'styles/OfficerPage/OfficerTimeline.sass';
@@ -114,6 +116,7 @@ class OfficerTimeline extends Component {
 
     return (
       <StickyContainer className={ style.officerTimeline }>
+        <NavbarContainer backLink={ constants.SEARCH_PATH } />
         { header }
         <InfiniteScroll
           hasMore={ hasMore }

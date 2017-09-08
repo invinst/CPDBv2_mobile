@@ -16,6 +16,7 @@ import ComplaintCategory from 'components/ComplaintPage/ComplaintCategory';
 import Attachment from 'components/ComplaintPage/Attachment';
 import Arrow from 'components/Shared/Arrow';
 import CoaccusedDropdown from 'components/ComplaintPage/CoaccusedDropdown';
+import NavbarContainer from 'containers/NavbarContainer';
 import constants from 'constants';
 
 
@@ -65,6 +66,7 @@ export default class ComplaintPage extends Component {
 
     return (
       <StickyContainer className={ style.complaintPage }>
+        <NavbarContainer backLink={ constants.SEARCH_PATH } />
         <Sticky className='complaint-header'>
           <ReactHeight className='relative' onHeightReady={ this.updateHeaderHeight.bind(this) }>
             <div className={ cx('sheet-header header', { expanded: this.state.coaccusedIsExpanded }) }>
