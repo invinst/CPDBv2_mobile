@@ -4,12 +4,11 @@ import { openShareMenu, closeShareMenu } from 'actions/navbar';
 import Navbar from 'components/Shared/Navbar';
 
 
-function mapStateToProps(state, ownProps) {
-  return {
-    backLink: ownProps.backLink,
-    shareMenuIsOpen: state.navbar.shareMenuIsOpen
-  };
-}
+const mapStateToProps = (state, ownProps) => ({
+  backLink: ownProps.backLink,
+  shareMenuIsOpen: state.navbar.shareMenuIsOpen
+});
+
 
 const mapDispatchToProps = {
   openShareMenu,

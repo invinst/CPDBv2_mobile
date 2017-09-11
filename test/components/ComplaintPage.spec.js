@@ -52,4 +52,38 @@ describe('<ComplaintPage />', function () {
     navbarContainer.prop('backLink').should.eql(constants.SEARCH_PATH);
   });
 
+  it('toggleCoaccused should flip the coaccusedIsExpanded state', function () {
+    const dummyComplaint = {
+      coaccused: [{ id: 1 }]
+    };
+    const wrapper = shallow(
+      <ComplaintPage
+        complaint={ dummyComplaint }
+        coaccusedId={ 1 }
+      />
+    );
+
+    const instance = wrapper.instance();
+
+    instance.state.coaccusedIsExpanded.should.be.false();
+    instance.toggleCoaccused();
+    instance.state.coaccusedIsExpanded.should.be.true();
+  });
+
+  it('updateHeaderHeight should set a new headerHeight state', function () {
+    const dummyComplaint = {
+      coaccused: [{ id: 1 }]
+    };
+    const wrapper = shallow(
+      <ComplaintPage
+        complaint={ dummyComplaint }
+        coaccusedId={ 1 }
+      />
+    );
+
+    const instance = wrapper.instance();
+
+    instance.updateHeaderHeight(987);
+    instance.state.headerHeight.should.eql(987);
+  });
 });

@@ -71,7 +71,7 @@ export default class ComplaintPage extends Component {
           <ReactHeight className='relative' onHeightReady={ this.updateHeaderHeight.bind(this) }>
             <div className={ cx('sheet-header header', { expanded: this.state.coaccusedIsExpanded }) }>
               <span onClick={ scrollToTop() }>CR { complaint.crid }</span>
-              <span onClick={ () => { this.toggleCoaccused(); } } className='subheader'>
+              <span onClick={ this.toggleCoaccused.bind(this) } className='subheader'>
                 <span className='coaccused-text'>{ complaint.coaccused.length } coaccused</span>
                 <Arrow direction={ this.state.coaccusedIsExpanded ? 'up' : 'down' } />
               </span>

@@ -61,6 +61,13 @@ describe('<Navbar />', function () {
     spyCloseShareMenu.called.should.be.true();
   });
 
+  it('should close Share menu on unmount', function () {
+    const spyCloseShareMenu = spy();
+    const wrapper = shallow(<Navbar closeShareMenu={ spyCloseShareMenu } />);
+    wrapper.instance().componentWillUnmount();
+    spyCloseShareMenu.called.should.be.true();
+  });
+
   describe('Share menu', function () {
     beforeEach(function () {
       this.dummyCloseShareMenu = () => {};

@@ -48,14 +48,4 @@ describe('<CRItem />', function () {
     wrapper.prop('to').should.eql(`${constants.COMPLAINT_PATH}1044088/11/`);
   });
 
-  describe('getFindingClass', function () {
-    it('should convert to snake case', function () {
-      CRItem.prototype.getFindingClass('Not Sustained').should.be.eql('not-sustained');
-    });
-
-    it('should return "unknown" if finding is not available', function () {
-      CRItem.prototype.getFindingClass(undefined).should.be.eql('unknown');
-    });
-  });
-
 });
