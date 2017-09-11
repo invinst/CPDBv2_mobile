@@ -15,7 +15,7 @@ import SearchPageContainer from 'containers/SearchPageContainer';
 import OfficerSummaryContainer from 'containers/OfficerPage/OfficerSummaryContainer';
 import OfficerTimelineContainer from 'containers/OfficerPage/OfficerTimelineContainer';
 import ComplaintPageContainer from 'containers/ComplaintPageContainer';
-import MainPageContentContainer from 'containers/MainPage/MainPageContentContainer';
+import LandingPageContainer from 'containers/LandingPageContainer';
 
 import 'styles/Style.sass';
 import 'styles/Fonts.sass';
@@ -29,7 +29,7 @@ const App = React.createClass({
     return (
       <Router history={ AppHistory }>
         <Route path='/' component={ MainPageContainer }>
-          <IndexRoute component={ MainPageContentContainer } />
+          <IndexRoute component={ LandingPageContainer } />
 
           <Route path={ constants.REPORTING_PATH } component={ ReportingPageContainer }>
             <Route path={ constants.REPORTING_PATH + ':id' } component={ ReportingDetailContainer } />
