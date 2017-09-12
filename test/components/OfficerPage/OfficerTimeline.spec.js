@@ -254,4 +254,11 @@ describe('<OfficerTimeline />', function () {
     infiniteScroll.prop('loadMore')();
     spyGetMore.calledWith(12, '/next-url/').should.be.true();
   });
+
+  it('should have BottomPadding', function () {
+    const wrapper = shallow(
+      <OfficerTimeline found={ true } />
+    );
+    wrapper.find('BottomPadding').exists().should.be.true();
+  });
 });

@@ -86,4 +86,17 @@ describe('<ComplaintPage />', function () {
     instance.updateHeaderHeight(987);
     instance.state.headerHeight.should.eql(987);
   });
+
+  it('should have BottomPadding', function () {
+    const dummyComplaint = {
+      coaccused: [{ id: 1 }]
+    };
+    const wrapper = shallow(
+      <ComplaintPage
+        complaint={ dummyComplaint }
+        coaccusedId={ 1 }
+      />
+    );
+    wrapper.find('BottomPadding').exists().should.be.true();
+  });
 });

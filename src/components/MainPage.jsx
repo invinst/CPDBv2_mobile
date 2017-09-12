@@ -21,15 +21,9 @@ class MainPage extends Component {
   }
 
   render() {
-    let bottomPaddingElement = null;
-    if (this.props.location.pathname === '/') {
-      bottomPaddingElement = <div className='bottom-padding' />;
-    }
-
     return (
       <div className={ cx('content', style.mainPage) }>
         { this.props.children }
-        { bottomPaddingElement }
       </div>
     );
   }

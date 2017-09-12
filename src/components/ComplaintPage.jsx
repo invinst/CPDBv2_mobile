@@ -18,6 +18,7 @@ import Arrow from 'components/Shared/Arrow';
 import CoaccusedDropdown from 'components/ComplaintPage/CoaccusedDropdown';
 import NavbarContainer from 'containers/NavbarContainer';
 import constants from 'constants';
+import BottomPadding from 'components/Shared/BottomPadding';
 
 
 export default class ComplaintPage extends Component {
@@ -143,6 +144,7 @@ export default class ComplaintPage extends Component {
           />
 
         </div>
+        <BottomPadding />
       </StickyContainer>
     );
   }

@@ -8,6 +8,7 @@ import OfficerTopLinks from 'components/OfficerPage/OfficerTopLinks';
 import SectionRow from 'components/OfficerPage/SectionRow';
 import SummaryStatsSection from 'components/OfficerPage/SummaryStatsSection';
 import NavbarContainer from 'containers/NavbarContainer';
+import BottomPadding from 'components/Shared/BottomPadding';
 import { scrollToTop } from 'utils/NavigationUtil';
 import constants from 'constants';
 
@@ -68,6 +69,7 @@ class OfficerSummary extends Component {
           <SummaryStatsSection name='Complaints' data={ summary.complaints } />
         </div>
 
+        <BottomPadding />
       </StickyContainer>
     );
   }

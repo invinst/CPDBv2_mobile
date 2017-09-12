@@ -10,6 +10,7 @@ import YearlyStats from 'components/OfficerPage/OfficerTimeline/YearlyStats';
 import CRItem from 'components/OfficerPage/OfficerTimeline/CRItem';
 import SimpleEventItem from 'components/OfficerPage/OfficerTimeline/SimpleEventItem';
 import NavbarContainer from 'containers/NavbarContainer';
+import BottomPadding from 'components/Shared/BottomPadding';
 import constants from 'constants';
 import { scrollToTop } from 'utils/NavigationUtil';
 
@@ -127,6 +128,7 @@ class OfficerTimeline extends Component {
           <div className='officer-timeline-body'>
             { body }
           </div>
+          <BottomPadding />
         </InfiniteScroll>
       </StickyContainer>
     );

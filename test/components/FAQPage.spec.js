@@ -92,6 +92,11 @@ describe('<FAQPage />', () => {
 
   it('should render Navbar via NavbarContainer', function () {
     const wrapper = shallow(<FAQPage pagination={ { loaded: true } } />);
-    wrapper.find(NavbarContainer).should.have.length(1);
+    wrapper.find(NavbarContainer).exists().should.be.true();
+  });
+
+  it('should have BottomPadding', function () {
+    const wrapper = shallow(<FAQPage pagination={ { loaded: true } } />);
+    wrapper.find('BottomPadding').exists().should.be.true();
   });
 });

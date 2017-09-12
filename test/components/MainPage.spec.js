@@ -25,12 +25,6 @@ describe('MainPage component', function () {
     spyRouteChanged.calledWith('dummy/').should.be.true();
   });
 
-  it('should render bottom padding element if at root', function () {
-    const location = { pathname: '/' };
-    let wrapper = shallow(<MainPage location={ location }/>);
-    wrapper.find('.bottom-padding').exists().should.be.true();
-  });
-
   it('should not render bottom padding element if not at root', function () {
     const location = { pathname: '/search/' };
     let wrapper = shallow(<MainPage location={ location }/>);

@@ -168,4 +168,10 @@ describe('<OfficerSummary />', function () {
     });
   });
 
+  it('should have BottomPadding', function () {
+    const wrapper = shallow(
+      <OfficerSummary loading={ false } found={ true } summary={ this.summary }/>
+    );
+    wrapper.find('BottomPadding').exists().should.be.true();
+  });
 });

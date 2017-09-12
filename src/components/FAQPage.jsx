@@ -8,6 +8,7 @@ import style from 'styles/FAQPage.sass';
 import { Sticky, StickyContainer } from 'react-sticky';
 import NavbarContainer from 'containers/NavbarContainer';
 import { scrollToTop } from 'utils/NavigationUtil';
+import BottomPadding from 'components/Shared/BottomPadding';
 
 
 export default class FAQPage extends Component {
@@ -56,6 +57,7 @@ export default class FAQPage extends Component {
         <div className='sheet-body'>
           { body }
         </div>
+        <BottomPadding />
       </StickyContainer>
     );
   }
