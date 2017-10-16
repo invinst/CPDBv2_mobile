@@ -4,9 +4,9 @@ import TwoLineList from 'components/Shared/TwoLineList';
 
 class UnitSearchResult extends Component {
   render() {
-    const { units } = this.props;
+    const { items } = this.props;
 
-    const rows = units.map((unit) => ({
+    const rows = items.map((unit) => ({
       label: unit.text,
       sublabel: `${unit.memberCount} officers, ${unit.activeMemberCount} active`,
       // TODO: We don't have a dedicated view for Unit on mobile yet, and the provided external url (unit.url)
@@ -19,7 +19,11 @@ class UnitSearchResult extends Component {
 
 UnitSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
-  units: PropTypes.array
+  items: PropTypes.array
+};
+
+UnitSearchResult.defaultProps = {
+  items: []
 };
 
 export default UnitSearchResult;

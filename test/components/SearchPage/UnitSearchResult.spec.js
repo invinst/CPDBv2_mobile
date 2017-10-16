@@ -36,7 +36,7 @@ describe('<UnitSearchResult />', () => {
 
     const wrapper = mount(
       <UnitSearchResult
-        units={ units }
+        items={ units }
         saveToRecent={ () => {} }
       />
     );

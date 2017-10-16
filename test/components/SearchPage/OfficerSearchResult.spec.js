@@ -44,7 +44,7 @@ describe('<OfficerSearchResult />', () => {
 
     const wrapper = mount(
       <OfficerSearchResult
-        officers={ officers }
+        items={ officers }
         saveToRecent={ () => {} }
       />
     );

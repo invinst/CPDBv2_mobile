@@ -2,20 +2,22 @@ import should from 'should';
 import React from 'react';
 
 import { shallow, mount } from 'enzyme';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
+import * as NavigationUtil from 'utils/NavigationUtil';
 
 import SearchNavbar from 'components/SearchPage/SearchNavbar';
 
 
 describe('<SearchNavbar />', function () {
-  it('should be renderable', () => {
+
+  it('should be renderable', function () {
     const wrapper = shallow(
       <SearchNavbar categories={ [] }/>
     );
     wrapper.should.be.ok();
   });
 
-  it('should make first category active by default', () => {
+  it('should make first category active by default', function () {
     const categories = [
       {
         id: 'officers'
@@ -34,7 +36,7 @@ describe('<SearchNavbar />', function () {
     wrapper.find('button').at(1).hasClass('active').should.be.false();
   });
 
-  it('should render all the categories with correct names', () => {
+  it('should render all the categories with correct names', function () {
     const categories = [
       {
         id: 'officers',
@@ -56,7 +58,7 @@ describe('<SearchNavbar />', function () {
     wrapper.find('button').at(1).text().should.be.eql('FAQs');
   });
 
-  it('should scroll to the correct position when clicking on the category links', () => {
+  it('should scroll to the correct position when clicking on the category links', function () {
     const categories = [
       {
         id: 'officers',
@@ -88,5 +90,67 @@ describe('<SearchNavbar />', function () {
     wrapper.find('button').at(1).simulate('click');
     spyScrollToCategory.calledWith('faqs').should.be.true();
     spyUpdateActiveCategory.calledWith('faqs').should.be.true();
+  });
+
+  describe('chosenCategory-related behaviors', function () {
+    beforeEach(function () {
+      this.stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
+    });
+
+    afterEach(function () {
+      this.stubInstantScrollToTop.restore();
+    });
+
+    it('should not render "clear" button if no single category is currently chosen', function () {
+      const categories = [
+        {
+          id: 'officers'
+        },
+        {
+          id: 'faqs'
+        }
+      ];
+      const wrapper = mount(
+        <SearchNavbar
+          categories={ categories }
+        />
+      );
+
+      wrapper.find('.clear-icon').exists().should.be.false();
+    });
+
+    it('should render "clear" button if a category is currently chosen', function () {
+      const clearChosenCategory = spy();
+
+      const wrapper = mount(
+        <SearchNavbar
+          chosenCategory='faqs'
+          clearChosenCategory={ clearChosenCategory }
+        />
+      );
+
+      wrapper.find('.clear-icon').simulate('click');
+
+      clearChosenCategory.calledWith().should.be.true();
+      this.stubInstantScrollToTop.calledWith().should.be.true();
+    });
+
+    it('should render the chosenCategory as active no matter what', function () {
+      const categories = [
+        {
+          id: 'officers',
+          name: 'Officers'
+        }
+      ];
+      const wrapper = mount(
+        <SearchNavbar
+          categories={ categories }
+          activeCategory='faqs'
+          chosenCategory='officers'
+        />
+      );
+
+      wrapper.find('.category-link.active').text().should.eql('Officers');
+    });
   });
 });

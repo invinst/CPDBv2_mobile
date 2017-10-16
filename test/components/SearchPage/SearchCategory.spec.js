@@ -2,6 +2,7 @@ import should from 'should';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
+import { range } from 'lodash';
 import * as NavigationUtil from 'utils/NavigationUtil';
 
 import SearchCategory from 'components/SearchPage/SearchCategory';
@@ -11,8 +12,8 @@ const fixedHeaderHeight = (
   constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + 2 * constants.NEW_DIVIDER_WEIGHT
 );
 
-describe('<SearchCategory />', () => {
-  it('should be renderable', () => {
+describe('<SearchCategory />', function () {
+  it('should be renderable', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
@@ -23,7 +24,7 @@ describe('<SearchCategory />', () => {
     wrapper.should.be.ok();
   });
 
-  it('should add scroll listener when mounted', () => {
+  it('should add scroll listener when mounted', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
@@ -44,7 +45,7 @@ describe('<SearchCategory />', () => {
     stubWatchActiveStateBind.restore();
   });
 
-  it('should define function to remove scroll listener', () => {
+  it('should define function to remove scroll listener', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
@@ -71,7 +72,7 @@ describe('<SearchCategory />', () => {
     stubWatchActiveStateBind.restore();
   });
 
-  it('should unwatch active state when unmounted', () => {
+  it('should unwatch active state when unmounted', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
@@ -89,7 +90,7 @@ describe('<SearchCategory />', () => {
     spyUnwatchActiveState.calledWith().should.be.true();
   });
 
-  it('should render title', () => {
+  it('should render title', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
@@ -102,25 +103,8 @@ describe('<SearchCategory />', () => {
     title.text().should.eql('foo');
   });
 
-  it('should render "All" button', () => {
-    const stubRenderAllButton = stub(SearchCategory.prototype, 'renderAllButton');
-    stubRenderAllButton.returns('renderall');
-
-    shallow(
-      <SearchCategory
-        isShowingAll={ false }
-        requestAll='requestAll'
-        items={ [] }
-        categoryId='faqs'
-      />
-    );
-
-    stubRenderAllButton.calledWith(false, 0, 'requestAll').should.be.true();
-    stubRenderAllButton.restore();
-  });
-
-  describe('render officers', () => {
-    it('should render officer correctly', () => {
+  describe('render officers', function () {
+    it('should render officer correctly', function () {
       const spySaveToRecent = spy();
       const officers = [
         {
@@ -145,14 +129,14 @@ describe('<SearchCategory />', () => {
 
       const officerElement = wrapper.find('OfficerSearchResult');
       officerElement.exists().should.be.true();
-      officerElement.prop('officers').should.be.eql(officers);
+      officerElement.prop('items').should.be.eql(officers);
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
 
     });
   });
 
-  describe('render FAQs', () => {
-    it('should render faq correctly', () => {
+  describe('render FAQs', function () {
+    it('should render faq correctly', function () {
       const spySaveToRecent = spy();
       const faqs = [
         {
@@ -175,25 +159,25 @@ describe('<SearchCategory />', () => {
 
       const faqElement = wrapper.find('FaqSearchResult');
       faqElement.exists().should.be.true();
-      faqElement.prop('faqs').should.be.eql(faqs);
+      faqElement.prop('items').should.be.eql(faqs);
       faqElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
   });
 
-  describe('renderReport', () => {
-    it('should render report correctly', () => {
+  describe('renderReport', function () {
+    it('should render report correctly', function () {
       const spySaveToRecent = spy();
-      const report = {
+      const reports = [{
         id: '2',
         title: 'foo',
         publication: 'NYT',
         publishDate: 'whenever'
-      };
+      }];
 
       const wrapper = mount(
         <SearchCategory
-          items={ [report] }
+          items={ reports }
           categoryId='reports'
           saveToRecent={ spySaveToRecent }
         />
@@ -202,13 +186,13 @@ describe('<SearchCategory />', () => {
       const reportLink = wrapper.find('ReportSearchResult');
 
       reportLink.exists().should.be.true();
-      reportLink.prop('report').should.be.eql(report);
+      reportLink.prop('items').should.be.eql(reports);
       reportLink.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
   });
 
-  describe('render units', () => {
-    it('should render units correctly', () => {
+  describe('render units', function () {
+    it('should render units correctly', function () {
       const spySaveToRecent = spy();
       const units = [
         {
@@ -223,7 +207,7 @@ describe('<SearchCategory />', () => {
         }
       ];
 
-      const wrapper = mount(
+      const wrapper = shallow(
         <SearchCategory
           items={ units }
           categoryId='units'
@@ -233,23 +217,23 @@ describe('<SearchCategory />', () => {
 
       const officerElement = wrapper.find('UnitSearchResult');
       officerElement.exists().should.be.true();
-      officerElement.prop('units').should.be.eql(units);
+      officerElement.prop('items').should.be.eql(units);
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
   });
 
-  describe('renderSuggested', () => {
-    it('should render item correctly', () => {
+  describe('renderSuggested', function () {
+    it('should render item correctly', function () {
       const spySaveToRecent = spy();
-      const item = {
+      const items = [{
         url: 'localhost',
         type: 'recent',
         title: 'Whatever'
-      };
+      }];
 
       const wrapper = mount(
         <SearchCategory
-          items={ [item] }
+          items={ items }
           categoryId='recent'
           saveToRecent={ spySaveToRecent }
         />
@@ -257,61 +241,55 @@ describe('<SearchCategory />', () => {
       const itemLink = wrapper.find('SuggestedSearchResult');
 
       itemLink.exists().should.be.true();
-      itemLink.prop('item').should.be.eql(item);
+      itemLink.prop('items').should.be.eql(items);
       itemLink.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
   });
 
-  describe('renderAllButton', () => {
-    it('should render correctly', () => {
-      const stubRenderFunc = stub(SearchCategory.prototype, 'renderResults');
-      stubRenderFunc.returns((item) => item);
+  describe('renderAllButton', function () {
+    beforeEach(function () {
+      this.stubRenderFunc = stub(SearchCategory.prototype, 'renderResults');
+      this.stubRenderFunc.returns((item) => item);
+    });
 
+    afterEach(function () {
+      this.stubRenderFunc.restore();
+    });
+
+    it('should render correctly', function () {
       const items = new Array(11);
-      const dummyRequestAll = () => 'dummyRequestAll';
-
       const wrapper = mount(
         <SearchCategory
           items={ items }
-          requestAll={ dummyRequestAll }
-          isShowingAll={ false }
+          showAllButton={ true }
         />
       );
 
       const showAllButton = wrapper.find('.all');
 
       showAllButton.exists().should.be.true();
-      showAllButton.prop('onClick').should.be.eql(dummyRequestAll);
       showAllButton.text().should.eql('ALL');
-
-      stubRenderFunc.restore();
     });
 
-    it('should not render if already isShowingAll', () => {
-      const stubRenderFunc = stub(SearchCategory.prototype, 'renderResults');
-      stubRenderFunc.returns((item) => item);
-
-      const items = new Array(11);
-      const dummyRequestAll = () => 'dummyRequestAll';
+    it('should call allButtonClickHandler() and scroll to top on click', function () {
+      const allButtonClickHandler = spy();
 
       const wrapper = mount(
         <SearchCategory
-          items={ items }
-          requestAll={ dummyRequestAll }
-          isShowingAll={ true }
+          items={ [] }
+          showAllButton={ true }
+          allButtonClickHandler={ allButtonClickHandler }
         />
       );
 
-      const showAllButton = wrapper.find('.all');
-
-      showAllButton.exists().should.be.false();
-
-      stubRenderFunc.restore();
+      const allButton = wrapper.find('.all');
+      allButton.simulate('click');
+      allButtonClickHandler.calledWith().should.be.true();
     });
   });
 
-  describe('renderResults', () => {
-    it('should return null if given invalid category id', () => {
+  describe('renderResults', function () {
+    it('should return null if given invalid category id', function () {
 
       const wrapper = shallow(
         <SearchCategory
@@ -322,6 +300,20 @@ describe('<SearchCategory />', () => {
 
       const result = wrapper.instance().renderResults();
       should.equal(result, null);
+    });
+
+    it('should return only the first 5 items if not in single category mode', function () {
+      const items = range(11);
+      const wrapper = shallow(
+        <SearchCategory
+          items={ items }
+          categoryId='faqs'
+          showAllButton={ true }
+        />
+      );
+
+      const faqSearchResult = wrapper.find('FaqSearchResult');
+      faqSearchResult.prop('items').should.eql(range(5));
     });
   });
 

@@ -4,9 +4,9 @@ import TwoLineList from 'components/Shared/TwoLineList';
 
 class OfficerSearchResult extends Component {
   render() {
-    const { officers, saveToRecent } = this.props;
+    const { items, saveToRecent } = this.props;
 
-    const rows = officers.map((officer) => ({
+    const rows = items.map((officer) => ({
       label: officer.name,
       sublabel: officer.extraInfo,
       url: officer.url,
@@ -23,7 +23,7 @@ class OfficerSearchResult extends Component {
 
 OfficerSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
-  officers: PropTypes.array
+  items: PropTypes.array
 };
 
 export default OfficerSearchResult;
