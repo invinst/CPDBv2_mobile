@@ -3,7 +3,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import MainPage from 'components/MainPage';
-import MainPageContentContainer from 'containers/MainPage/MainPageContentContainer';
 import { spy } from 'sinon';
 
 
@@ -24,17 +23,6 @@ describe('MainPage component', function () {
     wrapper.instance().componentDidMount();
 
     spyRouteChanged.calledWith('dummy/').should.be.true();
-  });
-
-  it('should render MainPageContentContainer as subcomponents', function () {
-    let wrapper = shallow(<MainPage />);
-    wrapper.find(MainPageContentContainer).should.have.length(1);
-  });
-
-  it('should render bottom padding element if at root', function () {
-    const location = { pathname: '/' };
-    let wrapper = shallow(<MainPage location={ location }/>);
-    wrapper.find('.bottom-padding').exists().should.be.true();
   });
 
   it('should not render bottom padding element if not at root', function () {

@@ -4,6 +4,8 @@ import { spy, stub } from 'sinon';
 import GaUtil from 'utils/GaUtil';
 import OfficerTimeline from 'components/OfficerPage/OfficerTimeline';
 import NotMatchedOfficerPage from 'components/OfficerPage/NotMatchedOfficerPage';
+import NavbarContainer from 'containers/NavbarContainer';
+import constants from 'constants';
 
 
 describe('<OfficerTimeline />', function () {
@@ -88,6 +90,11 @@ describe('<OfficerTimeline />', function () {
     );
 
     wrapper.find('.header').text().should.be.eql('Foo Bar');
+  });
+
+  it('should render Navbar', function () {
+    const wrapper = shallow(<OfficerTimeline found={ true } />);
+    wrapper.find(NavbarContainer).prop('backLink').should.eql(constants.SEARCH_PATH);
   });
 
   it('should render empty header if officer summary has not been fetched yet', function () {
@@ -246,5 +253,12 @@ describe('<OfficerTimeline />', function () {
     const infiniteScroll = wrapper.find('InfiniteScroll');
     infiniteScroll.prop('loadMore')();
     spyGetMore.calledWith(12, '/next-url/').should.be.true();
+  });
+
+  it('should have BottomPadding', function () {
+    const wrapper = shallow(
+      <OfficerTimeline found={ true } />
+    );
+    wrapper.find('BottomPadding').exists().should.be.true();
   });
 });

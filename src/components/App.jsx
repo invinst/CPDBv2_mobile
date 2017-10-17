@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Router, Route } from 'react-router';
+import { Router, Route, IndexRoute } from 'react-router';
 
 import AppHistory from 'utils/History';
 import constants from 'constants';
@@ -15,6 +15,7 @@ import SearchPageContainer from 'containers/SearchPageContainer';
 import OfficerSummaryContainer from 'containers/OfficerPage/OfficerSummaryContainer';
 import OfficerTimelineContainer from 'containers/OfficerPage/OfficerTimelineContainer';
 import ComplaintPageContainer from 'containers/ComplaintPageContainer';
+import LandingPageContainer from 'containers/LandingPageContainer';
 
 import 'styles/Style.sass';
 import 'styles/Fonts.sass';
@@ -27,9 +28,9 @@ const App = React.createClass({
   render() {
     return (
       <Router history={ AppHistory }>
-        <Route path='/s/:query' component={ MainPageContainer } />
-        <Route path='/q/:query' component={ MainPageContainer } />
         <Route path='/' component={ MainPageContainer }>
+          <IndexRoute component={ LandingPageContainer } />
+
           <Route path={ constants.REPORTING_PATH } component={ ReportingPageContainer }>
             <Route path={ constants.REPORTING_PATH + ':id' } component={ ReportingDetailContainer } />
           </Route>

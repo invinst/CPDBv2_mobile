@@ -5,8 +5,10 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { map } from 'lodash';
 import { hasChildren } from 'utils/ComponentUtil';
 import style from 'styles/FAQPage.sass';
-import { Sticky } from 'react-sticky';
+import { Sticky, StickyContainer } from 'react-sticky';
+import NavbarContainer from 'containers/NavbarContainer';
 import { scrollToTop } from 'utils/NavigationUtil';
+import BottomPadding from 'components/Shared/BottomPadding';
 
 
 export default class FAQPage extends Component {
@@ -22,7 +24,7 @@ export default class FAQPage extends Component {
 
       return (
         <Link className='row' key={ faq.id } to={ `${cs.FAQ_PATH}${faq.id}/` }>
-        { blocks }
+          { blocks }
         </Link>
       );
     });
@@ -35,23 +37,28 @@ export default class FAQPage extends Component {
       return null;
     }
 
+    let body = null;
+    let headerClassnames = 'sheet-header header';
     if (hasChildren(this)) {
-      return (
-        <div>
-          FAQ
-        </div>
+      body = this.props.children;
+      headerClassnames += ' empty';
+    } else {
+      body = (
+        <InfiniteScroll loadMore={ () => loadMore(nextParams) } hasMore={ hasMore } useWindow={ false }>
+          { this.renderFAQItems(pagination.faqs) }
+        </InfiniteScroll>
       );
     }
 
     return (
-      <div className={ style.faqPage }>
-        <Sticky><h1 onClick={ scrollToTop() } className='sheet-header header'>FAQ</h1></Sticky>
+      <StickyContainer className={ style.faqPage }>
+        <NavbarContainer />
+        <Sticky><h1 onClick={ scrollToTop() } className={ headerClassnames }>FAQ</h1></Sticky>
         <div className='sheet-body'>
-          <InfiniteScroll loadMore={ () => loadMore(nextParams) } hasMore={ hasMore } useWindow={ false }>
-            { this.renderFAQItems(pagination.faqs) }
-          </InfiniteScroll>
+          { body }
         </div>
-      </div>
+        <BottomPadding />
+      </StickyContainer>
     );
   }
 }

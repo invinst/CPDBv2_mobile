@@ -7,7 +7,6 @@ module.exports = {
     sheetHeader: '.sheet-header',
     header: '.header',
     question: '.question',
-    answer: '.answer',
-    topOverlay: '.overlay'
+    answer: '.answer'
   }
 };
