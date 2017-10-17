@@ -5,9 +5,6 @@ import React, {
 import cx from 'classnames';
 import style from 'styles/MainPage.sass';
 
-import MainPageContentContainer from 'containers/MainPage/MainPageContentContainer';
-import BottomSheetContainer from 'containers/BottomSheetContainer';
-
 
 class MainPage extends Component {
   componentDidMount() {
@@ -24,24 +21,9 @@ class MainPage extends Component {
   }
 
   render() {
-    const { isSearchFocused, query, children } = this.props;
-
-    let bottomPaddingElement = null;
-    if (this.props.location.pathname === '/') {
-      bottomPaddingElement = <div className='bottom-padding'></div>;
-    }
-
     return (
-      <div className={ cx('content', style.mainPage, { gray: isSearchFocused }) }>
-        <MainPageContentContainer topLeft={ isSearchFocused } query={ query } />
-        <BottomSheetContainer location={ this.props.location }>
-          {
-            children && React.cloneElement(children, {
-              key: location.pathname
-            })
-          }
-        </BottomSheetContainer>
-        { bottomPaddingElement }
+      <div className={ cx('content', style.mainPage) }>
+        { this.props.children }
       </div>
     );
   }
@@ -52,13 +34,11 @@ MainPage.propTypes = {
   query: PropTypes.string,
   urlQuery: PropTypes.string,
   children: PropTypes.object,
-  isSearchFocused: PropTypes.number,
   location: PropTypes.object,
   routeChanged: PropTypes.func
 };
 
 MainPage.defaultProps = {
-  isSearchFocused: false,
   query: '',
   urlQuery: '',
   location: {

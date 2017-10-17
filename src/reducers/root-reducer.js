@@ -6,6 +6,7 @@ import landingPage from './landingPage';
 import reportingPage from './reportingPage';
 import faqPage from './faqPage';
 import complaintPage from './complaintPage';
+import navbar from './navbar';
 
 
 export default combineReducers({
@@ -14,5 +15,6 @@ export default combineReducers({
   landingPage,
   reportingPage,
   faqPage,
-  complaintPage
+  complaintPage,
+  navbar
 });

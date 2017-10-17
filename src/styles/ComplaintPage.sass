@@ -2,11 +2,10 @@
 
 :local(.complaint-page)
   font-size: 14px
-  margin: 0 $side-margin
 
   .header
     padding-left: 0
-    margin-left: $horizontal-padding
+    margin-left: $side-margin
 
     &.expanded
       border-bottom: none
@@ -16,11 +15,11 @@
       float: right
       position: relative
       top: 50%
-      transform: translateY(-60%)
+      transform: translateY(-50%)
 
       .coaccused-text
-        color: $thunder
-        font-weight: 400
+        color: $greyish
+        font-weight: 300
         margin-right: 14px
 
   .sticky
@@ -28,6 +27,9 @@
 
     .title
       display: none
+
+  .complaint-page-body
+    margin: 0 $side-margin
 
   .relative
     position: relative

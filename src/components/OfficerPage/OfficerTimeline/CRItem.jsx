@@ -1,17 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import ComplaintFinding from 'components/Shared/ComplaintFinding';
 import style from 'styles/OfficerPage/OfficerTimeline/CRItem.sass';
 import constants from 'constants';
 
 class CRItem extends Component {
-  getFindingClass(finding) {
-    return finding ? finding.toLowerCase().replace(' ', '-') : 'unknown';
-  }
-
   render() {
     const { category, coaccused, crid, date, finding, subcategory } = this.props.result;
 
-    const findingClassname = `${style.finding} ${this.getFindingClass(finding)}`;
     const crUrl = `${constants.COMPLAINT_PATH}${crid}/${this.props.officerId}/`;
 
     return (
@@ -25,7 +21,7 @@ class CRItem extends Component {
         <h2 className={ style.category }>{ category }</h2>
         <div className={ style.subcategory }>{ subcategory }</div>
         <div className={ style.findingContainer }>
-          <span className={ findingClassname }>{ finding }</span>
+          <ComplaintFinding finding={ finding } />
         </div>
         <div className={ style.coaccused }>1 of { coaccused } Coaccused</div>
       </Link>

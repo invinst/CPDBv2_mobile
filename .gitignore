@@ -34,3 +34,6 @@ ansible/*.retry
 ngrok
 dist/
 live-tests/local-mock-server.js
+
+# OS X crap
+.DS_Store

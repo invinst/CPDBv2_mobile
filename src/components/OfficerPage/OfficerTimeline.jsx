@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Sticky } from 'react-sticky';
+import { Sticky, StickyContainer } from 'react-sticky';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import GaUtil from 'utils/GaUtil';
@@ -9,6 +9,9 @@ import OfficerTopLinks from 'components/OfficerPage/OfficerTopLinks';
 import YearlyStats from 'components/OfficerPage/OfficerTimeline/YearlyStats';
 import CRItem from 'components/OfficerPage/OfficerTimeline/CRItem';
 import SimpleEventItem from 'components/OfficerPage/OfficerTimeline/SimpleEventItem';
+import NavbarContainer from 'containers/NavbarContainer';
+import BottomPadding from 'components/Shared/BottomPadding';
+import constants from 'constants';
 import { scrollToTop } from 'utils/NavigationUtil';
 
 import style from 'styles/OfficerPage/OfficerTimeline.sass';
@@ -113,7 +116,8 @@ class OfficerTimeline extends Component {
     const body = this.renderTimelineBody();
 
     return (
-      <div className={ style.officerTimeline }>
+      <StickyContainer className={ style.officerTimeline }>
+        <NavbarContainer backLink={ constants.SEARCH_PATH } />
         { header }
         <InfiniteScroll
           hasMore={ hasMore }
@@ -124,8 +128,9 @@ class OfficerTimeline extends Component {
           <div className='officer-timeline-body'>
             { body }
           </div>
+          <BottomPadding />
         </InfiniteScroll>
-      </div>
+      </StickyContainer>
     );
   }
 }

@@ -104,11 +104,11 @@ describe('SearchPageTest', function () {
   });
 
   it('should show recent items', function (client) {
-    this.searchPage.section.suggested.section.report.click();
+    this.searchPage.section.suggested.section.faq.click();
     // this report items should now be added into "recent" list
     this.searchPage.navigate();
     this.searchPage.expect.element('@recentHeader').to.be.present;
-    this.searchPage.expect.section('@recent').text.to.contain('Molestiae impedit rerum tempora nulla aliquid eius');
+    this.searchPage.expect.section('@recent').text.to.contain('How accurate is the data?');
   });
 
   it('should show results that match search query', function (client) {

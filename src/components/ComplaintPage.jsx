@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Sticky } from 'react-sticky';
+import { Sticky, StickyContainer } from 'react-sticky';
 import { find } from 'lodash';
 import cx from 'classnames';
 import ReactHeight from 'react-height';
@@ -16,13 +16,17 @@ import ComplaintCategory from 'components/ComplaintPage/ComplaintCategory';
 import Attachment from 'components/ComplaintPage/Attachment';
 import Arrow from 'components/Shared/Arrow';
 import CoaccusedDropdown from 'components/ComplaintPage/CoaccusedDropdown';
+import NavbarContainer from 'containers/NavbarContainer';
 import constants from 'constants';
+import BottomPadding from 'components/Shared/BottomPadding';
 
 
 export default class ComplaintPage extends Component {
 
   constructor(props) {
     super(props);
+    this.updateHeaderHeight = this.updateHeaderHeight.bind(this);
+    this.toggleCoaccused = this.toggleCoaccused.bind(this);
     this.state = {
       coaccusedIsExpanded: false,
       headerHeight: 0
@@ -64,12 +68,13 @@ export default class ComplaintPage extends Component {
     const activeCoaccused = this.getActiveCoaccused();
 
     return (
-      <div className={ style.complaintPage }>
+      <StickyContainer className={ style.complaintPage }>
+        <NavbarContainer backLink={ constants.SEARCH_PATH } />
         <Sticky className='complaint-header'>
-          <ReactHeight className='relative' onHeightReady={ this.updateHeaderHeight.bind(this) }>
+          <ReactHeight className='relative' onHeightReady={ this.updateHeaderHeight }>
             <div className={ cx('sheet-header header', { expanded: this.state.coaccusedIsExpanded }) }>
               <span onClick={ scrollToTop() }>CR { complaint.crid }</span>
-              <span onClick={ () => { this.toggleCoaccused(); } } className='subheader'>
+              <span onClick={ this.toggleCoaccused } className='subheader'>
                 <span className='coaccused-text'>{ complaint.coaccused.length } coaccused</span>
                 <Arrow direction={ this.state.coaccusedIsExpanded ? 'up' : 'down' } />
               </span>
@@ -84,7 +89,7 @@ export default class ComplaintPage extends Component {
             headerHeight={ this.state.headerHeight }
           />
         </Sticky>
-        <div>
+        <div className='complaint-page-body'>
 
           <ComplaintCategory
             category={ activeCoaccused.category }
@@ -141,7 +146,8 @@ export default class ComplaintPage extends Component {
           />
 
         </div>
-      </div>
+        <BottomPadding />
+      </StickyContainer>
     );
   }
 }
