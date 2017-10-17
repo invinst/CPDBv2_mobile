@@ -25,6 +25,8 @@ export default class ComplaintPage extends Component {
 
   constructor(props) {
     super(props);
+    this.updateHeaderHeight = this.updateHeaderHeight.bind(this);
+    this.toggleCoaccused = this.toggleCoaccused.bind(this);
     this.state = {
       coaccusedIsExpanded: false,
       headerHeight: 0
@@ -69,10 +71,10 @@ export default class ComplaintPage extends Component {
       <StickyContainer className={ style.complaintPage }>
         <NavbarContainer backLink={ constants.SEARCH_PATH } />
         <Sticky className='complaint-header'>
-          <ReactHeight className='relative' onHeightReady={ this.updateHeaderHeight.bind(this) }>
+          <ReactHeight className='relative' onHeightReady={ this.updateHeaderHeight }>
             <div className={ cx('sheet-header header', { expanded: this.state.coaccusedIsExpanded }) }>
               <span onClick={ scrollToTop() }>CR { complaint.crid }</span>
-              <span onClick={ this.toggleCoaccused.bind(this) } className='subheader'>
+              <span onClick={ this.toggleCoaccused } className='subheader'>
                 <span className='coaccused-text'>{ complaint.coaccused.length } coaccused</span>
                 <Arrow direction={ this.state.coaccusedIsExpanded ? 'up' : 'down' } />
               </span>
