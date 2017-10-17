@@ -2,16 +2,18 @@ import should from 'should';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
+import { range } from 'lodash';
 import * as NavigationUtil from 'utils/NavigationUtil';
 
 import SearchCategory from 'components/SearchPage/SearchCategory';
 import constants from 'constants';
 
-const fixedHeaderHeight = constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT;
+const fixedHeaderHeight = (
+  constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + 2 * constants.NEW_DIVIDER_WEIGHT
+);
 
-
-describe('<SearchCategory />', () => {
-  it('should be renderable', () => {
+describe('<SearchCategory />', function () {
+  it('should be renderable', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
@@ -22,7 +24,7 @@ describe('<SearchCategory />', () => {
     wrapper.should.be.ok();
   });
 
-  it('should add scroll listener when mounted', () => {
+  it('should add scroll listener when mounted', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
@@ -43,7 +45,7 @@ describe('<SearchCategory />', () => {
     stubWatchActiveStateBind.restore();
   });
 
-  it('should define function to remove scroll listener', () => {
+  it('should define function to remove scroll listener', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
@@ -70,7 +72,7 @@ describe('<SearchCategory />', () => {
     stubWatchActiveStateBind.restore();
   });
 
-  it('should unwatch active state when unmounted', () => {
+  it('should unwatch active state when unmounted', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
@@ -88,7 +90,7 @@ describe('<SearchCategory />', () => {
     spyUnwatchActiveState.calledWith().should.be.true();
   });
 
-  it('should render title', () => {
+  it('should render title', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
@@ -101,35 +103,25 @@ describe('<SearchCategory />', () => {
     title.text().should.eql('foo');
   });
 
-  it('should render "All" button', () => {
-    const stubRenderAllButton = stub(SearchCategory.prototype, 'renderAllButton');
-    stubRenderAllButton.returns('renderall');
-
-    shallow(
-      <SearchCategory
-        isShowingAll={ false }
-        requestAll='requestAll'
-        items={ [] }
-        categoryId='faqs'
-      />
-    );
-
-    stubRenderAllButton.calledWith(false, 0, 'requestAll').should.be.true();
-    stubRenderAllButton.restore();
-  });
-
-  describe('renderOfficer', () => {
-    it('should render officer correctly', () => {
+  describe('render officers', function () {
+    it('should render officer correctly', function () {
       const spySaveToRecent = spy();
-      const officer = {
-        name: 'John',
-        url: '/officer/1',
-        extraInfo: 'Badge #1'
-      };
+      const officers = [
+        {
+          name: 'John',
+          url: '/officer/1',
+          extraInfo: 'Badge #1'
+        },
+        {
+          name: 'Snow',
+          url: '/officer/2',
+          extraInfo: 'Badge #2'
+        }
+      ];
 
       const wrapper = mount(
         <SearchCategory
-          items={ [officer] }
+          items={ officers }
           categoryId='officers'
           saveToRecent={ spySaveToRecent }
         />
@@ -137,23 +129,29 @@ describe('<SearchCategory />', () => {
 
       const officerElement = wrapper.find('OfficerSearchResult');
       officerElement.exists().should.be.true();
-      officerElement.prop('officer').should.be.eql(officer);
+      officerElement.prop('items').should.be.eql(officers);
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
 
     });
   });
 
-  describe('renderFaq', () => {
-    it('should render faq correctly', () => {
+  describe('render FAQs', function () {
+    it('should render faq correctly', function () {
       const spySaveToRecent = spy();
-      const faq = {
-        id: '2',
-        question: 'foo'
-      };
+      const faqs = [
+        {
+          id: '1',
+          question: 'foo'
+        },
+        {
+          id: '2',
+          question: 'bar'
+        }
+      ];
 
       const wrapper = mount(
         <SearchCategory
-          items={ [faq] }
+          items={ faqs }
           categoryId='faqs'
           saveToRecent={ spySaveToRecent }
         />
@@ -161,25 +159,25 @@ describe('<SearchCategory />', () => {
 
       const faqElement = wrapper.find('FaqSearchResult');
       faqElement.exists().should.be.true();
-      faqElement.prop('faq').should.be.eql(faq);
+      faqElement.prop('items').should.be.eql(faqs);
       faqElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
   });
 
-  describe('renderReport', () => {
-    it('should render report correctly', () => {
+  describe('renderReport', function () {
+    it('should render report correctly', function () {
       const spySaveToRecent = spy();
-      const report = {
+      const reports = [{
         id: '2',
         title: 'foo',
         publication: 'NYT',
         publishDate: 'whenever'
-      };
+      }];
 
       const wrapper = mount(
         <SearchCategory
-          items={ [report] }
+          items={ reports }
           categoryId='reports'
           saveToRecent={ spySaveToRecent }
         />
@@ -188,24 +186,54 @@ describe('<SearchCategory />', () => {
       const reportLink = wrapper.find('ReportSearchResult');
 
       reportLink.exists().should.be.true();
-      reportLink.prop('report').should.be.eql(report);
+      reportLink.prop('items').should.be.eql(reports);
       reportLink.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
-
   });
 
-  describe('renderSuggested', () => {
-    it('should render item correctly', () => {
+  describe('render units', function () {
+    it('should render units correctly', function () {
       const spySaveToRecent = spy();
-      const item = {
+      const units = [
+        {
+          text: '001',
+          memberCount: 2,
+          activeMemberCount: 1
+        },
+        {
+          text: '002',
+          memberCount: 4,
+          activeMemberCount: 3
+        }
+      ];
+
+      const wrapper = shallow(
+        <SearchCategory
+          items={ units }
+          categoryId='units'
+          saveToRecent={ spySaveToRecent }
+        />
+      );
+
+      const officerElement = wrapper.find('UnitSearchResult');
+      officerElement.exists().should.be.true();
+      officerElement.prop('items').should.be.eql(units);
+      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+    });
+  });
+
+  describe('renderSuggested', function () {
+    it('should render item correctly', function () {
+      const spySaveToRecent = spy();
+      const items = [{
         url: 'localhost',
         type: 'recent',
         title: 'Whatever'
-      };
+      }];
 
       const wrapper = mount(
         <SearchCategory
-          items={ [item] }
+          items={ items }
           categoryId='recent'
           saveToRecent={ spySaveToRecent }
         />
@@ -213,61 +241,55 @@ describe('<SearchCategory />', () => {
       const itemLink = wrapper.find('SuggestedSearchResult');
 
       itemLink.exists().should.be.true();
-      itemLink.prop('item').should.be.eql(item);
+      itemLink.prop('items').should.be.eql(items);
       itemLink.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
   });
 
-  describe('renderAllButton', () => {
-    it('should render correctly', () => {
-      const stubRenderFunc = stub(SearchCategory.prototype, 'renderResults');
-      stubRenderFunc.returns((item) => item);
+  describe('renderAllButton', function () {
+    beforeEach(function () {
+      this.stubRenderFunc = stub(SearchCategory.prototype, 'renderResults');
+      this.stubRenderFunc.returns((item) => item);
+    });
 
+    afterEach(function () {
+      this.stubRenderFunc.restore();
+    });
+
+    it('should render correctly', function () {
       const items = new Array(11);
-      const dummyRequestAll = () => 'dummyRequestAll';
-
       const wrapper = mount(
         <SearchCategory
           items={ items }
-          requestAll={ dummyRequestAll }
-          isShowingAll={ false }
+          showAllButton={ true }
         />
       );
 
       const showAllButton = wrapper.find('.all');
 
       showAllButton.exists().should.be.true();
-      showAllButton.prop('onClick').should.be.eql(dummyRequestAll);
       showAllButton.text().should.eql('ALL');
-
-      stubRenderFunc.restore();
     });
 
-    it('should not render if already isShowingAll', () => {
-      const stubRenderFunc = stub(SearchCategory.prototype, 'renderResults');
-      stubRenderFunc.returns((item) => item);
-
-      const items = new Array(11);
-      const dummyRequestAll = () => 'dummyRequestAll';
+    it('should call allButtonClickHandler() and scroll to top on click', function () {
+      const allButtonClickHandler = spy();
 
       const wrapper = mount(
         <SearchCategory
-          items={ items }
-          requestAll={ dummyRequestAll }
-          isShowingAll={ true }
+          items={ [] }
+          showAllButton={ true }
+          allButtonClickHandler={ allButtonClickHandler }
         />
       );
 
-      const showAllButton = wrapper.find('.all');
-
-      showAllButton.exists().should.be.false();
-
-      stubRenderFunc.restore();
+      const allButton = wrapper.find('.all');
+      allButton.simulate('click');
+      allButtonClickHandler.calledWith().should.be.true();
     });
   });
 
-  describe('renderResults', () => {
-    it('should return null if given invalid category id', () => {
+  describe('renderResults', function () {
+    it('should return null if given invalid category id', function () {
 
       const wrapper = shallow(
         <SearchCategory
@@ -279,11 +301,33 @@ describe('<SearchCategory />', () => {
       const result = wrapper.instance().renderResults();
       should.equal(result, null);
     });
+
+    it('should return only the first 5 items if not in single category mode', function () {
+      const items = range(11);
+      const wrapper = shallow(
+        <SearchCategory
+          items={ items }
+          categoryId='faqs'
+          showAllButton={ true }
+        />
+      );
+
+      const faqSearchResult = wrapper.find('FaqSearchResult');
+      faqSearchResult.prop('items').should.eql(range(5));
+    });
   });
 
-  describe('watchActiveState', () => {
-    it('should not do anything if category is already active', () => {
-      const spyGetCurrentScrollPosition = spy(NavigationUtil, 'getCurrentScrollPosition');
+  describe('watchActiveState', function () {
+    beforeEach(function () {
+      this.stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
+      this.stubGetCurrentScrollPosition.returns(900);
+    });
+
+    afterEach(function () {
+      this.stubGetCurrentScrollPosition.restore();
+    });
+
+    it('should not do anything if category is already active', function () {
       const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
@@ -298,15 +342,11 @@ describe('<SearchCategory />', () => {
 
       instance.watchActiveState();
 
-      spyGetCurrentScrollPosition.called.should.be.false();
+      this.stubGetCurrentScrollPosition.called.should.be.false();
       spyUpdateActiveCategory.called.should.be.false();
-
-      spyGetCurrentScrollPosition.restore();
     });
 
-    it('should not set active if category is above header bottom', () => {
-      const stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
-      stubGetCurrentScrollPosition.returns(900);
+    it('should not set active if category is above header bottom', function () {
       const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
@@ -326,13 +366,9 @@ describe('<SearchCategory />', () => {
       instance.watchActiveState();
 
       spyUpdateActiveCategory.called.should.be.false();
-
-      stubGetCurrentScrollPosition.restore();
     });
 
-    it('should not set active if category is below header bottom', () => {
-      const stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
-      stubGetCurrentScrollPosition.returns(900);
+    it('should not set active if category is below header bottom', function () {
       const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
@@ -351,13 +387,9 @@ describe('<SearchCategory />', () => {
       instance.watchActiveState();
 
       spyUpdateActiveCategory.called.should.be.false();
-
-      stubGetCurrentScrollPosition.restore();
     });
 
-    it('should set active if category has touched header bottom', () => {
-      const stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
-      stubGetCurrentScrollPosition.returns(900);
+    it('should set active if category has touched header bottom', function () {
       const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
@@ -377,8 +409,6 @@ describe('<SearchCategory />', () => {
       instance.watchActiveState();
 
       spyUpdateActiveCategory.calledWith('faqs').should.be.true();
-
-      stubGetCurrentScrollPosition.restore();
     });
   });
 

@@ -7,6 +7,7 @@ import query from './query';
 import isSuccess from './is-success';
 import initialSuggestions from './initialSuggestions';
 import activeCategory from './active-category';
+import chosenCategory from './chosen-category';
 
 
 export default combineReducers({
@@ -16,5 +17,6 @@ export default combineReducers({
   query,
   isSuccess,
   initialSuggestions,
-  activeCategory
+  activeCategory,
+  chosenCategory
 });

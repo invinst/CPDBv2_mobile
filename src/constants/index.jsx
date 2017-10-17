@@ -260,6 +260,7 @@ export default {
     },
     {
       name: 'FAQ',
+      longName: 'FREQUENTLY ASKED QUESTIONS (FAQs)',
       id: 'faqs',
       path: 'FAQ'
     },
@@ -267,12 +268,18 @@ export default {
       name: 'Reports',
       id: 'reports',
       path: 'REPORT'
+    },
+    {
+      name: 'Units',
+      id: 'units',
+      path: 'UNIT'
     }
   ],
 
   // These should match their SASS counterparts in styles/Variables.sass
-  QUERY_INPUT_HEIGHT: 44,
-  SEARCH_CATEGORY_LINKS_HEIGHT: 37,
+  QUERY_INPUT_HEIGHT: 48,
+  SEARCH_CATEGORY_LINKS_HEIGHT: 40,
   BOTTOM_PADDING: 133,
-  TOP_MARGIN: 58
+  TOP_MARGIN: 58,
+  NEW_DIVIDER_WEIGHT: 2
 };

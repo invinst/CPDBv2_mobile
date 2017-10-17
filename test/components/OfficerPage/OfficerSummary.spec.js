@@ -4,6 +4,8 @@ import { mount, shallow } from 'enzyme';
 import { spy, stub } from 'sinon';
 import configureStore from 'redux-mock-store';
 
+import NavbarContainer from 'containers/NavbarContainer';
+import constants from 'constants';
 import OfficerSummary from 'components/OfficerPage/OfficerSummary';
 import LoadingPage from 'components/Shared/LoadingPage';
 import NotMatchedOfficerPage from 'components/OfficerPage/NotMatchedOfficerPage';
@@ -105,6 +107,18 @@ describe('<OfficerSummary />', function () {
     spyGetOfficerSummary.called.should.be.false();
   });
 
+  it('should render Navbar', function () {
+    const wrapper = shallow(
+      <OfficerSummary
+        loading={ false }
+        found={ true }
+        summary={ this.summary }
+      />
+    );
+
+    wrapper.find(NavbarContainer).prop('backLink').should.eql(constants.SEARCH_PATH);
+  });
+
   describe('when summary is provided', function () {
     beforeEach(function () {
       this.wrapper = shallow(
@@ -154,4 +168,10 @@ describe('<OfficerSummary />', function () {
     });
   });
 
+  it('should have BottomPadding', function () {
+    const wrapper = shallow(
+      <OfficerSummary loading={ false } found={ true } summary={ this.summary }/>
+    );
+    wrapper.find('BottomPadding').exists().should.be.true();
+  });
 });

@@ -8,20 +8,25 @@ $suggested-type-width: 114px
   font-weight: 400
 
   .title
-    height: 63px
-    background-color: $wild-sand
-    padding: 40px $padding 5px $padding
-    color: $dusty-gray
+    height: 64px
+    background-color: white
+    padding: 38px $side-margin 8px 0
+    color: $greyish
+    vertical-align: bottom
+    text-transform: uppercase
+
+    &.active
+      color: $thunder
 
   .body
-    padding-left: $padding
-
     .row
       display: block
       text-decoration: none
       color: inherit
-      padding: 11px 11px 12px 0px
-      border-bottom: 1.5px solid $alto-solid
+      padding: 11px 8px 11px 0
+      margin-right: 8px
+      border-bottom: 2px solid $alto-solid
+      line-height: 18px
 
       &:last-child
         border-bottom: 0
@@ -46,7 +51,7 @@ $suggested-type-width: 114px
       .suggested-type
         display: block
         float: left
-        color: $dusty-gray
+        color: $greyish
         width: $suggested-type-width
 
       .suggested-title
@@ -57,4 +62,4 @@ $suggested-type-width: 114px
     .all
       height: 44px
       padding: 13px (16px - $padding)
-      border-top: 2px solid $alto-solid
+      color: $greyish

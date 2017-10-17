@@ -65,7 +65,7 @@ export default class IncidentLocation extends Component {
           className='map'
           center={ [lat, lng] }
           zoom={ this.state.zoomLevel }
-          onClick={ () => { this.switchZoomLevel(); } }
+          onClick={ this.switchZoomLevel.bind(this) }
           scrollWheelZoom={ false }
           doubleClickZoom={ false }
           zoomControl={ false }

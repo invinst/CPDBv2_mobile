@@ -1,54 +1,57 @@
-import should from 'should';
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import { spy } from 'sinon';
+import { mount } from 'enzyme';
 
 import OfficerSearchResult from 'components/SearchPage/OfficerSearchResult';
 
 describe('<OfficerSearchResult />', () => {
 
-  it('should render officer correctly', () => {
-    const spySaveToRecent = spy();
-    const officer = {
-      name: 'John',
-      url: '/officer/1',
-      extraInfo: 'Badge #1'
-    };
+  it('should render officers correctly', () => {
+    const officers = [
+      {
+        name: 'John',
+        url: '/officer/1',
+        extraInfo: 'Badge #1'
+      },
+      {
+        name: 'Snow',
+        url: '/officer/2',
+        extraInfo: 'Badge #2'
+      }
+    ];
+
+    const rows = [
+      {
+        label: 'John',
+        sublabel: 'Badge #1',
+        url: '/officer/1',
+        onClick: (() => {}).bind(undefined, {
+          type: 'officer',
+          title: 'John',
+          url: '/officer/1'
+        })
+      },
+      {
+        label: 'Snow',
+        sublabel: 'Badge #2',
+        url: '/officer/2',
+        onClick: (() => {}).bind(undefined, {
+          type: 'officer',
+          title: 'Snow',
+          url: '/officer/2'
+        })
+      }
+    ];
 
     const wrapper = mount(
       <OfficerSearchResult
-        officer={ officer }
-        saveToRecent={ spySaveToRecent }
+        items={ officers }
+        saveToRecent={ () => {} }
       />
     );
 
-    const officerElement = wrapper.find('Link');
-    officerElement.exists().should.be.true();
-    officerElement.prop('to').should.be.eql('/officer/1');
-    officerElement.text().should.eql('JohnBadge #1');
+    const twoLineList = wrapper.find('TwoLineList');
+
+    twoLineList.exists().should.be.true();
+    twoLineList.prop('rows').should.be.eql(rows);
   });
-
-  it('should dispatch saveToRecent action on click', () => {
-    const spySaveToRecent = spy();
-    const officer = {
-      name: 'John',
-      url: 'http://localhost',
-      extraInfo: 'Badge #1'
-    };
-
-    const wrapper = shallow(
-      <OfficerSearchResult
-        officer={ officer }
-        saveToRecent={ spySaveToRecent }
-      />
-    );
-
-    wrapper.simulate('click');
-    spySaveToRecent.calledWith({
-      type: 'Officer',
-      title: 'John',
-      url: 'http://localhost'
-    }).should.be.true();
-  });
-
 });
