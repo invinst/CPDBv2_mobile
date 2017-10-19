@@ -40,7 +40,7 @@ export default class CoaccusedDropdown extends Component {
         <div className='content'>
           { rows }
         </div>
-        <div className='dropdown-padding'></div>
+        <div className='dropdown-padding' />
       </div>
     );
   }

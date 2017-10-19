@@ -206,7 +206,6 @@ export default {
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
   LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
-  REPORTING_API_ENDPOINT: '/reports/',
   FAQ_API_ENDPOINT: '/faqs/',
   COMPLAINT_API_ENDPOINT: '/cr/',
 
@@ -230,7 +229,6 @@ export default {
   SUBSCRIBE_FORM_FAILURE: 'SUBSCRIBE_FORM_FAILURE',
 
   // Router paths
-  REPORTING_PATH: '/reporting/',
   FAQ_PATH: '/faq/',
   ABOUT_PATH: '/about/',
   SEARCH_PATH: '/search/',
@@ -263,11 +261,6 @@ export default {
       longName: 'FREQUENTLY ASKED QUESTIONS (FAQs)',
       id: 'faqs',
       path: 'FAQ'
-    },
-    {
-      name: 'Reports',
-      id: 'reports',
-      path: 'REPORT'
     },
     {
       name: 'Units',

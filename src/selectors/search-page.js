@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import moment from 'moment';
 import constants from 'constants';
 
 
@@ -56,24 +55,6 @@ export const unitsSelector = createSelector(
   }
 );
 
-export const reportsSelector = createSelector(
-  (state) => state.suggestionApp.suggestions.REPORT,
-  (reports) => {
-    if (!reports) {
-      return { data: [] };
-    }
-
-    return {
-      isShowingAll: reports.isShowingAll,
-      data: reports.data.map((report) => ({
-        id: report.id,
-        title: report.title,
-        publication: report.publication,
-        publishDate: moment(report.publish_date).format('MMM D, YYYY')
-      }))
-    };
-  }
-);
 
 export const suggestedSelector = createSelector(
   (state) => state.suggestionApp.initialSuggestions.suggested,

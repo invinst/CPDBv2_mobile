@@ -2,14 +2,6 @@
 var api = require(__dirname + '/../mock-api');
 
 const mockSuggestionResponse = {
-  'REPORT': [
-    {
-      'title': 'Molestiae impedit rerum tempora nulla aliquid eius.',
-      'publish_date': '2016-11-07',
-      'id': 54,
-      'publication': 'dolorum'
-    }
-  ],
   'FAQ': [
     {
       'question': 'How accurate is the data?',
@@ -27,15 +19,6 @@ const mockSuggestionResponse = {
 };
 
 const mockSearchQueryResponse = {
-  'REPORT': [
-    {
-      'title': 'Lorem Ipsum Report',
-      'publish_date': '1900-01-01',
-      'id': 70,
-      'publication': 'New York Times'
-    }
-  ],
-
   'FAQ': [
     {
       'question': 'Where is the glossary?',
@@ -64,7 +47,6 @@ describe('SearchPageTest', function () {
     api.mock('GET', '/api/v2/search-mobile/wh/', 200, mockSearchQueryResponse);
     this.searchPage = client.page.search();
     this.officerSummaryPage = client.page.officerSummary();
-    this.reportingDetailPage = client.page.reportingDetail();
     this.faqDetailPage = client.page.faqDetail();
     this.searchPage.navigate();
     done();
@@ -86,13 +68,8 @@ describe('SearchPageTest', function () {
 
     const suggested = searchPage.section.suggested;
 
-    const suggestedReport = suggested.section.report;
     const suggestedFaq = suggested.section.faq;
     const suggestedOfficer = suggested.section.officer;
-
-    suggested.expect.section('@report').to.have.attribute('href').which.contains('/reporting/54/');
-    suggestedReport.expect.element('@label').text.to.contain('Report');
-    suggestedReport.expect.element('@value').text.to.contain('Molestiae impedit rerum tempora nulla aliquid eius.');
 
     suggested.expect.section('@faq').to.have.attribute('href').which.contains('/faq/18/');
     suggestedFaq.expect.element('@label').text.to.contain('FAQ');
@@ -116,16 +93,13 @@ describe('SearchPageTest', function () {
 
     this.searchPage.expect.element('@officersHeader').text.to.equal('OFFICERS');
     this.searchPage.expect.element('@faqsHeader').text.to.equal('FREQUENTLY ASKED QUESTIONS (FAQS)');
-    this.searchPage.expect.element('@reportsHeader').text.to.equal('REPORTS');
 
     let officers = this.searchPage.section.officers;
     let faqs = this.searchPage.section.faqs;
-    let reports = this.searchPage.section.reports;
 
     officers.expect.element('@row').text.to.contain('John Wang');
     faqs.expect.element('@row1').text.to.contain('Where is the glossary?');
     faqs.expect.element('@row2').text.to.contain('How does this interact with the IPRA Portal?');
-    reports.expect.element('@row').text.to.contain('Lorem Ipsum Report');
   });
 
   it('should empty query when clear icon is tapped', function (client) {
@@ -139,12 +113,6 @@ describe('SearchPageTest', function () {
     this.searchPage.setValue('@queryInput', 'wh');
     this.searchPage.section.officers.click('@row');
     client.assert.urlEquals(this.officerSummaryPage.url(9876));
-  });
-
-  it('should navigate to report detail page when tapped', function (client) {
-    this.searchPage.setValue('@queryInput', 'wh');
-    this.searchPage.section.reports.click('@row');
-    client.assert.urlEquals(this.reportingDetailPage.url(70));
   });
 
   it('should navigate to faq page when tapped', function (client) {
