@@ -6,8 +6,6 @@ import AppHistory from 'utils/History';
 import constants from 'constants';
 
 import MainPageContainer from 'containers/MainPageContainer';
-import ReportingPageContainer from 'containers/ReportingPageContainer';
-import ReportingDetailContainer from 'containers/ReportingPage/ReportingDetailContainer';
 import FAQPageContainer from 'containers/FAQPageContainer';
 import FAQDetailContainer from 'containers/FAQPage/FAQDetailContainer';
 import AboutPageContainer from 'containers/AboutPageContainer';
@@ -30,10 +28,6 @@ const App = React.createClass({
       <Router history={ AppHistory }>
         <Route path='/' component={ MainPageContainer }>
           <IndexRoute component={ LandingPageContainer } />
-
-          <Route path={ constants.REPORTING_PATH } component={ ReportingPageContainer }>
-            <Route path={ constants.REPORTING_PATH + ':id' } component={ ReportingDetailContainer } />
-          </Route>
 
           <Route path={ constants.FAQ_PATH } component={ FAQPageContainer }>
             <Route path={ constants.FAQ_PATH + ':id' } component={ FAQDetailContainer } />

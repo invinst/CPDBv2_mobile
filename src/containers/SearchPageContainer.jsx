@@ -13,7 +13,6 @@ import {
 import {
   officersSelector,
   faqsSelector,
-  reportsSelector,
   unitsSelector,
   suggestedSelector,
   recentSelector
@@ -25,7 +24,6 @@ function mapStateToProps(state, ownProps) {
     query: state.suggestionApp.query,
     officers: officersSelector(state),
     faqs: faqsSelector(state),
-    reports: reportsSelector(state),
     units: unitsSelector(state),
     recent: recentSelector(state),
     suggested: suggestedSelector(state),

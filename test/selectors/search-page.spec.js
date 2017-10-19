@@ -3,7 +3,6 @@ import constants from 'constants';
 import {
   officersSelector,
   faqsSelector,
-  reportsSelector,
   suggestedSelector,
   recentSelector,
   unitsSelector,
@@ -87,50 +86,6 @@ describe('search-page selectors', () => {
       faqsSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
         data: data
-      });
-    });
-  });
-
-  describe('reportsSelector', () => {
-    it('should return empty when there is no report', () => {
-      const state = {
-        suggestionApp: {
-          suggestions: {
-          }
-        }
-      };
-
-      reportsSelector(state).should.be.eql({ data: [] });
-    });
-
-    it('should return officer data when there are reports', () => {
-      const isShowingAll = true;
-      const data = [{
-        id: 1,
-        title: 'dummy title',
-        publication: 'NYT',
-        'publish_date': '2017-01-01'
-      }];
-
-      const state = {
-        suggestionApp: {
-          suggestions: {
-            REPORT: {
-              isShowingAll: isShowingAll,
-              data: data
-            }
-          }
-        }
-      };
-
-      reportsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: [{
-          id: 1,
-          title: 'dummy title',
-          publication: 'NYT',
-          publishDate: 'Jan 1, 2017'
-        }]
       });
     });
   });

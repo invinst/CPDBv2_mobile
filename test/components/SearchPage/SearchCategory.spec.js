@@ -165,32 +165,6 @@ describe('<SearchCategory />', function () {
 
   });
 
-  describe('renderReport', function () {
-    it('should render report correctly', function () {
-      const spySaveToRecent = spy();
-      const reports = [{
-        id: '2',
-        title: 'foo',
-        publication: 'NYT',
-        publishDate: 'whenever'
-      }];
-
-      const wrapper = mount(
-        <SearchCategory
-          items={ reports }
-          categoryId='reports'
-          saveToRecent={ spySaveToRecent }
-        />
-      );
-
-      const reportLink = wrapper.find('ReportSearchResult');
-
-      reportLink.exists().should.be.true();
-      reportLink.prop('items').should.be.eql(reports);
-      reportLink.prop('saveToRecent').should.be.eql(spySaveToRecent);
-    });
-  });
-
   describe('render units', function () {
     it('should render units correctly', function () {
       const spySaveToRecent = spy();
@@ -352,7 +326,7 @@ describe('<SearchCategory />', function () {
         <SearchCategory
           title='foo'
           items={ [] }
-          activeCategory='reports'
+          activeCategory='units'
           categoryId='faqs'
           updateActiveCategory={ spyUpdateActiveCategory }
         />
@@ -374,7 +348,7 @@ describe('<SearchCategory />', function () {
         <SearchCategory
           title='foo'
           items={ [] }
-          activeCategory='reports'
+          activeCategory='units'
           categoryId='faqs'
           updateActiveCategory={ spyUpdateActiveCategory }
         />
@@ -395,7 +369,7 @@ describe('<SearchCategory />', function () {
         <SearchCategory
           title='foo'
           items={ [] }
-          activeCategory='reports'
+          activeCategory='units'
           categoryId='faqs'
           updateActiveCategory={ spyUpdateActiveCategory }
         />

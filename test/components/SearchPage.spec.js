@@ -264,14 +264,21 @@ describe('<SearchPage />', function () {
   });
 
   describe('renderCategories()', () => {
-    it('should render SearchCategory components', () => {
-      const stubBoundCallback = stub(SearchPage.prototype.updateLastCategoryHeight, 'bind');
-      stubBoundCallback.returns(SearchPage.prototype.updateLastCategoryHeight);
+    beforeEach(function () {
+      stub(SearchPage.prototype.updateLastCategoryHeight, 'bind');
+      SearchPage.prototype.updateLastCategoryHeight.bind.returns(SearchPage.prototype.updateLastCategoryHeight);
+    });
 
+    afterEach(function () {
+      SearchPage.prototype.updateLastCategoryHeight.bind.restore();
+    });
+
+    it('should render SearchCategory components', () => {
       const officersProp = {
         data: ['data']
       };
-      const reportsProp = {
+
+      const unitsProp = {
         data: ['data']
       };
 
@@ -280,21 +287,19 @@ describe('<SearchPage />', function () {
           saveToRecent={ () => {} }
           query='qa'
           officers={ officersProp }
-          reports={ reportsProp }
+          units={ unitsProp }
           suggestAllFromCategory={ () => {} }/>
       );
 
       const categoryDetails = wrapper.find('.category-details-container').children();
 
-      categoryDetails.should.have.length(2);
+      categoryDetails.length.should.eql(2);
       categoryDetails.at(0).childAt(0).type().should.be.eql(SearchCategory);
 
       // Last component should be wrapped inside ReactHeight:
       const lastCategory = categoryDetails.at(1);
       lastCategory.type().should.be.eql(ReactHeight);
       lastCategory.prop('onHeightReady').should.be.eql(SearchPage.prototype.updateLastCategoryHeight);
-
-      stubBoundCallback.restore();
     });
 
     it('should pass correct allButtonClickHandler prop to SearchCategory', () => {
@@ -304,7 +309,7 @@ describe('<SearchPage />', function () {
       const officersProp = {
         data: ['data']
       };
-      const reportsProp = {
+      const unitsProp = {
         data: ['data']
       };
 
@@ -313,7 +318,7 @@ describe('<SearchPage />', function () {
           saveToRecent={ () => {} }
           query='qa'
           officers={ officersProp }
-          reports={ reportsProp }
+          units={ unitsProp }
           suggestAllFromCategory={ () => {} }/>
       );
 
