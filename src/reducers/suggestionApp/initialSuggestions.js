@@ -16,14 +16,17 @@ const defaultState = {
   }
 };
 
-
 export default handleActions({
   [FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS]: (state, action) => {
     const categories = Object.keys(action.payload);
     return {
       ...state,
       suggested: {
-        data: categories.filter(category => !!action.payload[category][0]).map((category) => {
+        data: categories.reduce((acc, category) => {
+          if (!action.payload[category][0]) {
+            return acc;
+          }
+
           const data = action.payload[category][0];
           let type, title, url;
 
@@ -38,11 +41,6 @@ export default handleActions({
               title = data.name;
               url = `${constants.OFFICER_PATH}${data.id}/`;
               break;
-            case 'REPORT':
-              type = 'Report';
-              title = data.title;
-              url = `${constants.REPORTING_PATH}${data.id}/`;
-              break;
             case 'UNIT':
               type = 'Unit';
               title = data.text;
@@ -50,12 +48,17 @@ export default handleActions({
               break;
           }
 
-          return {
+          if (!type) {
+            return acc;
+          }
+
+          acc.push({
             type: type,
             url: url,
             title: title
-          };
-        })
+          });
+          return acc;
+        }, [])
       }
     };
   },
