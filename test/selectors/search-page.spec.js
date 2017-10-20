@@ -3,9 +3,9 @@ import constants from 'constants';
 import {
   officersSelector,
   faqsSelector,
-  reportsSelector,
   suggestedSelector,
-  recentSelector
+  recentSelector,
+  unitsSelector,
 } from 'selectors/search-page';
 
 describe('search-page selectors', () => {
@@ -90,50 +90,6 @@ describe('search-page selectors', () => {
     });
   });
 
-  describe('reportsSelector', () => {
-    it('should return empty when there is no report', () => {
-      const state = {
-        suggestionApp: {
-          suggestions: {
-          }
-        }
-      };
-
-      reportsSelector(state).should.be.eql({ data: [] });
-    });
-
-    it('should return officer data when there are reports', () => {
-      const isShowingAll = true;
-      const data = [{
-        id: 1,
-        title: 'dummy title',
-        publication: 'NYT',
-        'publish_date': '2017-01-01'
-      }];
-
-      const state = {
-        suggestionApp: {
-          suggestions: {
-            REPORT: {
-              isShowingAll: isShowingAll,
-              data: data
-            }
-          }
-        }
-      };
-
-      reportsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: [{
-          id: 1,
-          title: 'dummy title',
-          publication: 'NYT',
-          publishDate: 'Jan 1, 2017'
-        }]
-      });
-    });
-  });
-
   describe('suggestedSelector', () => {
     it('should return correct value', () => {
       const state = {
@@ -159,4 +115,70 @@ describe('search-page selectors', () => {
       recentSelector(state).should.be.eql('foobar');
     });
   });
+
+  describe('unitsSelector', () => {
+    it('should return empty when there are no units', () => {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+          }
+        }
+      };
+
+      unitsSelector(state).should.be.eql({ data: [] });
+    });
+
+    it('should return unit data when there are units', () => {
+      const isShowingAll = true;
+      const units = [
+        {
+          'id': '1',
+          'text': '001',
+          'member_count': 2,
+          'active_member_count': 1,
+          'url': 'http://example.unit/1'
+        },
+        {
+          'id': '2',
+          'text': '002',
+          'member_count': 4,
+          'active_member_count': 3,
+          'url': 'http://example.unit/2'
+        }
+      ];
+      const expectedUnits = [
+        {
+          'id': '1',
+          'text': '001',
+          'memberCount': 2,
+          'activeMemberCount': 1,
+          'url': 'http://example.unit/1'
+        },
+        {
+          'id': '2',
+          'text': '002',
+          'memberCount': 4,
+          'activeMemberCount': 3,
+          'url': 'http://example.unit/2'
+        }
+      ];
+
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            UNIT: {
+              isShowingAll: isShowingAll,
+              data: units
+            }
+          }
+        }
+      };
+
+      unitsSelector(state).should.be.eql({
+        isShowingAll: isShowingAll,
+        data: expectedUnits
+      });
+    });
+  });
+
 });

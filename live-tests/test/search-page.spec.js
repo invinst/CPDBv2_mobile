@@ -2,14 +2,6 @@
 var api = require(__dirname + '/../mock-api');
 
 const mockSuggestionResponse = {
-  'REPORT': [
-    {
-      'title': 'Molestiae impedit rerum tempora nulla aliquid eius.',
-      'publish_date': '2016-11-07',
-      'id': 54,
-      'publication': 'dolorum'
-    }
-  ],
   'FAQ': [
     {
       'question': 'How accurate is the data?',
@@ -27,15 +19,6 @@ const mockSuggestionResponse = {
 };
 
 const mockSearchQueryResponse = {
-  'REPORT': [
-    {
-      'title': 'Lorem Ipsum Report',
-      'publish_date': '1900-01-01',
-      'id': 70,
-      'publication': 'New York Times'
-    }
-  ],
-
   'FAQ': [
     {
       'question': 'Where is the glossary?',
@@ -59,110 +42,82 @@ const mockSearchQueryResponse = {
 
 
 describe('SearchPageTest', function () {
+  beforeEach(function (client, done) {
+    api.mock('GET', '/api/v2/search-mobile/', 200, mockSuggestionResponse);
+    api.mock('GET', '/api/v2/search-mobile/wh/', 200, mockSearchQueryResponse);
+    this.searchPage = client.page.search();
+    this.officerSummaryPage = client.page.officerSummary();
+    this.faqDetailPage = client.page.faqDetail();
+    this.searchPage.navigate();
+    done();
+  });
+
+  afterEach(function (client, done) {
+    client.end(function () {
+      done();
+    });
+  });
+
   it('should show search page with suggested items', function (client) {
+    const searchPage = this.searchPage;
 
-    api.mock('GET', '/search-mobile/', 200, mockSuggestionResponse);
+    searchPage.expect.element('@queryInput').to.be.visible;
+    searchPage.expect.element('@queryInput').to.have.attribute('placeholder', 'Search');
 
-    client
-      .url(client.globals.clientUrl)
-      .waitForElementVisible('a[href="/search/"]', 10000);
+    searchPage.expect.element('@suggestedHeader').text.to.equal('SUGGESTED');
 
-    client.click('a[href="/search/"]');
-    client.waitForElementVisible('.sheet', 4000);
+    const suggested = searchPage.section.suggested;
 
-    client.expect.element('.query-input').to.be.visible;
-    client.expect.element('.query-input').to.have.attribute('placeholder', 'Search');
+    const suggestedFaq = suggested.section.faq;
+    const suggestedOfficer = suggested.section.officer;
 
-    client.expect.element('#search-category-suggested').text.to.equal('Suggested');
+    suggested.expect.section('@faq').to.have.attribute('href').which.contains('/faq/18/');
+    suggestedFaq.expect.element('@label').text.to.contain('FAQ');
+    suggestedFaq.expect.element('@value').text.to.contain('How accurate is the data?');
 
-    client.expect.element('.suggested[href="/reporting/54/"]').to.be.present;
-    client.expect.element('.sheet').text.to.contain('Report');
-    client.expect.element('.sheet').text.to.contain('Molestiae impedit rerum tempora nulla aliquid eius.');
-
-    client.expect.element('.suggested[href="/faq/18/"]').to.be.present;
-    client.expect.element('.sheet').text.to.contain('FAQ');
-    client.expect.element('.sheet').text.to.contain('How accurate is the data?');
-
-    client.expect.element('.sheet').text.to.contain('Officer');
-    client.expect.element('.sheet').text.to.contain('John Tobler');
-
-    client.end();
+    suggested.expect.section('@officer').to.have.attribute('href').which.contains('/officer/30291/');
+    suggestedOfficer.expect.element('@label').text.to.contain('Officer');
+    suggestedOfficer.expect.element('@value').text.to.contain('John Tobler');
   });
 
   it('should show recent items', function (client) {
-
-    api.mock('GET', '/search-mobile/', 200, mockSuggestionResponse);
-
-    client
-      .url(client.globals.clientUrl)
-      .waitForElementVisible('a[href="/search/"]', 10000);
-
-    client.click('a[href="/search/"]') ;
-    client.waitForElementVisible('.sheet', 4000);
-
-    client.click('.suggested[href="/reporting/54/"]');
+    this.searchPage.section.suggested.section.faq.click();
     // this report items should now be added into "recent" list
-
-    client.url(client.globals.clientUrl + '/search/').waitForElementVisible('.sheet', 4000);
-    client.expect.element('#search-category-recent').to.be.present;
-    client.expect.element('.body.recent').text.to.contain('Molestiae impedit rerum tempora nulla aliquid eius');
-
-    client.end();
+    this.searchPage.navigate();
+    this.searchPage.expect.element('@recentHeader').to.be.present;
+    this.searchPage.expect.section('@recent').text.to.contain('How accurate is the data?');
   });
 
   it('should show results that match search query', function (client) {
+    this.searchPage.setValue('@queryInput', 'wh');
 
-    api.mock('GET', '/search-mobile/', 200, mockSuggestionResponse);
-    api.mock('GET', '/search-mobile/wh/', 200, mockSearchQueryResponse);
+    this.searchPage.expect.element('@officersHeader').text.to.equal('OFFICERS');
+    this.searchPage.expect.element('@faqsHeader').text.to.equal('FREQUENTLY ASKED QUESTIONS (FAQS)');
 
-    client
-      .url(client.globals.clientUrl + '/search/')
-      .waitForElementVisible('.sheet', 4000);
+    let officers = this.searchPage.section.officers;
+    let faqs = this.searchPage.section.faqs;
 
-    client
-      .setValue('.query-input', 'wh')
-      .waitForElementVisible('#search-category-officers', 4000);
-
-    client.expect.element('#search-category-officers').text.to.equal('Officers');
-    client.expect.element('#search-category-faqs').text.to.equal('FAQ');
-    client.expect.element('#search-category-reports').text.to.equal('Reports');
-
-    client.expect
-      .element('a[href="/faq/24/"]')
-      .text.to.contain('Where is the glossary?');
-
-    client.expect
-      .element('a[href="/faq/27/"]')
-      .text.to.contain('How does this interact with the IPRA Portal?');
-
-    client.expect
-      .element('a[href="/reporting/70/"]')
-      .text.to.contain('Lorem Ipsum Report');
-
-    client.expect
-      .element('a[href="/officer/9876/"]')
-      .text.to.contain('John Wang');
-
-    client.end();
+    officers.expect.element('@row').text.to.contain('John Wang');
+    faqs.expect.element('@row1').text.to.contain('Where is the glossary?');
+    faqs.expect.element('@row2').text.to.contain('How does this interact with the IPRA Portal?');
   });
 
   it('should empty query when clear icon is tapped', function (client) {
+    this.searchPage.setValue('@queryInput', 'wh');
+    this.searchPage.expect.element('@queryInput').value.to.equal('wh');
+    this.searchPage.click('@clearIcon');
+    this.searchPage.expect.element('@queryInput').value.to.equal('');
+  });
 
-    api.mock('GET', '/search-mobile/', 200, mockSuggestionResponse);
-    api.mock('GET', '/search-mobile/wh/', 200, mockSearchQueryResponse);
+  it('should navigate to officer summary page when tapped', function (client) {
+    this.searchPage.setValue('@queryInput', 'wh');
+    this.searchPage.section.officers.click('@row');
+    client.assert.urlEquals(this.officerSummaryPage.url(9876));
+  });
 
-    client
-      .url(client.globals.clientUrl + '/search/')
-      .waitForElementVisible('.sheet', 4000);
-
-    client
-      .setValue('.query-input', 'wh')
-      .waitForElementVisible('#search-category-officers', 4000);
-
-    client.expect.element('.query-input').value.to.equal('wh');
-    client.click('.clear-icon');
-    client.expect.element('.query-input').value.to.equal('');
-
-    client.end();
+  it('should navigate to faq page when tapped', function (client) {
+    this.searchPage.setValue('@queryInput', 'wh');
+    this.searchPage.section.faqs.click('@row1');
+    client.assert.urlEquals(this.faqDetailPage.url(24));
   });
 });

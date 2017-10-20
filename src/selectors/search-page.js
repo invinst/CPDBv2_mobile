@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import moment from 'moment';
 import constants from 'constants';
 
 
@@ -36,24 +35,26 @@ export const faqsSelector = createSelector(
   }
 );
 
-export const reportsSelector = createSelector(
-  (state) => state.suggestionApp.suggestions.REPORT,
-  (reports) => {
-    if (!reports) {
+export const unitsSelector = createSelector(
+  (state) => state.suggestionApp.suggestions.UNIT,
+  (units) => {
+    if (!units) {
       return { data: [] };
     }
 
     return {
-      isShowingAll: reports.isShowingAll,
-      data: reports.data.map((report) => ({
-        id: report.id,
-        title: report.title,
-        publication: report.publication,
-        publishDate: moment(report.publish_date).format('MMM D, YYYY')
+      isShowingAll: units.isShowingAll,
+      data: units.data.map((unit) => ({
+        id: unit.id,
+        text: unit.text,
+        url: unit.url,
+        memberCount: unit.member_count,
+        activeMemberCount: unit.active_member_count,
       }))
     };
   }
 );
+
 
 export const suggestedSelector = createSelector(
   (state) => state.suggestionApp.initialSuggestions.suggested,

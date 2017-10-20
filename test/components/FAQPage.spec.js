@@ -3,6 +3,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 
+import NavbarContainer from 'containers/NavbarContainer';
 import FAQPage from 'components/FAQPage';
 
 describe('<FAQPage />', () => {
@@ -57,14 +58,14 @@ describe('<FAQPage />', () => {
     item.find('.question').text().should.eql('What is FAQ?');
   });
 
-  it('should render a FAQ title only if it has children', () => {
+  it('should hide FAQ title if it has children', () => {
     const wrapper = shallow(
       <FAQPage pagination={ { loaded: true } }>
         <hr />
       </FAQPage>
     );
 
-    wrapper.equals(<div>FAQ</div>).should.be.true();
+    wrapper.find('.header').hasClass('empty').should.be.true();
   });
 
   it('should render InfiniteScroll with correct props', () => {
@@ -87,5 +88,15 @@ describe('<FAQPage />', () => {
 
     infiniteScroll.prop('loadMore')();
     loadMoreProp.called.should.be.true();
+  });
+
+  it('should render Navbar via NavbarContainer', function () {
+    const wrapper = shallow(<FAQPage pagination={ { loaded: true } } />);
+    wrapper.find(NavbarContainer).exists().should.be.true();
+  });
+
+  it('should have BottomPadding', function () {
+    const wrapper = shallow(<FAQPage pagination={ { loaded: true } } />);
+    wrapper.find('BottomPadding').exists().should.be.true();
   });
 });

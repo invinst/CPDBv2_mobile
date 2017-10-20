@@ -5,26 +5,35 @@ $row-height: 40px
 :local(.yearly-stats)
   position: relative
   z-index: 1
-  background-color: $wild-sand
-  padding: 12px 0 0 $horizontal-padding
-  border-top: $divider-weight solid $alto-solid
+  background-color: white
+  margin-bottom: 56px
 
   :local(.year)
-    padding-right: $horizontal-padding
     text-align: right
-    font-size: 18px
-    font-weight: 500
+    font-size: 26px
+    font-weight: 400
+    color: $thunder
+    // The next 4 lines are to achieve a 64px-height div with the text inside stays 8px to the bottom
+    height: 64px
+    line-height: 26px
+    padding-top: 30px
+    padding-bottom: 8px
 
   :local(.row)
+    margin-right: $side-margin
     height: $row-height
-    border-bottom: $divider-weight solid $alto-solid
-    
+    border-bottom: $divider
+
     &:last-child
       margin-left: -$horizontal-padding
       padding-left: $horizontal-padding
+      border-bottom: none
 
     :local(.label)
       display: inline-block
-      color: $dusty-gray
+      color: $thunder
       width: 114px
       line-height: $row-height
+
+    :local(.value)
+      color: $greyish

@@ -1,74 +1,60 @@
 @import '../Variables'
 
 $gray-border: 2px solid $alto-solid
-$bright-orange: #ff5f00
 
 $count-width: 32px
 $entry-name-width: calc(100% - #{$count-width * 2})
 
 :local(.stats-section)
-
   .facet
-    border-bottom: $gray-border
+    .facet-name
+      color: $gandalf-gray
+      text-transform: uppercase
+      padding: 18px 0px $side-margin 0px
+      font-weight: 400
 
-  .facet-name
-    padding: $horizontal-padding $horizontal-padding 13px $horizontal-padding
-    color: $dusty-gray
+    .facet-entry
+      padding: 7px 0
 
-  .facet-entry
-    padding: $horizontal-padding $horizontal-padding $horizontal-padding 0
-    margin-left: $horizontal-padding
-    border-bottom: $gray-border
+      &.total
+        margin-left: 0
+        padding-left: $horizontal-padding
 
-    &.total
-      margin-left: 0
-      padding-left: $horizontal-padding
+      &:last-child
+        border-bottom: 0
 
-    &:last-child
-      border-bottom: 0
+      .facet-entry-count
+        display: inline-block
+        vertical-align: top
+        color: $thunder
 
-    .facet-entry-count
-      display: inline-block
-      width: $count-width
-      vertical-align: top
-      color: $thunder
+        &.sustained
+          color: $bright-orange
+          float: right
 
-      &.sustained
-        color: $bright-orange
+          &.zero
+            color: rgba(255, 95, 0, 0.4)
 
-        &.zero
-          color: rgba(255, 95, 0, 0.4)
-
-    .facet-entry-name
-      color: $dusty-gray
-
-      width: $entry-name-width
-      display: inline-block
+      .facet-entry-name
+        color: $greyish
+        width: $entry-name-width
+        display: inline-block
+        font-weight: 400
 
   .complaint-counts
-    margin-left: 10px
-    font-size: 12px
-
-    .count
-      margin-right: 10px
-      transform: translateY(-10px)
-
-      &::before
-        content: ''
-        width: 11px
-        height: 11px
-        display: inline-block
-        border-radius: 5.5px
-        margin-right: 5px
+    font-size: 26px
 
     .total-count
       color: $thunder
+      margin-right: 5px
 
       &::before
         background-color: $thunder
 
     .sustained-count
       color: $bright-orange
+      white-space: nowrap
+      display: inline-block
 
       &::before
         background-color: $bright-orange

@@ -4,31 +4,25 @@ $date-line-height: 17px
 $top-padding: $horizontal-padding
 
 :local(.simple-event-item)
-  padding: $top-padding 0 $horizontal-padding $horizontal-padding
   position: relative
   background-color: white
+  margin-bottom: 56px
 
   :local(.title)
     display: inline-block
     width: 50%
     color: $dusty-gray
     font-weight: 500
+    line-height: 32px
 
   :local(.date)
     display: inline-block
     text-align: right
     width: 50%
     color: $dusty-gray
-    padding-right: $horizontal-padding
     height: $date-line-height
-
-    .dot
-      position: relative
-      z-index: 1
-      margin-left: 7px
-      right: -3px
 
   :local(.content)
     color: $dusty-gray
     font-weight: 400
-    margin-top: 11px
+    line-height: 32px

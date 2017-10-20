@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import style from 'styles/FAQDetail.sass';
-import { scrollToTop } from 'utils/NavigationUtil';
-import { Sticky } from 'react-sticky';
 
 
 export default class FAQDetail extends Component {
@@ -24,9 +22,6 @@ export default class FAQDetail extends Component {
 
     return (
       <div className={ style.faqDetail }>
-        <Sticky>
-          <div onClick={ scrollToTop() } className='empty sheet-header header'></div>
-        </Sticky>
         <h1 className='question'>{ question.join(' - ') }</h1>
         <div className='answer'>
           { answerParagraphs }

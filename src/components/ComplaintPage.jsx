@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import { Sticky } from 'react-sticky';
+import { Sticky, StickyContainer } from 'react-sticky';
 import { find } from 'lodash';
+import cx from 'classnames';
+import ReactHeight from 'react-height';
 
 import { scrollToTop } from 'utils/NavigationUtil';
 import style from 'styles/ComplaintPage.sass';
@@ -12,10 +14,25 @@ import Involvements from 'components/ComplaintPage/Involvements';
 import IncidentLocation from 'components/ComplaintPage/IncidentLocation';
 import ComplaintCategory from 'components/ComplaintPage/ComplaintCategory';
 import Attachment from 'components/ComplaintPage/Attachment';
+import Arrow from 'components/Shared/Arrow';
+import CoaccusedDropdown from 'components/ComplaintPage/CoaccusedDropdown';
+import NavbarContainer from 'containers/NavbarContainer';
 import constants from 'constants';
+import BottomPadding from 'components/Shared/BottomPadding';
 
 
 export default class ComplaintPage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.updateHeaderHeight = this.updateHeaderHeight.bind(this);
+    this.toggleCoaccused = this.toggleCoaccused.bind(this);
+    this.state = {
+      coaccusedIsExpanded: false,
+      headerHeight: 0
+    };
+  }
+
   componentDidMount() {
     const { complaint, requestComplaint, complaintId } = this.props;
     if (!complaint) {
@@ -23,10 +40,22 @@ export default class ComplaintPage extends Component {
     }
   }
 
+  toggleCoaccused() {
+    this.setState({
+      coaccusedIsExpanded: !this.state.coaccusedIsExpanded
+    });
+  }
+
   getActiveCoaccused() {
     const { complaint, coaccusedId } = this.props;
 
     return find(complaint.coaccused, c => c.id === coaccusedId);
+  }
+
+  updateHeaderHeight(height) {
+    this.setState({
+      headerHeight: height
+    });
   }
 
   render() {
@@ -39,27 +68,43 @@ export default class ComplaintPage extends Component {
     const activeCoaccused = this.getActiveCoaccused();
 
     return (
-      <div className={ style.complaintPage }>
+      <StickyContainer className={ style.complaintPage }>
+        <NavbarContainer backLink={ constants.SEARCH_PATH } />
         <Sticky className='complaint-header'>
-          <div onClick={ scrollToTop() } className='sheet-header header'>
-            CR { complaint.crid }
-            <span className='subheader'>{ complaint.coaccused.length } coaccused</span>
-          </div>
-          <PeopleList
-            title='Accused'
-            people={ [{
-              content: activeCoaccused.fullName,
-              subcontent: activeCoaccused.gender + ', ' + activeCoaccused.race,
-              url: `${constants.OFFICER_PATH}${activeCoaccused.id}/`
-            }] }
+          <ReactHeight className='relative' onHeightReady={ this.updateHeaderHeight }>
+            <div className={ cx('sheet-header header', { expanded: this.state.coaccusedIsExpanded }) }>
+              <span onClick={ scrollToTop() }>CR { complaint.crid }</span>
+              <span onClick={ this.toggleCoaccused } className='subheader'>
+                <span className='coaccused-text'>{ complaint.coaccused.length } coaccused</span>
+                <Arrow direction={ this.state.coaccusedIsExpanded ? 'up' : 'down' } />
+              </span>
+            </div>
+          </ReactHeight>
+
+          <CoaccusedDropdown
+            complaintId={ complaint.crid }
+            activeCoaccusedId={ activeCoaccused.id }
+            coaccused={ complaint.coaccused }
+            isExpanded={ this.state.coaccusedIsExpanded }
+            headerHeight={ this.state.headerHeight }
           />
         </Sticky>
-        <div>
+        <div className='complaint-page-body'>
 
           <ComplaintCategory
             category={ activeCoaccused.category }
             subcategory={ activeCoaccused.subcategory }
           />
+
+          <PeopleList
+            title='Accused Officer'
+            people={ [{
+              content: activeCoaccused.fullName,
+              subcontent: activeCoaccused.badge ? `Badge ${activeCoaccused.badge}` : '',
+              url: `${constants.OFFICER_PATH}${activeCoaccused.id}/`
+            }] }
+          />
+
           <Complainants complainants={ complaint.complainants } />
 
           <Outcome
@@ -88,6 +133,8 @@ export default class ComplaintPage extends Component {
             notAvailableMessage='There are no documents publicly available for this incident at this time.'
           />
 
+          <a className='attachment-request-link'>Request Documents</a>
+
           <Attachment
             title='Audio'
             notAvailableMessage='There are no audio clips publicly available for this incident at this time.'
@@ -99,7 +146,8 @@ export default class ComplaintPage extends Component {
           />
 
         </div>
-      </div>
+        <BottomPadding />
+      </StickyContainer>
     );
   }
 }

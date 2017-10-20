@@ -11,16 +11,14 @@ describe('<SectionHeader />', function () {
   });
 
   it('should render data', function () {
-    const description = <div className='ho'>ho</div>;
+    const text = <div className='hey'>Hey</div>;
     const wrapper = shallow(
       <SectionHeader
-        text='Hey'
-        description={ description }
+        text={ text }
       />
     );
 
     wrapper.text().should.containEql('Hey');
-    wrapper.find('.ho').text().should.eql('ho');
   });
 
 });

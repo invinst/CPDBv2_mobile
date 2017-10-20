@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Sticky } from 'react-sticky';
+import { Sticky, StickyContainer } from 'react-sticky';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import GaUtil from 'utils/GaUtil';
@@ -9,6 +9,9 @@ import OfficerTopLinks from 'components/OfficerPage/OfficerTopLinks';
 import YearlyStats from 'components/OfficerPage/OfficerTimeline/YearlyStats';
 import CRItem from 'components/OfficerPage/OfficerTimeline/CRItem';
 import SimpleEventItem from 'components/OfficerPage/OfficerTimeline/SimpleEventItem';
+import NavbarContainer from 'containers/NavbarContainer';
+import BottomPadding from 'components/Shared/BottomPadding';
+import constants from 'constants';
 import { scrollToTop } from 'utils/NavigationUtil';
 
 import style from 'styles/OfficerPage/OfficerTimeline.sass';
@@ -37,13 +40,6 @@ class OfficerTimeline extends Component {
           { summary ? summary.name : '' }
         </h1>
       </Sticky>
-    );
-  }
-
-  renderDivider() {
-    return (
-      <div className={ style.divider }>
-      </div>
     );
   }
 
@@ -93,7 +89,6 @@ class OfficerTimeline extends Component {
 
       return (
         <div key={ index }>
-          { this.renderDivider() }
           <div className={ index === lastIndex ? 'last-item' : null }>
             { item }
           </div>
@@ -121,7 +116,8 @@ class OfficerTimeline extends Component {
     const body = this.renderTimelineBody();
 
     return (
-      <div className={ style.officerTimeline }>
+      <StickyContainer className={ style.officerTimeline }>
+        <NavbarContainer backLink={ constants.SEARCH_PATH } />
         { header }
         <InfiniteScroll
           hasMore={ hasMore }
@@ -131,10 +127,10 @@ class OfficerTimeline extends Component {
           <OfficerTopLinks id={ pk } currentPath='timeline' />
           <div className='officer-timeline-body'>
             { body }
-            <div className='vertical-line'></div>
           </div>
+          <BottomPadding />
         </InfiniteScroll>
-      </div>
+      </StickyContainer>
     );
   }
 }

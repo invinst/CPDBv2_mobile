@@ -206,7 +206,6 @@ export default {
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
   LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
-  REPORTING_API_ENDPOINT: '/reports/',
   FAQ_API_ENDPOINT: '/faqs/',
   COMPLAINT_API_ENDPOINT: '/cr/',
 
@@ -230,7 +229,6 @@ export default {
   SUBSCRIBE_FORM_FAILURE: 'SUBSCRIBE_FORM_FAILURE',
 
   // Router paths
-  REPORTING_PATH: '/reporting/',
   FAQ_PATH: '/faq/',
   ABOUT_PATH: '/about/',
   SEARCH_PATH: '/search/',
@@ -260,19 +258,21 @@ export default {
     },
     {
       name: 'FAQ',
+      longName: 'FREQUENTLY ASKED QUESTIONS (FAQs)',
       id: 'faqs',
       path: 'FAQ'
     },
     {
-      name: 'Reports',
-      id: 'reports',
-      path: 'REPORT'
+      name: 'Units',
+      id: 'units',
+      path: 'UNIT'
     }
   ],
 
   // These should match their SASS counterparts in styles/Variables.sass
-  QUERY_INPUT_HEIGHT: 44,
-  SEARCH_CATEGORY_LINKS_HEIGHT: 37,
+  QUERY_INPUT_HEIGHT: 48,
+  SEARCH_CATEGORY_LINKS_HEIGHT: 40,
   BOTTOM_PADDING: 133,
-  TOP_MARGIN: 58
+  TOP_MARGIN: 58,
+  NEW_DIVIDER_WEIGHT: 2
 };

@@ -1,28 +1,29 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import TwoLineList from 'components/Shared/TwoLineList';
+
 
 class OfficerSearchResult extends Component {
   render() {
-    const { officer, saveToRecent } = this.props;
+    const { items, saveToRecent } = this.props;
 
-    const onClick = saveToRecent.bind(undefined, {
-      type: 'Officer',
-      title: officer.name,
-      url: officer.url
-    });
+    const rows = items.map((officer) => ({
+      label: officer.name,
+      sublabel: officer.extraInfo,
+      url: officer.url,
+      onClick: saveToRecent.bind(undefined, {
+        type: 'Officer',
+        title: officer.name,
+        url: officer.url
+      })
+    }));
 
-    return (
-      <Link to={ officer.url } className='row' onClick={ onClick }>
-        <p>{ officer.name }</p>
-        <p className='officer-badge-number'>{ officer.extraInfo }</p>
-      </Link>
-    );
+    return <TwoLineList rows={ rows } />;
   }
 }
 
 OfficerSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
-  officer: PropTypes.object
+  items: PropTypes.array
 };
 
 export default OfficerSearchResult;

@@ -2,29 +2,29 @@ import should from 'should'; // eslint-disable-line no-unused-vars
 import { spy, stub, useFakeTimers } from 'sinon';
 import * as NavigationUtil from 'utils/NavigationUtil';
 
-describe('NavigationUtil', () => {
-  describe('goUp', () => {
-    it('should do nothing if already at root path', () => {
+describe('NavigationUtil', function () {
+  describe('goUp', function () {
+    it('should do nothing if already at root path', function () {
       const router = { push: spy() };
       NavigationUtil.goUp(router, '/');
       router.push.called.should.be.false();
     });
 
-    it('should go to /reporting/ if currently at /reporting/<id>/', () => {
+    it('should go to /reporting/ if currently at /reporting/<id>/', function () {
       const router = { push: spy() };
       NavigationUtil.goUp(router, '/reporting/1/');
 
       router.push.calledWith('/reporting/').should.be.true();
     });
 
-    it('should go to root if currently at /reporting/', () => {
+    it('should go to root if currently at /reporting/', function () {
       const router = { push: spy() };
       NavigationUtil.goUp(router, '/reporting/');
 
       router.push.calledWith('/').should.be.true();
     });
 
-    it('should go to straight root if current path is /officer/<id>/', () => {
+    it('should go to straight root if current path is /officer/<id>/', function () {
       const router = { push: spy() };
       NavigationUtil.goUp(router, '/officer/11/');
 
@@ -33,7 +33,7 @@ describe('NavigationUtil', () => {
   });
 
 
-  describe('scrollTo', () => {
+  describe('scrollTo', function () {
     beforeEach(function () {
       this.clock = useFakeTimers();
     });
@@ -66,61 +66,71 @@ describe('NavigationUtil', () => {
   });
 
 
-  describe('scrollToTop', () => {
+  describe('scrollToTop', function () {
+    beforeEach(function () {
+      this.animatedScrollTo = spy(NavigationUtil, 'animatedScrollTo');
+    });
+
+    afterEach(function () {
+      this.animatedScrollTo.restore();
+    });
+
     it('should call scrollTop with appropriate params', function () {
-      const animatedScrollTo = spy(NavigationUtil, 'animatedScrollTo');
-      NavigationUtil.scrollToTop(animatedScrollTo)();
-      animatedScrollTo.called.should.be.true();
-      animatedScrollTo.restore();
+      NavigationUtil.scrollToTop(this.animatedScrollTo)();
+      this.animatedScrollTo.called.should.be.true();
     });
   });
 
 
-  describe('scrollToElement', () => {
+  describe('scrollToElement', function () {
+    afterEach(function () {
+      if (this.stubQuerySelector) {
+        this.stubQuerySelector.restore();
+      }
+    });
+
     it('should set appropriate scrollTop value', function () {
-      const stubQuerySelector = stub(document, 'querySelector');
-      stubQuerySelector.withArgs('#target').returns({ offsetTop: 200 });
-      stubQuerySelector.withArgs('#offset').returns({ offsetHeight: 50 });
+      this.stubQuerySelector = stub(document, 'querySelector');
+      this.stubQuerySelector.withArgs('#target').returns({ offsetTop: 200 });
+      this.stubQuerySelector.withArgs('#offset').returns({ offsetHeight: 50 });
       // Have to set body size so that it can actually scroll
       document.body.style.height = '9999px';
       document.body.style.width = '99px';
 
       NavigationUtil.scrollToElement('#target', '#offset');
 
-      document.body.scrollTop.should.be.eql(150);
+      window.pageYOffset.should.be.eql(150);
 
-      stubQuerySelector.restore();
-      document.body.scrollTop = 0;
+      window.scrollTo(0, 0);
     });
 
-    it('should do nothing if target element does not exist', () => {
-      const stubQuerySelector = stub(document, 'querySelector');
-      stubQuerySelector.withArgs('#target').returns(null);
-      stubQuerySelector.withArgs('#offset').returns({ offsetHeight: 50 });
+    it('should do nothing if target element does not exist', function () {
+      this.stubQuerySelector = stub(document, 'querySelector');
+      this.stubQuerySelector.withArgs('#target').returns(null);
+      this.stubQuerySelector.withArgs('#offset').returns({ offsetHeight: 50 });
       // Have to set body size so that it can actually scroll
       document.body.style.height = '9999px';
       document.body.style.width = '99px';
 
       NavigationUtil.scrollToElement('#target', '#offset');
 
-      document.body.scrollTop.should.be.eql(0);
-      stubQuerySelector.restore();
+      window.pageYOffset.should.be.eql(0);
     });
   });
 
 
-  describe('instantScrollToTop', () => {
+  describe('instantScrollToTop', function () {
     it('should scroll whole body to top', function () {
       // Have to set body size so that it can actually scroll
       document.body.style.height = '9999px';
       document.body.style.width = '99px';
 
-      document.body.scrollTop = 11;
-      document.body.scrollTop.should.be.eql(11);
+      window.scrollTo(0, 11);
+      window.pageYOffset.should.be.eql(11);
 
       NavigationUtil.instantScrollToTop();
 
-      document.body.scrollTop.should.be.eql(0);
+      window.pageYOffset.should.be.eql(0);
     });
   });
 
@@ -137,7 +147,7 @@ describe('NavigationUtil', () => {
     });
 
     it('should return correct value', function () {
-      document.body.scrollTop = 12;
+      window.scrollTo(0, 12);
       NavigationUtil.getCurrentScrollPosition().should.eql(12);
     });
   });

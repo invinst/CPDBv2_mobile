@@ -12,7 +12,7 @@ import constants from 'constants';
 
 describe('<SearchPage />', function () {
   it('should be renderable', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <SearchPage query={ '' } />
     );
     wrapper.should.be.ok();
@@ -180,6 +180,13 @@ describe('<SearchPage />', function () {
       clearableInput.prop('onClear')();
       spyInputChanged.calledWith('').should.be.true();
     });
+
+    it('should set this.searchInput ref to its own instance', function () {
+      const wrapper = mount(<SearchPage />);
+
+      const refInstance = wrapper.instance().searchInput;
+      (typeof refInstance).should.not.eql('undefined');
+    });
   });
 
   describe('updateLastCategoryHeight', () => {
@@ -210,9 +217,10 @@ describe('<SearchPage />', function () {
       const result = instance.calculateDynamicBottomPaddingStyle();
       const dynamicBottomPaddingOffset = (
         constants.QUERY_INPUT_HEIGHT +
-        constants.SEARCH_CATEGORY_LINKS_HEIGHT
+        constants.SEARCH_CATEGORY_LINKS_HEIGHT +
+        2 * constants.NEW_DIVIDER_WEIGHT
       );
-      const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
+      const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
 
       result.should.eql({
         height
@@ -230,25 +238,47 @@ describe('<SearchPage />', function () {
       const dynamicBottomPaddingOffset = (
         constants.QUERY_INPUT_HEIGHT +
         constants.SEARCH_CATEGORY_LINKS_HEIGHT +
+        2 * constants.NEW_DIVIDER_WEIGHT +
         1
       );
-      const height = `calc(100vh - ${dynamicBottomPaddingOffset}px)`;
+      const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
 
       result.should.eql({
         height
       });
     });
+
+    it('should return minimum height when lastCategoryHeight is sufficiently large', () => {
+      const wrapper = shallow(
+        <SearchPage />
+      );
+      const instance = wrapper.instance();
+      instance.lastCategoryHeight = 9999;
+
+      const result = instance.calculateDynamicBottomPaddingStyle();
+
+      result.should.eql({
+        height: '133px'
+      });
+    });
   });
 
   describe('renderCategories()', () => {
-    it('should render SearchCategory components', () => {
-      const stubBoundCallback = stub(SearchPage.prototype.updateLastCategoryHeight, 'bind');
-      stubBoundCallback.returns(SearchPage.prototype.updateLastCategoryHeight);
+    beforeEach(function () {
+      stub(SearchPage.prototype.updateLastCategoryHeight, 'bind');
+      SearchPage.prototype.updateLastCategoryHeight.bind.returns(SearchPage.prototype.updateLastCategoryHeight);
+    });
 
+    afterEach(function () {
+      SearchPage.prototype.updateLastCategoryHeight.bind.restore();
+    });
+
+    it('should render SearchCategory components', () => {
       const officersProp = {
         data: ['data']
       };
-      const reportsProp = {
+
+      const unitsProp = {
         data: ['data']
       };
 
@@ -257,21 +287,91 @@ describe('<SearchPage />', function () {
           saveToRecent={ () => {} }
           query='qa'
           officers={ officersProp }
-          reports={ reportsProp }
+          units={ unitsProp }
           suggestAllFromCategory={ () => {} }/>
       );
 
       const categoryDetails = wrapper.find('.category-details-container').children();
 
-      categoryDetails.should.have.length(2);
+      categoryDetails.length.should.eql(2);
       categoryDetails.at(0).childAt(0).type().should.be.eql(SearchCategory);
 
       // Last component should be wrapped inside ReactHeight:
       const lastCategory = categoryDetails.at(1);
       lastCategory.type().should.be.eql(ReactHeight);
       lastCategory.prop('onHeightReady').should.be.eql(SearchPage.prototype.updateLastCategoryHeight);
+    });
+
+    it('should pass correct allButtonClickHandler prop to SearchCategory', () => {
+      const stubBoundCallback = stub(SearchPage.prototype.chooseCategory, 'bind');
+      stubBoundCallback.returns(SearchPage.prototype.chooseCategory);
+
+      const officersProp = {
+        data: ['data']
+      };
+      const unitsProp = {
+        data: ['data']
+      };
+
+      const wrapper = shallow(
+        <SearchPage
+          saveToRecent={ () => {} }
+          query='qa'
+          officers={ officersProp }
+          units={ unitsProp }
+          suggestAllFromCategory={ () => {} }/>
+      );
+
+      const searchCategory = wrapper.find(SearchCategory).at(0);
+      searchCategory.prop('allButtonClickHandler').should.eql(SearchPage.prototype.chooseCategory);
 
       stubBoundCallback.restore();
+    });
+  });
+
+  describe('chooseCategory', function () {
+    it('should call suggestAllFromCategory & updateChosenCategory with correct args', function () {
+      const suggestAllFromCategory = spy();
+      const updateChosenCategory = spy();
+
+      const wrapper = shallow(
+        <SearchPage
+          query='wa'
+          suggestAllFromCategory={ suggestAllFromCategory }
+          updateChosenCategory={ updateChosenCategory }
+        />
+      );
+
+      wrapper.instance().chooseCategory({
+        path: 'mypath',
+        id: 'myid'
+      });
+
+      suggestAllFromCategory.calledWith('mypath', 'wa').should.be.true();
+      updateChosenCategory.calledWith('myid').should.be.true();
+    });
+  });
+
+  describe('"view single category" mode', function () {
+    it('should only display search results of the chosen single category', function () {
+      const faqsProp = {
+        data: ['data']
+      };
+      const officersProp = {
+        data: ['data']
+      };
+
+      const wrapper = shallow(
+        <SearchPage
+          query='qa'
+          officers={ officersProp }
+          faqs={ faqsProp }
+          chosenCategory='faqs'
+        />
+      );
+
+      const searchCategories = wrapper.find('SearchCategory');
+      searchCategories.should.have.length(1);
     });
   });
 });

@@ -7,15 +7,15 @@ import SuggestedSearchResult from 'components/SearchPage/SuggestedSearchResult';
 
 describe('<SuggestedSearchResult />', () => {
   it('should render item correctly', () => {
-    const item = {
+    const items = [{
       url: 'localhost',
       type: 'recent',
       title: 'Whatever'
-    };
+    }];
 
     const wrapper = mount(
       <SuggestedSearchResult
-        item={ item }
+        items={ items }
         saveToRecent={ () => {} }
       />
     );
@@ -29,22 +29,26 @@ describe('<SuggestedSearchResult />', () => {
 
   it('should dispatch "saveToRecent" action when clicked', () => {
     const spySaveToRecent = spy();
-    const item = {
+    const items = [{
       url: 'localhost',
       type: 'recent',
       title: 'Whatever'
-    };
+    }];
 
     const wrapper = shallow(
       <SuggestedSearchResult
-        item={ item }
+        items={ items }
         saveToRecent={ spySaveToRecent }
       />
     );
     const itemLink = wrapper.find('Link');
 
     itemLink.simulate('click');
-    spySaveToRecent.calledWith(item).should.be.true();
+    spySaveToRecent.calledWith({
+      url: 'localhost',
+      type: 'recent',
+      title: 'Whatever'
+    }).should.be.true();
   });
 
 });

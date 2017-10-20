@@ -1,13 +1,11 @@
 import React from 'react';
 
-import { Router, Route } from 'react-router';
+import { Router, Route, IndexRoute } from 'react-router';
 
 import AppHistory from 'utils/History';
 import constants from 'constants';
 
 import MainPageContainer from 'containers/MainPageContainer';
-import ReportingPageContainer from 'containers/ReportingPageContainer';
-import ReportingDetailContainer from 'containers/ReportingPage/ReportingDetailContainer';
 import FAQPageContainer from 'containers/FAQPageContainer';
 import FAQDetailContainer from 'containers/FAQPage/FAQDetailContainer';
 import AboutPageContainer from 'containers/AboutPageContainer';
@@ -15,6 +13,7 @@ import SearchPageContainer from 'containers/SearchPageContainer';
 import OfficerSummaryContainer from 'containers/OfficerPage/OfficerSummaryContainer';
 import OfficerTimelineContainer from 'containers/OfficerPage/OfficerTimelineContainer';
 import ComplaintPageContainer from 'containers/ComplaintPageContainer';
+import LandingPageContainer from 'containers/LandingPageContainer';
 
 import 'styles/Style.sass';
 import 'styles/Fonts.sass';
@@ -27,12 +26,8 @@ const App = React.createClass({
   render() {
     return (
       <Router history={ AppHistory }>
-        <Route path='/s/:query' component={ MainPageContainer } />
-        <Route path='/q/:query' component={ MainPageContainer } />
         <Route path='/' component={ MainPageContainer }>
-          <Route path={ constants.REPORTING_PATH } component={ ReportingPageContainer }>
-            <Route path={ constants.REPORTING_PATH + ':id' } component={ ReportingDetailContainer } />
-          </Route>
+          <IndexRoute component={ LandingPageContainer } />
 
           <Route path={ constants.FAQ_PATH } component={ FAQPageContainer }>
             <Route path={ constants.FAQ_PATH + ':id' } component={ FAQDetailContainer } />

@@ -1,20 +1,31 @@
 'use strict';
 
 describe('MainPageTest', function () {
+  beforeEach(function (client, done) {
+    this.mainPage = client.page.main();
+    this.mainPage.navigate();
+    done();
+  });
+
+  afterEach(function (client, done) {
+    client.end(function () {
+      done();
+    });
+  });
+
   it('should show homepage with logo and navigation links', function (client) {
-    client
-      .url(client.globals.clientUrl)
-      .waitForElementVisible('body', 10000)
-      .waitForElementVisible('.cpdb-logo', 10000);
+    const mainPage = this.mainPage;
 
-    client.expect.element('.cpdb-logo').to.be.visible;
-    client.expect.element('.cpdb-logo').text.to.contain('cpdp');
+    mainPage.expect.element('@cpdbLogo').text.to.contain('Citizens Police Data Project');
+    mainPage.expect.element('@searchLink').to.be.visible;
+  });
 
-    client.expect.element('a[href="/reporting/"]').to.be.visible;
-    client.expect.element('a[href="/faq/"]').to.be.visible;
-    client.expect.element('a[href="/about/"]').to.be.visible;
-    client.expect.element('a[href="/search/"]').to.be.visible;
+  it('should navigate to Search page when user clicks on fake search box', function (client) {
+    const mainPage = this.mainPage;
+    const searchPage = client.page.search();
 
-    client.end();
+    mainPage
+      .click('@searchLink')
+      .assert.urlEquals(searchPage.url());
   });
 });

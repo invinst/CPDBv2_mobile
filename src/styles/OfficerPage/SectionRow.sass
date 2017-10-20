@@ -1,21 +1,26 @@
 @import '../Variables'
 
 :local(.section-row)
-  margin-left: $horizontal-padding
-  padding: $horizontal-padding 0
-  border-bottom: 2px solid $alto-solid
+  border-top: 1px solid $alto-solid
+  vertical-align: middle
+  // these 4 lines are to achive optical center
+  height: 40px
+  line-height: 20px
+  padding-top: 9px
+  padding-bottom: 11px
 
-  &:last-child
-    border-bottom: 0
+  &:first-child
+    border-top: 0
 
   .label
     display: inline-block
     width: 128px - $horizontal-padding
-    color: $dusty-gray
+    color: $greyish
+    font-weight: 400
 
   .value
     color: $metadata-black
 
   .extra-info
-    color: $dusty-gray
+    color: $greyish
     padding-left: 8px

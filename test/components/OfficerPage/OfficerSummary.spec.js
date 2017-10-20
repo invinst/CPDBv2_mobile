@@ -4,6 +4,8 @@ import { mount, shallow } from 'enzyme';
 import { spy, stub } from 'sinon';
 import configureStore from 'redux-mock-store';
 
+import NavbarContainer from 'containers/NavbarContainer';
+import constants from 'constants';
 import OfficerSummary from 'components/OfficerPage/OfficerSummary';
 import LoadingPage from 'components/Shared/LoadingPage';
 import NotMatchedOfficerPage from 'components/OfficerPage/NotMatchedOfficerPage';
@@ -105,6 +107,18 @@ describe('<OfficerSummary />', function () {
     spyGetOfficerSummary.called.should.be.false();
   });
 
+  it('should render Navbar', function () {
+    const wrapper = shallow(
+      <OfficerSummary
+        loading={ false }
+        found={ true }
+        summary={ this.summary }
+      />
+    );
+
+    wrapper.find(NavbarContainer).prop('backLink').should.eql(constants.SEARCH_PATH);
+  });
+
   describe('when summary is provided', function () {
     beforeEach(function () {
       this.wrapper = shallow(
@@ -125,19 +139,17 @@ describe('<OfficerSummary />', function () {
 
     it('should render "Assignment Details" section', function () {
       const section = this.wrapper.find('.assignment-detail-section');
-
-      section.find('SectionHeader').props().should.eql({
-        text: 'Assignment Details'
-      });
-
       const rows = section.find('SectionRow');
       const expectedRows = [
         ['Unit', this.summary.unit],
         ['Rank', this.summary.rank],
         ['Badge', this.summary.badge],
         ['2017 Salary', this.summary.salary],
-        ['Date of Apt.', this.summary.dateOfAppt, this.summary.yearsSinceDateOfAppt]
+        ['Career', this.summary.dateOfAppt, this.summary.yearsSinceDateOfAppt],
+        ['Race', this.summary.race],
+        ['Sex', this.summary.sex]
       ];
+
       expectedRows.forEach(([label, value, extraInfo], index) => {
         const row = rows.at(index);
         row.prop('label').should.be.eql(label);
@@ -148,18 +160,6 @@ describe('<OfficerSummary />', function () {
       });
     });
 
-    it('should render "Demographics" SectionHeader', function () {
-      const section = this.wrapper.find('.demographics-section');
-
-      section.find('SectionHeader').props().should.eql({
-        text: 'Demographics'
-      });
-
-      const rows = section.find('SectionRow');
-      rows.at(0).props().should.eql({ label: 'Race', value: this.summary.race });
-      rows.at(1).props().should.eql({ label: 'Sex', value: this.summary.sex });
-    });
-
     it('should render SummaryStatsSection', function () {
       this.wrapper.find('SummaryStatsSection').props().should.eql({
         name: 'Complaints',
@@ -168,4 +168,10 @@ describe('<OfficerSummary />', function () {
     });
   });
 
+  it('should have BottomPadding', function () {
+    const wrapper = shallow(
+      <OfficerSummary loading={ false } found={ true } summary={ this.summary }/>
+    );
+    wrapper.find('BottomPadding').exists().should.be.true();
+  });
 });
