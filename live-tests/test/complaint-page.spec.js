@@ -73,7 +73,7 @@ const mockComplaint = {
 describe('ComplaintPageTest', function () {
   it('should show proper header with CR title, coaccused and accused', function (client) {
 
-    api.mock('GET', '/api/v2/cr/1053667/', 200, mockComplaint);
+    api.mock('GET', '/api/v2/mobile/cr/1053667/', 200, mockComplaint);
 
     client
       .url(`${client.globals.clientUrl}/complaint/1053667/6493/`);
