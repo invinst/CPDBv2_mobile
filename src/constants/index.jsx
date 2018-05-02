@@ -207,7 +207,7 @@ export default {
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
   LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
   FAQ_API_ENDPOINT: '/faqs/',
-  COMPLAINT_API_ENDPOINT: '/cr/',
+  COMPLAINT_API_ENDPOINT: '/mobile/cr/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
