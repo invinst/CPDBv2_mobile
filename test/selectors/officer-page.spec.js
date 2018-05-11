@@ -87,7 +87,11 @@ describe('officer-page selectors', () => {
                 'full_name': 'Jason Van Dyke',
                 'badge': '9465',
                 'id': 7655,
-                'unit': '008'
+                'unit': {
+                  'unit_name': '008',
+                  'id': 5,
+                  'description': 'District 008'
+                }
               }
             }
           }
