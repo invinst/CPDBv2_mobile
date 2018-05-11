@@ -100,7 +100,11 @@ var mockOfficer = {
   'full_name': 'John Doe',
   'badge': '9999',
   'id': 2235,
-  'unit': '153'
+  'unit': {
+    'unit_name': '153',
+    'id': 5,
+    'description': 'District 008'
+  }
 };
 
 describe('OfficerSummary test', function () {

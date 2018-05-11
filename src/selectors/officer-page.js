@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import { startCase } from 'lodash';
+import { startCase, get } from 'lodash';
 import constants from 'constants';
 
 const getOfficerSummary = (state, props) => (
@@ -23,10 +23,11 @@ export const officerSummarySelector = createSelector(
     }
 
     const complaints = summary.complaint_records;
+    const unit = get(summary, 'unit', {});
 
     return {
       name: summary.full_name,
-      unit: summary.unit,
+      unit: unit.unit_name,
       rank: summary.rank,
       badge: summary.badge,
       dateOfAppt: dateOfAppt,
