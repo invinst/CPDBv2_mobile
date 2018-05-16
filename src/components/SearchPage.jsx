@@ -177,7 +177,6 @@ SearchPage.propTypes = {
   inputChanged: PropTypes.func,
   suggestTerm: PropTypes.func,
   officers: PropTypes.object,
-  faqs: PropTypes.object,
   suggestAllFromCategory: PropTypes.func,
   categories: PropTypes.array,
   saveToRecent: PropTypes.func,

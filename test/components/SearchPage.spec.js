@@ -53,7 +53,6 @@ describe('<SearchPage />', function () {
           query={ 'ab' }
           suggestAllFromCategory={ () => {} }
           officers={ { data: [1] } }
-          faqs={ { data: [] } }
           undefined={ { data: [1] } }
           inputChanged={ () => {} }
          />
@@ -354,7 +353,7 @@ describe('<SearchPage />', function () {
 
   describe('"view single category" mode', function () {
     it('should only display search results of the chosen single category', function () {
-      const faqsProp = {
+      const crsProp = {
         data: ['data']
       };
       const officersProp = {
@@ -365,8 +364,8 @@ describe('<SearchPage />', function () {
         <SearchPage
           query='qa'
           officers={ officersProp }
-          faqs={ faqsProp }
-          chosenCategory='faqs'
+          crs={ crsProp }
+          chosenCategory='crs'
         />
       );
 

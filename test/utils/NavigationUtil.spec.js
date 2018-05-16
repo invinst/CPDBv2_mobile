@@ -10,16 +10,16 @@ describe('NavigationUtil', function () {
       router.push.called.should.be.false();
     });
 
-    it('should go to /reporting/ if currently at /reporting/<id>/', function () {
+    it('should go back one level if link is not one of NONEXISTENT_ROUTES', function () {
       const router = { push: spy() };
-      NavigationUtil.goUp(router, '/reporting/1/');
+      NavigationUtil.goUp(router, '/existent/1/');
 
-      router.push.calledWith('/reporting/').should.be.true();
+      router.push.calledWith('/existent/').should.be.true();
     });
 
-    it('should go to root if currently at /reporting/', function () {
+    it('should go to root if currently at /existent/', function () {
       const router = { push: spy() };
-      NavigationUtil.goUp(router, '/reporting/');
+      NavigationUtil.goUp(router, '/existent/');
 
       router.push.calledWith('/').should.be.true();
     });

@@ -1,3 +1,4 @@
+import OfficerSearchResult from 'components/SearchPage/OfficerSearchResult';
 import should from 'should';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
@@ -18,7 +19,7 @@ describe('<SearchCategory />', function () {
       <SearchCategory
         title='foo'
         items={ [] }
-        categoryId='faqs'
+        categoryId='crs'
       />
     );
     wrapper.should.be.ok();
@@ -29,7 +30,7 @@ describe('<SearchCategory />', function () {
       <SearchCategory
         title='foo'
         items={ [] }
-        categoryId='faqs'
+        categoryId='crs'
       />
     );
     const instance = wrapper.instance();
@@ -50,7 +51,7 @@ describe('<SearchCategory />', function () {
       <SearchCategory
         title='foo'
         items={ [] }
-        categoryId='faqs'
+        categoryId='crs'
       />
     );
     const instance = wrapper.instance();
@@ -77,7 +78,7 @@ describe('<SearchCategory />', function () {
       <SearchCategory
         title='foo'
         items={ [] }
-        categoryId='faqs'
+        categoryId='crs'
       />
     );
     const instance = wrapper.instance();
@@ -95,7 +96,7 @@ describe('<SearchCategory />', function () {
       <SearchCategory
         title='foo'
         items={ [] }
-        categoryId='faqs'
+        categoryId='crs'
       />
     );
 
@@ -133,36 +134,6 @@ describe('<SearchCategory />', function () {
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
 
     });
-  });
-
-  describe('render FAQs', function () {
-    it('should render faq correctly', function () {
-      const spySaveToRecent = spy();
-      const faqs = [
-        {
-          id: '1',
-          question: 'foo'
-        },
-        {
-          id: '2',
-          question: 'bar'
-        }
-      ];
-
-      const wrapper = mount(
-        <SearchCategory
-          items={ faqs }
-          categoryId='faqs'
-          saveToRecent={ spySaveToRecent }
-        />
-      );
-
-      const faqElement = wrapper.find('FaqSearchResult');
-      faqElement.exists().should.be.true();
-      faqElement.prop('items').should.be.eql(faqs);
-      faqElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
-    });
-
   });
 
   describe('render units', function () {
@@ -281,13 +252,13 @@ describe('<SearchCategory />', function () {
       const wrapper = shallow(
         <SearchCategory
           items={ items }
-          categoryId='faqs'
+          categoryId='officers'
           showAllButton={ true }
         />
       );
 
-      const faqSearchResult = wrapper.find('FaqSearchResult');
-      faqSearchResult.prop('items').should.eql(range(5));
+      const officerSearchResult = wrapper.find('OfficerSearchResult');
+      officerSearchResult.prop('items').should.eql(range(5));
     });
   });
 
@@ -307,8 +278,8 @@ describe('<SearchCategory />', function () {
         <SearchCategory
           title='foo'
           items={ [] }
-          activeCategory='faqs'
-          categoryId='faqs'
+          activeCategory='crs'
+          categoryId='crs'
           updateActiveCategory={ spyUpdateActiveCategory }
         />
       );
@@ -327,7 +298,7 @@ describe('<SearchCategory />', function () {
           title='foo'
           items={ [] }
           activeCategory='units'
-          categoryId='faqs'
+          categoryId='crs'
           updateActiveCategory={ spyUpdateActiveCategory }
         />
       );
@@ -349,7 +320,7 @@ describe('<SearchCategory />', function () {
           title='foo'
           items={ [] }
           activeCategory='units'
-          categoryId='faqs'
+          categoryId='crs'
           updateActiveCategory={ spyUpdateActiveCategory }
         />
       );
@@ -370,7 +341,7 @@ describe('<SearchCategory />', function () {
           title='foo'
           items={ [] }
           activeCategory='units'
-          categoryId='faqs'
+          categoryId='crs'
           updateActiveCategory={ spyUpdateActiveCategory }
         />
       );
@@ -382,7 +353,7 @@ describe('<SearchCategory />', function () {
 
       instance.watchActiveState();
 
-      spyUpdateActiveCategory.calledWith('faqs').should.be.true();
+      spyUpdateActiveCategory.calledWith('crs').should.be.true();
     });
   });
 

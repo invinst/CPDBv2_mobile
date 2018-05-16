@@ -21,20 +21,6 @@ export const officersSelector = createSelector(
   }
 );
 
-export const faqsSelector = createSelector(
-  (state) => state.suggestionApp.suggestions.FAQ,
-  (faqs) => {
-    if (!faqs) {
-      return { data: [] };
-    }
-
-    return {
-      isShowingAll: faqs.isShowingAll,
-      data: faqs.data
-    };
-  }
-);
-
 export const unitsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.UNIT,
   (units) => {

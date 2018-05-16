@@ -23,7 +23,7 @@ describe('<SearchNavbar />', function () {
         id: 'officers'
       },
       {
-        id: 'faqs'
+        id: 'crs'
       }
     ];
     const wrapper = mount(
@@ -43,8 +43,8 @@ describe('<SearchNavbar />', function () {
         name: 'Officers'
       },
       {
-        id: 'faqs',
-        name: 'FAQs'
+        id: 'crs',
+        name: 'CRs'
       }
     ];
 
@@ -55,7 +55,7 @@ describe('<SearchNavbar />', function () {
     );
 
     wrapper.find('button').at(0).text().should.be.eql('Officers');
-    wrapper.find('button').at(1).text().should.be.eql('FAQs');
+    wrapper.find('button').at(1).text().should.be.eql('CRs');
   });
 
   it('should scroll to the correct position when clicking on the category links', function () {
@@ -65,8 +65,8 @@ describe('<SearchNavbar />', function () {
         name: 'Officers'
       },
       {
-        id: 'faqs',
-        name: 'FAQs'
+        id: 'crs',
+        name: 'CRs'
       }
     ];
     const spyScrollToCategory = spy();
@@ -88,8 +88,8 @@ describe('<SearchNavbar />', function () {
     spyUpdateActiveCategory.reset();
 
     wrapper.find('button').at(1).simulate('click');
-    spyScrollToCategory.calledWith('faqs').should.be.true();
-    spyUpdateActiveCategory.calledWith('faqs').should.be.true();
+    spyScrollToCategory.calledWith('crs').should.be.true();
+    spyUpdateActiveCategory.calledWith('crs').should.be.true();
   });
 
   describe('chosenCategory-related behaviors', function () {
@@ -107,7 +107,7 @@ describe('<SearchNavbar />', function () {
           id: 'officers'
         },
         {
-          id: 'faqs'
+          id: 'crs'
         }
       ];
       const wrapper = mount(
@@ -124,7 +124,7 @@ describe('<SearchNavbar />', function () {
 
       const wrapper = mount(
         <SearchNavbar
-          chosenCategory='faqs'
+          chosenCategory='crs'
           clearChosenCategory={ clearChosenCategory }
         />
       );
@@ -145,7 +145,7 @@ describe('<SearchNavbar />', function () {
       const wrapper = mount(
         <SearchNavbar
           categories={ categories }
-          activeCategory='faqs'
+          activeCategory='crs'
           chosenCategory='officers'
         />
       );
