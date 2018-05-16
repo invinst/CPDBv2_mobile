@@ -59,7 +59,8 @@ describe('SearchPageTest', function () {
   });
 
   it('should show recent items', function (client) {
-    // this report items should now be added into "recent" list
+    this.searchPage.section.suggested.section.officer.click();
+    // this officer item should now be added into "recent" list
     this.searchPage.navigate();
     this.searchPage.expect.element('@recentHeader').to.be.present;
     this.searchPage.expect.section('@recent').text.to.contain('How accurate is the data?');
