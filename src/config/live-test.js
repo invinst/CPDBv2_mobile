@@ -8,11 +8,6 @@ let config = {
   baseUrlV1: 'http://localhost:9002',
   baseUrlV2: 'http://localhost:9002/api/v1',
   baseUrlV2V2: 'http://localhost:9002/api/v2',
-
-  bottomSheet: {
-    transitionDuration: 1
-    // because setting it to 0 will result in bottom sheet not disappearing when transitioning back to root
-  }
 };
 
 export default Object.freeze(Object.assign(baseConfig, config));
