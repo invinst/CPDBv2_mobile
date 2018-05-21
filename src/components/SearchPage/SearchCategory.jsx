@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import style from 'styles/SearchCategory.sass';
 import OfficerSearchResult from 'components/SearchPage/OfficerSearchResult';
-import FaqSearchResult from 'components/SearchPage/FaqSearchResult';
 import SuggestedSearchResult from 'components/SearchPage/SuggestedSearchResult';
 import UnitSearchResult from 'components/SearchPage/UnitSearchResult';
 import { getCurrentScrollPosition, instantScrollToTop } from 'utils/NavigationUtil';
@@ -14,7 +13,6 @@ const fixedHeaderHeight = (
 
 const resultComponentMappings = {
   officers: OfficerSearchResult,
-  faqs: FaqSearchResult,
   units: UnitSearchResult,
   recent: SuggestedSearchResult,
   suggested: SuggestedSearchResult

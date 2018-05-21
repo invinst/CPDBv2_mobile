@@ -9,7 +9,6 @@ module.exports = {
     suggestedHeader: '#search-category-suggested',
     recentHeader: '#search-category-recent',
     officersHeader: '#search-category-officers',
-    faqsHeader: '#search-category-faqs',
   },
 
   sections: {
@@ -17,14 +16,6 @@ module.exports = {
     suggested: {
       selector: '.suggested.body',
       sections: {
-
-        faq: {
-          selector: '.row.faq',
-          elements: {
-            label: '.suggested-type',
-            value: '.suggested-title'
-          }
-        },
 
         officer: {
           selector: '.row.officer',
@@ -46,12 +37,5 @@ module.exports = {
         row: 'a[href="/officer/9876/"]'
       }
     },
-    faqs: {
-      selector: '.body.faqs',
-      elements: {
-        row1: 'a[href="/faq/24/"]',
-        row2: 'a[href="/faq/27/"]'
-      }
-    }
   }
 };

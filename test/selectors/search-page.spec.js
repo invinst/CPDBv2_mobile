@@ -2,7 +2,6 @@ import constants from 'constants';
 
 import {
   officersSelector,
-  faqsSelector,
   suggestedSelector,
   recentSelector,
   unitsSelector,
@@ -50,42 +49,6 @@ describe('search-page selectors', () => {
       officersSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
         data: [expectedOfficer]
-      });
-    });
-  });
-
-  describe('faqsSelector', () => {
-    it('should return empty when there is no faq', () => {
-      const state = {
-        suggestionApp: {
-          suggestions: {
-          }
-        }
-      };
-
-      faqsSelector(state).should.be.eql({ data: [] });
-    });
-
-    it('should return officer data when there are faqs', () => {
-      const isShowingAll = true;
-      const data = [{
-        'any': 'any'
-      }];
-
-      const state = {
-        suggestionApp: {
-          suggestions: {
-            FAQ: {
-              isShowingAll: isShowingAll,
-              data: data
-            }
-          }
-        }
-      };
-
-      faqsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: data
       });
     });
   });

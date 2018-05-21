@@ -2,12 +2,6 @@
 var api = require(__dirname + '/../mock-api');
 
 const mockSuggestionResponse = {
-  'FAQ': [
-    {
-      'question': 'How accurate is the data?',
-      'id': 18
-    }
-  ],
   'OFFICER': [
     {
       'url': 'https://beta.cpdb.co/officer/john-tobler/30291',
@@ -19,17 +13,6 @@ const mockSuggestionResponse = {
 };
 
 const mockSearchQueryResponse = {
-  'FAQ': [
-    {
-      'question': 'Where is the glossary?',
-      'id': 24
-    },
-    {
-      'question': 'How does this interact with the IPRA Portal?',
-      'id': 27
-    }
-  ],
-
   'OFFICER': [
     {
       'url': 'https://beta.cpdb.co/officer/dummy/john-wang',
@@ -47,7 +30,6 @@ describe('SearchPageTest', function () {
     api.mock('GET', '/api/v2/search-mobile/wh/', 200, mockSearchQueryResponse);
     this.searchPage = client.page.search();
     this.officerSummaryPage = client.page.officerSummary();
-    this.faqDetailPage = client.page.faqDetail();
     this.searchPage.navigate();
     done();
   });
@@ -68,12 +50,8 @@ describe('SearchPageTest', function () {
 
     const suggested = searchPage.section.suggested;
 
-    const suggestedFaq = suggested.section.faq;
     const suggestedOfficer = suggested.section.officer;
 
-    suggested.expect.section('@faq').to.have.attribute('href').which.contains('/faq/18/');
-    suggestedFaq.expect.element('@label').text.to.contain('FAQ');
-    suggestedFaq.expect.element('@value').text.to.contain('How accurate is the data?');
 
     suggested.expect.section('@officer').to.have.attribute('href').which.contains('/officer/30291/');
     suggestedOfficer.expect.element('@label').text.to.contain('Officer');
@@ -81,8 +59,8 @@ describe('SearchPageTest', function () {
   });
 
   it('should show recent items', function (client) {
-    this.searchPage.section.suggested.section.faq.click();
-    // this report items should now be added into "recent" list
+    this.searchPage.section.suggested.section.officer.click();
+    // this officer item should now be added into "recent" list
     this.searchPage.navigate();
     this.searchPage.expect.element('@recentHeader').to.be.present;
     this.searchPage.expect.section('@recent').text.to.contain('How accurate is the data?');
@@ -92,14 +70,10 @@ describe('SearchPageTest', function () {
     this.searchPage.setValue('@queryInput', 'wh');
 
     this.searchPage.expect.element('@officersHeader').text.to.equal('OFFICERS');
-    this.searchPage.expect.element('@faqsHeader').text.to.equal('FREQUENTLY ASKED QUESTIONS (FAQS)');
 
     let officers = this.searchPage.section.officers;
-    let faqs = this.searchPage.section.faqs;
 
     officers.expect.element('@row').text.to.contain('John Wang');
-    faqs.expect.element('@row1').text.to.contain('Where is the glossary?');
-    faqs.expect.element('@row2').text.to.contain('How does this interact with the IPRA Portal?');
   });
 
   it('should empty query when clear icon is tapped', function (client) {
@@ -113,11 +87,5 @@ describe('SearchPageTest', function () {
     this.searchPage.setValue('@queryInput', 'wh');
     this.searchPage.section.officers.click('@row');
     client.assert.urlEquals(this.officerSummaryPage.url(9876));
-  });
-
-  it('should navigate to faq page when tapped', function (client) {
-    this.searchPage.setValue('@queryInput', 'wh');
-    this.searchPage.section.faqs.click('@row1');
-    client.assert.urlEquals(this.faqDetailPage.url(24));
   });
 });

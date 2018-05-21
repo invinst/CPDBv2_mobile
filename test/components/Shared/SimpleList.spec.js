@@ -9,23 +9,21 @@ import SimpleList from 'components/Shared/SimpleList';
 describe('<SimpleList />', function () {
   it('should render label', function () {
 
-    const fooUrl = `${constants.FAQ_PATH}1/`;
-    const barUrl = `${constants.FAQ_PATH}2/`;
     const rows = [
       {
-        label: 'foo',
+        label: 'Result 1',
         onClick: (() => {}).bind(undefined, {
-          type: 'FAQ',
-          title: 'foo',
-          url: fooUrl
+          type: 'RESULT',
+          title: 'Result 1',
+          url: 'result/1'
         })
       },
       {
-        label: 'bar',
+        label: 'Result 2',
         onClick: (() => {}).bind(undefined, {
-          type: 'FAQ',
-          title: 'bar',
-          url: barUrl
+          type: 'RESULT',
+          title: 'Result 2',
+          url: 'result/1'
         })
       }
     ];
@@ -33,8 +31,8 @@ describe('<SimpleList />', function () {
     const labels = wrapper.find('.label');
 
     labels.should.have.length(2);
-    labels.at(0).text().should.eql('foo');
-    labels.at(1).text().should.eql('bar');
+    labels.at(0).text().should.eql('Result 1');
+    labels.at(1).text().should.eql('Result 2');
 
   });
 
@@ -42,17 +40,15 @@ describe('<SimpleList />', function () {
     const onClick1 = spy();
     const onClick2 = spy();
 
-    const fooUrl = `${constants.FAQ_PATH}1/`;
-    const barUrl = `${constants.FAQ_PATH}2/`;
     const rows = [
       {
-        label: 'foo',
-        url: fooUrl,
+        label: 'Result 1',
+        url: 'result/1',
         onClick: onClick1
       },
       {
-        label: 'bar',
-        url: barUrl,
+        label: 'Result 2',
+        url: 'result/2',
         onClick: onClick2
       }
     ];
@@ -61,12 +57,12 @@ describe('<SimpleList />', function () {
 
     links.should.have.length(2);
 
-    links.at(0).text().should.eql('foo');
-    links.at(0).prop('to').should.eql(fooUrl);
+    links.at(0).text().should.eql('Result 1');
+    links.at(0).prop('to').should.eql('result/1');
     links.at(0).prop('onClick').should.equal(onClick1);
 
-    links.at(1).text().should.eql('bar');
-    links.at(1).prop('to').should.eql(barUrl);
+    links.at(1).text().should.eql('Result 2');
+    links.at(1).prop('to').should.eql('result/2');
     links.at(1).prop('onClick').should.equal(onClick2);
   });
 

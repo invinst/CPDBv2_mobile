@@ -31,11 +31,6 @@ export default handleActions({
           let type, title, url;
 
           switch (category) {
-            case 'FAQ':
-              type = 'FAQ';
-              title = data.question;
-              url = `${constants.FAQ_PATH}${data.id}/`;
-              break;
             case 'OFFICER':
               type = 'Officer';
               title = data.name;
