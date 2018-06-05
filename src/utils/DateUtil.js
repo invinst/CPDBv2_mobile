@@ -1,16 +1,29 @@
 import moment from 'moment';
-import AppConstants from 'constants';
 
 
-const DateUtil = {
-  sanitizeDate(date, inputFormat) {
-    let momentDate;
-    inputFormat = inputFormat || AppConstants.SIMPLE_SERVER_DATE_FORMAT;
-
-    momentDate = moment(date, inputFormat);
-
-    return momentDate.isValid() ? momentDate : null;
+const getThisYear = () => {
+  if (global.LIVE_TEST !== undefined || global.mocha !== undefined) {
+    return 2017;
   }
+  /* istanbul ignore next */
+  return (new Date()).getFullYear();
 };
 
-export default DateUtil;
+export const formatDate = (str) => {
+  let date = moment(str);
+  return date.isValid() ? date.format('ll').toUpperCase() : null;
+};
+
+const formatCareerDate = inputDate => moment(inputDate).format('ll').toUpperCase();
+
+export const getCareerDuration = (dateOfAppt, dateOfResignation) => {
+  if (!dateOfAppt && !dateOfResignation) {
+    return '';
+  }
+
+  const careerStart = formatCareerDate(dateOfAppt);
+  const careerEnd = dateOfResignation ? formatCareerDate(dateOfResignation) : 'Present';
+  return `${careerStart} — ${careerEnd}`;
+};
+
+export const getCurrentAge = (birthYear) => (birthYear ? getThisYear() - birthYear : null);
