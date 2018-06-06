@@ -11,7 +11,7 @@ const officerSelector = (trr) => {
   return trr.officer ? ({
     ...officerTransform(trr.officer),
     assignedBeat: assignedBeat ? `Beat ${assignedBeat}` : '',
-    onDuty: get(trr, 'officer_duty_status') ? 'Yes' : 'No',
+    onDuty: get(trr, 'officer_on_duty') ? 'Yes' : 'No',
     inUniform: get(trr, 'officer_in_uniform') ? 'Yes' : 'No',
   }) : {};
 };
