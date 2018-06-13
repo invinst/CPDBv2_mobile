@@ -16,17 +16,17 @@ describe('DateUtil module', function () {
 
   describe('getCareerDuration function', () => {
     it('should return correct career duration string', () => {
-      should(getCareerDuration(null, null)).be.eql('');
-      should(getCareerDuration(null, '1999-12-13')).be.eql('INVALID DATE — DEC 13, 1999');
-      should(getCareerDuration('1999-12-13', null)).be.eql('DEC 13, 1999 — Present');
-      should(getCareerDuration('1999-12-13', '2015-12-23')).be.eql('DEC 13, 1999 — DEC 23, 2015');
+      getCareerDuration(null, null).should.eql('');
+      getCareerDuration(null, '1999-12-13').should.eql('INVALID DATE — DEC 13, 1999');
+      getCareerDuration('1999-12-13', null).should.eql('DEC 13, 1999 — Present');
+      getCareerDuration('1999-12-13', '2015-12-23').should.eql('DEC 13, 1999 — DEC 23, 2015');
     });
   });
 
   describe('getCurrentAge function', () => {
     it('should return correct current age at 2017 (fixed year for testing)', () => {
-      should(getCurrentAge(1970)).be.eql(47);
-      should(getCurrentAge(null)).be.eql(null);
+      getCurrentAge(1970).should.eql(47);
+      should(getCurrentAge(null)).eql(null);
     });
   });
 });

@@ -21,13 +21,8 @@ describe('<Location />', function () {
     const rows = wrapper.find('.row');
     rows.should.have.length(3);
 
-    rows.at(0).text().should.containEql('Address');
-    rows.at(0).text().should.containEql('11XX 79Th St');
-
-    rows.at(1).text().should.containEql('Location Type');
-    rows.at(1).text().should.containEql('Street');
-
-    rows.at(2).text().should.containEql('Beat');
-    rows.at(2).text().should.containEql('612');
+    rows.at(0).text().should.containEql('Address').and.containEql('11XX 79Th St');
+    rows.at(1).text().should.containEql('Location Type').and.containEql('Street');
+    rows.at(2).text().should.containEql('Beat').and.containEql('612');
   });
 });
