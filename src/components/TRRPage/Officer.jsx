@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 
 import navigationArrow from 'img/disclosure-indicator.svg';
 import style from 'styles/TRRPage/Officer.sass';
+import RadarChart from 'components/common/RadarChart';
 
 
 class Officer extends Component {
@@ -10,8 +11,13 @@ class Officer extends Component {
     const {
       officerId, fullName, demographic, careerDuration,
       unitName, unitDescription,
-      assignedBeat, onDuty, inUniform
+      assignedBeat, onDuty, inUniform, percentile
     } = this.props;
+
+    const visualTokenConfig = percentile ? {
+      backgroundColor: percentile.visualTokenBackground,
+      data: percentile.items,
+    } : {};
 
     return (
       <div className={ style.trrOfficer }>
@@ -19,7 +25,9 @@ class Officer extends Component {
           className='officer-row'
           to={ `/officer/${officerId}/` }
         >
-          <img className='officer-visual-token' src='https://via.placeholder.com/38x38'/>
+          <div className='officer-visual-token'>
+            <RadarChart { ...visualTokenConfig }/>
+          </div>
           <div className='officer-profile'>
             <div className='rank'>Officer</div>
             <div className='full-name'>{ fullName }</div>
@@ -66,6 +74,7 @@ Officer.propTypes = {
   assignedBeat: PropTypes.string,
   onDuty: PropTypes.string,
   inUniform: PropTypes.string,
+  percentile: PropTypes.object,
 };
 
 export default Officer;

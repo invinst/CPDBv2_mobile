@@ -17,13 +17,30 @@ describe('<Officer />', function () {
       assignedBeat: '123',
       onDuty: 'Yes',
       inUniform: 'No',
+      percentile: {
+        officerId: undefined,
+        year: undefined,
+        items: [
+          { axis: 'Use of Force Reports', value: 99.9 },
+          { axis: 'Internal Allegations', value: 11.1 },
+          { axis: 'Civilian Allegations', value: 22.2 }
+        ],
+        visualTokenBackground: '#ed6154',
+      },
     };
 
     const wrapper = shallow(<Officer { ...officer }/>);
 
     wrapper.find('Link').prop('to').should.equal('/officer/456/');
 
-    wrapper.find('.officer-visual-token');
+    const radarChart = wrapper.find('RadarChart');
+    radarChart.prop('data').should.deepEqual([
+      { axis: 'Use of Force Reports', value: 99.9 },
+      { axis: 'Internal Allegations', value: 11.1 },
+      { axis: 'Civilian Allegations', value: 22.2 }
+    ]);
+    radarChart.prop('backgroundColor').should.deepEqual('#ed6154')
+
     wrapper.find('.rank').text().should.equal('Officer');
     wrapper.find('.full-name').text().should.equal('Donovan Markiewicz');
 
