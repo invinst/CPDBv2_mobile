@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { get, compact, startCase, toLower, upperFirst } from 'lodash';
-import { getCurrentAge, getCareerDuration, formatDate } from 'utils/DateUtil';
+import { getCurrentAge, getCareerDuration, formatDate } from 'utils/date';
 import { extractPercentile } from 'selectors/common/percentile';
 
 

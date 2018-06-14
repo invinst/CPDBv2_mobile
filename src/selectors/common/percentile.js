@@ -1,4 +1,4 @@
-import { getVisualTokenOIGBackground } from 'utils/VisualTokenUtil';
+import { getVisualTokenOIGBackground } from 'utils/visual-token';
 
 
 export const extractPercentile = (percentile) => {

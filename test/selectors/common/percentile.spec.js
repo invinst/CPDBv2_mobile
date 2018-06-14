@@ -1,7 +1,7 @@
 import should from 'should';
 
 import { extractPercentile } from 'selectors/common/percentile';
-import { OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT } from 'utils/VisualTokenUtil';
+import { OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT } from 'utils/visual-token';
 
 
 describe('extractPercentile', () => {

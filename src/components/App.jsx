@@ -11,7 +11,7 @@ import SearchPageContainer from 'containers/SearchPageContainer';
 import OfficerSummaryContainer from 'containers/OfficerPage/OfficerSummaryContainer';
 import OfficerTimelineContainer from 'containers/OfficerPage/OfficerTimelineContainer';
 import ComplaintPageContainer from 'containers/ComplaintPageContainer';
-import TRRPageContainer from 'containers/TRRPageContainer';
+import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/LandingPageContainer';
 
 import 'styles/Style.sass';
