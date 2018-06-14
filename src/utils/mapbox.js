@@ -41,10 +41,11 @@ if (global.LIVE_TEST !== undefined || global.mocha !== undefined) {
   }
 
   class MockMarker {
-    constructor() {
+    constructor(element) {
       this.setLngLat = setLngLatSpy;
       this.addTo = addToSpy;
       this.setPopup = setPopupSpy;
+      this.element = element;
     }
   }
 
