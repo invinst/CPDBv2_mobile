@@ -6,7 +6,6 @@ import style from 'styles/Common/RadarChart.sass';
 import RadarAxis from './RadarChart/RadarAxis';
 import RadarArea from './RadarChart/RadarArea';
 import RadarSpineLine from './RadarChart/RadarSpineLine';
-import RadarLegend from './RadarChart/RadarLegend';
 import RadarGrid from './RadarChart/RadarGrid';
 
 
@@ -44,8 +43,6 @@ export default class RadarChart extends Component {
       backgroundColor,
       textColor,
       data,
-      legendText,
-      fadeOutLegend,
       showAxisTitle,
       showAxisValue,
       axisTitleFontSize,
@@ -73,7 +70,7 @@ export default class RadarChart extends Component {
         height='100%'
         viewBox={ `0 0 ${width} ${height}` }
       >
-        <g style={ { transform: `translate(${parseInt(width / 2)}px, ${parseInt(height * 0.34)}px)` } }>
+        <g style={ { transform: `translate(${Math.floor(width / 2)}px, ${Math.floor(height * 0.34)}px)` } }>
           <RadarAxis
             data={ data }
             radius={ radius }
@@ -97,7 +94,6 @@ export default class RadarChart extends Component {
               strokeWidth={ this.strokeWidth }/>
           ) }
           { showSpineLine && <RadarSpineLine rPoints={ transformData } showSpineLinePoint={ showSpineLinePoint }/> }
-          <RadarLegend fadeOut={ fadeOutLegend } content={ legendText }/>
         </g>
       </svg>
     );
@@ -109,7 +105,6 @@ RadarChart.defaultProps = {
   width: 512,
   height: 392,
   radius: 233,
-  legendText: '',
   backgroundColor: '#fdfaf2',
   showAxisTitle: false,
   showAxisValue: false,
@@ -118,7 +113,6 @@ RadarChart.defaultProps = {
   gridOpacity: 1,
   showSpineLine: true,
   showSpineLinePoint: false,
-  fadeOutLegend: false,
   axisTitleFontWeight: 400,
 };
 
@@ -144,11 +138,5 @@ RadarChart.propTypes = {
   gridColor: PropTypes.string,
   showSpineLine: PropTypes.bool,
   showSpineLinePoint: PropTypes.bool,
-  legendText: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.element
-  ]),
-  fadeOutLegend: PropTypes.bool,
 };
 
