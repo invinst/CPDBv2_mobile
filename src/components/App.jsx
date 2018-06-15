@@ -11,6 +11,7 @@ import SearchPageContainer from 'containers/SearchPageContainer';
 import OfficerSummaryContainer from 'containers/OfficerPage/OfficerSummaryContainer';
 import OfficerTimelineContainer from 'containers/OfficerPage/OfficerTimelineContainer';
 import ComplaintPageContainer from 'containers/ComplaintPageContainer';
+import TRRPageContainer from 'containers/TRRPageContainer';
 import LandingPageContainer from 'containers/LandingPageContainer';
 
 import 'styles/Style.sass';
@@ -39,6 +40,11 @@ const App = React.createClass({
           <Route
             path={ `${constants.COMPLAINT_PATH}:complaintId/:coaccusedId/` }
             component={ ComplaintPageContainer }
+          />
+
+          <Route
+            path={ `${constants.TRR_PATH}:trrId/` }
+            component={ TRRPageContainer }
           />
 
         </Route>

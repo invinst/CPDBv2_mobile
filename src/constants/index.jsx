@@ -207,6 +207,7 @@ export default {
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
   LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
   COMPLAINT_API_ENDPOINT: '/mobile/cr/',
+  TRR_API_ENDPOINT: '/mobile/trr/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
@@ -232,6 +233,7 @@ export default {
   SEARCH_PATH: '/search/',
   OFFICER_PATH: '/officer/',
   COMPLAINT_PATH: '/complaint/',
+  TRR_PATH: '/trr/',
 
   // Routes that don't have their corresponding component.
   // NavigationUtil.goUp() skips all of these.

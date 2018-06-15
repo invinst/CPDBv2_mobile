@@ -1,32 +1,32 @@
 import should from 'should';
-import DateUtil from 'utils/DateUtil';
+import { formatDate, getCareerDuration, getCurrentAge } from 'utils/DateUtil';
 
 
-describe('DateUtil', () => {
-  it('should date with default format', () => {
-    const date = '2012-01-19';
-    const sanitizeDate = DateUtil.sanitizeDate(date);
+describe('DateUtil module', function () {
+  describe('formatDate function', () => {
+    it('should return correct format string', () => {
+      formatDate('2017-01-03').should.eql('JAN 3, 2017');
+    });
 
-    sanitizeDate.date().should.be.equal(19);
-    sanitizeDate.month().should.be.equal(0);
-    sanitizeDate.year().should.be.equal(2012);
+    it('should return null when cannot parse string to moment object', () => {
+      should(formatDate(null)).be.null();
+      should(formatDate('fdsafdsa')).be.null();
+    });
   });
 
-  it('should return null if invalid date', () => {
-    const date = 'invalid';
-    const sanitizeDate = DateUtil.sanitizeDate(date);
-
-    should(sanitizeDate).be.exactly(null);
+  describe('getCareerDuration function', () => {
+    it('should return correct career duration string', () => {
+      getCareerDuration(null, null).should.eql('');
+      getCareerDuration(null, '1999-12-13').should.eql('INVALID DATE — DEC 13, 1999');
+      getCareerDuration('1999-12-13', null).should.eql('DEC 13, 1999 — Present');
+      getCareerDuration('1999-12-13', '2015-12-23').should.eql('DEC 13, 1999 — DEC 23, 2015');
+    });
   });
 
-  it('should date with the format supplied in arguments', () => {
-    const date = '19-02-2012';
-    const sanitizeDate = DateUtil.sanitizeDate(date, 'DD-MM-YYYY');
-
-    sanitizeDate.date().should.be.equal(19);
-    sanitizeDate.month().should.be.equal(1);
-    sanitizeDate.year().should.be.equal(2012);
+  describe('getCurrentAge function', () => {
+    it('should return correct current age at 2017 (fixed year for testing)', () => {
+      getCurrentAge(1970).should.eql(47);
+      should(getCurrentAge(null)).eql(null);
+    });
   });
 });
-
-
