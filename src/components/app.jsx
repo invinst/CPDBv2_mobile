@@ -14,11 +14,9 @@ import ComplaintPageContainer from 'containers/ComplaintPageContainer';
 import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
 
-import 'styles/Style.sass';
-import 'styles/Fonts.sass';
-import 'styles/Grid.sass';
-import 'styles/Helper.sass';
-import 'styles/Ratchicons.sass';
+import 'styles/style.sass';
+import 'styles/fonts.sass';
+import 'styles/helper.sass';
 
 
 const App = React.createClass({
