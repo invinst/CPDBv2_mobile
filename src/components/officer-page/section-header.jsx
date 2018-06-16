@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-import style from 'styles/OfficerPage/SectionHeader.sass';
+
+import style from './section-header.sass';
 
 
 const SectionHeader = ({ text }) => (

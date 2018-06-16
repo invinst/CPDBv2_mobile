@@ -3,18 +3,18 @@ import { Sticky, StickyContainer } from 'react-sticky';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import GaUtil from 'utils/GaUtil';
+import { scrollToTop } from 'utils/NavigationUtil';
 import LoadingPage from 'components/Shared/LoadingPage';
-import NotMatchedOfficerPage from 'components/OfficerPage/NotMatchedOfficerPage';
-import OfficerTopLinks from 'components/OfficerPage/OfficerTopLinks';
-import YearlyStats from 'components/OfficerPage/OfficerTimeline/YearlyStats';
-import CRItem from 'components/OfficerPage/OfficerTimeline/CRItem';
-import SimpleEventItem from 'components/OfficerPage/OfficerTimeline/SimpleEventItem';
 import NavbarContainer from 'containers/NavbarContainer';
 import BottomPadding from 'components/Shared/BottomPadding';
 import constants from 'constants';
-import { scrollToTop } from 'utils/NavigationUtil';
 
-import style from 'styles/OfficerPage/OfficerTimeline.sass';
+import NotMatchedOfficerPage from '../not-matched-officer-page';
+import OfficerTopLinks from '../officer-top-links';
+import YearlyStats from './yearly-stats';
+import CRItem from './cr-item';
+import SimpleEventItem from './simple-event-item';
+import style from './officer-timeline.sass';
 
 
 class OfficerTimeline extends Component {

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-import style from 'styles/OfficerPage/OfficerTimeline/SimpleEventItem.sass';
+
+import style from './simple-event-item.sass';
 
 const SimpleEventItem = ({ title, date, content, isLast }) => (
   <div className={ style.simpleEventItem }>

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-import style from 'styles/OfficerPage/SectionRow.sass';
+
+import style from './section-row.sass';
 
 
 const SectionRow = ({ label, value, extraInfo }) => (

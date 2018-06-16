@@ -3,8 +3,7 @@ import { Link } from 'react-router';
 import { startCase } from 'lodash';
 
 import constants from 'constants';
-
-import style from 'styles/OfficerPage/OfficerTopLinks.sass';
+import style from './officer-top-links.sass';
 
 
 class OfficerTopLinks extends Component {

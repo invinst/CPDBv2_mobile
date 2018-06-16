@@ -2,17 +2,17 @@ import React, { PropTypes, Component } from 'react';
 import { Sticky, StickyContainer } from 'react-sticky';
 
 import GaUtil from 'utils/GaUtil';
+import { scrollToTop } from 'utils/NavigationUtil';
 import LoadingPage from 'components/Shared/LoadingPage';
-import NotMatchedOfficerPage from 'components/OfficerPage/NotMatchedOfficerPage';
-import OfficerTopLinks from 'components/OfficerPage/OfficerTopLinks';
-import SectionRow from 'components/OfficerPage/SectionRow';
-import SummaryStatsSection from 'components/OfficerPage/SummaryStatsSection';
 import NavbarContainer from 'containers/NavbarContainer';
 import BottomPadding from 'components/Shared/BottomPadding';
-import { scrollToTop } from 'utils/NavigationUtil';
+import NotMatchedOfficerPage from './not-matched-officer-page';
+import OfficerTopLinks from './officer-top-links';
+import SectionRow from './section-row';
+import SummaryStatsSection from './summary-stats-section';
 import constants from 'constants';
 
-import style from 'styles/OfficerPage/OfficerSummary.sass';
+import style from './officer-summary.sass';
 
 
 class OfficerSummary extends Component {

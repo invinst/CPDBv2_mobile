@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-import style from 'styles/OfficerPage/OfficerTimeline/YearlyStats.sass';
+
+import style from './yearly-stats.sass';
 
 const YearlyStats = ({ year, crCount, trrCount, salary }) => {
   if (trrCount === undefined) {

@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-import SectionHeader from 'components/OfficerPage/SectionHeader';
-import style from 'styles/OfficerPage/SummaryStatsSection.sass';
+
+import SectionHeader from './section-header';
+import style from './summary-stats-section.sass';
 
 
 const SummaryStatsSection = ({ name, data }) => {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import OfficerTimeline from 'components/OfficerPage/OfficerTimeline';
+import OfficerTimeline from 'components/officer-page/officer-timeline';
 
 import {
   getOfficerTimeline,

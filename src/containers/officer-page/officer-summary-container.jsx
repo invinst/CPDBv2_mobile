@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import OfficerSummary from 'components/OfficerPage/OfficerSummary';
+import OfficerSummary from 'components/officer-page/officer-summary';
 import { getOfficerSummary } from 'actions/officer';
 import { officerSummarySelector } from 'selectors/officer-page';
 

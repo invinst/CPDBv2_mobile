@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+
 import ComplaintFinding from 'components/Shared/ComplaintFinding';
-import style from 'styles/OfficerPage/OfficerTimeline/CRItem.sass';
+import style from './cr-item.sass';
 import constants from 'constants';
 
 class CRItem extends Component {
