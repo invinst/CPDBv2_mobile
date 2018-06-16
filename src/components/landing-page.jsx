@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import style from 'styles/LandingPage.sass';
 import { Link } from 'react-router';
+
 import constants from 'constants';
+import style from './landing-page.sass';
 
 
 export default class LandingPage extends Component {

@@ -5,14 +5,14 @@ import { Router, Route, IndexRoute } from 'react-router';
 import AppHistory from 'utils/History';
 import constants from 'constants';
 
-import MainPageContainer from 'containers/MainPageContainer';
-import AboutPageContainer from 'containers/AboutPageContainer';
+import MainPageContainer from 'containers/main-page-container';
+import AboutPageContainer from 'containers/about-page-container';
 import SearchPageContainer from 'containers/SearchPageContainer';
 import OfficerSummaryContainer from 'containers/officer-page/officer-summary-container';
 import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
 import ComplaintPageContainer from 'containers/ComplaintPageContainer';
 import TRRPageContainer from 'containers/trr-page-container';
-import LandingPageContainer from 'containers/LandingPageContainer';
+import LandingPageContainer from 'containers/landing-page-container';
 
 import 'styles/Style.sass';
 import 'styles/Fonts.sass';

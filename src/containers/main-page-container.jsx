@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+
 import { routeChanged } from 'actions/navigation';
-import MainPage from 'components/MainPage';
+import MainPage from 'components/main-page';
 import { fetchSuggestedSearchItems } from 'actions/suggestion';
 
 

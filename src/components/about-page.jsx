@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Sticky } from 'react-sticky';
+
 import { scrollToTop } from 'utils/NavigationUtil';
-import style from 'styles/AboutPage.sass';
+import style from './about-page.sass';
 
 
 export default class AboutPage extends Component {

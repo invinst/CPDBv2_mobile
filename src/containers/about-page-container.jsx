@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import AboutPage from 'components/AboutPage';
+import AboutPage from 'components/about-page';
 
 
 function mapStateToProps(state, ownProps) {

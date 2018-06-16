@@ -1,9 +1,7 @@
-import React, {
-  Component,
-  PropTypes
-} from 'react';
+import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
-import style from 'styles/MainPage.sass';
+
+import style from './main-page.sass';
 
 
 class MainPage extends Component {
