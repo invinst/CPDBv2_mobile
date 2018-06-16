@@ -5,7 +5,7 @@ import suggestions from './suggestions';
 import isSearchFocused from './is-search-focused';
 import query from './query';
 import isSuccess from './is-success';
-import initialSuggestions from './initialSuggestions';
+import initialSuggestions from './initial-suggestions';
 import activeCategory from './active-category';
 import chosenCategory from './chosen-category';
 

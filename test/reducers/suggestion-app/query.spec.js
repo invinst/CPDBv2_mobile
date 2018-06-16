@@ -1,5 +1,5 @@
 import { SEARCH_INPUT_CHANGED, SEARCH_CLEAR, SEARCH_RESET } from 'actions/suggestion';
-import query from 'reducers/suggestionApp/query';
+import query from 'reducers/suggestion-app/query';
 
 
 describe('query reducer', function () {

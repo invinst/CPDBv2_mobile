@@ -1,7 +1,7 @@
 import {
   OFFICER_SUMMARY_REQUEST_START, OFFICER_SUMMARY_REQUEST_SUCCESS, OFFICER_SUMMARY_REQUEST_FAILURE
 } from 'actions/officer';
-import isRequesting from 'reducers/officerPage/summaries/is-requesting';
+import isRequesting from 'reducers/officer-page/summaries/is-requesting';
 
 
 describe('isRequesting reducer', function () {

@@ -1,5 +1,5 @@
 import { OFFICER_SUMMARY_REQUEST_SUCCESS, OFFICER_SUMMARY_REQUEST_FAILURE } from 'actions/officer';
-import officerData from 'reducers/officerPage/summaries/data';
+import officerData from 'reducers/officer-page/summaries/data';
 
 
 describe('officer summary data reducer', function () {

@@ -1,5 +1,5 @@
 import { TRR_REQUEST_SUCCESS, TRR_REQUEST_FAILURE } from 'actions/trr-page';
-import trrs from 'reducers/trrPage/trrs';
+import trrs from 'reducers/trr-page/trrs';
 
 
 describe('trrs reducer', function () {

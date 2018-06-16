@@ -1,5 +1,5 @@
 import { SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE } from 'actions/suggestion';
-import isSuccess from 'reducers/suggestionApp/is-success';
+import isSuccess from 'reducers/suggestion-app/is-success';
 
 
 describe('isSuccess reducer', function () {

@@ -1,5 +1,5 @@
 import { OFFICER_TIMELINE_REQUEST_SUCCESS, OFFICER_TIMELINE_REQUEST_FAILURE } from 'actions/officer';
-import timelineData from 'reducers/officerPage/timelines/data';
+import timelineData from 'reducers/officer-page/timelines/data';
 
 
 describe('officer summary data reducer', function () {

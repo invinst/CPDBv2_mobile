@@ -3,7 +3,7 @@ import {
   OFFICER_SUMMARY_REQUEST_SUCCESS,
   OFFICER_SUMMARY_REQUEST_FAILURE
 } from 'actions/officer';
-import isSuccess from 'reducers/officerPage/summaries/is-success';
+import isSuccess from 'reducers/officer-page/summaries/is-success';
 
 
 describe('isSuccess reducer', function () {

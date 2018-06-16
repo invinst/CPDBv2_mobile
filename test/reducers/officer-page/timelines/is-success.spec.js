@@ -1,28 +1,30 @@
 import {
-  OFFICER_TIMELINE_REQUEST_START, OFFICER_TIMELINE_REQUEST_SUCCESS, OFFICER_TIMELINE_REQUEST_FAILURE
+  OFFICER_TIMELINE_REQUEST_START,
+  OFFICER_TIMELINE_REQUEST_SUCCESS,
+  OFFICER_TIMELINE_REQUEST_FAILURE
 } from 'actions/officer';
-import isRequesting from 'reducers/officerPage/timelines/is-requesting';
+import isSuccess from 'reducers/officer-page/timelines/is-success';
 
 
-describe('isRequesting reducer', function () {
+describe('isSuccess reducer', function () {
   it('should return initial state', function () {
-    isRequesting(undefined, {}).should.be.false();
+    isSuccess(undefined, {}).should.be.true();
   });
 
   it('should handle OFFICER_TIMELINE_REQUEST_START', function () {
-    isRequesting(false, {
+    isSuccess(false, {
       type: OFFICER_TIMELINE_REQUEST_START
     }).should.be.true();
   });
 
   it('should handle OFFICER_TIMELINE_REQUEST_SUCCESS', function () {
-    isRequesting(true, {
+    isSuccess(false, {
       type: OFFICER_TIMELINE_REQUEST_SUCCESS
-    }).should.be.false();
+    }).should.be.true();
   });
 
   it('should handle OFFICER_TIMELINE_REQUEST_FAILURE', function () {
-    isRequesting(true, {
+    isSuccess(true, {
       type: OFFICER_TIMELINE_REQUEST_FAILURE
     }).should.be.false();
   });

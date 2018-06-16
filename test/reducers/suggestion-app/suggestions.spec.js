@@ -4,7 +4,7 @@ import {
   SUGGEST_ALL_REQUEST_SUCCESS,
   SUGGEST_ALL_REQUEST_FAILURE
 } from 'actions/suggestion';
-import suggestions from 'reducers/suggestionApp/suggestions';
+import suggestions from 'reducers/suggestion-app/suggestions';
 
 
 describe('suggestions reducer', function () {

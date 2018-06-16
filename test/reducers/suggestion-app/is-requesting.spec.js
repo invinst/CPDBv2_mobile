@@ -1,5 +1,5 @@
 import { SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE } from 'actions/suggestion';
-import isRequesting from 'reducers/suggestionApp/is-requesting';
+import isRequesting from 'reducers/suggestion-app/is-requesting';
 
 
 describe('isRequesting reducer', function () {

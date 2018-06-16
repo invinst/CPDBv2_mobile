@@ -1,4 +1,4 @@
-import configureDev from './configureStore.dev';
+import configureDev from './configure-store.dev';
 
 let configureStore = configureDev;
 

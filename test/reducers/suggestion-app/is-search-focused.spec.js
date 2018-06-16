@@ -1,5 +1,5 @@
 import { SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_RESET } from 'actions/suggestion';
-import isSearchFocused from 'reducers/suggestionApp/is-search-focused';
+import isSearchFocused from 'reducers/suggestion-app/is-search-focused';
 
 
 describe('isSearchFocused reducer', function () {

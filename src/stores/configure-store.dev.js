@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import configuredAxiosMiddleware from 'middleware/configured-axios-middleware';
 import rootReducer from 'reducers/root-reducer';
-import localStorageConfig from './localStorageConfig';
+import localStorageConfig from './local-storage-config';
 import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
 
 const logger = createLogger({
