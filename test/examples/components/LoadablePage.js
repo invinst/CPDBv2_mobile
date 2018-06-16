@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-addons-test-utils';
 import LoadingPage from 'components/Shared/LoadingPage';
 import NotMatchedComplaintPage from 'components/ComplaintPage/NotMatchedComplaintPage';
-import SharedExample from 'utils/tests/SharedExample';
+import SharedExample from 'utils/tests/shared-example';
 
 
 SharedExample.define('a loadable page', function () {

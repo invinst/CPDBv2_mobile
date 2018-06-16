@@ -1,5 +1,5 @@
 import should from 'should';
-import SharedExample from 'utils/tests/SharedExample';
+import SharedExample from 'utils/tests/shared-example';
 
 
 should.Assertion.add('behaveLike', function (name) {

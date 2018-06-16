@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactHeight from 'react-height';
 
 import constants from 'constants';
-import { scrollToElement, goUp } from 'utils/NavigationUtil';
+import { scrollToElement, goUp } from 'utils/navigation-util';
 import SearchCategory from './search-category';
 import SearchNavbar from './search-navbar';
 import ClearableInput from './clearable-input';

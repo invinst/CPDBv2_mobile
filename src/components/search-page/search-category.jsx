@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 
 import constants from 'constants';
-import { getCurrentScrollPosition, instantScrollToTop } from 'utils/NavigationUtil';
+import { getCurrentScrollPosition, instantScrollToTop } from 'utils/navigation-util';
 import OfficerSearchResult from './officer-search-result';
 import SuggestedSearchResult from './suggested-search-result';
 import UnitSearchResult from './unit-search-result';

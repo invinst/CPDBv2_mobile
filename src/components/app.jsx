@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Router, Route, IndexRoute } from 'react-router';
 
-import AppHistory from 'utils/History';
+import AppHistory from 'utils/history';
 import constants from 'constants';
 
 import MainPageContainer from 'containers/main-page-container';

@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import { getRichTextValueAsArray } from 'utils/CmsDataUtil';
+import { getRichTextValueAsArray } from 'utils/cms-data-util';
 import { LANDING_PAGE_REQUEST_SUCCESS, LANDING_PAGE_REQUEST_FAILURE } from 'actions/landing-page';
 
 

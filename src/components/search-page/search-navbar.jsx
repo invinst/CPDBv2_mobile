@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 
 import clearIcon from 'img/ic-clear.svg';
-import { instantScrollToTop } from 'utils/NavigationUtil';
+import { instantScrollToTop } from 'utils/navigation-util';
 
 export default class SearchNavbar extends Component {
   clearChosenCategoryButton() {

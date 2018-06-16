@@ -1,2 +1,2 @@
-import Factory from 'utils/tests/Factory';
+import Factory from 'utils/tests/factory';
 export default Factory();

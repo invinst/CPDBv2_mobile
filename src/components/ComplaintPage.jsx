@@ -4,7 +4,7 @@ import { find } from 'lodash';
 import cx from 'classnames';
 import ReactHeight from 'react-height';
 
-import { scrollToTop } from 'utils/NavigationUtil';
+import { scrollToTop } from 'utils/navigation-util';
 import style from 'styles/ComplaintPage.sass';
 import Arrow from 'components/shared/arrow';
 import BottomPadding from 'components/shared/bottom-padding';

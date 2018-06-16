@@ -2,8 +2,8 @@ import React, { PropTypes, Component } from 'react';
 import { Sticky, StickyContainer } from 'react-sticky';
 
 import constants from 'constants';
-import GaUtil from 'utils/GaUtil';
-import { scrollToTop } from 'utils/NavigationUtil';
+import GaUtil from 'utils/ga-util';
+import { scrollToTop } from 'utils/navigation-util';
 import LoadingPage from 'components/shared/loading-page';
 import BottomPadding from 'components/shared/bottom-padding';
 import NavbarContainer from 'containers/navbar-container';

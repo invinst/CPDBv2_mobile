@@ -2,8 +2,8 @@ import React, { PropTypes, Component } from 'react';
 import { Sticky, StickyContainer } from 'react-sticky';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import GaUtil from 'utils/GaUtil';
-import { scrollToTop } from 'utils/NavigationUtil';
+import GaUtil from 'utils/ga-util';
+import { scrollToTop } from 'utils/navigation-util';
 import LoadingPage from 'components/shared/loading-page';
 import NavbarContainer from 'containers/navbar-container';
 import BottomPadding from 'components/shared/bottom-padding';
