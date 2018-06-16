@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import { scaleLinear } from 'd3-scale';
 import { map } from 'lodash';
 
-import style from 'styles/common/radar-chart.sass';
-import RadarAxis from './radar-chart/radar-axis';
-import RadarArea from './radar-chart/radar-area';
-import RadarSpineLine from './radar-chart/radar-spine-line';
-import RadarGrid from './radar-chart/radar-grid';
+import style from './radar-chart.sass';
+import RadarAxis from './radar-axis';
+import RadarArea from './radar-area';
+import RadarSpineLine from './radar-spine-line';
+import RadarGrid from './radar-grid';
 
 
 export default class RadarChart extends Component {

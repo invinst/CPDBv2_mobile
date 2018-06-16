@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import style from 'styles/common/radar-chart/radar-spine-line.sass';
+import style from './radar-spine-line.sass';
 
 
 export default class RadarSpineLine extends React.Component {

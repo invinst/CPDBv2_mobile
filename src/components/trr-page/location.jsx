@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import style from 'styles/trr-page/location.sass';
+import style from './location.sass';
 
 
 class Location extends Component {

@@ -3,7 +3,7 @@ import { range } from 'lodash';
 import { curveLinearClosed, radialLine } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 
-import style from 'styles/common/radar-chart/radar-grid.sass';
+import style from './radar-grid.sass';
 
 
 const LEVEL = 5;

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import style from 'styles/trr-page.sass';
+import style from './trr-page.sass';
 import NavbarContainer from 'containers/NavbarContainer';
 import constants from 'constants';
 import BottomPadding from 'components/Shared/BottomPadding';

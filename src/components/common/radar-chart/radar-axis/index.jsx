@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import { scaleLinear } from 'd3-scale';
 import { curveLinearClosed, radialLine } from 'd3-shape';
 
-import style from 'styles/common/radar-chart/radar-axis.sass';
-import RadarAxisText from './radar-axis/radar-axis-text';
+import style from './radar-axis.sass';
+import RadarAxisText from './radar-axis-text';
 
 
 export default class RadarAxis extends React.Component {

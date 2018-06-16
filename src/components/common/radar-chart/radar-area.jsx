@@ -3,7 +3,7 @@ import { every } from 'lodash';
 
 import { curveLinearClosed, radialLine } from 'd3-shape';
 
-import style from 'styles/common/radar-chart/radar-area.sass';
+import style from './radar-area.sass';
 
 
 export default class RadarArea extends Component {

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import style from 'styles/trr-page/type-of-force.sass';
+import style from './type-of-force.sass';
 
 
 class TypeOfForce extends Component {
