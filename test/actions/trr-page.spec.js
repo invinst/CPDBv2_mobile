@@ -5,7 +5,7 @@ import {
   TRR_REQUEST_FAILURE,
 } from 'actions/trr-page';
 import constants from 'constants';
-import { v2Url } from 'utils/UrlUtil';
+import { v2Url } from 'utils/url-util';
 
 
 describe('trr-page actions', function () {
