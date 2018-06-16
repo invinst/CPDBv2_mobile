@@ -18,7 +18,7 @@
     "serve:dist": "node server.js --env=dist",
     "start": "SASS_PATH=./src/styles node server.js --env=dev",
     "test": "karma start",
-    "live-test": "NODE_ENV='live-test' node nightwatch.js",
+    "live-test": "SASS_PATH=./src/styles NODE_ENV='live-test' node nightwatch.js",
     "ci-test": "karma start --reporters mocha,coverage,coveralls",
     "mocha-watch": "karma start --no-single-run --reporters mocha",
     "test:watch": "karma start --autoWatch=true --singleRun=false"
