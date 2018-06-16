@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
-import twoLineListStyle from 'styles/Shared/TwoLineList.sass';
+import twoLineListStyle from './two-line-list.sass';
 
 
 class TwoLineList extends Component {

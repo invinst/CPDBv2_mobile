@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import TwoLineList from 'components/Shared/TwoLineList';
+import TwoLineList from 'components/shared/two-line-list';
 
 
 class OfficerSearchResult extends Component {

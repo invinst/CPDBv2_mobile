@@ -1,6 +1,6 @@
 import React from 'react';
 
-import style from 'styles/Shared/LoadingPage.sass';
+import style from './loading-page.sass';
 
 
 const LoadingPage = React.createClass({

@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+
 import { openShareMenu, closeShareMenu } from 'actions/navbar';
-import Navbar from 'components/Shared/Navbar';
+import Navbar from 'components/shared/navbar';
 
 
 const mapStateToProps = (state, ownProps) => ({

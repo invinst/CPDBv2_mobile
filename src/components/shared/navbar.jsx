@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import ClipboardButton from 'react-clipboard.js';
 import { Link } from 'react-router';
+
 import constants from 'constants';
-import style from 'styles/Shared/Navbar.sass';
+import style from './navbar.sass';
 import facebookIcon from 'img/ic-facebook.svg';
 import twitterIcon from 'img/ic-twitter.svg';
 

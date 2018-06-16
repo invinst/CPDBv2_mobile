@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import SectionTitle from 'components/ComplaintPage/SectionTitle';
-import ComplaintFinding from 'components/Shared/ComplaintFinding';
+import ComplaintFinding from 'components/shared/complaint-finding';
 
 import style from 'styles/ComplaintPage/Outcome.sass';
 

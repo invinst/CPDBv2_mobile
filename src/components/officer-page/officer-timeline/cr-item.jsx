@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
-import ComplaintFinding from 'components/Shared/ComplaintFinding';
+import ComplaintFinding from 'components/shared/complaint-finding';
 import style from './cr-item.sass';
 import constants from 'constants';
 

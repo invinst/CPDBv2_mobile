@@ -6,6 +6,8 @@ import ReactHeight from 'react-height';
 
 import { scrollToTop } from 'utils/NavigationUtil';
 import style from 'styles/ComplaintPage.sass';
+import Arrow from 'components/shared/arrow';
+import BottomPadding from 'components/shared/bottom-padding';
 import PeopleList from 'components/ComplaintPage/PeopleList';
 import Outcome from 'components/ComplaintPage/Outcome';
 import InvestigationTimeline from 'components/ComplaintPage/InvestigationTimeline';
@@ -14,11 +16,9 @@ import Involvements from 'components/ComplaintPage/Involvements';
 import IncidentLocation from 'components/ComplaintPage/IncidentLocation';
 import ComplaintCategory from 'components/ComplaintPage/ComplaintCategory';
 import Attachment from 'components/ComplaintPage/Attachment';
-import Arrow from 'components/Shared/Arrow';
 import CoaccusedDropdown from 'components/ComplaintPage/CoaccusedDropdown';
-import NavbarContainer from 'containers/NavbarContainer';
+import NavbarContainer from 'containers/navbar-container';
 import constants from 'constants';
-import BottomPadding from 'components/Shared/BottomPadding';
 
 
 export default class ComplaintPage extends Component {

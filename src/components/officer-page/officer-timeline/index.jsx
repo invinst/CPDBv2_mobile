@@ -4,9 +4,9 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 import GaUtil from 'utils/GaUtil';
 import { scrollToTop } from 'utils/NavigationUtil';
-import LoadingPage from 'components/Shared/LoadingPage';
-import NavbarContainer from 'containers/NavbarContainer';
-import BottomPadding from 'components/Shared/BottomPadding';
+import LoadingPage from 'components/shared/loading-page';
+import NavbarContainer from 'containers/navbar-container';
+import BottomPadding from 'components/shared/bottom-padding';
 import constants from 'constants';
 
 import NotMatchedOfficerPage from '../not-matched-officer-page';

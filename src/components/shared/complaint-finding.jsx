@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import style from 'styles/ComplaintPage/ComplaintFinding.sass';
+import style from './complaint-finding.sass';
 
 export default class ComplaintFinding extends Component {
   getFindingClass(finding) {
