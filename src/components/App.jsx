@@ -7,7 +7,7 @@ import constants from 'constants';
 
 import MainPageContainer from 'containers/main-page-container';
 import AboutPageContainer from 'containers/about-page-container';
-import SearchPageContainer from 'containers/SearchPageContainer';
+import SearchPageContainer from 'containers/search-page-container';
 import OfficerSummaryContainer from 'containers/officer-page/officer-summary-container';
 import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
 import ComplaintPageContainer from 'containers/ComplaintPageContainer';

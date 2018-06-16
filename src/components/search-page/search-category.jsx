@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import style from 'styles/SearchCategory.sass';
-import OfficerSearchResult from 'components/SearchPage/OfficerSearchResult';
-import SuggestedSearchResult from 'components/SearchPage/SuggestedSearchResult';
-import UnitSearchResult from 'components/SearchPage/UnitSearchResult';
-import { getCurrentScrollPosition, instantScrollToTop } from 'utils/NavigationUtil';
-import constants from 'constants';
 import cx from 'classnames';
+
+import constants from 'constants';
+import { getCurrentScrollPosition, instantScrollToTop } from 'utils/NavigationUtil';
+import OfficerSearchResult from './officer-search-result';
+import SuggestedSearchResult from './suggested-search-result';
+import UnitSearchResult from './unit-search-result';
+import style from './search-category.sass';
+
 
 const fixedHeaderHeight = (
   constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + 2 * constants.NEW_DIVIDER_WEIGHT

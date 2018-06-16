@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import SearchPage from 'components/SearchPage';
+import SearchPage from 'components/search-page';
 import {
   inputChanged,
   suggestTerm,

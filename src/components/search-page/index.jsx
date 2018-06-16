@@ -1,11 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import style from 'styles/SearchPage.sass';
-import SearchCategory from 'components/SearchPage/SearchCategory';
-import SearchNavbar from 'components/SearchPage/SearchNavbar';
-import ClearableInput from 'components/SearchPage/ClearableInput';
-import { scrollToElement, goUp } from 'utils/NavigationUtil';
-import constants from 'constants';
 import ReactHeight from 'react-height';
+
+import constants from 'constants';
+import { scrollToElement, goUp } from 'utils/NavigationUtil';
+import SearchCategory from './search-category';
+import SearchNavbar from './search-navbar';
+import ClearableInput from './clearable-input';
+import style from './search-page.sass';
+
 
 export default class SearchPage extends Component {
   componentDidMount() {
