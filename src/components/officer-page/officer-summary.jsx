@@ -12,13 +12,15 @@ import OfficerTopLinks from './officer-top-links';
 import SectionRow from './section-row';
 import SummaryStatsSection from './summary-stats-section';
 import style from './officer-summary.sass';
+import OfficerRadarChart from './radar-chart';
 
 
 class OfficerSummary extends Component {
   componentDidMount() {
-    const { summary, getOfficerSummary, pk } = this.props;
+    const { summary, getOfficerSummary, pk, fetchOfficer } = this.props;
     if (!summary) {
       getOfficerSummary(pk);
+      fetchOfficer(pk);
     }
 
     GaUtil.track('event', 'officer', 'view_detail', window.location.pathname);
@@ -26,7 +28,7 @@ class OfficerSummary extends Component {
 
 
   render() {
-    const { loading, found, summary, pk } = this.props;
+    const { loading, found, summary, pk, threeCornerPercentile } = this.props;
 
     if (loading) {
       return (
@@ -50,6 +52,7 @@ class OfficerSummary extends Component {
         </Sticky>
 
         <OfficerTopLinks id={ pk } currentPath='summary' />
+        <OfficerRadarChart data={ threeCornerPercentile }/>
 
         <div className='officer-summary-body'>
           <div className='assignment-detail-section'>
@@ -77,10 +80,12 @@ class OfficerSummary extends Component {
 OfficerSummary.propTypes = {
   pk: PropTypes.number,
   getOfficerSummary: PropTypes.func.isRequired,
+  fetchOfficer: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   found: PropTypes.bool,
   summary: PropTypes.object,
-  children: PropTypes.object
+  children: PropTypes.object,
+  threeCornerPercentile: PropTypes.array,
 };
 
 export default OfficerSummary;

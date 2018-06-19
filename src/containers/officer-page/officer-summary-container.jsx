@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import OfficerSummary from 'components/officer-page/officer-summary';
-import { getOfficerSummary } from 'actions/officer';
-import { officerSummarySelector } from 'selectors/officer-page';
+import { getOfficerSummary, fetchOfficer } from 'actions/officer';
+import { officerSummarySelector, officerYearlyPercentileSelector } from 'selectors/officer-page';
 
 
 function mapStateToProps(state, ownProps) {
@@ -15,17 +15,18 @@ function mapStateToProps(state, ownProps) {
       id: pk
     }
   };
-
   return {
-    loading: state.officerPage.summaries.isRequesting,
+    loading: state.officerPage.summaries.isRequesting || state.officerPage.officers.isRequesting,
     found: state.officerPage.summaries.isSuccess,
     summary: officerSummarySelector(state, props),
+    threeCornerPercentile: officerYearlyPercentileSelector(state, props),
     pk: pk
   };
 }
 
 const mapDispatchToProps = {
-  getOfficerSummary
+  getOfficerSummary,
+  fetchOfficer
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OfficerSummary));
