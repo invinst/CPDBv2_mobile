@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 
-import style from 'styles/trr-page/location/trr-map.sass';
+import style from './trr-map.sass';
 import LocationMap from 'components/common/location-map';
 
 
