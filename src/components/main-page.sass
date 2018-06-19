@@ -1,0 +1,27 @@
+@import 'variables'
+
+
+:local(.main-page)
+  &.gray
+    background-color: $wild-sand
+
+  // TODO: the following is useful styling extracted from BottomSheet stylesheet.
+  // Should refactor this into something cleaner instead of plastering all over main page.
+  .header
+    font-size: 26px
+    background-color: white
+    height: 64px
+    line-height: 64px
+    padding: 0 $side-margin
+
+    &.empty
+      height: 20px
+      color: white
+      overflow: hidden
+
+  .sticky
+    box-shadow: 0 1px 2px #e4e4e4
+    z-index: 2
+    left: 0
+    right: 0
+  // end of BottomSheet styles

@@ -1,5 +1,5 @@
 import { TRR_REQUEST_START, TRR_REQUEST_SUCCESS, TRR_REQUEST_FAILURE } from 'actions/trr-page';
-import notFound from 'reducers/trrPage/not-found';
+import notFound from 'reducers/trr-page/not-found';
 
 
 describe('notFound reducer', function () {

@@ -1,5 +1,5 @@
 import { get } from 'actions/common/async-action';
-import { v2Url } from 'utils/UrlUtil';
+import { v2Url } from 'utils/url-util';
 import constants from 'constants';
 
 export const COMPLAINT_REQUEST_START = 'COMPLAINT_REQUEST_START';

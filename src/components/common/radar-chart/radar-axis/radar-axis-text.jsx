@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import style from 'styles/common/radar-chart/radar-axis/radar-axis-text.sass';
+import style from './radar-axis-text.sass';
 import { roundedPercentile } from 'utils/calculation';
 
 

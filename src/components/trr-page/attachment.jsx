@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import style from 'styles/trr-page/attachment.sass';
+import style from './attachment.sass';
 
 
 class Attachment extends Component {

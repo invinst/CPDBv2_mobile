@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions';
 import { get } from 'actions/common/async-action';
-import { v2Url } from 'utils/UrlUtil';
+import { v2Url } from 'utils/url-util';
 import constants from 'constants';
 
 

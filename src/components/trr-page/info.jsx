@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import style from 'styles/trr-page/info.sass';
+import style from './info.sass';
 import TypeOfForce from 'components/trr-page/type-of-force';
 import Attachment from 'components/trr-page/attachment';
 import Location from 'components/trr-page/location';

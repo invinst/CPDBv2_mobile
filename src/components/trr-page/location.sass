@@ -1,0 +1,32 @@
+@import 'variables'
+
+:local(.location)
+
+  .location-header
+    margin: $side-margin
+    padding-top: 30px
+    line-height: 18px
+
+  .map
+    height: 183px
+    background: $gray
+    text-align: center
+    line-height: 183px
+    color: $dusty-gray
+
+  .row
+    line-height: 40px
+    margin: 0 $side-margin
+    border-bottom: 1px solid $alto-solid
+    color: $thunder
+
+    &:last-of-type
+      border-bottom: none
+
+    .title
+      color: $gandalf-gray
+      min-width: 96px
+
+    .title, .value
+      display: inline-block
+      vertical-align: middle
