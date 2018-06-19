@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { render } from 'react-dom';
 
-import style from 'styles/common/location-map.sass';
+import style from './location-map.sass';
 import { mapboxgl } from 'utils/mapbox';
 
 
