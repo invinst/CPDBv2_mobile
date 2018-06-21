@@ -10,6 +10,7 @@
     dest={{ application_root_path }}
     accept_hostkey=True
     version={{ branch }}
+    force=yes
     key_file=/home/{{ deploy_user }}/.ssh/khoi_github
   when: pull_code_from_git
   tags: deploy
@@ -17,12 +18,6 @@
 - name : Install packages based on package.json.
   command: yarn install
     chdir={{ application_root_path }}
-  tags: deploy
-
-- name: Clean static root
-  become: yes
-  become_user: root
-  file: path={{ nginx_dist_path }} state=absent
   tags: deploy
 
 - name: Make sure `/var/www` is available
@@ -35,10 +30,6 @@
   file: path={{ application_logs_path }} state=directory owner={{ deploy_user }} group={{ deploy_group }} mode=0774
   tags: deploy
 
-- name: Clean old nginx dist build
-  file: path={{ nginx_dist_path }} state=absent
-  tags: deploy
-
 - name: Clean old build
   file: path={{ application_dist_path }}/dist state=absent
   tags: deploy
@@ -46,6 +37,32 @@
 - name: Build everything
   command: yarn run {{ yarn_command }}
     chdir={{ application_root_path }}
+  register: build_dist
+  tags: deploy
+
+- name: find index.html
+  stat:
+    path={{ application_root_path }}/dist/index.html
+  register: index_exists
+  tags: deploy
+
+- debug: msg="{{ build_dist.stdout_lines }}"
+  when: index_exists.stat.exists == False
+  tags: deploy
+
+- fail:
+    msg: "Whoops! the build was not success, the index.html doesn't exist"
+  when: index_exists.stat.exists == False
+  tags: deploy
+
+- name: Clean static root
+  become: yes
+  become_user: root
+  file: path={{ nginx_dist_path }} state=absent
+  tags: deploy
+
+- name: Clean old nginx dist build
+  file: path={{ nginx_dist_path }} state=absent
   tags: deploy
 
 - name: Move file to dist
