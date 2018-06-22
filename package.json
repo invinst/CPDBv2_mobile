@@ -7,8 +7,8 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist",
-    "dist": "npm run copy & webpack --env=dist",
-    "prod": "npm run copy & webpack --env=prod",
+    "dist": "npm run copy & SASS_PATH=./src/styles webpack --env=dist --bail",
+    "prod": "npm run copy & SASS_PATH=./src/styles webpack --env=prod",
     "lint": "eslint ./src",
     "posttest": "npm run lint",
     "release:major": "npm version major && npm publish && git push --follow-tags",
@@ -27,6 +27,7 @@
   "keywords": [],
   "author": "CPDB Team",
   "devDependencies": {
+    "@types/react": "^16.3.17",
     "axios-mock-adapter": "^1.6.1",
     "babel-core": "^6.0.0",
     "babel-eslint": "^7.2.3",
