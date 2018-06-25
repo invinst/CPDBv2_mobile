@@ -29,7 +29,7 @@ describe('SearchPageTest', function () {
     api.mock('GET', '/api/v2/search-mobile/', 200, mockSuggestionResponse);
     api.mock('GET', '/api/v2/search-mobile/wh/', 200, mockSearchQueryResponse);
     this.searchPage = client.page.search();
-    this.officerSummaryPage = client.page.officerSummary();
+    this.officerPage = client.page.officerPage();
     this.searchPage.navigate();
     done();
   });
@@ -86,6 +86,6 @@ describe('SearchPageTest', function () {
   it('should navigate to officer summary page when tapped', function (client) {
     this.searchPage.setValue('@queryInput', 'wh');
     this.searchPage.section.officers.click('@row');
-    client.assert.urlEquals(this.officerSummaryPage.url(9876));
+    client.assert.urlEquals(this.officerPage.url(9876));
   });
 });
