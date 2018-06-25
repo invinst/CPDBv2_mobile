@@ -102,7 +102,7 @@
     "history": "^2.1.2",
     "leaflet": "^1.0.3",
     "lodash": "^4.17.4",
-    "mapbox.js": "^2.4.0",
+    "mapbox-gl": "0.42.2",
     "moment": "^2.13.0",
     "normalize.css": "^4.0.0",
     "object-assign": "^4.1.0",

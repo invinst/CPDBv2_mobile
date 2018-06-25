@@ -102,4 +102,5 @@ LocationMap.defaultProps = {
   zoomOutLevel: 8,
   zoomInLevel: 13,
   centerLat: 41.85677,
-  centerLng: -87.6024055,
+  centerLng: -87.6024055
+};
