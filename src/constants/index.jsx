@@ -206,7 +206,7 @@ export default {
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
   LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
-  COMPLAINT_API_ENDPOINT: '/mobile/cr/',
+  COMPLAINT_API_ENDPOINT: '/cr/',
   TRR_API_ENDPOINT: '/mobile/trr/',
 
   //Time format
