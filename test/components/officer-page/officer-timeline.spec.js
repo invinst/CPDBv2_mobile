@@ -5,7 +5,7 @@ import { spy, stub } from 'sinon';
 import GaUtil from 'utils/ga-util';
 import OfficerTimeline from 'components/officer-page/officer-timeline';
 import NotMatchedOfficerPage from 'components/officer-page/not-matched-officer-page';
-import NavbarContainer from 'containers/navbar-container';
+import Header from 'components/shared/header';
 import constants from 'constants';
 
 
@@ -95,7 +95,7 @@ describe('<OfficerTimeline />', function () {
 
   it('should render Navbar', function () {
     const wrapper = shallow(<OfficerTimeline found={ true } />);
-    wrapper.find(NavbarContainer).prop('backLink').should.eql(constants.SEARCH_PATH);
+    wrapper.find(Header).should.have.length(1);
   });
 
   it('should render empty header if officer summary has not been fetched yet', function () {

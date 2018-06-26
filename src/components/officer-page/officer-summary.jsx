@@ -1,12 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 import { Sticky, StickyContainer } from 'react-sticky';
 
-import constants from 'constants';
 import GaUtil from 'utils/ga-util';
 import { scrollToTop } from 'utils/navigation-util';
 import LoadingPage from 'components/shared/loading-page';
 import BottomPadding from 'components/shared/bottom-padding';
-import NavbarContainer from 'containers/navbar-container';
+import Header from 'components/shared/header';
 import NotMatchedOfficerPage from './not-matched-officer-page';
 import OfficerTopLinks from './officer-top-links';
 import SectionRow from './section-row';
@@ -42,7 +41,7 @@ class OfficerSummary extends Component {
 
     return (
       <StickyContainer className={ style.officerSummary }>
-        <NavbarContainer backLink={ constants.SEARCH_PATH } />
+        <Header />
         <Sticky>
           <h1 className='sheet-header header' onClick={ scrollToTop() }>
             { summary.name }

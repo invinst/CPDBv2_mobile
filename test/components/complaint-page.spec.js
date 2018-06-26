@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 
 import constants from 'constants';
-import NavbarContainer from 'containers/navbar-container';
+import Header from 'components/shared/header';
 import ComplaintPage from 'components/ComplaintPage';
 
 describe('<ComplaintPage />', function () {
@@ -37,7 +37,7 @@ describe('<ComplaintPage />', function () {
     spyRequestComplaint.calledWith(1).should.be.true();
   });
 
-  it('should render navbar via NavbarContainer', function () {
+  it('should render Header', function () {
     const dummyComplaint = {
       coaccused: [{ id: 1 }]
     };
@@ -48,8 +48,7 @@ describe('<ComplaintPage />', function () {
       />
     );
 
-    const navbarContainer = wrapper.find(NavbarContainer);
-    navbarContainer.prop('backLink').should.eql(constants.SEARCH_PATH);
+    wrapper.find(Header).should.have.length(1);
   });
 
   it('toggleCoaccused should flip the coaccusedIsExpanded state', function () {

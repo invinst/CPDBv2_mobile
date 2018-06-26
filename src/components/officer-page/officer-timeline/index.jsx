@@ -5,10 +5,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import GaUtil from 'utils/ga-util';
 import { scrollToTop } from 'utils/navigation-util';
 import LoadingPage from 'components/shared/loading-page';
-import NavbarContainer from 'containers/navbar-container';
 import BottomPadding from 'components/shared/bottom-padding';
-import constants from 'constants';
-
+import Header from 'components/shared/header';
 import NotMatchedOfficerPage from '../not-matched-officer-page';
 import OfficerTopLinks from '../officer-top-links';
 import YearlyStats from './yearly-stats';
@@ -117,7 +115,7 @@ class OfficerTimeline extends Component {
 
     return (
       <StickyContainer className={ style.officerTimeline }>
-        <NavbarContainer backLink={ constants.SEARCH_PATH } />
+        <Header />
         { header }
         <InfiniteScroll
           hasMore={ hasMore }

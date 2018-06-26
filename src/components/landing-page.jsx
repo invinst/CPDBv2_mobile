@@ -6,9 +6,17 @@ import style from './landing-page.sass';
 
 
 export default class LandingPage extends Component {
-
   componentDidMount() {
-    this.props.requestLandingPage();
+    const {
+      requestLandingPage, pushBreadcrumbs, location, routes, params
+    } = this.props;
+    pushBreadcrumbs({ location, routes, params });
+    requestLandingPage();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { location, params, routes, pushBreadcrumbs } = nextProps;
+    pushBreadcrumbs({ location, params, routes });
   }
 
   render() {
@@ -26,9 +34,14 @@ export default class LandingPage extends Component {
 }
 
 LandingPage.defaultProps = {
-  requestLandingPage: () => {}
+  requestLandingPage: () => {},
+  pushBreadcrumbs: () => {}
 };
 
 LandingPage.propTypes = {
+  pushBreadcrumbs: PropTypes.func,
   requestLandingPage: PropTypes.func,
+  location: PropTypes.object,
+  params: PropTypes.object,
+  routes: PropTypes.array,
 };

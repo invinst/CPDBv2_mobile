@@ -4,8 +4,7 @@ import { mount, shallow } from 'enzyme';
 import { spy, stub } from 'sinon';
 import configureStore from 'redux-mock-store';
 
-import NavbarContainer from 'containers/navbar-container';
-import constants from 'constants';
+import Header from 'components/shared/header';
 import OfficerSummary from 'components/officer-page/officer-summary';
 import LoadingPage from 'components/shared/loading-page';
 import NotMatchedOfficerPage from 'components/officer-page/not-matched-officer-page';
@@ -116,7 +115,7 @@ describe('<OfficerSummary />', function () {
       />
     );
 
-    wrapper.find(NavbarContainer).prop('backLink').should.eql(constants.SEARCH_PATH);
+    wrapper.find(Header).should.have.length(1);
   });
 
   describe('when summary is provided', function () {
