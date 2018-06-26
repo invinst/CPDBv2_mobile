@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import suggestionApp from './suggestionApp';
-import officerPage from './officerPage';
-import landingPage from './landingPage';
-import complaintPage from './complaintPage';
+import suggestionApp from './suggestion-app';
+import officerPage from './officer-page';
+import landingPage from './landing-page';
+import complaintPage from './complaint-page';
 import navbar from './navbar';
-import trrPage from './trrPage';
+import trrPage from './trr-page';
 
 
 export default combineReducers({

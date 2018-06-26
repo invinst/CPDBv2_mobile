@@ -10,7 +10,7 @@ import {
   OFFICER_TIMELINE_REQUEST_FAILURE
 } from 'actions/officer';
 import constants from 'constants';
-import { v2Url } from 'utils/UrlUtil';
+import { v2Url } from 'utils/url-util';
 
 
 describe('officer actions', function () {

@@ -1,8 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import cx from 'classnames';
 import { Link } from 'react-router';
+
 import constants from 'constants';
-import Arrow from 'components/Shared/Arrow';
+import Arrow from 'components/shared/arrow';
 import style from 'styles/ComplaintPage/CoaccusedDropdown.sass';
 
 export default class CoaccusedDropdown extends Component {

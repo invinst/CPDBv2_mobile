@@ -1,7 +1,8 @@
 import should from 'should';
 import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
 import { stub } from 'sinon';
-import * as NavigationUtil from 'utils/NavigationUtil';
+
+import * as NavigationUtil from 'utils/navigation-util';
 
 describe('scrollPositionMiddleware', function () {
   beforeEach(function () {

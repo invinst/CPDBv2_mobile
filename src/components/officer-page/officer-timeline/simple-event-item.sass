@@ -1,0 +1,28 @@
+@import 'variables'
+
+$date-line-height: 17px
+$top-padding: $horizontal-padding
+
+:local(.simple-event-item)
+  position: relative
+  background-color: white
+  margin-bottom: 56px
+
+  :local(.title)
+    display: inline-block
+    width: 50%
+    color: $dusty-gray
+    font-weight: 500
+    line-height: 32px
+
+  :local(.date)
+    display: inline-block
+    text-align: right
+    width: 50%
+    color: $dusty-gray
+    height: $date-line-height
+
+  :local(.content)
+    color: $dusty-gray
+    font-weight: 400
+    line-height: 32px
