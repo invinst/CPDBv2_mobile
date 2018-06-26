@@ -201,13 +201,14 @@ export default {
 
   // API endpoints
   ALLEGATION_API_ENDPOINT: '/api/allegation/',
-  OFFICER_API_ENDPOINT: '/officers/',
+  OLD_OFFICER_API_ENDPOINT: '/officers/',
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
   LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
   COMPLAINT_API_ENDPOINT: '/mobile/cr/',
   TRR_API_ENDPOINT: '/mobile/trr/',
+  OFFICER_API_ENDPOINT: '/mobile/officers/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
@@ -268,5 +269,38 @@ export default {
   SEARCH_CATEGORY_LINKS_HEIGHT: 40,
   BOTTOM_PADDING: 133,
   TOP_MARGIN: 58,
-  NEW_DIVIDER_WEIGHT: 2
+  NEW_DIVIDER_WEIGHT: 2,
 };
+
+//Officer timeline
+export const NEW_TIMELINE_ITEMS = {
+  CR: 'CR',
+  FORCE: 'FORCE',
+  AWARD: 'AWARD',
+  UNIT_CHANGE: 'UNIT_CHANGE',
+  JOINED: 'JOINED',
+  YEAR: 'YEAR',
+  EMPTY: 'EMPTY',
+};
+
+export const NEW_TIMELINE_FILTERS = {
+  ALL: 'ALL EVENTS',
+  CRS: 'COMPLAINTS',
+  FORCE: 'USE OF FORCE',
+  AWARDS: 'AWARDS',
+};
+
+export const ATTACHMENT_TYPES = {
+  VIDEO: 'video',
+  AUDIO: 'audio',
+  DOCUMENT: 'document',
+};
+
+export const OFFICER_PAGE_TAB_NAMES = {
+  TIMELINE: 'TIMELINE',
+  MAP: 'MAP',
+  COACCUSALS: 'COACCUSALS',
+  ATTACHMENTS: 'ATTACHMENTS',
+};
+
+export const OFFICER_NEW_TIMELINE_ITEMS_CHANGE_FILTER = 'OFFICER_NEW_TIMELINE_ITEMS_CHANGE_FILTER';

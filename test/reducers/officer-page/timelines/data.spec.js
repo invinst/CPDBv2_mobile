@@ -1,5 +1,6 @@
-import { OFFICER_TIMELINE_REQUEST_SUCCESS, OFFICER_TIMELINE_REQUEST_FAILURE } from 'actions/officer';
-import timelineData from 'reducers/officer-page/timelines/data';
+import { OFFICER_NEW_TIMELINE_ITEMS_REQUEST_FAILURE } from 'actions/officer-page/timeline';
+import timelineData from 'reducers/officer-page/timeline/items';
+import { OFFICER_NEW_TIMELINE_ITEMS_REQUEST_SUCCESS } from 'actions/officer-page/timeline';
 
 
 describe('officer summary data reducer', function () {
@@ -18,7 +19,7 @@ describe('officer summary data reducer', function () {
       };
 
       timelineData({}, {
-        type: OFFICER_TIMELINE_REQUEST_SUCCESS,
+        type: OFFICER_NEW_TIMELINE_ITEMS_REQUEST_SUCCESS,
         payload: response,
         meta: {
           id: 11
@@ -53,7 +54,7 @@ describe('officer summary data reducer', function () {
       timelineData(
         currentState,
         {
-          type: OFFICER_TIMELINE_REQUEST_SUCCESS,
+          type: OFFICER_NEW_TIMELINE_ITEMS_REQUEST_SUCCESS,
           payload: response,
           meta: {
             id: 11
@@ -71,7 +72,7 @@ describe('officer summary data reducer', function () {
 
   it('should handle OFFICER_SUMMARY_REQUEST_FAILURE', function () {
     timelineData({}, {
-      type: OFFICER_TIMELINE_REQUEST_FAILURE
+      type: OFFICER_NEW_TIMELINE_ITEMS_REQUEST_FAILURE
     }).should.eql({});
   });
 });

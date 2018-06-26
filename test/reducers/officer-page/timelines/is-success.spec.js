@@ -1,9 +1,11 @@
 import {
-  OFFICER_TIMELINE_REQUEST_START,
-  OFFICER_TIMELINE_REQUEST_SUCCESS,
-  OFFICER_TIMELINE_REQUEST_FAILURE
-} from 'actions/officer';
-import isSuccess from 'reducers/officer-page/timelines/is-success';
+  OFFICER_NEW_TIMELINE_ITEMS_REQUEST_FAILURE
+} from 'actions/officer-page/timeline';
+import isSuccess from 'reducers/officer-page/timeline/is-success';
+import {
+  OFFICER_NEW_TIMELINE_ITEMS_REQUEST_START,
+  OFFICER_NEW_TIMELINE_ITEMS_REQUEST_SUCCESS,
+} from 'actions/officer-page/timeline';
 
 
 describe('isSuccess reducer', function () {
@@ -13,19 +15,19 @@ describe('isSuccess reducer', function () {
 
   it('should handle OFFICER_TIMELINE_REQUEST_START', function () {
     isSuccess(false, {
-      type: OFFICER_TIMELINE_REQUEST_START
+      type: OFFICER_NEW_TIMELINE_ITEMS_REQUEST_START
     }).should.be.true();
   });
 
   it('should handle OFFICER_TIMELINE_REQUEST_SUCCESS', function () {
     isSuccess(false, {
-      type: OFFICER_TIMELINE_REQUEST_SUCCESS
+      type: OFFICER_NEW_TIMELINE_ITEMS_REQUEST_SUCCESS
     }).should.be.true();
   });
 
   it('should handle OFFICER_TIMELINE_REQUEST_FAILURE', function () {
     isSuccess(true, {
-      type: OFFICER_TIMELINE_REQUEST_FAILURE
+      type: OFFICER_NEW_TIMELINE_ITEMS_REQUEST_FAILURE
     }).should.be.false();
   });
 });

@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
-import summaries from './summaries/index';
-import timelines from './timelines/index';
+import summaries from './summaries';
+import timeline from './timeline';
 
 
 export default combineReducers({
   summaries,
-  timelines
+  timeline,
 });

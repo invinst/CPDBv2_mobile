@@ -1,7 +1,11 @@
 import { createSelector } from 'reselect';
+import { get, startCase } from 'lodash';
 import moment from 'moment';
-import { startCase, get } from 'lodash';
+
 import constants from 'constants';
+
+
+export const getOfficerId = state => state.officerPage.officerId;
 
 const getOfficerSummary = (state, props) => (
   state.officerPage.summaries.data[props.params.id] || null
@@ -44,35 +48,4 @@ export const officerSummarySelector = createSelector(
       }
     };
   }
-);
-
-
-const getOfficerTimeline = (state, props) => {
-  const timeline = state.officerPage.timelines.data[props.params.id];
-  if (!timeline) {
-    return null;
-  }
-
-  const results = timeline.results.map((result) => ({
-    ...result,
-    date: moment(result.date).format(constants.SIMPLE_DATE_FORMAT)
-  }));
-
-  return {
-    ...timeline,
-    results: results
-  };
-};
-
-export const officerTimelineSelector = createSelector(
-  [getOfficerTimeline],
-  (timeline) => timeline
-);
-
-
-const getCurrentTimeline = (state, props) => state.officerPage.timelines.data[props.params.id];
-
-export const hasMoreOfficerTimelineSelector = createSelector(
-  getCurrentTimeline,
-  (timeline) => (!!timeline && !timeline.isRequesting && !!timeline.next)
 );

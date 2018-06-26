@@ -1,0 +1,13 @@
+@import 'variables'
+@import '../base-item'
+
+$height: 32px
+
+.wrapper-showing
+  @extend %base-wrapper-showing
+  height: $height
+
+.showing
+  @extend %base-showing
+  height: $height
+  line-height: $height - 1px

@@ -1,45 +1,24 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import OfficerTimeline from 'components/officer-page/officer-timeline';
-
-import {
-  getOfficerTimeline,
-  getMoreOfficerTimeline,
-  getOfficerSummary
-} from 'actions/officer';
-
-import {
-  officerTimelineSelector,
-  hasMoreOfficerTimelineSelector,
-  officerSummarySelector
-} from 'selectors/officer-page';
+import TimeLine from 'components/officer-page/tabbed-pane-section/timeline';
+import { getNewTimelineItems } from 'selectors/officer-page/timeline';
+import { getOfficerTimeline, changeFilter } from 'actions/officer-page/timeline';
+import { getOfficerId } from 'selectors/officer-page';
 
 
 function mapStateToProps(state, ownProps) {
-  const pk = Number.parseInt(ownProps.params.id);
-  const props = {
-    ...ownProps,
-    params: {
-      ...ownProps.params,
-      id: pk
-    }
-  };
-
   return {
-    loading: state.officerPage.timelines.isRequesting,
-    found: state.officerPage.timelines.isSuccess,
-    timeline: officerTimelineSelector(state, props),
-    hasMore: hasMoreOfficerTimelineSelector(state, props),
-    summary: officerSummarySelector(state, props),
-    pk: pk
+    items: getNewTimelineItems(state),
+    officerId: getOfficerId(state),
+    pk: Number.parseInt(ownProps.params.id)
   };
 }
 
 const mapDispatchToProps = {
+  changeFilter,
   getOfficerTimeline,
-  getMoreOfficerTimeline,
-  getOfficerSummary
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OfficerTimeline));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TimeLine));

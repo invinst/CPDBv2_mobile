@@ -1,0 +1,63 @@
+@import 'variables'
+@import '../base-item'
+
+$height: 58px
+
+:local(.wrapper-showing)
+  @extend %base-wrapper-showing
+  background-color: $snow-color
+  cursor: pointer
+
+  .showing
+    @extend %base-showing
+    height: $height
+    line-height: $height - 1px
+
+  .wrapper-kind
+    @extend %base-wrapper-kind
+
+    .kind
+      @extend %base-kind
+      width: 85px
+      border: solid 1px $champagne-color
+      color: $scarlet-color
+      background-color: $champagne-color
+
+  .detail
+    @extend %base-detail
+    display: inline-block
+    vertical-align: middle
+
+    .category
+      color: $thunder
+
+    .finding
+      font-weight: 300
+      line-height: 14px
+      font-size: 12px
+      color: $gandalf-gray
+
+  .right
+    @extend %base-right
+    display: inline-block
+    float: right
+
+    .coaccused
+      font-size: 14px
+      font-weight: 300
+      color: $gandalf-gray
+      display: inline-block
+
+    .date
+      font-size: 12px
+      color: $thunder
+      font-weight: 300
+      float: none
+
+
+//export const kindStyle = (active) => ({
+//  width: 85px,
+//  border: `solid 1px ${champagneColor}`,
+//  color: active ? scarletColor : brightOrangeTwoColor,
+//  backgroundColor: active ? champagneColor : inherit,
+//});

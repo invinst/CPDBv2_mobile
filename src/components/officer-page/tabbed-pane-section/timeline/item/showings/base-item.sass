@@ -1,0 +1,51 @@
+@import 'variables'
+
+%base-wrapper-showing
+  display: inline-block
+  width: calc(100% - 209px)
+  background-color: $snow-color
+
+%base-showing
+  width: calc(100% - 32px)
+  display: inline-block
+  margin: 0 16px
+  border-bottom: solid 1px $alto-solid
+  box-sizing: border-box
+
+%base-wrapper-kind
+  width: 85px
+  display: inline-block
+  margin-right: 16px
+
+%base-kind
+  line-height: 24px
+  display: inline-block
+  text-align: center
+
+%base-detail
+  line-height: 18px
+  color: $thunder
+
+%base-category
+  line-height: 18px
+  color: $thunder
+
+%base-date
+  float: right
+  width: 44px
+  display: inline-block
+  text-align: right
+
+%base-right
+  float: right
+  width: 44px
+  display: inline-block
+  text-align: right
+
+//baseShowingStyle = (hasBorderBottom) => ({
+//  width: 'calc(100% - 32px)',
+//  display: 'inline-block',
+//  margin: '0 16px',
+//  borderBottom: hasBorderBottom ? `solid 1px ${whiteTwoColor}`: 'none',
+//  boxSizing: 'border-box',
+//});
