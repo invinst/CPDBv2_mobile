@@ -10,8 +10,8 @@ export default class Empty extends Component {
     const { hasBorderBottom } = this.props;
 
     return (
-      <span className={ cx(styles.wrapperShowing) }>
-        <div className='showing'/>
+      <span className={ cx(styles.wrapper, { 'no-border-bottom': !hasBorderBottom }) }>
+        <div className='content'/>
       </span>
     );
   }

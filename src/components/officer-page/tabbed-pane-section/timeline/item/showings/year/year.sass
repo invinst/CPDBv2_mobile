@@ -4,33 +4,30 @@
 $has-data-height: 64px
 $no-data-height: 32px
 
+:local(.wrapper-no-data)
+  height: $no-data-height
+  line-height: $no-data-height - 1px
+
 :local(.wrapper)
   @extend %base-wrapper
+  background-color: $snow-color
+  height: $has-data-height
+  line-height: $has-data-height - 1px
+  margin-bottom: -4px
 
-  .has-data-showing
-    @extend %base-showing
-    height: $has-data-height
-    line-height: $has-data-height - 1px
+  .no-border-bottom
+    border-bottom: none
 
-  .no-data-showing
-    @extend %base-showing
-    height: $no-data-height
-    line-height: $no-data-height - 1px
+  .content
+    @extend %base-content
 
-    .has-data-date
+    .date-no-data
+      font-size: 14px
+      padding-top: 0
+
+    .date
       @extend %base-date
       font-size: 18px
       color: $thunder
       font-weight: 400
-      padding-top: 13px
-
-    .no-data-date
-      @extend %base-date
-      font-size: 14px
-      color: $thunder
-      font-weight: 400
-      padding-top: 0
-
-
-    .clear-float
-      clear: both
+      padding-top: 10px

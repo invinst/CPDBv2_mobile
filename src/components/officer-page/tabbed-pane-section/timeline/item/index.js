@@ -7,8 +7,8 @@ import Trr from './showings/trr';
 import Award from './showings/award';
 import UnitChange from './showings/unit-change';
 import Joined from './showings/joined';
-// import Year from './showings/year';
-// import Empty from './showings/empty';
+import Year from './showings/year';
+import Empty from './showings/empty';
 import { NEW_TIMELINE_ITEMS } from 'constants';
 import styles from './item.sass';
 
@@ -17,8 +17,6 @@ export default class Item extends Component {
 
   constructor(props) {
     super(props);
-    // this.renderRankAndUnit = this.renderRankAndUnit.bind(this);
-
     const { item } = props;
 
     const componentMap = {
@@ -47,16 +45,16 @@ export default class Item extends Component {
         className: 'test--timeline-joined-item',
         item: <Joined { ...this.props } />
       },
-      // [NEW_TIMELINE_ITEMS.YEAR]: {
-      //   height: item.hasData ? 64 : 32,
-      //   className: 'test--timeline-year-item',
-      //   item: <Year { ...this.props } baseStyles={ baseStyles }/>
-      // },
-      // [NEW_TIMELINE_ITEMS.EMPTY]: {
-      //   height: 32,
-      //   className: 'test--timeline-empty-item',
-      //   item: <Empty { ...this.props } baseStyles={ baseStyles }/>
-      // },
+      [NEW_TIMELINE_ITEMS.YEAR]: {
+        height: item.hasData ? 64 : 32,
+        className: 'test--timeline-year-item',
+        item: <Year { ...this.props } />
+      },
+      [NEW_TIMELINE_ITEMS.EMPTY]: {
+        height: 32,
+        className: 'test--timeline-empty-item',
+        item: <Empty { ...this.props } />
+      },
     };
 
     this.component = get(componentMap, item.kind, {});

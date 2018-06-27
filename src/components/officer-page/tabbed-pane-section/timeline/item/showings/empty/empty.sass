@@ -7,7 +7,10 @@ $height: 32px
   @extend %base-wrapper
   height: $height
 
-.showing
-  @extend %base-showing
-  height: $height
-  line-height: $height - 1px
+  .no-border-bottom
+    border-bottom: none
+
+  .content
+    @extend %base-content
+    height: $height
+    line-height: $height - 1px
