@@ -1,0 +1,46 @@
+@import 'variables'
+@import 'modal'
+
+:local(.explainer-layout)
+  font-size: 14px
+  background-color: white
+
+  .explainer-radar-chart-container
+    height: 206px
+    position: relative
+
+    .explainer-close-button
+      width: 24px
+      height: 24px
+      background-color: $wild-sand
+      border-radius: 12px
+      position: absolute
+      right: 16px
+      bottom: 16px
+
+      .close-button
+        width: 100%
+        line-height: 26px
+        text-align: center
+        color: #979797
+        font-size: 24px
+        font-weight: 100
+        position: relative
+        top: 50%
+        transform: translateY(-55%)
+
+      .times-mark:before
+	      content: '\00d7'
+
+  .explainer-content
+    background-color: white
+    padding: 41px 8px 37px 8px
+    text-align: justify
+    text-justify: inter-word
+
+    .title
+      line-height: 20px
+      margin-bottom: 3px
+      font-weight: 600
+      text-align: center
+      color: $thunder

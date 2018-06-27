@@ -1,13 +1,15 @@
 import React from 'react';
 import should from 'should';
-import { mount, shallow } from 'enzyme';
+import { mount, shallow, ReactWrapper } from 'enzyme';
 import { useFakeTimers, spy } from 'sinon';
+import Modal from 'react-modal';
 
 import AnimatedRadarChart from 'components/officer-page/radar-chart';
 import StaticRadarChart from 'components/common/radar-chart';
+import RadarExplainer from 'components/officer-page/radar-chart/explainer';
 
 
-describe('AnimatedRadarChart components', function () {
+describe('AnimatedRadarChart component', function () {
   const data = [{
     year: 2015,
     items: [
@@ -52,6 +54,22 @@ describe('AnimatedRadarChart components', function () {
     should(wrapper.instance().timer).not.be.null();
   });
 
+  it('should open explainer when click on radar chart', function () {
+    const wrapper = mount(
+      <AnimatedRadarChart data={ data }/>
+    );
+    wrapper.find('.explainer-open-button').exists().should.be.true();
+
+    wrapper.find('.radar-chart-container').exists().should.be.true();
+    wrapper.find('.radar-chart-container').simulate('click');
+
+    const modalWrapper = new ReactWrapper(wrapper.find(Modal).node.portal, true);
+
+    const explainer = modalWrapper.find(RadarExplainer);
+    explainer.exists().should.be.true();
+    explainer.prop('radarChartData').should.equal(data);
+  });
+
   describe('test animate', function () {
     let clock;
     beforeEach(function () {
@@ -93,29 +111,6 @@ describe('AnimatedRadarChart components', function () {
 
     });
 
-    it('should stop when click, then resume if click again', function () {
-      const wrapper = mount(
-        <AnimatedRadarChart data={ data }/>
-      );
-      const instance = wrapper.instance();
-
-      clock.tick(25);
-      instance.state.transitionValue.should.eql(instance.velocity);
-
-      // STOP
-      instance.handleClick();
-      clock.tick(500);
-      instance.state.transitionValue.should.eql(instance.velocity);
-
-      // RESUME
-      instance.handleClick();
-      clock.tick(500);
-      instance.state.transitionValue.should.eql(2);
-
-      instance.handleClick();
-      instance.state.transitionValue.should.eql(0);
-    });
-
     it('should it stops timer before unmounted', function () {
       const wrapper = mount(
         <AnimatedRadarChart data={ data }/>
@@ -126,6 +121,24 @@ describe('AnimatedRadarChart components', function () {
       wrapper.unmount();
 
       stopTimerSpy.called.should.be.true();
+    });
+
+    it('should start to animate after closing explainer', function () {
+      const wrapper = mount(
+        <AnimatedRadarChart data={ data }/>
+      );
+      const instance = wrapper.instance();
+      const startAnimation = spy(instance, 'startAnimation');
+
+      wrapper.find('.radar-chart-container').simulate('click');
+
+      const modalWrapper = new ReactWrapper(wrapper.find(Modal).node.portal, true);
+      modalWrapper.find(RadarExplainer).exists().should.be.true();
+
+      modalWrapper.find('.explainer-close-button').simulate('click');
+
+      modalWrapper.find(RadarExplainer).exists().should.be.false();
+      startAnimation.calledOnce.should.be.true();
     });
   });
 });

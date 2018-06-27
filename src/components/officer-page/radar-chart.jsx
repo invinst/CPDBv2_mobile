@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { map, isEqual } from 'lodash';
 import { scaleLinear } from 'd3-scale';
+import Modal from 'react-modal';
 
 import StaticRadarChart from 'components/common/radar-chart';
+import RadarExplainer from './radar-chart/explainer';
 import style from './radar-chart.sass';
 
 
@@ -11,12 +13,14 @@ export default class AnimatedRadarChart extends Component {
     super(props);
     this.state = {
       transitionValue: 0,
+      explainerOpened: false,
     };
     this.interval = 20;
     this.velocity = 0.1;
     this.timer = null;
 
-    this.handleClick = this.handleClick.bind(this);
+    this.openExplainer = this.openExplainer.bind(this);
+    this.closeExplainer = this.closeExplainer.bind(this);
     this.animate = this.animate.bind(this);
     this.getCurrentTransitionData = this.getCurrentTransitionData.bind(this);
   }
@@ -86,44 +90,72 @@ export default class AnimatedRadarChart extends Component {
     };
   }
 
-  handleClick() {
+  startAnimation() {
     if (this.timer) {
       this.stopTimer();
-    } else {
-      if (this.state.transitionValue === this.props.data.length - 1) {
-        this.setState({
-          transitionValue: 0,
-        });
-      }
-      this.startTimer();
     }
+
+    this.setState({ transitionValue: 0 });
+    this.startTimer();
+  }
+
+  openExplainer() {
+    this.setState({ explainerOpened: true });
+  }
+
+  closeExplainer() {
+    this.setState({ explainerOpened: false });
+    this.startAnimation();
   }
 
   render() {
-    const { transitionValue } = this.state;
+    const { transitionValue, explainerOpened } = this.state;
     const { data } = this.props;
     if (!data) return null;
 
     const itemData = this.getCurrentTransitionData();
 
+    const explainerModalStyles = {
+      overlay: {
+        top: '21px',
+      },
+      content: {
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100vh',
+        minHeight: '100vh',
+        padding: 0
+      }
+    };
+
+    Modal.setAppElement('body');
+
     return (!!itemData) && (
       <div className={ style.animatedRadarChart }>
-        <StaticRadarChart
-          onClick={ this.handleClick }
-          backgroundColor={ itemData.visualTokenBackground }
-          fadeOutLegend={ transitionValue >= (data.length - 1) }
-          legendText={ itemData.year }
-          data={ itemData.items }
-          showSpineLine={ false }
-          showGrid={ true }
-          gridOpacity={ 0.25 }
-          showAxisTitle={ true }
-          radius={ 121 }
-          axisTitleFontSize={ 23 }
-          axisTitleFontWeight={ 200 }
-          textColor={ '#f5f4f4' }
-          gridColor='white'
-        />
+        <div className='radar-chart-container' onClick={ this.openExplainer }>
+          <StaticRadarChart
+            backgroundColor={ itemData.visualTokenBackground }
+            fadeOutLegend={ transitionValue >= (data.length - 1) }
+            data={ itemData.items }
+            showSpineLine={ false }
+            showGrid={ true }
+            gridOpacity={ 0.5 }
+            showAxisTitle={ true }
+            radius={ 121 }
+            axisTitleFontSize={ 23 }
+            axisTitleFontWeight={ 200 }
+            textColor='#f5f4f4'
+            gridColor='white'
+            yAxisCenter={ 133 }
+          />
+          <div className='explainer-open-button'>
+            { <span className='inner'>?</span> }
+          </div>
+        </div>
+        <Modal isOpen={ explainerOpened } style={ explainerModalStyles }>
+          <RadarExplainer radarChartData={ data } closeExplainer={ this.closeExplainer }/>
+        </Modal>
       </div>
     );
   }

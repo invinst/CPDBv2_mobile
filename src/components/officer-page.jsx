@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { isNil, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
