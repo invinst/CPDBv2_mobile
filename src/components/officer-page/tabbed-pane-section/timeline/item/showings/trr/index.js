@@ -11,7 +11,7 @@ export default class Trr extends Component {
 
     return (
       <Link className={ cx(styles.wrapper) } to={ `/trr/${item.trrId}/` }>
-        <div className='content'>
+        <div className={ cx('content', { 'no-border-bottom': !hasBorderBottom }) }>
           <span className='kind'>F</span>
           <span className='category'>{ item.category }</span>
           <span className='date'>{ item.date }</span>

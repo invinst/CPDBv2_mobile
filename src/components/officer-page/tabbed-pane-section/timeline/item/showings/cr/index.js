@@ -15,7 +15,7 @@ export default class Cr extends Component {
         className={ cx(styles.wrapper, 'test--cr-item') }
         to={ `/complaint/${item.crid}/${officerId}/` }
       >
-        <div className='content'>
+        <div className={ cx('content', { 'no-border-bottom': !hasBorderBottom }) }>
           <span className='kind'>C</span>
           <span className='detail'>
             <div className='category'>{ item.category }</div>

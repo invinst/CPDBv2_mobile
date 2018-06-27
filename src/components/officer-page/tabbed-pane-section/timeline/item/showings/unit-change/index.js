@@ -6,7 +6,7 @@ import styles from './unit-change.sass';
 
 export default class UnitChange extends Component {
   render() {
-    const { unitName, oldUnitName, unitDescription, date, hasBorderBottom, } = this.props.item;
+    const { unitName, oldUnitName, unitDescription, date } = this.props.item;
 
     return (
       <span className={ cx(styles.wrapper) }>
@@ -27,5 +27,4 @@ export default class UnitChange extends Component {
 
 UnitChange.propTypes = {
   item: PropTypes.object,
-  hasBorderBottom: PropTypes.bool,
 };
