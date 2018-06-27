@@ -4,6 +4,7 @@ import { mount, shallow } from 'enzyme';
 import { spy, stub } from 'sinon';
 import { cloneDeep } from 'lodash';
 import configureStore from 'redux-mock-store';
+import should from 'should';
 
 import NavbarContainer from 'containers/navbar-container';
 import constants from 'constants';
@@ -15,7 +16,6 @@ import NotMatchedOfficerPage from 'components/officer-page/not-matched-officer-p
 import SectionRow from 'components/officer-page/section-row';
 import GaUtil from 'utils/ga-util';
 import MetricWidget from 'components/officer-page/metric-widget';
-import pluralize from "pluralize";
 
 
 const mockStore = configureStore();
@@ -462,6 +462,72 @@ describe('<OfficerPage />', function () {
 
       metricsProp[5].name.should.equal('Honorable Mention');
       metricsProp[5].value.should.equal(1);
+    });
+
+    it('should skip some content if data is not available', function () {
+      const data = {
+        navbar: { shareMenuIsOpen: false },
+        officerPage: {
+          officers: {
+            isRequesting: false,
+            isSuccess: true,
+            data: {
+              11: {
+                'officer_id': 11,
+                'full_name': 'Kenneth Wojtan',
+                active: true,
+                badge: '8548',
+                'historic_badges': ['8547', '8546'],
+                'birth_year': 1957,
+                'date_of_appt': '1993-12-13',
+                'date_of_resignation': '2017-01-15',
+                gender: 'Male',
+                race: 'White',
+                rank: 'Police Officer',
+                unit: {
+                  'unit_id': 6,
+                  description: 'District 005',
+                  'unit_name': '005',
+                },
+                percentiles: []
+              }
+            }
+          }
+        }
+      };
+
+      const wrapper = mount(
+        <Provider store={ mockStore(data) }>
+          <OfficerPageContainer params={ { id: 11 } }/>
+        </Provider>
+      );
+
+      const metricWidget = wrapper.find(MetricWidget);
+      const metricsProp = metricWidget.prop('metrics');
+
+      metricsProp.should.have.length(6);
+
+      metricsProp[0].name.should.equal('Allegations');
+      metricsProp[0].value.should.equal('N/A');
+      should(metricsProp[0].description).be.null();
+
+      metricsProp[1].name.should.equal('Sustained');
+      metricsProp[1].value.should.equal('N/A');
+      metricsProp[1].isHighlight.should.be.true();
+      should(metricsProp[1].description).be.null();
+
+      metricsProp[2].name.should.equal('Use of Force Reports');
+      metricsProp[2].value.should.equal('N/A');
+      should(metricsProp[2].description).be.null();
+
+      metricsProp[3].value.should.equal('N/A');
+
+      metricsProp[4].name.should.equal('Major Awards');
+      metricsProp[4].value.should.equal('N/A');
+
+      metricsProp[5].name.should.equal('Honorable Mentions');
+      metricsProp[5].value.should.equal('N/A');
+      should(metricsProp[5].description).be.null();
     });
   });
 });

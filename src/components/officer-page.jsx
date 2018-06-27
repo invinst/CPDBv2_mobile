@@ -16,6 +16,7 @@ import OfficerRadarChart from './officer-page/radar-chart';
 import MetricWidget from './officer-page/metric-widget';
 import { roundedPercentile } from 'utils/calculation';
 import navigationArrow from 'img/disclosure-indicator.svg';
+import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
 
 
 class OfficerPage extends Component {
@@ -52,39 +53,42 @@ class OfficerPage extends Component {
       majorAwardCount,
       honorableMentionPercentile,
     } = this.props.metrics;
-    const formatValue = (value) => isNil(value) ? 'N/A' : value;
 
     return [
       {
         name: pluralize('Allegation', allegationCount),
-        value: formatValue(allegationCount),
-        description: !isNil(allegationPercentile) &&
-          `More than ${roundedPercentile(allegationPercentile)}% of other officers`,
+        value: allegationCount,
+        description: (allegationPercentile !== DATA_NOT_AVAILABLE) ?
+          `More than ${roundedPercentile(allegationPercentile)}% of other officers`
+          : null,
       },
       {
         name: 'Sustained',
-        value: formatValue(sustainedCount),
+        value: sustainedCount,
         isHighlight: true,
-        description: !isNil(disciplineCount) && `${disciplineCount} Disciplined`,
+        description: (disciplineCount !== DATA_NOT_AVAILABLE) ? `${disciplineCount} Disciplined`: null,
       },
       {
         name: `Use of Force ${pluralize('Report', trrCount)}`,
-        value: formatValue(trrCount),
-        description: !isNil(trrPercentile) && `More than ${roundedPercentile(trrPercentile)}% of other officers`,
+        value: trrCount,
+        description: (trrPercentile !== DATA_NOT_AVAILABLE) ?
+          `More than ${roundedPercentile(trrPercentile)}% of other officers`
+          : null,
       },
       {
         name: <span>Civilian<br/>{ pluralize('Compliment', civilianComplimentCount) }</span>,
-        value: formatValue(civilianComplimentCount),
+        value: civilianComplimentCount,
       },
       {
         name: `Major ${pluralize('Award', majorAwardCount)}`,
-        value: formatValue(majorAwardCount),
+        value: majorAwardCount,
       },
       {
         name: `Honorable ${pluralize('Mention', honorableMentionCount)}`,
-        value: formatValue(honorableMentionCount),
-        description: !isNil(honorableMentionPercentile) &&
-          `More than ${roundedPercentile(honorableMentionPercentile)}% of other officers`,
+        value: honorableMentionCount,
+        description: (honorableMentionPercentile !== DATA_NOT_AVAILABLE) ?
+          `More than ${roundedPercentile(honorableMentionPercentile)}% of other officers`
+          : null,
       },
     ];
   }
