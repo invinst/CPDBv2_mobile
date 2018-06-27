@@ -14,17 +14,11 @@ export default class Trr extends Component {
         className={ cx(styles.wrapper) }
         to={ `/trr/${item.trrId}/` }
       >
-        <span className='showing'>
-          <div className='wrapper-kind'>
-            <span className='kind'>Force</span>
-          </div>
-          <span
-            className='category'
-          >
-            { item.category }
-          </span>
+        <div className='content'>
+          <span className='kind'>F</span>
+          <span className='category'>{ item.category }</span>
           <span className='date'>{ item.date }</span>
-        </span>
+        </div>
       </Link>
     );
   }

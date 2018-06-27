@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import cx from 'classnames';
 
 import Cr from './showings/cr';
-// import Trr from './showings/trr';
+import Trr from './showings/trr';
 // import Award from './showings/award';
 // import UnitChange from './showings/unit-change';
 // import Joined from './showings/joined';
@@ -27,11 +27,11 @@ export default class Item extends Component {
         className: 'test--timeline-cr-item',
         item: <Cr { ...this.props } />
       },
-      // [NEW_TIMELINE_ITEMS.FORCE]: {
-      //   height: 58,
-      //   className: 'test--timeline-trr-item',
-      //   item: <Trr { ...this.props }/>
-      // },
+      [NEW_TIMELINE_ITEMS.FORCE]: {
+        height: 58,
+        className: 'test--timeline-trr-item',
+        item: <Trr { ...this.props }/>
+      },
       // [NEW_TIMELINE_ITEMS.AWARD]: {
       //   height: 58,
       //   className: 'test--timeline-award-item',
