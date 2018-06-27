@@ -1,17 +1,19 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import cx from 'classnames';
+
 // import Attachments from './attachments';
 import styles from './cr.sass';
 
 
 export default class Cr extends Component {
   render() {
-    const { item, hasBorderBottom, officerId, openComplaintPage } = this.props;
+    const { item, hasBorderBottom, officerId } = this.props;
 
     return (
-      <div
+      <Link
         className={ cx(styles.wrapper, 'test--cr-item') }
-        onClick={ () => openComplaintPage({ crid: item.crid, officerId: officerId }) }
+        to={ `/complaint/${item.crid}/${officerId}/` }
       >
         <div className='content'>
           <span className='kind'>C</span>
@@ -24,7 +26,7 @@ export default class Cr extends Component {
             <span className='date'>{ item.date }</span>
           </span>
         </div>
-      </div>
+      </Link>
     );
   }
 }
@@ -33,5 +35,4 @@ Cr.propTypes = {
   item: PropTypes.object,
   hasBorderBottom: PropTypes.bool,
   officerId: PropTypes.number,
-  openComplaintPage: PropTypes.func,
 };

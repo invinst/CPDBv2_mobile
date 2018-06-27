@@ -5,8 +5,6 @@ import moment from 'moment';
 import constants from 'constants';
 
 
-export const getOfficerId = state => state.officerPage.officerId;
-
 const getOfficerSummary = (state, props) => (
   state.officerPage.summaries.data[props.params.id] || null
 );

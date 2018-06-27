@@ -11,7 +11,7 @@ export default class Trr extends Component {
 
     return (
       <Link
-        className={ cx(styles.wrapperShowing) }
+        className={ cx(styles.wrapper) }
         to={ `/trr/${item.trrId}/` }
       >
         <span className='showing'>

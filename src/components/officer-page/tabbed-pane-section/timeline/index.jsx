@@ -11,9 +11,9 @@ import GaUtil from 'utils/ga-util';
 
 export default class Timeline extends Component {
   componentDidMount() {
-    const { items, getOfficerTimeline, pk } = this.props;
+    const { items, getOfficerTimeline, officerId } = this.props;
     if (isEmpty(items)) {
-      getOfficerTimeline(pk);
+      getOfficerTimeline(officerId);
     }
     GaUtil.track('event', 'officer', 'view_detail', window.location.pathname);
   }
@@ -38,7 +38,7 @@ export default class Timeline extends Component {
   }
 
   renderItems() {
-    const { items, officerId, openComplaintPage } = this.props;
+    const { items, officerId } = this.props;
     return (
       <div>
         {
@@ -58,7 +58,6 @@ export default class Timeline extends Component {
                 key={ item.key }
                 officerId={ officerId }
                 hasBorderBottom={ hasBorderBottom }
-                openComplaintPage={ openComplaintPage }
               />
             );
           })
@@ -80,8 +79,8 @@ export default class Timeline extends Component {
 Timeline.propTypes = {
   items: PropTypes.array,
   changeFilter: PropTypes.func,
+  getOfficerTimeline: PropTypes.func,
   officerId: PropTypes.number,
-  openComplaintPage: PropTypes.func,
 };
 
 Timeline.defaultProps = {

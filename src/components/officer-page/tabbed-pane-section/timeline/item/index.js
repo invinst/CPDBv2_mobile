@@ -30,7 +30,7 @@ export default class Item extends Component {
       // [NEW_TIMELINE_ITEMS.FORCE]: {
       //   height: 58,
       //   className: 'test--timeline-trr-item',
-      //   item: <Trr { ...this.props } baseStyles={ baseStyles }/>
+      //   item: <Trr { ...this.props }/>
       // },
       // [NEW_TIMELINE_ITEMS.AWARD]: {
       //   height: 58,
@@ -76,5 +76,4 @@ export default class Item extends Component {
 Item.propTypes = {
   item: PropTypes.object,
   officerId: PropTypes.number,
-  openComplaintPage: PropTypes.func,
 };
