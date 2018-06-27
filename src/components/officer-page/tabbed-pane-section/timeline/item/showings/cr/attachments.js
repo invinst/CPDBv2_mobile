@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import cx from 'classnames';
 
-import { imageStyle, wrapperStyle, moreStyle } from './attachments.style';
+import styles from './attachments.sass';
+import { ATTACHMENT_TYPES } from 'constants';
 
 
 export default class Attachments extends Component {
@@ -8,31 +10,18 @@ export default class Attachments extends Component {
     const { attachments } = this.props;
     const [firstAttachment, ...rest] = attachments;
     if (firstAttachment) {
-      const { url, previewImageUrl, fileType } = firstAttachment;
+      const { url, fileType } = firstAttachment;
       return (
-        <span style={ wrapperStyle }>
-          {
-            rest.length
-              ? (
-                <span
-                  style={ moreStyle }
-                  className='test--more-attachment'
-                >
-                  +{ rest.length }
-                </span>
-              )
-              : null
-          }
+        <span className={ cx(styles.wrapper) }>
           <a href={ url } className='test--attachment-image-href' target='_blank'>
             <div
-              className='test--attachment-image'
-              style={ imageStyle(previewImageUrl, fileType) }
+              className={ cx('image', { 'image-document': fileType === ATTACHMENT_TYPES.DOCUMENT }) }
             />
           </a>
         </span>
       );
     }
-    return <span style={ wrapperStyle }/>;
+    return <span className={ cx(styles.wrapper) }/>;
   }
 }
 

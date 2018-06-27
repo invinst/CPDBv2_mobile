@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import cx from 'classnames';
 
-// import Attachments from './attachments';
+import Attachments from './attachments';
 import styles from './cr.sass';
 
 
@@ -22,7 +22,7 @@ export default class Cr extends Component {
             <div className='finding'>{ item.finding }, { item.outcome }</div>
           </span>
           <span className='right'>
-            { /*<Attachments attachments={ item.attachments } />*/ }
+            <Attachments attachments={ item.attachments } />
             <span className='date'>{ item.date }</span>
           </span>
         </div>
