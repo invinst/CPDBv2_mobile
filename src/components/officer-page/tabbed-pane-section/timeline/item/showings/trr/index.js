@@ -1,37 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import cx from 'classnames';
 
-import { categoryStyle, dateStyle, kindStyle, showingStyle, wrapperShowingStyle, } from './trr.style';
+import styles from './trr.sass';
 
 
 export default class Trr extends Component {
   render() {
-    const { item, hasBorderBottom, baseStyles } = this.props;
-    const {
-      baseWrapperShowingStyle,
-      baseShowingStyle,
-      baseWrapperKindStyle,
-      baseKindStyle,
-      baseCategoryStyle,
-      baseDateStyle,
-    } = baseStyles;
+    const { item, hasBorderBottom } = this.props;
 
     return (
       <Link
-        style={ { ...baseWrapperShowingStyle, ...wrapperShowingStyle } }
+        className={ cx(styles.wrapperShowing) }
         to={ `/trr/${item.trrId}/` }
       >
-        <span style={ { ...baseShowingStyle(hasBorderBottom), ...showingStyle } }>
-          <div style={ baseWrapperKindStyle }>
-            <span style={ { ...baseKindStyle, ...kindStyle } } className='test--trr-item-kind'>Force</span>
+        <span className='showing'>
+          <div className='wrapper-kind'>
+            <span className='kind'>Force</span>
           </div>
           <span
-            style={ { ...baseCategoryStyle, ...categoryStyle } }
-            className='test--trr-item-category'
+            className='category'
           >
             { item.category }
           </span>
-          <span style={ { ...baseDateStyle, ...dateStyle } } className='test--trr-item-date'>{ item.date }</span>
+          <span className='date'>{ item.date }</span>
         </span>
       </Link>
     );
@@ -41,5 +33,4 @@ export default class Trr extends Component {
 Trr.propTypes = {
   item: PropTypes.object,
   hasBorderBottom: PropTypes.bool,
-  baseStyles: PropTypes.object,
 };

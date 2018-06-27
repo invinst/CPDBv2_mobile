@@ -1,0 +1,36 @@
+@import 'variables'
+@import '../base-item'
+
+$height: 58px
+
+:local(.wrapper-showing)
+  @extend %base-wrapper-showing
+  background-color: $snow-color
+
+  .showing
+    @extend %base-showing
+    height: $height
+    line-height: $height - 1px
+    display: inline-block
+
+    .wrapper-kind
+      @extend %base-wrapper-showing
+
+      .kind
+        @extend %base-kind
+        width: 57px
+        color: white
+        background-color: $gandalf-gray
+        font-weight: 300
+
+    .category
+      @extend %base-category
+      display: inline-block
+      vertical-align: middle
+      color: $thunder
+
+    .date
+      @extend %base-date
+      font-size: 12px
+      color: $thunder
+      font-weight: 300

@@ -1,13 +1,7 @@
 import React, { PropTypes, Component } from 'react';
+import cx from 'classnames';
 
-import {
-  dateStyle,
-  newUnitStyle,
-  oldUnitStyle,
-  showingStyle,
-  unitChangeStyle,
-  wrapperShowingStyle,
-} from './unit-change.style';
+import styles from './unit-change.sass';
 
 
 export default class UnitChange extends Component {
@@ -15,21 +9,20 @@ export default class UnitChange extends Component {
     const {
       unitName, oldUnitName, oldUnitDescription, unitDescription, date, hasBorderBottom,
     } = this.props.item;
-    const { baseWrapperShowingStyle, baseShowingStyle, baseDateStyle } = this.props.baseStyles;
 
     return (
-      <span style={ { ...baseWrapperShowingStyle, ...wrapperShowingStyle } }>
-        <span style={ { ...baseShowingStyle(hasBorderBottom), ...showingStyle } }>
-          <span style={ unitChangeStyle } className='test--unit-change-item-content'>
+      <span className={ cx(styles.wrapperShowing) }>
+        <span className='showing'>
+          <span className='unit-change'>
             {
               oldUnitName === 'Unassigned' ?
-                <span style={ oldUnitStyle(true) }>Unassigned → </span>
+                <span className='unassigned-old-unit'>Unassigned → </span>
               :
-                <span style={ oldUnitStyle(false) }>{ oldUnitName } - { oldUnitDescription } → </span>
+                <span className='assigned-old-unit'>{ oldUnitName } - { oldUnitDescription } → </span>
             }
-            <span style={ newUnitStyle }>{ unitName } - { unitDescription }</span>
+            <span className='new-unit'>{ unitName } - { unitDescription }</span>
           </span>
-          <span style={ { ...baseDateStyle, ...dateStyle } } className='test--unit-change-item-date'>{ date }</span>
+          <span className='date'>{ date }</span>
         </span>
       </span>
     );
@@ -39,5 +32,4 @@ export default class UnitChange extends Component {
 UnitChange.propTypes = {
   item: PropTypes.object,
   hasBorderBottom: PropTypes.bool,
-  baseStyles: PropTypes.object,
 };

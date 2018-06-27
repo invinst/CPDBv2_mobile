@@ -1,0 +1,36 @@
+@import 'variables'
+@import '../base-item'
+
+$has-data-height: 64px
+$no-data-height: 32px
+
+:local(.wrapper-showing)
+  @extend %base-wrapper-showing
+
+  .has-data-showing
+    @extend %base-showing
+    height: $has-data-height
+    line-height: $has-data-height - 1px
+
+  .no-data-showing
+    @extend %base-showing
+    height: $no-data-height
+    line-height: $no-data-height - 1px
+
+    .has-data-date
+      @extend %base-date
+      font-size: 18px
+      color: $thunder
+      font-weight: 400
+      padding-top: 13px
+
+    .no-data-date
+      @extend %base-date
+      font-size: 14px
+      color: $thunder
+      font-weight: 400
+      padding-top: 0
+
+
+    .clear-float
+      clear: both

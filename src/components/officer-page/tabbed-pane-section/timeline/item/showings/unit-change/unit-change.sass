@@ -1,0 +1,37 @@
+@import 'variables'
+@import '../base-item'
+
+$height: 24px
+
+:local(.wrapper-showing)
+  @extend %base-wrapper-showing
+  background-color: inherit
+
+  .showing
+    @extend %base-showing
+    height: $height
+    line-height: $height - 1px
+    display: inline-block
+
+    .date
+      @extend %base-date
+      font-size: 12px
+      color: $thunder
+      font-weight: 300
+
+    .unit-change
+      display: inline-block
+      width: 100% - 44px
+      text-align: center
+      font-size: 12px
+
+      .unassigned-old-unit
+        color: $gandalf-gray
+        font-style: italic
+
+      .assigned-old-unit
+        color: $gandalf-gray
+        font-style: normal
+
+      .new-unit
+        color: $thunder,
