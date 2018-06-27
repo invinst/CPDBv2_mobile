@@ -6,30 +6,29 @@ $height: 58px
 
 :local(.wrapper)
   @extend %base-wrapper
+  background-color: $snow-color
+  height: $height
+  line-height: $height - 1px
 
-  .showing
-    @extend %base-showing
-    height: $height
-    line-height: $height - 1px
-    display: inline-block
+  .content
+    @extend %base-content
 
-    .wrapper-kind
-      @extend %base-wrapper-kind
-
-      .kind
-        @extend %base-kind
-        width: 61px
-        color: $gandalf-gray
-        background-color: $wild-sand
-        border: solid 1px $alto-solid
+    .kind
+      @extend %base-kind
+      color: $gandalf-gray
+      background-color: $wild-sand
+      border-color: $alto-solid
 
     .category
       @extend %base-category
       display: inline-block
       vertical-align: middle
+      font-size: 12px
+      color: $gandalf-gray
+      font-weight: 300
 
     .date
       @extend %base-date
       font-size: 12px
-      color: $thunder
+      color: $gandalf-gray
       font-weight: 300

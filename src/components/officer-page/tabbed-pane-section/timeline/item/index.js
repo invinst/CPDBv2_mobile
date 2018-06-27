@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import Cr from './showings/cr';
 import Trr from './showings/trr';
-// import Award from './showings/award';
+import Award from './showings/award';
 // import UnitChange from './showings/unit-change';
 // import Joined from './showings/joined';
 // import Year from './showings/year';
@@ -32,11 +32,11 @@ export default class Item extends Component {
         className: 'test--timeline-trr-item',
         item: <Trr { ...this.props }/>
       },
-      // [NEW_TIMELINE_ITEMS.AWARD]: {
-      //   height: 58,
-      //   className: 'test--timeline-award-item',
-      //   item: <Award { ...this.props } baseStyles={ baseStyles }/>
-      // },
+      [NEW_TIMELINE_ITEMS.AWARD]: {
+        height: 58,
+        className: 'test--timeline-award-item',
+        item: <Award { ...this.props } />
+      },
       // [NEW_TIMELINE_ITEMS.UNIT_CHANGE]: {
       //   height: 24,
       //   className: 'test--timeline-unit-change-item',

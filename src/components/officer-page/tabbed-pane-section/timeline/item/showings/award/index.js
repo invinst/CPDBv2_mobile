@@ -1,36 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 
-import style from './award.sass';
+import styles from './award.sass';
 
 
 export default class Award extends Component {
 
   render() {
-    const { item, hasBorderBottom, baseStyles } = this.props;
+    const { item, hasBorderBottom } = this.props;
     return (
-      <span style={ style.wrapperShowing }>
-        <span
-          className='showing'
-        >
-          <div className='wrapper-kind'>
-            <span
-              className='kind'
-            >
-              Award
-            </span>
-          </div>
-          <span
-            className='category'
-          >
-            { item.category }
-          </span>
-          <span
-            className='date'
-          >
-            { item.date }
-          </span>
-        </span>
-      </span>
+      <div className={ styles.wrapper }>
+        <div className='content'>
+          <span className='kind'>A</span>
+          <span className='category'>{ item.category }</span>
+          <span className='date'>{ item.date }</span>
+        </div>
+      </div>
     );
   }
 }
@@ -38,5 +22,4 @@ export default class Award extends Component {
 Award.propTypes = {
   item: PropTypes.object,
   hasBorderBottom: PropTypes.bool,
-  baseStyles: PropTypes.object,
 };
