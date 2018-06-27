@@ -7,17 +7,12 @@ import styles from './joined.sass';
 export default class Joined extends Component {
 
   render() {
-    const { item, hasBorderBottom } = this.props;
-    const unitString = item.unitName === 'Unassigned' ? '' : `with ${item.unitName} `;
+    const { item } = this.props;
 
     return (
-      <span className={ cx(styles.wrapperShowing) }>
-        <span className='showing'>
-          <span className='join'>
-            Joined Chicago Police Department { unitString }as a {item.rank}
-          </span>
-          <span className='date'>{ item.date }</span>
-        </span>
+      <span className={ cx(styles.wrapper) }>
+        <span className='join'>Joined CPD</span>
+        <span className='date'>{ item.date }</span>
       </span>
     );
   }
@@ -25,5 +20,4 @@ export default class Joined extends Component {
 
 Joined.propTypes = {
   item: PropTypes.object,
-  hasBorderBottom: PropTypes.bool,
 };

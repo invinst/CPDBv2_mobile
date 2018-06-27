@@ -6,7 +6,7 @@ import Cr from './showings/cr';
 import Trr from './showings/trr';
 import Award from './showings/award';
 import UnitChange from './showings/unit-change';
-// import Joined from './showings/joined';
+import Joined from './showings/joined';
 // import Year from './showings/year';
 // import Empty from './showings/empty';
 import { NEW_TIMELINE_ITEMS } from 'constants';
@@ -42,11 +42,11 @@ export default class Item extends Component {
         className: 'test--timeline-unit-change-item',
         item: <UnitChange { ...this.props } />
       },
-      // [NEW_TIMELINE_ITEMS.JOINED]: {
-      //   height: 24,
-      //   className: 'test--timeline-joined-item',
-      //   item: <Joined { ...this.props } baseStyles={ baseStyles }/>
-      // },
+      [NEW_TIMELINE_ITEMS.JOINED]: {
+        height: 24,
+        className: 'test--timeline-joined-item',
+        item: <Joined { ...this.props } />
+      },
       // [NEW_TIMELINE_ITEMS.YEAR]: {
       //   height: item.hasData ? 64 : 32,
       //   className: 'test--timeline-year-item',
