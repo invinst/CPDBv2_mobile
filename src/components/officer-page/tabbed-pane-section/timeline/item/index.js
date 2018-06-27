@@ -62,53 +62,10 @@ export default class Item extends Component {
     this.component = get(componentMap, item.kind, {});
   }
 
-  // renderRankAndUnit() {
-  //   const {
-  //     isFirstRank, isLastRank, isFirstUnit, isLastUnit, rankDisplay, unitDisplay, kind, isCurrentUnit
-  //   } = this.props.item;
-  //   const height = this.component.height;
-  //
-  //   return (
-  //     <span>
-  //       <span
-  //         style={ rankStyle(height, isFirstRank, isLastRank) }
-  //         className='test--item-rank'
-  //       >
-  //         <div style={ rankTextWrapperStyle }>
-  //           <div style={ rankTextStyle }>
-  //             { rankDisplay }
-  //           </div>
-  //         </div>
-  //       </span>
-  //       {
-  //         kind === NEW_TIMELINE_ITEMS.UNIT_CHANGE ? (
-  //           <span
-  //             style={ unitChangeStyle(height, isFirstUnit, isLastUnit) }
-  //             className='test--unit-change-item-unit'
-  //           >
-  //             UNIT CHANGE
-  //           </span>
-  //         ) : (
-  //           <span
-  //             style={ unitStyle(height, isFirstUnit, isLastUnit) }
-  //             className='test--item-unit'
-  //           >
-  //             <div style={ unitTextStyle(unitDisplay === 'Unassigned', isCurrentUnit) }>
-  //               { (isFirstUnit && unitDisplay) ? unitDisplay : ' ' }
-  //             </div>
-  //           </span>
-  //         )
-  //       }
-  //     </span>
-  //   );
-  // }
-
   render() {
     const { height, className, item } = this.component;
-    console.warn(item)
     return (
       <div className={ cx(styles.wrapperStyle, className) }>
-        {/*{ this.renderRankAndUnit() }*/}
         { item }
       </div>
     );

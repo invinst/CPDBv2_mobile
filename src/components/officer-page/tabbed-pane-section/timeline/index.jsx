@@ -23,10 +23,10 @@ export default class Timeline extends Component {
 
     return (
       <div className='header-wrapper'>
-        <div className='rankHeader'>RANK</div>
-        <div className='unitHeader'>UNIT</div>
-        <div className='showingContentHeader'>
-          <div className='showingText'>SHOWING</div>
+        <div className='rank-header'>RANK</div>
+        <div className='unit-header'>UNIT</div>
+        <div className='showing-content-header'>
+          <div className='showing-text'>SHOWING</div>
           {/*<Dropdown*/}
             {/*defaultValue={ NEW_TIMELINE_FILTERS.ALL }*/}
             {/*onChange={ changeFilter }*/}
@@ -35,7 +35,7 @@ export default class Timeline extends Component {
             {/*width={ 146 }*/}
           {/*/>*/}
         </div>
-        <div className='dateHeader'>DATE</div>
+        <div className='date-header'>DATE</div>
       </div>
     );
   }

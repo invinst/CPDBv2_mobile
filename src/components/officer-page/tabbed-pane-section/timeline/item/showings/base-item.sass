@@ -1,23 +1,21 @@
 @import 'variables'
 
-%base-wrapper-showing
+%base-wrapper
   display: inline-block
-  width: calc(100% - 209px)
+  width: 100%
   background-color: $snow-color
-
-%base-showing
-  width: calc(100% - 32px)
-  display: inline-block
-  margin: 0 16px
-  border-bottom: solid 1px $alto-solid
+  padding: 0 8px
   box-sizing: border-box
 
-%base-wrapper-kind
-  width: 85px
-  display: inline-block
-  margin-right: 16px
+%base-content
+  border-bottom: solid 1px $alto-solid
 
 %base-kind
+  width: 24px
+  height: 24px
+  border: 1px solid
+  border-radius: 2px
+  margin-right: 16px
   line-height: 24px
   display: inline-block
   text-align: center
