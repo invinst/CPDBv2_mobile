@@ -248,16 +248,25 @@ export default {
   SEARCH_CATEGORIES: [
     {
       name: 'Officers',
+      filter: 'Officers',
       id: 'officers',
       path: 'OFFICER'
     },
     {
-      name: 'CRs',
+      name: 'COMPLAINT RECORDS (CRs)',
+      filter: 'CRs',
       id: 'crs',
-      path: 'CRS'
+      path: 'CR'
+    },
+    {
+      name: 'TACTICAL RESPONSE REPORTS (TRRs)',
+      filter: 'TRRs',
+      id: 'trrs',
+      path: 'TRR'
     },
     {
       name: 'Units',
+      filter: 'Units',
       id: 'units',
       path: 'UNIT'
     }

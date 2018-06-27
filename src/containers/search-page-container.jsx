@@ -12,7 +12,8 @@ import {
 } from 'actions/suggestion';
 import {
   officersSelector,
-  unitsSelector,
+  crsSelector,
+  trrsSelector,
   suggestedSelector,
   recentSelector
 } from 'selectors/search-page';
@@ -22,7 +23,8 @@ function mapStateToProps(state, ownProps) {
   return {
     query: state.suggestionApp.query,
     officers: officersSelector(state),
-    units: unitsSelector(state),
+    crs: crsSelector(state),
+    trrs: trrsSelector(state),
     recent: recentSelector(state),
     suggested: suggestedSelector(state),
     activeCategory: state.suggestionApp.activeCategory,

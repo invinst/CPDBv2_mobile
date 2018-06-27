@@ -62,7 +62,8 @@ describe('<SearchPage />', function () {
         {
           id: 'officers',
           name: 'Officers',
-          path: 'OFFICER'
+          path: 'OFFICER',
+          filter: 'Officers'
         }
       ]);
     });

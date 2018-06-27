@@ -39,11 +39,13 @@ describe('<SearchNavbar />', function () {
     const categories = [
       {
         id: 'officers',
-        name: 'Officers'
+        name: 'Officers',
+        filter: 'Officers'
       },
       {
         id: 'crs',
-        name: 'CRs'
+        name: 'CRs',
+        filter: 'CRs'
       }
     ];
 
@@ -138,7 +140,8 @@ describe('<SearchNavbar />', function () {
       const categories = [
         {
           id: 'officers',
-          name: 'Officers'
+          name: 'Officers',
+          filter: 'Officers'
         }
       ];
       const wrapper = mount(
