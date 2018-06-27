@@ -25,14 +25,16 @@ describe('search-page selectors', () => {
       const officer = {
         'id': 1,
         'name': 'Name',
-        'extra_info': 'Extra',
-        'url': 'url'
+        'badge': '12314',
+        'percentile': null
       };
+
       const expectedOfficer = {
         id: 1,
         name: 'Name',
-        extraInfo: 'Extra',
-        url: `${constants.OFFICER_PATH}1/`
+        badge: 'Badge #12314',
+        url: `${constants.OFFICER_PATH}1/`,
+        percentile: {}
       };
 
       const state = {
