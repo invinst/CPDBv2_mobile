@@ -13,6 +13,17 @@ export default class Attachments extends Component {
       const { url, fileType } = firstAttachment;
       return (
         <span className={ cx(styles.wrapper) }>
+          {
+            rest.length
+              ? (
+                <span
+                  className='more'
+                >
+                  +{ rest.length }
+                </span>
+              )
+              : null
+          }
           <a href={ url } className='test--attachment-image-href' target='_blank'>
             <div
               className={ cx('image', { 'image-document': fileType === ATTACHMENT_TYPES.DOCUMENT }) }
