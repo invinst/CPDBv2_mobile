@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 
 import TimeLine from 'components/officer-page/tabbed-pane-section/timeline';
 import { getNewTimelineItems } from 'selectors/officer-page/timeline';
-import { getOfficerTimeline, changeFilter } from 'actions/officer-page/timeline';
+import { getOfficerTimeline } from 'actions/officer-page/timeline';
 
 
 function mapStateToProps(state, ownProps) {
@@ -15,7 +15,6 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  changeFilter,
   getOfficerTimeline,
 };
 

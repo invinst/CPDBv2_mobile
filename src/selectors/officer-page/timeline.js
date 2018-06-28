@@ -6,7 +6,6 @@ import { imgUrl } from 'utils/static-assets';
 
 
 const getSelectedFilter = (state) => state.officerPage.timeline.filter;
-export const getItems = (state) => get(state.officerPage.timeline, 'items', []);
 
 export const baseTransform = (item, index) => {
   const unitName = item['unit_name'] ? `Unit ${item['unit_name']}` : 'Unassigned';

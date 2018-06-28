@@ -57,7 +57,6 @@ export default class Timeline extends Component {
 
 Timeline.propTypes = {
   items: PropTypes.array,
-  changeFilter: PropTypes.func,
   getOfficerTimeline: PropTypes.func,
   officerId: PropTypes.number,
 };
