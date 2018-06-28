@@ -55,7 +55,7 @@ export default class Item extends Component {
   }
 
   render() {
-    const { height, className, item } = this.component;
+    const { className, item } = this.component;
     return (
       <div className={ cx(styles.wrapperStyle, className) }>
         { item }
