@@ -8,7 +8,6 @@ import Award from './showings/award';
 import UnitChange from './showings/unit-change';
 import Joined from './showings/joined';
 import Year from './showings/year';
-import Empty from './showings/empty';
 import { NEW_TIMELINE_ITEMS } from 'constants';
 import styles from './item.sass';
 
@@ -49,11 +48,6 @@ export default class Item extends Component {
         height: item.hasData ? 64 : 32,
         className: 'test--timeline-year-item',
         item: <Year { ...this.props } />
-      },
-      [NEW_TIMELINE_ITEMS.EMPTY]: {
-        height: 32,
-        className: 'test--timeline-empty-item',
-        item: <Empty { ...this.props } />
       },
     };
 

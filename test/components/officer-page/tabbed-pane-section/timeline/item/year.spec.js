@@ -1,0 +1,25 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+
+import Year from 'components/officer-page/tabbed-pane-section/timeline/item/showings/year';
+
+
+describe('Year component', function () {
+  it('should render item correctly', function () {
+    const year = {
+      date: '1994',
+      hasData: true,
+      isLastUnit: true,
+      kind: 'YEAR',
+      rank: 'Police Officer',
+      rankDisplay: ' ',
+      unitDescription: 'Mobile Strike Force',
+      unitDisplay: ' ',
+      unitName: '153',
+    };
+
+    const instance = shallow(<Year item={ year } hasBorderBottom={ false } />);
+    instance.find('.content').text().should.equal('1994');
+    instance.find('.date').text().should.equal('1994');
+  });
+});

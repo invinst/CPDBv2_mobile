@@ -1,12 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { nth, values, isEmpty } from 'lodash';
+import { nth, isEmpty } from 'lodash';
 import cx from 'classnames';
 
 import style from './timeline.sass';
 import Item from './item';
-import { NEW_TIMELINE_FILTERS, NEW_TIMELINE_ITEMS } from 'constants';
+import { NEW_TIMELINE_ITEMS } from 'constants';
 import GaUtil from 'utils/ga-util';
-// import Dropdown from 'components/common/dropdown';
 
 
 export default class Timeline extends Component {
@@ -16,25 +15,6 @@ export default class Timeline extends Component {
       getOfficerTimeline(officerId);
     }
     GaUtil.track('event', 'officer', 'view_detail', window.location.pathname);
-  }
-
-  renderHeader() {
-    const { changeFilter } = this.props;
-
-    return (
-      <div className='header-wrapper'>
-        <div className='showing-content-header'>
-          <div className='showing-text'>SHOWING</div>
-          {/*<Dropdown*/}
-            {/*defaultValue={ NEW_TIMELINE_FILTERS.ALL }*/}
-            {/*onChange={ changeFilter }*/}
-            {/*options={ values(NEW_TIMELINE_FILTERS) }*/}
-            {/*className='test--timeline-filter'*/}
-            {/*width={ 146 }*/}
-          {/*/>*/}
-        </div>
-      </div>
-    );
   }
 
   renderItems() {
@@ -69,7 +49,6 @@ export default class Timeline extends Component {
   render() {
     return (
       <div className={ cx(style.officerTimeline, 'test--officer-timeline') }>
-        {/*{ this.renderHeader() }*/}
         { this.renderItems() }
       </div>
     );
