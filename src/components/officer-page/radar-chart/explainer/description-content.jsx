@@ -8,7 +8,7 @@ export default class DescriptionContent extends Component {
     const { content, subContent } = this.props;
 
     return (
-      <div className={ style.explainerContent }>
+      <div className={ style.descriptionContent }>
         <p className='content'>{ content }</p>
         <p className='sub-content'>{ subContent }</p>
       </div>
