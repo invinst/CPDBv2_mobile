@@ -1,0 +1,39 @@
+---
+
+- name: Install dependencies
+  apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
+  with_items:
+    - git
+    - curl
+    - build-essential
+    - libssl-dev
+  become: true
+
+- name: Install nvm
+  become: yes
+  become_user: "{{ nvm.user }}"
+  git: repo=https://github.com/creationix/nvm.git dest=~/.nvm version={{ nvm.version }}
+
+- name: Source nvm in ~/.profile
+  become: yes
+  become_user: "{{ nvm.user }}"
+  lineinfile: >
+    dest=~/.profile
+    line="source ~/.nvm/nvm.sh"
+    create=yes
+
+- name: Install node {{ nvm.node_version }}
+  shell: >
+    /bin/bash -c "source ~/.nvm/nvm.sh && nvm install {{ nvm.node_version }}"
+  become: yes
+  become_user: "{{ nvm.user }}"
+  register: nvm_install_result
+  changed_when: "'is already installed.' not in nvm_install_result.stdout"
+
+- name: Install yarn {{ nvm.yarn_version }}
+  shell: >
+    /bin/bash -c "source ~/.nvm/nvm.sh &&
+                  nvm use {{ nvm.node_version }} &&
+                  npm install -g yarn@{{ nvm.yarn_version }}"
+  become: yes
+  become_user: "{{ nvm.user }}"

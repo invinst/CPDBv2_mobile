@@ -1,0 +1,59 @@
+---
+
+
+- block:
+    - name: Create a release name
+      shell: echo "$(date +%Y%m%d%H%M%S)"
+      register: release_name
+
+    - name: Pull code from git repo
+      git: repo={{ deploy.git_repo }}
+           dest="{{ deploy.temp }}{{ release_name.stdout }}"
+           accept_hostkey=True
+           version={{ deploy.branch }}
+           force=yes
+
+    - name: Install node packages
+      shell: >
+        /bin/bash -c "source ~/.nvm/nvm.sh && nvm use {{ deploy.node_version }} && yarn install"
+      args:
+        chdir: "{{ deploy.temp }}{{ release_name.stdout }}"
+      become: yes
+      become_user: "{{ deploy.user }}"
+
+    - name: Build the app
+      shell: >
+        /bin/bash -c "source ~/.nvm/nvm.sh && nvm use {{ deploy.node_version }} && yarn run dist"
+      args:
+        chdir: "{{ deploy.temp }}{{ release_name.stdout }}"
+      become: yes
+      become_user: "{{ deploy.user }}"
+
+    - name: Store the revision for later query
+      shell: "git rev-parse HEAD > {{ deploy.temp }}{{ release_name.stdout }}/dist/.REVISION"
+      args:
+        chdir: "{{ deploy.temp }}{{ release_name.stdout }}"
+
+    - name: Move the release to releases folder
+      command: mv {{ deploy.temp }}{{ release_name.stdout }}/dist {{ deploy.releases }}/{{ release_name.stdout }}
+
+    - name: Remove current folder if it's a directory
+      file:
+        state: absent
+        path: "{{ deploy.current }}"
+
+    - name: Change softlink to new release
+      file:
+        state: link
+        path: "{{ deploy.current }}"
+        src: "{{ deploy.releases }}/{{ release_name.stdout }}"
+
+    - name: Clean up old releases
+      shell: ls -1dt {{ deploy.releases }}/* | tail -n +{{ deploy.keep_releases | int + 1 }} | xargs rm -rf
+      when: deploy.keep_releases > 0
+
+  always:
+    - name: Clean up temp folder
+      file:
+        state: absent
+        path: "{{ deploy.temp }}{{ release_name.stdout }}"

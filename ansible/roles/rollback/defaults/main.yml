@@ -1,0 +1,4 @@
+rollback:
+  releases: "/CPDB/CPDBv2_mobile/releases"
+  rollback_to: ""
+  current: "/CPDB/CPDBv2_mobile/current"
