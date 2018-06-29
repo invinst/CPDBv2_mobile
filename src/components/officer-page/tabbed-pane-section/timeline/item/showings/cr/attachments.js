@@ -12,10 +12,13 @@ export default class Attachments extends Component {
     if (firstAttachment) {
       const { url, fileType } = firstAttachment;
       return (
-        <span className={ cx(styles.wrapper) } style={ { backgroundColor: 'red'} }>
-          <a href={ url } className='test--attachment-image-href' target='_blank'>
-            <div className={ cx('image', { 'image-document': fileType === ATTACHMENT_TYPES.DOCUMENT }) } />
-          </a>
+        <span className={ cx(styles.wrapper) } >
+          <a
+            href={ url }
+            target='_blank'
+            className={ cx('image', { 'image-document': fileType === ATTACHMENT_TYPES.DOCUMENT }) }
+            style={ { backgroundImage: `url(${firstAttachment.previewImageUrl})` } }
+          />
         </span>
       );
     }

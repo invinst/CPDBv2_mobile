@@ -17,7 +17,6 @@ import {
   markLatestUnit,
 } from 'selectors/officer-page/timeline';
 import { NEW_TIMELINE_FILTERS } from 'constants';
-import { imgUrl } from 'utils/static-assets';
 
 
 describe('Officer new timeline selectors', function () {
@@ -119,13 +118,13 @@ describe('Officer new timeline selectors', function () {
         {
           title: 'Audio Clip',
           url: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/262463136&amp',
-          previewImageUrl: imgUrl('ic-audio.svg'),
+          previewImageUrl: '/img/ic-audio.svg',
           fileType: 'audio',
         },
         {
           title: 'Video Clip',
           url: 'https://player.vimeo.com/video/165206070',
-          previewImageUrl: imgUrl('ic-video.svg'),
+          previewImageUrl: '/img/ic-video.svg',
           fileType: 'video',
         },
       ]);

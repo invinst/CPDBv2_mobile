@@ -2,7 +2,6 @@ import { concat, difference, filter, get, includes, isEmpty, nth, rangeRight, sl
 import moment from 'moment';
 
 import { NEW_TIMELINE_FILTERS, NEW_TIMELINE_ITEMS, ATTACHMENT_TYPES } from 'constants';
-import { imgUrl } from 'utils/static-assets';
 
 
 const getSelectedFilter = (state) => state.officerPage.timeline.filter;
@@ -34,9 +33,9 @@ export const attachmentsTransform = (attachments) => {
       const fileType = attachment['file_type'];
       let previewImageUrl = attachment['preview_image_url'];
       if (fileType === ATTACHMENT_TYPES.AUDIO) {
-        previewImageUrl = imgUrl('ic-audio.svg');
+        previewImageUrl = '/img/ic-audio.svg';
       } else if (fileType === ATTACHMENT_TYPES.VIDEO) {
-        previewImageUrl = imgUrl('ic-video.svg');
+        previewImageUrl = '/img/ic-video.svg';
       }
       return {
         title: attachment.title,
