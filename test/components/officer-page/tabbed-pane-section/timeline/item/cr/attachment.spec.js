@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { stub } from 'sinon';
 
 import Attachments from 'components/officer-page/tabbed-pane-section/timeline/item/showings/cr/attachments';
 
@@ -35,5 +36,15 @@ describe('Attachments component', function () {
     }];
     const instance = shallow(<Attachments attachments={ videoAttachments } />);
     instance.find('image-document').exists().should.be.false();
+  });
+
+  it('should open new attachment file tab when click on attachment', function () {
+    const stubOpen = stub(window, 'open');
+    const instance = shallow(<Attachments attachments={ attachments } />);
+    instance.find('.image').simulate('click', { preventDefault() {} });
+    stubOpen.calledWith(
+      'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-1-of-3.html'
+    ).should.be.true();
+    stubOpen.restore();
   });
 });

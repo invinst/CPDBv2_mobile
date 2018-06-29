@@ -6,20 +6,30 @@ import { ATTACHMENT_TYPES } from 'constants';
 
 
 export default class Attachments extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    const url = this.props.attachments[0].url;
+    window.open(url, '_blank');
+  }
+
   render() {
-    const { attachments } = this.props;
-    const firstAttachment = attachments[0];
+    const firstAttachment = this.props.attachments[0];
     if (firstAttachment) {
-      const { url, fileType } = firstAttachment;
+      const { fileType, previewImageUrl } = firstAttachment;
       return (
-        <span className={ cx(styles.wrapper) } >
-          <a
-            href={ url }
-            target='_blank'
+        <div className={ cx(styles.wrapper) } >
+          <div
             className={ cx('image', { 'image-document': fileType === ATTACHMENT_TYPES.DOCUMENT }) }
-            style={ { backgroundImage: `url(${firstAttachment.previewImageUrl})` } }
+            style={ { backgroundImage: `url(${previewImageUrl})` } }
+            onClick={ this.handleClick }
           />
-        </span>
+        </div>
       );
     }
     return <span className={ cx(styles.wrapper) }/>;
