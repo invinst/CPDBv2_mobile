@@ -47,4 +47,9 @@ describe('Attachments component', function () {
     ).should.be.true();
     stubOpen.restore();
   });
+
+  it('should render null when there are no attachments', function () {
+    const instance = shallow(<Attachments attachments={ [] } />);
+    instance.find('.test-wrapper').exists().should.be.false();
+  });
 });

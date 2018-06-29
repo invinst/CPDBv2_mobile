@@ -8,10 +8,9 @@ import {
 } from 'actions/officer-page/timeline';
 
 
-describe('officer actions', function () {
+describe('timeline actions', function () {
   describe('getOfficerTimeline', function () {
     it('should return right action', function () {
-
       getOfficerTimeline(11).should.eql({
         types: [
           OFFICER_NEW_TIMELINE_ITEMS_REQUEST_START,
