@@ -1,10 +1,8 @@
-import { concat, difference, filter, get, includes, isEmpty, nth, rangeRight, slice, values } from 'lodash';
+import { get, nth, rangeRight, slice, isEmpty } from 'lodash';
 import moment from 'moment';
 
-import { NEW_TIMELINE_FILTERS, NEW_TIMELINE_ITEMS, ATTACHMENT_TYPES } from 'constants';
+import { TIMELINE_ITEMS, ATTACHMENT_TYPES } from 'constants/officer-page/tabbed-pane-section/timeline';
 
-
-const getSelectedFilter = (state) => state.officerPage.timeline.filter;
 
 export const baseTransform = (item, index) => {
   const unitName = item['unit_name'] ? `Unit ${item['unit_name']}` : 'Unassigned';
@@ -70,11 +68,11 @@ export const awardTransform = (item, index) => ({
 });
 
 const transformMap = {
-  [NEW_TIMELINE_ITEMS.CR]: crTransform,
-  [NEW_TIMELINE_ITEMS.FORCE]: trrTransform,
-  [NEW_TIMELINE_ITEMS.JOINED]: baseTransform,
-  [NEW_TIMELINE_ITEMS.UNIT_CHANGE]: baseTransform,
-  [NEW_TIMELINE_ITEMS.AWARD]: awardTransform,
+  [TIMELINE_ITEMS.CR]: crTransform,
+  [TIMELINE_ITEMS.FORCE]: trrTransform,
+  [TIMELINE_ITEMS.JOINED]: baseTransform,
+  [TIMELINE_ITEMS.UNIT_CHANGE]: baseTransform,
+  [TIMELINE_ITEMS.AWARD]: awardTransform,
 };
 
 const transform = (item, index) => transformMap[item.kind](item, index);
@@ -90,9 +88,9 @@ export const yearItem = (baseItem, year, hasData) => ({
   isLastRank: false,
   isFirstUnit: false,
   isLastUnit: false,
-  kind: NEW_TIMELINE_ITEMS.YEAR,
+  kind: TIMELINE_ITEMS.YEAR,
   date: `${year}`,
-  key: `${baseItem.key}-${NEW_TIMELINE_ITEMS.YEAR}-${year}`,
+  key: `${baseItem.key}-${TIMELINE_ITEMS.YEAR}-${year}`,
   hasData,
 });
 
@@ -124,8 +122,8 @@ export const fillYears = (items) => {
 
 const emptyItem = (baseItem) => ({
   ...baseItem,
-  kind: NEW_TIMELINE_ITEMS.EMPTY,
-  key: `${baseItem.key}-${NEW_TIMELINE_ITEMS.EMPTY}`,
+  kind: TIMELINE_ITEMS.EMPTY,
+  key: `${baseItem.key}-${TIMELINE_ITEMS.EMPTY}`,
 });
 
 export const fillEmptyItems = (items) => {
@@ -135,7 +133,7 @@ export const fillEmptyItems = (items) => {
     newItems.push(item);
 
     const nextItem = nth(items, index + 1);
-    if (nextItem && item.kind === NEW_TIMELINE_ITEMS.UNIT_CHANGE && nextItem.kind === NEW_TIMELINE_ITEMS.YEAR) {
+    if (nextItem && item.kind === TIMELINE_ITEMS.UNIT_CHANGE && nextItem.kind === TIMELINE_ITEMS.YEAR) {
       newItems.push(emptyItem(nextItem));
     }
   });
@@ -170,7 +168,7 @@ export const markFirstAndLastUnit = (items) => {
   items[0].isFirstUnit = true;
   items[items.length - 1].isLastUnit = true;
   items.map((item, index) => {
-    if (item.kind === NEW_TIMELINE_ITEMS.UNIT_CHANGE) {
+    if (item.kind === TIMELINE_ITEMS.UNIT_CHANGE) {
       if (index - 1 >= 0) {
         items[index - 1].isLastUnit = true;
       }
@@ -184,7 +182,7 @@ export const fillUnitChange = (items) => {
   let previousUnitChangeItem = undefined;
 
   items.map((item) => {
-    if (item.kind === NEW_TIMELINE_ITEMS.UNIT_CHANGE) {
+    if (item.kind === TIMELINE_ITEMS.UNIT_CHANGE) {
       if (previousUnitChangeItem !== undefined) {
         previousUnitChangeItem.oldUnitName = item.unitName;
         previousUnitChangeItem.oldUnitDescription = item.unitDescription;
@@ -203,30 +201,13 @@ export const fillUnitChange = (items) => {
   return items;
 };
 
-const removableKinds = [NEW_TIMELINE_ITEMS.CR, NEW_TIMELINE_ITEMS.FORCE, NEW_TIMELINE_ITEMS.AWARD];
-const unremovableKinds = difference(values(NEW_TIMELINE_ITEMS), removableKinds);
-
-const filteredKindsMap = {
-  [NEW_TIMELINE_FILTERS.CRS]: [NEW_TIMELINE_ITEMS.CR],
-  [NEW_TIMELINE_FILTERS.FORCE]: [NEW_TIMELINE_ITEMS.FORCE],
-  [NEW_TIMELINE_FILTERS.AWARDS]: [NEW_TIMELINE_ITEMS.AWARD],
-  [NEW_TIMELINE_FILTERS.ALL]: removableKinds,
-};
-
-export const applyFilter = (selectedFilter, items) => {
-  const filteredKinds = filteredKindsMap[selectedFilter];
-  const displayKinds = concat(unremovableKinds, filteredKinds);
-
-  return filter(items, (item) => includes(displayKinds, item.kind));
-};
-
 export const markLatestUnit = (items) => {
   const latestUnit = items[0] ? items[0].unitName : undefined;
 
   let inLastUnitPeriod = true;
 
   return items.map((item) => {
-    if (item.kind === NEW_TIMELINE_ITEMS.UNIT_CHANGE) {
+    if (item.kind === TIMELINE_ITEMS.UNIT_CHANGE) {
       inLastUnitPeriod = false;
     }
     item.isCurrentUnit = inLastUnitPeriod && item.unitName === latestUnit;
@@ -235,16 +216,12 @@ export const markLatestUnit = (items) => {
 };
 
 export const getNewTimelineItems = state => {
-  const items = get(state.officerPage.timeline, 'items', []);
-
-  const transformedItems = markLatestUnit(items.map(transform));
-
-  const filteredItems = applyFilter(getSelectedFilter(state), transformedItems);
-  if (isEmpty(filteredItems)) {
-    return [];
-  }
   // Do not change the order of these processors
   const processors = [fillYears, fillEmptyItems, dedupeRank, dedupeUnit, markFirstAndLastUnit, fillUnitChange];
-
-  return processors.reduce((accItems, processor) => processor(accItems), filteredItems);
+  const items = get(state.officerPage.timeline, 'items', []);
+  const transformedItems = markLatestUnit(items.map(transform));
+  if (isEmpty(transformedItems)) {
+    return [];
+  }
+  return processors.reduce((accItems, processor) => processor(accItems), transformedItems);
 };

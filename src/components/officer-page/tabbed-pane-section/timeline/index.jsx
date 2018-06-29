@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import style from './timeline.sass';
 import Item from './item';
-import { NEW_TIMELINE_ITEMS } from 'constants';
+import { TIMELINE_ITEMS } from 'constants/officer-page/tabbed-pane-section/timeline';
 import GaUtil from 'utils/ga-util';
 
 
@@ -26,10 +26,10 @@ export default class Timeline extends Component {
             const nextItem = nth(items, index + 1);
 
             const hasBorderBottom = (
-              item.kind !== NEW_TIMELINE_ITEMS.UNIT_CHANGE
+              item.kind !== TIMELINE_ITEMS.UNIT_CHANGE
               && nextItem !== undefined
-              && nextItem.kind !== NEW_TIMELINE_ITEMS.UNIT_CHANGE
-              && nextItem.kind !== NEW_TIMELINE_ITEMS.JOINED
+              && nextItem.kind !== TIMELINE_ITEMS.UNIT_CHANGE
+              && nextItem.kind !== TIMELINE_ITEMS.JOINED
             );
 
             return (

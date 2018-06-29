@@ -245,7 +245,6 @@ export default {
     /^\/complaint\/\d+\/?$/
   ],
 
-
   SEARCH_CATEGORIES: [
     {
       name: 'Officers',
@@ -270,35 +269,4 @@ export default {
   BOTTOM_PADDING: 133,
   TOP_MARGIN: 58,
   NEW_DIVIDER_WEIGHT: 2,
-};
-
-//Officer timeline
-export const NEW_TIMELINE_ITEMS = {
-  CR: 'CR',
-  FORCE: 'FORCE',
-  AWARD: 'AWARD',
-  UNIT_CHANGE: 'UNIT_CHANGE',
-  JOINED: 'JOINED',
-  YEAR: 'YEAR',
-  EMPTY: 'EMPTY',
-};
-
-export const NEW_TIMELINE_FILTERS = {
-  ALL: 'ALL EVENTS',
-  CRS: 'COMPLAINTS',
-  FORCE: 'USE OF FORCE',
-  AWARDS: 'AWARDS',
-};
-
-export const ATTACHMENT_TYPES = {
-  VIDEO: 'video',
-  AUDIO: 'audio',
-  DOCUMENT: 'document',
-};
-
-export const OFFICER_PAGE_TAB_NAMES = {
-  TIMELINE: 'TIMELINE',
-  MAP: 'MAP',
-  COACCUSALS: 'COACCUSALS',
-  ATTACHMENTS: 'ATTACHMENTS',
 };

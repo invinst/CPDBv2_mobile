@@ -8,7 +8,7 @@ import Award from './showings/award';
 import UnitChange from './showings/unit-change';
 import Joined from './showings/joined';
 import Year from './showings/year';
-import { NEW_TIMELINE_ITEMS } from 'constants';
+import { TIMELINE_ITEMS } from 'constants/officer-page/tabbed-pane-section/timeline';
 import styles from './item.sass';
 
 
@@ -19,33 +19,27 @@ export default class Item extends Component {
     const { item } = props;
 
     const componentMap = {
-      [NEW_TIMELINE_ITEMS.CR]: {
-        height: 58,
+      [TIMELINE_ITEMS.CR]: {
         className: 'test--timeline-cr-item',
         item: <Cr { ...this.props } />
       },
-      [NEW_TIMELINE_ITEMS.FORCE]: {
-        height: 58,
+      [TIMELINE_ITEMS.FORCE]: {
         className: 'test--timeline-trr-item',
         item: <Trr { ...this.props }/>
       },
-      [NEW_TIMELINE_ITEMS.AWARD]: {
-        height: 58,
+      [TIMELINE_ITEMS.AWARD]: {
         className: 'test--timeline-award-item',
         item: <Award { ...this.props } />
       },
-      [NEW_TIMELINE_ITEMS.UNIT_CHANGE]: {
-        height: 24,
+      [TIMELINE_ITEMS.UNIT_CHANGE]: {
         className: 'test--timeline-unit-change-item',
         item: <UnitChange { ...this.props } />
       },
-      [NEW_TIMELINE_ITEMS.JOINED]: {
-        height: 24,
+      [TIMELINE_ITEMS.JOINED]: {
         className: 'test--timeline-joined-item',
         item: <Joined { ...this.props } />
       },
-      [NEW_TIMELINE_ITEMS.YEAR]: {
-        height: item.hasData ? 64 : 32,
+      [TIMELINE_ITEMS.YEAR]: {
         className: 'test--timeline-year-item',
         item: <Year { ...this.props } />
       },

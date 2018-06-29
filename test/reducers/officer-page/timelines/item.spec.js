@@ -1,7 +1,7 @@
 import items from 'reducers/officer-page/timeline/items';
 import {
-  OFFICER_NEW_TIMELINE_ITEMS_REQUEST_SUCCESS,
-  OFFICER_NEW_TIMELINE_ITEMS_REQUEST_FAILURE,
+  OFFICER_TIMELINE_ITEMS_REQUEST_SUCCESS,
+  OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE,
 } from 'actions/officer-page/timeline';
 
 
@@ -10,16 +10,16 @@ describe('items reducer', function () {
     items(undefined, {}).should.eql([]);
   });
 
-  it('should handle OFFICER_NEW_TIMELINE_ITEMS_REQUEST_SUCCESS', function () {
+  it('should handle OFFICER_TIMELINE_ITEMS_REQUEST_SUCCESS', function () {
     items([1, 2], {
-      type: OFFICER_NEW_TIMELINE_ITEMS_REQUEST_SUCCESS,
+      type: OFFICER_TIMELINE_ITEMS_REQUEST_SUCCESS,
       payload: [3, 4, 5]
     }).should.eql([3, 4, 5]);
   });
 
-  it('should handle OFFICER_NEW_TIMELINE_ITEMS_REQUEST_FAILURE', function () {
+  it('should handle OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE', function () {
     items([1, 2], {
-      type: OFFICER_NEW_TIMELINE_ITEMS_REQUEST_FAILURE,
+      type: OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE,
       payload: [3, 4, 5]
     }).should.eql([1, 2]);
   });

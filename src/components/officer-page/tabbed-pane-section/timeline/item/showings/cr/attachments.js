@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 
 import styles from './attachments.sass';
-import { ATTACHMENT_TYPES } from 'constants';
+import { ATTACHMENT_TYPES } from 'constants/officer-page/tabbed-pane-section/timeline';
 
 
 export default class Attachments extends Component {
@@ -12,6 +12,7 @@ export default class Attachments extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+  // this is necessary at we cannot use nested anchors
   handleClick(e) {
     e.preventDefault();
     const url = this.props.attachments[0].url;
