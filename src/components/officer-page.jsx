@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { isNil, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
@@ -27,10 +27,6 @@ class OfficerPage extends Component {
     this.toggleHistoricBadges = this.toggleHistoricBadges.bind(this);
   }
 
-  toggleHistoricBadges() {
-    this.setState({ historicBadgesExpanded: !this.state.historicBadgesExpanded });
-  }
-
   componentDidMount() {
     const { summary, pk, fetchOfficer } = this.props;
     if (!summary) {
@@ -38,6 +34,10 @@ class OfficerPage extends Component {
     }
 
     GaUtil.track('event', 'officer', 'view_detail', window.location.pathname);
+  }
+
+  toggleHistoricBadges() {
+    this.setState({ historicBadgesExpanded: !this.state.historicBadgesExpanded });
   }
 
   getMetricWidgetData() {
