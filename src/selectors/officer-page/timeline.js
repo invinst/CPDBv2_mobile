@@ -1,4 +1,4 @@
-import { get, nth, rangeRight, slice, isEmpty } from 'lodash';
+import { get, rangeRight, slice, isEmpty } from 'lodash';
 import moment from 'moment';
 
 import { TIMELINE_ITEMS, ATTACHMENT_TYPES } from 'constants/officer-page/tabbed-pane-section/timeline';
@@ -11,16 +11,8 @@ export const baseTransform = (item, index) => {
     year: moment(item.date).year(),
     date: moment(item.date).format('MMM D').toUpperCase(),
     kind: item.kind,
-    rank: item.rank,
-    rankDisplay: item.rank,
     unitName: unitName,
     unitDescription: item['unit_description'],
-    unitDisplay: unitName,
-    isFirstRank: false,
-    isLastRank: false,
-    isFirstUnit: false,
-    isLastUnit: false,
-    isCurrentUnit: false,
     key: index,
   };
 };
@@ -50,7 +42,6 @@ export const crTransform = (item, index) => ({
   ...baseTransform(item, index),
   category: item.category,
   crid: item.crid,
-  coaccused: item.coaccused,
   finding: item.finding,
   outcome: item.outcome,
   attachments: attachmentsTransform(item.attachments),
@@ -78,16 +69,6 @@ const transformMap = {
 const transform = (item, index) => transformMap[item.kind](item, index);
 
 export const yearItem = (baseItem, year, hasData) => ({
-  rank: baseItem.rank,
-  rankDisplay: baseItem.rankDisplay,
-  unitName: baseItem.unitName,
-  unitDescription: baseItem.unitDescription,
-  unitDisplay: baseItem.unitDisplay,
-  isCurrentUnit: baseItem.isCurrentUnit,
-  isFirstRank: false,
-  isLastRank: false,
-  isFirstUnit: false,
-  isLastUnit: false,
   kind: TIMELINE_ITEMS.YEAR,
   date: `${year}`,
   key: `${baseItem.key}-${TIMELINE_ITEMS.YEAR}-${year}`,
@@ -120,64 +101,6 @@ export const fillYears = (items) => {
   return newItems;
 };
 
-const emptyItem = (baseItem) => ({
-  ...baseItem,
-  kind: TIMELINE_ITEMS.EMPTY,
-  key: `${baseItem.key}-${TIMELINE_ITEMS.EMPTY}`,
-});
-
-export const fillEmptyItems = (items) => {
-  const newItems = [];
-
-  items.map((item, index) => {
-    newItems.push(item);
-
-    const nextItem = nth(items, index + 1);
-    if (nextItem && item.kind === TIMELINE_ITEMS.UNIT_CHANGE && nextItem.kind === TIMELINE_ITEMS.YEAR) {
-      newItems.push(emptyItem(nextItem));
-    }
-  });
-
-  return newItems;
-};
-
-export const dedupeRank = (items) => {
-  items[0].isFirstRank = true;
-  items[items.length - 1].isLastRank = true;
-  return items.map((item, index) => {
-    if (index !== 0) {
-      item.rankDisplay = ' ';
-    }
-    return item;
-  });
-};
-
-export const dedupeUnit = (items) => {
-  return items.map((currentItem, index) => {
-    if (index > 0) {
-      const previousItem = items[index - 1];
-      if (currentItem.unitDescription === previousItem.unitDescription) {
-        currentItem.unitDisplay = ' ';
-      }
-    }
-    return currentItem;
-  });
-};
-
-export const markFirstAndLastUnit = (items) => {
-  items[0].isFirstUnit = true;
-  items[items.length - 1].isLastUnit = true;
-  items.map((item, index) => {
-    if (item.kind === TIMELINE_ITEMS.UNIT_CHANGE) {
-      if (index - 1 >= 0) {
-        items[index - 1].isLastUnit = true;
-      }
-      items[index + 1].isFirstUnit = true;
-    }
-  });
-  return items;
-};
-
 export const fillUnitChange = (items) => {
   let previousUnitChangeItem = undefined;
 
@@ -201,25 +124,11 @@ export const fillUnitChange = (items) => {
   return items;
 };
 
-export const markLatestUnit = (items) => {
-  const latestUnit = items[0] ? items[0].unitName : undefined;
-
-  let inLastUnitPeriod = true;
-
-  return items.map((item) => {
-    if (item.kind === TIMELINE_ITEMS.UNIT_CHANGE) {
-      inLastUnitPeriod = false;
-    }
-    item.isCurrentUnit = inLastUnitPeriod && item.unitName === latestUnit;
-    return item;
-  });
-};
-
 export const getNewTimelineItems = state => {
   // Do not change the order of these processors
-  const processors = [fillYears, fillEmptyItems, dedupeRank, dedupeUnit, markFirstAndLastUnit, fillUnitChange];
+  const processors = [fillYears, fillUnitChange];
   const items = get(state.officerPage.timeline, 'items', []);
-  const transformedItems = markLatestUnit(items.map(transform));
+  const transformedItems = items.map(transform);
   if (isEmpty(transformedItems)) {
     return [];
   }

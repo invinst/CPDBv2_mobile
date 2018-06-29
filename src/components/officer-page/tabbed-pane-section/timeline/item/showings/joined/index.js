@@ -7,12 +7,12 @@ import styles from './joined.sass';
 export default class Joined extends Component {
 
   render() {
-    const { item } = this.props;
+    const { date } = this.props.item;
 
     return (
       <span className={ cx(styles.wrapper) }>
         <span className='join'>Joined CPD</span>
-        <span className='date'>{ item.date }</span>
+        <span className='date'>{ date }</span>
       </span>
     );
   }
