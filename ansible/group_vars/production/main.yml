@@ -33,12 +33,13 @@ deploy:
 
   deploy_to: "{{ _deploy_to }}"
   releases: "{{ _releases }}"
-  logs: "{{ _logs }}"
+  logs: "{{ _logs }}"x
   current: "{{ _current }}"
   temp: "/tmp/mobilev2-build-"
 
   node_version: "{{ _node_version}}"
 
+  webpack_env: "prod"
   branch: master
   git_repo: git@github.com:EastAgile/CPDBv2_mobile.git
   keep_releases: 30

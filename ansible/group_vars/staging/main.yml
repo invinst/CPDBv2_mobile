@@ -37,6 +37,7 @@ deploy:
 
   node_version: "{{ _node_version}}"
 
+  webpack_env: "staging"
   branch: staging
   git_repo: git@github.com:EastAgile/CPDBv2_mobile.git
   keep_releases: 30

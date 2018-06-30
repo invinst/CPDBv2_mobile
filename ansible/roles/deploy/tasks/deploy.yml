@@ -21,13 +21,15 @@
       become: yes
       become_user: "{{ deploy.user }}"
 
-    - name: Build the app
+    - name: Build the app for {{ deploy.webpack_env }}
       shell: >
         /bin/bash -c "source ~/.nvm/nvm.sh && nvm use {{ deploy.node_version }} && yarn run dist"
       args:
         chdir: "{{ deploy.temp }}{{ release_name.stdout }}"
       become: yes
       become_user: "{{ deploy.user }}"
+      environment:
+        WEBPACK_ENV: "{{ deploy.webpack_env }}"
 
     - name: Store the revision for later query
       shell: "git rev-parse HEAD > {{ deploy.temp }}{{ release_name.stdout }}/dist/.REVISION"
@@ -42,7 +44,7 @@
         state: absent
         path: "{{ deploy.current }}"
 
-    - name: Change softlink to new release
+    - name: Change softlink to new release {{ release_name.stdout }}
       file:
         state: link
         path: "{{ deploy.current }}"
