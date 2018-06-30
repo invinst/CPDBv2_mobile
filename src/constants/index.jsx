@@ -200,14 +200,15 @@ export default {
   OFFICER_COMPLAINT_COUNT_RANGE: [20, 9, 3, 2, 0],
 
   // API endpoints
-  ALLEGATION_API_ENDPOINT: '/api/allegation/',
   OFFICER_API_ENDPOINT: '/officers/',
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
-  REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
-  INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
   LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
   COMPLAINT_API_ENDPOINT: '/mobile/cr/',
   TRR_API_ENDPOINT: '/mobile/trr/',
+  TOP_OFFICERS_BY_ALLEGATION_ENDPOINT: '/officers/top-by-allegation/',
+  RECENT_ACTIVITIES_ENDPOINT: '/activity-grid/',
+  NEW_DOCUMENT_ALLEGATIONS_ENDPOINT: '/cr/list-by-new-document/',
+  COMPLAINT_SUMMARIES_ENDPOINT: '/cr/complaint-summaries/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
