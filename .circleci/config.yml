@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/node:8.11.3-browsers
     steps:
@@ -10,3 +10,21 @@ jobs:
       - run: yarn run lint
       - run: yarn run ci-test
       - run: yarn run live-test
+  deploy:
+    docker:
+      - image: ansible/ansible:ubuntu1604
+    steps:
+      - checkout
+      - run: ansible-playbook -i staging staging.yml
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: staging
