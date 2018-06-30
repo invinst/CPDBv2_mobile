@@ -12,10 +12,12 @@ jobs:
       - run: yarn run live-test
   deploy:
     docker:
-      - image: ansible/ansible:ubuntu1604
+      - image: circleci/python:3.6.4
+
     steps:
       - checkout
-      - run: ansible-playbook -i staging staging.yml
+      - run: pipenv install
+      - run: pipenv run ansible-playbook -i ansible/staging ansible/deploy.yml
 
 workflows:
   version: 2
