@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.11.3-browsers
+    steps:
+      - checkout
+      - run: sudo npm install i -g yarn@1.7.0
+      - run: yarn install
+      - run: yarn run lint
+      - run: yarn run ci-test
+      - run: yarn run live-test
