@@ -202,7 +202,7 @@ export default {
   // API endpoints
   OFFICER_API_ENDPOINT: '/officers/',
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
-  LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
+  LANDING_PAGE_CMS_API_ENDPOINT: '/cms-pages/landing-page/',
   COMPLAINT_API_ENDPOINT: '/mobile/cr/',
   TRR_API_ENDPOINT: '/mobile/trr/',
   TOP_OFFICERS_BY_ALLEGATION_ENDPOINT: '/officers/top-by-allegation/',

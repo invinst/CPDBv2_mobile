@@ -13,7 +13,7 @@ import style from './landing-page.sass';
 export default class LandingPage extends Component {
 
   componentDidMount() {
-    this.props.requestLandingPage();
+    this.props.requestCMS();
   }
 
   render() {
@@ -36,9 +36,9 @@ export default class LandingPage extends Component {
 }
 
 LandingPage.defaultProps = {
-  requestLandingPage: () => {}
+  requestCMS: () => {}
 };
 
 LandingPage.propTypes = {
-  requestLandingPage: PropTypes.func
+  requestCMS: PropTypes.func
 };

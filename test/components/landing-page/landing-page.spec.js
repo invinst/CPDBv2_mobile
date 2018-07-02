@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { spy } from 'sinon';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 
 import constants from 'constants';
 import LandingPage from 'components/landing-page';
@@ -25,8 +27,21 @@ describe('<LandingPage />', function () {
   });
 
   it('should request landing page data on mount', function () {
-    const spyRequestLandingPage = spy();
-    mount(<LandingPage requestLandingPage={ spyRequestLandingPage } />);
-    spyRequestLandingPage.calledWith().should.be.true();
+    const store = configureStore()({
+      landingPage: {
+        topOfficersByAllegation: [1],
+        recentActivities: [1],
+        newDocumentAllegations: [1],
+        complaintSummaries: [1]
+      }
+    });
+
+    const spyRequestCMS = spy();
+    mount(
+      <Provider store={ store }>
+        <LandingPage requestCMS={ spyRequestCMS } />
+      </Provider>
+    );
+    spyRequestCMS.calledWith().should.be.true();
   });
 });
