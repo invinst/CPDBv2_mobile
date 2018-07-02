@@ -1,9 +1,13 @@
+import config from 'config';
+import configureProd from './configureStore.prod';
 import configureDev from './configureStore.dev';
 
-let configureStore = configureDev;
+let configureStore;
 
-if (global.DEVELOPMENT) {
   /* istanbul ignore next */
+if (['staging', 'production'].includes(config.appEnv)) {
+  configureStore = configureProd;
+} else {
   configureStore = configureDev;
 }
 

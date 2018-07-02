@@ -39,7 +39,7 @@ deploy:
 
   node_version: "{{ _node_version}}"
 
-  webpack_env: "prod"
+  webpack_env: "production"
   branch: master
   git_repo: git@github.com:EastAgile/CPDBv2_mobile.git
   keep_releases: 30
