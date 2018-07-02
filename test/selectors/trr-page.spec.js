@@ -32,11 +32,14 @@ describe('trr-page selectors', () => {
                 race: 'White',
                 'appointed_date': '2005-09-26',
                 'birth_year': 1973,
-                'resignation_date': '',
+                'date_of_resignation': '2015-12-23',
                 unit: {
                   'unit_name': '253',
                   'description': 'Targeted Response Unit'
                 },
+                'percentile_allegation_internal': 11.1,
+                'percentile_allegation_civilian': 22.2,
+                'percentile_trr': 99.9,
               },
               'officer_in_uniform': false,
               'officer_assigned_beat': '4682E',
@@ -67,12 +70,23 @@ describe('trr-page selectors', () => {
           officerId: 583,
           fullName: 'Donovan Markiewicz',
           demographic: '44 years old, white, male.',
-          careerDuration: 'SEP 26, 2005 — Present',
+          careerDuration: 'SEP 26, 2005 — DEC 23, 2015',
           unitName: '253',
           unitDescription: 'Targeted Response Unit',
           assignedBeat: 'Beat 4682E',
           onDuty: 'Yes',
           inUniform: 'No',
+          percentile: {
+            officerId: undefined,
+            year: undefined,
+            items: [
+              { axis: 'Use of Force Reports', value: 99.9 },
+              { axis: 'Internal Allegations', value: 11.1 },
+              { axis: 'Civilian Allegations', value: 22.2 }
+            ],
+            visualTokenBackground: '#e85050',
+            textColor: '#231F20',
+          },
         },
         info: {
           victimDemographic: 'Black, Male, Age 27',

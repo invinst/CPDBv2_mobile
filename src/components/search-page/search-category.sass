@@ -1,0 +1,51 @@
+@import 'variables'
+
+$padding: $header-logo-padding-x
+$suggested-type-width: 114px
+
+:local(.search-category)
+  font-size: 14px
+  font-weight: 400
+
+  .title
+    height: 64px
+    background-color: white
+    padding: 38px $side-margin 8px 0
+    color: $greyish
+    vertical-align: bottom
+    text-transform: uppercase
+
+    &.active
+      color: $thunder
+
+  .body
+    .row
+      display: block
+      text-decoration: none
+      color: inherit
+      padding: 11px 8px 11px 0
+      margin-right: 8px
+      border-bottom: 2px solid $alto-solid
+      line-height: 18px
+
+      &:last-child
+        border-bottom: 0
+
+      .officer-badge-number
+        color: $dusty-gray
+
+      .suggested-type
+        display: block
+        float: left
+        color: $greyish
+        width: $suggested-type-width
+
+      .suggested-title
+        display: block
+        float: left
+        width: calc(100% - #{$suggested-type-width})
+
+    .all
+      height: 44px
+      padding: 13px (16px - $padding)
+      color: $greyish
