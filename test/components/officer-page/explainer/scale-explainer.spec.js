@@ -8,25 +8,7 @@ import DescriptionContent from 'components/officer-page/radar-chart/explainer/de
 
 
 describe('ScaleExplainer component', function () {
-  const data = [{
-    year: 2015,
-    items: [
-      { axis: 'Use of Force Reports', value: 20 },
-      { axis: 'Civilian Complaints', value: 0 },
-      { axis: 'Internal Complaints', value: 10 },
-    ],
-    textColor: 'black',
-    visualTokenBackground: 'white'
-  }, {
-    year: 2016,
-    items: [
-      { axis: 'Use of Force Reports', value: 40 },
-      { axis: 'Civilian Complaints', value: 50 },
-      { axis: 'Internal Complaints', value: 60 },
-    ],
-    textColor: 'black',
-    visualTokenBackground: 'white'
-  }, {
+  const data = {
     year: 2017,
     items: [
       { axis: 'Use of Force Reports', value: 80 },
@@ -35,7 +17,7 @@ describe('ScaleExplainer component', function () {
     ],
     textColor: 'black',
     visualTokenBackground: 'white'
-  }];
+  };
 
 
   it('should render enough content', function () {

@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+import { last } from 'lodash';
 
 import TriangleExplainer from './explainer/triangle-explainer';
 import ScaleExplainer from './explainer/scale-explainer';
 import PercentileExplainer from './explainer/percentile-explainer';
 
 const numType = 3;
+
 
 export default class RadarExplainer extends Component {
   constructor(props) {
@@ -13,17 +15,6 @@ export default class RadarExplainer extends Component {
 
     this.navigateLeft = this.navigateLeft.bind(this);
     this.navigateRight = this.navigateRight.bind(this);
-  }
-
-  getCurrentComponent() {
-    switch (this.state.currentIndex) {
-      case 1:
-        return ScaleExplainer;
-      case 2:
-        return PercentileExplainer;
-      default:
-        return TriangleExplainer;
-    }
   }
 
   navigateLeft() {
@@ -39,21 +30,42 @@ export default class RadarExplainer extends Component {
   }
 
   render() {
-    const { radarChartData, closeExplainer } = this.props;
-    const ExplainerComponent = this.getCurrentComponent();
+    const { percentileData, closeExplainer } = this.props;
+    const radarChartData = last(percentileData);
 
-    return (
-      <ExplainerComponent
-        radarChartData={ radarChartData }
-        closeExplainer={ closeExplainer }
-        leftNavHandler={ this.navigateLeft }
-        rightNavHandler={ this.navigateRight }
-      />
-    );
+    switch (this.state.currentIndex) {
+      case 1:
+        return (
+          <ScaleExplainer
+            radarChartData={ radarChartData }
+            closeExplainer={ closeExplainer }
+            leftNavHandler={ this.navigateLeft }
+            rightNavHandler={ this.navigateRight }
+          />
+        );
+      case 2:
+        return (
+          <PercentileExplainer
+            data={ percentileData }
+            closeExplainer={ closeExplainer }
+            leftNavHandler={ this.navigateLeft }
+            rightNavHandler={ this.navigateRight }
+          />
+        );
+      default:
+        return (
+          <TriangleExplainer
+            radarChartData={ radarChartData }
+            closeExplainer={ closeExplainer }
+            leftNavHandler={ this.navigateLeft }
+            rightNavHandler={ this.navigateRight }
+          />
+        );
+    }
   }
 }
 
 RadarExplainer.propTypes = {
-  radarChartData: PropTypes.array,
+  percentileData: PropTypes.array,
   closeExplainer: PropTypes.func
 };

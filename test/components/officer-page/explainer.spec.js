@@ -41,14 +41,23 @@ describe('Explainer component', function () {
   it('should render TriangleExplainer by default', function () {
     const closeExplainerSpy = spy();
     const wrapper = shallow(
-      <RadarExplainer radarChartData={ data } closeExplainer={ closeExplainerSpy }/>
+      <RadarExplainer percentileData={ data } closeExplainer={ closeExplainerSpy }/>
     );
     const instance = wrapper.instance();
 
     const triangleExplainer = wrapper.find(TriangleExplainer);
     triangleExplainer.exists().should.be.true();
 
-    triangleExplainer.prop('radarChartData').should.equal(data);
+    triangleExplainer.prop('radarChartData').should.deepEqual({
+      year: 2017,
+      items: [
+        { axis: 'Use of Force Reports', value: 80 },
+        { axis: 'Civilian Complaints', value: 70 },
+        { axis: 'Internal Complaints', value: 60 },
+      ],
+      textColor: 'black',
+      visualTokenBackground: 'white'
+    });
     triangleExplainer.prop('closeExplainer').should.equal(closeExplainerSpy);
     triangleExplainer.prop('leftNavHandler').should.equal(instance.navigateLeft);
     triangleExplainer.prop('rightNavHandler').should.equal(instance.navigateRight);
@@ -56,7 +65,7 @@ describe('Explainer component', function () {
 
   it('should navigate correctly between explainers', function () {
     const wrapper = mount(
-      <RadarExplainer radarChartData={ data }/>
+      <RadarExplainer percentileData={ data }/>
     );
 
     wrapper.find(TriangleExplainer).exists().should.be.true();
@@ -89,7 +98,7 @@ describe('Explainer component', function () {
   it('should invoke closeExplainer when clicking on the close button', function () {
     const closeExplainerSpy = spy();
     const wrapper = mount(
-      <RadarExplainer radarChartData={ data } closeExplainer={ closeExplainerSpy }/>
+      <RadarExplainer percentileData={ data } closeExplainer={ closeExplainerSpy }/>
     );
     const explainer = wrapper.find(TriangleExplainer);
 

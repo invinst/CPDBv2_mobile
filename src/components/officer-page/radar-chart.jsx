@@ -30,7 +30,7 @@ export default class AnimatedRadarChart extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!isEqual(this.props.data, prevProps.data)) {
+    if (!isEqual(this.props.percentileData, prevProps.percentileData)) {
       this.startTimer();
     }
   }
@@ -40,9 +40,9 @@ export default class AnimatedRadarChart extends Component {
   }
 
   animate() {
-    const { data } = this.props;
+    const { percentileData } = this.props;
 
-    const maxValue = data.length - 1;
+    const maxValue = percentileData.length - 1;
     this.setState({
       transitionValue: Math.min(this.state.transitionValue + this.velocity, maxValue),
     });
@@ -52,7 +52,7 @@ export default class AnimatedRadarChart extends Component {
   }
 
   startTimer() {
-    if (this.props.data && this.props.data.length > 1 && !this.timer) {
+    if (this.props.percentileData && this.props.percentileData.length > 1 && !this.timer) {
       this.timer = setInterval(this.animate, this.interval);
     }
   }
@@ -64,25 +64,25 @@ export default class AnimatedRadarChart extends Component {
 
   getCurrentTransitionData() {
     const { transitionValue } = this.state;
-    const { data } = this.props;
+    const { percentileData } = this.props;
 
     // ensure at least 2 elements
-    if (data.length < 2)
-      return data[0];
+    if (percentileData.length < 2)
+      return percentileData[0];
 
-    const index = Math.min(parseInt(transitionValue) + 1, data.length - 1);
+    const index = Math.min(Math.floor(transitionValue) + 1, percentileData.length - 1);
 
-    const previousData = data[index - 1].items;
+    const previousData = percentileData[index - 1].items;
 
     const color = scaleLinear()
       .domain([0, 1])
-      .range([data[index - 1].visualTokenBackground, data[index].visualTokenBackground]);
+      .range([percentileData[index - 1].visualTokenBackground, percentileData[index].visualTokenBackground]);
 
     const backgroundColor = color(transitionValue - (index - 1));
 
     return {
-      ...data[index],
-      items: map(data[index].items, (d, i) => ({
+      ...percentileData[index],
+      items: map(percentileData[index].items, (d, i) => ({
         ...d,
         value: (d.value - previousData[i].value) * (transitionValue - (index - 1)) + previousData[i].value,
       })),
@@ -110,8 +110,8 @@ export default class AnimatedRadarChart extends Component {
 
   render() {
     const { transitionValue, explainerOpened } = this.state;
-    const { data } = this.props;
-    if (!data) return null;
+    const { percentileData } = this.props;
+    if (!percentileData) return null;
 
     const itemData = this.getCurrentTransitionData();
 
@@ -136,7 +136,7 @@ export default class AnimatedRadarChart extends Component {
         <div className='radar-chart-container' onClick={ this.openExplainer }>
           <StaticRadarChart
             backgroundColor={ itemData.visualTokenBackground }
-            fadeOutLegend={ transitionValue >= (data.length - 1) }
+            fadeOutLegend={ transitionValue >= (percentileData.length - 1) }
             data={ itemData.items }
             showSpineLine={ false }
             showGrid={ true }
@@ -154,7 +154,7 @@ export default class AnimatedRadarChart extends Component {
           </div>
         </div>
         <Modal isOpen={ explainerOpened } style={ explainerModalStyles }>
-          <RadarExplainer radarChartData={ data } closeExplainer={ this.closeExplainer }/>
+          <RadarExplainer percentileData={ percentileData } closeExplainer={ this.closeExplainer }/>
         </Modal>
       </div>
     );
@@ -163,5 +163,5 @@ export default class AnimatedRadarChart extends Component {
 
 
 AnimatedRadarChart.propTypes = {
-  data: PropTypes.array
+  percentileData: PropTypes.array
 };

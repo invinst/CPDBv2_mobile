@@ -44,19 +44,19 @@ describe('AnimatedRadarChart component', function () {
   });
 
   it('should render if data provided', function () {
-    const wrapper = shallow(<AnimatedRadarChart data={ data }/>);
+    const wrapper = shallow(<AnimatedRadarChart percentileData={ data }/>);
     wrapper.find(StaticRadarChart).exists().should.be.true();
   });
 
   it('should rerender if data change', function () {
-    const wrapper = mount(<AnimatedRadarChart data={ [data[0]] }/>);
-    wrapper.setProps({ data: data });
+    const wrapper = mount(<AnimatedRadarChart percentileData={ [data[0]] }/>);
+    wrapper.setProps({ percentileData: data });
     should(wrapper.instance().timer).not.be.null();
   });
 
   it('should open explainer when click on radar chart', function () {
     const wrapper = mount(
-      <AnimatedRadarChart data={ data }/>
+      <AnimatedRadarChart percentileData={ data }/>
     );
     wrapper.find('.explainer-open-button').exists().should.be.true();
 
@@ -67,7 +67,7 @@ describe('AnimatedRadarChart component', function () {
 
     const explainer = modalWrapper.find(RadarExplainer);
     explainer.exists().should.be.true();
-    explainer.prop('radarChartData').should.equal(data);
+    explainer.prop('percentileData').should.equal(data);
   });
 
   describe('test animate', function () {
@@ -84,7 +84,7 @@ describe('AnimatedRadarChart component', function () {
     it('should not animate if data length is 1', function () {
       const compactData = [data[0]];
       const wrapper = shallow(
-        <AnimatedRadarChart data={ compactData }/>
+        <AnimatedRadarChart percentileData={ compactData }/>
       );
       const instance = wrapper.instance();
 
@@ -97,7 +97,7 @@ describe('AnimatedRadarChart component', function () {
     it('should change transition value after mounting', function () {
 
       const wrapper = mount(
-        <AnimatedRadarChart data={ data }/>
+        <AnimatedRadarChart percentileData={ data }/>
       );
       const instance = wrapper.instance();
 
@@ -113,7 +113,7 @@ describe('AnimatedRadarChart component', function () {
 
     it('should it stops timer before unmounted', function () {
       const wrapper = mount(
-        <AnimatedRadarChart data={ data }/>
+        <AnimatedRadarChart percentileData={ data }/>
       );
       const instance = wrapper.instance();
 
@@ -125,7 +125,7 @@ describe('AnimatedRadarChart component', function () {
 
     it('should start to animate after closing explainer', function () {
       const wrapper = mount(
-        <AnimatedRadarChart data={ data }/>
+        <AnimatedRadarChart percentileData={ data }/>
       );
       const instance = wrapper.instance();
       const startAnimation = spy(instance, 'startAnimation');

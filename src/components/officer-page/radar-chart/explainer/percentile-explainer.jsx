@@ -9,8 +9,8 @@ import StaticRadarChart from 'components/common/radar-chart';
 
 export default class PercentileExplainer extends Component {
   render() {
-    const { leftNavHandler, rightNavHandler, closeExplainer, radarChartData } = this.props;
-    const { items, visualTokenBackground } = last(radarChartData);
+    const { leftNavHandler, rightNavHandler, closeExplainer, data } = this.props;
+    const { items, visualTokenBackground } = last(data);
 
     const percentileConfig = {
       data: items,
@@ -34,7 +34,7 @@ export default class PercentileExplainer extends Component {
       showSpineLine: false
     };
 
-    const tableData = radarChartData ? [].concat(radarChartData).reverse() : [];
+    const tableData = data ? [].concat(data).reverse() : [];
 
     const content = (
       <div className={ style.percentileExplainer }>
@@ -82,7 +82,7 @@ export default class PercentileExplainer extends Component {
 }
 
 PercentileExplainer.propTypes = {
-  radarChartData: PropTypes.array,
+  data: PropTypes.array,
   closeExplainer: PropTypes.func,
   leftNavHandler: PropTypes.func,
   rightNavHandler: PropTypes.func,

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { last } from 'lodash';
 
 import ExplainerLayout from './explainer-layout';
 import DescriptionContent from './description-content';
@@ -8,7 +7,7 @@ import DescriptionContent from './description-content';
 export default class ScaleExplainer extends Component {
   render() {
     const { leftNavHandler, rightNavHandler, closeExplainer, radarChartData } = this.props;
-    const { items } = last(radarChartData);
+    const { items } = radarChartData;
 
     const scaleConfig = {
       data: items,
@@ -54,7 +53,7 @@ export default class ScaleExplainer extends Component {
 }
 
 ScaleExplainer.propTypes = {
-  radarChartData: PropTypes.array,
+  radarChartData: PropTypes.object,
   closeExplainer: PropTypes.func,
   leftNavHandler: PropTypes.func,
   rightNavHandler: PropTypes.func,

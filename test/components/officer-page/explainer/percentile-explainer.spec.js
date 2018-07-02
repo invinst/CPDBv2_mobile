@@ -36,7 +36,7 @@ describe('PercentileExplainer component', function () {
 
     const wrapper = mount(
       <PercentileExplainer
-        radarChartData={ data }
+        data={ data }
         closeExplainer={ closeExplainerSpy }
         leftNavHandler={ leftNavHandlerSpy }
         rightNavHandler={ rightNavHandlerSpy }

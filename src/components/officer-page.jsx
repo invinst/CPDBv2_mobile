@@ -114,7 +114,7 @@ class OfficerPage extends Component {
     return (
       <div className={ style.officerSummary }>
         <NavbarContainer backLink={ constants.SEARCH_PATH } />
-        <OfficerRadarChart data={ threeCornerPercentile }/>
+        <OfficerRadarChart percentileData={ threeCornerPercentile }/>
         <h1 className='officer-name header' onClick={ scrollToTop() }>
           { name }
         </h1>

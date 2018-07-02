@@ -249,7 +249,7 @@ describe('<OfficerPage />', function () {
 
       const officerRadarChart = wrapper.find(OfficerRadarChart);
       officerRadarChart.exists().should.be.true();
-      officerRadarChart.prop('data').should.deepEqual([{
+      officerRadarChart.prop('percentileData').should.deepEqual([{
         items: [{
           axis: 'Use of Force Reports',
           value: 0.049
