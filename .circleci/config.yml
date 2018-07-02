@@ -3,10 +3,25 @@ jobs:
   test:
     docker:
       - image: circleci/node:8.11.3-browsers
+
     steps:
       - checkout
       - run: sudo npm install i -g yarn@1.7.0
-      - run: yarn install
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Install Dependencies
+          command: yarn install
+
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
       - run: yarn run lint
       - run: yarn run ci-test
       - run: yarn run live-test
