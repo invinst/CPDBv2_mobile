@@ -4,10 +4,12 @@ module.exports = {
   },
 
   elements: {
-    header: '.sheet-header',
-    activeLink: '.officer-link.active',
-    yearlyStats2005: '.test--yearly-stats-2005',
-    crItem: '.test--cr-item-309887',
-    lastItem: '.last-item'
+    crItem: '.test--timeline-cr-item',
+    trrItem: '.test--timeline-trr-item',
+    awardItem: '.test--timeline-award-item',
+    unitChangeItem: '.test--timeline-unit-change-item',
+    joinedItem: '.test--timeline-joined-item',
+    yearItem: '.test--timeline-year-item',
+    attachmentThumbnail: '.test--attachments .image',
   }
 };

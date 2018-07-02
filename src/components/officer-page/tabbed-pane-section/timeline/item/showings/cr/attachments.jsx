@@ -24,7 +24,7 @@ export default class Attachments extends Component {
     if (firstAttachment) {
       const { fileType, previewImageUrl } = firstAttachment;
       return (
-        <div className={ cx(styles.wrapper, 'test-wrapper') } >
+        <div className={ cx(styles.wrapper, 'test--attachments') } >
           <div
             className={ cx('image', { 'image-document': fileType === ATTACHMENT_TYPES.DOCUMENT }) }
             style={ { backgroundImage: `url(${previewImageUrl})` } }
