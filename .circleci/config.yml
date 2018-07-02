@@ -11,7 +11,6 @@ jobs:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-
       - run:
           name: Install Dependencies
           command: yarn install
@@ -20,7 +19,7 @@ jobs:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - /home/circleci/.cache/yarn/v1
 
       - run: yarn run lint
       - run: yarn run ci-test
@@ -31,7 +30,15 @@ jobs:
 
     steps:
       - checkout
-      - run: pipenv install
+      - restore_cache:
+          keys:
+            - pip-packages-{{ checksum "Pipfile.lock" }}
+
+      - save_cache:
+          paths:
+            - ~/.local/share/virtualenvs/venv
+          key: pip-packages-{{ checksum "Pipfile.lock" }}
+
       - run: pipenv run ansible-playbook -i ansible/staging ansible/deploy.yml
 
 workflows:
