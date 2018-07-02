@@ -36,7 +36,7 @@ jobs:
 
       - save_cache:
           paths:
-            - ~/.local/share/virtualenvs/venv
+            - ~/.local/share/virtualenvs
           key: pip-packages-{{ checksum "Pipfile.lock" }}
 
       - run: pipenv run ansible-playbook -i ansible/staging ansible/deploy.yml
