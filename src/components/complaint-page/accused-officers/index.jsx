@@ -32,7 +32,7 @@ export default class AccusedOfficers extends Component {
         </div>
         {
           (!expanded && officers.length > 2 )
-            ? (<div className='show-all' onClick={ () => this.showAllHandleClick() }>Show ALL Accused Officers</div>)
+            ? (<div className='show-all' onClick={ () => this.showAllHandleClick() }>Show All Accused Officers</div>)
             : (<div className='padding-bottom' />)
         }
       </div>
