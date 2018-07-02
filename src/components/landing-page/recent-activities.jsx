@@ -22,11 +22,9 @@ export default class RecentActivities extends Component {
 
     return (
       <div className={ style.recentActivities }>
-        <div className='carousel-title'><CMSContent field={ title } /></div>
+        <CMSContent className='carousel-title' content={ title } />
         <HorizontalScrolling>
-          <div className='carousel-description'>
-            <CMSContent field={ description } />
-          </div>
+          <CMSContent className='carousel-description' content={ description } />
           {
             recentActivities.map(officer => <OfficerCard officer={ officer } key={ officer.id } />)
           }

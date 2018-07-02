@@ -6,7 +6,7 @@ import CMSContent from 'components/landing-page/cms-content';
 
 describe('<CMSContent />', () => {
   it('should be renderable', () => {
-    const wrapper = shallow(<CMSContent field={ {} } />);
+    const wrapper = shallow(<CMSContent content={ {} } />);
     wrapper.should.be.ok();
   });
 

@@ -1,20 +1,23 @@
 import React, { PropTypes } from 'react';
 import { Editor } from 'draft-js';
 
-const CMSContent = ({ field }) => {
-  if (!field) {
+const CMSContent = ({ content, className }) => {
+  if (!content) {
     return null;
   }
 
   return (
-    <Editor
-      editorState={ field }
-      readonly={ true } />
+    <div className={ className }>
+      <Editor
+        editorState={ content }
+        readonly={ true } />
+    </div>
   );
 };
 
 CMSContent.propTypes = {
-  field: PropTypes.object
+  content: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default CMSContent;

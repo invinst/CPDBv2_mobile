@@ -22,11 +22,9 @@ export default class TopOfficersByAllegation extends Component {
 
     return (
       <div className={ style.topOfficersByAllegation }>
-        <div className='carousel-title'><CMSContent field={ title } /></div>
+        <CMSContent className='carousel-title' content={ title } />
         <HorizontalScrolling>
-          <div className='carousel-description'>
-            <CMSContent field={ description } />
-          </div>
+          <CMSContent className='carousel-description' content={ description } />
           {
             topOfficersByAllegation.map(officer => <OfficerCard officer={ officer } key={ officer.id } />)
           }

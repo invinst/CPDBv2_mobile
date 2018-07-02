@@ -22,11 +22,9 @@ export default class ComplaintSummaries extends Component {
 
     return (
       <div className={ style.complaintSummaries }>
-        <div className='carousel-title'><CMSContent field={ title } /></div>
+        <CMSContent className='carousel-title' content={ title } />
         <HorizontalScrolling>
-          <div className='carousel-description'>
-            <CMSContent field={ description } />
-          </div>
+          <CMSContent className='carousel-description' content={ description } />
           {
             complaintSummaries.map(allegation => (
               <ComplaintSummaryCard allegation={ allegation } key={ allegation.crid } />
