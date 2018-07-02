@@ -1,6 +1,6 @@
 import config from 'config';
-import configureProd from './configureStore.prod';
-import configureDev from './configureStore.dev';
+import configureProd from './configure-store.prod';
+import configureDev from './configure-store.dev';
 
 let configureStore;
 
