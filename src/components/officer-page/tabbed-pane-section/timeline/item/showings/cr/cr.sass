@@ -12,15 +12,17 @@ $height: 58px
   .content
     @extend %base-content
 
+    &.no-border-bottom
+      border-bottom: none
+
     .kind
       @extend %base-kind
       color: $bright-orange
       border-color: $champagne-color
 
-    .kind-sustained
-      color: $scarlet-color
-      background-color: $champagne-color
-
+      &.sustained
+        color: $scarlet-color
+        background-color: $champagne-color
 
     .detail
       @extend %base-detail
@@ -45,6 +47,3 @@ $height: 58px
         color: $gandalf-gray
         font-weight: 300
         float: none
-
-  .no-border-bottom
-    border-bottom: none

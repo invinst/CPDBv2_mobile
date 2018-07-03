@@ -26,7 +26,7 @@ export default class Attachments extends Component {
       return (
         <div className={ cx(styles.wrapper, 'test--attachments') } >
           <div
-            className={ cx('image', { 'image-document': fileType === ATTACHMENT_TYPES.DOCUMENT }) }
+            className={ cx('image', { 'document': fileType === ATTACHMENT_TYPES.DOCUMENT }) }
             style={ { backgroundImage: `url(${previewImageUrl})` } }
             onClick={ this.handleClick }
           />

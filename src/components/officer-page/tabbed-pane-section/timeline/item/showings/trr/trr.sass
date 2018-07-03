@@ -12,6 +12,9 @@ $height: 58px
   .content
     @extend %base-content
 
+    &.no-border-bottom
+      border-bottom: none
+
     .kind
       @extend %base-kind
       color: white
@@ -29,6 +32,3 @@ $height: 58px
       font-size: 12px
       color: $thunder
       font-weight: 300
-
-  .no-border-bottom
-    border-bottom: none

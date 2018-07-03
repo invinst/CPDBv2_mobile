@@ -16,7 +16,7 @@ export default class Cr extends Component {
         to={ `/complaint/${item.crid}/${officerId}/` }
       >
         <div className={ cx('content', { 'no-border-bottom': !hasBorderBottom }) }>
-          <span className={ cx('kind', { 'kind-sustained': item.finding === 'Sustained' }) }>C</span>
+          <span className={ cx('kind', { 'sustained': item.finding === 'Sustained' }) }>C</span>
           <span className='detail'>
             <div className='category'>{ item.category }</div>
             <div className='finding'>{ item.finding }, { item.outcome }</div>

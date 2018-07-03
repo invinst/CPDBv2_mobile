@@ -25,7 +25,7 @@ describe('Attachments component', function () {
     instance.find('.image').prop('style').backgroundImage.should.equal(
       'url(https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif)'
     );
-    instance.find('.image-document').exists().should.be.true();
+    instance.find('.document').exists().should.be.true();
   });
 
   it('should render file types of attachments correctly', function () {

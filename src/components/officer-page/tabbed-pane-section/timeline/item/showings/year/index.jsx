@@ -11,8 +11,8 @@ export default class Year extends Component {
 
     return (
       <div className={ cx(styles.wrapper, 'test--timeline-year-item') }>
-        <div className={ cx('content', { 'content-no-data': !hasData }, { 'no-border-bottom': !hasBorderBottom }) }>
-          <div className={ cx('date', { 'date-no-data': !hasData } ) }>{ date }</div>
+        <div className={ cx('content', { 'no-data': !hasData }, { 'no-border-bottom': !hasBorderBottom }) }>
+          <div className={ cx('date', { 'no-data': !hasData } ) }>{ date }</div>
         </div>
       </div>
     );
