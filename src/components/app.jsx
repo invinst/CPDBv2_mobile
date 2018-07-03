@@ -17,6 +17,7 @@ import LandingPageContainer from 'containers/landing-page-container';
 import 'styles/style.sass';
 import 'styles/fonts.sass';
 import 'styles/helper.sass';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 
 const App = React.createClass({

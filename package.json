@@ -6,7 +6,7 @@
   "main": "",
   "scripts": {
     "clean": "rimraf dist/*",
-    "copy": "copyup ./src/index.html ./src/img/favicon.ico ./src/styles/css/mapbox-gl.css ./dist",
+    "copy": "copyup ./src/index.html ./src/img/favicon.ico ./dist",
     "dist": "npm run copy & SASS_PATH=./src/styles webpack --env=dist",
     "prod": "npm run copy & SASS_PATH=./src/styles webpack --env=prod",
     "lint": "eslint ./src",
