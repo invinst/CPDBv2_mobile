@@ -39,5 +39,3 @@ live-tests/local-mock-server.js
 .DS_Store
 .vscode/
 jsconfig.json
-Pipfile
-Pipfile.lock

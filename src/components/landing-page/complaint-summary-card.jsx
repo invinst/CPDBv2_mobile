@@ -11,8 +11,8 @@ const ComplaintSummaryCard = ({ allegation }) => {
       className={ style.complaintSummaryCard }
     >
       <div className='complaint-info'>
-        <div className='incident-date'>{ allegation.incident_date }</div>
-        <div className='category'>{ allegation.category_names }</div>
+        <div className='incident-date'>{ allegation.incidentDate }</div>
+        <div className='category'>{ allegation.categories }</div>
       </div>
       <div className='complaint-summary'>{ allegation.summary }</div>
     </Link>

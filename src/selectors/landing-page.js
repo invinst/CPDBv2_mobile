@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect';
-import { find, get } from 'lodash';
+import { find, get, compact } from 'lodash';
+import moment from 'moment';
 
+import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
 import { convertContentStateToEditorState } from 'utils/draftjs';
 
@@ -21,7 +23,21 @@ export const recentActivitiesSelector = createSelector(
 
 export const newDocumentAllegationsSelector = state => state.landingPage.newDocumentAllegations || [];
 
-export const complaintSummariesSelector = state => state.landingPage.complaintSummaries || [];
+export const complaintSummariesSelector = createSelector(
+  state => state.landingPage.complaintSummaries || [],
+  complaints => complaints.map(complaint => {
+    const incidentDate = complaint.incident_date
+      ? moment(complaint.incident_date).format(constants.SIMPLE_DATE_FORMAT).toUpperCase()
+      : null;
+
+    return {
+      crid: complaint.crid,
+      summary: complaint.summary,
+      categories: compact(complaint.category_names).join(', '),
+      incidentDate: incidentDate
+    };
+  })
+);
 
 export const cmsSelector = field => state => {
   const cmsField = find(state.landingPage.cms, { name: field });

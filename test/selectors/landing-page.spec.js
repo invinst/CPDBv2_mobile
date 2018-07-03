@@ -65,9 +65,35 @@ describe('landing page selectors', function () {
 
     complaintSummariesSelector({
       landingPage: {
-        complaintSummaries: ['abc']
+        complaintSummaries: [
+          {
+            'crid': '12345',
+            'summary': 'summary',
+            'incident_date': '2016-04-18',
+            'category_names': ['Use Of Force', 'Verbal Abuse']
+          },
+          {
+            'crid': '12346',
+            'summary': 'summary',
+            'incident_date': null,
+            'category_names': ['Use Of Force']
+          }
+        ]
       }
-    }).should.eql(['abc']);
+    }).should.eql([
+      {
+        crid: '12345',
+        summary: 'summary',
+        incidentDate: 'APR 18, 2016',
+        categories: 'Use Of Force, Verbal Abuse'
+      },
+      {
+        crid: '12346',
+        summary: 'summary',
+        incidentDate: null,
+        categories: 'Use Of Force'
+      }
+    ]);
   });
 
   it('cmsSelector', () => {
