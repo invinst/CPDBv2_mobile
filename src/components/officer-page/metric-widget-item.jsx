@@ -8,11 +8,10 @@ export default class MetricWidgetItem extends Component {
   render() {
     const { value, name, description, isHighlight, firstChunk, lastChunk } = this.props;
     const active = value > 0;
-    const paddingBottom = firstChunk ? '8px' : '0';
-    const paddingTop = lastChunk ? '8px' : '0';
 
     return (
-      <div className={ style.metricWidgetItem } style={ { paddingBottom, paddingTop } }>
+      <div
+        className={ classnames(style.metricWidgetItem, { 'first-chunk': firstChunk, 'last-chunk': lastChunk }) }>
         <div className={ classnames('value', { active: active, highlight: isHighlight }) }>
           { value }
         </div>
