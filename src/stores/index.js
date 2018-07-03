@@ -1,11 +1,11 @@
 import config from 'config';
-import configureDev from './configure-store.dev';
 import configureProd from './configure-store.prod';
+import configureDev from './configure-store.dev';
 
 let configureStore;
 
-/* istanbul ignore next */
-if (config.appEnv === 'prod') {
+  /* istanbul ignore next */
+if (['staging', 'production'].includes(config.appEnv)) {
   configureStore = configureProd;
 } else {
   configureStore = configureDev;
