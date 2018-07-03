@@ -46,6 +46,6 @@ LandingPage.defaultProps = {
 
 LandingPage.propTypes = {
   requestCMS: PropTypes.func,
-  title: PropTypes.string,
-  description: PropTypes.string
+  title: PropTypes.object,
+  description: PropTypes.object
 };
