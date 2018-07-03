@@ -10,7 +10,7 @@ export default class Trr extends Component {
     const { item, hasBorderBottom } = this.props;
 
     return (
-      <Link className={ cx(styles.wrapper) } to={ `/trr/${item.trrId}/` }>
+      <Link className={ styles.wrapper } to={ `/trr/${item.trrId}/` }>
         <div className={ cx('content', { 'no-border-bottom': !hasBorderBottom }) }>
           <span className='kind'>F</span>
           <span className='category'>{ item.category }</span>

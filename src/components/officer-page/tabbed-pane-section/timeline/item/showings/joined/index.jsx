@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import cx from 'classnames';
 
 import styles from './joined.sass';
 
@@ -10,7 +9,7 @@ export default class Joined extends Component {
     const { date } = this.props.item;
 
     return (
-      <span className={ cx(styles.wrapper) }>
+      <span className={ styles.wrapper }>
         <span className='join'>Joined CPD</span>
         <span className='date'>{ date }</span>
       </span>

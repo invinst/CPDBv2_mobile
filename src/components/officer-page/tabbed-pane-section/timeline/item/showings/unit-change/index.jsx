@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import cx from 'classnames';
 
 import styles from './unit-change.sass';
 
@@ -9,7 +8,7 @@ export default class UnitChange extends Component {
     const { unitName, oldUnitName, unitDescription, date } = this.props.item;
 
     return (
-      <span className={ cx(styles.wrapper) }>
+      <span className={ styles.wrapper }>
         <span className='unit-change'>
           {
             oldUnitName === 'Unassigned' ?
