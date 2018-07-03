@@ -10,7 +10,7 @@ import AboutPageContainer from 'containers/about-page-container';
 import SearchPageContainer from 'containers/search-page-container';
 import OfficerSummaryContainer from 'containers/officer-page/officer-summary-container';
 import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
-import ComplaintPageContainer from 'containers/ComplaintPageContainer';
+import ComplaintPageContainer from 'containers/complaint-page-container';
 import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
 

@@ -1,0 +1,76 @@
+@import 'variables'
+
+:local(.attachments)
+  padding-top: 50px
+
+  .header
+    font-size: 14px
+    display: flex
+    justify-content: space-between
+    height: 28px
+    line-height: 28px
+    padding: 0
+    margin-bottom: 30px
+
+    .label
+      color: $dusty-gray
+
+    .request-document-button
+      border-radius: 2px
+      border: 1px solid $alto-solid
+      padding: 0 5px
+      color: $gandalf-gray
+
+    &.no-attachment
+      display: block
+      height: auto
+      background-color: $wild-sand
+      text-align: center
+      padding: 10px 0 8px 0
+      margin: 0 -8px 30px
+
+      .label
+        padding: 0 20px
+        line-height: 1.4em
+        margin-bottom: 8px
+
+      .request-document-button
+        display: inline-block
+
+  .attachment-list
+    display: flex
+    flex-flow: row
+    flex-wrap: wrap
+    align-items: center
+    justify-content: flex-start
+
+    .attachment
+      display: flex
+      padding: 5px
+      width: 120px
+      text-decoration: none
+      height: 120px
+      align-items: center
+      justify-content: flex-start
+      flex-flow: column
+
+
+    .attachment-thumbnail-wrapper
+      width: 45px
+      height: 53px
+      border: solid 1px #979797
+      display: flex
+      justify-content: center
+
+    .attachment-thumbnail
+      width: 100%
+
+      &.audio, &.video
+        width: 30%
+
+    .attachment-title
+      font-size: 14px
+      font-weight: 400
+      color: $gandalf-gray
+      text-align: center
+      margin-top: 8px
