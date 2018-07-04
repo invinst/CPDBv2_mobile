@@ -1,2 +1,2 @@
-[default]
-mb.cpdp.co ansible_user=ansible branch=master
+[production]
+mb.cpdp.co

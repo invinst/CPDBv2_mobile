@@ -1,26 +1,26 @@
 @import 'variables'
 
+$label-width: 104px
+
 :local(.section-row)
   border-top: 1px solid $alto-solid
   vertical-align: middle
   // these 4 lines are to achive optical center
-  height: 40px
   line-height: 20px
   padding-top: 9px
   padding-bottom: 11px
+  margin: 0 $side-margin
 
   &:first-child
     border-top: 0
 
   .label
     display: inline-block
-    width: 128px - $horizontal-padding
+    width: $label-width
     color: $greyish
     font-weight: 400
 
   .value
+    width: calc(100% - #{$label-width})
+    display: inline-block
     color: $metadata-black
-
-  .extra-info
-    color: $greyish
-    padding-left: 8px

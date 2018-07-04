@@ -45,6 +45,7 @@ const trrInfoSelector = (trr) => {
     address: get(trr, 'address'),
     beat: String(get(trr, 'beat')),
     locationType: get(trr, 'location_type'),
+    point: trr.point,
   };
 };
 
