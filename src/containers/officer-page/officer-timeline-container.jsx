@@ -6,7 +6,7 @@ import OfficerTimeline from 'components/officer-page/officer-timeline';
 import {
   getOfficerTimeline,
   getMoreOfficerTimeline,
-  getOfficerSummary
+  fetchOfficer
 } from 'actions/officer';
 
 import {
@@ -39,7 +39,7 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = {
   getOfficerTimeline,
   getMoreOfficerTimeline,
-  getOfficerSummary
+  fetchOfficer
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OfficerTimeline));

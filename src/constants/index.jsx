@@ -200,7 +200,8 @@ export default {
   OFFICER_COMPLAINT_COUNT_RANGE: [20, 9, 3, 2, 0],
 
   // API endpoints
-  OFFICER_API_ENDPOINT: '/officers/',
+  OLD_OFFICER_API_ENDPOINT: '/officers/',
+  OFFICER_API_ENDPOINT: '/mobile/officers/',
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
   LANDING_PAGE_CMS_API_ENDPOINT: '/cms-pages/landing-page/',
   COMPLAINT_API_ENDPOINT: '/mobile/cr/',

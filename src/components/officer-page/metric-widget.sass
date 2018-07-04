@@ -1,0 +1,21 @@
+@import 'variables'
+
+:local(.metric-widget)
+  background-color: $wild-sand
+  padding: 16px 8px
+  border-bottom: 1px solid $alto-solid
+
+  .nested-wrapper
+    border-radius: 2px
+    border: 1px solid $alto-solid
+    background-color: white
+    padding: 8px
+
+    .chunk
+      border-bottom: 1px solid $alto-solid
+
+      &:last-of-type
+        border-bottom: none
+
+  .clearfix
+    clear: both
