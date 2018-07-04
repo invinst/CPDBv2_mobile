@@ -6,6 +6,7 @@ import RadarChart from 'components/common/radar-chart';
 import constants from 'constants';
 import style from './officer-card.sass';
 
+
 const OfficerCard = ({ officer }) => {
   return (
     <Link

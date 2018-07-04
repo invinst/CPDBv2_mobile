@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import constants from 'constants';
 import style from './complaint-summary-card.sass';
 
+
 const ComplaintSummaryCard = ({ allegation }) => {
   return (
     <Link

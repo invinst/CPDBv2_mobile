@@ -1,17 +1,18 @@
 @import 'variables'
 
 :local(.complaint-document-card)
+  display: block
   width: 148px
   height: 176px
   margin-right: 8px
   border: 1px solid $alto-solid
   box-sizing: border-box
   background-color: $white
+  text-decoration: none
 
   .document-preview
-    display: block
-    width: 100%
     text-align: center
+    background-color: $white
 
     .preview-image
       margin: 12px auto 10px
@@ -21,9 +22,7 @@
       box-sizing: border-box
 
   .complaint-info
-    display: block
     background-color: $wild-sand
-    text-decoration: none
     box-sizing: border-box
     padding: 8px
 

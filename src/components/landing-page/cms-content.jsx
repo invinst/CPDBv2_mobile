@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Editor } from 'draft-js';
+import { isEmpty } from 'lodash';
+
 
 const CMSContent = ({ content, className }) => {
-  if (!content) {
+  if (isEmpty(content)) {
     return null;
   }
 
