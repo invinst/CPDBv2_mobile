@@ -4,6 +4,7 @@ const srcPath = path.join(__dirname, '/../src');
 const defaultPort = 9967;
 function getDefaultModules() {
   return {
+    noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
     loaders: [
       {
         test: /\.css$/,
