@@ -202,13 +202,13 @@ export default {
   // API endpoints
   ALLEGATION_API_ENDPOINT: '/api/allegation/',
   OLD_OFFICER_API_ENDPOINT: '/officers/',
+  OFFICER_API_ENDPOINT: '/mobile/officers/',
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
   REQUEST_EMAIL_API_EMAIL: '/api/request_email/',
   INTERFACE_TEXT_API_ENDPOINT: '/api/interface_text/',
   LANDING_PAGE_API_ENDPOINT: '/cms-pages/landing-page/',
   COMPLAINT_API_ENDPOINT: '/mobile/cr/',
   TRR_API_ENDPOINT: '/mobile/trr/',
-  OFFICER_API_ENDPOINT: '/mobile/officers/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',

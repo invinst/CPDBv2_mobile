@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
-import summaries from './summaries';
 import timeline from './timeline';
+import officers from './officers';
 
 
 export default combineReducers({
-  summaries,
   timeline,
+  officers
 });
