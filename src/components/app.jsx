@@ -36,7 +36,7 @@ const App = React.createClass({
           <Route path={ `${constants.OFFICER_PATH}:id/timeline/` } component={ OfficerTimelineContainer } />
 
           <Route
-            path={ `${constants.COMPLAINT_PATH}:complaintId/:coaccusedId/` }
+            path={ `${constants.COMPLAINT_PATH}:complaintId/` }
             component={ ComplaintPageContainer }
           />
 

@@ -170,7 +170,7 @@ describe('search-page selectors', () => {
       const expectedCrs = [
         {
           'crid': '1',
-          'url': '/complaint/1/19046/'
+          'url': '/complaint/1/'
         },
       ];
 

@@ -44,7 +44,6 @@ export const unitsSelector = createSelector(
   }
 );
 
-// FIXME: Gonna remove the magic 19046 later (when new CR page is merged)
 export const crsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.CR,
   (crs) => {
@@ -56,7 +55,7 @@ export const crsSelector = createSelector(
       isShowingAll: crs.isShowingAll,
       data: crs.data.map((cr) => ({
         crid: cr.crid,
-        url: `${constants.COMPLAINT_PATH}${cr.crid}/19046/`
+        url: `${constants.COMPLAINT_PATH}${cr.crid}/`
       }))
     };
   }
