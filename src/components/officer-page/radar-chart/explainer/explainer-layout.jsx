@@ -22,7 +22,7 @@ export default class ExplainerLayout extends Component {
         <div className='explainer-radar-chart-container'>
           <StaticRadarChart { ...radarChartConfig }/>
           <div className='explainer-close-button' onClick={ this.props.closeExplainer }>
-            <div className='close-button times-mark'/>
+            <div className='close-button'>&times;</div>
           </div>
         </div>
         <ExplainerNav
