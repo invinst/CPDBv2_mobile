@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { mount, shallow } from 'enzyme';
 import { spy, stub } from 'sinon';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, noop } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
 
@@ -74,7 +74,7 @@ describe('<OfficerPage />', function () {
       <OfficerPage
         loading={ false }
         found={ false }
-        getOfficerSummary={ () => {} }
+        getOfficerSummary={ noop }
         />
     );
     wrapper.find(NotMatchedOfficerPage).should.have.length(1);
@@ -83,7 +83,7 @@ describe('<OfficerPage />', function () {
   it('should be tracked by Google Analytics when mounted', function () {
     mount(
       <Provider store={ store }>
-        <OfficerPage loading={ false } found={ false } getOfficerSummary={ () => {} } fetchOfficer={ () => {} }/>
+        <OfficerPage loading={ false } found={ false } getOfficerSummary={ noop } fetchOfficer={ noop }/>
       </Provider>
     );
 
@@ -133,7 +133,7 @@ describe('<OfficerPage />', function () {
       <OfficerPage
         loading={ false }
         found={ true }
-        fetchOfficer={ () => {} }
+        fetchOfficer={ noop }
         summary={ this.summary }
         metrics={ this.metrics }
       />
@@ -147,7 +147,7 @@ describe('<OfficerPage />', function () {
       <OfficerPage
         loading={ false }
         found={ true }
-        fetchOfficer={ () => {} }
+        fetchOfficer={ noop }
         summary={ this.summary }
         metrics={ this.metrics }
       />

@@ -7,14 +7,14 @@
     border-bottom: 0
     text-align: center
 
-  .row
+  %row
     line-height: 20px
     padding-top: 9px
     padding-bottom: 11px
     color: $gandalf-gray
 
   .officer-demographic
-    @extend .row
+    @extend %row
     margin: 0 $side-margin
     border-top: 1px solid $alto-solid
     text-align: center
@@ -25,7 +25,7 @@
     transition: max-height .3s ease-out
 
     .historic-badges
-      @extend .row
+      @extend %row
       padding-right: 12px
       text-align: right
       background-color: $wild-sand
@@ -45,5 +45,3 @@
 
       &.expanded
         transform: rotate(-90deg)
-
-
