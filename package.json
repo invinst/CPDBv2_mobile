@@ -20,7 +20,7 @@
     "live-test": "SASS_PATH=./src/styles NODE_ENV='live-test' node nightwatch.js",
     "ci-test": "karma start --reporters mocha,coverage,coveralls",
     "mocha-watch": "karma start --no-single-run --reporters mocha",
-    "test:watch": "karma start --autoWatch=true --singleRun=false"
+    "test-watch": "karma start --autoWatch=true --singleRun=false"
   },
   "repository": "",
   "keywords": [],

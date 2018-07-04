@@ -1,7 +1,10 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import { startCase, get } from 'lodash';
+import { startCase, get, map } from 'lodash';
+
 import constants from 'constants';
+import { extractPercentile } from 'selectors/common/percentile';
+
 
 const getOfficerSummary = (state, props) => (
   state.officerPage.summaries.data[props.params.id] || null
@@ -75,4 +78,14 @@ const getCurrentTimeline = (state, props) => state.officerPage.timelines.data[pr
 export const hasMoreOfficerTimelineSelector = createSelector(
   getCurrentTimeline,
   (timeline) => (!!timeline && !timeline.isRequesting && !!timeline.next)
+);
+
+
+const getOfficer = (state, props) => (
+  state.officerPage.officers.data[props.params.id] || null
+);
+
+export const officerYearlyPercentileSelector = createSelector(
+  [getOfficer],
+  (officer) => map(get(officer, 'percentiles', []), extractPercentile)
 );
