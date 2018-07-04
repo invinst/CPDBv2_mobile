@@ -35,14 +35,23 @@ describe('landing page selectors', function () {
 
     recentActivitiesSelector({
       landingPage: {
-        recentActivities: [{
-          id: 123,
-          percentile: null
-        }]
+        recentActivities: [
+          {
+            id: 123,
+            percentile: null,
+            type: 'coaccused_pair'
+          },
+          {
+            id: 124,
+            percentile: null,
+            type: 'single_officer'
+          },
+        ]
       }
     }).should.deepEqual([{
-      id: 123,
-      percentile: {}
+      id: 124,
+      percentile: {},
+      type: 'single_officer'
     }]);
   });
 
@@ -53,9 +62,25 @@ describe('landing page selectors', function () {
 
     newDocumentAllegationsSelector({
       landingPage: {
-        newDocumentAllegations: ['abc']
+        newDocumentAllegations: [
+          {
+            'crid': '123214',
+            'num_recent_documents': 2,
+            'latest_document': {
+              'preview_image_url': 'preview_link',
+              'url': 'something.html'
+            }
+          }
+        ]
       }
-    }).should.eql(['abc']);
+    }).should.eql([{
+      crid: '123214',
+      documentCount: 2,
+      document: {
+        previewImageUrl: 'preview_link',
+        url: 'something.pdf'
+      }
+    }]);
   });
 
   it('complaintSummariesSelector', () => {

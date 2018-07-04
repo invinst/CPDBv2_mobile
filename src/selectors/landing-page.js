@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
+import documentUrl from 'selectors/common/document-url';
 import { convertContentStateToEditorState } from 'utils/draftjs';
 
 const officerCardTransform = officer => ({
@@ -18,10 +19,21 @@ export const topOfficersByAllegationSelector = createSelector(
 
 export const recentActivitiesSelector = createSelector(
   state => state.landingPage.recentActivities || [],
-  officers => officers.map(officerCardTransform)
+  //TODO: Below filter should be removed when Officer Pairing Card is implemented
+  officers => officers.filter(x => x.type === 'single_officer').map(officerCardTransform)
 );
 
-export const newDocumentAllegationsSelector = state => state.landingPage.newDocumentAllegations || [];
+export const newDocumentAllegationsSelector = createSelector(
+  state => state.landingPage.newDocumentAllegations || [],
+  complaints => complaints.map(complaint => ({
+    crid: complaint.crid,
+    documentCount: complaint.num_recent_documents,
+    document: {
+      previewImageUrl: get(complaint, 'latest_document.preview_image_url', null),
+      url: documentUrl(get(complaint, 'latest_document.url', null))
+    }
+  }))
+);
 
 export const complaintSummariesSelector = createSelector(
   state => state.landingPage.complaintSummaries || [],

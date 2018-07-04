@@ -7,19 +7,19 @@ import constants from 'constants';
 import style from './complaint-document-card.sass';
 
 const ComplaintDocumentCard = ({ allegation }) => {
-  const latestDocument = get(allegation, 'latest_document', {});
+  const document = get(allegation, 'document', {});
 
   return (
     <div className={ style.complaintDocumentCard }>
-      <a href={ latestDocument.url } className='document-preview'>
-        <img className='preview-image' src={ latestDocument.preview_image_url } />
+      <a href={ document.url } className='document-preview'>
+        <img className='preview-image' src={ document.previewImageUrl } />
       </a>
       <Link
         to={ `${constants.COMPLAINT_PATH}${allegation.crid}/` }
         className='complaint-info'>
         <div className='crid'>CR { allegation.crid }</div>
         <div className='num-recent-documents'>
-          { `${allegation.num_recent_documents} new ${pluralize('attachment', allegation.num_recent_documents)}` }
+          { `${allegation.documentCount} new ${pluralize('attachment', allegation.documentCount)}` }
         </div>
       </Link>
     </div>
