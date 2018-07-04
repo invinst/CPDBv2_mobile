@@ -10,7 +10,7 @@ import { getOfficerTimeline } from 'actions/officer-page/timeline';
 function mapStateToProps(state, ownProps) {
   return {
     items: getNewTimelineItems(state),
-    officerId: Number.parseInt(ownProps.params.id)
+    officerId: ownProps.officerId
   };
 }
 
