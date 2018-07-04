@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Year from 'components/officer-page/tabbed-pane-section/timeline/item/showings/year';
+import Year from 'components/officer-page/tabbed-pane-section/timeline/item/year';
 
 
 describe('Year component', function () {

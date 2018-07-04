@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Joined from 'components/officer-page/tabbed-pane-section/timeline/item/showings/joined';
+import Joined from 'components/officer-page/tabbed-pane-section/timeline/item/joined';
 
 
 describe('Joined component', function () {

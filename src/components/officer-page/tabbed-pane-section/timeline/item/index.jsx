@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { get } from 'lodash';
 import cx from 'classnames';
 
-import Cr from './showings/cr';
-import Trr from './showings/trr';
-import Award from './showings/award';
-import UnitChange from './showings/unit-change';
-import Joined from './showings/joined';
-import Year from './showings/year';
+import Cr from './cr';
+import Trr from './trr';
+import Award from './award';
+import UnitChange from './unit-change';
+import Joined from './joined';
+import Year from './year';
 import { TIMELINE_ITEMS } from 'constants/officer-page/tabbed-pane-section/timeline';
 import styles from './item.sass';
 

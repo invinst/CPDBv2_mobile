@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Link } from 'react-router';
-import Trr from 'components/officer-page/tabbed-pane-section/timeline/item/showings/trr';
+import Trr from 'components/officer-page/tabbed-pane-section/timeline/item/trr';
 
 
 describe('Trr component', function () {

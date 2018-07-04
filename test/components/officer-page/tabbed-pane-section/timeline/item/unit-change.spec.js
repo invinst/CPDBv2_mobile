@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import UnitChange from 'components/officer-page/tabbed-pane-section/timeline/item/showings/unit-change';
+import UnitChange from 'components/officer-page/tabbed-pane-section/timeline/item/unit-change';
 
 
 describe('UnitChange component', function () {

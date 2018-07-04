@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Award from 'components/officer-page/tabbed-pane-section/timeline/item/showings/award';
+import Award from 'components/officer-page/tabbed-pane-section/timeline/item/award';
 
 
 describe('Award component', function () {

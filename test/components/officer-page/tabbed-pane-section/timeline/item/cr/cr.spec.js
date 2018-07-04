@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Cr from 'components/officer-page/tabbed-pane-section/timeline/item/showings/cr';
+import Cr from 'components/officer-page/tabbed-pane-section/timeline/item/cr';
 
 
 describe('Cr component', function () {

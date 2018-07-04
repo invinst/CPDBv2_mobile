@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { stub } from 'sinon';
 
-import Attachments from 'components/officer-page/tabbed-pane-section/timeline/item/showings/cr/attachments';
+import Attachments from 'components/officer-page/tabbed-pane-section/timeline/item/cr/attachments';
 
 
 describe('Attachments component', function () {

@@ -7,12 +7,12 @@ import {
 } from 'react-addons-test-utils';
 
 import Item from 'components/officer-page/tabbed-pane-section/timeline/item';
-import Year from 'components/officer-page/tabbed-pane-section/timeline/item/showings/year';
-import CR from 'components/officer-page/tabbed-pane-section/timeline/item/showings/cr';
-import TRR from 'components/officer-page/tabbed-pane-section/timeline/item/showings/trr';
-import Award from 'components/officer-page/tabbed-pane-section/timeline/item/showings/award';
-import UnitChange from 'components/officer-page/tabbed-pane-section/timeline/item/showings/unit-change';
-import Joined from 'components/officer-page/tabbed-pane-section/timeline/item/showings/joined';
+import Year from 'components/officer-page/tabbed-pane-section/timeline/item/year';
+import CR from 'components/officer-page/tabbed-pane-section/timeline/item/cr';
+import TRR from 'components/officer-page/tabbed-pane-section/timeline/item/trr';
+import Award from 'components/officer-page/tabbed-pane-section/timeline/item/award';
+import UnitChange from 'components/officer-page/tabbed-pane-section/timeline/item/unit-change';
+import Joined from 'components/officer-page/tabbed-pane-section/timeline/item/joined';
 
 
 describe('Item component', function () {

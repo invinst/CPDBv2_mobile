@@ -1,5 +1,6 @@
 @import 'variables'
-@import '../base-item'
+@import '../base'
+
 
 $height: 58px
 
@@ -17,18 +18,20 @@ $height: 58px
 
     .kind
       @extend %base-kind
-      color: white
-      background-color: $gandalf-gray
-      border-color: $gandalf-gray
+      color: $gandalf-gray
+      background-color: $wild-sand
+      border-color: $alto-solid
 
     .category
       @extend %base-category
       display: inline-block
       vertical-align: middle
-      color: $thunder
+      font-size: 12px
+      color: $gandalf-gray
+      font-weight: 300
 
     .date
       @extend %base-date
       font-size: 12px
-      color: $thunder
+      color: $gandalf-gray
       font-weight: 300
