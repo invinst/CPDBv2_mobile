@@ -1,0 +1,39 @@
+@import 'variables'
+
+:local(.accused-officers)
+  .header
+    font-size: 14px
+    font-weight: 500
+    color: $thunder
+    margin: 38px 0 8px 0
+    height: auto
+    line-height: initial
+    padding: 0 8px
+    background-color: $wild-sand
+  
+  .coaccusals
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    margin-top: -3px
+    max-height: 460px
+    overflow: hidden
+    padding: 0 8px
+
+    &.expanded
+      max-height: initial
+
+  .show-all
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 100%
+    height: 44px
+    border-top: 1px solid $alto-solid
+    color: $blue-ribbon2
+
+  .padding-bottom
+    width: 100%
+    height: 44px
+    margin-top: 8px
+    border-top: 1px solid $alto-solid
