@@ -16,7 +16,9 @@ export default class LandingPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { location, params, routes, pushBreadcrumbs } = nextProps;
-    pushBreadcrumbs({ location, params, routes });
+    if (location !== this.props.location) {
+      pushBreadcrumbs({ location, params, routes });
+    }
   }
 
   render() {

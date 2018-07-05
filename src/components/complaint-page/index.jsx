@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StickyContainer } from 'react-sticky';
+import { StickyContainer, Sticky } from 'react-sticky';
 
 import Header from 'components/shared/header';
 import BottomPadding from 'components/shared/bottom-padding';
@@ -25,7 +25,7 @@ export default class ComplaintPage extends Component {
 
     return (
       <StickyContainer className={ style.complaintPage }>
-        <Header />
+        <Sticky><Header /></Sticky>
         <div className='complaint-page-body'>
           <ComplaintCategory
             category={ complaint.category }

@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import { StickyContainer, Sticky } from 'react-sticky';
 import { isEmpty } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
@@ -111,8 +112,8 @@ class OfficerPage extends Component {
     const { historicBadgesExpanded } = this.state;
 
     return (
-      <div className={ style.officerSummary }>
-        <Header />
+      <StickyContainer className={ style.officerSummary }>
+        <Sticky><Header /></Sticky>
         <OfficerRadarChart data={ threeCornerPercentile }/>
         <h1 className='officer-name header' onClick={ scrollToTop() }>
           { name }
@@ -145,7 +146,7 @@ class OfficerPage extends Component {
         </div>
         { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
         <BottomPadding />
-      </div>
+      </StickyContainer>
     );
   }
 }

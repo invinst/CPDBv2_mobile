@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { StickyContainer, Sticky } from 'react-sticky';
 
 import style from './trr-page.sass';
 import BottomPadding from 'components/shared/bottom-padding';
@@ -24,15 +25,15 @@ export default class TRRPage extends Component {
     }
 
     return (
-      <div className={ style.trrPage }>
-        <Header />
+      <StickyContainer className={ style.trrPage }>
+        <Sticky><Header /></Sticky>
         <h4 className='trr-header'>{ trr.category }</h4>
         <div className='trr-page-body'>
           <Officer { ...trr.officer }/>
           <Info { ...trr.info }/>
         </div>
         <BottomPadding />
-      </div>
+      </StickyContainer>
     );
   }
 }
