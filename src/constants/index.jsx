@@ -254,14 +254,14 @@ export default {
       path: 'OFFICER'
     },
     {
-      name: 'COMPLAINT RECORDS (CRs)',
-      filter: 'CRs',
+      name: 'COMPLAINT RECORDS',
+      filter: 'CR',
       id: 'crs',
       path: 'CR'
     },
     {
-      name: 'TACTICAL RESPONSE REPORTS (TRRs)',
-      filter: 'TRRs',
+      name: 'TACTICAL RESPONSE REPORTS',
+      filter: 'TRR',
       id: 'trrs',
       path: 'TRR'
     },
