@@ -14,7 +14,7 @@ const CRLocationMap = ({ lng, lat }) => {
       <LocationMap
         lat={ lat }
         lng={ lng }
-        zoomOutLevel={ 8 }
+        zoomOutLevel={ 9 }
         zoomInLevel={ 13 }
         mapboxStyle='mapbox://styles/mapbox/streets-v10'
         markerEl={ marker } />
