@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { StickyContainer } from 'react-sticky';
 
-import constants from 'constants';
-import NavbarContainer from 'containers/navbar-container';
+import Header from 'components/shared/header';
 import BottomPadding from 'components/shared/bottom-padding';
 import AccusedOfficers from './accused-officers';
 import ComplaintCategory from './complaint-category';
@@ -26,7 +25,7 @@ export default class ComplaintPage extends Component {
 
     return (
       <StickyContainer className={ style.complaintPage }>
-        <NavbarContainer backLink={ constants.SEARCH_PATH } />
+        <Header />
         <div className='complaint-page-body'>
           <ComplaintCategory
             category={ complaint.category }

@@ -3,12 +3,11 @@ import { isEmpty } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
-import constants from 'constants';
 import GaUtil from 'utils/ga-util';
 import { scrollToTop } from 'utils/navigation-util';
+import Header from 'components/shared/header';
 import LoadingPage from 'components/shared/loading-page';
 import BottomPadding from 'components/shared/bottom-padding';
-import NavbarContainer from 'containers/navbar-container';
 import NotMatchedOfficerPage from './officer-page/not-matched-officer-page';
 import SectionRow from './officer-page/section-row';
 import style from './officer-page.sass';
@@ -113,7 +112,7 @@ class OfficerPage extends Component {
 
     return (
       <div className={ style.officerSummary }>
-        <NavbarContainer backLink={ constants.SEARCH_PATH } />
+        <Header />
         <OfficerRadarChart data={ threeCornerPercentile }/>
         <h1 className='officer-name header' onClick={ scrollToTop() }>
           { name }

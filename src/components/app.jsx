@@ -61,7 +61,7 @@ const App = React.createClass({
             component={ OfficerTimelineContainer } />
 
           <Route
-            path={ `${constants.COMPLAINT_PATH}:complaintId/:coaccusedId/` }
+            path={ `${constants.COMPLAINT_PATH}:complaintId/` }
             breadcrumb={ BreadcrumbItemContainer }
             component={ ComplaintPageContainer }
           />
