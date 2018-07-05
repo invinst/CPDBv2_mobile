@@ -1,5 +1,7 @@
 'use strict';
-var api = require(__dirname + '/../mock-api');
+
+const api = require(__dirname + '/../mock-api');
+const { TIMEOUT } = require(__dirname + '/../constants');
 
 const mockComplaint = {
   'most_common_category': {
@@ -72,6 +74,18 @@ const mockComplaint = {
 describe('ComplaintPageTest', function () {
   beforeEach(function (client, done) {
     api.mock('GET', '/api/v2/mobile/cr/1053667/', 200, mockComplaint);
+    api.mockPost(
+      '/api/v2/mobile/cr/1053667/request-document/',
+      200,
+      { email: 'valid@email.com' },
+      { 'message': 'Thanks for subscribing.', crid: 1053667 }
+    );
+    api.mockPost(
+      '/api/v2/mobile/cr/1053667/request-document/',
+      400,
+      { email: 'invalid#email.com' },
+      { 'message': 'Sorry, we can not subscribe your email' }
+    );
     this.complaintPage = client.page.complaintPage();
     client.url(`${client.globals.clientUrl}/complaint/1053667/6493/`);
     done();
@@ -114,5 +128,43 @@ describe('ComplaintPageTest', function () {
       'Apr 30, 2012\nIncident Occurs\nInvestigation Begins\nInvestigation Closed'
     );
     this.complaintPage.expect.element('@firstInvestigator').text.to.contain('Peter Parker');
+  });
+
+  it('should show request document modal when clicks on "Request Document"', function () {
+    this.complaintPage.expect.section('@requestDocumentForm').to.be.not.present;
+
+    this.complaintPage.click('@requestDocumentButton');
+    this.complaintPage.expect.section('@requestDocumentForm').to.be.present;
+
+    this.complaintPage.section.requestDocumentForm.click('@cancelButton');
+    this.complaintPage.expect.section('@requestDocumentForm').to.be.not.present;
+  });
+
+  it('should accept valid email, and close modal after 1.5s', function () {
+    this.complaintPage.expect.element('@requestDocumentButton').text.to.equal('Request Documents');
+    this.complaintPage.click('@requestDocumentButton');
+    this.complaintPage.expect.section('@requestDocumentForm').to.be.present;
+
+    const requestDocumentForm = this.complaintPage.section.requestDocumentForm;
+    requestDocumentForm.setValue('@emailInput', 'valid@email.com');
+    requestDocumentForm.click('@requestButton');
+    requestDocumentForm.waitForElementVisible('@messageBox', TIMEOUT);
+    requestDocumentForm.expect.element('@messageBox').text.to.equal('Thanks for subscribing.');
+
+    this.complaintPage.expect.section('@requestDocumentForm').to.be.not.present.after(2000);
+    this.complaintPage.expect.element('@requestDocumentButton').text.to.equal('Documents Requested✔');
+  });
+
+  it('should ignore invalid email', function () {
+    this.complaintPage.click('@requestDocumentButton');
+    this.complaintPage.expect.section('@requestDocumentForm').to.be.present;
+
+    const requestDocumentForm = this.complaintPage.section.requestDocumentForm;
+    requestDocumentForm.setValue('@emailInput', 'invalid#email.com');
+    requestDocumentForm.click('@requestButton');
+    requestDocumentForm.waitForElementVisible('@messageBox', TIMEOUT);
+    requestDocumentForm.expect.element('@messageBox').text.to.equal(
+      'Sorry, we can not subscribe your email'
+    );
   });
 });

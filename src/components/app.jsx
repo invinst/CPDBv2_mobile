@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { Router, Route, IndexRoute } from 'react-router';
+import Modal from 'react-modal';
 
 import AppHistory from 'utils/history';
 import constants from 'constants';
@@ -19,6 +19,8 @@ import 'styles/fonts.sass';
 import 'styles/helper.sass';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+
+Modal.setAppElement('body');
 
 const App = React.createClass({
   render() {

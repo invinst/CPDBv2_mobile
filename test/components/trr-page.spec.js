@@ -20,6 +20,7 @@ describe('<TRRPage />', function () {
 
     wrapper.find('Officer').prop('officerId').should.equal(123);
     wrapper.find('Info').prop('victimDemographic').should.equal('Black, Male, 27 years old');
+    wrapper.find('Info').prop('trrId').should.equal(1);
     wrapper.find('.trr-header').text().should.equal('Other');
   });
 

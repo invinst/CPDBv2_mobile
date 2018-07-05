@@ -25,7 +25,7 @@ export default class ComplaintPage extends Component {
   }
 
   render() {
-    const { complaint } = this.props;
+    const { complaint, complaintId } = this.props;
 
     if (!complaint) {
       return null;
@@ -44,7 +44,7 @@ export default class ComplaintPage extends Component {
             <Victim victims={ complaint.victims } />
             <Complainant complainants={ complaint.complainants } />
             <Summary summary={ complaint.summary } />
-            <Attachments attachments={ complaint.attachments } />
+            <Attachments attachments={ complaint.attachments } complaintId={ complaintId }/>
             <InvestigationTimeline
               startDate={ complaint.startDate }
               endDate={ complaint.endDate }

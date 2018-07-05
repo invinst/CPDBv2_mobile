@@ -18,7 +18,7 @@ export default class TRRPage extends Component {
   }
 
   render() {
-    const { trr } = this.props;
+    const { trr, trrId } = this.props;
 
     if (!trr) {
       return null;
@@ -30,7 +30,7 @@ export default class TRRPage extends Component {
         <h4 className='trr-header'>{ trr.category }</h4>
         <div className='trr-page-body'>
           <Officer { ...trr.officer }/>
-          <Info { ...trr.info }/>
+          <Info { ...trr.info } trrId={ trrId }/>
         </div>
         <BottomPadding />
       </div>

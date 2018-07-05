@@ -8,16 +8,16 @@ import Location from 'components/trr-page/location';
 
 class Info extends Component {
   render() {
-    const { victimDemographic, forceTypes, incidentDate, address, locationType, beat, point } = this.props;
+    const { victimDemographic, forceTypes, incidentDate, address, locationType, beat, point, trrId } = this.props;
 
     return (
-      <div className={ style.info }>
+      <div className={ style.trrInfo }>
         <div className='victim-section'>
           <div className='title'>Victim</div>
           <div className='value'>{ victimDemographic }</div>
         </div>
         <TypeOfForce forceTypes={ forceTypes }/>
-        <Attachment/>
+        <Attachment trrId={ trrId }/>
         <div className='date-title'>DATE OF INCIDENT</div>
         <div className='incident-date'>{ incidentDate }</div>
         <Location address={ address } locationType={ locationType } beat={ beat } point={ point }/>
@@ -35,6 +35,7 @@ Info.propTypes = {
   locationType: PropTypes.string,
   beat: PropTypes.string,
   point: PropTypes.object,
+  trrId: PropTypes.number,
 };
 
 export default Info;

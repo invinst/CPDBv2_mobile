@@ -26,7 +26,13 @@ describe('ComplaintPage component', function () {
   it('should call requestComplaint when component mounted', function () {
     const requestComplaintSpy = spy();
     const store = configureStore()({
-      navbar: {}
+      navbar: {},
+      complaintPage: {
+        attachmentRequest: {
+          message: '',
+          subscribedCRIds: {}
+        }
+      }
     });
 
     mount(

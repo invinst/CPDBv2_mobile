@@ -5,7 +5,7 @@ import Image from 'components/shared/image';
 import document from 'img/ic-document.jpg';
 import audio from 'img/ic-audio.svg';
 import video from 'img/ic-video.svg';
-
+import CRRequestDocumentButtonContainer from 'containers/common/cr-request-document-container';
 import styles from './attachments.sass';
 
 
@@ -14,15 +14,9 @@ const TYPE_TO_ICONS = {
 };
 
 class Attachments extends Component {
-  handleClick() {
-    const { alreadyRequested, requestDocument } = this.props;
-    if (!alreadyRequested) {
-      requestDocument();
-    }
-  }
 
   render() {
-    const { attachments, alreadyRequested } = this.props;
+    const { attachments, complaintId } = this.props;
     const noAttachment = attachments.length === 0;
 
     return (
@@ -33,13 +27,7 @@ class Attachments extends Component {
               noAttachment ? 'There are no documents that have been made public yet.' : 'ATTACHMENTS'
             }
           </div>
-          <div className='request-document-button' onClick={ () => this.handleClick() }>
-            {
-              !alreadyRequested
-                ? 'Request Documents'
-                : <span>Documents Requested &nbsp; <span>✔</span></span>
-            }
-          </div>
+          <CRRequestDocumentButtonContainer id={ complaintId } customClassName='request-button-container'/>
         </div>
         <div className='attachment-list'>
           {
@@ -64,13 +52,11 @@ class Attachments extends Component {
 
 Attachments.propTypes = {
   attachments: PropTypes.array,
-  alreadyRequested: PropTypes.bool,
-  requestDocument: PropTypes.function
+  complaintId: PropTypes.string
 };
 
 Attachments.defaultProps = {
   attachments: [],
-  requestDocument: () => {}
 };
 
 export default Attachments;

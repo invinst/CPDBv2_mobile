@@ -1,4 +1,4 @@
-var express = require("express");
+var express = require('express');
 var app = express();
 var cors = require('cors');
 var bodyParser = require('body-parser');
@@ -20,7 +20,7 @@ app.use(cors());
 // We haven't handle our api-server for specific params yet
 // TODO: Handle parameters here
 app.use('/*', function (req, res) {
-  api.call(req.method, req.originalUrl)(req, res)
+  api.call(req)(res);
 });
 
 
