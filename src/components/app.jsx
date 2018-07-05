@@ -14,11 +14,14 @@ import ComplaintPageContainer from 'containers/complaint-page-container';
 import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
 
-import 'styles/style.sass';
 import 'styles/fonts.sass';
+import 'styles/style.sass';
 import 'styles/helper.sass';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import config from 'config';
 
+
+window.Intercom('boot', { 'app_id': config.intercomAppId } );
 
 const App = React.createClass({
   render() {
