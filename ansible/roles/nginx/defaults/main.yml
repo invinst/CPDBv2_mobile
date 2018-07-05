@@ -1,0 +1,11 @@
+_logs_path: /var/log/nginx/cpdv2-mobile
+
+nginx:
+  update_apt_cache: yes
+  template: "nginx.j2"
+  app_path: "{{ _deploy_to }}/current"
+  configuration_name: cpdb-mobile
+  access_log: "{{ _logs_path }}/access_log"
+  error_log: "{{ _logs_path }}/error_log"
+  server_name: m.lvh.me
+  enable_https: no

@@ -14,7 +14,8 @@ describe('AccusedOfficers component', function () {
       <AccusedOfficers officers={ ['1', '2'] } />
     );
 
-    wrapper.find('.show-all').should.have.length(0);
+    wrapper.find('.show-all').exists().should.be.false();
+    wrapper.find('.padding-bottom').exists().should.be.true();
   });
 
   it('should render show all button if officers count is bigger than 3', function () {
@@ -22,7 +23,8 @@ describe('AccusedOfficers component', function () {
       <AccusedOfficers officers={ ['1', '2', '3'] } />
     );
 
-    wrapper.find('.show-all').should.have.length(1);
+    wrapper.find('.show-all').exists().should.be.true();
+    wrapper.find('.padding-bottom').exists().should.be.false();
   });
 
   it('should show all officers when click on show all button', function () {
@@ -31,7 +33,8 @@ describe('AccusedOfficers component', function () {
     );
 
     wrapper.find('.show-all').simulate('click');
-    wrapper.find('.show-all').should.have.length(0);
+    wrapper.find('.show-all').exists().should.be.false();
+    wrapper.find('.padding-bottom').exists().should.be.true();
     wrapper.find('.coaccusals').hasClass('expanded').should.be.true();
   });
 });

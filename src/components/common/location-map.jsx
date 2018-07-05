@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { render } from 'react-dom';
+import { isNil } from 'lodash';
 
 import style from './location-map.sass';
 import { mapboxgl } from 'utils/mapbox';
@@ -36,7 +37,14 @@ export default class LocationMap extends Component {
   }
 
   addMarker(lat, lng, markerEl) {
-    if (!this.marker) {
+    const locationValid = !isNil(lat) && !isNil(lng);
+
+    if (this.marker && locationValid) {
+      this.marker.setLngLat([lng, lat]);
+    } else if (this.marker) {
+      this.marker.remove();
+      this.marker = null;
+    } else if (locationValid) {
       const placeholder = document.createElement('div');
 
       const markerDOM = render(
@@ -47,8 +55,6 @@ export default class LocationMap extends Component {
       this.marker = new mapboxgl.Marker(markerDOM);
       this.marker.setLngLat([lng, lat]);
       this.marker.addTo(this.map);
-    } else {
-      this.marker.setLngLat([lng, lat]);
     }
   }
 
@@ -102,5 +108,5 @@ LocationMap.defaultProps = {
   zoomOutLevel: 8,
   zoomInLevel: 13,
   centerLat: 41.85677,
-  centerLng: -87.6024055
+  centerLng: -87.6024055,
 };

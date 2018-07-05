@@ -67,4 +67,25 @@ describe('LocationMap component', function () {
 
     wrapper.instance().marker.element.className.should.equal('custom-marker');
   });
+<<<<<<< HEAD
+=======
+
+  it('shouldn\'t render custom marker if lng or lat is missing', function () {
+    const customMarker = <div className='custom-marker'/>;
+    const wrapper = mount(<LocationMap lng={ 1 } markerEl={ customMarker }/>);
+
+    should(wrapper.instance().marker).not.be.ok();
+  });
+
+  it('should remove old marker if new lng or lat is missing', function () {
+    const customMarker = <div className='custom-marker'/>;
+    const wrapper = mount(<LocationMap lng={ 1 } lat={ 1 } markerEl={ customMarker }/>);
+
+    wrapper.instance().marker.element.className.should.equal('custom-marker');
+
+    wrapper.setProps({ lng: null, lat: 1 });
+
+    should(wrapper.instance().marker).not.be.ok();
+  });
+>>>>>>> develop
 });

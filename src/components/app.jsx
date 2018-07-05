@@ -8,7 +8,7 @@ import constants from 'constants';
 import MainPageContainer from 'containers/main-page-container';
 import AboutPageContainer from 'containers/about-page-container';
 import SearchPageContainer from 'containers/search-page-container';
-import OfficerSummaryContainer from 'containers/officer-page/officer-summary-container';
+import OfficerPageContainer from 'containers/officer-page-container';
 import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
 import ComplaintPageContainer from 'containers/complaint-page-container';
 import TRRPageContainer from 'containers/trr-page-container';
@@ -18,6 +18,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import 'styles/fonts.sass';
 import 'styles/style.sass';
 import 'styles/helper.sass';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const App = React.createClass({
   render() {
@@ -32,7 +33,7 @@ const App = React.createClass({
             <Route path={ constants.SEARCH_PATH + ':query' } component={ SearchPageContainer } />
           </Route>
 
-          <Route path={ `${constants.OFFICER_PATH}:id/` } component={ OfficerSummaryContainer } />
+          <Route path={ `${constants.OFFICER_PATH}:id/` } component={ OfficerPageContainer } />
           <Route path={ `${constants.OFFICER_PATH}:id/timeline/` } component={ OfficerTimelineContainer } />
 
           <Route

@@ -1,6 +1,7 @@
 /* istanbul ignore next */
 import _mapboxgl from 'mapbox-gl';
 import { spy, stub } from 'sinon';
+import config from 'config';
 
 const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoiaW52aXNpYmxlaW5zdGl0dXRlIiwiYSI6ImNpZ256bXRqMDAwMDBzeGtud3VoZGplNHMifQ.ky2VSGEYU5KritRMArHY-w';
@@ -8,7 +9,7 @@ const MAPBOX_ACCESS_TOKEN =
 
 _mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 
-if (global.LIVE_TEST !== undefined || global.mocha !== undefined) {
+if (config.appEnv === 'test') {
   const addSourceSpy = spy();
   const getSourceSpy = stub().returns(undefined);
   const addLayerSpy = spy();
@@ -17,6 +18,7 @@ if (global.LIVE_TEST !== undefined || global.mocha !== undefined) {
   const addControlSpy = spy();
   const navigationControlSpy = spy();
   const removeSpy = spy();
+  const removeMakerSpy = spy();
   const easeToSpy = spy();
   const getZoomStub = stub();
   const setLngLatSpy = spy();
@@ -46,6 +48,7 @@ if (global.LIVE_TEST !== undefined || global.mocha !== undefined) {
       this.addTo = addToSpy;
       this.setPopup = setPopupSpy;
       this.element = element;
+      this.remove = removeMakerSpy;
     }
   }
 

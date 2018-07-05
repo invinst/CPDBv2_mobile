@@ -1,5 +1,6 @@
-import { trrSelector } from 'selectors/trr-page';
 import should from 'should';
+
+import { trrSelector } from 'selectors/trr-page';
 
 
 describe('trr-page selectors', () => {
@@ -51,6 +52,10 @@ describe('trr-page selectors', () => {
               'force_types': ['Physical Force - Stunning', 'Verbal Commands', 'Member Presence'],
               'date_of_incident': '2004-04-23',
               'location_type': 'Street',
+              point: {
+                lng: 1.1,
+                lat: 2.2,
+              },
               address: '11XX 79Th St',
               beat: 612
             }
@@ -94,6 +99,10 @@ describe('trr-page selectors', () => {
           incidentDate: 'APR 23, 2004',
           address: '11XX 79Th St',
           locationType: 'Street',
+          point: {
+            lng: 1.1,
+            lat: 2.2,
+          },
           beat: '612',
         },
       });
@@ -137,6 +146,7 @@ describe('trr-page selectors', () => {
           incidentDate: 'APR 23, 2004',
           address: '11XX 79Th St',
           locationType: 'Street',
+          point: undefined,
           beat: '612',
         },
       });
