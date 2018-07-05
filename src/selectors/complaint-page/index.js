@@ -1,10 +1,11 @@
-import constants from 'constants';
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import { get, compact } from 'lodash';
+import { get, compact, sortBy } from 'lodash';
 
+import constants from 'constants';
 import { getFindingOutcomeMix } from './finding-outcome-mix';
 import { extractPercentile } from 'selectors/common/percentile';
+import { breadcrumbSelector } from 'selectors/common/breadcrumbs';
 
 
 const getComplaint = (state, props) => state.complaintPage.complaints[props.params.complaintId];
@@ -33,6 +34,38 @@ const coaccusedTransform = coaccused => {
   };
 };
 
+const coaccusedSelector = createSelector(
+  getComplaint,
+  complaint => get(complaint, 'coaccused', []).map(coaccusedTransform)
+);
+
+const sortByOfficerInBreadcrumb = breadcrumbs => officer => {
+  const officerIdsInBreadcrumb = breadcrumbs
+    .filter(item => item.url.indexOf(constants.OFFICER_PATH) > -1)
+    .map(item => item.params.officerId);
+  return -officerIdsInBreadcrumb.indexOf(String(officer.id));
+};
+
+const sortByOfficerFinding = officer => {
+  return officer.finding === 'Sustained' ? 0 : 1;
+};
+
+const sortByOfficerComplaint = officer => -officer.allegationCount;
+
+const getCoaccusedSelector = createSelector(
+  coaccusedSelector,
+  breadcrumbSelector,
+  (officers, { breadcrumbs }) => {
+    return sortBy(
+      officers,
+      [
+        sortByOfficerInBreadcrumb(breadcrumbs),
+        sortByOfficerFinding,
+        sortByOfficerComplaint
+      ]
+    );
+  }
+);
 
 const attachmentTransform = attachment => ({
   fileType: attachment['file_type'],
@@ -44,8 +77,9 @@ const attachmentTransform = attachment => ({
 const involvedAs = type => involvement => involvement['involved_type'] === type;
 
 export const complaintSelector = createSelector(
-  [getComplaint],
-  complaint => {
+  getComplaint,
+  getCoaccusedSelector,
+  (complaint, coaccuseds) => {
     if (!complaint) {
       return null;
     }
@@ -62,7 +96,7 @@ export const complaintSelector = createSelector(
       category: get(complaint, 'most_common_category.category') || 'Unknown',
       subcategory: get(complaint, 'most_common_category.allegation_name') || 'Unknown',
       summary: complaint.summary,
-      coaccused: get(complaint, 'coaccused', []).map(coaccusedTransform),
+      coaccused: coaccuseds,
       victims: compact(get(complaint, 'victims', []).map(getDemographicString)),
       complainants: compact(get(complaint, 'complainants', []).map(getDemographicString)),
       attachments: get(complaint, 'attachments', []).map(attachmentTransform),
