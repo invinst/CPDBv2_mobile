@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
+import should from 'should';
 
 import LocationMap from 'components/common/location-map';
 
@@ -67,8 +68,6 @@ describe('LocationMap component', function () {
 
     wrapper.instance().marker.element.className.should.equal('custom-marker');
   });
-<<<<<<< HEAD
-=======
 
   it('shouldn\'t render custom marker if lng or lat is missing', function () {
     const customMarker = <div className='custom-marker'/>;
@@ -87,5 +86,4 @@ describe('LocationMap component', function () {
 
     should(wrapper.instance().marker).not.be.ok();
   });
->>>>>>> develop
 });
