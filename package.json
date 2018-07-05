@@ -7,8 +7,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist",
-    "dist": "npm run copy & SASS_PATH=./src/styles webpack --env=dist",
-    "prod": "npm run copy & SASS_PATH=./src/styles webpack --env=prod",
+    "dist": "npm run copy & webpack --env=${WEBPACK_ENV:-production} --bail",
     "lint": "eslint ./src",
     "posttest": "npm run lint",
     "release:major": "npm version major && npm publish && git push --follow-tags",
@@ -21,7 +20,7 @@
     "live-test": "SASS_PATH=./src/styles NODE_ENV='live-test' node nightwatch.js",
     "ci-test": "karma start --reporters mocha,coverage,coveralls",
     "mocha-watch": "karma start --no-single-run --reporters mocha",
-    "test:watch": "karma start --autoWatch=true --singleRun=false"
+    "test-watch": "karma start --autoWatch=true --singleRun=false"
   },
   "repository": "",
   "keywords": [],
@@ -101,6 +100,7 @@
     "history": "^2.1.2",
     "leaflet": "^1.0.3",
     "lodash": "^4.17.4",
+    "mapbox-gl": "0.42.2",
     "mapbox.js": "^2.4.0",
     "moment": "^2.13.0",
     "normalize.css": "^4.0.0",

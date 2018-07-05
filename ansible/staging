@@ -1,2 +1,2 @@
-[default]
-ms.cpdp.co ansible_user=ansible branch=staging
+[staging]
+ms.cpdp.co

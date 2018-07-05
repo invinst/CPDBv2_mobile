@@ -8,9 +8,9 @@ import constants from 'constants';
 import MainPageContainer from 'containers/main-page-container';
 import AboutPageContainer from 'containers/about-page-container';
 import SearchPageContainer from 'containers/search-page-container';
-import OfficerSummaryContainer from 'containers/officer-page/officer-summary-container';
+import OfficerPageContainer from 'containers/officer-page-container';
 import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
-import ComplaintPageContainer from 'containers/ComplaintPageContainer';
+import ComplaintPageContainer from 'containers/complaint-page-container';
 import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
 import BreadcrumbItemContainer from 'containers/breadcrumb-container';
@@ -18,6 +18,7 @@ import BreadcrumbItemContainer from 'containers/breadcrumb-container';
 import 'styles/style.sass';
 import 'styles/fonts.sass';
 import 'styles/helper.sass';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 
 const App = React.createClass({
@@ -53,7 +54,7 @@ const App = React.createClass({
           <Route
             path={ `${constants.OFFICER_PATH}:id/` }
             breadcrumb={ BreadcrumbItemContainer }
-            component={ OfficerSummaryContainer } />
+            component={ OfficerPageContainer } />
           <Route
             path={ `${constants.OFFICER_PATH}:id/timeline/` }
             breadcrumb='Timeline'

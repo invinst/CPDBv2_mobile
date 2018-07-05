@@ -1,4 +1,0 @@
-nginx_server_name: ms.cpdp.co
-branch: staging
-yarn_command: dist
-enable_https: no

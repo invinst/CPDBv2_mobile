@@ -17,13 +17,13 @@ import style from './officer-timeline.sass';
 
 class OfficerTimeline extends Component {
   componentDidMount() {
-    const { timeline, getOfficerTimeline, summary, getOfficerSummary, pk } = this.props;
+    const { timeline, getOfficerTimeline, summary, fetchOfficer, pk } = this.props;
 
     if (!timeline) {
       getOfficerTimeline(pk);
     }
     if (!summary) {
-      getOfficerSummary(pk);
+      fetchOfficer(pk);
     }
 
     GaUtil.track('event', 'officer', 'view_detail', window.location.pathname);
@@ -137,7 +137,7 @@ OfficerTimeline.propTypes = {
   pk: PropTypes.number,
   getOfficerTimeline: PropTypes.func.isRequired,
   getMoreOfficerTimeline: PropTypes.func.isRequired,
-  getOfficerSummary: PropTypes.func.isRequired,
+  fetchOfficer: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   found: PropTypes.bool,
   hasMore: PropTypes.bool,

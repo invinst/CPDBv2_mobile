@@ -1,12 +1,51 @@
 'use strict';
 const api = require(__dirname + '/../mock-api');
 
+// TODO: clean mock before each test
 const mockOfficer = {
-  'full_name': 'John Doe',
-  'id': 2235,
-  'complaint_records': {
-    facets: []
-  }
+  'officer_id': 2235,
+  'full_name': 'Kevin Osborn',
+  active: true,
+  'allegation_count': 104,
+  badge: '8548',
+  'historic_badges': ['8547', '8546'],
+  'birth_year': 1957,
+  'civilian_compliment_count': 4,
+  'complaint_percentile': 99.895,
+  'date_of_appt': '1993-12-13',
+  'date_of_resignation': '2017-01-15',
+  'discipline_count': 1,
+  gender: 'Male',
+  'honorable_mention_count': 55,
+  'honorable_mention_percentile': 85.87,
+  'major_award_count': 1,
+  race: 'White',
+  rank: 'Police Officer',
+  'sustained_count': 1,
+  'trr_count': 1,
+  unit: {
+    'unit_id': 6,
+    description: 'District 005',
+    'unit_name': '005',
+  },
+  percentiles: [
+    {
+      'officer_id': 2235,
+      year: 2006,
+      'percentile_allegation_civilian': '66.251',
+      'percentile_allegation_internal': '0.023',
+      'percentile_trr': '0.049',
+      'percentile_allegation': '41.001',
+    },
+    {
+      'officer_id': 1,
+      year: 2007,
+      'percentile_allegation_civilian': '75.065',
+      'percentile_allegation_internal': '0.022',
+      'percentile_trr': '0.046',
+      'percentile_allegation': '31.201'
+    }
+  ]
 };
 
 const mockTimeline = {
@@ -254,7 +293,7 @@ const mockTimelinePage2 = {
 describe('OfficerTimeline test', function () {
 
   beforeEach(function (client, done) {
-    api.mock('GET', '/api/v2/officers/2235/summary/', 200, mockOfficer);
+    api.mock('GET', '/api/v2/mobile/officers/2235/summary/', 200, mockOfficer);
     api.mock('GET', '/api/v2/officers/2235/timeline-items/', 200, mockTimeline);
     api.mock('GET', '/api/v2/officers/2235/timeline-items/?limit=20&offset=20/', 200, mockTimelinePage2);
 
@@ -270,7 +309,7 @@ describe('OfficerTimeline test', function () {
   });
 
   it('should render officer name as sheet header', function (client) {
-    this.officerTimelinePage.expect.element('@header').text.to.equal('John Doe');
+    this.officerTimelinePage.expect.element('@header').text.to.equal('Kevin Osborn');
   });
 
   it('should have "Timeline" navigation link marked as "active"', function () {
