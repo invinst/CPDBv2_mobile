@@ -3,10 +3,10 @@ import { scaleLinear } from 'd3-scale';
 import { map } from 'lodash';
 
 import style from './radar-chart.sass';
-import RadarAxis from './radar-axis';
-import RadarArea from './radar-area';
-import RadarSpineLine from './radar-spine-line';
-import RadarGrid from './radar-grid';
+import RadarAxis from './radar-chart/radar-axis';
+import RadarArea from './radar-chart/radar-area';
+import RadarSpineLine from './radar-chart/radar-spine-line';
+import RadarGrid from './radar-chart/radar-grid';
 
 
 export default class RadarChart extends Component {
@@ -52,6 +52,8 @@ export default class RadarChart extends Component {
       gridOpacity,
       showSpineLine,
       showSpineLinePoint,
+      yAxisCenter,
+      areaColor
     } = this.props;
 
     if (!data || !data.length || isNaN(data[0].value))
@@ -65,6 +67,8 @@ export default class RadarChart extends Component {
       );
 
     const transformData = this._embedComputedPosition(data);
+    const xCenter = Math.floor(width / 2);
+    const yCenter = typeof yAxisCenter !== 'undefined' ? yAxisCenter : Math.floor(height * 0.34);
 
     return (
       <svg
@@ -75,7 +79,7 @@ export default class RadarChart extends Component {
         height='100%'
         viewBox={ `0 0 ${width} ${height}` }
       >
-        <g style={ { transform: `translate(${Math.floor(width / 2)}px, ${Math.floor(height * 0.34)}px)` } }>
+        <g style={ { transform: `translate(${xCenter}px, ${yCenter}px)` } }>
           <RadarAxis
             data={ data }
             radius={ radius }
@@ -87,7 +91,7 @@ export default class RadarChart extends Component {
             axisTitleFontSize={ axisTitleFontSize }
             axisTitleFontWeight={ axisTitleFontWeight }
           />
-          <RadarArea rPoints={ transformData } strokeWidth={ this.strokeWidth }/>
+          <RadarArea areaColor={ areaColor } rPoints={ transformData } strokeWidth={ this.strokeWidth }/>
 
           { showGrid && (
             <RadarGrid
@@ -124,6 +128,7 @@ RadarChart.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   radius: PropTypes.number,
+  yAxisCenter: PropTypes.number,
   onClick: PropTypes.func,
   data: PropTypes.arrayOf(
     PropTypes.shape({
@@ -142,5 +147,6 @@ RadarChart.propTypes = {
   gridColor: PropTypes.string,
   showSpineLine: PropTypes.bool,
   showSpineLinePoint: PropTypes.bool,
+  areaColor: PropTypes.string
 };
 

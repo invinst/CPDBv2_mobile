@@ -28,21 +28,21 @@ describe('RadarArea component', function () {
       <RadarArea rPoints={ rPoints }/>
     );
     wrapper.find('.radar-wrapper').exists().should.be.true();
-    wrapper.find('.radar-stroke').exists().should.be.true();
+    wrapper.find('.test--radar-stroke').exists().should.be.true();
   });
 
   it('should hide stroke if drawStroke is false', function () {
     const wrapper = shallow(
       <RadarArea rPoints={ rPoints } drawStroke={ false }/>
     );
-    wrapper.find('.radar-stroke').exists().should.be.false();
+    wrapper.find('.test--radar-stroke').exists().should.be.false();
   });
 
   it('should add extra strokeWidth style if strokeWidth is defined', function () {
     const wrapper = shallow(
       <RadarArea rPoints={ rPoints } drawStroke={ true } strokeWidth={ 3 }/>
     );
-    wrapper.find('.radar-stroke').prop('style').strokeWidth.should.equal(3);
+    wrapper.find('.test--radar-stroke').prop('style').strokeWidth.should.equal(3);
   });
 
   it('should not display radar area and stroke when rPoints is not valid', () => {
@@ -55,6 +55,6 @@ describe('RadarArea component', function () {
       />
     );
     wrapper.find('.radar-wrapper').exists().should.be.true();
-    wrapper.find('.radar-stroke').exists().should.be.false();
+    wrapper.find('.test--radar-stroke').exists().should.be.false();
   });
 });
