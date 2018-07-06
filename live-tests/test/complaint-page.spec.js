@@ -45,7 +45,8 @@ const mockComplaint = {
       'id': 6493,
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
-      'full_name': 'Donovan Markiewicz'
+      'full_name': 'Donovan Markiewicz',
+      'allegation_count': 10
     },
     {
       'category': 'Excessive Force',
@@ -53,7 +54,8 @@ const mockComplaint = {
       'id': 234,
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
-      'full_name': 'John Foertsch'
+      'full_name': 'John Foertsch',
+      'allegation_count': 8
     },
     {
       'category': 'Excessive Force',
@@ -61,7 +63,8 @@ const mockComplaint = {
       'id': 543,
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
-      'full_name': 'Kenneth Wojtan'
+      'full_name': 'Kenneth Wojtan',
+      'allegation_count': 5
     }
   ],
   'location': '03',
@@ -72,7 +75,7 @@ describe('ComplaintPageTest', function () {
   beforeEach(function (client, done) {
     api.mock('GET', '/api/v2/mobile/cr/1053667/', 200, mockComplaint);
     this.complaintPage = client.page.complaintPage();
-    client.url(`${client.globals.clientUrl}/complaint/1053667/6493/`);
+    client.url(`${client.globals.clientUrl}/complaint/1053667/`);
     done();
   });
 
