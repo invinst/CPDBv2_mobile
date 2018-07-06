@@ -6,6 +6,7 @@ const mockComplaint = {
     'category': 'Operation/Personnel Violations',
     'allegation_name': 'Inventory Procedures'
   },
+  'summary': 'summary',
   'incident_date': '2012-04-30',
   'involvements': [
     {
@@ -82,10 +83,13 @@ describe('ComplaintPageTest', function () {
     });
   });
 
-  it('should show proper header with CR title, coaccused and accused', function (client) {
-    this.complaintPage.expect.element('@category').text.to.contain('Operation/Personnel Violations');
-    this.complaintPage.expect.element('@subcategory').text.to.contain('Inventory Procedures');
+  it('should show proper header with CR title', function (client) {
+    const comlaintCategory = this.complaintPage.section.complaintCategory;
+    comlaintCategory.expect.element('@category').text.to.contain('Operation/Personnel Violations');
+    comlaintCategory.expect.element('@subcategory').text.to.contain('Inventory Procedures');
+  });
 
+  it('should show proper coaccusals', function (client) {
     const coaccusals = this.complaintPage.section.coaccusals;
     coaccusals.expect.element('@header').text.to.contain('3 ACCUSED OFFICERS');
     coaccusals.expect.element('@showAll').to.be.visible;
@@ -95,10 +99,20 @@ describe('ComplaintPageTest', function () {
     coaccusals.expect.element('@showAll').not.to.be.present;
     coaccusals.expect.element('@paddingBottom').to.be.visible;
 
-    const firstCoaccusal = this.complaintPage.section.firstItem;
+    const firstCoaccusal = this.complaintPage.section.firstCoaccusal;
     firstCoaccusal.expect.element('@rank').text.to.contain('Police Officer');
     firstCoaccusal.expect.element('@name').text.to.contain('Donovan Markiewicz');
     firstCoaccusal.expect.element('@category').text.to.contain('Excessive Force');
     firstCoaccusal.expect.element('@findingOutcome').text.to.contain('Sustained');
+  });
+
+  it('should show proper cr info', function () {
+    this.complaintPage.expect.element('@victims').text.to.contain('Black, Male, Age 45');
+    this.complaintPage.expect.element('@complainants').text.to.contain('White, Male, Age 57');
+    this.complaintPage.expect.element('@summary').text.to.contain('summary');
+    this.complaintPage.expect.element('@investigatorTimeline').text.to.contain(
+      'Apr 30, 2012\nIncident Occurs\nInvestigation Begins\nInvestigation Closed'
+    );
+    this.complaintPage.expect.element('@firstInvestigator').text.to.contain('Peter Parker');
   });
 });

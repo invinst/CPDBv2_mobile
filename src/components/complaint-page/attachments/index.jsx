@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { noop } from 'lodash';
 import cx from 'classnames';
 
 import Image from 'components/shared/image';
@@ -23,7 +22,7 @@ class Attachments extends Component {
   }
 
   render() {
-    const { attachments } = this.props;
+    const { attachments, alreadyRequested } = this.props;
     const noAttachment = attachments.length === 0;
 
     return (
@@ -35,7 +34,11 @@ class Attachments extends Component {
             }
           </div>
           <div className='request-document-button' onClick={ () => this.handleClick() }>
-            Request Documents
+            {
+              !alreadyRequested
+                ? 'Request Documents'
+                : <span>Documents Requested &nbsp; <span>✔</span></span>
+            }
           </div>
         </div>
         <div className='attachment-list'>
@@ -67,7 +70,7 @@ Attachments.propTypes = {
 
 Attachments.defaultProps = {
   attachments: [],
-  requestDocument: noop
+  requestDocument: () => {}
 };
 
 export default Attachments;
