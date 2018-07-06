@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import ComplaintFinding from 'components/shared/complaint-finding';
 
-describe('<ComplaintFinding />', function () {
+describe('ComplaintFinding component', function () {
   it('should render text correctly', function () {
     let wrapper = shallow(<ComplaintFinding finding='Sustained' />);
     wrapper.text().should.eql('Sustained');

@@ -1,0 +1,37 @@
+@import 'variables'
+
+:local(.investigator)
+  margin-bottom: 30px
+
+  .header
+    font-size: 14px
+    font-weight: 400
+    line-height: 14px
+    color: $dusty-gray
+    padding: 0
+    height: auto
+    margin: 8px 0 12px 0
+
+  .investigator-row
+    display: flex
+    justify-content: flex-start
+    flex-flow: row
+    text-decoration: none
+    padding: 12px 0
+    border-bottom: 1px solid $alto-solid
+
+    &:last-child
+      border-bottom: none
+
+    .visual-token
+      width: 32px
+      height: 32px
+      border-radius: 2px
+      background-color: $alto-solid
+      margin-right: 8px
+      overflow: hidden
+
+    .name
+      align-self: center
+      font-weight: 500
+      color: $thunder
