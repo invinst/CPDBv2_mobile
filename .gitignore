@@ -38,4 +38,4 @@ live-tests/local-mock-server.js
 # OS X crap
 .DS_Store
 .vscode/
-.jsconfig
+jsconfig.json
