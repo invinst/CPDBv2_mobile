@@ -6,9 +6,7 @@ import OfficerItem from 'components/search-page/officer-item';
 
 describe('<OfficerItem />', () => {
   it('should be renderable', () => {
-    shallow(
-      <OfficerItem />
-    ).should.be.ok();
+    shallow(<OfficerItem />).should.be.ok();
   });
 
   it('should call saveToRecent when click on item', function () {
