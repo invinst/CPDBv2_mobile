@@ -110,12 +110,14 @@ describe('<SearchCategory />', function () {
         {
           name: 'John',
           url: '/officer/1',
-          extraInfo: 'Badge #1'
+          badge: 'Badge #1',
+          percentile: {}
         },
         {
           name: 'Snow',
           url: '/officer/2',
-          extraInfo: 'Badge #2'
+          badge: 'Badge #2',
+          percentile: {}
         }
       ];
 
@@ -132,37 +134,6 @@ describe('<SearchCategory />', function () {
       officerElement.prop('items').should.be.eql(officers);
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
 
-    });
-  });
-
-  describe('render units', function () {
-    it('should render units correctly', function () {
-      const spySaveToRecent = spy();
-      const units = [
-        {
-          text: '001',
-          memberCount: 2,
-          activeMemberCount: 1
-        },
-        {
-          text: '002',
-          memberCount: 4,
-          activeMemberCount: 3
-        }
-      ];
-
-      const wrapper = shallow(
-        <SearchCategory
-          items={ units }
-          categoryId='units'
-          saveToRecent={ spySaveToRecent }
-        />
-      );
-
-      const officerElement = wrapper.find('UnitSearchResult');
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(units);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
   });
 
