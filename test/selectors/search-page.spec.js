@@ -20,6 +20,37 @@ describe('search-page selectors', () => {
       officersSelector(state).should.be.eql({ data: [] });
     });
 
+    it('should return default values when the data is not available', function () {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            OFFICER: {
+              isShowingAll: true,
+              data: [
+                {
+                  'id': 1,
+                  'name': 'Name',
+                  'badge': null,
+                  'percentile': null
+                }
+              ]
+            }
+          }
+        }
+      };
+
+      officersSelector(state).should.be.eql({
+        isShowingAll: true,
+        data: [{
+          id: 1,
+          name: 'Name',
+          badge: '',
+          percentile: {},
+          url: `${constants.OFFICER_PATH}1/`,
+        }]
+      });
+    });
+
     it('should return officer data when there are officers', () => {
       const isShowingAll = true;
       const officer = {
