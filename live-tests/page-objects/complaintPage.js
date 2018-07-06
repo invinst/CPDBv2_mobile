@@ -55,5 +55,14 @@ module.exports = {
         title: '.attachment-title'
       }
     },
+    location: {
+      selector: '//div[contains(@class, "location__location")]',
+      locateStrategy: 'xpath',
+      elements: {
+        address: '.address .info',
+        type: '.type .info',
+        beat: '.beat .info'
+      }
+    },
   }
 };

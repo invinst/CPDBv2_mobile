@@ -12,6 +12,7 @@ import Attachments from './attachments';
 import InvestigationTimeline from './investigation-timeline';
 import Investigator from './investigator';
 import PoliceWitness from './police-witness';
+import Location from './location';
 import style from './complaint-page.sass';
 
 
@@ -49,6 +50,11 @@ export default class ComplaintPage extends Component {
               endDate={ complaint.endDate }
               incidentDate={ complaint.incidentDate }
               />
+            <Location
+              point={ complaint.point }
+              address={ complaint.address }
+              beat={ complaint.beat }
+              location={ complaint.location } />
             <Investigator investigators={ complaint.investigators } />
             <PoliceWitness policeWitnesses={ complaint.policeWitnesses } />
           </div>

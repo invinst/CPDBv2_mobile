@@ -6,7 +6,13 @@ import { roundedPercentile } from 'utils/calculation';
 
 export default class RadarAxisText extends React.Component {
   renderTitleTexts(title, value, xText, yText, extraPadding, fontSize, fontWeight) {
-    const { showAxisTitle, showAxisValue } = this.props;
+    const { showAxisTitle, showAxisValue, textColor } = this.props;
+    const textStyle = {
+      fontSize: `${fontSize}px`,
+      fontWeight: fontWeight,
+      fill: textColor,
+      stroke: 'none'
+    };
 
     const words = title.split(' ');
     const firstPhase = words.slice(0, -1).join(' ');
@@ -16,7 +22,7 @@ export default class RadarAxisText extends React.Component {
       <tspan
         key={ `text-${title}-${idx}` }
         className='radar-axis-text-title'
-        style={ { fontSize: `${fontSize}px`, fontWeight: fontWeight } }
+        style={ textStyle }
         x={ xText }
         y={ yText }
         dy={ `${extraPadding + idx * 1.25}em` }
@@ -28,7 +34,7 @@ export default class RadarAxisText extends React.Component {
       <tspan
         key={ `text-value-${title}` }
         className='radar-axis-text-value'
-        style={ { fontSize: `${fontSize}px`, fontWeight: fontWeight } }
+        style={ textStyle }
         x={ xText }
         y={ yText }
         dy={ `${extraPadding + phases.length * 1.3}em` }
@@ -40,7 +46,7 @@ export default class RadarAxisText extends React.Component {
   }
 
   render() {
-    const { radius, data, textColor, axisTitleFontSize, axisTitleFontWeight } = this.props;
+    const { radius, data, axisTitleFontSize, axisTitleFontWeight } = this.props;
     const angleSlice = Math.PI * 2 / data.length;
     const labelFactor = 1.1;
 
@@ -60,7 +66,6 @@ export default class RadarAxisText extends React.Component {
                 dy='0.35em'
                 x={ xText }
                 y={ yText }
-                style={ { fill: textColor } }
               >
                 {
                   this.renderTitleTexts(
