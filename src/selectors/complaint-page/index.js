@@ -68,12 +68,19 @@ const getCoaccusedSelector = createSelector(
   }
 );
 
-const attachmentTransform = attachment => ({
-  fileType: attachment['file_type'],
-  previewImageUrl: attachment['preview_image_url'],
-  title: attachment['title'],
-  url: attachment['url']
-});
+const buildAttachmentUrl = attachment => {
+  let url = attachment['url'];
+  if (attachment['file_type'] === 'document') {
+    url = url.replace(/(\.html)$/, '.pdf');
+  }
+
+  return {
+    fileType: attachment['file_type'],
+    previewImageUrl: attachment['preview_image_url'],
+    title: attachment['title'],
+    url: url
+  };
+};
 
 const involvedAs = type => involvement => involvement['involved_type'] === type;
 
@@ -100,7 +107,7 @@ export const complaintSelector = createSelector(
       coaccused: coaccuseds,
       victims: compact(get(complaint, 'victims', []).map(getDemographicString)),
       complainants: compact(get(complaint, 'complainants', []).map(getDemographicString)),
-      attachments: get(complaint, 'attachments', []).map(attachmentTransform),
+      attachments: get(complaint, 'attachments', []).map(buildAttachmentUrl),
       incidentDate: formatDate(complaint.incident_date),
       endDate: formatDate(complaint.end_date),
       startDate: formatDate(complaint.start_date),

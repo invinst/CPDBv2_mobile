@@ -100,7 +100,20 @@ describe('complaint-page selectors', () => {
                   'full_name': 'Patrick Boyle'
                 }
               ],
-              'attachments': []
+              'attachments': [
+                {
+                  'file_type': 'audio',
+                  'url': 'http://audio.io',
+                  'preview_image_url': 'http://preview.audio',
+                  'title': 'audio'
+                },
+                {
+                  'file_type': 'document',
+                  'url': 'http://document.io/file.html',
+                  'preview_image_url': 'http://preview.document',
+                  'title': 'document'
+                }
+              ]
             }
           }
         }
@@ -154,7 +167,20 @@ describe('complaint-page selectors', () => {
             'percentile': {}
           }
         ],
-        'attachments': []
+        'attachments': [
+          {
+            'fileType': 'audio',
+            'url': 'http://audio.io',
+            'previewImageUrl': 'http://preview.audio',
+            'title': 'audio'
+          },
+          {
+            'fileType': 'document',
+            'url': 'http://document.io/file.pdf',
+            'previewImageUrl': 'http://preview.document',
+            'title': 'document'
+          }
+        ]
       });
     });
   });

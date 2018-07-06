@@ -1,0 +1,45 @@
+import React, { PropTypes } from 'react';
+
+
+import { officerUrl } from 'utils/url-util';
+import RadarChart from 'components/common/radar-chart';
+import SafeLink from './safe-link';
+import style from './investigator.sass';
+
+
+const Investigator = ({ investigators=[] }) => {
+  if (investigators.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className={ style.investigator }>
+      <div className='header'>INVESTIGATOR</div>
+      {
+        investigators.map((investigator, idx) => {
+          return (
+            <SafeLink
+              key={ idx }
+              to={ officerUrl(investigator['officer_id']) }
+              className='investigator-row'
+            >
+              <div className='visual-token'>
+                <RadarChart
+                  backgroundColor={ investigator.percentile.visualTokenBackground }
+                  data={ investigator.percentile.items }
+                  />
+              </div>
+              <div className='name'>{ investigator['full_name'] }</div>
+            </SafeLink>
+          );
+        })
+      }
+    </div>
+  );
+};
+
+Investigator.propTypes = {
+  investigators: PropTypes.array
+};
+
+export default Investigator;
