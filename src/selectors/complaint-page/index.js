@@ -27,6 +27,7 @@ const coaccusedTransform = coaccused => {
     finalOutcome: coaccused.final_outcome,
     fullName: coaccused.full_name,
     disciplined: coaccused.disciplined,
+    allegationCount: coaccused.allegation_count,
     id: coaccused.id,
     rank: coaccused.rank,
     findingOutcome: getFindingOutcomeMix(coaccused['final_finding'], coaccused['final_outcome']),
