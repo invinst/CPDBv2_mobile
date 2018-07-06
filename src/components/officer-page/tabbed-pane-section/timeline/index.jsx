@@ -18,7 +18,7 @@ export default class Timeline extends Component {
   }
 
   renderItems() {
-    const { items, officerId } = this.props;
+    const { items } = this.props;
     return (
       <div>
         {
@@ -36,7 +36,6 @@ export default class Timeline extends Component {
               <Item
                 item={ item }
                 key={ item.key }
-                officerId={ officerId }
                 hasBorderBottom={ hasBorderBottom }
               />
             );

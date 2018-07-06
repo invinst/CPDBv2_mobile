@@ -273,7 +273,7 @@ describe('OfficerPage test', function () {
 
     it('should go to cr page when clicking on an cr timeline item', function () {
       this.timeline.click('@crItem');
-      this.timeline.assert.urlContains('/complaint/294088/2235/');
+      this.timeline.assert.urlContains('/complaint/294088/');
     });
 
     it('should go to attachment source page when clicking on the attachment thumbnail', function () {

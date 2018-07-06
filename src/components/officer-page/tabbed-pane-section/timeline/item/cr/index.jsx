@@ -8,12 +8,12 @@ import styles from './cr.sass';
 
 export default class Cr extends Component {
   render() {
-    const { item, hasBorderBottom, officerId } = this.props;
+    const { item, hasBorderBottom } = this.props;
 
     return (
       <Link
         className={ cx(styles.wrapper, 'test--cr-item') }
-        to={ `/complaint/${item.crid}/${officerId}/` }
+        to={ `/complaint/${item.crid}/` }
       >
         <div className={ cx('content', { 'no-border-bottom': !hasBorderBottom }) }>
           <span className={ cx('kind', { 'sustained': item.finding === 'Sustained' }) }>C</span>
@@ -34,5 +34,4 @@ export default class Cr extends Component {
 Cr.propTypes = {
   item: PropTypes.object,
   hasBorderBottom: PropTypes.bool,
-  officerId: PropTypes.number,
 };
