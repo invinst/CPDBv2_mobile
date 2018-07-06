@@ -65,7 +65,7 @@ const mockComplaint = {
       'full_name': 'Kenneth Wojtan'
     }
   ],
-  'location': '03',
+  'location': 'Building',
   'address': '2459 WESTERN AVE, CHICAGO IL 60608'
 };
 
@@ -114,5 +114,12 @@ describe('ComplaintPageTest', function () {
       'Apr 30, 2012\nIncident Occurs\nInvestigation Begins\nInvestigation Closed'
     );
     this.complaintPage.expect.element('@firstInvestigator').text.to.contain('Peter Parker');
+  });
+
+  it('should show proper cr location', function () {
+    const location = this.complaintPage.section.location;
+    location.expect.element('@address').text.to.contain('2459 WESTERN AVE, CHICAGO IL 60608');
+    location.expect.element('@type').text.to.contain('Building');
+    location.expect.element('@beat').text.to.contain('1034');
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { useFakeTimers } from 'sinon';
 import Image from 'components/shared/image';
 
@@ -18,7 +18,7 @@ describe('Image component', function () {
   it('should render image with given src if loaded successful', function () {
     const sampleImage = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
-    const instance = shallow(
+    const instance = mount(
       <Image src={ sampleImage } fallback='fallback' />
     );
 
@@ -31,7 +31,7 @@ describe('Image component', function () {
   });
 
   it('should render image with fallback source if loaded fail', function () {
-    const instance = shallow(
+    const instance = mount(
       <Image src={ 'invalid image' } fallback='fallback' />
     );
 
