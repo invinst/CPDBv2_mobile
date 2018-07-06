@@ -14,10 +14,12 @@ import ComplaintPageContainer from 'containers/complaint-page-container';
 import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
 
+import 'swiper/dist/css/swiper.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
 import 'styles/style.sass';
 import 'styles/fonts.sass';
 import 'styles/helper.sass';
-import 'mapbox-gl/dist/mapbox-gl.css';
 
 
 const App = React.createClass({

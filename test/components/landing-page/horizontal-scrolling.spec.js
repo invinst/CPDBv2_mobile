@@ -17,6 +17,6 @@ describe('<HorizontalScrolling />', () => {
       </HorizontalScrolling>
     );
 
-    wrapper.find('.slide-item').should.have.length(2);
+    wrapper.find('.swiper-slide').should.have.length(2);
   });
 });
