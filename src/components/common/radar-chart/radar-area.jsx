@@ -9,7 +9,7 @@ import style from './radar-area.sass';
 export default class RadarArea extends Component {
   render() {
 
-    const { rPoints, drawStroke, strokeWidth } = this.props;
+    const { rPoints, drawStroke, strokeWidth, areaColor } = this.props;
     if (!rPoints || !every(rPoints, (point) => !isNaN(point.r)))
       return <g className='radar-wrapper'/>;
 
@@ -27,13 +27,16 @@ export default class RadarArea extends Component {
           <path
             className={ style.radarArea }
             d={ pathD }
+            fill={ areaColor }
           />
 
           { drawStroke && (
             <path
-              className='radar-stroke'
+              className='test--radar-stroke'
               d={ pathD }
               style={ { strokeWidth } }
+              stroke={ areaColor }
+              fill='none'
             />
           ) }
         </g>
@@ -43,11 +46,13 @@ export default class RadarArea extends Component {
 }
 
 RadarArea.defaultProps = {
-  drawStroke: true
+  drawStroke: true,
+  areaColor: '#231f20',
 };
 
 RadarArea.propTypes = {
   rPoints: PropTypes.array,
   drawStroke: PropTypes.bool,
-  strokeWidth: PropTypes.number
+  strokeWidth: PropTypes.number,
+  areaColor: PropTypes.string,
 };

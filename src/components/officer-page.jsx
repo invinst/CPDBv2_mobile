@@ -114,7 +114,7 @@ class OfficerPage extends Component {
     return (
       <StickyContainer className={ style.officerSummary }>
         <Sticky><Header /></Sticky>
-        <OfficerRadarChart data={ threeCornerPercentile }/>
+        <OfficerRadarChart percentileData={ threeCornerPercentile }/>
         <h1 className='officer-name header' onClick={ scrollToTop() }>
           { name }
         </h1>

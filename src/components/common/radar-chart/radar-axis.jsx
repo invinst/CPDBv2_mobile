@@ -3,7 +3,7 @@ import { scaleLinear } from 'd3-scale';
 import { curveLinearClosed, radialLine } from 'd3-shape';
 
 import style from './radar-axis.sass';
-import RadarAxisText from './radar-axis-text';
+import RadarAxisText from './radar-axis/radar-axis-text';
 
 
 export default class RadarAxis extends React.Component {
