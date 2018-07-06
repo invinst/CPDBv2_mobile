@@ -38,6 +38,10 @@ export default class LocationMap extends Component {
     removeEventListener('scroll', this.handleScroll);
   }
 
+  isValidLocation(lat, lng) {
+    return !isNil(lat) && !isNil(lng);
+  }
+
   gotRef(el) {
     if (el && !this.map) {
       this.el = el;
@@ -55,14 +59,12 @@ export default class LocationMap extends Component {
   }
 
   addMarker(lat, lng, markerEl) {
-    const locationValid = !isNil(lat) && !isNil(lng);
-
-    if (this.marker && locationValid) {
+    if (this.marker && this.isValidLocation(lat, lng)) {
       this.marker.setLngLat([lng, lat]);
     } else if (this.marker) {
       this.marker.remove();
       this.marker = null;
-    } else if (locationValid) {
+    } else if (this.isValidLocation(lat, lng)) {
       const placeholder = document.createElement('div');
 
       const markerDOM = render(
@@ -86,15 +88,16 @@ export default class LocationMap extends Component {
 
   zoomIn() {
     const { lng, lat, zoomInLevel } = this.props;
-    this.map.easeTo({
-      center: [lng, lat],
-      zoom: zoomInLevel
-    });
+    if (this.isValidLocation(lat, lng)) {
+      this.map.easeTo({
+        center: [lng, lat],
+        zoom: zoomInLevel
+      });
+    }
   }
 
   zoomOut() {
     const { centerLat, centerLng, zoomOutLevel } = this.props;
-
     this.map.easeTo({
       center: [centerLng, centerLat],
       zoom: zoomOutLevel
