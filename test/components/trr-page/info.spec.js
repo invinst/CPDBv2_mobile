@@ -14,6 +14,10 @@ describe('<Info />', function () {
       address: '11XX 79Th St',
       locationType: 'Street',
       beat: '612',
+      point: {
+        lat: 1.2,
+        lng: 2.3
+      }
     };
 
     const wrapper = shallow(<Info { ...info }/>);
@@ -34,5 +38,6 @@ describe('<Info />', function () {
     location.prop('address').should.equal('11XX 79Th St');
     location.prop('locationType').should.equal('Street');
     location.prop('beat').should.equal('612');
+    location.prop('point').should.deepEqual({ lat: 1.2, lng: 2.3 });
   });
 });
