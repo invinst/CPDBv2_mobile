@@ -14,12 +14,14 @@ class Img extends Component {
   componentWillMount() {
     const image = new Image();
     image.src = this.props.src;
+    /* istanbul ignore next */
     image.onload = () => {
       this.setState({
         loaded: true,
         error: false
       });
     };
+    /* istanbul ignore next */
     image.onerror = () => {
       this.setState({
         loaded: true,
