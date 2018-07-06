@@ -1,8 +1,19 @@
 import { getVisualTokenOIGBackground } from 'utils/visual-token';
+import { isNil, every } from 'lodash';
 
 
 export const extractPercentile = (percentile) => {
-  if (!percentile) return null;
+  const hasPercentile = percentile && every(
+    [
+      'percentile_allegation_civilian',
+      'percentile_allegation_internal',
+      'percentile_trr'
+    ],
+    (field) => !isNil(percentile[field])
+  );
+
+  if (!hasPercentile) return null;
+
   const { backgroundColor, textColor } = getVisualTokenOIGBackground(
     parseFloat(percentile['percentile_allegation_civilian']),
     parseFloat(percentile['percentile_allegation_internal']),

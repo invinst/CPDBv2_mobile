@@ -52,7 +52,7 @@ const getOfficerRank = (officer) => {
   if (typeof officer.rank === 'undefined')
     return '';
   else
-    return officer.rank ? officer.rank : DATA_NOT_AVAILABLE;
+    return officer.rank || DATA_NOT_AVAILABLE;
 };
 
 const getOfficerUnitDisplay = (officer) => {

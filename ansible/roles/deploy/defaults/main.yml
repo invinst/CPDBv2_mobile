@@ -1,0 +1,18 @@
+_user: vagrant
+_deploy_to: /CPDB/CPDBv2_mobile
+
+deploy:
+  user: "{{ _user }}"
+  group: vagrant
+
+  deploy_to: "{{ _deploy_to }}"
+  releases: "{{ _deploy_to }}/releases"
+  logs: "{{ _deploy_to }}/logs"
+  current: "{{ _deploy_to }}/current"
+  temp: "{{ _deploy_to }}/tmp"
+
+  webpack_env: staging
+  branch: staging
+  git_repo: ssh://git@github.com:EastAgile/CPDBv2_mobile.git
+  node_version: 6.14.4
+  keep_releases: 30

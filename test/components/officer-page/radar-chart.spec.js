@@ -74,7 +74,6 @@ describe('AnimatedRadarChart component', function () {
     let clock;
     beforeEach(function () {
       clock = useFakeTimers();
-
     });
 
     afterEach(function () {

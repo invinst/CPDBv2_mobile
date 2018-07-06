@@ -65,6 +65,44 @@ yarn run live-test -- --file live-tests/test/complaint-page.spec.js
 yarn run live-test -- --file complaint-page
 ```
 
+# Deployment
+## Ansible
+We are using Ansible as a configuration manager and deploy tool. You can install it through your OS package manager or pip, but [pipenv](https://github.com/pypa/pipenv) is encouraged.  After the installation steps (`brew install pipenv`, then `pipenv install`), you can run Ansible:
+```bash
+pipenv run ansible --version
+```
+
+## Setup the server
+Any changes made to the server would go through Ansible scripts, making changes manually must be considered carefully. 
+
+For spawning a new server instance, just run the Ansible setup task (which helps to ensure that we have nginx and nvm on the server):
+```bash
+pipenv run ansible-playbook -i ansible/staging ansible/setup.yml
+```
+Please make sure that you have an ssh-key which has enough permission to access the servers.
+
+## Deploy 
+Every change merged to staging branch will be automatically deployed to staging server if they do pass the tests. The production still needs to be deployed manually with these below steps:
+```bash
+pipenv run ansible-playbook -i ansible/production ansible/deploy.yml
+```
+For security reasons, we are using SSH forward agent instead of storing the ssh keys in the server, so make sure your ssh key (at least has `read` permission to the repositories, and accessible to the servers) is added to ssh-agent:
+```bash
+eval $(ssh-agent -c)
+ssh-add ~/.ssh/<your-key-here>
+```
+
+## Rollback
+If there are any issues with the deployment, we can quickly rollback to the latest previous version:
+```bash
+pipenv run ansible-playbook -i ansible/production ansible/deploy.yml
+```
+Or you can specify the release version:
+```bash
+pipenv run ansible-playbook -i ansible/production ansible/deploy.yml -e rollback_to="20180702101602"
+```
+with "20180702101602" is the version that you want to rollback to.
+
 # Misc
 
 You should also `yarn run lint` before pushing. We strongly recommend setting up
