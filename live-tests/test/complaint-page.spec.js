@@ -73,7 +73,7 @@ describe('ComplaintPageTest', function () {
   beforeEach(function (client, done) {
     api.mock('GET', '/api/v2/mobile/cr/1053667/', 200, mockComplaint);
     this.complaintPage = client.page.complaintPage();
-    client.url(`${client.globals.clientUrl}/complaint/1053667/6493/`);
+    client.url(`${client.globals.clientUrl}/complaint/1053667/`);
     done();
   });
 
