@@ -42,13 +42,7 @@ module.exports = {
       containers: `${defaultSettings.srcPath}/containers/`,
       selectors: `${defaultSettings.srcPath}/selectors/`,
       img: `${defaultSettings.srcPath}/img/`,
-      config: `${defaultSettings.srcPath}/config/` + process.env.REACT_WEBPACK_ENV
+      config: `${defaultSettings.srcPath}/config/` + process.env.WEBPACK_ENV
     }
   },
-
-  sassLoader: {
-    data: `$env: ${process.env.REACT_WEBPACK_ENV}\n`
-  },
-
-  module: {}
 };
