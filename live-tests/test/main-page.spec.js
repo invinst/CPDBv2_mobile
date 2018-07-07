@@ -28,15 +28,4 @@ describe('MainPageTest', function () {
       .click('@searchLink')
       .assert.urlEquals(searchPage.url());
   });
-
-  it('should show the itercom body when clicking on intercom icon', function (client) {
-    const mainPage = this.mainPage;
-    mainPage.expect.element('@intercomHomeScreen', 2000).to.be.not.present;
-
-    mainPage.waitForElementVisible('@intercomOpenIcon').click('@intercomOpenIcon');
-    mainPage.expect.element('@intercomHomeScreen', 2000).to.be.visible;
-
-    mainPage.waitForElementVisible('@intercomCloseButton').click('@intercomCloseButton');
-    mainPage.expect.element('@intercomHomeScreen', 2000).to.be.not.present;
-  });
 });

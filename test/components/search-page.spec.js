@@ -5,16 +5,18 @@ import { stub, spy } from 'sinon';
 import ReactHeight from 'react-height';
 
 import * as NavigationUtil from 'utils/navigation-util';
+import * as IntercomUtils from 'utils/intercom';
 import SearchPage from 'components/search-page';
 import SearchCategory from 'components/search-page/search-category';
 import constants from 'constants';
 
 describe('<SearchPage />', function () {
-  it('should be renderable', () => {
-    const wrapper = shallow(
-      <SearchPage query={ '' } />
-    );
-    wrapper.should.be.ok();
+  beforeEach(function () {
+    stub(IntercomUtils, 'showIntercomLauncher');
+  });
+
+  afterEach(function () {
+    IntercomUtils.showIntercomLauncher.restore();
   });
 
   it('should render categories returned by getCategoriesWithSuggestions when it has query', () => {
@@ -370,6 +372,21 @@ describe('<SearchPage />', function () {
 
       const searchCategories = wrapper.find('SearchCategory');
       searchCategories.should.have.length(1);
+    });
+  });
+
+  describe('Intercom', function () {
+    it('should hide intercom launcher when mounted', function () {
+      mount(<SearchPage />);
+
+      IntercomUtils.showIntercomLauncher.calledWith(false).should.be.true();
+    });
+
+    it('should show intercom launcher again when unmounted', function () {
+      const wrapper = mount(<SearchPage />);
+      wrapper.unmount();
+
+      IntercomUtils.showIntercomLauncher.calledWith(true).should.be.true();
     });
   });
 });
