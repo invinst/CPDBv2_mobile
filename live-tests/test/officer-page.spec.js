@@ -33,14 +33,14 @@ const officer2235 = {
       year: 2006,
       'percentile_allegation_civilian': '66.251',
       'percentile_allegation_internal': '0.023',
-      'percentile_trr': '0.049',
+      'percentile_trr': '44.7',
       'percentile_allegation': '41.001',
     },
     {
-      'officer_id': 1,
+      'officer_id': 2235,
       year: 2007,
-      'percentile_allegation_civilian': '75.065',
-      'percentile_allegation_internal': '0.022',
+      'percentile_allegation_civilian': '0.022',
+      'percentile_allegation_internal': '75.065',
       'percentile_trr': '0.046',
       'percentile_allegation': '31.201'
     }
@@ -263,6 +263,176 @@ describe('OfficerPage test', function () {
     honorableMentionItem.expect.element('@value').text.to.equal('55');
     honorableMentionItem.expect.element('@name').text.to.equal('Honorable Mentions');
     honorableMentionItem.expect.element('@description').text.to.equal('More than 85% of other officers');
+  });
+
+  it('should open explainer when clicking on radar chart', function () {
+    const officerPage = this.officerPage;
+    const animatedRadarChart = officerPage.section.animatedRadarChart;
+
+    officerPage.expect.section('@animatedRadarChart').to.be.present;
+    animatedRadarChart.expect.section('@radarChart').to.be.present;
+    animatedRadarChart.expect.element('@radarChartContainer').to.be.present;
+
+    animatedRadarChart.click('@radarChartContainer');
+
+    officerPage.expect.section('@triangleExplainer').to.be.present;
+  });
+
+  context('Radar chart explainer is opened', function () {
+    beforeEach(function (client, done) {
+      const officerPage = this.officerPage;
+      const animatedRadarChart = officerPage.section.animatedRadarChart;
+      officerPage.expect.section('@animatedRadarChart').to.be.present;
+      animatedRadarChart.expect.section('@radarChart').to.be.present;
+      animatedRadarChart.expect.element('@radarChartContainer').to.be.present;
+
+      animatedRadarChart.click('@radarChartContainer');
+
+      officerPage.expect.section('@triangleExplainer').to.be.present;
+
+      const triangleExplainer = officerPage.section.triangleExplainer;
+      const radarChartContainer = triangleExplainer.section.radarChartContainer;
+
+      radarChartContainer.expect.element('@closeButton').to.be.present;
+      radarChartContainer.expect.element('@radarChart').to.be.present;
+      triangleExplainer.section.explainerContent.expect.element('@title').text.to.equal('What is this triangle?');
+
+      done();
+    });
+
+    it('should be closed when clicking on the close button', function () {
+      const officerPage = this.officerPage;
+      const radarChartContainer = officerPage.section.triangleExplainer.section.radarChartContainer;
+
+      radarChartContainer.click('@closeButton');
+
+      officerPage.expect.section('@triangleExplainer').to.be.not.present;
+    });
+
+    it('should navigate between explainers when clicking in rightNav', function (client) {
+      const officerPage = this.officerPage;
+      const triangleExplainer = officerPage.section.triangleExplainer;
+
+      triangleExplainer.click('@rightNav');
+
+      const scaleExplainer = officerPage.section.scaleExplainer;
+      const scaleExplainerContent = scaleExplainer.section.explainerContent;
+      scaleExplainerContent.expect.element('@title').text.to.equal('What is the scale?');
+
+      scaleExplainer.click('@rightNav');
+
+      const percentileExplainer = officerPage.section.percentileExplainer;
+      const percentileExplainerContent = percentileExplainer.section.explainerContent;
+      percentileExplainerContent.expect.element('@title').text.to.equal('Cumulative Percentiles by Year');
+
+      percentileExplainer.click('@rightNav');
+
+      const triangleExplainerContent = officerPage.section.triangleExplainer.section.explainerContent;
+      triangleExplainerContent.expect.element('@title').text.to.equal('What is this triangle?');
+    });
+
+    it('should navigate between explainers when clicking in leftNav', function () {
+      const officerPage = this.officerPage;
+      const triangleExplainer = officerPage.section.triangleExplainer;
+
+      triangleExplainer.click('@leftNav');
+
+      const percentileExplainer = officerPage.section.percentileExplainer;
+      const percentileExplainerContent = percentileExplainer.section.explainerContent;
+      percentileExplainerContent.expect.element('@title').text.to.equal('Cumulative Percentiles by Year');
+
+      percentileExplainer.click('@leftNav');
+
+      const scaleExplainer = officerPage.section.scaleExplainer;
+      const scaleExplainerContent = scaleExplainer.section.explainerContent;
+      scaleExplainerContent.expect.element('@title').text.to.equal('What is the scale?');
+
+      scaleExplainer.click('@leftNav');
+
+      const triangleExplainerContent = officerPage.section.triangleExplainer.section.explainerContent;
+      triangleExplainerContent.expect.element('@title').text.to.equal('What is this triangle?');
+    });
+
+    it('should show triangleExplainer content correctly', function () {
+      const officerPage = this.officerPage;
+      const triangleExplainer = officerPage.section.triangleExplainer;
+
+      triangleExplainer.expect.element('@leftNav').text.to.equal('Percentiles by year');
+      triangleExplainer.expect.element('@rightNav').text.to.equal('What is the scale?');
+
+      const descriptionContent = triangleExplainer.section.explainerContent.section.descriptionContent;
+
+      descriptionContent.expect.element('@content').text.to.be.equal(
+        'The triangle shows the percentile rank for this officer in each of three types of data: ' +
+        'complaints from civilians, complaints from other police officers, and self-reported uses of force.'
+      );
+      descriptionContent.expect.element('@subContent').text.to.be.equal(
+        'If one corner of the inner triangle is close to reaching the outer triangle,' +
+        'then this officer is named in a relatively high rate of incidents of that type.'
+      );
+    });
+
+    it('should show scaleExplainer content correctly', function () {
+      const officerPage = this.officerPage;
+      const triangleExplainer = officerPage.section.triangleExplainer;
+
+      triangleExplainer.click('@rightNav');
+
+      const scaleExplainer = officerPage.section.scaleExplainer;
+
+      scaleExplainer.expect.element('@leftNav').text.to.equal('What is this triangle?');
+      scaleExplainer.expect.element('@rightNav').text.to.equal('Percentiles by year');
+
+      const descriptionContent = scaleExplainer.section.explainerContent.section.descriptionContent;
+
+      descriptionContent.expect.element('@content').text.to.be.equal(
+        'The scale is based on this officer’s percentile rank. ' +
+        'This is relative to all other officers for whom data is available during the same years.'
+      );
+      descriptionContent.expect.element('@subContent').text.to.be.equal(
+        'If an officer’s percentile rank for civilian complaints is 99% ' +
+        'then this means that they were accused in more civilian complaints per year than 99 % ' +
+        'of other officers for whom data is available during the same years.'
+      );
+    });
+
+    it('should show percentileExplainer content correctly', function (client) {
+      const officerPage = this.officerPage;
+      const triangleExplainer = officerPage.section.triangleExplainer;
+
+      triangleExplainer.click('@leftNav');
+
+      const percentileExplainer = officerPage.section.percentileExplainer;
+
+      percentileExplainer.expect.element('@leftNav').text.to.equal('What is the scale?');
+      percentileExplainer.expect.element('@rightNav').text.to.equal('What is this triangle?');
+
+      const percentileContent = percentileExplainer.section.explainerContent.section.percentileContent;
+      const tableHeader = percentileContent.section.tableHeader;
+
+      percentileContent.expect.section('@tableHeader').to.be.present;
+      tableHeader.expect.element('@internalComplaintHeader').text.to.equal('Internal Complaints');
+      tableHeader.expect.element('@civilianComplaintHeader').text.to.equal('Civilian Complaints');
+      tableHeader.expect.element('@useOfForceHeader').text.to.equal('Use Of Force');
+
+      const percentileTable = percentileContent.section.percentileTable;
+      const firstRow = percentileTable.section.firstRow;
+      const secondRow = percentileTable.section.secondRow;
+
+      firstRow.expect.element('@radarChart').to.be.present;
+      firstRow.expect.element('@year').text.to.equal('2007');
+      firstRow.expect.element('@internalComplaint').text.to.equal('75');
+      firstRow.expect.element('@civilianComplaint').text.to.equal('0');
+      firstRow.expect.element('@useOfForce').text.to.equal('0');
+
+      secondRow.expect.element('@year').text.to.equal('2006');
+      secondRow.expect.element('@radarChart').to.be.present;
+      secondRow.expect.element('@internalComplaint').text.to.equal('0');
+      secondRow.expect.element('@civilianComplaint').text.to.equal('66');
+      secondRow.expect.element('@useOfForce').text.to.equal('44');
+
+
+    });
   });
 
   describe('Timeline', function () {

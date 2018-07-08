@@ -1,14 +1,14 @@
 import React, { PropTypes, Component } from 'react';
+import { StickyContainer, Sticky } from 'react-sticky';
 import { isEmpty } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
-import constants from 'constants';
 import GaUtil from 'utils/ga-util';
 import { scrollToTop } from 'utils/navigation-util';
+import Header from 'components/shared/header';
 import LoadingPage from 'components/shared/loading-page';
 import BottomPadding from 'components/shared/bottom-padding';
-import NavbarContainer from 'containers/navbar-container';
 import NotMatchedOfficerPage from './officer-page/not-matched-officer-page';
 import SectionRow from './officer-page/section-row';
 import style from './officer-page.sass';
@@ -113,9 +113,9 @@ class OfficerPage extends Component {
     const { historicBadgesExpanded } = this.state;
 
     return (
-      <div className={ style.officerSummary }>
-        <NavbarContainer backLink={ constants.SEARCH_PATH } />
-        <OfficerRadarChart data={ threeCornerPercentile }/>
+      <StickyContainer className={ style.officerSummary }>
+        <Sticky><Header /></Sticky>
+        <OfficerRadarChart percentileData={ threeCornerPercentile }/>
         <h1 className='officer-name header' onClick={ scrollToTop() }>
           { name }
         </h1>
@@ -148,7 +148,7 @@ class OfficerPage extends Component {
         { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
         <OfficerTimelineContainer officerId={ pk }/>
         <BottomPadding />
-      </div>
+      </StickyContainer>
     );
   }
 }

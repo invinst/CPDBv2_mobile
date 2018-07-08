@@ -1,0 +1,31 @@
+@import 'variables'
+  
+:local(.victim)
+  display: flex
+  border-bottom: 1px solid $alto-solid
+
+  .label
+    color: $gandalf-gray
+    font-size: 14px
+    font-weight: 400
+    width: 100px
+    flex-grow: 0
+    padding-top: 8px
+  
+  .victim-list
+    flex-grow: 1
+
+  .victim-item
+    padding: 10px 0
+    border-bottom: 1px solid $alto-solid
+
+    &:last-child
+      border-bottom: none
+
+    .text
+      border: 1px solid $alto-solid
+      border-radius: 2px
+      font-size: 14px
+      font-weight: 400
+      color: $thunder
+      padding: 2px 10px

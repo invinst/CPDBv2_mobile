@@ -6,8 +6,7 @@ import { cloneDeep, noop } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
 
-import NavbarContainer from 'containers/navbar-container';
-import constants from 'constants';
+import Header from 'components/shared/header';
 import OfficerPage from 'components/officer-page';
 import OfficerPageContainer from 'containers/officer-page-container';
 import OfficerRadarChart from 'components/officer-page/radar-chart';
@@ -23,6 +22,9 @@ const mockStore = configureStore();
 const store = mockStore({
   suggestionApp: {
     query: ''
+  },
+  breadcrumb: {
+    breadcrumbs: []
   }
 });
 
@@ -129,7 +131,7 @@ describe('<OfficerPage />', function () {
     spyfetchOfficer.calledWith(123).should.be.true();
   });
 
-  it('should render Navbar', function () {
+  it('should render Header', function () {
     const wrapper = shallow(
       <OfficerPage
         loading={ false }
@@ -140,7 +142,7 @@ describe('<OfficerPage />', function () {
       />
     );
 
-    wrapper.find(NavbarContainer).prop('backLink').should.eql(constants.SEARCH_PATH);
+    wrapper.find(Header).exists().should.be.true();
   });
 
   it('should have BottomPadding', function () {
@@ -174,7 +176,9 @@ describe('<OfficerPage />', function () {
       }]
     };
     const stateData = {
-      navbar: { shareMenuIsOpen: false },
+      breadcrumb: {
+        breadcrumbs: []
+      },
       officerPage: {
         officers: {
           isRequesting: false,
@@ -267,7 +271,7 @@ describe('<OfficerPage />', function () {
 
       const officerRadarChart = wrapper.find(OfficerRadarChart);
       officerRadarChart.exists().should.be.true();
-      officerRadarChart.prop('data').should.deepEqual([{
+      officerRadarChart.prop('percentileData').should.deepEqual([{
         items: [{
           axis: 'Use of Force Reports',
           value: 0.049
@@ -280,7 +284,7 @@ describe('<OfficerPage />', function () {
         }],
         officerId: 1,
         textColor: '#231F20',
-        visualTokenBackground: '#eb9056',
+        visualTokenBackground: '#fc5d2c',
         year: 2006
       }, {
         items: [{
@@ -295,7 +299,7 @@ describe('<OfficerPage />', function () {
         }],
         officerId: 1,
         textColor: '#231F20',
-        visualTokenBackground: '#eb9056',
+        visualTokenBackground: '#fc5d2c',
         year: 2007
       }]);
     });
@@ -402,7 +406,9 @@ describe('<OfficerPage />', function () {
 
     it('should pluralize content correctly', function () {
       const data = {
-        navbar: { shareMenuIsOpen: false },
+        breadcrumb: {
+          breadcrumbs: []
+        },
         officerPage: {
           officers: {
             isRequesting: false,
@@ -485,7 +491,9 @@ describe('<OfficerPage />', function () {
 
     it('should skip some content if data is not available', function () {
       const data = {
-        navbar: { shareMenuIsOpen: false },
+        breadcrumb: {
+          breadcrumbs: []
+        },
         officerPage: {
           officers: {
             isRequesting: false,

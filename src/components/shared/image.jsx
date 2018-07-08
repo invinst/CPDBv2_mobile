@@ -6,7 +6,6 @@ class Img extends Component {
     super(props);
 
     this.state = {
-      image: null,
       loaded: false,
       error: false
     };
@@ -15,28 +14,28 @@ class Img extends Component {
   componentWillMount() {
     const image = new Image();
     image.src = this.props.src;
+    /* istanbul ignore next */
     image.onload = () => {
       this.setState({
         loaded: true,
         error: false
       });
     };
+    /* istanbul ignore next */
     image.onerror = () => {
       this.setState({
         loaded: true,
         error: true
       });
     };
-
-    this.setState({ image });
   }
 
   render() {
-    const { image, loaded, error } = this.state;
+    const { loaded, error } = this.state;
     const { src, fallback, ...rest } = this.props; // eslint-disable-line no-unused-vars
 
     if (loaded && !error) {
-      return <img src={ image.src } { ...rest } />;
+      return <img src={ src } { ...rest } />;
     } else {
       return <img src={ fallback } { ...rest } />;
     }
