@@ -155,6 +155,18 @@ module.exports = {
         awardItem: metricSection('(//div[contains(@class, "metric-widget-item")][1])[3]'),
         honorableMentionItem: metricSection('(//div[contains(@class, "metric-widget-item")][2])[3]'),
       }
+    },
+    timeline: {
+      selector: '.test--officer-timeline',
+      elements: {
+        crItem: '.test--timeline-cr-item',
+        trrItem: '.test--timeline-trr-item',
+        awardItem: '.test--timeline-award-item',
+        unitChangeItem: '.test--timeline-unit-change-item',
+        joinedItem: '.test--timeline-joined-item',
+        yearItem: '.test--timeline-year-item',
+        attachmentThumbnail: '.test--attachments .image',
+      }
     }
   }
 };

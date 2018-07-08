@@ -17,6 +17,7 @@ import MetricWidget from './officer-page/metric-widget';
 import { roundedPercentile } from 'utils/calculation';
 import navigationArrow from 'img/disclosure-indicator.svg';
 import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
+import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
 
 
 class OfficerPage extends Component {
@@ -145,6 +146,7 @@ class OfficerPage extends Component {
           <SectionRow label='Career' value={ careerDuration }/>
         </div>
         { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
+        <OfficerTimelineContainer officerId={ pk }/>
         <BottomPadding />
       </StickyContainer>
     );

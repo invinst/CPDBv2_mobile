@@ -1,0 +1,49 @@
+@import 'variables'
+@import '../base'
+
+$height: 58px
+
+:local(.wrapper)
+  @extend %base-wrapper
+  background-color: $snow-color
+  height: $height
+  line-height: $height - 1px
+
+  .content
+    @extend %base-content
+
+    &.no-border-bottom
+      border-bottom: none
+
+    .kind
+      @extend %base-kind
+      color: $bright-orange
+      border-color: $champagne
+
+      &.sustained
+        color: $scarlet-color
+        background-color: $champagne
+
+    .detail
+      @extend %base-detail
+      display: inline-block
+      vertical-align: middle
+
+      .category
+        color: $thunder
+
+      .finding
+        font-weight: 300
+        line-height: 14px
+        font-size: 12px
+        color: $gandalf-gray
+
+    .right
+      @extend %base-right
+
+      .date
+        @extend %base-date
+        font-size: 12px
+        color: $gandalf-gray
+        font-weight: 300
+        float: none
