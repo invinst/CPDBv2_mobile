@@ -9,7 +9,7 @@ import { getOfficerTimeline } from 'actions/officer-page/timeline';
 
 function mapStateToProps(state, ownProps) {
   return {
-    items: getNewTimelineItems(state),
+    items: getNewTimelineItems(state, ownProps.officerId),
     officerId: ownProps.officerId
   };
 }
