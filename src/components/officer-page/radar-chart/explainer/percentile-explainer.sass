@@ -1,0 +1,57 @@
+@import 'variables'
+
+$num-value-column: 3
+
+:local(.percentile-explainer)
+  .table-header
+    font-size: 12px
+    color: $gandalf-gray
+    font-weight: 500
+    padding: 9px 0 11px 88px
+    box-sizing: border-box
+    border-bottom: 1px solid $alto-solid
+    line-height: 15px
+
+    .header-cell
+      display: inline-block
+      padding-right: 6px
+      width: calc(100% / #{$num-value-column})
+      box-sizing: border-box
+      vertical-align: top
+      text-align: center
+
+  .percentile-table
+    list-style-type: none
+
+    .percentiles-row
+
+      .radar-chart-container
+        display: inline-block
+        margin-top: 5px
+        width: 32px
+        height: 32px
+        border-radius: 3px
+        overflow: hidden
+
+      .year
+        display: inline-block
+        width: 48px
+        color: $greyish
+        padding: 12px 8px 11px 0
+        line-height: 18px
+        margin-left: 8px
+        font-size: 13px
+        border-bottom: 1px solid $alto-solid
+        vertical-align: top
+        font-weight: 300
+
+      .cell
+        display: inline-block
+        padding: 12px 0 11px
+        border-bottom: 1px solid $alto-solid
+        width: calc((100% - 94px) / #{$num-value-column})
+        vertical-align: top
+        text-align: center
+        line-height: 18px
+
+

@@ -15,6 +15,7 @@ import NotMatchedOfficerPage from 'components/officer-page/not-matched-officer-p
 import SectionRow from 'components/officer-page/section-row';
 import GaUtil from 'utils/ga-util';
 import MetricWidget from 'components/officer-page/metric-widget';
+import TimeLine from 'components/officer-page/tabbed-pane-section/timeline';
 
 
 const mockStore = configureStore();
@@ -158,6 +159,22 @@ describe('<OfficerPage />', function () {
   });
 
   context('inside container', function () {
+    const timeline = {
+      items: [{
+        attachments: [],
+        category: 'Illegal Search',
+        coaccused: 8,
+        crid: '267098',
+        date: 'NOV 8',
+        finding: 'Not Sustained',
+        kind: 'CR',
+        outcome: 'No Action Taken',
+        unitDescription: 'Mobile Strike Force',
+        unitDisplay: ' ',
+        unitName: '153',
+        year: 2000,
+      }]
+    };
     const stateData = {
       breadcrumb: {
         breadcrumbs: []
@@ -213,7 +230,8 @@ describe('<OfficerPage />', function () {
               ]
             }
           }
-        }
+        },
+        timeline: timeline
       }
     };
 
@@ -253,7 +271,7 @@ describe('<OfficerPage />', function () {
 
       const officerRadarChart = wrapper.find(OfficerRadarChart);
       officerRadarChart.exists().should.be.true();
-      officerRadarChart.prop('data').should.deepEqual([{
+      officerRadarChart.prop('percentileData').should.deepEqual([{
         items: [{
           axis: 'Use of Force Reports',
           value: 0.049
@@ -266,7 +284,7 @@ describe('<OfficerPage />', function () {
         }],
         officerId: 1,
         textColor: '#231F20',
-        visualTokenBackground: '#eb9056',
+        visualTokenBackground: '#fc5d2c',
         year: 2006
       }, {
         items: [{
@@ -281,7 +299,7 @@ describe('<OfficerPage />', function () {
         }],
         officerId: 1,
         textColor: '#231F20',
-        visualTokenBackground: '#eb9056',
+        visualTokenBackground: '#fc5d2c',
         year: 2007
       }]);
     });
@@ -442,7 +460,8 @@ describe('<OfficerPage />', function () {
                 ]
               }
             }
-          }
+          },
+          timeline: timeline,
         }
       };
 
@@ -500,7 +519,8 @@ describe('<OfficerPage />', function () {
                 percentiles: []
               }
             }
-          }
+          },
+          timeline: timeline,
         }
       };
 
@@ -536,6 +556,16 @@ describe('<OfficerPage />', function () {
       metricsProp[5].name.should.equal('Honorable Mentions');
       metricsProp[5].value.should.equal('N/A');
       should(metricsProp[5].description).be.null();
+    });
+
+    it('should render officer Timeline', function () {
+      const workingStore = mockStore(stateData);
+      const wrapper = mount(
+        <Provider store={ workingStore }>
+          <OfficerPageContainer params={ { id: 11 } } />
+        </Provider>
+      );
+      wrapper.find(TimeLine).exists().should.be.true();
     });
   });
 });
