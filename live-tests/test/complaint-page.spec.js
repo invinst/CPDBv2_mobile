@@ -46,7 +46,8 @@ const mockComplaint = {
       'id': 6493,
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
-      'full_name': 'Donovan Markiewicz'
+      'full_name': 'Donovan Markiewicz',
+      'allegation_count': 10
     },
     {
       'category': 'Excessive Force',
@@ -54,7 +55,8 @@ const mockComplaint = {
       'id': 234,
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
-      'full_name': 'John Foertsch'
+      'full_name': 'John Foertsch',
+      'allegation_count': 8
     },
     {
       'category': 'Excessive Force',
@@ -62,7 +64,8 @@ const mockComplaint = {
       'id': 543,
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
-      'full_name': 'Kenneth Wojtan'
+      'full_name': 'Kenneth Wojtan',
+      'allegation_count': 5
     }
   ],
   'location': 'Building',
