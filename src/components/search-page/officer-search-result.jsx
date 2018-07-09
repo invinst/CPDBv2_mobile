@@ -15,7 +15,7 @@ class OfficerSearchResult extends Component {
               key={ officer.id }
               saveToRecent={ saveToRecent }
               { ...officer }
-              />
+            />
           ))
         }
       </div>

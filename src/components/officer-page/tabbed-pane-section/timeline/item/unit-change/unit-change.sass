@@ -1,0 +1,38 @@
+@import 'variables'
+@import '../base'
+
+$height: 24px
+
+:local(.wrapper)
+  @extend %base-wrapper
+  @extend %base-content
+  border-top: solid 1px $alto-solid
+  background-color: $wild-sand
+  height: $height
+  line-height: $height - 1px
+
+  .unit-change
+    display: inline-block
+    width: calc(100% - 44px)
+    font-size: 12px
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+    vertical-align: bottom
+
+    .unassigned-old-unit
+      color: $gandalf-gray
+      font-style: italic
+
+    .assigned-old-unit
+      color: $gandalf-gray
+      font-style: normal
+
+    .new-unit
+      color: $thunder
+
+  .date
+    @extend %base-date
+    font-size: 12px
+    color: $thunder
+    font-weight: 300

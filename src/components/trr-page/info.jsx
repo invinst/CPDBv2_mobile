@@ -8,7 +8,7 @@ import Location from 'components/trr-page/location';
 
 class Info extends Component {
   render() {
-    const { victimDemographic, forceTypes, incidentDate, address, locationType, beat } = this.props;
+    const { victimDemographic, forceTypes, incidentDate, address, locationType, beat, point } = this.props;
 
     return (
       <div className={ style.info }>
@@ -20,7 +20,7 @@ class Info extends Component {
         <Attachment/>
         <div className='date-title'>DATE OF INCIDENT</div>
         <div className='incident-date'>{ incidentDate }</div>
-        <Location address={ address } locationType={ locationType } beat={ beat }/>
+        <Location address={ address } locationType={ locationType } beat={ beat } point={ point }/>
       </div>
     );
   }
@@ -34,6 +34,7 @@ Info.propTypes = {
   address: PropTypes.string,
   locationType: PropTypes.string,
   beat: PropTypes.string,
+  point: PropTypes.object,
 };
 
 export default Info;

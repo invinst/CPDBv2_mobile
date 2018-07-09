@@ -29,4 +29,29 @@ describe('<LandingPage />', function () {
     mount(<LandingPage requestLandingPage={ spyRequestLandingPage } />);
     spyRequestLandingPage.calledWith().should.be.true();
   });
+
+  it('should call pushBreadcrumb when mounted and updating', function () {
+    const pushBreadcrumbsSpy = spy();
+    const wrapper = mount(
+      <LandingPage
+        pushBreadcrumbs={ pushBreadcrumbsSpy }
+        location='location'
+        routes='routes'
+        params='params'
+      />
+    );
+    pushBreadcrumbsSpy.calledWith({
+      location: 'location',
+      routes: 'routes',
+      params: 'params'
+    }).should.be.true();
+
+    pushBreadcrumbsSpy.reset();
+    wrapper.setProps({ location: 'changed' });
+    pushBreadcrumbsSpy.calledWith({
+      location: 'changed',
+      routes: 'routes',
+      params: 'params'
+    }).should.be.true();
+  });
 });
