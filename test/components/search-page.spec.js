@@ -19,6 +19,13 @@ describe('<SearchPage />', function () {
     IntercomUtils.showIntercomLauncher.restore();
   });
 
+  it('should be renderable', () => {
+    const wrapper = shallow(
+      <SearchPage query={ '' }/>
+    );
+    wrapper.should.be.ok();
+  });
+
   it('should render categories returned by getCategoriesWithSuggestions when it has query', () => {
     const dummyCategories = [
       {
