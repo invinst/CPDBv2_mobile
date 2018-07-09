@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 
 import CRSearchResult from 'components/search-page/cr-search-result';
-import { Link } from 'react-router';
+
 
 describe('<CRSearchResult />', () => {
 
