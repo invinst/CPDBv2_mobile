@@ -6,7 +6,20 @@ import style from './location-map.sass';
 import { mapboxgl } from 'utils/mapbox';
 
 
+const scrollTopMargin = 40; // this value depends on the height of Header
+
 export default class LocationMap extends Component {
+  constructor(props) {
+    super(props);
+    this.handleScroll = this.handleScroll.bind(this);
+    this.prevTop = 0;
+    this.prevBottom = 0;
+  }
+
+  componentDidMount() {
+    /* istanbul ignore next */
+    addEventListener('scroll', this.handleScroll);
+  }
 
   componentWillReceiveProps(nextProps, nextState) {
     const { lat, lng, zoomInLevel } = this.props;
@@ -18,6 +31,15 @@ export default class LocationMap extends Component {
         this.zoomOut();
       }
     }
+  }
+
+  componentWillUnmount() {
+    /* istanbul ignore next */
+    removeEventListener('scroll', this.handleScroll);
+  }
+
+  isValidLocation(lat, lng) {
+    return !isNil(lat) && !isNil(lng);
   }
 
   gotRef(el) {
@@ -37,14 +59,12 @@ export default class LocationMap extends Component {
   }
 
   addMarker(lat, lng, markerEl) {
-    const locationValid = !isNil(lat) && !isNil(lng);
-
-    if (this.marker && locationValid) {
+    if (this.marker && this.isValidLocation(lat, lng)) {
       this.marker.setLngLat([lng, lat]);
     } else if (this.marker) {
       this.marker.remove();
       this.marker = null;
-    } else if (locationValid) {
+    } else if (this.isValidLocation(lat, lng)) {
       const placeholder = document.createElement('div');
 
       const markerDOM = render(
@@ -68,19 +88,43 @@ export default class LocationMap extends Component {
 
   zoomIn() {
     const { lng, lat, zoomInLevel } = this.props;
-    this.map.easeTo({
-      center: [lng, lat],
-      zoom: zoomInLevel
-    });
+    if (this.isValidLocation(lat, lng)) {
+      this.map.easeTo({
+        center: [lng, lat],
+        zoom: zoomInLevel
+      });
+    }
   }
 
   zoomOut() {
     const { centerLat, centerLng, zoomOutLevel } = this.props;
-
     this.map.easeTo({
       center: [centerLng, centerLat],
       zoom: zoomOutLevel
     });
+  }
+
+  handleScroll(event) {
+    /* istanbul ignore next */
+    // Logic: zoom in the map if it closes to top or bottom of the current window
+    if (this.map) {
+      const { top, bottom } = this.map.getContainer().getBoundingClientRect();
+      const isScrollDown = top - this.prevTop < 0 || this.prevTop == 0;
+      const bottomCrossed = (this.prevBottom != 0) &&
+        (this.prevBottom - window.innerHeight) * (bottom - window.innerHeight) <= 0;
+      const topCrossed = (this.prevTop != 0) && (top - scrollTopMargin) * (this.prevTop - scrollTopMargin) <= 0;
+
+      if (isScrollDown && (bottomCrossed || topCrossed)) {
+        this.zoomIn();
+      }
+
+      if (!isScrollDown && (bottomCrossed || topCrossed)) {
+        this.zoomOut();
+      }
+
+      this.prevTop = top;
+      this.prevBottom = bottom;
+    }
   }
 
   render() {

@@ -26,7 +26,9 @@ describe('ComplaintPage component', function () {
   it('should call requestComplaint when component mounted', function () {
     const requestComplaintSpy = spy();
     const store = configureStore()({
-      navbar: {}
+      breadcrumb: {
+        breadcrumbs: []
+      }
     });
 
     mount(

@@ -21,7 +21,7 @@ describe('<LandingPage />', function () {
     searchBar.prop('to').should.eql(constants.SEARCH_PATH);
   });
 
-  it('should request landing page data on mount', function () {
+  it('should request landing page data and pushBreadcrumb on mount', function () {
     const store = configureStore()({
       landingPage: {
         topOfficersByAllegation: [1],
@@ -32,11 +32,42 @@ describe('<LandingPage />', function () {
     });
 
     const spyRequestCMS = spy();
+    const pushBreadcrumbsSpy = spy();
     mount(
       <Provider store={ store }>
-        <LandingPage requestCMS={ spyRequestCMS } />
+        <LandingPage
+          requestCMS={ spyRequestCMS }
+          pushBreadcrumbs={ pushBreadcrumbsSpy }
+          location='location'
+          routes='routes'
+          params='params'
+        />
       </Provider>
     );
     spyRequestCMS.calledWith().should.be.true();
+    pushBreadcrumbsSpy.calledWith({
+      location: 'location',
+      routes: 'routes',
+      params: 'params'
+    }).should.be.true();
+  });
+
+  it('should call pushBreadcrumb when updating', function () {
+    const pushBreadcrumbsSpy = spy();
+    const wrapper = shallow(
+      <LandingPage
+        pushBreadcrumbs={ pushBreadcrumbsSpy }
+        location='location'
+        routes='routes'
+        params='params'
+      />
+    );
+
+    wrapper.setProps({ location: 'changed' });
+    pushBreadcrumbsSpy.calledWith({
+      location: 'changed',
+      routes: 'routes',
+      params: 'params'
+    }).should.be.true();
   });
 });

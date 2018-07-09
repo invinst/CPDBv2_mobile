@@ -13,9 +13,19 @@ import style from './landing-page.sass';
 
 
 export default class LandingPage extends Component {
-
   componentDidMount() {
-    this.props.requestCMS();
+    const {
+      requestCMS, pushBreadcrumbs, location, routes, params
+    } = this.props;
+    pushBreadcrumbs({ location, routes, params });
+    requestCMS();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { location, params, routes, pushBreadcrumbs } = nextProps;
+    if (location !== this.props.location) {
+      pushBreadcrumbs({ location, params, routes });
+    }
   }
 
   render() {
@@ -41,11 +51,16 @@ export default class LandingPage extends Component {
 }
 
 LandingPage.defaultProps = {
-  requestCMS: () => {}
+  requestCMS: () => {},
+  pushBreadcrumbs: () => {}
 };
 
 LandingPage.propTypes = {
+  pushBreadcrumbs: PropTypes.func,
   requestCMS: PropTypes.func,
   title: PropTypes.object,
-  description: PropTypes.object
+  description: PropTypes.object,
+  location: PropTypes.object,
+  params: PropTypes.object,
+  routes: PropTypes.array,
 };
