@@ -5,6 +5,9 @@ describe('complaint-page selectors', () => {
   describe('complaintSelector', () => {
     it('should do nothing & return null if complaint is not found', () => {
       const state = {
+        breadcrumb: {
+          breadcrumbs: []
+        },
         complaintPage: {
           complaints: {}
         }
@@ -19,6 +22,9 @@ describe('complaint-page selectors', () => {
 
     it('should return default value if not found', function () {
       const state = {
+        breadcrumb: {
+          breadcrumbs: []
+        },
         complaintPage: {
           complaints: {
             '111': {
@@ -43,6 +49,9 @@ describe('complaint-page selectors', () => {
 
     it('should correctly get and transform complaint data', () => {
       const state = {
+        breadcrumb: {
+          breadcrumbs: []
+        },
         complaintPage: {
           complaints: {
             '111': {
@@ -74,6 +83,7 @@ describe('complaint-page selectors', () => {
                   'category': 'Operation\/Personnel Violations',
                   'final_outcome': 'Penalty Not Served',
                   'full_name': 'Jerome Finnigan',
+                  'allegation_count': 1,
                   'id': 2235,
                   'final_finding': 'Sustained',
                   'rank': 'Police Officer',
@@ -90,7 +100,20 @@ describe('complaint-page selectors', () => {
                   'full_name': 'Patrick Boyle'
                 }
               ],
-              'attachments': []
+              'attachments': [
+                {
+                  'file_type': 'audio',
+                  'url': 'http://audio.io',
+                  'preview_image_url': 'http://preview.audio',
+                  'title': 'audio'
+                },
+                {
+                  'file_type': 'document',
+                  'url': 'http://document.io/file.html',
+                  'preview_image_url': 'http://preview.document',
+                  'title': 'document'
+                }
+              ]
             }
           }
         }
@@ -122,6 +145,7 @@ describe('complaint-page selectors', () => {
             'finalFinding': 'Sustained',
             'finalOutcome': 'Penalty Not Served',
             'fullName': 'Jerome Finnigan',
+            'allegationCount': 1,
             'id': 2235,
             'rank': 'Police Officer',
             'findingOutcome': 'Sustained - Penalty Not Served',
@@ -143,8 +167,112 @@ describe('complaint-page selectors', () => {
             'percentile': {}
           }
         ],
-        'attachments': []
+        'attachments': [
+          {
+            'fileType': 'audio',
+            'url': 'http://audio.io',
+            'previewImageUrl': 'http://preview.audio',
+            'title': 'audio'
+          },
+          {
+            'fileType': 'document',
+            'url': 'http://document.io/file.pdf',
+            'previewImageUrl': 'http://preview.document',
+            'title': 'document'
+          }
+        ]
       });
     });
+  });
+
+  it('should prioritize officers user visited', function () {
+    const state = {
+      breadcrumb: {
+        breadcrumbs: [
+          {
+            url: '/officer/1/',
+            params: {
+              officerId: '1'
+            }
+          },
+          {
+            url: '/officer/2/',
+            params: {
+              officerId: '2'
+            }
+          }
+        ]
+      },
+      complaintPage: {
+        complaints: {
+          '123': {
+            crid: '123',
+            coaccused: [{ id: 3 }, { id: 2 }, { id: 1 }]
+          }
+        }
+      }
+    };
+
+    const props = {
+      params: {
+        complaintId: '123'
+      }
+    };
+
+    complaintSelector(state, props).coaccused.map(obj => obj.id).should.eql([2, 1, 3]);
+  });
+
+  it('should prioritize officer with sustained finding', function () {
+    const state = {
+      breadcrumb: {
+        breadcrumbs: []
+      },
+      complaintPage: {
+        complaints: {
+          '123': {
+            crid: '123',
+            coaccused: [
+              { 'id': 1, 'final_finding': 'Unsustained' },
+              { 'id': 2, 'final_finding': 'Sustained' }
+            ]
+          }
+        }
+      }
+    };
+
+    const props = {
+      params: {
+        complaintId: '123'
+      }
+    };
+
+    complaintSelector(state, props).coaccused.map(obj => obj.id).should.eql([2, 1]);
+  });
+
+  it('should prioritize officers with most complaints', function () {
+    const state = {
+      breadcrumb: {
+        breadcrumbs: []
+      },
+      complaintPage: {
+        complaints: {
+          '123': {
+            crid: '123',
+            coaccused: [
+              { 'id': 1, 'allegation_count': 1 },
+              { 'id': 2, 'allegation_count': 2 }
+            ]
+          }
+        }
+      }
+    };
+
+    const props = {
+      params: {
+        complaintId: '123'
+      }
+    };
+
+    complaintSelector(state, props).coaccused.map(obj => obj.id).should.eql([2, 1]);
   });
 });

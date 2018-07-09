@@ -135,6 +135,31 @@ describe('<SearchPage />', function () {
     });
   });
 
+  it('should call pushBreadcrumb when mounted and updating', function () {
+    const pushBreadcrumbsSpy = spy();
+    const wrapper = mount(
+      <SearchPage
+        pushBreadcrumbs={ pushBreadcrumbsSpy }
+        location='location'
+        routes='routes'
+        params='params'
+      />
+    );
+    pushBreadcrumbsSpy.calledWith({
+      location: 'location',
+      routes: 'routes',
+      params: 'params'
+    }).should.be.true();
+
+    pushBreadcrumbsSpy.reset();
+    wrapper.setProps({ location: 'changed' });
+    pushBreadcrumbsSpy.calledWith({
+      location: 'changed',
+      routes: 'routes',
+      params: 'params'
+    }).should.be.true();
+  });
+
   it('should focus the input element when mounted', () => {
     const wrapper = shallow(<SearchPage />);
     const instance = wrapper.instance();
