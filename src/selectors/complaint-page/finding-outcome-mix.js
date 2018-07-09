@@ -4,7 +4,7 @@ import pluralize from 'pluralize';
 
 const suspensionDaysMix = (finalFinding, finalOutcome) => {
   const suspensionDaysPattern = /^(\d+) Day Suspension$/;
-  const matched = finalOutcome.match(suspensionDaysPattern);
+  const matched = finalOutcome && finalOutcome.match(suspensionDaysPattern);
   if (matched) {
     return `Suspended ${matched[1]} ${pluralize('day', matched[1])}`;
   }

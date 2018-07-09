@@ -56,6 +56,15 @@ module.exports = {
         title: '.attachment-title'
       }
     },
+    location: {
+      selector: '//div[contains(@class, "location__location")]',
+      locateStrategy: 'xpath',
+      elements: {
+        address: '.address .info',
+        type: '.type .info',
+        beat: '.beat .info'
+      }
+    },
     requestDocumentForm: {
       selector: '//form[contains(@class, "request-document-content")]',
       locateStrategy: 'xpath',

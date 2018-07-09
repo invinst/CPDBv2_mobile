@@ -11,7 +11,16 @@ import style from './search-page.sass';
 
 export default class SearchPage extends Component {
   componentDidMount() {
+    const {
+      pushBreadcrumbs, location, routes, params
+    } = this.props;
+    pushBreadcrumbs({ location, routes, params });
     this.searchInput.inputElement.focus();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { location, params, routes, pushBreadcrumbs } = nextProps;
+    pushBreadcrumbs({ location, params, routes });
   }
 
   onInputChange(event) {
@@ -186,11 +195,17 @@ SearchPage.propTypes = {
   chosenCategory: PropTypes.string,
   updateActiveCategory: PropTypes.func,
   updateChosenCategory: PropTypes.func,
-  router: PropTypes.object
+  router: PropTypes.object,
+  pushBreadcrumbs: PropTypes.func,
+  requestLandingPage: PropTypes.func,
+  location: PropTypes.object,
+  params: PropTypes.object,
+  routes: PropTypes.array,
 };
 
 SearchPage.defaultProps = {
   inputChanged: function () {},
   updateChosenCategory: function () {},
-  chosenCategory: ''
+  chosenCategory: '',
+  pushBreadcrumbs: () => {}
 };

@@ -48,7 +48,8 @@ const mockComplaint = {
       'id': 6493,
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
-      'full_name': 'Donovan Markiewicz'
+      'full_name': 'Donovan Markiewicz',
+      'allegation_count': 10
     },
     {
       'category': 'Excessive Force',
@@ -56,7 +57,8 @@ const mockComplaint = {
       'id': 234,
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
-      'full_name': 'John Foertsch'
+      'full_name': 'John Foertsch',
+      'allegation_count': 8
     },
     {
       'category': 'Excessive Force',
@@ -64,10 +66,11 @@ const mockComplaint = {
       'id': 543,
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
-      'full_name': 'Kenneth Wojtan'
+      'full_name': 'Kenneth Wojtan',
+      'allegation_count': 5
     }
   ],
-  'location': '03',
+  'location': 'Building',
   'address': '2459 WESTERN AVE, CHICAGO IL 60608'
 };
 
@@ -87,7 +90,7 @@ describe('ComplaintPageTest', function () {
       { 'message': 'Sorry, we can not subscribe your email' }
     );
     this.complaintPage = client.page.complaintPage();
-    client.url(`${client.globals.clientUrl}/complaint/1053667/6493/`);
+    client.url(`${client.globals.clientUrl}/complaint/1053667/`);
     done();
   });
 
@@ -128,6 +131,13 @@ describe('ComplaintPageTest', function () {
       'Apr 30, 2012\nIncident Occurs\nInvestigation Begins\nInvestigation Closed'
     );
     this.complaintPage.expect.element('@firstInvestigator').text.to.contain('Peter Parker');
+  });
+
+  it('should show proper cr location', function () {
+    const location = this.complaintPage.section.location;
+    location.expect.element('@address').text.to.contain('2459 WESTERN AVE, CHICAGO IL 60608');
+    location.expect.element('@type').text.to.contain('Building');
+    location.expect.element('@beat').text.to.contain('1034');
   });
 
   it('should show request document modal when clicks on "Request Document"', function () {
