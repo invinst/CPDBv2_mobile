@@ -4,6 +4,7 @@ import { Router, Route, IndexRoute } from 'react-router';
 
 import AppHistory from 'utils/history';
 import constants from 'constants';
+import config from 'config';
 
 import MainPageContainer from 'containers/main-page-container';
 import AboutPageContainer from 'containers/about-page-container';
@@ -15,11 +16,13 @@ import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
 import BreadcrumbItemContainer from 'containers/breadcrumb-container';
 
-import 'mapbox-gl/dist/mapbox-gl.css';
 import 'styles/fonts.sass';
 import 'styles/style.sass';
 import 'styles/helper.sass';
 import 'mapbox-gl/dist/mapbox-gl.css';
+
+
+window.Intercom('boot', { 'app_id': config.intercomAppId } );
 
 const App = React.createClass({
   render() {
