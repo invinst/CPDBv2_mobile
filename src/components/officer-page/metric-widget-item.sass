@@ -1,0 +1,45 @@
+@import 'variables'
+
+:local(.metric-widget-item)
+  width: calc(50% - 0.5px)
+  height: 144px
+  float: left
+  text-align: center
+  color: $gandalf-gray
+  padding-left: 8px
+
+  &.first-chunk
+    padding-bottom: 8px
+
+  &.last-chunk
+    padding-top: 8px
+
+  &:first-of-type
+    border-right: 1px solid $alto-solid
+    padding-left: 0
+    padding-right: 8px
+
+  .value
+    font-size: 26px
+    text-align: center
+    line-height: 32px
+    margin-top: 30px
+
+    &.active
+      color: $thunder
+
+      &.highlight
+        color: $bright-orange
+
+  .name
+    line-height: 18px
+
+    &.active
+      color: $thunder
+
+  .description
+    font-size: 12px
+    text-align: center
+    width: 100%
+    line-height: 14px
+    margin-top: 2px

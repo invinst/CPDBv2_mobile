@@ -1,0 +1,25 @@
+@import 'variables'
+@import '../base'
+
+$height: 24px
+
+:local(.wrapper)
+  @extend %base-wrapper
+  @extend %base-content
+  background-color: inherit
+  height: $height
+  line-height: $height - 1px
+  border-top: solid 1px $alto-solid
+  padding-bottom: 128px
+
+  .join
+    display: inline-block
+    width: calc(100% - 44px)
+    font-size: 12px
+    color: black
+
+  .date
+    @extend %base-date
+    font-size: 12px
+    color: $thunder
+    font-weight: 300
