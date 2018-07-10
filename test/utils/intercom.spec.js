@@ -1,6 +1,6 @@
 import { spy } from 'sinon';
 
-import { showIntercomLauncher } from 'utils/intercom';
+import { showIntercomLauncher, showIntercomMessages } from 'utils/intercom';
 
 
 describe('Intercom utils', function () {
@@ -20,5 +20,15 @@ describe('Intercom utils', function () {
   it('showIntercomLauncher should call Intercom correctly', function () {
     showIntercomLauncher(true);
     window.Intercom.calledWith('update', { 'hide_default_launcher': false }).should.be.true();
+  });
+
+  it('showIntercomMessages should call Intercom correctly', function () {
+    showIntercomMessages(true);
+    window.Intercom.calledWith('show').should.be.true();
+
+    window.Intercom.reset();
+
+    showIntercomMessages(false);
+    window.Intercom.calledWith('hide').should.be.true();
   });
 });

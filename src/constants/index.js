@@ -268,4 +268,7 @@ export default {
   BOTTOM_PADDING: 133,
   TOP_MARGIN: 58,
   NEW_DIVIDER_WEIGHT: 2,
+  INVINST_GITHUB_URL: 'https://github.com/invinst/',
+  QA_URL: 'http://how.cpdp.works/',
+  ROADMAP_URL: 'http://roadmap.cpdp.co/',
 };

@@ -40,4 +40,19 @@ describe('MainPageTest', function () {
 
     footer.expect.element('@logo').to.have.attribute('href').equals('https://invisible.institute/introduction');
   });
+
+  it('should open and close legal modal', function () {
+    const footer = this.mainPage.section.footer;
+    const legalModal = this.mainPage.section.legalModal;
+
+    footer.click('@legal');
+    legalModal.expect.element('@content').to.be.visible;
+    legalModal.click('@closeButton');
+    legalModal.expect.element('@content').to.not.be.present;
+
+    footer.click('@legal');
+    legalModal.expect.element('@content').to.be.visible;
+    legalModal.click('@understandButton');
+    legalModal.expect.element('@content').to.not.be.present;
+  });
 });
