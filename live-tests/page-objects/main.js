@@ -4,6 +4,6 @@ module.exports = {
   },
   elements: {
     cpdbLogo: '.title',
-    searchLink: 'a[href="/search/"]'
+    searchLink: 'a[href="/search/"]',
   }
 };
