@@ -124,10 +124,10 @@ export const fillUnitChange = (items) => {
   return items;
 };
 
-export const getNewTimelineItems = state => {
+export const getNewTimelineItems = (state, officerId) => {
   // Do not change the order of these processors
   const processors = [fillYears, fillUnitChange];
-  const items = get(state.officerPage.timeline, 'items', []);
+  const items = get(state.officerPage.timeline.data, String(officerId), []);
   const transformedItems = items.map(transform);
   if (isEmpty(transformedItems)) {
     return [];
