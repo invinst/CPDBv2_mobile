@@ -11,9 +11,9 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    id: ownProps.id,
+    id: ownProps.trrId,
     message: state.trrPage.attachmentRequest.message,
-    isRequested: state.trrPage.attachmentRequest.subscribedTRRIds[ownProps.id]
+    isRequested: state.trrPage.attachmentRequest.subscribedTRRIds[ownProps.trrId]
   };
 };
 

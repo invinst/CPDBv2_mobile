@@ -11,7 +11,7 @@ class Attachment extends Component {
       <div className={ style.attachment }>
         <div className='title'>
           ATTACHMENTS
-          <TRRRequestDocumentButtonContainer id={ this.props.trrId }/>
+          <TRRRequestDocumentButtonContainer trrId={ this.props.trrId }/>
         </div>
         <div className='subtitle'>May contain graphic content</div>
       </div>

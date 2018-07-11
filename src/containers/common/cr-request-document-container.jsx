@@ -11,10 +11,10 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    id: ownProps.id,
+    id: ownProps.crid,
     customClassName: ownProps.customClassName,
     message: state.complaintPage.attachmentRequest.message,
-    isRequested: state.complaintPage.attachmentRequest.subscribedCRIds[ownProps.id]
+    isRequested: state.complaintPage.attachmentRequest.subscribedCRIds[ownProps.crid]
   };
 };
 
