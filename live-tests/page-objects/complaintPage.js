@@ -17,7 +17,8 @@ module.exports = {
     firstInvestigator: {
       selector: '(//div[contains(@class, "investigator-row")])[1]',
       locateStrategy: 'xpath'
-    }
+    },
+    requestDocumentButton: '.request-button'
   },
 
   sections: {
@@ -64,5 +65,15 @@ module.exports = {
         beat: '.beat .info'
       }
     },
+    requestDocumentForm: {
+      selector: '//form[contains(@class, "request-document-content")]',
+      locateStrategy: 'xpath',
+      elements: {
+        emailInput: '.email-input',
+        requestButton: '.request-button',
+        cancelButton: '.cancel-button',
+        messageBox: '.message-box'
+      }
+    }
   }
 };

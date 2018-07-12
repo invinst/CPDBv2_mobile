@@ -1,3 +1,5 @@
+var hashBody = (body) => JSON.stringify(body, Object.keys(body).sort());
+
 var buildApi = function () {
   var handleMap = {};
 
@@ -6,18 +8,42 @@ var buildApi = function () {
       handleMap[method] = {};
     }
 
-    handleMap[method][uri] = function (request, response) {
+    handleMap[method][uri] = function (response) {
       response.status(status).send(data);
     };
   };
 
-  var call = function (method, uri) {
+  var mockPost = function (uri, status, body, data) {
+    var method = 'POST';
+    if (!(method in handleMap)) {
+      handleMap[method] = {};
+    }
+    if (!(uri in handleMap[method])) {
+      handleMap[method][uri] = {};
+    }
+
+    handleMap[method][uri][hashBody(body)] = function (response) {
+      response.status(status).send(data);
+    };
+  };
+  var cleanMock = function () {
+    handleMap = {};
+  };
+
+  var call = function (req) {
+    var uri = req.originalUrl;
     var doNothing = function () {};
-    return (handleMap[method] || {})[uri] || doNothing;
+    if (req.method === 'POST') {
+      return ((handleMap[req.method] || {})[uri] || {})[hashBody(req.body)] || doNothing;
+    } else {
+      return (handleMap[req.method] || {})[uri] || doNothing;
+    }
   };
 
   return {
     mock: mock,
+    mockPost: mockPost,
+    cleanMock: cleanMock,
     call: call
   };
 };
