@@ -1,45 +1,44 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { spy } from 'sinon';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
+import { shallow, mount } from 'enzyme';
 
 import Attachments from 'components/complaint-page/attachments';
+import RequestDocumentButton from 'components/common/request-document/request-document-button';
+
 
 describe('Attachments component', function () {
   it('should render header', function () {
-    let instance = shallow(
-      <Attachments attachments={ [] } />
+    const wrapper = shallow(
+      <Attachments attachments={ [] } complaintId='CR123'/>
     );
 
-    instance.find('.label').text().should.eql('There are no documents that have been made public yet.');
+    wrapper.find('.label').text().should.eql('There are no documents that have been made public yet.');
 
-    instance = shallow(
-      <Attachments attachments={ ['abc'] } />
-    );
+    wrapper.setProps({ attachments: ['abc'] });
 
-    instance.find('.label').text().should.eql('ATTACHMENTS');
+    wrapper.find('.label').text().should.eql('ATTACHMENTS');
   });
 
-  it('should call requestDocument when click on request button', function () {
-    const requestDocumentSpy = spy();
-    const instance = shallow(
-      <Attachments requestDocument={ requestDocumentSpy } />
+  it('should render request document button', function () {
+    const store = configureStore()({
+      complaintPage: {
+        attachmentRequest: {
+          message: '',
+          subscribedCRIds: {}
+        }
+      }
+    });
+    const wrapper = mount(
+      <Provider store={ store }>
+        <Attachments attachments={ [] } complaintId='CR123'/>
+      </Provider>
     );
 
-    instance.find('.request-document-button').simulate('click');
-    requestDocumentSpy.called.should.be.true();
-  });
-
-  it('should not call requestDocument if already requested', function () {
-    const requestDocumentSpy = spy();
-    const instance = shallow(
-      <Attachments
-        requestDocument={ requestDocumentSpy }
-        alreadyRequested={ true } />
-    );
-
-    const requestButton = instance.find('.request-document-button');
-    requestButton.simulate('click');
-    requestButton.text().should.eql('Documents Requested   ✔');
-    requestDocumentSpy.called.should.be.false();
+    const requestButton = wrapper.find(RequestDocumentButton);
+    requestButton.prop('id').should.equal('CR123');
+    requestButton.prop('isRequested').should.be.false();
+    requestButton.prop('message').should.equal('');
+    requestButton.prop('customClassName').should.equal('request-button-container');
   });
 });

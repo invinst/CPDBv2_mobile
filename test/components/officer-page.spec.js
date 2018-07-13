@@ -160,20 +160,22 @@ describe('<OfficerPage />', function () {
 
   context('inside container', function () {
     const timeline = {
-      items: [{
-        attachments: [],
-        category: 'Illegal Search',
-        coaccused: 8,
-        crid: '267098',
-        date: 'NOV 8',
-        finding: 'Not Sustained',
-        kind: 'CR',
-        outcome: 'No Action Taken',
-        unitDescription: 'Mobile Strike Force',
-        unitDisplay: ' ',
-        unitName: '153',
-        year: 2000,
-      }]
+      data: {
+        11: [{
+          attachments: [],
+          category: 'Illegal Search',
+          coaccused: 8,
+          crid: '267098',
+          date: 'NOV 8',
+          finding: 'Not Sustained',
+          kind: 'CR',
+          outcome: 'No Action Taken',
+          unitDescription: 'Mobile Strike Force',
+          unitDisplay: ' ',
+          unitName: '153',
+          year: 2000,
+        }]
+      }
     };
     const stateData = {
       breadcrumb: {

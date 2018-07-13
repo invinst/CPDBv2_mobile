@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Info from 'components/trr-page/info';
+import Attachment from 'components/trr-page/attachment';
 
 
 describe('<Info />', function () {
@@ -17,7 +18,8 @@ describe('<Info />', function () {
       point: {
         lat: 1.2,
         lng: 2.3
-      }
+      },
+      trrId: 123,
     };
 
     const wrapper = shallow(<Info { ...info }/>);
@@ -29,7 +31,8 @@ describe('<Info />', function () {
       ['Escort Holds', 'Member Presence', 'Verbal Commands']
     );
 
-    wrapper.find('Attachment');
+    const attachmentSection = wrapper.find(Attachment);
+    attachmentSection.prop('trrId').should.equal(123);
 
     wrapper.find('.date-title').text().should.equal('DATE OF INCIDENT');;
     wrapper.find('.incident-date').text().should.equal('SEP 23, 2003');
