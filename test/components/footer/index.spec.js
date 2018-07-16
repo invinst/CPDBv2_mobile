@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { stub } from 'sinon';
+import Modal from 'react-modal';
 
 import * as intercomUtils from 'utils/intercom';
 import Footer from 'components/footer';
@@ -17,6 +18,7 @@ describe('<Footer />', () => {
     const wrapper = shallow(<Footer />);
     wrapper.find('.legal-item').simulate('click');
     wrapper.state('legalModalIsOpen').should.be.true();
+    wrapper.find(Modal).prop('isOpen').should.be.true();
   });
 
   it('should update state when close modal', () => {
