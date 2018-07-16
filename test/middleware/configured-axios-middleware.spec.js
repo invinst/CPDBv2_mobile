@@ -46,15 +46,17 @@ describe('configured-axios-middleware', function () {
   });
 
   describe('onError', () => {
-    it('should fire action with error', () => {
+    it('should fire action with error with response without message', function () {
       const error = {
         status: 400
       };
 
       onError({ action, next, error }).should.eql({
         type: getActionTypes(action)[2],
-        payload: new Error(getErrorMessage(requestUrl, error.status)),
-        error: true
+        payload: {
+          message: 'Request to /request-url failed with status code 400.'
+        },
+        statusCode: 400
       });
     });
 
@@ -64,8 +66,26 @@ describe('configured-axios-middleware', function () {
 
       onError({ action, next, error }).should.eql({
         type: getActionTypes(action)[2],
-        payload: error,
-        error: true
+        payload: {
+          message
+        },
+        statusCode: null
+      });
+    });
+
+    it('should fire action with error with message in response', function () {
+      const message = 'You\'ve entered an incorrect password.';
+      const error = {
+        status: 400,
+        data: { message }
+      };
+
+      onError({ action, next, error }).should.eql({
+        type: getActionTypes(action)[2],
+        payload: {
+          message
+        },
+        statusCode: 400
       });
     });
   });

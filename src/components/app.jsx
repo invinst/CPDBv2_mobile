@@ -1,10 +1,10 @@
 import React from 'react';
-
 import { Router, Route, IndexRoute } from 'react-router';
+import Modal from 'react-modal';
+import config from 'config';
 
 import AppHistory from 'utils/history';
 import constants from 'constants';
-import config from 'config';
 
 import MainPageContainer from 'containers/main-page-container';
 import AboutPageContainer from 'containers/about-page-container';
@@ -23,6 +23,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 
 window.Intercom('boot', { 'app_id': config.intercomAppId } );
+Modal.setAppElement('body');
 
 const App = React.createClass({
   render() {
