@@ -14,17 +14,17 @@ const officerCardTransform = officer => ({
 
 export const topOfficersByAllegationSelector = createSelector(
   state => state.landingPage.topOfficersByAllegation || [],
-  officers => take(officers, 10).map(officerCardTransform)
+  officers => take(officers, 20).map(officerCardTransform)
 );
 
 export const recentActivitiesSelector = createSelector(
   state => state.landingPage.recentActivities || [],
   //TODO: Below filter should be removed when Officer Pairing Card is implemented
-  officers => chain(officers).filter({ type: 'single_officer' }).take(10).map(officerCardTransform).value()
+  officers => chain(officers).filter({ type: 'single_officer' }).take(20).map(officerCardTransform).value()
 );
 
 export const newDocumentAllegationsSelector = createSelector(
-  state => take(state.landingPage.newDocumentAllegations, 10),
+  state => take(state.landingPage.newDocumentAllegations, 20),
   complaints => complaints.map(complaint => ({
     crid: complaint.crid,
     documentCount: complaint.num_recent_documents,
@@ -36,7 +36,7 @@ export const newDocumentAllegationsSelector = createSelector(
 );
 
 export const complaintSummariesSelector = createSelector(
-  state => take(state.landingPage.complaintSummaries, 10),
+  state => take(state.landingPage.complaintSummaries, 20),
   complaints => complaints.map(complaint => {
     const incidentDate = complaint.incident_date
       ? moment(complaint.incident_date).format(constants.SIMPLE_DATE_FORMAT).toUpperCase()
