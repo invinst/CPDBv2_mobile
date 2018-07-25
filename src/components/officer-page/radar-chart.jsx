@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { map, isEqual } from 'lodash';
+import { map, isEqual, filter } from 'lodash';
 import { scaleLinear } from 'd3-scale';
 import Modal from 'react-modal';
 
@@ -19,6 +19,8 @@ export default class AnimatedRadarChart extends Component {
     this.velocity = 0.1;
     this.timer = null;
 
+    this.animatedData = filter(props.percentileData, item => item.hasEnoughPercentile);
+
     this.openExplainer = this.openExplainer.bind(this);
     this.closeExplainer = this.closeExplainer.bind(this);
     this.animate = this.animate.bind(this);
@@ -27,6 +29,12 @@ export default class AnimatedRadarChart extends Component {
 
   componentDidMount() {
     this.startTimer();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!isEqual(this.props.percentileData, nextProps.percentileData)) {
+      this.animatedData = filter(nextProps.percentileData, item => item.hasEnoughPercentile);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -40,9 +48,7 @@ export default class AnimatedRadarChart extends Component {
   }
 
   animate() {
-    const { percentileData } = this.props;
-
-    const maxValue = percentileData.length - 1;
+    const maxValue = this.animatedData.length - 1;
     this.setState({
       transitionValue: Math.min(this.state.transitionValue + this.velocity, maxValue),
     });
@@ -52,7 +58,7 @@ export default class AnimatedRadarChart extends Component {
   }
 
   startTimer() {
-    if (this.props.percentileData && this.props.percentileData.length > 1 && !this.timer) {
+    if (this.animatedData && this.animatedData.length > 1 && !this.timer) {
       this.timer = setInterval(this.animate, this.interval);
     }
   }
@@ -64,25 +70,24 @@ export default class AnimatedRadarChart extends Component {
 
   getCurrentTransitionData() {
     const { transitionValue } = this.state;
-    const { percentileData } = this.props;
 
     // ensure at least 2 elements
-    if (percentileData.length < 2)
-      return percentileData[0];
+    if (this.animatedData.length < 2)
+      return this.animatedData[0];
 
-    const index = Math.min(Math.floor(transitionValue) + 1, percentileData.length - 1);
+    const index = Math.min(Math.floor(transitionValue) + 1, this.animatedData.length - 1);
 
-    const previousData = percentileData[index - 1].items;
+    const previousData = this.animatedData[index - 1].items;
 
     const color = scaleLinear()
       .domain([0, 1])
-      .range([percentileData[index - 1].visualTokenBackground, percentileData[index].visualTokenBackground]);
+      .range([this.animatedData[index - 1].visualTokenBackground, this.animatedData[index].visualTokenBackground]);
 
     const backgroundColor = color(transitionValue - (index - 1));
 
     return {
-      ...percentileData[index],
-      items: map(percentileData[index].items, (d, i) => ({
+      ...this.animatedData[index],
+      items: map(this.animatedData[index].items, (d, i) => ({
         ...d,
         value: (d.value - previousData[i].value) * (transitionValue - (index - 1)) + previousData[i].value,
       })),
@@ -117,7 +122,7 @@ export default class AnimatedRadarChart extends Component {
 
     const explainerModalStyles = {
       overlay: {
-        top: '21px',
+        top: '40px',
       },
       content: {
         top: 0,
@@ -136,7 +141,7 @@ export default class AnimatedRadarChart extends Component {
         <div className='radar-chart-container' onClick={ this.openExplainer }>
           <StaticRadarChart
             backgroundColor={ itemData.visualTokenBackground }
-            fadeOutLegend={ transitionValue >= (percentileData.length - 1) }
+            fadeOutLegend={ transitionValue >= (this.animatedData.length - 1) }
             data={ itemData.items }
             showSpineLine={ false }
             showGrid={ true }

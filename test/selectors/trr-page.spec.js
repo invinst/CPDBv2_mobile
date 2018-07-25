@@ -91,6 +91,7 @@ describe('trr-page selectors', () => {
             ],
             visualTokenBackground: '#e85050',
             textColor: '#231F20',
+            hasEnoughPercentile: true,
           },
         },
         info: {
