@@ -16,10 +16,12 @@ import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
 import BreadcrumbItemContainer from 'containers/breadcrumb-container';
 
+import 'swiper/dist/css/swiper.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
 import 'styles/fonts.sass';
 import 'styles/style.sass';
 import 'styles/helper.sass';
-import 'mapbox-gl/dist/mapbox-gl.css';
 
 
 window.Intercom('boot', { 'app_id': config.intercomAppId } );

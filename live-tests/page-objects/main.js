@@ -3,7 +3,7 @@ module.exports = {
     return this.api.globals.clientUrl;
   },
   elements: {
-    cpdbLogo: '.title',
+    title: '.site-title',
     searchLink: 'a[href="/search/"]'
   },
 
