@@ -34,6 +34,8 @@ jobs:
           keys:
             - pip-packages-{{ checksum "Pipfile.lock" }}
 
+      - run: pipenv install
+
       - save_cache:
           paths:
             - ~/.local/share/virtualenvs
