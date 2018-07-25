@@ -7,19 +7,15 @@ const args = require('minimist')(process.argv.slice(2));
 const allowedEnvs = ['dev', 'dist', 'test', 'live-test'];
 
 // Set the correct environment
-let env;
+let env = args.env || 'dev';
 
-if (process.env.NODE_ENV == 'live-test') {
+if (process.env.WEBPACK_ENV == 'live-test') {
   env = 'live-test';
-} else if (args._.length > 0 && args._.indexOf('start') !== -1) {
-  env = 'test';
-} else if (args.env) {
-  env = args.env;
-} else {
-  env = 'dev';
 }
 
-process.env.REACT_WEBPACK_ENV = env;
+if (!['production', 'staging'].includes(process.env.WEBPACK_ENV)) {
+  process.env.WEBPACK_ENV = env;
+}
 
 /**
  * Build the webpack configuration
