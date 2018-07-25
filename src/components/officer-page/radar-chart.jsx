@@ -33,7 +33,7 @@ export default class AnimatedRadarChart extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!isEqual(this.props.percentileData, nextProps.percentileData)) {
-      this.animatedData = filter(nextProps.percentileData, item => item => item.hasEnoughPercentile);
+      this.animatedData = filter(nextProps.percentileData, item => item.hasEnoughPercentile);
     }
   }
 

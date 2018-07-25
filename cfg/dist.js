@@ -2,6 +2,7 @@
 
 let path = require('path');
 let webpack = require('webpack');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 let baseConfig = require('./base');
 let defaultSettings = require('./defaults');
@@ -10,9 +11,13 @@ let defaultSettings = require('./defaults');
 let BowerWebpackPlugin = require('bower-webpack-plugin');
 
 let config = Object.assign({}, baseConfig, {
-  entry: path.join(__dirname, '../src/index'),
+  entry: './src/index',
+  output: {
+    path: path.join(__dirname, '/../dist/assets'),
+    filename: 'app.[hash].js',
+    publicPath: `.${defaultSettings.publicPath}`
+  },
   cache: false,
-  devtool: 'sourcemap',
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
@@ -24,7 +29,11 @@ let config = Object.assign({}, baseConfig, {
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      template: './src/index.html.template',
+      filename: '../index.html'
+    }),
   ],
   module: defaultSettings.getDefaultModules()
 });

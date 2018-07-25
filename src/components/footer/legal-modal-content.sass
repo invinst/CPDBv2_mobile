@@ -1,0 +1,51 @@
+@import 'variables'
+
+:local(.legal-modal-content)
+  display: flex
+  flex-direction: column
+  padding-bottom: 34px
+
+  .close-button-wrapper
+    width: 24px
+    height: 24px
+    border-radius: 50%
+    font-size: 24px
+    line-height: 22px
+    font-weight: 100
+    background-color: $wild-sand
+    align-self: flex-end
+    margin: 11px
+    padding-top: 0
+    padding-left: 6px
+
+  .close-button
+    color: $soft-gray
+
+  .modal-title
+    font-size: 14px
+    color: $thunder
+    margin: 0 16px
+
+  .legal-content
+    font-size: 14px
+    color: $boulder
+    margin: 16px 16px 0 16px
+    font-weight: 300
+    line-height: 1.4em
+
+    p
+      margin-bottom: 16px
+
+    .legal-link
+      color: $accent-blue
+      text-decoration: none
+
+  .confirm-button
+    background-color: $gandalf-gray
+    border-radius: 2px
+    color: $white
+    padding: 4px 15px
+    align-self: center
+    display: inline-flex
+    font-size: 14px
+    font-weight: 300
