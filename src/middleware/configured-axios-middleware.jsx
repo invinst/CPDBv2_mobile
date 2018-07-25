@@ -1,10 +1,18 @@
 import { createAction } from 'redux-actions';
 import axiosMiddleware, { getActionTypes } from 'redux-axios-middleware';
-
 import axiosClient from 'utils/axios-client';
+import { get } from 'lodash';
 
 
-export const getErrorMessage = (url, status) => (`Request to ${url} failed with status code ${status}.`);
+export const getErrorMessage = (action, error) => {
+  if (get(error, 'data.message')) {
+    return error.data.message;
+  } else if (get(error, 'status')) {
+    return `Request to ${action.payload.request.url} failed with status code ${error.status}.`;
+  } else {
+    return error.message;
+  }
+};
 
 export const onSuccess = ({ action, next, response }, options) => {
   const nextActionCreator = createAction(
@@ -18,14 +26,14 @@ export const onSuccess = ({ action, next, response }, options) => {
 };
 
 export const onError = ({ action, next, error }, options) => {
-  let errorObject;
-  if (error instanceof Error) {
-    errorObject = error;
-  } else {
-    errorObject = new Error(getErrorMessage(action.payload.request.url, error.status));
-  }
-
-  const nextAction = createAction(getActionTypes(action, options)[2])(errorObject);
+  const nextAction = {
+    type: getActionTypes(action, options)[2],
+    statusCode: get(error, 'status', null),
+    payload: {
+      message: getErrorMessage(action, error),
+      ...get(error, 'data', {})
+    }
+  };
   next(nextAction);
   return nextAction;
 };

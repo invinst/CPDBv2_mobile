@@ -1,0 +1,41 @@
+@import 'variables'
+
+:local(.footer)
+  .footer-items
+    display: flex
+    padding: 11px 8px
+
+    .item
+      margin-right: 24px
+      color: $gandalf-gray
+      font-size: 14px
+      text-decoration: none
+
+  .invist-logo-link
+    padding: 11px 8px 6px 0
+    background-color: $alto-solid
+    display: block
+
+    .invist-logo
+      height: 22px
+      line-height: 22px
+      display: inline-block
+
+:local(.legal-modal)
+  position: absolute
+  top: 16px
+  left: 16px
+  right: 16px
+  border-radius: 2px
+  border: solid 1px $alto
+  background-color: $white
+  outline: none
+
+:local(.overlay-legal-modal)
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background-color: transparent
+  z-index: 1001

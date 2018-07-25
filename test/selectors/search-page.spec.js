@@ -2,10 +2,11 @@ import constants from 'constants';
 
 import {
   officersSelector,
-  faqsSelector,
   suggestedSelector,
   recentSelector,
   unitsSelector,
+  crsSelector,
+  trrsSelector
 } from 'selectors/search-page';
 
 describe('search-page selectors', () => {
@@ -21,19 +22,52 @@ describe('search-page selectors', () => {
       officersSelector(state).should.be.eql({ data: [] });
     });
 
+    it('should return default values when the data is not available', function () {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            OFFICER: {
+              isShowingAll: true,
+              data: [
+                {
+                  'id': 1,
+                  'name': 'Name',
+                  'badge': null,
+                  'percentile': null
+                }
+              ]
+            }
+          }
+        }
+      };
+
+      officersSelector(state).should.be.eql({
+        isShowingAll: true,
+        data: [{
+          id: 1,
+          name: 'Name',
+          badge: '',
+          percentile: {},
+          url: `${constants.OFFICER_PATH}1/`,
+        }]
+      });
+    });
+
     it('should return officer data when there are officers', () => {
       const isShowingAll = true;
       const officer = {
         'id': 1,
         'name': 'Name',
-        'extra_info': 'Extra',
-        'url': 'url'
+        'badge': '12314',
+        'percentile': null
       };
+
       const expectedOfficer = {
         id: 1,
         name: 'Name',
-        extraInfo: 'Extra',
-        url: `${constants.OFFICER_PATH}1/`
+        badge: 'Badge #12314',
+        url: `${constants.OFFICER_PATH}1/`,
+        percentile: {}
       };
 
       const state = {
@@ -50,42 +84,6 @@ describe('search-page selectors', () => {
       officersSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
         data: [expectedOfficer]
-      });
-    });
-  });
-
-  describe('faqsSelector', () => {
-    it('should return empty when there is no faq', () => {
-      const state = {
-        suggestionApp: {
-          suggestions: {
-          }
-        }
-      };
-
-      faqsSelector(state).should.be.eql({ data: [] });
-    });
-
-    it('should return officer data when there are faqs', () => {
-      const isShowingAll = true;
-      const data = [{
-        'any': 'any'
-      }];
-
-      const state = {
-        suggestionApp: {
-          suggestions: {
-            FAQ: {
-              isShowingAll: isShowingAll,
-              data: data
-            }
-          }
-        }
-      };
-
-      faqsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: data
       });
     });
   });
@@ -181,4 +179,91 @@ describe('search-page selectors', () => {
     });
   });
 
+  describe('crsSelector', () => {
+    it('should return empty when there are no units', () => {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+          }
+        }
+      };
+
+      crsSelector(state).should.be.eql({ data: [] });
+    });
+
+    it('should return cr data when there are crs', () => {
+      const isShowingAll = true;
+      const crs = [
+        {
+          'crid': '1'
+        },
+      ];
+      const expectedCrs = [
+        {
+          'crid': '1',
+          'url': '/complaint/1/'
+        },
+      ];
+
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            CR: {
+              isShowingAll: isShowingAll,
+              data: crs
+            }
+          }
+        }
+      };
+
+      crsSelector(state).should.be.eql({
+        isShowingAll: isShowingAll,
+        data: expectedCrs
+      });
+    });
+  });
+
+  describe('trrsSelector', () => {
+    it('should return empty when there are no trss', () => {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+          }
+        }
+      };
+
+      trrsSelector(state).should.be.eql({ data: [] });
+    });
+
+    it('should return trr data when there are trrs', () => {
+      const isShowingAll = true;
+      const trrs = [
+        {
+          'id': '1'
+        },
+      ];
+      const expectedTrrs = [
+        {
+          'id': '1',
+          'url': '/trr/1/'
+        },
+      ];
+
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            TRR: {
+              isShowingAll: isShowingAll,
+              data: trrs
+            }
+          }
+        }
+      };
+
+      trrsSelector(state).should.be.eql({
+        isShowingAll: isShowingAll,
+        data: expectedTrrs
+      });
+    });
+  });
 });

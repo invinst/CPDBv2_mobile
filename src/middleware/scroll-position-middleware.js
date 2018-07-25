@@ -1,5 +1,5 @@
 import { ROUTE_CHANGED } from 'actions/navigation';
-import { instantScrollToTop } from 'utils/NavigationUtil';
+import { instantScrollToTop } from 'utils/navigation-util';
 
 // Disable scroll restoration feature from Chrome which breaks our "scroll to
 // top on initial page load" behavior

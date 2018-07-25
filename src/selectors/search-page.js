@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
+
 import constants from 'constants';
+import { extractEnoughPercentile } from 'selectors/common/percentile';
 
 
 export const officersSelector = createSelector(
@@ -14,23 +16,10 @@ export const officersSelector = createSelector(
       data: officers.data.map((officer) => ({
         id: officer.id,
         name: officer.name,
-        extraInfo: officer.extra_info,
+        badge: officer.badge ? `Badge #${officer.badge}` : '',
+        percentile: extractEnoughPercentile(officer.percentile) || {},
         url: `${constants.OFFICER_PATH}${officer.id}/`
       }))
-    };
-  }
-);
-
-export const faqsSelector = createSelector(
-  (state) => state.suggestionApp.suggestions.FAQ,
-  (faqs) => {
-    if (!faqs) {
-      return { data: [] };
-    }
-
-    return {
-      isShowingAll: faqs.isShowingAll,
-      data: faqs.data
     };
   }
 );
@@ -50,6 +39,40 @@ export const unitsSelector = createSelector(
         url: unit.url,
         memberCount: unit.member_count,
         activeMemberCount: unit.active_member_count,
+      }))
+    };
+  }
+);
+
+export const crsSelector = createSelector(
+  (state) => state.suggestionApp.suggestions.CR,
+  (crs) => {
+    if (!crs) {
+      return { data: [] };
+    }
+
+    return {
+      isShowingAll: crs.isShowingAll,
+      data: crs.data.map((cr) => ({
+        crid: cr.crid,
+        url: `${constants.COMPLAINT_PATH}${cr.crid}/`
+      }))
+    };
+  }
+);
+
+export const trrsSelector = createSelector(
+  (state) => state.suggestionApp.suggestions.TRR,
+  (trrs) => {
+    if (!trrs) {
+      return { data: [] };
+    }
+
+    return {
+      isShowingAll: trrs.isShowingAll,
+      data: trrs.data.map((trr) => ({
+        id: trr.id,
+        url: `${constants.TRR_PATH}${trr.id}/`
       }))
     };
   }

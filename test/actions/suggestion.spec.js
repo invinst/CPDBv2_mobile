@@ -6,7 +6,7 @@ import {
   SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_INPUT_CHANGED, SEARCH_RESET, SEARCH_SAVE_TO_RECENT
 } from 'actions/suggestion';
 import constants from 'constants';
-import { v2Url } from 'utils/UrlUtil';
+import { v2Url } from 'utils/url-util';
 
 
 describe('suggestions actions', function () {
