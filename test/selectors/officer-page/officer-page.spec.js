@@ -58,7 +58,8 @@ describe('officer-page selectors', () => {
         'officerId': 1,
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
-        'year': 2006
+        'year': 2006,
+        hasEnoughPercentile: true,
       }, {
         'items': [{
           'axis': 'Use of Force Reports',
@@ -73,7 +74,8 @@ describe('officer-page selectors', () => {
         'officerId': 1,
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
-        'year': 2007
+        'year': 2007,
+        hasEnoughPercentile: true,
       }]);
     });
   });

@@ -11,6 +11,16 @@ import RadarExplainer from 'components/officer-page/radar-chart/explainer';
 
 describe('AnimatedRadarChart component', function () {
   const data = [{
+    year: 2014,
+    items: [
+      { axis: 'Use of Force Reports', value: NaN },
+      { axis: 'Civilian Complaints', value: 0 },
+      { axis: 'Internal Complaints', value: 10 },
+    ],
+    textColor: 'black',
+    visualTokenBackground: 'white',
+    hasEnoughPercentile: false,
+  }, {
     year: 2015,
     items: [
       { axis: 'Use of Force Reports', value: 20 },
@@ -18,7 +28,8 @@ describe('AnimatedRadarChart component', function () {
       { axis: 'Internal Complaints', value: 10 },
     ],
     textColor: 'black',
-    visualTokenBackground: 'white'
+    visualTokenBackground: 'white',
+    hasEnoughPercentile: true,
   }, {
     year: 2016,
     items: [
@@ -27,7 +38,8 @@ describe('AnimatedRadarChart component', function () {
       { axis: 'Internal Complaints', value: 60 },
     ],
     textColor: 'black',
-    visualTokenBackground: 'white'
+    visualTokenBackground: 'white',
+    hasEnoughPercentile: true,
   }, {
     year: 2017,
     items: [
@@ -36,11 +48,39 @@ describe('AnimatedRadarChart component', function () {
       { axis: 'Internal Complaints', value: 60 },
     ],
     textColor: 'black',
-    visualTokenBackground: 'white'
+    visualTokenBackground: 'white',
+    hasEnoughPercentile: true,
   }];
 
   it('should display nothing if no data', function () {
     should(shallow(<AnimatedRadarChart/>).type()).be.null();
+  });
+
+  it('should display nothing if missing percentile for all years', function () {
+    const missingPercentileData = [{
+      year: 2015,
+      items: [
+        { axis: 'Use of Force Reports', value: NaN },
+        { axis: 'Civilian Complaints', value: 0 },
+        { axis: 'Internal Complaints', value: 10 },
+      ],
+      textColor: 'black',
+      visualTokenBackground: 'white',
+      hasEnoughPercentile: false,
+    }, {
+      year: 2016,
+      items: [
+        { axis: 'Use of Force Reports', value: NaN },
+        { axis: 'Civilian Complaints', value: 50 },
+        { axis: 'Internal Complaints', value: 60 },
+      ],
+      textColor: 'black',
+      visualTokenBackground: 'white',
+      hasEnoughPercentile: false,
+    }];
+    const wrapper = shallow(<AnimatedRadarChart percentileData={ missingPercentileData }/>);
+
+    should(wrapper.type()).be.null();
   });
 
   it('should render if data provided', function () {

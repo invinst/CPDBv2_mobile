@@ -122,6 +122,7 @@ RadarChart.defaultProps = {
   showSpineLine: true,
   showSpineLinePoint: false,
   axisTitleFontWeight: 400,
+  backgroundColor: '#767676'
 };
 
 RadarChart.propTypes = {
