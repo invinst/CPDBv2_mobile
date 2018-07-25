@@ -363,12 +363,13 @@ describe('OfficerPage test', function () {
       const descriptionContent = triangleExplainer.section.explainerContent.section.descriptionContent;
 
       descriptionContent.expect.element('@content').text.to.be.equal(
-        'The triangle shows the percentile rank for this officer in each of three types of data: ' +
-        'complaints from civilians, complaints from other police officers, and self-reported uses of force.'
+        'The corners of the triangle show the percentile score for this officer in each of three types of data: ' +
+        'complaints from civilians, complaints from other officers, and self-reported uses of force.'
       );
       descriptionContent.expect.element('@subContent').text.to.be.equal(
-        'If one corner of the inner triangle is close to reaching the outer triangle,' +
-        'then this officer is named in a relatively high rate of incidents of that type.'
+        'If one corner of the black inner triangle is close to reaching the outer triangle, ' +
+        'then this officer is named in a relatively high rate ' +
+        'of incidents of that type compared with other officers.'
       );
     });
 
@@ -386,13 +387,14 @@ describe('OfficerPage test', function () {
       const descriptionContent = scaleExplainer.section.explainerContent.section.descriptionContent;
 
       descriptionContent.expect.element('@content').text.to.be.equal(
-        'The scale is based on this officer’s percentile rank. ' +
-        'This is relative to all other officers for whom data is available during the same years.'
+        'If an officer’s percentile rank for civilian complaints is 99% ' +
+        'then this means that they were accused in more civilian complaints per year than 99% of other officers.'
       );
       descriptionContent.expect.element('@subContent').text.to.be.equal(
-        'If an officer’s percentile rank for civilian complaints is 99% ' +
-        'then this means that they were accused in more civilian complaints per year than 99 % ' +
-        'of other officers for whom data is available during the same years.'
+        'Civilian and internal complaint percentiles are based on data that is only available since 2000, ' +
+        'use of force data is only available since 2004. ' +
+        'The overall allegation count percentiles displayed on the officer profile page ' +
+        'are calculated using data that reaches back to 1988.'
       );
     });
 

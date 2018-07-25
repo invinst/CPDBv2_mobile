@@ -60,12 +60,13 @@ describe('TriangleExplainer component', function () {
     const descriptionContent = layout.find(DescriptionContent);
 
     descriptionContent.prop('content').should.equal(
-      'The triangle shows the percentile rank for this officer in each of three types of data: ' +
-      'complaints from civilians, complaints from other police officers, and self-reported uses of force.'
+      'The corners of the triangle show the percentile score for this officer in each of three types of data: ' +
+      'complaints from civilians, complaints from other officers, and self-reported uses of force.'
     );
     descriptionContent.prop('subContent').should.equal(
-      'If one corner of the inner triangle is close to reaching the outer triangle,' +
-      'then this officer is named in a relatively high rate of incidents of that type.'
+      'If one corner of the black inner triangle is close to reaching the outer triangle, ' +
+      'then this officer is named in a relatively high rate ' +
+      'of incidents of that type compared with other officers.'
     );
   });
 });
