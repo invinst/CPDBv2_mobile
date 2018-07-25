@@ -6,6 +6,7 @@ import { scrollToElement, goUp } from 'utils/navigation-util';
 import SearchCategory from './search-category';
 import SearchNavbar from './search-navbar';
 import ClearableInput from './clearable-input';
+import { showIntercomLauncher } from 'utils/intercom';
 import style from './search-page.sass';
 
 
@@ -16,11 +17,16 @@ export default class SearchPage extends Component {
     } = this.props;
     pushBreadcrumbs({ location, routes, params });
     this.searchInput.inputElement.focus();
+    showIntercomLauncher(false);
   }
 
   componentWillReceiveProps(nextProps) {
     const { location, params, routes, pushBreadcrumbs } = nextProps;
     pushBreadcrumbs({ location, params, routes });
+  }
+
+  componentWillUnmount() {
+    showIntercomLauncher(true);
   }
 
   onInputChange(event) {

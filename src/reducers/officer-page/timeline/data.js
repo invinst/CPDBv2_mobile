@@ -7,8 +7,9 @@ import {
 
 
 export default handleActions({
-  [OFFICER_TIMELINE_ITEMS_REQUEST_SUCCESS]: (state, action) => {
-    return action.payload;
-  },
+  [OFFICER_TIMELINE_ITEMS_REQUEST_SUCCESS]: (state, action) => ({
+    ...state,
+    [action.meta.id]: action.payload
+  }),
   [OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE]: (state, action) => state
-}, []);
+}, {});

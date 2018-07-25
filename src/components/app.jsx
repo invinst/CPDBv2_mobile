@@ -1,6 +1,7 @@
 import React from 'react';
-
 import { Router, Route, IndexRoute } from 'react-router';
+import Modal from 'react-modal';
+import config from 'config';
 
 import AppHistory from 'utils/history';
 import constants from 'constants';
@@ -15,11 +16,16 @@ import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
 import BreadcrumbItemContainer from 'containers/breadcrumb-container';
 
+import 'swiper/dist/css/swiper.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
+
 import 'styles/fonts.sass';
 import 'styles/style.sass';
 import 'styles/helper.sass';
-import 'mapbox-gl/dist/mapbox-gl.css';
+
+
+window.Intercom('boot', { 'app_id': config.intercomAppId } );
+Modal.setAppElement('body');
 
 const App = React.createClass({
   render() {
