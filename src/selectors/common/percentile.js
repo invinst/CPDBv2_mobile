@@ -2,8 +2,17 @@ import { getVisualTokenOIGBackground } from 'utils/visual-token';
 import { isNil, every } from 'lodash';
 
 
+export const extractEnoughPercentile = (percentile) => {
+  if (!percentile)
+    return null;
+  const rawPercentile = extractPercentile(percentile);
+  return rawPercentile.hasEnoughPercentile ? rawPercentile : null;
+};
+
 export const extractPercentile = (percentile) => {
-  const hasPercentile = percentile && every(
+  if (!percentile)
+    return null;
+  const hasEnoughPercentile = percentile && every(
     [
       'percentile_allegation_civilian',
       'percentile_allegation_internal',
@@ -11,23 +20,31 @@ export const extractPercentile = (percentile) => {
     ],
     (field) => !isNil(percentile[field])
   );
-
-  if (!hasPercentile) return null;
-
-  const { backgroundColor, textColor } = getVisualTokenOIGBackground(
-    parseFloat(percentile['percentile_allegation_civilian']),
-    parseFloat(percentile['percentile_allegation_internal']),
-    parseFloat(percentile['percentile_trr'])
-  );
-  return {
+  const civilianAllegationPercentile = parseFloat(percentile['percentile_allegation_civilian']);
+  const internalAllegationPercentile = parseFloat(percentile['percentile_allegation_internal']);
+  const trrPercentile = parseFloat(percentile['percentile_trr']);
+  const basePercentile = {
     officerId: percentile['officer_id'],
     year: percentile['year'],
     items: [
-      { axis: 'Use of Force Reports', value: parseFloat(percentile['percentile_trr']) },
-      { axis: 'Internal Allegations', value: parseFloat(percentile['percentile_allegation_internal']) },
-      { axis: 'Civilian Allegations', value: parseFloat(percentile['percentile_allegation_civilian']) }
+      { axis: 'Use of Force Reports', value: trrPercentile },
+      { axis: 'Internal Allegations', value: internalAllegationPercentile },
+      { axis: 'Civilian Allegations', value: civilianAllegationPercentile }
     ],
-    visualTokenBackground: backgroundColor,
-    textColor,
+    hasEnoughPercentile
   };
+  if (hasEnoughPercentile) {
+    const { backgroundColor, textColor } = getVisualTokenOIGBackground(
+      civilianAllegationPercentile,
+      internalAllegationPercentile,
+      trrPercentile
+    );
+    return {
+      ...basePercentile,
+      visualTokenBackground: backgroundColor,
+      textColor,
+    };
+  } else {
+    return basePercentile;
+  }
 };

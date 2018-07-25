@@ -3,13 +3,13 @@ import { find, get, compact, take, chain } from 'lodash';
 import moment from 'moment';
 
 import constants from 'constants';
-import { extractPercentile } from 'selectors/common/percentile';
+import { extractEnoughPercentile } from 'selectors/common/percentile';
 import documentUrl from 'selectors/common/document-url';
 import { convertContentStateToEditorState } from 'utils/draftjs';
 
 const officerCardTransform = officer => ({
   ...officer,
-  percentile: extractPercentile(officer.percentile) || {}
+  percentile: extractEnoughPercentile(officer.percentile) || {}
 });
 
 export const topOfficersByAllegationSelector = createSelector(
