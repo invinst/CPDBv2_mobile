@@ -20,13 +20,11 @@ $suggested-type-width: 114px
 
   .body
     .row
-      display: block
+      display: flex
       text-decoration: none
       color: inherit
       padding: 11px 8px 11px 0
-      margin-right: 8px
       border-bottom: 2px solid $alto-solid
-      line-height: 18px
 
       &:last-child
         border-bottom: 0
@@ -35,15 +33,8 @@ $suggested-type-width: 114px
         color: $dusty-gray
 
       .suggested-type
-        display: block
-        float: left
         color: $greyish
         width: $suggested-type-width
-
-      .suggested-title
-        display: block
-        float: left
-        width: calc(100% - #{$suggested-type-width})
 
     .all
       height: 44px
