@@ -10,9 +10,9 @@ describe('<CRSearchResult />', () => {
 
   it('should render crs correctly', () => {
     const crs = [
-      {
-        crid: '1',
-      }
+      { crid: '1' },
+      { crid: '2' },
+      { crid: '3' },
     ];
 
     const wrapper = shallow(
@@ -23,6 +23,7 @@ describe('<CRSearchResult />', () => {
     );
 
     wrapper.should.be.ok();
+    wrapper.find(Link).should.have.length(3);
   });
 
   it('should call saveToRecent when click on item', function () {

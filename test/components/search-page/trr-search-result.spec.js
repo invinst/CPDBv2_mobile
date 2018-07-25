@@ -10,9 +10,9 @@ describe('<TRRSearchResult />', () => {
 
   it('should render trrs correctly', () => {
     const trrs = [
-      {
-        id: '1',
-      }
+      { id: '1' },
+      { id: '2' },
+      { id: '3' },
     ];
 
     const wrapper = shallow(
@@ -23,6 +23,7 @@ describe('<TRRSearchResult />', () => {
     );
 
     wrapper.should.be.ok();
+    wrapper.find(Link).should.have.length(3);
   });
 
   it('should call saveToRecent when click on item', function () {
