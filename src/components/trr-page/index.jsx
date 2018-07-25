@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import { StickyContainer, Sticky } from 'react-sticky';
 
 import style from './trr-page.sass';
-import NavbarContainer from 'containers/navbar-container';
-import constants from 'constants';
 import BottomPadding from 'components/shared/bottom-padding';
+import Header from 'components/shared/header';
 import Officer from 'components/trr-page/officer';
 import Info from 'components/trr-page/info';
 
@@ -18,22 +18,22 @@ export default class TRRPage extends Component {
   }
 
   render() {
-    const { trr } = this.props;
+    const { trr, trrId } = this.props;
 
     if (!trr) {
       return null;
     }
 
     return (
-      <div className={ style.trrPage }>
-        <NavbarContainer backLink={ constants.SEARCH_PATH } />
+      <StickyContainer className={ style.trrPage }>
+        <Sticky><Header /></Sticky>
         <h4 className='trr-header'>{ trr.category }</h4>
         <div className='trr-page-body'>
           <Officer { ...trr.officer }/>
-          <Info { ...trr.info }/>
+          <Info { ...trr.info } trrId={ trrId }/>
         </div>
         <BottomPadding />
-      </div>
+      </StickyContainer>
     );
   }
 }

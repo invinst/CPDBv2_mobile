@@ -1,27 +1,45 @@
 @import 'variables'
 
 :local(.landing-page)
-  padding: 0 8px
+  background-color: $wild-sand
 
   .full-height-wrapper
     position: relative
-    height: 84vh
+    height: 440px
+    background-color: $white
+    padding: 0 8px
 
-  .title
-    margin-top: 4px
-    font-size: 12px
+  .site-title
+    margin-top: 16px
+    font-size: 14px
     color: $thunder
+    font-weight: 400
+
+  .site-desc
+    margin-top: 4px
+    font-size: 14px
+    color: $gandalf-gray
     font-weight: 400
 
   .search-bar
     text-decoration: none
-    color: $greyish
+    color: $boulder
     background-color: $wild-sand
-    font-size: 13px
-    font-weight: 300
-    padding: 8px
+    font-size: 14px
+    line-height: 14px
+    font-weight: 400
+    padding: 11px 14px 11px 8px
     position: absolute
-    left: 0
-    right: 0
+    left: 8px
+    right: 8px
     top: 50%
     transform: translateY(-50%)
+    border-radius: 2px
+    border: 1px solid $alto-solid
+    overflow: hidden
+    white-space: nowrap
+    vertical-align: middle
+
+    img
+      margin-right: 8px
+      vertical-align: middle

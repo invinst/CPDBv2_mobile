@@ -1,0 +1,27 @@
+@import 'variables'
+
+:local(.explainer-nav)
+  line-height: 18px
+  background-color: $wild-sand
+
+  .text
+    display: inline-block
+    color: $accent-blue
+    width: 80px
+    padding: 10px 0
+
+  .arrow
+    vertical-align: top
+    width: 8px
+    height: 13px
+    margin: 22px $side-margin
+
+  .left-nav
+    .arrow
+      transform: rotate(180deg)
+
+  .right-nav
+    float: right
+
+    .text
+      text-align: right

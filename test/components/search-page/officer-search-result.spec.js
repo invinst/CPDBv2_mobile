@@ -1,57 +1,26 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import OfficerSearchResult from 'components/search-page/officer-search-result';
+import OfficerItem from 'components/search-page/officer-item';
+
 
 describe('<OfficerSearchResult />', () => {
-
-  it('should render officers correctly', () => {
-    const officers = [
-      {
-        name: 'John',
-        url: '/officer/1',
-        extraInfo: 'Badge #1'
-      },
-      {
-        name: 'Snow',
-        url: '/officer/2',
-        extraInfo: 'Badge #2'
-      }
-    ];
-
-    const rows = [
-      {
-        label: 'John',
-        sublabel: 'Badge #1',
-        url: '/officer/1',
-        onClick: (() => {}).bind(undefined, {
-          type: 'officer',
-          title: 'John',
-          url: '/officer/1'
-        })
-      },
-      {
-        label: 'Snow',
-        sublabel: 'Badge #2',
-        url: '/officer/2',
-        onClick: (() => {}).bind(undefined, {
-          type: 'officer',
-          title: 'Snow',
-          url: '/officer/2'
-        })
-      }
-    ];
-
-    const wrapper = mount(
+  it('should be renderable', () => {
+    shallow(
       <OfficerSearchResult
-        items={ officers }
-        saveToRecent={ () => {} }
+        items={ [{ id: 1 }] }
+      />
+    ).should.be.ok();
+  });
+
+  it('should render list of officer item', () => {
+    const wrapper = shallow(
+      <OfficerSearchResult
+        items={ [{ id: 1 }, { id: 2 }] }
       />
     );
 
-    const twoLineList = wrapper.find('TwoLineList');
-
-    twoLineList.exists().should.be.true();
-    twoLineList.prop('rows').should.be.eql(rows);
+    wrapper.find(OfficerItem).should.have.length(2);
   });
 });

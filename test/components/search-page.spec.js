@@ -5,14 +5,23 @@ import { stub, spy } from 'sinon';
 import ReactHeight from 'react-height';
 
 import * as NavigationUtil from 'utils/navigation-util';
+import * as IntercomUtils from 'utils/intercom';
 import SearchPage from 'components/search-page';
 import SearchCategory from 'components/search-page/search-category';
 import constants from 'constants';
 
 describe('<SearchPage />', function () {
+  beforeEach(function () {
+    stub(IntercomUtils, 'showIntercomLauncher');
+  });
+
+  afterEach(function () {
+    IntercomUtils.showIntercomLauncher.restore();
+  });
+
   it('should be renderable', () => {
     const wrapper = shallow(
-      <SearchPage query={ '' } />
+      <SearchPage query={ '' }/>
     );
     wrapper.should.be.ok();
   });
@@ -131,6 +140,31 @@ describe('<SearchPage />', function () {
       instance.onInputChange({ currentTarget: { value: 'f' } });
       spySuggestTerm.called.should.be.false();
     });
+  });
+
+  it('should call pushBreadcrumb when mounted and updating', function () {
+    const pushBreadcrumbsSpy = spy();
+    const wrapper = mount(
+      <SearchPage
+        pushBreadcrumbs={ pushBreadcrumbsSpy }
+        location='location'
+        routes='routes'
+        params='params'
+      />
+    );
+    pushBreadcrumbsSpy.calledWith({
+      location: 'location',
+      routes: 'routes',
+      params: 'params'
+    }).should.be.true();
+
+    pushBreadcrumbsSpy.reset();
+    wrapper.setProps({ location: 'changed' });
+    pushBreadcrumbsSpy.calledWith({
+      location: 'changed',
+      routes: 'routes',
+      params: 'params'
+    }).should.be.true();
   });
 
   it('should focus the input element when mounted', () => {
@@ -370,6 +404,21 @@ describe('<SearchPage />', function () {
 
       const searchCategories = wrapper.find('SearchCategory');
       searchCategories.should.have.length(1);
+    });
+  });
+
+  describe('Intercom', function () {
+    it('should hide intercom launcher when mounted', function () {
+      mount(<SearchPage />);
+
+      IntercomUtils.showIntercomLauncher.calledWith(false).should.be.true();
+    });
+
+    it('should show intercom launcher again when unmounted', function () {
+      const wrapper = mount(<SearchPage />);
+      wrapper.unmount();
+
+      IntercomUtils.showIntercomLauncher.calledWith(true).should.be.true();
     });
   });
 });

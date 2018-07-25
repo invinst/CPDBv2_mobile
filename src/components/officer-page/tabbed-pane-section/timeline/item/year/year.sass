@@ -1,0 +1,33 @@
+@import 'variables'
+@import '../base'
+
+$has-data-height: 64px
+$no-data-height: 32px
+
+:local(.wrapper)
+  @extend %base-wrapper
+  background-color: $snow-color
+  vertical-align: top
+
+  .content
+    @extend %base-content
+    height: $has-data-height
+    line-height: $has-data-height - 1px
+
+    &.no-border-bottom
+      border-bottom: none
+
+    .date
+      text-align: right
+      font-size: 18px
+      color: $thunder
+      font-weight: 400
+      padding-top: 10px
+
+      &.no-data
+        font-size: 14px
+        padding-top: 1px
+
+    &.no-data
+      height: $no-data-height
+      line-height: $no-data-height - 1px
