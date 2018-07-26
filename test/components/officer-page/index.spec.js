@@ -288,7 +288,6 @@ describe('<OfficerPage />', function () {
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
         year: 2006,
-        hasEnoughPercentile: true,
       }, {
         items: [{
           axis: 'Use of Force Reports',
@@ -304,7 +303,6 @@ describe('<OfficerPage />', function () {
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
         year: 2007,
-        hasEnoughPercentile: true,
       }]);
     });
 

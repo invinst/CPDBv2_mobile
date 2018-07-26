@@ -15,8 +15,8 @@ class Officer extends Component {
     } = this.props;
 
     const visualTokenConfig = percentile ? {
-      backgroundColor: percentile.visualTokenBackground,
-      data: percentile.items,
+      backgroundColor: percentile && percentile.visualTokenBackground,
+      data: percentile && percentile.items,
     } : {};
 
     return (

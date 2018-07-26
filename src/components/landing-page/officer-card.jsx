@@ -8,6 +8,7 @@ import style from './officer-card.sass';
 
 
 const OfficerCard = ({ officer }) => {
+  const { percentile } = officer;
   return (
     <Link
       to={ `${constants.OFFICER_PATH}${officer.id}/` }
@@ -15,8 +16,8 @@ const OfficerCard = ({ officer }) => {
       <div className='radar-chart'>
         <RadarChart
           radius={ 170 }
-          backgroundColor={ officer.percentile.visualTokenBackground }
-          data={ officer.percentile.items }
+          backgroundColor={ percentile && percentile.visualTokenBackground }
+          data={ percentile && percentile.items }
         />
       </div>
       <div className='officer-info'>

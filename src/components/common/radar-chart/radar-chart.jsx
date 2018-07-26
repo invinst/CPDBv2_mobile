@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react';
+
 import { scaleLinear } from 'd3-scale';
-import { map } from 'lodash';
+import { curveLinearClosed, radialLine } from 'd3-shape';
+import { map, range } from 'lodash';
 
 import style from './radar-chart.sass';
-import RadarAxis from './radar-chart/radar-axis';
-import RadarArea from './radar-chart/radar-area';
-import RadarSpineLine from './radar-chart/radar-spine-line';
-import RadarGrid from './radar-chart/radar-grid';
+import RadarAxis from './radar-axis';
+import RadarArea from './radar-area';
+import RadarSpineLine from './radar-spine-line';
+import RadarGrid from './radar-grid';
 
 
 export default class RadarChart extends Component {
@@ -16,19 +18,31 @@ export default class RadarChart extends Component {
     this.strokeWidth = 0.5;
   }
 
-  _embedComputedPosition(data) {
-    const rScale = scaleLinear()
-      .range([0, this.props.radius - this.strokeWidth])
-      .domain([0, this.maxValue]);
+  getNumMetrics() {
+    const { data, numMetrics } = this.props;
+    return data && data.length ? data.length : numMetrics;
+  }
 
-    const angleSlice = Math.PI * 2 / data.length;
+  rScale(value) {
+    const { radius } = this.props;
+    return scaleLinear().range([0, radius - this.strokeWidth]).domain([0, this.maxValue])(value);
+  }
+
+  angle(i) {
+    const angleSlice = Math.PI * 2 / this.getNumMetrics();
+    return i * angleSlice - Math.PI;
+  }
+
+  embedComputedPosition() {
+    const { data } = this.props;
+    const angleSlice = Math.PI * 2 / this.getNumMetrics();
 
     return map(data, (d, i) => {
-      const r = rScale(d.value);
+      const r = this.rScale(d.value);
       return {
         ...d,
         r: r,
-        angle: i * angleSlice - Math.PI,
+        angle: this.angle(i),
         x: r * Math.cos(angleSlice * i + Math.PI / 2),
         y: r * Math.sin(angleSlice * i + Math.PI / 2)
       };
@@ -53,26 +67,21 @@ export default class RadarChart extends Component {
       showSpineLine,
       showSpineLinePoint,
       yAxisCenter,
-      areaColor
+      areaColor,
+      boundaryAreaColor
     } = this.props;
 
-    if (!data || !data.length || isNaN(data[0].value))
-      return (
-        <svg
-          className={ style.radarChart }
-          width='100%'
-          height='100%'
-          style={ { backgroundColor } }
-        />
-      );
-
-    const transformData = this._embedComputedPosition(data);
+    const transformData = this.embedComputedPosition(data);
+    const boundaryLine = radialLine()
+      .curve(curveLinearClosed)
+      .radius(this.rScale(this.maxValue))
+      .angle(i => this.angle(i));
+    const boundaryPathD = boundaryLine(range(this.getNumMetrics()));
     const xCenter = Math.floor(width / 2);
     const yCenter = typeof yAxisCenter !== 'undefined' ? yAxisCenter : Math.floor(height * 0.34);
 
     return (
       <svg
-        onClick={ this.props.onClick }
         className={ style.radarChart }
         style={ { backgroundColor } }
         width='100%'
@@ -80,23 +89,34 @@ export default class RadarChart extends Component {
         viewBox={ `0 0 ${width} ${height}` }
       >
         <g style={ { transform: `translate(${xCenter}px, ${yCenter}px)` } }>
-          <RadarAxis
-            data={ data }
-            radius={ radius }
-            maxValue={ this.maxValue }
-            showAxisTitle={ showAxisTitle }
-            showAxisValue={ showAxisValue }
-            textColor={ textColor }
-            strokeWidth={ this.strokeWidth }
-            axisTitleFontSize={ axisTitleFontSize }
-            axisTitleFontWeight={ axisTitleFontWeight }
+          {
+            data && (showAxisTitle || showAxisValue) && (
+              <RadarAxis
+                data={ data }
+                textColor={ textColor }
+                radius={ radius }
+                axisTitleFontSize={ axisTitleFontSize }
+                axisTitleFontWeight={ axisTitleFontWeight }
+                showAxisTitle={ showAxisTitle }
+                showAxisValue={ showAxisValue }
+              />
+            )
+          }
+          <path
+            className='radar-boundary-area'
+            d={ boundaryPathD }
+            style={ { fill: boundaryAreaColor ? boundaryAreaColor :'white' } }
           />
-          <RadarArea areaColor={ areaColor } rPoints={ transformData } strokeWidth={ this.strokeWidth }/>
+          <RadarArea
+            areaColor={ areaColor }
+            rPoints={ transformData }
+            strokeWidth={ this.strokeWidth }
+          />
 
           { showGrid && (
             <RadarGrid
               opacity={ gridOpacity }
-              numAxis={ data.length }
+              numAxis={ this.getNumMetrics() }
               radius={ radius }
               maxValue={ this.maxValue }
               strokeColor={ gridColor || backgroundColor }
@@ -122,7 +142,8 @@ RadarChart.defaultProps = {
   showSpineLine: true,
   showSpineLinePoint: false,
   axisTitleFontWeight: 400,
-  backgroundColor: '#767676'
+  backgroundColor: '#767676',
+  numMetrics: 3,
 };
 
 RadarChart.propTypes = {
@@ -130,7 +151,6 @@ RadarChart.propTypes = {
   height: PropTypes.number,
   radius: PropTypes.number,
   yAxisCenter: PropTypes.number,
-  onClick: PropTypes.func,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       axis: PropTypes.string.isRequired,
@@ -148,6 +168,8 @@ RadarChart.propTypes = {
   gridColor: PropTypes.string,
   showSpineLine: PropTypes.bool,
   showSpineLinePoint: PropTypes.bool,
-  areaColor: PropTypes.string
+  areaColor: PropTypes.string,
+  boundaryAreaColor: PropTypes.string,
+  numMetrics: PropTypes.number
 };
 

@@ -2,72 +2,87 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import RadarAxis from 'components/common/radar-chart/radar-axis';
-import RadarAxisText from 'components/common/radar-chart/radar-axis/radar-axis-text';
 
 
 describe('RadarAxis component', function () {
-  const data = [{
-    axis: 'Use of Force Reports',
-    value: 22.2,
-  }, {
-    axis: 'Civilian Complaints',
-    value: 44.8,
-  }, {
-    axis: 'Internal Complaints',
-    value: 99.28,
-  }];
-
-  it('should be renderable', () => {
-    shallow(<RadarAxis />).should.be.ok();
-  });
-
-  it('should hide axis titles and values as default', function () {
+  it('should draw 3 lines if have 3 axis titles', () => {
+    const data = [
+      {
+        axis: 'a',
+        value: 10,
+      },
+      {
+        axis: 'b',
+        value: 50,
+      },
+      {
+        axis: 'c',
+        value: 20,
+      }
+    ];
     const wrapper = shallow(
-      <RadarAxis
-        maxValue={ 100 }
-        radius={ 145 }
-        data={ data }
-      />
+      <RadarAxis radius={ 100 } data={ data } showAxisTitle={ true }/>
     );
 
-    wrapper.text().should.not.containEql('Use of Force');
-    wrapper.text().should.not.containEql('Civilian');
-    wrapper.text().should.not.containEql('Internal');
-    wrapper.text().should.not.containEql('Complaints');
+    const titles = wrapper.find('.radar-axis-title');
 
-    const radarAxisText = wrapper.find(RadarAxisText);
-    radarAxisText.exists().should.be.false();
-
-    wrapper.find('.radar-boundary-area').exists().should.be.true();
+    titles.at(0).text().should.be.eql('a');
+    titles.at(1).text().should.be.eql('b');
+    titles.at(2).text().should.be.eql('c');
   });
 
-  it('should render pass showAxisValue to RadarAxisText', function () {
+  it('should show the last word in a new line if the title contains 2 words or more', function () {
+    const data = [
+      {
+        axis: 'Title is 1',
+        value: 10,
+      },
+      {
+        axis: 'b',
+        value: 50,
+      },
+      {
+        axis: 'c',
+        value: 20,
+      }
+    ];
     const wrapper = shallow(
-      <RadarAxis
-        maxValue={ 100 }
-        radius={ 145 }
-        data={ data }
-        showAxisValue={ true }
-      />
+      <RadarAxis radius={ 100 } data={ data } showAxisTitle={ true }/>
     );
 
-    const radarAxisText = wrapper.find(RadarAxisText);
-    radarAxisText.prop('showAxisTitle').should.be.false();
-    radarAxisText.prop('showAxisValue').should.be.true();
+    const axisTexts = wrapper.find('text');
+
+    const lines = axisTexts.at(0).find('tspan');
+    lines.should.have.length(2);
+    lines.at(0).text().should.be.eql('Title is');
+    lines.at(1).text().should.be.eql('1');
+
+    axisTexts.at(1).find('tspan').text().should.equal('b');
   });
 
-  it('should render showAxisTitle to RadarAxisText', function () {
+  it('should show axis values if showAxisValue is true', function () {
+    const data = [
+      {
+        axis: 'Title is 1',
+        value: 10,
+      },
+      {
+        axis: 'b',
+        value: 50,
+      },
+      {
+        axis: 'c',
+        value: 20,
+      }
+    ];
     const wrapper = shallow(
-      <RadarAxis
-        maxValue={ 100 }
-        radius={ 145 }
-        data={ data }
-        showAxisTitle={ true }
-      />
+      <RadarAxis radius={ 100 } data={ data } showAxisValue={ true }/>
     );
 
-    const radarAxisText = wrapper.find(RadarAxisText);
-    radarAxisText.prop('showAxisTitle').should.be.true();
-    radarAxisText.prop('showAxisValue').should.be.false();
+    const values = wrapper.find('.radar-axis-value');
+    values.should.have.length(3);
+    values.at(0).text().should.be.eql('10');
+    values.at(1).text().should.be.eql('50');
+    values.at(2).text().should.be.eql('20');
   });
 });

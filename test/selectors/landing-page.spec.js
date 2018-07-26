@@ -24,7 +24,7 @@ describe('landing page selectors', function () {
       }
     }).should.deepEqual([{
       id: 123,
-      percentile: {}
+      percentile: null
     }]);
   });
 
@@ -50,7 +50,7 @@ describe('landing page selectors', function () {
       }
     }).should.deepEqual([{
       id: 124,
-      percentile: {},
+      percentile: null,
       type: 'single_officer'
     }]);
   });

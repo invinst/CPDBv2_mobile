@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { get, compact, startCase, toLower, upperFirst } from 'lodash';
 import { getCurrentAge, getCareerDuration, formatDate } from 'utils/date';
-import { extractEnoughPercentile } from 'selectors/common/percentile';
+import { extractPercentile } from 'selectors/common/percentile';
 
 
 const getTRR = (state, props) => state.trrPage.trrs[props.params.trrId];
@@ -28,7 +28,7 @@ const officerTransform = (officer) => {
     unitDescription: get(officer.unit, 'description'),
     demographic: `${demographic}.`,
     careerDuration: getCareerDuration(officer['appointed_date'], officer['date_of_resignation']),
-    percentile: extractEnoughPercentile(officer),
+    percentile: extractPercentile(officer),
   };
 };
 

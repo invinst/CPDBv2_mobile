@@ -78,7 +78,7 @@ module.exports = {
 
   sections: {
     animatedRadarChart: {
-      selector: '//div[contains(@class, "animated--radar-chart")]',
+      selector: '//div[contains(@class, "animated-radar-chart")]',
       locateStrategy: 'xpath',
       elements: {
         radarChartContainer: '.radar-chart-container',
@@ -89,7 +89,7 @@ module.exports = {
           locateStrategy: 'xpath',
           elements: {
             radarAxis: {
-              selector: '//*[name()="g" and contains(@class, "radar-axis")]',
+              selector: '//*[name()="text" and contains(@class, "radar-axis")]',
               locateStrategy: 'xpath'
             },
             radarArea: {
@@ -100,6 +100,13 @@ module.exports = {
           },
         },
       }
+    },
+    noDataRadarChart: {
+      selector: '//div[contains(@class, "no-data-radar-chart")]',
+      locateStrategy: 'xpath',
+      elements: {
+        noDataText: '.no-data-text',
+      },
     },
     triangleExplainer: descriptionExplainer,
     scaleExplainer: descriptionExplainer,
