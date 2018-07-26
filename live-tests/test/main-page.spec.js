@@ -52,4 +52,31 @@ describe('MainPageTest', function () {
       .click('@searchLink')
       .assert.urlEquals(searchPage.url());
   });
+
+  it('should show footer link and invist logo', function () {
+    const footer = this.mainPage.section.footer;
+
+    footer.expect.element('@github').text.to.equal('Github');
+    footer.expect.element('@github').to.have.attribute('href').equals('https://github.com/invinst/');
+
+    footer.expect.element('@roadmap').text.to.equal('Roadmap');
+    footer.expect.element('@roadmap').to.have.attribute('href').equals('http://roadmap.cpdp.co/');
+
+    footer.expect.element('@logo').to.have.attribute('href').equals('https://invisible.institute/introduction');
+  });
+
+  it('should open and close legal modal', function () {
+    const footer = this.mainPage.section.footer;
+    const legalModal = this.mainPage.section.legalModal;
+
+    footer.click('@legal');
+    legalModal.expect.element('@content').to.be.visible;
+    legalModal.click('@closeButton');
+    legalModal.expect.element('@content').to.not.be.present;
+
+    footer.click('@legal');
+    legalModal.expect.element('@content').to.be.visible;
+    legalModal.click('@understandButton');
+    legalModal.expect.element('@content').to.not.be.present;
+  });
 });

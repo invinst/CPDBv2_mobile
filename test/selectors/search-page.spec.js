@@ -5,6 +5,8 @@ import {
   suggestedSelector,
   recentSelector,
   unitsSelector,
+  crsSelector,
+  trrsSelector
 } from 'selectors/search-page';
 
 describe('search-page selectors', () => {
@@ -177,4 +179,91 @@ describe('search-page selectors', () => {
     });
   });
 
+  describe('crsSelector', () => {
+    it('should return empty when there are no units', () => {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+          }
+        }
+      };
+
+      crsSelector(state).should.be.eql({ data: [] });
+    });
+
+    it('should return cr data when there are crs', () => {
+      const isShowingAll = true;
+      const crs = [
+        {
+          'crid': '1'
+        },
+      ];
+      const expectedCrs = [
+        {
+          'crid': '1',
+          'url': '/complaint/1/'
+        },
+      ];
+
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            CR: {
+              isShowingAll: isShowingAll,
+              data: crs
+            }
+          }
+        }
+      };
+
+      crsSelector(state).should.be.eql({
+        isShowingAll: isShowingAll,
+        data: expectedCrs
+      });
+    });
+  });
+
+  describe('trrsSelector', () => {
+    it('should return empty when there are no trss', () => {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+          }
+        }
+      };
+
+      trrsSelector(state).should.be.eql({ data: [] });
+    });
+
+    it('should return trr data when there are trrs', () => {
+      const isShowingAll = true;
+      const trrs = [
+        {
+          'id': '1'
+        },
+      ];
+      const expectedTrrs = [
+        {
+          'id': '1',
+          'url': '/trr/1/'
+        },
+      ];
+
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            TRR: {
+              isShowingAll: isShowingAll,
+              data: trrs
+            }
+          }
+        }
+      };
+
+      trrsSelector(state).should.be.eql({
+        isShowingAll: isShowingAll,
+        data: expectedTrrs
+      });
+    });
+  });
 });

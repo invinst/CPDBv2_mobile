@@ -5,6 +5,9 @@ import constants from 'constants';
 import { getCurrentScrollPosition, instantScrollToTop } from 'utils/navigation-util';
 import OfficerSearchResult from './officer-search-result';
 import SuggestedSearchResult from './suggested-search-result';
+import CRSearchResult from './cr-search-result';
+import TRRSearchResult from './trr-search-result';
+
 import style from './search-category.sass';
 
 
@@ -14,6 +17,8 @@ const fixedHeaderHeight = (
 
 const resultComponentMappings = {
   officers: OfficerSearchResult,
+  crs: CRSearchResult,
+  trrs: TRRSearchResult,
   recent: SuggestedSearchResult,
   suggested: SuggestedSearchResult
 };

@@ -60,7 +60,7 @@ module.exports = {
       constants: srcPath + 'constants/',
       styles: srcPath + 'styles/',
       img: srcPath + 'img/',
-      config: srcPath + 'config/' + process.env.REACT_WEBPACK_ENV
+      config: srcPath + `config/${process.env.WEBPACK_ENV}`
     }
   },
   plugins: [

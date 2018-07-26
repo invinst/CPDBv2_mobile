@@ -249,16 +249,25 @@ export default {
   SEARCH_CATEGORIES: [
     {
       name: 'Officers',
+      filter: 'Officers',
       id: 'officers',
       path: 'OFFICER'
     },
     {
-      name: 'CRs',
+      name: 'COMPLAINT RECORDS',
+      filter: 'CR',
       id: 'crs',
-      path: 'CRS'
+      path: 'CR'
+    },
+    {
+      name: 'TACTICAL RESPONSE REPORTS',
+      filter: 'TRR',
+      id: 'trrs',
+      path: 'TRR'
     },
     {
       name: 'Units',
+      filter: 'Units',
       id: 'units',
       path: 'UNIT'
     }
@@ -270,4 +279,7 @@ export default {
   BOTTOM_PADDING: 133,
   TOP_MARGIN: 58,
   NEW_DIVIDER_WEIGHT: 2,
+  INVINST_GITHUB_URL: 'https://github.com/invinst/',
+  QA_URL: 'http://how.cpdp.works/',
+  ROADMAP_URL: 'http://roadmap.cpdp.co/',
 };

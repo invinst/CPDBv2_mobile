@@ -47,7 +47,7 @@ export default class SearchNavbar extends Component {
           <button key={ index }
             onClick={ () => { scrollToCategory(category.id); updateActiveCategory(category.id); } }
             className={ classNames }>
-            { category.name }
+            { category.filter }
           </button>
         );
       }
