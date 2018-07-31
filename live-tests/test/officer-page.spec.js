@@ -240,10 +240,9 @@ describe('OfficerPage test', function () {
 
     it('should render officer no data radar chart', function (client) {
       const officerPage = this.officerPage;
-      const noDataRadarChart = officerPage.section.noDataRadarChart;
+      const radarChart = officerPage.section.animatedRadarChart;
 
-      officerPage.expect.section('@noDataRadarChart').to.be.present;
-      noDataRadarChart.expect.element('@noDataText').text.to.equal(
+      radarChart.expect.element('@noDataText').text.to.equal(
         'There is not enough data to construct a radar graph for this officer.'
       );
     });

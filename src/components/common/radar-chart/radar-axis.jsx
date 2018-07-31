@@ -15,10 +15,10 @@ export default class RadarAxis extends React.Component {
     };
 
     const words = title.split(' ');
-    const firstPhase = words.slice(0, -1).join(' ');
-    const secondPhase = words[words.length - 1];
-    const phases = showAxisTitle ? firstPhase ? [firstPhase, secondPhase] : [secondPhase] : [];
-    const axisTitles = phases.map((phase, idx) => (
+    const firstPhrase = words.slice(0, -1).join(' ');
+    const secondPhrase = words[words.length - 1];
+    const phrases = showAxisTitle ? firstPhrase ? [firstPhrase, secondPhrase] : [secondPhrase] : [];
+    const axisTitles = phrases.map((phrase, idx) => (
       <tspan
         key={ `text-${title}-${idx}` }
         className='radar-axis-title'
@@ -27,7 +27,7 @@ export default class RadarAxis extends React.Component {
         y={ yText }
         dy={ `${extraPadding + idx * 1.25}em` }
       >
-        { phase }
+        { phrase }
       </tspan>
     ));
     const valueTitle = showAxisValue ? (
@@ -37,7 +37,7 @@ export default class RadarAxis extends React.Component {
         style={ textStyle }
         x={ xText }
         y={ yText }
-        dy={ `${extraPadding + phases.length * 1.3}em` }
+        dy={ `${extraPadding + phrases.length * 1.3}em` }
       >
         { roundedPercentile(value) }
       </tspan>

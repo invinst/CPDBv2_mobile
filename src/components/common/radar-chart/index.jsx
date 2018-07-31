@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
 import RadarChart from './radar-chart';
-import NoDataRadarChart from './no-data-radar-chart';
 import { hasEnoughRadarChartData } from 'utils/visual-token';
 
 
@@ -9,8 +8,18 @@ export default class StaticRadarChart extends Component {
   render() {
     const { data, width, height, radius, yAxisCenter } = this.props;
     if (!hasEnoughRadarChartData(data)) {
-      const noDataProps = { width, height, radius, yAxisCenter };
-      return <NoDataRadarChart { ...noDataProps }/>;
+      return (
+        <RadarChart
+          numMetrics={ 3 }
+          width={ width }
+          height={ height }
+          radius={ radius }
+          yAxisCenter={ yAxisCenter }
+          showGrid={ true }
+          gridColor='#8f8f8f'
+          boundaryAreaColor='#adadad'
+        />
+      );
     }
 
     return <RadarChart{ ...this.props }/>;

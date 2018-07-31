@@ -23,6 +23,14 @@ describe('officer-page selectors', () => {
                 percentiles: [
                   {
                     'officer_id': 1,
+                    year: 2005,
+                    'percentile_allegation_civilian': null,
+                    'percentile_allegation_internal': null,
+                    'percentile_trr': null,
+                    'percentile_allegation': '41.001',
+                  },
+                  {
+                    'officer_id': 1,
                     year: 2006,
                     'percentile_allegation_civilian': '66.251',
                     'percentile_allegation_internal': '0.023',

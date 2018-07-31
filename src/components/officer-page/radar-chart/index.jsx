@@ -4,7 +4,6 @@ import { scaleLinear } from 'd3-scale';
 import Modal from 'react-modal';
 
 import StaticRadarChart from 'components/common/radar-chart';
-import NoDataRadarChart from 'components/common/radar-chart/no-data-radar-chart';
 import RadarExplainer from './explainer';
 import style from './radar-chart.sass';
 import { hasEnoughRadarChartData } from 'utils/visual-token';
@@ -170,11 +169,19 @@ export default class AnimatedRadarChart extends Component {
     } else {
       return (
         <div className={ style.animatedRadarChart }>
-          <NoDataRadarChart
+          <StaticRadarChart
+            numMetrics={ 3 }
             radius={ 121 }
             yAxisCenter={ 133 }
-            noDataText={ noDataText }
+            showGrid={ true }
+            gridColor='#8f8f8f'
+            boundaryAreaColor='#adadad'
           />
+          {
+            noDataText ? (
+              <div className='no-data-text'>{ noDataText }</div>
+            ) : null
+          }
         </div>
       );
     }

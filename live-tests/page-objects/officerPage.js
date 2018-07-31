@@ -82,6 +82,7 @@ module.exports = {
       locateStrategy: 'xpath',
       elements: {
         radarChartContainer: '.radar-chart-container',
+        noDataText: '.no-data-text',
       },
       sections: {
         radarChart: {
@@ -100,13 +101,6 @@ module.exports = {
           },
         },
       }
-    },
-    noDataRadarChart: {
-      selector: '//div[contains(@class, "no-data-radar-chart")]',
-      locateStrategy: 'xpath',
-      elements: {
-        noDataText: '.no-data-text',
-      },
     },
     triangleExplainer: descriptionExplainer,
     scaleExplainer: descriptionExplainer,

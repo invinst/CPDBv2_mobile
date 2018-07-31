@@ -1,9 +1,11 @@
 @import 'variables'
 
+$no-data-text-width: 252
 
 :local(.animated-radar-chart)
   width: 100%
   height: 240px
+  position: relative
 
   .radar-chart-container
     position: relative
@@ -28,3 +30,15 @@
         line-height: 24px
         text-align: center
         font-weight: 500
+
+  .no-data-text
+    background-color: transparent
+    color: $alto-solid
+    position: absolute
+    left: calc(50% - #{$no-data-text-width / 2}px)
+    bottom: 35px
+    font-size: 14px
+    font-weight: 300
+    text-align: center
+    width: #{$no-data-text-width}px
+

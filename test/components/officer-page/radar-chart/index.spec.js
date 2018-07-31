@@ -7,7 +7,6 @@ import Modal from 'react-modal';
 import AnimatedRadarChart from 'components/officer-page/radar-chart';
 import StaticRadarChart from 'components/common/radar-chart';
 import RadarExplainer from 'components/officer-page/radar-chart/explainer';
-import NoDataRadarChart from 'components/common/radar-chart/no-data-radar-chart';
 
 
 describe('AnimatedRadarChart component', function () {
@@ -49,11 +48,13 @@ describe('AnimatedRadarChart component', function () {
     visualTokenBackground: 'white',
   }];
 
-  it('should render NoDataRadarChart if no data', function () {
-    shallow(<AnimatedRadarChart/>).find(NoDataRadarChart).exists().should.be.true();
+  it('should render no data RadarChart if no data', function () {
+    const wrapper = shallow(<AnimatedRadarChart/>);
+    const noDataRadarChart = wrapper.find(StaticRadarChart);
+    should(noDataRadarChart.prop('data')).be.undefined();
   });
 
-  it('should render NoDataRadarChart if some data is missing', function () {
+  it('should render no data RadarChart if some data is missing', function () {
     const missingPercentileData = [{
       year: 2015,
       items: [
@@ -75,7 +76,8 @@ describe('AnimatedRadarChart component', function () {
     }];
 
     const wrapper = shallow(<AnimatedRadarChart percentileData={ missingPercentileData }/>);
-    wrapper.find(NoDataRadarChart).exists().should.be.true();
+    const noDataRadarChart = wrapper.find(StaticRadarChart);
+    should(noDataRadarChart.prop('data')).be.undefined();
   });
 
   it('should render if data provided', function () {

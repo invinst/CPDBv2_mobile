@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import { scaleLinear } from 'd3-scale';
 import { curveLinearClosed, radialLine } from 'd3-shape';
-import { map, range } from 'lodash';
+import { map, range, isEmpty } from 'lodash';
 
 import style from './radar-chart.sass';
 import RadarAxis from './radar-axis';
@@ -90,7 +90,7 @@ export default class RadarChart extends Component {
       >
         <g style={ { transform: `translate(${xCenter}px, ${yCenter}px)` } }>
           {
-            data && (showAxisTitle || showAxisValue) && (
+            !isEmpty(data) && (showAxisTitle || showAxisValue) && (
               <RadarAxis
                 data={ data }
                 textColor={ textColor }

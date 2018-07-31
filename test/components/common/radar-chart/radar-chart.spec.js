@@ -44,6 +44,9 @@ describe('RadarChart component', function () {
 
     wrapper = shallow(<RadarChart data={ data } showAxisValue={ true }/>);
     wrapper.find(RadarAxis).exists().should.be.true();
+
+    wrapper = shallow(<RadarChart data={ [] } showAxisTitle={ true } showAxisValue={ true }/>);
+    wrapper.find(RadarAxis).exists().should.be.false();
   });
 
   it('should render grid if showGrid is true', function () {

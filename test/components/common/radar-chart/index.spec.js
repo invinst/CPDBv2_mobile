@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import should from 'should';
 
 import StaticRadarChart from 'components/common/radar-chart';
 import RadarChart from 'components/common/radar-chart/radar-chart';
-import NoDataRadarChart from 'components/common/radar-chart/no-data-radar-chart';
 
 describe('StaticRadarChart component', function () {
   it('should be renderable', () => {
@@ -35,7 +35,7 @@ describe('StaticRadarChart component', function () {
     radarChart.prop('data').should.equal(props.data);
   });
 
-  it('should be able to render NoDataRadarChart', () => {
+  it('should be able to render no data radar chart', () => {
     const missingData = [
       {
         axis: 'A',
@@ -59,9 +59,7 @@ describe('StaticRadarChart component', function () {
     };
 
     const wrapper = shallow(<StaticRadarChart { ...props }/>);
-    const noDataRadarChart = wrapper.find(NoDataRadarChart);
-    noDataRadarChart.prop('width').should.equal(props.width);
-    noDataRadarChart.prop('height').should.equal(props.height);
-    noDataRadarChart.prop('radius').should.equal(props.radius);
+    const noDataRadarChart = wrapper.find(RadarChart);
+    should(noDataRadarChart.prop('data')).be.undefined();
   });
 });
