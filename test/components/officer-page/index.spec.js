@@ -19,14 +19,6 @@ import TimeLine from 'components/officer-page/tabbed-pane-section/timeline';
 
 
 const mockStore = configureStore();
-const store = mockStore({
-  suggestionApp: {
-    query: ''
-  },
-  breadcrumb: {
-    breadcrumbs: []
-  }
-});
 
 describe('<OfficerPage />', function () {
   beforeEach(function () {
@@ -84,6 +76,10 @@ describe('<OfficerPage />', function () {
   });
 
   it('should be tracked by Google Analytics when mounted', function () {
+    const store = mockStore({
+      suggestionApp: { query: '' },
+      breadcrumb: { breadcrumbs: [] }
+    });
     mount(
       <Provider store={ store }>
         <OfficerPage loading={ false } found={ false } getOfficerSummary={ noop } fetchOfficer={ noop }/>

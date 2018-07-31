@@ -224,7 +224,60 @@ const mockTimeline = [
 const mockOfficerPageCms = {
   fields: [
     {
-      name: 'no_data_explain_text',
+      name: 'triangle_description',
+      type: 'rich_text',
+      value: {
+        entityMap: {},
+        blocks: [{
+          data: {},
+          depth: 0,
+          entityRanges: [],
+          inlineStyleRanges: [],
+          key: '2ff83',
+          text: 'The corners of the triangle show the percentile score for this officer ' +
+            'in each of three types of data: complaints from civilians, complaints from other officers, ' +
+            'and self-reported uses of force.',
+          type: 'unstyled'
+        }]
+      },
+    },
+    {
+      name: 'triangle_sub_description',
+      type: 'rich_text',
+      value: {
+        entityMap: {},
+        blocks: [{
+          data: {},
+          depth: 0,
+          entityRanges: [],
+          inlineStyleRanges: [],
+          key: '2ff84',
+          text: 'If one corner of the black inner triangle is close to reaching the outer triangle, ' +
+            'then this officer is named in a relatively high rate ' +
+            'of incidents of that type compared with other officers.',
+          type: 'unstyled'
+        }]
+      },
+    },
+    {
+      name: 'scale_description',
+      type: 'rich_text',
+      value: {
+        entityMap: {},
+        blocks: [{
+          data: {},
+          depth: 0,
+          entityRanges: [],
+          inlineStyleRanges: [],
+          key: '2ff85',
+          text: 'If an officer’s percentile rank for civilian complaints is 99% ' +
+            'then this means that they were accused in more civilian complaints per year than 99% of other officers.',
+          type: 'unstyled'
+        }]
+      },
+    },
+    {
+      name: 'scale_sub_description',
       type: 'rich_text',
       value: {
         entityMap: {},
@@ -234,10 +287,29 @@ const mockOfficerPageCms = {
           entityRanges: [],
           inlineStyleRanges: [],
           key: '2ff82',
+          text: 'Civilian and internal complaint percentiles are based on data that is only available since 2000, ' +
+            'use of force data is only available since 2004. ' +
+            'The overall allegation count percentiles displayed on the officer profile page ' +
+            'are calculated using data that reaches back to 1988.',
+          type: 'unstyled'
+        }]
+      },
+    },
+    {
+      name: 'no_data_explain_text',
+      type: 'rich_text',
+      value: {
+        entityMap: {},
+        blocks: [{
+          data: {},
+          depth: 0,
+          entityRanges: [],
+          inlineStyleRanges: [],
+          key: '2ff86',
           text: 'There is not enough data to construct a radar graph for this officer.',
           type: 'unstyled'
         }]
-      }
+      },
     }
   ]
 };

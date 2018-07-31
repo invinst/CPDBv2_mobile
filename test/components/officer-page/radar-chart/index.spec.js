@@ -1,4 +1,6 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import should from 'should';
 import { mount, shallow, ReactWrapper } from 'enzyme';
 import { useFakeTimers, spy } from 'sinon';
@@ -48,6 +50,13 @@ describe('AnimatedRadarChart component', function () {
     textColor: 'black',
     visualTokenBackground: 'white',
   }];
+
+  const mockStore = configureStore();
+  const store = mockStore({
+    officerPage: {
+      cms: [{ type: 'rich_text', name: 'triangle_description' }]
+    }
+  });
 
   it('should render no data RadarChart if no data', function () {
     const wrapper = shallow(<AnimatedRadarChart/>);
@@ -100,7 +109,9 @@ describe('AnimatedRadarChart component', function () {
 
   it('should open explainer when click on radar chart', function () {
     const wrapper = mount(
-      <AnimatedRadarChart percentileData={ data }/>
+      <Provider store={ store }>
+        <AnimatedRadarChart percentileData={ data }/>
+      </Provider>
     );
     wrapper.find('.explainer-open-button').exists().should.be.true();
 
@@ -163,9 +174,14 @@ describe('AnimatedRadarChart component', function () {
     });
 
     it('should start to animate after closing explainer', function () {
-      const wrapper = mount(<AnimatedRadarChart percentileData={ data }/>);
-      const instance = wrapper.instance();
-      const startAnimation = spy(instance, 'startAnimation');
+      let animatedRadarChart = null;
+
+      const wrapper = mount(
+        <Provider store={ store }>
+          <AnimatedRadarChart ref={ (c) => {animatedRadarChart = c;} } percentileData={ data }/>
+        </Provider>
+      );
+      const startAnimation = spy(animatedRadarChart, 'startAnimation');
 
       wrapper.find('.radar-chart-container').simulate('click');
 

@@ -6,7 +6,10 @@ import DescriptionContent from './description-content';
 
 export default class ScaleExplainer extends Component {
   render() {
-    const { leftNavHandler, rightNavHandler, closeExplainer, radarChartData } = this.props;
+    const {
+      leftNavHandler, rightNavHandler, closeExplainer, radarChartData,
+      descriptionCMSContent, subDescriptionCMSContent
+    } = this.props;
     const { items } = radarChartData;
 
     const scaleConfig = {
@@ -24,18 +27,7 @@ export default class ScaleExplainer extends Component {
       areaColor: '#767676'
     };
     const content = (
-      <DescriptionContent
-        content={
-          'If an officer’s percentile rank for civilian complaints is 99% ' +
-          'then this means that they were accused in more civilian complaints per year than 99% of other officers.'
-        }
-        subContent={
-          'Civilian and internal complaint percentiles are based on data that is only available since 2000, ' +
-          'use of force data is only available since 2004. ' +
-          'The overall allegation count percentiles displayed on the officer profile page ' +
-          'are calculated using data that reaches back to 1988.'
-        }
-      />
+      <DescriptionContent content={ descriptionCMSContent } subContent={ subDescriptionCMSContent }/>
     );
 
     return (
@@ -58,4 +50,6 @@ ScaleExplainer.propTypes = {
   closeExplainer: PropTypes.func,
   leftNavHandler: PropTypes.func,
   rightNavHandler: PropTypes.func,
+  descriptionCMSContent: PropTypes.object,
+  subDescriptionCMSContent: PropTypes.object,
 };

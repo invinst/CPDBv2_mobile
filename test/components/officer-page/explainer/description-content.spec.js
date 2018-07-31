@@ -1,19 +1,24 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { spy } from 'sinon';
 
 import DescriptionContent from 'components/officer-page/radar-chart/explainer/description-content';
+import CMSContent from 'components/landing-page/cms-content';
 
 
 describe('DescriptionContent component', function () {
   it('should render content and subContent', function () {
+    const contentSpy = spy();
+    const subContentSpy = spy();
     const wrapper = shallow(
       <DescriptionContent
-        content='some content'
-        subContent='some sub content'
+        content={ contentSpy }
+        subContent={ subContentSpy }
       />
     );
+    const cmsContents = wrapper.find(CMSContent);
 
-    wrapper.find('.content').text().should.equal('some content');
-    wrapper.find('.sub-content').text().should.equal('some sub content');
+    cmsContents.at(0).prop('content').should.equal(contentSpy);
+    cmsContents.at(1).prop('content').should.equal(subContentSpy);
   });
 });
