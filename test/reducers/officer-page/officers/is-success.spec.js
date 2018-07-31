@@ -2,7 +2,7 @@ import {
   OFFICER_REQUEST_START,
   OFFICER_REQUEST_SUCCESS,
   OFFICER_REQUEST_FAILURE
-} from 'actions/officer';
+} from 'actions/officer-page';
 import isSuccess from 'reducers/officer-page/officers/is-success';
 
 

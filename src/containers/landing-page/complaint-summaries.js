@@ -2,12 +2,13 @@ import { connect } from 'react-redux';
 
 import ComplaintSummaries from 'components/landing-page/complaint-summaries';
 import { requestComplaintSummaries } from 'actions/landing-page';
-import { complaintSummariesSelector, cmsSelector } from 'selectors/landing-page';
+import { complaintSummariesSelector } from 'selectors/landing-page';
+import { cmsSelector } from 'selectors/common/cms';
 
 const mapStateToProps = state => ({
   complaintSummaries: complaintSummariesSelector(state),
-  description: cmsSelector('carousel_complaint_desc')(state),
-  title: cmsSelector('carousel_complaint_title')(state)
+  description: cmsSelector(state, 'landingPage', 'carousel_complaint_desc'),
+  title: cmsSelector(state, 'landingPage', 'carousel_complaint_title')
 });
 
 const mapDispatchToProps = {

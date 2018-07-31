@@ -3,6 +3,7 @@ import should from 'should';
 import { mount, shallow, ReactWrapper } from 'enzyme';
 import { useFakeTimers, spy } from 'sinon';
 import Modal from 'react-modal';
+import { EditorState } from 'draft-js';
 
 import AnimatedRadarChart from 'components/officer-page/radar-chart';
 import StaticRadarChart from 'components/common/radar-chart';
@@ -75,9 +76,15 @@ describe('AnimatedRadarChart component', function () {
       visualTokenBackground: 'white',
     }];
 
-    const wrapper = shallow(<AnimatedRadarChart percentileData={ missingPercentileData }/>);
+    const wrapper = shallow(
+      <AnimatedRadarChart
+        percentileData={ missingPercentileData }
+        noDataCMSContent={ EditorState.createEmpty() }/>
+    );
     const noDataRadarChart = wrapper.find(StaticRadarChart);
     should(noDataRadarChart.prop('data')).be.undefined();
+
+    wrapper.find('.no-data-text').exists().should.be.true();
   });
 
   it('should render if data provided', function () {
@@ -229,7 +236,7 @@ describe('AnimatedRadarChart component', function () {
 
       clock.tick(250);
       instance.state.transitionValue.should.eql(1);
-      
+
       clock.tick(500);
       instance.state.transitionValue.should.eql(1);
     });

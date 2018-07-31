@@ -233,7 +233,13 @@ describe('<OfficerPage />', function () {
             }
           }
         },
-        timeline: timeline
+        timeline: timeline,
+        cms: [
+          {
+            type: 'rich_text',
+            name: 'triangle_description'
+          }
+        ]
       }
     };
 
@@ -464,6 +470,12 @@ describe('<OfficerPage />', function () {
             }
           },
           timeline: timeline,
+          cms: [
+            {
+              type: 'rich_text',
+              name: 'triangle_description'
+            }
+          ]
         }
       };
 
@@ -523,6 +535,12 @@ describe('<OfficerPage />', function () {
             }
           },
           timeline: timeline,
+          cms: [
+            {
+              type: 'rich_text',
+              name: 'triangle_description'
+            }
+          ]
         }
       };
 

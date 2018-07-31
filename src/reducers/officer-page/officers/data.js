@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import { OFFICER_REQUEST_SUCCESS, OFFICER_REQUEST_FAILURE } from 'actions/officer';
+import { OFFICER_REQUEST_SUCCESS, OFFICER_REQUEST_FAILURE } from 'actions/officer-page';
 
 
 const officers = handleActions({

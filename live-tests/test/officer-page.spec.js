@@ -221,10 +221,32 @@ const mockTimeline = [
   }
 ];
 
+const mockOfficerPageCms = {
+  fields: [
+    {
+      name: 'no_data_explain_text',
+      type: 'rich_text',
+      value: {
+        entityMap: {},
+        blocks: [{
+          data: {},
+          depth: 0,
+          entityRanges: [],
+          inlineStyleRanges: [],
+          key: '2ff82',
+          text: 'There is not enough data to construct a radar graph for this officer.',
+          type: 'unstyled'
+        }]
+      }
+    }
+  ]
+};
+
 describe('OfficerPage test', function () {
   describe('OfficerPage not enough data for radar chart', function () {
     beforeEach(function (client, done) {
       this.client = client;
+      api.mock('GET', '/api/v2/cms-pages/officer-page/', 200, mockOfficerPageCms);
       api.mock('GET', '/api/v2/mobile/officers/2234/', 200, officerNotEnoughPercentile);
 
       this.officerPage = client.page.officerPage();
@@ -238,7 +260,7 @@ describe('OfficerPage test', function () {
       });
     });
 
-    it('should render officer no data radar chart', function (client) {
+    it('should render officer no data radar chart', function () {
       const officerPage = this.officerPage;
       const radarChart = officerPage.section.animatedRadarChart;
 
@@ -250,6 +272,7 @@ describe('OfficerPage test', function () {
 
   describe('OfficerPage has radar chart', function () {
     beforeEach(function (client, done) {
+      api.mock('GET', '/api/v2/cms-pages/officer-page/', 200, mockOfficerPageCms);
       this.client = client;
       api.mock('GET', '/api/v2/mobile/officers/2235/', 200, officer2235);
       api.mock('GET', '/api/v2/mobile/officers/2234/', 200, officerNotEnoughPercentile);
@@ -474,7 +497,7 @@ describe('OfficerPage test', function () {
         );
       });
 
-      it('should show percentileExplainer content correctly', function (client) {
+      it('should show percentileExplainer content correctly', function () {
         const officerPage = this.officerPage;
         const triangleExplainer = officerPage.section.triangleExplainer;
 

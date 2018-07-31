@@ -1,11 +1,10 @@
 import { createSelector } from 'reselect';
-import { find, get, compact, take, chain } from 'lodash';
+import { get, compact, take, chain } from 'lodash';
 import moment from 'moment';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
 import documentUrl from 'selectors/common/document-url';
-import { convertContentStateToEditorState } from 'utils/draftjs';
 
 const officerCardTransform = officer => ({
   ...officer,
@@ -50,8 +49,3 @@ export const complaintSummariesSelector = createSelector(
     };
   })
 );
-
-export const cmsSelector = field => state => {
-  const cmsField = find(state.landingPage.cms, { name: field });
-  return convertContentStateToEditorState(get(cmsField, 'value', {}));
-};
