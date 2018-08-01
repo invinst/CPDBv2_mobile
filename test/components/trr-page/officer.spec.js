@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Officer from 'components/trr-page/officer';
+import RadarChart from 'components/common/radar-chart';
 
 
 describe('<Officer />', function () {
@@ -33,7 +34,7 @@ describe('<Officer />', function () {
 
     wrapper.find('Link').prop('to').should.equal('/officer/456/');
 
-    const radarChart = wrapper.find('RadarChart');
+    const radarChart = wrapper.find(RadarChart);
     radarChart.prop('data').should.deepEqual([
       { axis: 'Use of Force Reports', value: 99.9 },
       { axis: 'Internal Allegations', value: 11.1 },

@@ -78,10 +78,11 @@ module.exports = {
 
   sections: {
     animatedRadarChart: {
-      selector: '//div[contains(@class, "animated--radar-chart")]',
+      selector: '//div[contains(@class, "animated-radar-chart")]',
       locateStrategy: 'xpath',
       elements: {
         radarChartContainer: '.radar-chart-container',
+        noDataText: '.no-data-text',
       },
       sections: {
         radarChart: {
@@ -89,7 +90,7 @@ module.exports = {
           locateStrategy: 'xpath',
           elements: {
             radarAxis: {
-              selector: '//*[name()="g" and contains(@class, "radar-axis")]',
+              selector: '//*[name()="text" and contains(@class, "radar-axis")]',
               locateStrategy: 'xpath'
             },
             radarArea: {

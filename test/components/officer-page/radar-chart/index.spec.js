@@ -19,7 +19,6 @@ describe('AnimatedRadarChart component', function () {
     ],
     textColor: 'black',
     visualTokenBackground: 'white',
-    hasEnoughPercentile: false,
   }, {
     year: 2015,
     items: [
@@ -29,7 +28,6 @@ describe('AnimatedRadarChart component', function () {
     ],
     textColor: 'black',
     visualTokenBackground: 'white',
-    hasEnoughPercentile: true,
   }, {
     year: 2016,
     items: [
@@ -39,7 +37,6 @@ describe('AnimatedRadarChart component', function () {
     ],
     textColor: 'black',
     visualTokenBackground: 'white',
-    hasEnoughPercentile: true,
   }, {
     year: 2017,
     items: [
@@ -49,14 +46,15 @@ describe('AnimatedRadarChart component', function () {
     ],
     textColor: 'black',
     visualTokenBackground: 'white',
-    hasEnoughPercentile: true,
   }];
 
-  it('should display nothing if no data', function () {
-    should(shallow(<AnimatedRadarChart/>).type()).be.null();
+  it('should render no data RadarChart if no data', function () {
+    const wrapper = shallow(<AnimatedRadarChart/>);
+    const noDataRadarChart = wrapper.find(StaticRadarChart);
+    should(noDataRadarChart.prop('data')).be.undefined();
   });
 
-  it('should display nothing if missing percentile for all years', function () {
+  it('should render no data RadarChart if some data is missing', function () {
     const missingPercentileData = [{
       year: 2015,
       items: [
@@ -66,7 +64,6 @@ describe('AnimatedRadarChart component', function () {
       ],
       textColor: 'black',
       visualTokenBackground: 'white',
-      hasEnoughPercentile: false,
     }, {
       year: 2016,
       items: [
@@ -76,11 +73,11 @@ describe('AnimatedRadarChart component', function () {
       ],
       textColor: 'black',
       visualTokenBackground: 'white',
-      hasEnoughPercentile: false,
     }];
-    const wrapper = shallow(<AnimatedRadarChart percentileData={ missingPercentileData }/>);
 
-    should(wrapper.type()).be.null();
+    const wrapper = shallow(<AnimatedRadarChart percentileData={ missingPercentileData }/>);
+    const noDataRadarChart = wrapper.find(StaticRadarChart);
+    should(noDataRadarChart.prop('data')).be.undefined();
   });
 
   it('should render if data provided', function () {
@@ -134,10 +131,7 @@ describe('AnimatedRadarChart component', function () {
     });
 
     it('should change transition value after mounting', function () {
-
-      const wrapper = mount(
-        <AnimatedRadarChart percentileData={ data }/>
-      );
+      const wrapper = mount(<AnimatedRadarChart percentileData={ data }/>);
       const instance = wrapper.instance();
 
       instance.state.transitionValue.should.eql(0);
@@ -147,7 +141,6 @@ describe('AnimatedRadarChart component', function () {
 
       clock.tick(500);
       instance.state.transitionValue.should.eql(2);
-
     });
 
     it('should it stops timer before unmounted', function () {
@@ -163,9 +156,7 @@ describe('AnimatedRadarChart component', function () {
     });
 
     it('should start to animate after closing explainer', function () {
-      const wrapper = mount(
-        <AnimatedRadarChart percentileData={ data }/>
-      );
+      const wrapper = mount(<AnimatedRadarChart percentileData={ data }/>);
       const instance = wrapper.instance();
       const startAnimation = spy(instance, 'startAnimation');
 
@@ -178,6 +169,69 @@ describe('AnimatedRadarChart component', function () {
 
       modalWrapper.find(RadarExplainer).exists().should.be.false();
       startAnimation.calledOnce.should.be.true();
+    });
+
+    it('should not animate to years that data is missing', function () {
+      const missingData = [{
+        year: 2013,
+        items: [
+          { axis: 'Use of Force Reports', value: 20 },
+          { axis: 'Civilian Complaints', value: NaN },
+          { axis: 'Internal Complaints', value: 10 },
+        ],
+        textColor: 'black',
+        visualTokenBackground: 'white'
+      }, {
+        year: 2014,
+        items: [
+          { axis: 'Use of Force Reports', value: 20 },
+          { axis: 'Civilian Complaints', value: 0 },
+          { axis: 'Internal Complaints', value: 10 },
+        ],
+        textColor: 'black',
+        visualTokenBackground: 'white'
+      }, {
+        year: 2015,
+        items: [
+          { axis: 'Use of Force Reports', value: NaN },
+          { axis: 'Civilian Complaints', value: 0 },
+          { axis: 'Internal Complaints', value: 10 },
+        ],
+        textColor: 'black',
+        visualTokenBackground: 'white'
+      }, {
+        year: 2016,
+        items: [
+          { axis: 'Use of Force Reports', value: 40 },
+          { axis: 'Civilian Complaints', value: 50 },
+          { axis: 'Internal Complaints', value: 60 },
+        ],
+        textColor: 'black',
+        visualTokenBackground: 'white'
+      }, {
+        year: 2017,
+        items: [
+          { axis: 'Use of Force Reports', value: 80 },
+          { axis: 'Civilian Complaints', value: 70 },
+          { axis: 'Internal Complaints', value: NaN },
+        ],
+        textColor: 'black',
+        visualTokenBackground: 'white'
+      }];
+
+      const wrapper = mount(<AnimatedRadarChart percentileData={ missingData }/>);
+      const instance = wrapper.instance();
+
+      instance.state.transitionValue.should.eql(0);
+      instance.animatedData.should.have.length(2);
+      instance.animatedData[0].year.should.equal(2014);
+      instance.animatedData[1].year.should.equal(2016);
+
+      clock.tick(250);
+      instance.state.transitionValue.should.eql(1);
+      
+      clock.tick(500);
+      instance.state.transitionValue.should.eql(1);
     });
   });
 });

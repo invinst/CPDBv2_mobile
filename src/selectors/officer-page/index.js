@@ -11,7 +11,7 @@ const getOfficer = (state, props) => (
 
 export const officerYearlyPercentileSelector = createSelector(
   [getOfficer],
-  (officer) => map(get(officer, 'percentiles', []), extractPercentile)
+  (officer) => compact(map(get(officer, 'percentiles', []), extractPercentile))
 );
 
 export const DATA_NOT_AVAILABLE = 'N/A';

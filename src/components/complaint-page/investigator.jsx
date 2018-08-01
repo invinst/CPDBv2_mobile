@@ -25,8 +25,8 @@ const Investigator = ({ investigators=[] }) => {
             >
               <div className='visual-token'>
                 <RadarChart
-                  backgroundColor={ investigator.percentile.visualTokenBackground }
-                  data={ investigator.percentile.items }
+                  backgroundColor={ investigator.percentile && investigator.percentile.visualTokenBackground }
+                  data={ investigator.percentile && investigator.percentile.items }
                   />
               </div>
               <div className='name'>{ investigator['full_name'] }</div>

@@ -238,12 +238,13 @@ describe('OfficerPage test', function () {
       });
     });
 
-    it('should not render officer radar chart', function (client) {
+    it('should render officer no data radar chart', function (client) {
       const officerPage = this.officerPage;
+      const radarChart = officerPage.section.animatedRadarChart;
 
-      officerPage.expect.element('@officerName').text.to.equal('Not Enough Percentile Officer');
-
-      officerPage.expect.section('@animatedRadarChart').to.be.not.present;
+      radarChart.expect.element('@noDataText').text.to.equal(
+        'There is not enough data to construct a radar graph for this officer.'
+      );
     });
   });
 
@@ -265,7 +266,7 @@ describe('OfficerPage test', function () {
       });
     });
 
-    it('should render officer radar chart', function (client) {
+    it('should render officer radar chart', function () {
       const officerPage = this.officerPage;
       const animatedRadarChart = officerPage.section.animatedRadarChart;
       const radarChart = animatedRadarChart.section.radarChart;
@@ -277,8 +278,7 @@ describe('OfficerPage test', function () {
       radarChart.expect.element('@radarGrid').to.be.present;
     });
 
-    it('should render officer summary correctly', function (client) {
-
+    it('should render officer summary correctly', function () {
       const officerPage = this.officerPage;
 
       officerPage.expect.element('@officerName').text.to.equal('Kevin Osborn');

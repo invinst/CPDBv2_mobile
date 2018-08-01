@@ -15,14 +15,15 @@ const CoaccusedCard = ({ officer }) => {
       'not-sustained': officer.finalFinding !== 'Sustained'
     }
   );
+  const { percentile } = officer;
 
   return (
     <Link className={ style.coaccusedCard } to={ officerUrl(officer.id) }>
       <div className='radar-chart'>
         <RadarChart
           radius={ 150 }
-          backgroundColor={ officer.percentile.visualTokenBackground }
-          data={ officer.percentile.items }
+          backgroundColor={ percentile && percentile.visualTokenBackground }
+          data={ percentile && percentile.items }
         />
       </div>
       <div className='officer-info'>

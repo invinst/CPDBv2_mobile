@@ -4,7 +4,7 @@ import { get, compact, sortBy } from 'lodash';
 
 import constants from 'constants';
 import { getFindingOutcomeMix } from './finding-outcome-mix';
-import { extractEnoughPercentile } from 'selectors/common/percentile';
+import { extractPercentile } from 'selectors/common/percentile';
 import { breadcrumbSelector } from 'selectors/common/breadcrumbs';
 
 
@@ -31,7 +31,7 @@ const coaccusedTransform = coaccused => {
     id: coaccused.id,
     rank: coaccused.rank,
     findingOutcome: getFindingOutcomeMix(coaccused['final_finding'], coaccused['final_outcome']),
-    percentile: extractEnoughPercentile(coaccused) || {}
+    percentile: extractPercentile(coaccused)
   };
 };
 
@@ -95,7 +95,7 @@ export const complaintSelector = createSelector(
     const involvements = get(complaint, 'involvements', []).map(
       involvement => ({
         ...involvement,
-        percentile: (involvement['officer_id'] && extractEnoughPercentile(involvement)) || {}
+        percentile: involvement['officer_id'] && extractPercentile(involvement)
       })
     );
 
