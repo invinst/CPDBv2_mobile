@@ -132,8 +132,8 @@ export default class AnimatedRadarChart extends Component {
         top: 0,
         left: 0,
         width: '100%',
-        height: '100vh',
-        minHeight: '100vh',
+        height: 'calc(100vh - 40px)',
+        minHeight: 'calc(100vh - 40px)',
         padding: 0
       }
     };
