@@ -26,13 +26,14 @@ export default class ScaleExplainer extends Component {
     const content = (
       <DescriptionContent
         content={
-          'The scale is based on this officer’s percentile rank. ' +
-          'This is relative to all other officers for whom data is available during the same years.'
+          'If an officer’s percentile rank for civilian complaints is 99% ' +
+          'then this means that they were accused in more civilian complaints per year than 99% of other officers.'
         }
         subContent={
-          'If an officer’s percentile rank for civilian complaints is 99% ' +
-          'then this means that they were accused in more civilian complaints per year than 99 % ' +
-          'of other officers for whom data is available during the same years.'
+          'Civilian and internal complaint percentiles are based on data that is only available since 2000, ' +
+          'use of force data is only available since 2004. ' +
+          'The overall allegation count percentiles displayed on the officer profile page ' +
+          'are calculated using data that reaches back to 1988.'
         }
       />
     );

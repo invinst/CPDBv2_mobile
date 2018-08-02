@@ -28,6 +28,12 @@ describe('ComplaintPage component', function () {
     const store = configureStore()({
       breadcrumb: {
         breadcrumbs: []
+      },
+      complaintPage: {
+        attachmentRequest: {
+          message: '',
+          subscribedCRIds: {}
+        }
       }
     });
 

@@ -2,16 +2,23 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 import constants from 'constants';
+import CMSContent from 'components/landing-page/cms-content';
+import BottomPadding from 'components/shared/bottom-padding';
+import TopOfficersByAllegation from 'containers/landing-page/top-officers-by-allegation';
+import RecentActivities from 'containers/landing-page/recent-activities';
+import NewDocumentAllegations from 'containers/landing-page/new-document-allegations';
+import ComplaintSummaries from 'containers/landing-page/complaint-summaries';
+import magnifyingGlassIcon from 'img/ic-magnifying-glass.svg';
 import style from './landing-page.sass';
 
 
 export default class LandingPage extends Component {
   componentDidMount() {
     const {
-      requestLandingPage, pushBreadcrumbs, location, routes, params
+      requestCMS, pushBreadcrumbs, location, routes, params
     } = this.props;
     pushBreadcrumbs({ location, routes, params });
-    requestLandingPage();
+    requestCMS();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -22,27 +29,37 @@ export default class LandingPage extends Component {
   }
 
   render() {
+    const { title, description } = this.props;
+
     return (
       <div className={ style.landingPage }>
         <div className='full-height-wrapper'>
-          <div className='title'>Citizens Police Data Project</div>
+          <CMSContent className='site-title' content={ title } />
+          <CMSContent className='site-desc' content={ description } />
           <Link className='search-bar' to={ constants.SEARCH_PATH }>
-            Search
+            <img src={ magnifyingGlassIcon } />Search by officer name or badge number
           </Link>
         </div>
+        <TopOfficersByAllegation />
+        <RecentActivities />
+        <NewDocumentAllegations />
+        <ComplaintSummaries />
+        <BottomPadding />
       </div>
     );
   }
 }
 
 LandingPage.defaultProps = {
-  requestLandingPage: () => {},
+  requestCMS: () => {},
   pushBreadcrumbs: () => {}
 };
 
 LandingPage.propTypes = {
   pushBreadcrumbs: PropTypes.func,
-  requestLandingPage: PropTypes.func,
+  requestCMS: PropTypes.func,
+  title: PropTypes.object,
+  description: PropTypes.object,
   location: PropTypes.object,
   params: PropTypes.object,
   routes: PropTypes.array,

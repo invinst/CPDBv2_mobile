@@ -1,69 +1,101 @@
 import React, { PropTypes } from 'react';
-import { scaleLinear } from 'd3-scale';
-import { curveLinearClosed, radialLine } from 'd3-shape';
 
 import style from './radar-axis.sass';
-import RadarAxisText from './radar-axis/radar-axis-text';
+import { roundedPercentile } from 'utils/calculation';
 
 
 export default class RadarAxis extends React.Component {
+  renderTitleTexts(title, value, xText, yText, extraPadding, fontSize, fontWeight) {
+    const { showAxisTitle, showAxisValue, textColor } = this.props;
+    const textStyle = {
+      fontSize: `${fontSize}px`,
+      fontWeight: fontWeight,
+      fill: textColor,
+      stroke: 'none'
+    };
+
+    const words = title.split(' ');
+    const firstPhrase = words.slice(0, -1).join(' ');
+    const secondPhrase = words[words.length - 1];
+    const phrases = showAxisTitle ? firstPhrase ? [firstPhrase, secondPhrase] : [secondPhrase] : [];
+    const axisTitles = phrases.map((phrase, idx) => (
+      <tspan
+        key={ `text-${title}-${idx}` }
+        className='radar-axis-title'
+        style={ textStyle }
+        x={ xText }
+        y={ yText }
+        dy={ `${extraPadding + idx * 1.25}em` }
+      >
+        { phrase }
+      </tspan>
+    ));
+    const valueTitle = showAxisValue ? (
+      <tspan
+        key={ `text-value-${title}` }
+        className='radar-axis-value'
+        style={ textStyle }
+        x={ xText }
+        y={ yText }
+        dy={ `${extraPadding + phrases.length * 1.3}em` }
+      >
+        { roundedPercentile(value) }
+      </tspan>
+    ) : null;
+    return [...axisTitles, valueTitle];
+  }
+
   render() {
-    const {
-      radius, data, maxValue, showAxisTitle, textColor, strokeWidth,
-      axisTitleFontSize, axisTitleFontWeight, showAxisValue
-    } = this.props;
-    if (!data)
-      return <g/>;
-
+    const { radius, data, axisTitleFontSize, axisTitleFontWeight } = this.props;
     const angleSlice = Math.PI * 2 / data.length;
-
-    const rScale = scaleLinear()
-      .range([0, radius + strokeWidth])
-      .domain([0, maxValue]);
-
-    const radarLine = radialLine()
-      .curve(curveLinearClosed)
-      .radius(rScale(maxValue))
-      .angle((d, i) => i * angleSlice - Math.PI);
+    const labelFactor = 1.1;
 
     return (
-      <g className={ style.radarAxis }>
+      <g>
         {
-          (showAxisTitle || showAxisValue) && (
-            <RadarAxisText
-              radius={ radius }
-              data={ data }
-              textColor={ textColor }
-              showAxisTitle={ showAxisTitle }
-              showAxisValue={ showAxisValue }
-              axisTitleFontSize={ axisTitleFontSize }
-              axisTitleFontWeight={ axisTitleFontWeight }
-            />
-          )
-        }
+          data.map((item, i) => {
+            const xText = radius * labelFactor * Math.cos(angleSlice * i + Math.PI / 2);
+            const yText = radius * labelFactor * Math.sin(angleSlice * i + Math.PI / 2);
+            const extraPadding = +xText.toFixed(4) === 0 ? 1.1 : 1.4;
 
-        <path
-          className='radar-boundary-area'
-          d={ radarLine(data.map(() => ({ value: maxValue }))) }
-        />
+            return (
+              <text
+                key={ `axis--${i}` }
+                className={ style.radarAxis }
+                textAnchor={ +xText.toFixed(4) === 0 ? 'middle' : xText > 0 ? 'start' : 'end' }
+                dy='0.35em'
+                x={ xText }
+                y={ yText }
+              >
+                {
+                  this.renderTitleTexts(
+                    item.axis,
+                    item.value,
+                    xText,
+                    yText,
+                    extraPadding,
+                    axisTitleFontSize,
+                    axisTitleFontWeight
+                  )
+                }
+              </text>
+            );
+          })
+        }
       </g>
     );
   }
 }
 
-RadarAxis.defaultProps = {
-  showAxisTitle: false,
-  showAxisValue: false,
-};
-
 RadarAxis.propTypes = {
-  radius: PropTypes.number,
-  maxValue: PropTypes.number,
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    'axis': PropTypes.string,
+    'value': PropTypes.number,
+  })),
   textColor: PropTypes.string,
-  strokeWidth: PropTypes.number,
-  showAxisTitle: PropTypes.bool,
-  showAxisValue: PropTypes.bool,
+  radius: PropTypes.number,
   axisTitleFontSize: PropTypes.number,
   axisTitleFontWeight: PropTypes.number,
+  showAxisTitle: PropTypes.bool,
+  showAxisValue: PropTypes.bool,
 };

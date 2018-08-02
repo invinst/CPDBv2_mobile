@@ -6,8 +6,8 @@
   "main": "",
   "scripts": {
     "clean": "rimraf dist/*",
-    "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist",
-    "dist": "npm run copy & webpack --env=${WEBPACK_ENV:-production} --bail",
+    "copy": "copyfiles -f ./src/img/favicon.ico ./dist/img/",
+    "dist": "npm run copy & WEBPACK_ENV=${WEBPACK_ENV:-production} SASS_PATH=./src/styles webpack --env=dist --bail",
     "lint": "eslint ./src",
     "posttest": "npm run lint",
     "release:major": "npm version major && npm publish && git push --follow-tags",
@@ -16,11 +16,11 @@
     "serve": "node server.js --env=dev",
     "serve:dist": "node server.js --env=dist",
     "start": "SASS_PATH=./src/styles node server.js --env=dev",
-    "test": "karma start",
-    "live-test": "SASS_PATH=./src/styles NODE_ENV='live-test' node nightwatch.js",
-    "ci-test": "karma start --reporters mocha,coverage,coveralls",
-    "mocha-watch": "karma start --no-single-run --reporters mocha",
-    "test-watch": "karma start --autoWatch=true --singleRun=false"
+    "test": "karma start --env=test",
+    "live-test": "WEBPACK_ENV=live-test SASS_PATH=./src/styles node nightwatch.js",
+    "ci-test": "karma start --reporters mocha,coverage,coveralls --env=test",
+    "mocha-watch": "karma start --no-single-run --reporters mocha --env=test",
+    "test:watch": "karma start --autoWatch=true --singleRun=false --env=test"
   },
   "repository": "",
   "keywords": [],
@@ -51,6 +51,7 @@
     "faker": "^3.1.0",
     "file-loader": "^0.8.4",
     "glob": "^7.0.0",
+    "html-webpack-plugin": "^2.30.1",
     "isparta-instrumenter-loader": "^1.0.0",
     "json-loader": "^0.5.4",
     "karma": "^1.7.1",
@@ -96,6 +97,7 @@
     "clipboard": "^1.7.1",
     "core-js": "^2.0.0",
     "d3": "^5.4.0",
+    "draft-js": "^0.10.5",
     "flux": "^2.1.1",
     "hashids": "^1.0.2",
     "history": "^2.1.2",
@@ -126,6 +128,7 @@
     "reselect": "^2.5.4",
     "string": "^3.3.1",
     "superagent": "^2.0.0",
+    "swiper": "^4.3.3",
     "yargs-parser": "^5.0.0"
   }
 }

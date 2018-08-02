@@ -17,11 +17,6 @@ const rowSection = (selector) => ({
   }
 });
 
-const staticRarChart = {
-  selector: '//div[contains(@class, "radar-chart")]',
-  locateStrategy: 'xpath',
-};
-
 const explainer = (contentSections) => ({
   selector: '//div[contains(@class, "explainer-layout")]',
   locateStrategy: 'xpath',
@@ -33,7 +28,10 @@ const explainer = (contentSections) => ({
     radarChartContainer: {
       selector: '.explainer-radar-chart-container',
       elements: {
-        radarChart: staticRarChart,
+        radarChart: {
+          selector: '//*[name()="svg" and contains(@class, "radar-chart")]',
+          locateStrategy: 'xpath',
+        },
         closeButton: '.explainer-close-button'
       }
     },
@@ -61,7 +59,7 @@ const descriptionExplainer = explainer({
 const nthPercentileRow = (n) => ({
   selector: `.percentiles-row:nth-child(${n})`,
   elements: {
-    radarChart: staticRarChart,
+    radarChart: 'svg',
     year: '.year',
     internalComplaint: '.cell:nth-child(3)',
     civilianComplaint: '.cell:nth-child(4)',
@@ -80,10 +78,11 @@ module.exports = {
 
   sections: {
     animatedRadarChart: {
-      selector: '//div[contains(@class, "animated--radar-chart")]',
+      selector: '//div[contains(@class, "animated-radar-chart")]',
       locateStrategy: 'xpath',
       elements: {
         radarChartContainer: '.radar-chart-container',
+        noDataText: '.no-data-text',
       },
       sections: {
         radarChart: {
@@ -91,7 +90,7 @@ module.exports = {
           locateStrategy: 'xpath',
           elements: {
             radarAxis: {
-              selector: '//*[name()="g" and contains(@class, "radar-axis")]',
+              selector: '//*[name()="text" and contains(@class, "radar-axis")]',
               locateStrategy: 'xpath'
             },
             radarArea: {

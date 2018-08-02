@@ -20,13 +20,13 @@ export default class SearchPage extends Component {
     showIntercomLauncher(false);
   }
 
-  componentWillUnmount() {
-    showIntercomLauncher(true);
-  }
-
   componentWillReceiveProps(nextProps) {
     const { location, params, routes, pushBreadcrumbs } = nextProps;
     pushBreadcrumbs({ location, params, routes });
+  }
+
+  componentWillUnmount() {
+    showIntercomLauncher(true);
   }
 
   onInputChange(event) {

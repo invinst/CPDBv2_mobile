@@ -31,7 +31,7 @@ const coaccusedTransform = coaccused => {
     id: coaccused.id,
     rank: coaccused.rank,
     findingOutcome: getFindingOutcomeMix(coaccused['final_finding'], coaccused['final_outcome']),
-    percentile: extractPercentile(coaccused) || {}
+    percentile: extractPercentile(coaccused)
   };
 };
 
@@ -95,7 +95,7 @@ export const complaintSelector = createSelector(
     const involvements = get(complaint, 'involvements', []).map(
       involvement => ({
         ...involvement,
-        percentile: (involvement['officer_id'] && extractPercentile(involvement)) || {}
+        percentile: involvement['officer_id'] && extractPercentile(involvement)
       })
     );
 

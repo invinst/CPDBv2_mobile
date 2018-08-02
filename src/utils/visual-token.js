@@ -1,3 +1,5 @@
+import { some, isNaN, map } from 'lodash';
+
 const OIG_VISUAL_TOKEN_COLOR_SCHEME = {
   '00': '#f5f4f4',
   '01': '#fce0e0',
@@ -69,3 +71,7 @@ export const getVisualTokenOIGBackground = (civilPercentile, internalPercentile,
     textColor: COLOR_TEXT_LIGHT_SCHEME.indexOf(key) === -1 ? DARK_COLOR : LIGHT_COLOR,
   };
 };
+
+export const hasEnoughRadarChartData = (items) => (
+  !!items && items.length > 0 && !some(map(items, (d) => isNaN(d.value)))
+);
