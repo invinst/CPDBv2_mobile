@@ -131,6 +131,7 @@ describe('ComplaintPageTest', function () {
       'Apr 30, 2012\nIncident Occurs\nInvestigation Begins\nInvestigation Closed'
     );
     this.complaintPage.expect.element('@firstInvestigator').text.to.contain('Peter Parker');
+    this.complaintPage.expect.element('@incidentDate').text.to.equal('APR 30, 2012');
   });
 
   it('should show proper cr location', function () {
