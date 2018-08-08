@@ -27,7 +27,8 @@ describe('<LandingPage />', function () {
         topOfficersByAllegation: [1],
         recentActivities: [{ type: 'single_officer' }],
         newDocumentAllegations: [1],
-        complaintSummaries: [1]
+        complaintSummaries: [1],
+        cmsRequested: true,
       }
     });
 
@@ -36,6 +37,7 @@ describe('<LandingPage />', function () {
     mount(
       <Provider store={ store }>
         <LandingPage
+          cmsRequested={ false }
           requestCMS={ spyRequestCMS }
           pushBreadcrumbs={ pushBreadcrumbsSpy }
           location='location'

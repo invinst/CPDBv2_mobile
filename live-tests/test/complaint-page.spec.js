@@ -91,6 +91,7 @@ describe('ComplaintPageTest', function () {
     );
     this.complaintPage = client.page.complaintPage();
     client.url(`${client.globals.clientUrl}/complaint/1053667/`);
+    client.waitForElementVisible('body');
     done();
   });
 

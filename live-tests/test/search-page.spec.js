@@ -31,6 +31,7 @@ describe('SearchPageTest', function () {
     this.searchPage = client.page.search();
     this.officerPage = client.page.officerPage();
     this.searchPage.navigate();
+    client.waitForElementVisible('body');
     done();
   });
 

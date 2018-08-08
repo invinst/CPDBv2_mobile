@@ -5,9 +5,12 @@ import {
   recentActivitiesSelector,
   newDocumentAllegationsSelector,
   complaintSummariesSelector,
-  cmsSelector
+  cmsSelector,
+  getCMSRequested,
+  getEmbed
 } from 'selectors/landing-page';
 import * as draftjsUtils from 'utils/draftjs';
+
 
 describe('landing page selectors', function () {
   it('topOfficersByAllegationSelector', () => {
@@ -141,5 +144,16 @@ describe('landing page selectors', function () {
     cmsSelector('title_field')(state).should.eql('title');
     draftjsUtils.convertContentStateToEditorState.calledWith('title').should.be.true();
     draftjsUtils.convertContentStateToEditorState.restore();
+  });
+
+  it('getCMSRequested', () => {
+    getCMSRequested({ landingPage: { cmsRequested: true } }).should.be.true();
+    getCMSRequested({ landingPage: { cmsRequested: false } }).should.be.false();
+  });
+
+  it('getEmbed', () => {
+    getEmbed({ location: { pathname: 'embed/top-officers-page' } }).should.be.true();
+    getEmbed({ location: { pathname: 'top-officers-page' } }).should.be.false();
+    getEmbed({ }).should.be.false();
   });
 });

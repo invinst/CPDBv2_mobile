@@ -51,6 +51,10 @@ export const complaintSummariesSelector = createSelector(
   })
 );
 
+export const getCMSRequested = state => state.landingPage.cmsRequested;
+
+export const getEmbed = (props) => compact(get(props, 'location.pathname', '').split('/'))[0] === 'embed';
+
 export const cmsSelector = field => state => {
   const cmsField = find(state.landingPage.cms, { name: field });
   return convertContentStateToEditorState(get(cmsField, 'value', {}));

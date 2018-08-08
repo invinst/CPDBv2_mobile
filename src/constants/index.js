@@ -236,6 +236,7 @@ export default {
   OFFICER_PATH: '/officer/',
   COMPLAINT_PATH: '/complaint/',
   TRR_PATH: '/trr/',
+  EMBED_TOP_OFFICER_PATH: '/embed/top-officers-page',
 
   // Routes that don't have their corresponding component.
   // NavigationUtil.goUp() skips all of these.

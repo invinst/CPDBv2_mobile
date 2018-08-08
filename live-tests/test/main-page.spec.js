@@ -28,6 +28,7 @@ describe('MainPageTest', function () {
     api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
     this.mainPage = client.page.main();
     this.mainPage.navigate();
+    client.waitForElementVisible('body');
     done();
   });
 

@@ -229,6 +229,7 @@ describe('OfficerPage test', function () {
 
       this.officerPage = client.page.officerPage();
       this.officerPage.navigate(this.officerPage.url(2234));
+      client.waitForElementVisible('body');
       done();
     });
 
