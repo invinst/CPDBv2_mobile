@@ -1,6 +1,7 @@
 'use strict';
 
 var api = require(__dirname + '/../mock-api');
+const { TIMEOUT } = require(__dirname + '/../constants');
 
 const mockLandingPageCms = {
   fields: [
@@ -28,7 +29,7 @@ describe('MainPageTest', function () {
     api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
     this.mainPage = client.page.main();
     this.mainPage.navigate();
-    client.waitForElementVisible('body');
+    client.waitForElementVisible('body', TIMEOUT);
     done();
   });
 
