@@ -7,6 +7,7 @@ import StaticRadarChart from 'components/common/radar-chart';
 import RadarExplainer from './explainer';
 import style from './radar-chart.sass';
 import { hasEnoughRadarChartData } from 'utils/visual-token';
+import CMSContent from 'components/landing-page/cms-content';
 
 
 export default class AnimatedRadarChart extends Component {
@@ -120,7 +121,7 @@ export default class AnimatedRadarChart extends Component {
 
   render() {
     const { transitionValue, explainerOpened } = this.state;
-    const { percentileData, noDataText } = this.props;
+    const { percentileData, noDataCMSContent } = this.props;
 
     const itemData = this.getCurrentTransitionData();
 
@@ -178,8 +179,8 @@ export default class AnimatedRadarChart extends Component {
             boundaryAreaColor='#adadad'
           />
           {
-            noDataText ? (
-              <div className='no-data-text'>{ noDataText }</div>
+            noDataCMSContent ? (
+              <CMSContent className='no-data-text' content={ noDataCMSContent }/>
             ) : null
           }
         </div>
@@ -188,11 +189,8 @@ export default class AnimatedRadarChart extends Component {
   }
 }
 
-AnimatedRadarChart.defaultProps = {
-  noDataText: 'There is not enough data to construct a radar graph for this officer.'
-};
 
 AnimatedRadarChart.propTypes = {
   percentileData: PropTypes.array,
-  noDataText: PropTypes.string,
+  noDataCMSContent: PropTypes.object,
 };

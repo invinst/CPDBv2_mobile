@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import style from './description-content.sass';
+import CMSContent from 'components/landing-page/cms-content';
 
 
 export default class DescriptionContent extends Component {
@@ -9,14 +10,14 @@ export default class DescriptionContent extends Component {
 
     return (
       <div className={ style.descriptionContent }>
-        <p className='content'>{ content }</p>
-        <p className='sub-content'>{ subContent }</p>
+        <CMSContent className='content' content={ content }/>
+        <CMSContent className='sub-content' content={ subContent }/>
       </div>
     );
   }
 }
 
 DescriptionContent.propTypes = {
-  content: PropTypes.string,
-  subContent: PropTypes.string
+  content: PropTypes.object,
+  subContent: PropTypes.object
 };

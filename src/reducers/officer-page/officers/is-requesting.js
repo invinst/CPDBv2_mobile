@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 
 import { OFFICER_REQUEST_START, OFFICER_REQUEST_SUCCESS, OFFICER_REQUEST_FAILURE }
-from 'actions/officer';
+from 'actions/officer-page';
 
 
 const isRequesting = handleActions({

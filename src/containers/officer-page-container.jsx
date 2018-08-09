@@ -2,12 +2,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import OfficerPage from 'components/officer-page';
-import { fetchOfficer } from 'actions/officer';
+import { fetchOfficer, requestCMS } from 'actions/officer-page';
 import {
   officerSummarySelector,
   officerMetricsSelector,
-  officerYearlyPercentileSelector
+  officerYearlyPercentileSelector,
 } from 'selectors/officer-page';
+import { cmsSelector, hasCMS } from 'selectors/common/cms';
 
 
 function mapStateToProps(state, ownProps) {
@@ -25,11 +26,14 @@ function mapStateToProps(state, ownProps) {
     summary: officerSummarySelector(state, props),
     metrics: officerMetricsSelector(state, props),
     threeCornerPercentile: officerYearlyPercentileSelector(state, props),
-    pk: pk
+    pk,
+    hasCMS: hasCMS(state, 'officerPage'),
+    noDataCMSContent: cmsSelector(state, 'officerPage', 'no_data_explain_text')
   };
 }
 
 const mapDispatchToProps = {
+  requestCMS,
   fetchOfficer
 };
 

@@ -1,4 +1,4 @@
-import { OFFICER_REQUEST_SUCCESS, OFFICER_REQUEST_FAILURE } from 'actions/officer';
+import { OFFICER_REQUEST_SUCCESS, OFFICER_REQUEST_FAILURE } from 'actions/officer-page';
 import officerData from 'reducers/officer-page/officers/data';
 
 
