@@ -102,9 +102,16 @@ const mockTimeline = [
     'unit_name': '007',
     kind: 'AWARD',
     'unit_description': 'District 007',
-    rank: 'Police Officer',
+    rank: 'Detective',
     date: '2006-03-01',
     'award_type': 'Honorable Mention'
+  },
+  {
+    'unit_name': '007',
+    kind: 'RANK_CHANGE',
+    'unit_description': 'District 007',
+    rank: 'Detective',
+    date: '2006-02-28'
   },
   {
     'trr_id': 1,
@@ -207,16 +214,21 @@ const mockTimeline = [
   },
   {
     'unit_name': '153',
+    kind: 'RANK_CHANGE',
+    'unit_description': 'Mobile Strike Force',
+    rank: 'Police Officer',
+    date: '2000-04-28'
+  },
+  {
+    'unit_name': '153',
     kind: 'UNIT_CHANGE',
     'unit_description': 'Mobile Strike Force',
     rank: 'Police Officer',
     date: '2000-04-28'
   },
   {
-    'unit_name': '044',
     kind: 'JOINED',
     'unit_description': 'Recruit Training Section',
-    rank: 'Police Officer',
     date: '2000-02-05'
   }
 ];
@@ -617,6 +629,22 @@ describe('OfficerPage test', function () {
       beforeEach(function (client, done) {
         this.timeline = this.officerPage.section.timeline;
         done();
+      });
+
+      it('should render rank change and unit change', function (client) {
+        const firstUnitChange = this.timeline.section.firstUnitChangeItem;
+        const secondUnitChange = this.timeline.section.secondUnitChangeItem;
+        const firstRankChange = this.timeline.section.firstRankChangeItem;
+        const secondRankChange = this.timeline.section.secondRankChangeItem;
+        firstUnitChange.expect.element('@unitChange').text.to.equal('Unit 153 → Unit 007 - District 007');
+        firstUnitChange.expect.element('@date').text.to.equal('JAN 7');
+        secondUnitChange.expect.element('@unitChange').text.to.equal('Unassigned → Unit 153 - Mobile Strike Force');
+        secondUnitChange.expect.element('@date').text.to.equal('APR 28');
+
+        firstRankChange.expect.element('@rankChange').text.to.equal('Police Officer → Detective');
+        firstRankChange.expect.element('@date').text.to.equal('FEB 28');
+        secondRankChange.expect.element('@rankChange').text.to.equal('Unassigned → Police Officer');
+        secondRankChange.expect.element('@date').text.to.equal('APR 28');
       });
 
       it('should go to cr page when clicking on an cr timeline item', function () {

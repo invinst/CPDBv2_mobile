@@ -9,6 +9,7 @@ import {
   getNewTimelineItems,
   trrTransform,
   yearItem,
+  fillRankChange
 } from 'selectors/officer-page/timeline';
 
 
@@ -26,6 +27,7 @@ describe('Officer new timeline selectors', function () {
         year: 1988,
         date: 'DEC 5',
         kind: 'JOINED',
+        rank: 'Police Officer',
         unitName: 'Unit 044',
         unitDescription: 'Recruit Training Section',
         key: 1,
@@ -44,6 +46,7 @@ describe('Officer new timeline selectors', function () {
         year: 1988,
         date: 'DEC 5',
         kind: 'JOINED',
+        rank: 'Police Officer',
         unitName: 'Unassigned',
         unitDescription: '',
         key: 1,
@@ -146,6 +149,7 @@ describe('Officer new timeline selectors', function () {
         year: 2005,
         date: 'JAN 27',
         kind: 'CR',
+        rank: 'Police Officer',
         unitName: 'Unit 153',
         unitDescription: 'Mobile Strike Force',
         category: 'Use Of Force',
@@ -209,6 +213,7 @@ describe('Officer new timeline selectors', function () {
         year: 2004,
         date: 'DEC 17',
         kind: 'FORCE',
+        rank: 'Police Officer',
         unitName: 'Unit 153',
         unitDescription: 'Mobile Strike Force',
         category: 'Firearm',
@@ -219,6 +224,7 @@ describe('Officer new timeline selectors', function () {
         year: 2004,
         date: 'DEC 17',
         kind: 'FORCE',
+        rank: 'Police Officer',
         unitName: 'Unit 153',
         unitDescription: 'Mobile Strike Force',
         category: 'Taser',
@@ -229,6 +235,7 @@ describe('Officer new timeline selectors', function () {
         year: 2004,
         date: 'DEC 17',
         kind: 'FORCE',
+        rank: 'Police Officer',
         unitName: 'Unit 153',
         unitDescription: 'Mobile Strike Force',
         category: 'Use of Force Report',
@@ -252,6 +259,7 @@ describe('Officer new timeline selectors', function () {
         year: 2011,
         date: 'MAR 1',
         kind: 'AWARD',
+        rank: 'Police Officer',
         unitName: 'Unit 153',
         unitDescription: 'Mobile Strike Force',
         category: 'Honorable Mention',
@@ -267,10 +275,8 @@ describe('Officer new timeline selectors', function () {
         date: 'MAR 1',
         kind: 'AWARD',
         rank: 'Police Officer',
-        rankDisplay: 'Police Officer',
         unitName: '153',
         unitDescription: 'Mobile Strike Force',
-        unitDisplay: 'Mobile Strike Force',
         isCurrentUnit: true,
         key: 1,
       };
@@ -291,10 +297,8 @@ describe('Officer new timeline selectors', function () {
         date: 'MAR 1',
         kind: 'AWARD',
         rank: 'Some Officer',
-        rankDisplay: 'Some Officer',
         unitName: 'Unit 111',
         unitDescription: 'Some Force',
-        unitDisplay: 'Unit 111',
         isCurrentUnit: true,
         key: 1,
       };
@@ -303,10 +307,8 @@ describe('Officer new timeline selectors', function () {
         date: 'MAR 1',
         kind: 'AWARD',
         rank: 'Police Officer',
-        rankDisplay: 'Police Officer',
         unitName: 'Unit 153',
         unitDescription: 'Mobile Strike Force',
-        unitDisplay: 'Unit 153',
         isCurrentUnit: false,
         key: 2,
       };
@@ -336,10 +338,8 @@ describe('Officer new timeline selectors', function () {
           date: 'MAR 1',
           kind: 'AWARD',
           rank: 'Some Officer',
-          rankDisplay: 'Some Officer',
           unitName: 'Unit 111',
           unitDescription: 'Some Force',
-          unitDisplay: 'Unit 111',
           isCurrentUnit: true,
           key: 1,
         },
@@ -348,10 +348,8 @@ describe('Officer new timeline selectors', function () {
           date: 'MAR 1',
           kind: 'AWARD',
           rank: 'Police Officer',
-          rankDisplay: 'Police Officer',
           unitName: 'Unit 153',
           unitDescription: 'Mobile Strike Force',
-          unitDisplay: 'Unit 153',
           isCurrentUnit: false,
           key: 2,
         }
@@ -369,10 +367,8 @@ describe('Officer new timeline selectors', function () {
           date: 'MAR 1',
           kind: 'AWARD',
           rank: 'Some Officer',
-          rankDisplay: 'Some Officer',
           unitName: 'Unit 111',
           unitDescription: 'Some Force',
-          unitDisplay: 'Unit 111',
           isCurrentUnit: true,
           key: 1,
         },
@@ -399,10 +395,8 @@ describe('Officer new timeline selectors', function () {
           date: 'MAR 1',
           kind: 'AWARD',
           rank: 'Police Officer',
-          rankDisplay: 'Police Officer',
           unitName: 'Unit 153',
           unitDescription: 'Mobile Strike Force',
-          unitDisplay: 'Unit 153',
           isCurrentUnit: false,
           key: 2,
         }
@@ -416,10 +410,8 @@ describe('Officer new timeline selectors', function () {
           date: 'MAR 1',
           kind: 'AWARD',
           rank: 'Some Officer',
-          rankDisplay: 'Some Officer',
           unitName: 'Unit 111',
           unitDescription: 'Some Force',
-          unitDisplay: 'Unit 111',
           isCurrentUnit: false,
           key: 1,
         },
@@ -428,10 +420,8 @@ describe('Officer new timeline selectors', function () {
           date: 'MAR 1',
           kind: 'AWARD',
           rank: 'Police Officer',
-          rankDisplay: 'Police Officer',
           unitName: 'Unit 153',
           unitDescription: 'Mobile Strike Force',
-          unitDisplay: 'Unit 153',
           isCurrentUnit: false,
           key: 2,
         }
@@ -453,61 +443,117 @@ describe('Officer new timeline selectors', function () {
     it('should add old unit name and description into unit change item', function () {
       const sameUnitItems = [
         {
-          rank: 'Some Officer',
+          rank: 'Police Officer',
           unitName: 'Unit 111',
           unitDescription: 'Some Force',
-          unitDisplay: 'Unit 111',
         },
         {
-          rank: 'Some Officer',
+          rank: 'Police Officer',
           kind: 'UNIT_CHANGE',
           unitName: 'Unit 111',
           unitDescription: 'Some Force',
-          unitDisplay: 'Unit 111',
         },
         {
-          rank: 'Some Officer',
+          rank: 'Police Officer',
           unitName: 'Unit 153',
           unitDescription: 'Mobile Strike Force',
-          unitDisplay: 'Unit 153',
         }
       ];
 
       fillUnitChange(sameUnitItems).should.eql([
         {
-          rank: 'Some Officer',
+          rank: 'Police Officer',
           unitName: 'Unit 111',
           unitDescription: 'Some Force',
-          unitDisplay: 'Unit 111',
         },
         {
-          rank: 'Some Officer',
+          rank: 'Police Officer',
           kind: 'UNIT_CHANGE',
           unitName: 'Unit 111',
           unitDescription: 'Some Force',
-          unitDisplay: 'Unit 111',
           oldUnitName: 'Unit 153',
           oldUnitDescription: 'Mobile Strike Force',
         },
         {
-          rank: 'Some Officer',
+          rank: 'Police Officer',
           unitName: 'Unit 153',
           unitDescription: 'Mobile Strike Force',
-          unitDisplay: 'Unit 153',
         },
       ]);
     });
   });
 
+  describe('fillRankChange', function () {
+    it('should add old rank into rank change item', function () {
+      const sameRankItems = [{
+        kind: 'CR',
+        rank: 'Third Rank',
+      }, {
+        kind: 'RANK_CHANGE',
+        rank: 'Third Rank',
+      }, {
+        kind: 'CR',
+        rank: 'Second Rank',
+      }, {
+        kind: 'RANK_CHANGE',
+        rank: 'Second Rank',
+      }, {
+        kind: 'JOINED',
+        rank: 'First Rank',
+      }];
+
+      fillRankChange(sameRankItems).should.eql([{
+        kind: 'CR',
+        rank: 'Third Rank',
+      }, {
+        kind: 'RANK_CHANGE',
+        rank: 'Third Rank',
+        oldRank: 'Second Rank',
+      }, {
+        kind: 'CR',
+        rank: 'Second Rank',
+      }, {
+        kind: 'RANK_CHANGE',
+        rank: 'Second Rank',
+        oldRank: 'First Rank',
+      }, {
+        kind: 'JOINED',
+        rank: 'First Rank',
+      }]);
+    });
+  });
+
   describe('getNewTimelineItems', function () {
     it('should return empty if the state is empty', function () {
-      getNewTimelineItems({
+      const emptyState = {
         officerPage: {
           timeline: {
-            items: []
+            data: {}
           }
         }
-      }).should.be.empty();
+      };
+      getNewTimelineItems(emptyState, 8562).should.be.empty();
+    });
+
+    it('should ignore unsupported items', function () {
+      const emptyState = {
+        officerPage: {
+          timeline: {
+            data: {
+              8562: [
+                {
+                  'unit_name': '007',
+                  kind: 'SOME KIND',
+                  'unit_description': 'District 007',
+                  rank: 'Police Officer',
+                  date: '2006-03-01',
+                }
+              ]
+            }
+          }
+        }
+      };
+      getNewTimelineItems(emptyState, 8562).should.be.empty();
     });
 
     it('should process raw items with enough processors', function () {
@@ -520,9 +566,16 @@ describe('Officer new timeline selectors', function () {
                   'unit_name': '007',
                   kind: 'AWARD',
                   'unit_description': 'District 007',
-                  rank: 'Police Officer',
+                  rank: 'Detective',
                   date: '2006-03-01',
                   'award_type': 'Honorable Mention'
+                },
+                {
+                  'unit_name': '007',
+                  kind: 'RANK_CHANGE',
+                  'unit_description': 'District 007',
+                  rank: 'Detective',
+                  date: '2006-02-28'
                 },
                 {
                   'trr_id': 1,
@@ -598,6 +651,13 @@ describe('Officer new timeline selectors', function () {
                 },
                 {
                   'unit_name': '153',
+                  kind: 'RANK_CHANGE',
+                  'unit_description': 'Mobile Strike Force',
+                  rank: 'Police Officer',
+                  date: '2000-04-28'
+                },
+                {
+                  'unit_name': '153',
                   kind: 'UNIT_CHANGE',
                   'unit_description': 'Mobile Strike Force',
                   rank: 'Police Officer',
@@ -607,7 +667,6 @@ describe('Officer new timeline selectors', function () {
                   'unit_name': '044',
                   kind: 'JOINED',
                   'unit_description': 'Recruit Training Section',
-                  rank: 'Police Officer',
                   date: '2000-02-05'
                 }
               ]
@@ -627,68 +686,83 @@ describe('Officer new timeline selectors', function () {
           year: 2006,
           date: 'MAR 1',
           kind: 'AWARD',
+          rank: 'Detective',
           unitName: 'Unit 007',
           unitDescription: 'District 007',
           category: 'Honorable Mention',
           key: 0,
         },
         {
+          date: 'FEB 28',
+          kind: 'RANK_CHANGE',
+          oldRank: 'Police Officer',
+          rank: 'Detective',
+          unitName: 'Unit 007',
+          unitDescription: 'District 007',
+          year: 2006,
+          key: 1,
+        },
+        {
           date: '2005',
           hasData: true,
           kind: 'YEAR',
-          key: '1-YEAR-2005',
+          key: '2-YEAR-2005',
         },
         {
           trrId: 1,
           category: 'Taser',
           date: 'DEC 17',
           kind: 'FORCE',
-          unitName: 'Unit 007',
-          unitDescription: 'District 007',
-          year: 2005,
-          key: 1,
-        },
-        {
-          trrId: 2,
-          category: 'Use of Force Report',
-          date: 'MAR 17',
-          kind: 'FORCE',
+          rank: 'Police Officer',
           unitName: 'Unit 007',
           unitDescription: 'District 007',
           year: 2005,
           key: 2,
         },
         {
-          date: 'JAN 7',
-          kind: 'UNIT_CHANGE',
-          oldUnitDescription: 'Mobile Strike Force',
-          oldUnitName: 'Unit 153',
+          trrId: 2,
+          category: 'Use of Force Report',
+          date: 'MAR 17',
+          kind: 'FORCE',
+          rank: 'Police Officer',
           unitName: 'Unit 007',
           unitDescription: 'District 007',
           year: 2005,
           key: 3,
         },
         {
+          date: 'JAN 7',
+          kind: 'UNIT_CHANGE',
+          oldUnitDescription: 'Mobile Strike Force',
+          oldUnitName: 'Unit 153',
+          rank: 'Police Officer',
+          unitName: 'Unit 007',
+          unitDescription: 'District 007',
+          year: 2005,
+          key: 4,
+        },
+        {
           date: '2004',
           hasData: true,
           kind: 'YEAR',
-          key: '4-YEAR-2004',
+          key: '5-YEAR-2004',
         },
         {
           trrId: 3,
           category: 'Firearm',
           date: 'DEC 17',
           kind: 'FORCE',
+          rank: 'Police Officer',
           unitName: 'Unit 153',
           unitDescription: 'Mobile Strike Force',
           year: 2004,
-          key: 4,
+          key: 5,
         },
         {
           date: '2003',
           hasData: true,
           kind: 'YEAR',
-          key: '5-YEAR-2003',
+          key: '6-YEAR-2003',
         },
         {
           attachments: [
@@ -706,10 +780,11 @@ describe('Officer new timeline selectors', function () {
           finding: 'Exonerated',
           kind: 'CR',
           outcome: 'No Action Taken',
+          rank: 'Police Officer',
           unitName: 'Unit 153',
           unitDescription: 'Mobile Strike Force',
           year: 2003,
-          key: 5,
+          key: 6,
         },
         {
           attachments: [],
@@ -719,46 +794,59 @@ describe('Officer new timeline selectors', function () {
           finding: 'Unfounded',
           kind: 'CR',
           outcome: 'No Action Taken',
+          rank: 'Police Officer',
           unitName: 'Unit 153',
           unitDescription: 'Mobile Strike Force',
           year: 2003,
-          key: 6,
+          key: 7,
         },
         {
           date: '2002',
           hasData: false,
           kind: 'YEAR',
-          key: '7-YEAR-2002',
+          key: '8-YEAR-2002',
         },
         {
           date: '2001',
           hasData: false,
           kind: 'YEAR',
-          key: '7-YEAR-2001',
+          key: '8-YEAR-2001',
         },
         {
           date: '2000',
           hasData: true,
           kind: 'YEAR',
-          key: '7-YEAR-2000',
+          key: '8-YEAR-2000',
+        },
+        {
+          date: 'APR 28',
+          kind: 'RANK_CHANGE',
+          oldRank: 'Unassigned',
+          rank: 'Police Officer',
+          unitName: 'Unit 153',
+          unitDescription: 'Mobile Strike Force',
+          year: 2000,
+          key: 8,
         },
         {
           date: 'APR 28',
           kind: 'UNIT_CHANGE',
           oldUnitDescription: 'Recruit Training Section',
           oldUnitName: 'Unit 044',
+          rank: 'Police Officer',
           unitName: 'Unit 153',
           unitDescription: 'Mobile Strike Force',
           year: 2000,
-          key: 7,
+          key: 9,
         },
         {
           date: 'FEB 5',
           kind: 'JOINED',
+          rank: 'Unassigned',
           unitName: 'Unit 044',
           unitDescription: 'Recruit Training Section',
           year: 2000,
-          key: 8,
+          key: 10,
         }
       ])
       ;
