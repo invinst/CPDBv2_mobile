@@ -1,5 +1,6 @@
 'use strict';
 var api = require(__dirname + '/../mock-api');
+const { TIMEOUT } = require(__dirname + '/../constants');
 
 const officer2235 = {
   'officer_id': 2235,
@@ -335,6 +336,7 @@ describe('OfficerPage test', function () {
 
       this.officerPage = client.page.officerPage();
       this.officerPage.navigate(this.officerPage.url(2234));
+      client.waitForElementVisible('body', TIMEOUT);
       done();
     });
 

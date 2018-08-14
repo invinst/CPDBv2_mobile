@@ -1,5 +1,6 @@
 'use strict';
 var api = require(__dirname + '/../mock-api');
+const { TIMEOUT } = require(__dirname + '/../constants');
 
 const mockSuggestionResponse = {
   'OFFICER': [
@@ -31,6 +32,7 @@ describe('SearchPageTest', function () {
     this.searchPage = client.page.search();
     this.officerPage = client.page.officerPage();
     this.searchPage.navigate();
+    client.waitForElementVisible('body', TIMEOUT);
     done();
   });
 
