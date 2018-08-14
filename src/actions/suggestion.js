@@ -42,8 +42,7 @@ export const suggestAllFromCategory = (categoryPath, query) => {
       SUGGEST_ALL_REQUEST_FAILURE
     ]
   );
-
-  return suggest({ contentType: categoryPath }, undefined, query + '/');
+  return suggest({ contentType: categoryPath, term: query }, undefined, '');
 };
 
 export const fetchSuggestedSearchItems = () => {

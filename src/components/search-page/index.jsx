@@ -34,7 +34,7 @@ export default class SearchPage extends Component {
     const query = event.currentTarget.value;
 
     if (this.isLongEnoughQuery(query)) {
-      suggestTerm({}, undefined, query + '/');
+      suggestTerm({ term: query }, undefined, '');
     }
 
     inputChanged(query);

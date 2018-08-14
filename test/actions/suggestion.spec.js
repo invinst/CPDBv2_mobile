@@ -34,9 +34,9 @@ describe('suggestions actions', function () {
         types: [SUGGEST_ALL_REQUEST_START, SUGGEST_ALL_REQUEST_SUCCESS, SUGGEST_ALL_REQUEST_FAILURE],
         payload: {
           request: {
-            url: v2Url(constants.SUGGESTION_API_ENDPOINT + query + '/'),
+            url: v2Url(constants.SUGGESTION_API_ENDPOINT),
             adapter: undefined,
-            params: { contentType: categoryPath }
+            params: { contentType: categoryPath, term: query }
           }
         }
       });
