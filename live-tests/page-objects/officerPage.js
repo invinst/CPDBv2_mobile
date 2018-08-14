@@ -67,6 +67,36 @@ const nthPercentileRow = (n) => ({
   }
 });
 
+const nthUnitChangeSection = (n) => ({
+  selector: `//div[contains(@class, "test--timeline-unit-change-item")][${n}]`,
+  locateStrategy: 'xpath',
+  elements: {
+    unitChange: {
+      selector: `(//div[contains(@class, "test--timeline-unit-change-item")][${n}])//span[@class="unit-change"]`,
+      locateStrategy: 'xpath'
+    },
+    date: {
+      selector: `(//div[contains(@class, "test--timeline-unit-change-item")][${n}])//span[@class="date"]`,
+      locateStrategy: 'xpath'
+    }
+  }
+});
+
+const nthRankChangeSection = (n) => ({
+  selector: `//div[contains(@class, "test--timeline-rank-change-item")][${n}]`,
+  locateStrategy: 'xpath',
+  elements: {
+    rankChange: {
+      selector: `(//div[contains(@class, "test--timeline-rank-change-item")][${n}])//span[@class="rank-change"]`,
+      locateStrategy: 'xpath'
+    },
+    date: {
+      selector: `(//div[contains(@class, "test--timeline-rank-change-item")][${n}])//span[@class="date"]`,
+      locateStrategy: 'xpath'
+    }
+  }
+});
+
 module.exports = {
   url: function (id) {
     return `${this.api.globals.clientUrl}/officer/${id}/`;
@@ -161,10 +191,15 @@ module.exports = {
         crItem: '.test--timeline-cr-item',
         trrItem: '.test--timeline-trr-item',
         awardItem: '.test--timeline-award-item',
-        unitChangeItem: '.test--timeline-unit-change-item',
         joinedItem: '.test--timeline-joined-item',
         yearItem: '.test--timeline-year-item',
         attachmentThumbnail: '.test--attachments .image',
+      },
+      sections: {
+        firstUnitChangeItem: nthUnitChangeSection(1),
+        secondUnitChangeItem: nthUnitChangeSection(2),
+        firstRankChangeItem: nthRankChangeSection(1),
+        secondRankChangeItem: nthRankChangeSection(2),
       }
     }
   }

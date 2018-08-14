@@ -8,15 +8,9 @@ describe('Joined component', function () {
   it('should render item correctly', function () {
     const joinedItem = {
       date: 'DEC 5',
-      isFirstRank: false,
-      isFirstUnit: false,
-      isLastRank: true,
-      isLastUnit: true,
       kind: 'JOINED',
       rank: 'Police Officer',
-      rankDisplay: ' ',
       unitDescription: 'Recruit Training Section',
-      unitDisplay: ' ',
       unitName: 'Unit 044',
       year: 1988,
     };
