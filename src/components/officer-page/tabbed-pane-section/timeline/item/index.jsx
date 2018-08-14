@@ -6,6 +6,7 @@ import Cr from './cr';
 import Trr from './trr';
 import Award from './award';
 import UnitChange from './unit-change';
+import RankChange from './rank-change';
 import Joined from './joined';
 import Year from './year';
 import { TIMELINE_ITEMS } from 'constants/officer-page/tabbed-pane-section/timeline';
@@ -34,6 +35,10 @@ export default class Item extends Component {
       [TIMELINE_ITEMS.UNIT_CHANGE]: {
         className: 'test--timeline-unit-change-item',
         item: <UnitChange { ...this.props } />
+      },
+      [TIMELINE_ITEMS.RANK_CHANGE]: {
+        className: 'test--timeline-rank-change-item',
+        item: <RankChange { ...this.props } />
       },
       [TIMELINE_ITEMS.JOINED]: {
         className: 'test--timeline-joined-item',

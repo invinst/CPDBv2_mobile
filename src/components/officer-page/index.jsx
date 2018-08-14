@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
-import { isEmpty } from 'lodash';
+import { isEmpty, noop } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
@@ -29,11 +29,11 @@ class OfficerPage extends Component {
   }
 
   componentDidMount() {
-    const { summary, pk, fetchOfficer } = this.props;
+    const { summary, pk, fetchOfficer, requestCMS, hasCMS } = this.props;
     if (!summary) {
       fetchOfficer(pk);
     }
-
+    hasCMS || requestCMS();
     GaUtil.track('event', 'officer', 'view_detail', window.location.pathname);
   }
 
@@ -95,7 +95,7 @@ class OfficerPage extends Component {
   }
 
   render() {
-    const { loading, found, summary, pk, threeCornerPercentile, metrics } = this.props;
+    const { loading, found, summary, pk, threeCornerPercentile, metrics, noDataCMSContent } = this.props;
 
     if (loading) {
       return (
@@ -112,10 +112,11 @@ class OfficerPage extends Component {
     const { name, demographic, badge, historicBadges, rank, unit, careerDuration } = summary;
     const { historicBadgesExpanded } = this.state;
 
+
     return (
       <StickyContainer className={ style.officerSummary }>
         <Sticky><Header /></Sticky>
-        <OfficerRadarChart percentileData={ threeCornerPercentile }/>
+        <OfficerRadarChart percentileData={ threeCornerPercentile } noDataCMSContent={ noDataCMSContent }/>
         <h1 className='officer-name header' onClick={ scrollToTop() }>
           { name }
         </h1>
@@ -156,12 +157,19 @@ class OfficerPage extends Component {
 OfficerPage.propTypes = {
   pk: PropTypes.number,
   fetchOfficer: PropTypes.func.isRequired,
+  requestCMS: PropTypes.func,
   loading: PropTypes.bool,
   found: PropTypes.bool,
   summary: PropTypes.object,
   metrics: PropTypes.object,
   children: PropTypes.object,
   threeCornerPercentile: PropTypes.array,
+  noDataCMSContent: PropTypes.object,
+  hasCMS: PropTypes.bool,
+};
+
+OfficerPage.defaultProps = {
+  requestCMS: noop
 };
 
 export default OfficerPage;

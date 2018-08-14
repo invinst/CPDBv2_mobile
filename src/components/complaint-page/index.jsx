@@ -8,6 +8,7 @@ import Complainant from './complainant';
 import Summary from './summary';
 import AccusedOfficers from './accused-officers';
 import ComplaintCategory from './complaint-category';
+import ComplaintIncidentDate from './complaint-incident-date';
 import Attachments from './attachments';
 import InvestigationTimeline from './investigation-timeline';
 import Investigator from './investigator';
@@ -39,6 +40,7 @@ export default class ComplaintPage extends Component {
             category={ complaint.category }
             subcategory={ complaint.subcategory }
           />
+          <ComplaintIncidentDate incidentDate={ complaint.incidentDate } />
           <AccusedOfficers officers={ complaint.coaccused } />
           <div className='complaint-info'>
             <Victim victims={ complaint.victims } />
