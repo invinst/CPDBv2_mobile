@@ -28,7 +28,7 @@ const mockSearchQueryResponse = {
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
     api.mock('GET', '/api/v2/search-mobile/', 200, mockSuggestionResponse);
-    api.mock('GET', '/api/v2/search-mobile/wh/', 200, mockSearchQueryResponse);
+    api.mock('GET', '/api/v2/search-mobile/?term=wh', 200, mockSearchQueryResponse);
     this.searchPage = client.page.search();
     this.officerPage = client.page.officerPage();
     this.searchPage.navigate();

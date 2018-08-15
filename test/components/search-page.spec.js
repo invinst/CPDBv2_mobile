@@ -121,7 +121,7 @@ describe('<SearchPage />', function () {
 
       instance.onInputChange(dummyEvent);
 
-      spySuggestTerm.calledWith({}, undefined, 'foo/').should.be.true();
+      spySuggestTerm.calledWith({ term: 'foo' }, undefined, '').should.be.true();
     });
 
     it('should NOT call suggestTerm if query is empty or too short', () => {
