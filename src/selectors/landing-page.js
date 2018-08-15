@@ -49,3 +49,7 @@ export const complaintSummariesSelector = createSelector(
     };
   })
 );
+
+export const getCMSRequested = state => state.landingPage.cmsRequested;
+
+export const getEmbed = (props) => compact(get(props, 'location.pathname', '').split('/'))[0] === 'embed';

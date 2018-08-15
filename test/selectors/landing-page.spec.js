@@ -3,7 +3,10 @@ import {
   recentActivitiesSelector,
   newDocumentAllegationsSelector,
   complaintSummariesSelector,
+  getCMSRequested,
+  getEmbed
 } from 'selectors/landing-page';
+
 
 describe('landing page selectors', function () {
   it('topOfficersByAllegationSelector', () => {
@@ -115,5 +118,16 @@ describe('landing page selectors', function () {
         categories: 'Use Of Force'
       }
     ]);
+  });
+
+  it('getCMSRequested', () => {
+    getCMSRequested({ landingPage: { cmsRequested: true } }).should.be.true();
+    getCMSRequested({ landingPage: { cmsRequested: false } }).should.be.false();
+  });
+
+  it('getEmbed', () => {
+    getEmbed({ location: { pathname: 'embed/top-officers-page' } }).should.be.true();
+    getEmbed({ location: { pathname: 'top-officers-page' } }).should.be.false();
+    getEmbed({ }).should.be.false();
   });
 });
