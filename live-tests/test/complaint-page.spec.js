@@ -91,6 +91,7 @@ describe('ComplaintPageTest', function () {
     );
     this.complaintPage = client.page.complaintPage();
     client.url(`${client.globals.clientUrl}/complaint/1053667/`);
+    client.waitForElementVisible('body');
     done();
   });
 
@@ -131,6 +132,7 @@ describe('ComplaintPageTest', function () {
       'Apr 30, 2012\nIncident Occurs\nInvestigation Begins\nInvestigation Closed'
     );
     this.complaintPage.expect.element('@firstInvestigator').text.to.contain('Peter Parker');
+    this.complaintPage.expect.element('@incidentDate').text.to.equal('APR 30, 2012');
   });
 
   it('should show proper cr location', function () {

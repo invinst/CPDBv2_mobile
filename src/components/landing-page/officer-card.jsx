@@ -7,16 +7,18 @@ import constants from 'constants';
 import style from './officer-card.sass';
 
 
-const OfficerCard = ({ officer }) => {
+const OfficerCard = ({ officer, openCardInNewPage }) => {
+  const { percentile } = officer;
   return (
     <Link
       to={ `${constants.OFFICER_PATH}${officer.id}/` }
+      target={ openCardInNewPage ? '_blank' : null }
       className={ style.officerCard }>
       <div className='radar-chart'>
         <RadarChart
           radius={ 170 }
-          backgroundColor={ officer.percentile.visualTokenBackground }
-          data={ officer.percentile.items }
+          backgroundColor={ percentile && percentile.visualTokenBackground }
+          data={ percentile && percentile.items }
         />
       </div>
       <div className='officer-info'>
@@ -31,7 +33,8 @@ const OfficerCard = ({ officer }) => {
 };
 
 OfficerCard.propTypes = {
-  officer: PropTypes.object
+  officer: PropTypes.object,
+  openCardInNewPage: PropTypes.bool
 };
 
 export default OfficerCard;

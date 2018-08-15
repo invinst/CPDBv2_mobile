@@ -24,8 +24,8 @@ const PoliceWitness = ({ policeWitnesses=[] }) => {
           >
             <div className='visual-token'>
               <RadarChart
-                backgroundColor={ policeWitness.percentile.visualTokenBackground }
-                data={ policeWitness.percentile.items }
+                backgroundColor={ policeWitness.percentile && policeWitness.percentile.visualTokenBackground }
+                data={ policeWitness.percentile && policeWitness.percentile.items }
               />
             </div>
             <div className='police-witness-info'>

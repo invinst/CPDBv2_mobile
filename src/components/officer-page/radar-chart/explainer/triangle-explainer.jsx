@@ -6,7 +6,10 @@ import DescriptionContent from './description-content';
 
 export default class TriangleExplainer extends Component {
   render() {
-    const { leftNavHandler, rightNavHandler, closeExplainer, radarChartData } = this.props;
+    const {
+      leftNavHandler, rightNavHandler, closeExplainer, radarChartData,
+      descriptionCMSContent, subDescriptionCMSContent
+    } = this.props;
     const { items } = radarChartData;
 
     const triangleConfig = {
@@ -22,14 +25,8 @@ export default class TriangleExplainer extends Component {
     };
     const content = (
       <DescriptionContent
-        content={
-          'The triangle shows the percentile rank for this officer in each of three types of data: ' +
-          'complaints from civilians, complaints from other police officers, and self-reported uses of force.'
-        }
-        subContent={
-          'If one corner of the inner triangle is close to reaching the outer triangle,' +
-          'then this officer is named in a relatively high rate of incidents of that type.'
-        }
+        content={ descriptionCMSContent }
+        subContent={ subDescriptionCMSContent }
       />
     );
 
@@ -53,4 +50,6 @@ TriangleExplainer.propTypes = {
   closeExplainer: PropTypes.func,
   leftNavHandler: PropTypes.func,
   rightNavHandler: PropTypes.func,
+  descriptionCMSContent: PropTypes.object,
+  subDescriptionCMSContent: PropTypes.object,
 };

@@ -1,5 +1,7 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { mount } from 'enzyme';
 import { spy } from 'sinon';
 
 import RadarExplainer from 'components/officer-page/radar-chart/explainer';
@@ -38,12 +40,26 @@ describe('Explainer component', function () {
     visualTokenBackground: 'white'
   }];
 
+  const mockStore = configureStore();
+  const store = mockStore({
+    officerPage: {
+      cms: [{ type: 'rich_text', name: 'triangle_description' }]
+    }
+  });
+
   it('should render TriangleExplainer by default', function () {
     const closeExplainerSpy = spy();
-    const wrapper = shallow(
-      <RadarExplainer percentileData={ data } closeExplainer={ closeExplainerSpy }/>
+
+    let radarExplainer = null;
+    const wrapper = mount(
+      <Provider store={ store }>
+        <RadarExplainer
+          ref={ (c) => {radarExplainer = c;} }
+          percentileData={ data }
+          closeExplainer={ closeExplainerSpy }
+        />
+      </Provider>
     );
-    const instance = wrapper.instance();
 
     const triangleExplainer = wrapper.find(TriangleExplainer);
     triangleExplainer.exists().should.be.true();
@@ -59,13 +75,15 @@ describe('Explainer component', function () {
       visualTokenBackground: 'white'
     });
     triangleExplainer.prop('closeExplainer').should.equal(closeExplainerSpy);
-    triangleExplainer.prop('leftNavHandler').should.equal(instance.navigateLeft);
-    triangleExplainer.prop('rightNavHandler').should.equal(instance.navigateRight);
+    triangleExplainer.prop('leftNavHandler').should.equal(radarExplainer.navigateLeft);
+    triangleExplainer.prop('rightNavHandler').should.equal(radarExplainer.navigateRight);
   });
 
   it('should navigate correctly between explainers', function () {
     const wrapper = mount(
-      <RadarExplainer percentileData={ data }/>
+      <Provider store={ store }>
+        <RadarExplainer percentileData={ data }/>
+      </Provider>
     );
 
     wrapper.find(TriangleExplainer).exists().should.be.true();
@@ -98,7 +116,9 @@ describe('Explainer component', function () {
   it('should invoke closeExplainer when clicking on the close button', function () {
     const closeExplainerSpy = spy();
     const wrapper = mount(
-      <RadarExplainer percentileData={ data } closeExplainer={ closeExplainerSpy }/>
+      <Provider store={ store }>
+        <RadarExplainer percentileData={ data } closeExplainer={ closeExplainerSpy }/>
+      </Provider>
     );
     const explainer = wrapper.find(TriangleExplainer);
 

@@ -20,8 +20,8 @@ const OfficerItem = ({ name, badge, url, percentile, saveToRecent }) => {
       <div className='radar-chart-wrapper'>
         <RadarChart
           radius={ 150 }
-          backgroundColor={ percentile.visualTokenBackground }
-          data={ percentile.items }
+          backgroundColor={ percentile && percentile.visualTokenBackground }
+          data={ percentile && percentile.items }
        />
       </div>
       <div className='officer-info'>

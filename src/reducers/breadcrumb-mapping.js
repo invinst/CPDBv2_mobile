@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import { OFFICER_REQUEST_SUCCESS } from 'actions/officer';
+import { OFFICER_REQUEST_SUCCESS } from 'actions/officer-page';
 import { COMPLAINT_REQUEST_SUCCESS } from 'actions/complaint-page';
 import { TRR_REQUEST_SUCCESS } from 'actions/trr-page';
 

@@ -4,8 +4,10 @@ import { scaleLinear } from 'd3-scale';
 import Modal from 'react-modal';
 
 import StaticRadarChart from 'components/common/radar-chart';
-import RadarExplainer from './radar-chart/explainer';
+import RadarExplainer from './explainer';
 import style from './radar-chart.sass';
+import { hasEnoughRadarChartData } from 'utils/visual-token';
+import CMSContent from 'components/landing-page/cms-content';
 
 
 export default class AnimatedRadarChart extends Component {
@@ -19,7 +21,7 @@ export default class AnimatedRadarChart extends Component {
     this.velocity = 0.1;
     this.timer = null;
 
-    this.animatedData = filter(props.percentileData, item => item.hasEnoughPercentile);
+    this.animatedData = this.getAnimatedData(props.percentileData);
 
     this.openExplainer = this.openExplainer.bind(this);
     this.closeExplainer = this.closeExplainer.bind(this);
@@ -33,7 +35,7 @@ export default class AnimatedRadarChart extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!isEqual(this.props.percentileData, nextProps.percentileData)) {
-      this.animatedData = filter(nextProps.percentileData, item => item.hasEnoughPercentile);
+      this.animatedData = this.getAnimatedData(nextProps.percentileData);
     }
   }
 
@@ -45,6 +47,10 @@ export default class AnimatedRadarChart extends Component {
 
   componentWillUnmount() {
     this.stopTimer();
+  }
+
+  getAnimatedData(data) {
+    return filter(data, item => hasEnoughRadarChartData(item.items));
   }
 
   animate() {
@@ -115,8 +121,7 @@ export default class AnimatedRadarChart extends Component {
 
   render() {
     const { transitionValue, explainerOpened } = this.state;
-    const { percentileData } = this.props;
-    if (!percentileData) return null;
+    const { percentileData, noDataCMSContent } = this.props;
 
     const itemData = this.getCurrentTransitionData();
 
@@ -128,45 +133,64 @@ export default class AnimatedRadarChart extends Component {
         top: 0,
         left: 0,
         width: '100%',
-        height: '100vh',
-        minHeight: '100vh',
+        height: 'calc(100vh - 40px)',
+        minHeight: 'calc(100vh - 40px)',
         padding: 0
       }
     };
 
-    Modal.setAppElement('body');
-
-    return (!!itemData) && (
-      <div className={ style.animatedRadarChart }>
-        <div className='radar-chart-container' onClick={ this.openExplainer }>
-          <StaticRadarChart
-            backgroundColor={ itemData.visualTokenBackground }
-            fadeOutLegend={ transitionValue >= (this.animatedData.length - 1) }
-            data={ itemData.items }
-            showSpineLine={ false }
-            showGrid={ true }
-            gridOpacity={ 0.5 }
-            showAxisTitle={ true }
-            radius={ 121 }
-            axisTitleFontSize={ 23 }
-            axisTitleFontWeight={ 200 }
-            textColor='#f5f4f4'
-            gridColor='white'
-            yAxisCenter={ 133 }
-          />
-          <div className='explainer-open-button'>
-            { <span className='inner'>?</span> }
+    if (itemData) {
+      return (
+        <div className={ style.animatedRadarChart }>
+          <div className='radar-chart-container' onClick={ this.openExplainer }>
+            <StaticRadarChart
+              backgroundColor={ itemData.visualTokenBackground }
+              fadeOutLegend={ transitionValue >= (this.animatedData.length - 1) }
+              data={ itemData.items }
+              showSpineLine={ false }
+              showGrid={ true }
+              gridOpacity={ 0.5 }
+              showAxisTitle={ true }
+              radius={ 121 }
+              axisTitleFontSize={ 23 }
+              axisTitleFontWeight={ 200 }
+              textColor='#f5f4f4'
+              gridColor='white'
+              yAxisCenter={ 133 }
+            />
+            <div className='explainer-open-button'>
+              { <span className='inner'>?</span> }
+            </div>
           </div>
+          <Modal isOpen={ explainerOpened } style={ explainerModalStyles }>
+            <RadarExplainer percentileData={ percentileData } closeExplainer={ this.closeExplainer }/>
+          </Modal>
         </div>
-        <Modal isOpen={ explainerOpened } style={ explainerModalStyles }>
-          <RadarExplainer percentileData={ percentileData } closeExplainer={ this.closeExplainer }/>
-        </Modal>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className={ style.animatedRadarChart }>
+          <StaticRadarChart
+            numMetrics={ 3 }
+            radius={ 121 }
+            yAxisCenter={ 133 }
+            showGrid={ true }
+            gridColor='#8f8f8f'
+            boundaryAreaColor='#adadad'
+          />
+          {
+            noDataCMSContent ? (
+              <CMSContent className='no-data-text' content={ noDataCMSContent }/>
+            ) : null
+          }
+        </div>
+      );
+    }
   }
 }
 
 
 AnimatedRadarChart.propTypes = {
-  percentileData: PropTypes.array
+  percentileData: PropTypes.array,
+  noDataCMSContent: PropTypes.object,
 };

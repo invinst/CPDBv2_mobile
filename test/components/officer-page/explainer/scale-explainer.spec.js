@@ -5,6 +5,7 @@ import { spy } from 'sinon';
 import ScaleExplainer from 'components/officer-page/radar-chart/explainer/scale-explainer';
 import ExplainerLayout from 'components/officer-page/radar-chart/explainer/explainer-layout';
 import DescriptionContent from 'components/officer-page/radar-chart/explainer/description-content';
+import { EditorState } from 'draft-js';
 
 
 describe('ScaleExplainer component', function () {
@@ -24,6 +25,8 @@ describe('ScaleExplainer component', function () {
     const closeExplainerSpy = spy();
     const leftNavHandlerSpy = spy();
     const rightNavHandlerSpy = spy();
+    const descriptionCMSContent = EditorState.createEmpty();
+    const subDescriptionCMSContent = EditorState.createEmpty();
 
     const wrapper = mount(
       <ScaleExplainer
@@ -31,6 +34,8 @@ describe('ScaleExplainer component', function () {
         closeExplainer={ closeExplainerSpy }
         leftNavHandler={ leftNavHandlerSpy }
         rightNavHandler={ rightNavHandlerSpy }
+        descriptionCMSContent={ descriptionCMSContent }
+        subDescriptionCMSContent={ subDescriptionCMSContent }
       />
     );
 
@@ -63,14 +68,7 @@ describe('ScaleExplainer component', function () {
 
     const descriptionContent = layout.find(DescriptionContent);
 
-    descriptionContent.prop('content').should.equal(
-      'The scale is based on this officer’s percentile rank. ' +
-      'This is relative to all other officers for whom data is available during the same years.'
-    );
-    descriptionContent.prop('subContent').should.equal(
-      'If an officer’s percentile rank for civilian complaints is 99% ' +
-      'then this means that they were accused in more civilian complaints per year than 99 % ' +
-      'of other officers for whom data is available during the same years.'
-    );
+    descriptionContent.prop('content').should.equal(descriptionCMSContent);
+    descriptionContent.prop('subContent').should.equal(subDescriptionCMSContent);
   });
 });

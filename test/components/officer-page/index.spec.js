@@ -19,14 +19,6 @@ import TimeLine from 'components/officer-page/tabbed-pane-section/timeline';
 
 
 const mockStore = configureStore();
-const store = mockStore({
-  suggestionApp: {
-    query: ''
-  },
-  breadcrumb: {
-    breadcrumbs: []
-  }
-});
 
 describe('<OfficerPage />', function () {
   beforeEach(function () {
@@ -84,6 +76,10 @@ describe('<OfficerPage />', function () {
   });
 
   it('should be tracked by Google Analytics when mounted', function () {
+    const store = mockStore({
+      suggestionApp: { query: '' },
+      breadcrumb: { breadcrumbs: [] }
+    });
     mount(
       <Provider store={ store }>
         <OfficerPage loading={ false } found={ false } getOfficerSummary={ noop } fetchOfficer={ noop }/>
@@ -233,7 +229,13 @@ describe('<OfficerPage />', function () {
             }
           }
         },
-        timeline: timeline
+        timeline: timeline,
+        cms: [
+          {
+            type: 'rich_text',
+            name: 'triangle_description'
+          }
+        ]
       }
     };
 
@@ -288,7 +290,6 @@ describe('<OfficerPage />', function () {
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
         year: 2006,
-        hasEnoughPercentile: true,
       }, {
         items: [{
           axis: 'Use of Force Reports',
@@ -304,7 +305,6 @@ describe('<OfficerPage />', function () {
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
         year: 2007,
-        hasEnoughPercentile: true,
       }]);
     });
 
@@ -466,6 +466,12 @@ describe('<OfficerPage />', function () {
             }
           },
           timeline: timeline,
+          cms: [
+            {
+              type: 'rich_text',
+              name: 'triangle_description'
+            }
+          ]
         }
       };
 
@@ -525,6 +531,12 @@ describe('<OfficerPage />', function () {
             }
           },
           timeline: timeline,
+          cms: [
+            {
+              type: 'rich_text',
+              name: 'triangle_description'
+            }
+          ]
         }
       };
 

@@ -1,13 +1,12 @@
-import { stub } from 'sinon';
-
 import {
   topOfficersByAllegationSelector,
   recentActivitiesSelector,
   newDocumentAllegationsSelector,
   complaintSummariesSelector,
-  cmsSelector
+  getCMSRequested,
+  getEmbed
 } from 'selectors/landing-page';
-import * as draftjsUtils from 'utils/draftjs';
+
 
 describe('landing page selectors', function () {
   it('topOfficersByAllegationSelector', () => {
@@ -24,7 +23,7 @@ describe('landing page selectors', function () {
       }
     }).should.deepEqual([{
       id: 123,
-      percentile: {}
+      percentile: null
     }]);
   });
 
@@ -50,7 +49,7 @@ describe('landing page selectors', function () {
       }
     }).should.deepEqual([{
       id: 124,
-      percentile: {},
+      percentile: null,
       type: 'single_officer'
     }]);
   });
@@ -121,25 +120,14 @@ describe('landing page selectors', function () {
     ]);
   });
 
-  it('cmsSelector', () => {
-    stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
-    const state = {
-      landingPage: {
-        cms: [
-          {
-            name: 'title_field',
-            value: 'title'
-          },
-          {
-            name: 'desc_field',
-            value: 'desc'
-          }
-        ]
-      }
-    };
+  it('getCMSRequested', () => {
+    getCMSRequested({ landingPage: { cmsRequested: true } }).should.be.true();
+    getCMSRequested({ landingPage: { cmsRequested: false } }).should.be.false();
+  });
 
-    cmsSelector('title_field')(state).should.eql('title');
-    draftjsUtils.convertContentStateToEditorState.calledWith('title').should.be.true();
-    draftjsUtils.convertContentStateToEditorState.restore();
+  it('getEmbed', () => {
+    getEmbed({ location: { pathname: 'embed/top-officers-page' } }).should.be.true();
+    getEmbed({ location: { pathname: 'top-officers-page' } }).should.be.false();
+    getEmbed({ }).should.be.false();
   });
 });

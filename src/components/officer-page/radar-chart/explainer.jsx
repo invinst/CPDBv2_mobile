@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { last } from 'lodash';
 
-import TriangleExplainer from './explainer/triangle-explainer';
-import ScaleExplainer from './explainer/scale-explainer';
+import TriangleExplainerContainer from 'containers/officer-page/triangle-explainer-container';
+import ScaleExplainerContainer from 'containers/officer-page/scale-explainer-container';
 import PercentileExplainer from './explainer/percentile-explainer';
 
 const numType = 3;
@@ -36,7 +36,7 @@ export default class RadarExplainer extends Component {
     switch (this.state.currentIndex) {
       case 1:
         return (
-          <ScaleExplainer
+          <ScaleExplainerContainer
             radarChartData={ radarChartData }
             closeExplainer={ closeExplainer }
             leftNavHandler={ this.navigateLeft }
@@ -54,7 +54,7 @@ export default class RadarExplainer extends Component {
         );
       default:
         return (
-          <TriangleExplainer
+          <TriangleExplainerContainer
             radarChartData={ radarChartData }
             closeExplainer={ closeExplainer }
             leftNavHandler={ this.navigateLeft }

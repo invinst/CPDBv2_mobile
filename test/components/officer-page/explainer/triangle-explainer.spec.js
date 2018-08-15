@@ -5,6 +5,7 @@ import { spy } from 'sinon';
 import TriangleExplainer from 'components/officer-page/radar-chart/explainer/triangle-explainer';
 import ExplainerLayout from 'components/officer-page/radar-chart/explainer/explainer-layout';
 import DescriptionContent from 'components/officer-page/radar-chart/explainer/description-content';
+import { EditorState } from "draft-js";
 
 
 describe('TriangleExplainer component', function () {
@@ -24,6 +25,8 @@ describe('TriangleExplainer component', function () {
     const closeExplainerSpy = spy();
     const leftNavHandlerSpy = spy();
     const rightNavHandlerSpy = spy();
+    const descriptionCMSContent = EditorState.createEmpty();
+    const subDescriptionCMSContent = EditorState.createEmpty();
 
     const wrapper = mount(
       <TriangleExplainer
@@ -31,6 +34,8 @@ describe('TriangleExplainer component', function () {
         closeExplainer={ closeExplainerSpy }
         leftNavHandler={ leftNavHandlerSpy }
         rightNavHandler={ rightNavHandlerSpy }
+        descriptionCMSContent={ descriptionCMSContent }
+        subDescriptionCMSContent={ subDescriptionCMSContent }
       />
     );
 
@@ -59,13 +64,7 @@ describe('TriangleExplainer component', function () {
 
     const descriptionContent = layout.find(DescriptionContent);
 
-    descriptionContent.prop('content').should.equal(
-      'The triangle shows the percentile rank for this officer in each of three types of data: ' +
-      'complaints from civilians, complaints from other police officers, and self-reported uses of force.'
-    );
-    descriptionContent.prop('subContent').should.equal(
-      'If one corner of the inner triangle is close to reaching the outer triangle,' +
-      'then this officer is named in a relatively high rate of incidents of that type.'
-    );
+    descriptionContent.prop('content').should.equal(descriptionCMSContent);
+    descriptionContent.prop('subContent').should.equal(subDescriptionCMSContent);
   });
 });

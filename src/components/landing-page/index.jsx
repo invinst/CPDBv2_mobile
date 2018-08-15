@@ -15,10 +15,11 @@ import style from './landing-page.sass';
 export default class LandingPage extends Component {
   componentDidMount() {
     const {
-      requestCMS, pushBreadcrumbs, location, routes, params
+      requestCMS, pushBreadcrumbs, location, routes, params, cmsRequested
     } = this.props;
     pushBreadcrumbs({ location, routes, params });
-    requestCMS();
+
+    cmsRequested || requestCMS();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,6 +59,7 @@ LandingPage.defaultProps = {
 LandingPage.propTypes = {
   pushBreadcrumbs: PropTypes.func,
   requestCMS: PropTypes.func,
+  cmsRequested: PropTypes.bool,
   title: PropTypes.object,
   description: PropTypes.object,
   location: PropTypes.object,

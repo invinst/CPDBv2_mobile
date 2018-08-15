@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
-import { isEmpty } from 'lodash';
+import { isEmpty, noop } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
@@ -9,11 +9,11 @@ import { scrollToTop } from 'utils/navigation-util';
 import Header from 'components/shared/header';
 import LoadingPage from 'components/shared/loading-page';
 import BottomPadding from 'components/shared/bottom-padding';
-import NotMatchedOfficerPage from './officer-page/not-matched-officer-page';
-import SectionRow from './officer-page/section-row';
+import NotMatchedOfficerPage from './not-matched-officer-page';
+import SectionRow from './section-row';
 import style from './officer-page.sass';
-import OfficerRadarChart from './officer-page/radar-chart';
-import MetricWidget from './officer-page/metric-widget';
+import OfficerRadarChart from './radar-chart';
+import MetricWidget from './metric-widget';
 import { roundedPercentile } from 'utils/calculation';
 import navigationArrow from 'img/disclosure-indicator.svg';
 import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
@@ -29,11 +29,11 @@ class OfficerPage extends Component {
   }
 
   componentDidMount() {
-    const { summary, pk, fetchOfficer } = this.props;
+    const { summary, pk, fetchOfficer, requestCMS, hasCMS } = this.props;
     if (!summary) {
       fetchOfficer(pk);
     }
-
+    hasCMS || requestCMS();
     GaUtil.track('event', 'officer', 'view_detail', window.location.pathname);
   }
 
@@ -95,7 +95,7 @@ class OfficerPage extends Component {
   }
 
   render() {
-    const { loading, found, summary, pk, threeCornerPercentile, metrics } = this.props;
+    const { loading, found, summary, pk, threeCornerPercentile, metrics, noDataCMSContent } = this.props;
 
     if (loading) {
       return (
@@ -112,10 +112,11 @@ class OfficerPage extends Component {
     const { name, demographic, badge, historicBadges, rank, unit, careerDuration } = summary;
     const { historicBadgesExpanded } = this.state;
 
+
     return (
       <StickyContainer className={ style.officerSummary }>
         <Sticky><Header /></Sticky>
-        <OfficerRadarChart percentileData={ threeCornerPercentile }/>
+        <OfficerRadarChart percentileData={ threeCornerPercentile } noDataCMSContent={ noDataCMSContent }/>
         <h1 className='officer-name header' onClick={ scrollToTop() }>
           { name }
         </h1>
@@ -156,12 +157,19 @@ class OfficerPage extends Component {
 OfficerPage.propTypes = {
   pk: PropTypes.number,
   fetchOfficer: PropTypes.func.isRequired,
+  requestCMS: PropTypes.func,
   loading: PropTypes.bool,
   found: PropTypes.bool,
   summary: PropTypes.object,
   metrics: PropTypes.object,
   children: PropTypes.object,
   threeCornerPercentile: PropTypes.array,
+  noDataCMSContent: PropTypes.object,
+  hasCMS: PropTypes.bool,
+};
+
+OfficerPage.defaultProps = {
+  requestCMS: noop
 };
 
 export default OfficerPage;

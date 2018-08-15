@@ -47,7 +47,7 @@ describe('search-page selectors', () => {
           id: 1,
           name: 'Name',
           badge: '',
-          percentile: {},
+          percentile: null,
           url: `${constants.OFFICER_PATH}1/`,
         }]
       });
@@ -67,7 +67,7 @@ describe('search-page selectors', () => {
         name: 'Name',
         badge: 'Badge #12314',
         url: `${constants.OFFICER_PATH}1/`,
-        percentile: {}
+        percentile: null
       };
 
       const state = {

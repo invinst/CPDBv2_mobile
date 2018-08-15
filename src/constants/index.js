@@ -204,6 +204,7 @@ export default {
   OFFICER_API_ENDPOINT: '/mobile/officers/',
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
   LANDING_PAGE_CMS_API_ENDPOINT: '/cms-pages/landing-page/',
+  OFFICER_PAGE_CMS_API_ENDPOINT: '/cms-pages/officer-page/',
   COMPLAINT_API_ENDPOINT: '/mobile/cr/',
   TRR_API_ENDPOINT: '/mobile/trr/',
   TOP_OFFICERS_BY_ALLEGATION_ENDPOINT: '/officers/top-by-allegation/',
@@ -236,6 +237,7 @@ export default {
   OFFICER_PATH: '/officer/',
   COMPLAINT_PATH: '/complaint/',
   TRR_PATH: '/trr/',
+  EMBED_TOP_OFFICER_PATH: '/embed/top-officers-page',
 
   // Routes that don't have their corresponding component.
   // NavigationUtil.goUp() skips all of these.

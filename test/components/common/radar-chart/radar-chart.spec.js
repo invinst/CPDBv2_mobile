@@ -1,8 +1,7 @@
 import React from 'react';
-import { spy } from 'sinon';
 import { shallow } from 'enzyme';
 
-import RadarChart from 'components/common/radar-chart';
+import RadarChart from 'components/common/radar-chart/radar-chart';
 import RadarArea from 'components/common/radar-chart/radar-area';
 import RadarAxis from 'components/common/radar-chart/radar-axis';
 import RadarSpineLine from 'components/common/radar-chart/radar-spine-line';
@@ -31,9 +30,23 @@ describe('RadarChart component', function () {
 
   it('should render if default radar chart if data provided', () => {
     const wrapper = shallow(<RadarChart data={ data }/>);
-    wrapper.find(RadarAxis).exists().should.be.true();
     wrapper.find(RadarArea).exists().should.be.true();
     wrapper.find(RadarSpineLine).exists().should.be.true();
+    wrapper.find('.radar-boundary-area').exists().should.be.true();
+  });
+
+  it('should show RadarAxis if there is data and showAxisTitle || showAxisValue', function () {
+    let wrapper = shallow(<RadarChart data={ data } showAxisTitle={ true }/>);
+    wrapper.find(RadarAxis).exists().should.be.true();
+
+    wrapper = shallow(<RadarChart data={ data }/>);
+    wrapper.find(RadarAxis).exists().should.be.false();
+
+    wrapper = shallow(<RadarChart data={ data } showAxisValue={ true }/>);
+    wrapper.find(RadarAxis).exists().should.be.true();
+
+    wrapper = shallow(<RadarChart data={ [] } showAxisTitle={ true } showAxisValue={ true }/>);
+    wrapper.find(RadarAxis).exists().should.be.false();
   });
 
   it('should render grid if showGrid is true', function () {
@@ -60,14 +73,5 @@ describe('RadarChart component', function () {
     const wrapper = shallow(<RadarChart data={ data } backgroundColor='red'/>);
 
     wrapper.prop('style').backgroundColor.should.equal('red');
-  });
-
-  it('should simulate click action on svg ', () => {
-    const clickHandler = spy();
-    const wrapper = shallow(<RadarChart data={ data } onClick={ clickHandler }/>);
-
-    clickHandler.called.should.be.false();
-    wrapper.simulate('click');
-    clickHandler.calledOnce.should.be.true();
   });
 });
