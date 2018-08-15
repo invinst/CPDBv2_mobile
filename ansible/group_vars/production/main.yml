@@ -33,7 +33,7 @@ deploy:
 
   deploy_to: "{{ _deploy_to }}"
   releases: "{{ _releases }}"
-  logs: "{{ _logs }}"x
+  logs: "{{ _logs }}"
   current: "{{ _current }}"
   temp: "/tmp/mobilev2-build-"
 
