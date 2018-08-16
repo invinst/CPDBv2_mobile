@@ -6,6 +6,7 @@ import HorizontalScrolling from './horizontal-scrolling';
 import OfficerCard from './officer-card';
 import style from './top-officers-by-allegation.sass';
 import { showIntercomLauncher } from 'utils/intercom';
+import classnames from 'classnames';
 
 
 export default class TopOfficersByAllegation extends Component {
@@ -30,7 +31,7 @@ export default class TopOfficersByAllegation extends Component {
     const { topOfficersByAllegation, description, title, embed } = this.props;
 
     return (
-      <div className={ style.topOfficersByAllegation }>
+      <div className={ classnames(style.topOfficersByAllegation, { embed: embed } ) }>
         <CMSContent className='carousel-title' content={ title } />
         <HorizontalScrolling>
           <CMSContent className='carousel-description' content={ description } />
