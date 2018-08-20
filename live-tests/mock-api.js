@@ -32,11 +32,11 @@ var buildApi = function () {
 
   var call = function (req) {
     var uri = req.originalUrl;
-    var doNothing = function () {};
+    var return404 = (response) => response.status(404).send();
     if (req.method === 'POST') {
-      return ((handleMap[req.method] || {})[uri] || {})[hashBody(req.body)] || doNothing;
+      return ((handleMap[req.method] || {})[uri] || {})[hashBody(req.body)] || return404;
     } else {
-      return (handleMap[req.method] || {})[uri] || doNothing;
+      return (handleMap[req.method] || {})[uri] || return404;
     }
   };
 
