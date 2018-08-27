@@ -32,7 +32,7 @@ describe('GATracking utils', function () {
         eventCategory: 'search',
         eventAction: 'num_results',
         eventValue: 12
-      }).should.be.true();;
+      }).should.be.true();
     });
   });
 
@@ -50,7 +50,7 @@ describe('GATracking utils', function () {
         eventCategory: 'search',
         eventAction: 'change_query',
         eventLabel: 'quer'
-      }).should.be.true();;
+      }).should.be.true();
 
       clock.tick(1000);
       GATracking.trackSearchQuery('query');
@@ -71,7 +71,7 @@ describe('GATracking utils', function () {
         eventCategory: 'visual_token_explainer',
         eventAction: 'open',
         eventValue: 123
-      }).should.be.true();;
+      }).should.be.true();
     });
   });
 });

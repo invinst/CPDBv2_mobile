@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount, shallow } from 'enzyme';
-import { spy, stub } from 'sinon';
+import { spy } from 'sinon';
 import { cloneDeep, noop } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
@@ -13,7 +13,6 @@ import OfficerRadarChart from 'components/officer-page/radar-chart';
 import LoadingPage from 'components/shared/loading-page';
 import NotMatchedOfficerPage from 'components/officer-page/not-matched-officer-page';
 import SectionRow from 'components/officer-page/section-row';
-import GaUtil from 'utils/ga-util';
 import MetricWidget from 'components/officer-page/metric-widget';
 import TimeLine from 'components/officer-page/tabbed-pane-section/timeline';
 
@@ -44,12 +43,6 @@ describe('<OfficerPage />', function () {
       trrPercentile: 9.0,
       civilianComplimentCount: 10,
     };
-
-    this.stubTrack = stub(GaUtil, 'track');
-  });
-
-  afterEach(function () {
-    this.stubTrack.restore();
   });
 
   it('should be renderable', function () {
@@ -85,13 +78,6 @@ describe('<OfficerPage />', function () {
         <OfficerPage loading={ false } found={ false } getOfficerSummary={ noop } fetchOfficer={ noop }/>
       </Provider>
     );
-
-    this.stubTrack.calledWith(
-      'event',
-      'officer',
-      'view_detail',
-      window.location.pathname
-    ).should.be.true();
   });
 
   it('should not fetch officer data if summary is already available', function () {

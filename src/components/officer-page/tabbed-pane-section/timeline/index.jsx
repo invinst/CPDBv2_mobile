@@ -5,7 +5,6 @@ import cx from 'classnames';
 import style from './timeline.sass';
 import Item from './item';
 import { TIMELINE_ITEMS } from 'constants/officer-page/tabbed-pane-section/timeline';
-import GaUtil from 'utils/ga-util';
 
 
 export default class Timeline extends Component {
@@ -14,7 +13,6 @@ export default class Timeline extends Component {
     if (isEmpty(items)) {
       getOfficerTimeline(officerId);
     }
-    GaUtil.track('event', 'officer', 'view_detail', window.location.pathname);
   }
 
   renderItems() {
