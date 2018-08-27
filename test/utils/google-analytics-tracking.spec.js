@@ -12,7 +12,7 @@ describe('trackOpenExplainer', function () {
     window.ga.restore();
   });
 
-  it('trackOpenExplainer should call ga correctly', function () {
+  it('should call ga correctly', function () {
     trackOpenExplainer(123);
 
     window.ga.calledWith('send', {
