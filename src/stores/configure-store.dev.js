@@ -6,6 +6,8 @@ import configuredAxiosMiddleware from 'middleware/configured-axios-middleware';
 import rootReducer from 'reducers/root-reducer';
 import localStorageConfig from './local-storage-config';
 import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
+import trackingMiddleware from 'middleware/tracking-middleware';
+
 
 const logger = createLogger({
   diff: true
@@ -17,7 +19,7 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     compose(
-      applyMiddleware(thunk, configuredAxiosMiddleware, logger, scrollPositionMiddleware),
+      applyMiddleware(thunk, configuredAxiosMiddleware, logger, scrollPositionMiddleware, trackingMiddleware),
       persistState(()=>{}, localStorageConfig),
       window.devToolsExtension ? window.devToolsExtension() : f => f
     )
