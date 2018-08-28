@@ -44,38 +44,52 @@ export const unitsSelector = createSelector(
   }
 );
 
+const crFormatter = (crs) => {
+  if (!crs) {
+    return { data: [] };
+  }
+
+  return {
+    isShowingAll: crs.isShowingAll,
+    data: crs.data.map((cr) => ({
+      crid: cr.crid,
+      url: `${constants.COMPLAINT_PATH}${cr.crid}/`
+    }))
+  };
+};
+
 export const crsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.CR,
-  (crs) => {
-    if (!crs) {
-      return { data: [] };
-    }
-
-    return {
-      isShowingAll: crs.isShowingAll,
-      data: crs.data.map((cr) => ({
-        crid: cr.crid,
-        url: `${constants.COMPLAINT_PATH}${cr.crid}/`
-      }))
-    };
-  }
+  crFormatter
 );
+
+export const dateCRsSelector = createSelector(
+  (state) => state.suggestionApp.suggestions['DATE > CR'],
+  crFormatter
+);
+
+const trrFormatter = (trrs) => {
+  if (!trrs) {
+    return { data: [] };
+  }
+
+  return {
+    isShowingAll: trrs.isShowingAll,
+    data: trrs.data.map((trr) => ({
+      id: trr.id,
+      url: `${constants.TRR_PATH}${trr.id}/`
+    }))
+  };
+};
 
 export const trrsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.TRR,
-  (trrs) => {
-    if (!trrs) {
-      return { data: [] };
-    }
+  trrFormatter
+);
 
-    return {
-      isShowingAll: trrs.isShowingAll,
-      data: trrs.data.map((trr) => ({
-        id: trr.id,
-        url: `${constants.TRR_PATH}${trr.id}/`
-      }))
-    };
-  }
+export const dateTRRsSelector = createSelector(
+  (state) => state.suggestionApp.suggestions['DATE > TRR'],
+  trrFormatter
 );
 
 

@@ -13,6 +13,8 @@ import {
 } from 'actions/suggestion';
 import {
   officersSelector,
+  dateCRsSelector,
+  dateTRRsSelector,
   crsSelector,
   trrsSelector,
   suggestedSelector,
@@ -24,6 +26,8 @@ function mapStateToProps(state, ownProps) {
   return {
     query: state.suggestionApp.query,
     officers: officersSelector(state),
+    dateCRs: dateCRsSelector(state),
+    dateTRRs: dateTRRsSelector(state),
     crs: crsSelector(state),
     trrs: trrsSelector(state),
     recent: recentSelector(state),
