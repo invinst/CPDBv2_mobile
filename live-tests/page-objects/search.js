@@ -15,7 +15,6 @@ const nthRow = (n) => ({
   }
 });
 
-
 module.exports = {
   url: function () {
     return `${this.api.globals.clientUrl}/search/`;
