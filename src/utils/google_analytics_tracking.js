@@ -1,5 +1,15 @@
 import { throttle } from 'lodash';
 
+
+export const trackSwipeLanddingPageCarousel = (direction, type) => {
+  global.ga('send', {
+    hitType: 'event',
+    eventCategory: 'landing_page_carousel',
+    eventAction: `swipe_${direction}`,
+    eventLabel: type
+  });
+};
+
 export const trackPageView = (pathname) => {
   window.ga('send', {
     hitType: 'pageview',

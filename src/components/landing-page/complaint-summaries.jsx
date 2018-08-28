@@ -5,6 +5,7 @@ import CMSContent from './cms-content';
 import HorizontalScrolling from './horizontal-scrolling';
 import ComplaintSummaryCard from './complaint-summary-card';
 import style from './complaint-summaries.sass';
+import constants from 'constants';
 
 
 export default class ComplaintSummaries extends Component {
@@ -23,7 +24,7 @@ export default class ComplaintSummaries extends Component {
     return (
       <div className={ style.complaintSummaries }>
         <CMSContent className='carousel-title' content={ title } />
-        <HorizontalScrolling>
+        <HorizontalScrolling trackingContentType={ constants.CAROUSEL_TYPES.COMPLAINT }>
           <CMSContent className='carousel-description' content={ description } />
           {
             complaintSummaries.map(allegation => (

@@ -12,6 +12,19 @@ describe('GATracking utils', function () {
     window.ga.restore();
   });
 
+  describe('trackSwipeLanddingPageCarousel', function () {
+    it('should send event analytic', function () {
+      GATracking.trackSwipeLanddingPageCarousel('left', 'type');
+
+      window.ga.calledWith('send', {
+        hitType: 'event',
+        eventCategory: 'landing_page_carousel',
+        eventAction: 'swipe_left',
+        eventLabel: 'type'
+      }).should.be.true();
+    });
+  });
+
   describe('trackPageView', function () {
     it('should send event analytic', function () {
       GATracking.trackPageView('pathname');
