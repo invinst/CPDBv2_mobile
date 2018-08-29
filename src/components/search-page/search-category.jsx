@@ -16,6 +16,8 @@ const fixedHeaderHeight = (
 );
 
 const resultComponentMappings = {
+  dateCRs: CRSearchResult,
+  dateTRRs: TRRSearchResult,
   officers: OfficerSearchResult,
   crs: CRSearchResult,
   trrs: TRRSearchResult,
@@ -92,7 +94,7 @@ export default class SearchCategory extends Component {
         >
           { title }
         </div>
-        <div className={ `body ${categoryId}` }>
+        <div className={ `results ${categoryId}` }>
           <div>
             { results }
           </div>
