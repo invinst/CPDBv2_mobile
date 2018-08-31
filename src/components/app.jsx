@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, IndexRoute } from 'react-router';
+import { Router, Route, IndexRoute, Redirect } from 'react-router';
 import Modal from 'react-modal';
 import config from 'config';
 
@@ -83,6 +83,8 @@ const App = React.createClass({
         <Route
           path={ constants.EMBED_TOP_OFFICER_PATH }
           component={ TopOfficersByAllegationContainer } />
+
+        <Redirect from='*' to='/'/>
       </Router>
     );
   }
