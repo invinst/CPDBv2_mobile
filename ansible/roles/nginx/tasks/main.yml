@@ -10,12 +10,14 @@
             dest=/etc/nginx/sites-available/{{ nginx.configuration_name }}
             backup=yes
   become: yes
+  tags: update_nginx
 
 
 - name: Ensure that the default site is disabled
   file: path=/etc/nginx/sites-enabled/default
         state=absent
   become: yes
+  tags: update_nginx
 
 
 - name: Ensure that the application site is enabled
@@ -23,8 +25,10 @@
         dest=/etc/nginx/sites-enabled/{{ nginx.configuration_name }}
         state=link
   become: yes
+  tags: update_nginx
 
 
 - name: Ensure Nginx service is enabled on startup & restarted
   service: name=nginx state=restarted enabled=yes
   become: yes
+  tags: update_nginx

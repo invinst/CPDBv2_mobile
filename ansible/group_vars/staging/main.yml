@@ -24,6 +24,7 @@ nginx:
   error_log: "{{ _logs }}/error_log"
   server_name: ms.cpdp.co
   enable_https: no
+  desktop_server_name: staging.cpdp.co
 
 deploy:
   user: "{{ ansible_user }}"

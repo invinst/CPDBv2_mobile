@@ -26,6 +26,7 @@ nginx:
   ssl_cert_file: /etc/ssl/cpdb.crt
   ssl_key_file: /etc/ssl/cpdb.key
   enable_https: yes
+  desktop_server_name: cpdp.co
 
 deploy:
   user: "{{ ansible_user }}"

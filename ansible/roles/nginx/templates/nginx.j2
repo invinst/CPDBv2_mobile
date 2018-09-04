@@ -20,6 +20,14 @@ server {
     ssl_certificate_key {{ nginx.ssl_key_file }};
     {% endif %}
 
+    if ($http_user_agent !~* '(iPhone|iPod|Android|Blackberry|Windows Phone|Opera Mini|WebOS|SymbianOS|IEMobile|Maemo)') {
+        set $mode 'Desktop';
+    }
+
+    if ($mode = 'Desktop') {
+        return 301 $scheme://{{ nginx.desktop_server_name }}$request_uri;
+    }
+
     access_log {{ nginx.access_log }};
     error_log {{ nginx.error_log }};
 
