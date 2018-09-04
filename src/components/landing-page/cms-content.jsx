@@ -12,7 +12,8 @@ const CMSContent = ({ content, className }) => {
     <div className={ className }>
       <Editor
         editorState={ content }
-        readonly={ true } />
+        readOnly={ true }
+      />
     </div>
   );
 };
