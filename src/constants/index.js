@@ -250,6 +250,18 @@ export default {
 
   SEARCH_CATEGORIES: [
     {
+      name: 'DATE > COMPLAINT RECORDS',
+      filter: 'DATE > CR',
+      id: 'dateCRs',
+      path: 'DATE > CR'
+    },
+    {
+      name: 'DATE > TACTICAL RESPONSE REPORTS',
+      filter: 'DATE > TRR',
+      id: 'dateTRRs',
+      path: 'DATE > TRR'
+    },
+    {
       name: 'Officers',
       filter: 'Officers',
       id: 'officers',

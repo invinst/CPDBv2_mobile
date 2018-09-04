@@ -10,6 +10,8 @@ import suggestions from 'reducers/suggestion-app/suggestions';
 describe('suggestions reducer', function () {
   it('should return initial state', function () {
     suggestions(undefined, {}).should.eql({
+      'DATE > CR': { data: [], isShowingAll: false },
+      'DATE > TRR': { data: [], isShowingAll: false },
       CR: { data: [], isShowingAll: false },
       TRR: { data: [], isShowingAll: false },
       OFFICER: { data: [], isShowingAll: false },
@@ -19,6 +21,8 @@ describe('suggestions reducer', function () {
 
   it('should handle SUGGESTION_REQUEST_SUCCESS', function () {
     const suggestionResults = {
+      'DATE > CR': [11, 12],
+      'DATE > TRR': [13, 14],
       CR: [1, 2],
       TRR: [3, 4],
       OFFICER: [5, 6],
@@ -29,6 +33,8 @@ describe('suggestions reducer', function () {
       type: SUGGESTION_REQUEST_SUCCESS,
       payload: suggestionResults
     }).should.eql({
+      'DATE > CR': { data: [11, 12], isShowingAll: false },
+      'DATE > TRR': { data: [13, 14], isShowingAll: false },
       CR: { data: [1, 2], isShowingAll: false },
       TRR: { data: [3, 4], isShowingAll: false },
       OFFICER: { data: [5, 6], isShowingAll: false },
