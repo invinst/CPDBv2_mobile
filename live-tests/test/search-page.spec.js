@@ -5,7 +5,7 @@ const { TIMEOUT } = require(__dirname + '/../constants');
 const mockSuggestionResponse = {
   'OFFICER': [
     {
-      'url': 'https://beta.cpdb.co/officer/john-tobler/30291',
+      'url': 'https://cpdb.co/officer/john-tobler/30291',
       'extra_info': 'Badge # 4169',
       'id': 30291,
       'name': 'John Tobler'
@@ -16,7 +16,7 @@ const mockSuggestionResponse = {
 const mockSearchQueryResponse = {
   'OFFICER': [
     {
-      'url': 'https://beta.cpdb.co/officer/dummy/john-wang',
+      'url': 'https://cpdb.co/officer/dummy/john-wang',
       'extra_info': 'Badge # 9999',
       'id': 9876,
       'name': 'John Wang'
