@@ -8,6 +8,7 @@ import SearchNavbar from './search-navbar';
 import ClearableInput from './clearable-input';
 import { showIntercomLauncher } from 'utils/intercom';
 import style from './search-page.sass';
+import * as IntercomTracking from 'utils/intercom-tracking';
 
 
 export default class SearchPage extends Component {
@@ -17,6 +18,7 @@ export default class SearchPage extends Component {
     } = this.props;
     pushBreadcrumbs({ location, routes, params });
     this.searchInput.inputElement.focus();
+    IntercomTracking.trackSearchPage();
     showIntercomLauncher(false);
   }
 
