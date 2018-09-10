@@ -1,6 +1,6 @@
 import { spy } from 'sinon';
 
-import { trackOpenExplainer } from 'utils/intercom-tracking';
+import * as IntercomTracking from 'utils/intercom-tracking';
 
 
 describe('IntercomTracking', function () {
@@ -12,9 +12,19 @@ describe('IntercomTracking', function () {
     window.Intercom.restore();
   });
 
-  it('trackOpenExplainer should call Intercom correctly', function () {
-    trackOpenExplainer(123);
+  describe('trackOpenExplainer', function () {
+    it('should call Intercom correctly', function () {
+      IntercomTracking.trackOpenExplainer(123);
 
-    window.Intercom.calledWith('trackEvent', 'visual_token_explainer', { officerId: 123 }).should.be.true();
+      window.Intercom.calledWith('trackEvent', 'visual_token_explainer', { officerId: 123 }).should.be.true();
+    });
+  });
+
+  describe('trackSearchPage', function () {
+    it('should call Intercom correctly', function () {
+      IntercomTracking.trackSearchPage();
+
+      window.Intercom.calledWith('trackEvent', 'search_page').should.be.true();
+    });
   });
 });
