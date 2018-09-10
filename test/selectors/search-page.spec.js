@@ -6,7 +6,9 @@ import {
   recentSelector,
   unitsSelector,
   crsSelector,
-  trrsSelector
+  trrsSelector,
+  dateCRsSelector,
+  dateTRRsSelector
 } from 'selectors/search-page';
 
 describe('search-page selectors', () => {
@@ -179,8 +181,96 @@ describe('search-page selectors', () => {
     });
   });
 
+  describe('dateCRsSelector', () => {
+    it('should return empty when there are no date > crs', () => {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+          }
+        }
+      };
+
+      dateCRsSelector(state).should.be.eql({ data: [] });
+    });
+
+    it('should return cr data when there are date > crs', () => {
+      const isShowingAll = true;
+      const dateCRs = [
+        {
+          'crid': '1'
+        },
+      ];
+      const expectedDateCrs = [
+        {
+          'crid': '1',
+          'url': '/complaint/1/'
+        },
+      ];
+
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            'DATE > CR': {
+              isShowingAll: isShowingAll,
+              data: dateCRs
+            }
+          }
+        }
+      };
+
+      dateCRsSelector(state).should.be.eql({
+        isShowingAll: isShowingAll,
+        data: expectedDateCrs
+      });
+    });
+  });
+
+  describe('dateTRRsSelector', () => {
+    it('should return empty when there are no trss', () => {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+          }
+        }
+      };
+
+      dateTRRsSelector(state).should.be.eql({ data: [] });
+    });
+
+    it('should return trr data when there are trrs', () => {
+      const isShowingAll = true;
+      const dateTRRs = [
+        {
+          'id': '1'
+        },
+      ];
+      const expectedDateTRRs = [
+        {
+          'id': '1',
+          'url': '/trr/1/'
+        },
+      ];
+
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            'DATE > TRR': {
+              isShowingAll: isShowingAll,
+              data: dateTRRs
+            }
+          }
+        }
+      };
+
+      dateTRRsSelector(state).should.be.eql({
+        isShowingAll: isShowingAll,
+        data: expectedDateTRRs
+      });
+    });
+  });
+
   describe('crsSelector', () => {
-    it('should return empty when there are no units', () => {
+    it('should return empty when there are no crs', () => {
       const state = {
         suggestionApp: {
           suggestions: {
