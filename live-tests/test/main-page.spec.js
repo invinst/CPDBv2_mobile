@@ -81,4 +81,16 @@ describe('MainPageTest', function () {
     legalModal.click('@understandButton');
     legalModal.expect.element('@content').to.not.be.present;
   });
+
+  it('should go to the landing page when the url does not match any route', function (client) {
+    const mainPage = this.mainPage;
+    // As urlEquals always add a slash at the end of the root url, we have to do this stupid thing
+    const mainPageUrl = `${mainPage.url()}/`;
+
+    client.url('/url-mediator/session-builder/');
+    client.assert.urlEquals(mainPageUrl);
+
+    client.url('/something/really/wrong/');
+    client.assert.urlEquals(mainPageUrl);
+  });
 });
