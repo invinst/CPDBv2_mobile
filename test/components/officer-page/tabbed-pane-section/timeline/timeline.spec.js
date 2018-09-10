@@ -4,7 +4,6 @@ import { stub } from 'sinon';
 
 import Timeline from 'components/officer-page/tabbed-pane-section/timeline';
 import Item from 'components/officer-page/tabbed-pane-section/timeline/item';
-import GaUtil from 'utils/ga-util';
 
 
 describe('Timeline component', function () {
@@ -58,12 +57,9 @@ describe('Timeline component', function () {
     items.at(4).prop('hasBorderBottom').should.equal(false);
   });
 
-  it('should get officer timeline and track the event after the component is mounted', function () {
+  it('should get officer timeline after the component is mounted', function () {
     const stubGetOfficerTimeline = stub();
-    const stubTrack = stub(GaUtil, 'track');
     mount(<Timeline items={ [] } officerId={ 123 } getOfficerTimeline={ stubGetOfficerTimeline }/>);
     stubGetOfficerTimeline.calledWith(123).should.be.true();
-    stubTrack.calledWith('event', 'officer', 'view_detail', window.location.pathname).should.be.true();
-    stubTrack.restore();
   });
 });
