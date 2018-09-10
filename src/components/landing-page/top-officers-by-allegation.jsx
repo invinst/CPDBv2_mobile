@@ -7,6 +7,7 @@ import OfficerCard from './officer-card';
 import style from './top-officers-by-allegation.sass';
 import { showIntercomLauncher } from 'utils/intercom';
 import classnames from 'classnames';
+import constants from 'constants';
 
 
 export default class TopOfficersByAllegation extends Component {
@@ -33,7 +34,7 @@ export default class TopOfficersByAllegation extends Component {
     return (
       <div className={ classnames(style.topOfficersByAllegation, { embed: embed } ) }>
         <CMSContent className='carousel-title' content={ title } />
-        <HorizontalScrolling>
+        <HorizontalScrolling trackingContentType={ constants.CAROUSEL_TYPES.ALLEGATION }>
           <CMSContent className='carousel-description' content={ description } />
           {
             topOfficersByAllegation.map(

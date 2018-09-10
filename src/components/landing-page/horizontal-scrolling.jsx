@@ -3,19 +3,27 @@ import cx from 'classnames';
 import Swiper from 'swiper';
 
 import style from './horizontal-scrolling.sass';
+import * as GATracking from 'utils/google_analytics_tracking';
 
 
 class HorizontalScrolling extends React.Component {
   constructor(props) {
     super(props);
     this.swiper = null;
+
+    this.state = { activeIndex: 0 };
+    this.handleSlideChange = this.handleSlideChange.bind(this);
   }
 
   componentDidMount() {
     const defaultOptions = {
       spaceBetween: 8,
       slidesPerView: 'auto',
-      slidesOffsetAfter: 32
+      direction: 'horizontal',
+      slidesOffsetAfter: 32,
+      on: {
+        slideChange: this.handleSlideChange,
+      }
     };
     this.swiper = new Swiper(this.el, { ...defaultOptions, ...this.props.slideOptions });
   }
@@ -25,6 +33,18 @@ class HorizontalScrolling extends React.Component {
     if (this.swiper) {
       this.swiper.update();
     }
+  }
+
+  handleSlideChange() {
+    const activeIndex = this.swiper.activeIndex;
+    const lastActiveIndex = this.state.activeIndex;
+
+    if (activeIndex !== lastActiveIndex) {
+      const direction = activeIndex > lastActiveIndex ? 'right' : 'left';
+      GATracking.trackSwipeLanddingPageCarousel(direction, this.props.trackingContentType);
+    }
+
+    this.setState({ activeIndex });
   }
 
   render() {
@@ -51,7 +71,8 @@ class HorizontalScrolling extends React.Component {
 HorizontalScrolling.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  slideOptions: PropTypes.object
+  slideOptions: PropTypes.object,
+  trackingContentType: PropTypes.string.isRequired
 };
 
 export default HorizontalScrolling;

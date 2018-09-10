@@ -5,6 +5,7 @@ import CMSContent from './cms-content';
 import HorizontalScrolling from './horizontal-scrolling';
 import ComplaintDocumentCard from './complaint-document-card';
 import style from './new-document-allegations.sass';
+import constants from 'constants';
 
 
 export default class NewDocumentAllegations extends Component {
@@ -23,7 +24,7 @@ export default class NewDocumentAllegations extends Component {
     return (
       <div className={ style.newDocumentAllegations }>
         <CMSContent className='carousel-title' content={ title } />
-        <HorizontalScrolling>
+        <HorizontalScrolling trackingContentType={ constants.CAROUSEL_TYPES.DOCUMENT }>
           <CMSContent className='carousel-description' content={ description } />
           {
             newDocumentAllegations.map(allegation => (

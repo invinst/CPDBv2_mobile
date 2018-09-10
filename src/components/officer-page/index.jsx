@@ -4,7 +4,6 @@ import { isEmpty, noop } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
-import GaUtil from 'utils/ga-util';
 import { scrollToTop } from 'utils/navigation-util';
 import Header from 'components/shared/header';
 import LoadingPage from 'components/shared/loading-page';
@@ -34,7 +33,6 @@ class OfficerPage extends Component {
       fetchOfficer(pk);
     }
     hasCMS || requestCMS();
-    GaUtil.track('event', 'officer', 'view_detail', window.location.pathname);
   }
 
   toggleHistoricBadges() {
