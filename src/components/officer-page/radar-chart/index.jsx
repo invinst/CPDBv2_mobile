@@ -8,6 +8,8 @@ import RadarExplainer from './explainer';
 import style from './radar-chart.sass';
 import { hasEnoughRadarChartData } from 'utils/visual-token';
 import CMSContent from 'components/landing-page/cms-content';
+import * as IntercomTracking from 'utils/intercom-tracking';
+import * as GATracking from 'utils/google_analytics_tracking';
 
 
 export default class AnimatedRadarChart extends Component {
@@ -111,6 +113,11 @@ export default class AnimatedRadarChart extends Component {
   }
 
   openExplainer() {
+    const { officerId } = this.props;
+
+    GATracking.trackOpenExplainer(officerId);
+    IntercomTracking.trackOpenExplainer(officerId);
+
     this.setState({ explainerOpened: true });
   }
 
@@ -191,6 +198,7 @@ export default class AnimatedRadarChart extends Component {
 
 
 AnimatedRadarChart.propTypes = {
+  officerId: PropTypes.number,
   percentileData: PropTypes.array,
   noDataCMSContent: PropTypes.object,
 };
