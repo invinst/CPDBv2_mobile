@@ -9,6 +9,7 @@ import * as IntercomUtils from 'utils/intercom';
 import SearchPage from 'components/search-page';
 import SearchCategory from 'components/search-page/search-category';
 import constants from 'constants';
+import * as IntercomTracking from 'utils/intercom-tracking';
 
 describe('<SearchPage />', function () {
   beforeEach(function () {
@@ -409,17 +410,34 @@ describe('<SearchPage />', function () {
   });
 
   describe('Intercom', function () {
-    it('should hide intercom launcher when mounted', function () {
-      mount(<SearchPage />);
+    describe('Intercom launcher', function () {
+      it('should hide intercom launcher when mounted', function () {
+        mount(<SearchPage/>);
 
-      IntercomUtils.showIntercomLauncher.calledWith(false).should.be.true();
+        IntercomUtils.showIntercomLauncher.calledWith(false).should.be.true();
+      });
+
+      it('should show intercom launcher again when unmounted', function () {
+        const wrapper = mount(<SearchPage/>);
+        wrapper.unmount();
+
+        IntercomUtils.showIntercomLauncher.calledWith(true).should.be.true();
+      });
     });
 
-    it('should show intercom launcher again when unmounted', function () {
-      const wrapper = mount(<SearchPage />);
-      wrapper.unmount();
+    describe('Intercom tracking', function () {
+      beforeEach(function () {
+        stub(IntercomTracking, 'trackSearchPage');
+      });
 
-      IntercomUtils.showIntercomLauncher.calledWith(true).should.be.true();
+      afterEach(function () {
+        IntercomTracking.trackSearchPage.restore();
+      });
+
+      it('should track Intercom with search page', function () {
+        mount(<SearchPage/>);
+        IntercomTracking.trackSearchPage.called.should.be.true();
+      });
     });
   });
 });

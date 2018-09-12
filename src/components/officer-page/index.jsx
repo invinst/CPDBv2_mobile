@@ -4,7 +4,6 @@ import { isEmpty, noop } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
-import GaUtil from 'utils/ga-util';
 import { scrollToTop } from 'utils/navigation-util';
 import Header from 'components/shared/header';
 import LoadingPage from 'components/shared/loading-page';
@@ -12,7 +11,7 @@ import BottomPadding from 'components/shared/bottom-padding';
 import NotMatchedOfficerPage from './not-matched-officer-page';
 import SectionRow from './section-row';
 import style from './officer-page.sass';
-import OfficerRadarChart from './radar-chart';
+import AnimatedRadarChart from './radar-chart';
 import MetricWidget from './metric-widget';
 import { roundedPercentile } from 'utils/calculation';
 import navigationArrow from 'img/disclosure-indicator.svg';
@@ -34,7 +33,6 @@ class OfficerPage extends Component {
       fetchOfficer(pk);
     }
     hasCMS || requestCMS();
-    GaUtil.track('event', 'officer', 'view_detail', window.location.pathname);
   }
 
   toggleHistoricBadges() {
@@ -116,7 +114,10 @@ class OfficerPage extends Component {
     return (
       <StickyContainer className={ style.officerSummary }>
         <Sticky><Header /></Sticky>
-        <OfficerRadarChart percentileData={ threeCornerPercentile } noDataCMSContent={ noDataCMSContent }/>
+        <AnimatedRadarChart
+          officerId={ pk }
+          percentileData={ threeCornerPercentile }
+          noDataCMSContent={ noDataCMSContent }/>
         <h1 className='officer-name header' onClick={ scrollToTop() }>
           { name }
         </h1>

@@ -250,6 +250,18 @@ export default {
 
   SEARCH_CATEGORIES: [
     {
+      name: 'DATE > COMPLAINT RECORDS',
+      filter: 'DATE > CR',
+      id: 'dateCRs',
+      path: 'DATE > CR'
+    },
+    {
+      name: 'DATE > TACTICAL RESPONSE REPORTS',
+      filter: 'DATE > TRR',
+      id: 'dateTRRs',
+      path: 'DATE > TRR'
+    },
+    {
       name: 'Officers',
       filter: 'Officers',
       id: 'officers',
@@ -284,4 +296,10 @@ export default {
   INVINST_GITHUB_URL: 'https://github.com/invinst/',
   QA_URL: 'http://how.cpdp.works/',
   ROADMAP_URL: 'http://roadmap.cpdp.co/',
+  CAROUSEL_TYPES: {
+    'COMPLAINT': 'COMPLAINT',
+    'ACTIVITY': 'ACTIVITY',
+    'ALLEGATION': 'ALLEGATION',
+    'DOCUMENT': 'DOCUMENT'
+  }
 };

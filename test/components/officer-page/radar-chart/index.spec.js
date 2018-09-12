@@ -3,13 +3,15 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import should from 'should';
 import { mount, shallow, ReactWrapper } from 'enzyme';
-import { useFakeTimers, spy } from 'sinon';
+import { stub, useFakeTimers, spy } from 'sinon';
 import Modal from 'react-modal';
 import { EditorState } from 'draft-js';
 
 import AnimatedRadarChart from 'components/officer-page/radar-chart';
 import StaticRadarChart from 'components/common/radar-chart';
 import RadarExplainer from 'components/officer-page/radar-chart/explainer';
+import * as IntercomTracking from 'utils/intercom-tracking';
+import * as GATracking from 'utils/google_analytics_tracking';
 
 
 describe('AnimatedRadarChart component', function () {
@@ -59,7 +61,7 @@ describe('AnimatedRadarChart component', function () {
   });
 
   it('should render no data RadarChart if no data', function () {
-    const wrapper = shallow(<AnimatedRadarChart/>);
+    const wrapper = shallow(<AnimatedRadarChart officerId={ 123 }/>);
     const noDataRadarChart = wrapper.find(StaticRadarChart);
     should(noDataRadarChart.prop('data')).be.undefined();
   });
@@ -86,7 +88,7 @@ describe('AnimatedRadarChart component', function () {
     }];
 
     const wrapper = shallow(
-      <AnimatedRadarChart
+      <AnimatedRadarChart officerId={ 123 }
         percentileData={ missingPercentileData }
         noDataCMSContent={ EditorState.createEmpty() }/>
     );
@@ -97,33 +99,61 @@ describe('AnimatedRadarChart component', function () {
   });
 
   it('should render if data provided', function () {
-    const wrapper = shallow(<AnimatedRadarChart percentileData={ data }/>);
+    const wrapper = shallow(<AnimatedRadarChart officerId={ 123 } percentileData={ data }/>);
     wrapper.find(StaticRadarChart).exists().should.be.true();
   });
 
   it('should rerender if data change', function () {
-    const wrapper = mount(<AnimatedRadarChart percentileData={ [data[0]] }/>);
+    const wrapper = mount(<AnimatedRadarChart officerId={ 123 } percentileData={ [data[0]] }/>);
     wrapper.setProps({ percentileData: data });
     should(wrapper.instance().timer).not.be.null();
   });
 
-  it('should open explainer when click on radar chart', function () {
-    const wrapper = mount(
-      <Provider store={ store }>
-        <AnimatedRadarChart percentileData={ data }/>
-      </Provider>
-    );
-    wrapper.find('.explainer-open-button').exists().should.be.true();
+  context('open the explainer', function () {
+    beforeEach(function () {
+      stub(IntercomTracking, 'trackOpenExplainer');
+      stub(GATracking, 'trackOpenExplainer');
+    });
 
-    wrapper.find('.radar-chart-container').exists().should.be.true();
-    wrapper.find('.radar-chart-container').simulate('click');
+    afterEach(function () {
+      GATracking.trackOpenExplainer.restore();
+      IntercomTracking.trackOpenExplainer.restore();
+    });
 
-    const modalWrapper = new ReactWrapper(wrapper.find(Modal).node.portal, true);
+    it('should open the explainer clicking on the radar chart and track this event', function () {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <AnimatedRadarChart officerId={ 123 } percentileData={ data }/>
+        </Provider>
+      );
+      wrapper.find('.explainer-open-button').exists().should.be.true();
 
-    const explainer = modalWrapper.find(RadarExplainer);
-    explainer.exists().should.be.true();
-    explainer.prop('percentileData').should.equal(data);
+      wrapper.find('.radar-chart-container').exists().should.be.true();
+      wrapper.find('.radar-chart-container').simulate('click');
+
+      GATracking.trackOpenExplainer.calledWith(123).should.be.true();
+      IntercomTracking.trackOpenExplainer.calledWith(123).should.be.true();
+    });
+
+    it('should open explainer when click on radar chart', function () {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <AnimatedRadarChart officerId={ 123 } percentileData={ data }/>
+        </Provider>
+      );
+      wrapper.find('.explainer-open-button').exists().should.be.true();
+
+      wrapper.find('.radar-chart-container').exists().should.be.true();
+      wrapper.find('.radar-chart-container').simulate('click');
+
+      const modalWrapper = new ReactWrapper(wrapper.find(Modal).node.portal, true);
+
+      const explainer = modalWrapper.find(RadarExplainer);
+      explainer.exists().should.be.true();
+      explainer.prop('percentileData').should.equal(data);
+    });
   });
+
 
   describe('test animate', function () {
     let clock;
@@ -138,7 +168,7 @@ describe('AnimatedRadarChart component', function () {
     it('should not animate if data length is 1', function () {
       const compactData = [data[0]];
       const wrapper = shallow(
-        <AnimatedRadarChart percentileData={ compactData }/>
+        <AnimatedRadarChart officerId={ 123 } percentileData={ compactData }/>
       );
       const instance = wrapper.instance();
 
@@ -149,7 +179,7 @@ describe('AnimatedRadarChart component', function () {
     });
 
     it('should change transition value after mounting', function () {
-      const wrapper = mount(<AnimatedRadarChart percentileData={ data }/>);
+      const wrapper = mount(<AnimatedRadarChart officerId={ 123 } percentileData={ data }/>);
       const instance = wrapper.instance();
 
       instance.state.transitionValue.should.eql(0);
@@ -163,7 +193,7 @@ describe('AnimatedRadarChart component', function () {
 
     it('should it stops timer before unmounted', function () {
       const wrapper = mount(
-        <AnimatedRadarChart percentileData={ data }/>
+        <AnimatedRadarChart officerId={ 123 } percentileData={ data }/>
       );
       const instance = wrapper.instance();
 
@@ -178,7 +208,7 @@ describe('AnimatedRadarChart component', function () {
 
       const wrapper = mount(
         <Provider store={ store }>
-          <AnimatedRadarChart ref={ (c) => {animatedRadarChart = c;} } percentileData={ data }/>
+          <AnimatedRadarChart officerId={ 123 } ref={ (c) => {animatedRadarChart = c;} } percentileData={ data }/>
         </Provider>
       );
       const startAnimation = spy(animatedRadarChart, 'startAnimation');
@@ -242,7 +272,7 @@ describe('AnimatedRadarChart component', function () {
         visualTokenBackground: 'white'
       }];
 
-      const wrapper = mount(<AnimatedRadarChart percentileData={ missingData }/>);
+      const wrapper = mount(<AnimatedRadarChart officerId={ 123 } percentileData={ missingData }/>);
       const instance = wrapper.instance();
 
       instance.state.transitionValue.should.eql(0);

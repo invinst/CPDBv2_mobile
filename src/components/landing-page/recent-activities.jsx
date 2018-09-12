@@ -5,6 +5,7 @@ import CMSContent from './cms-content';
 import HorizontalScrolling from './horizontal-scrolling';
 import OfficerCard from './officer-card';
 import style from './recent-activities.sass';
+import constants from 'constants';
 
 
 export default class RecentActivities extends Component {
@@ -23,7 +24,7 @@ export default class RecentActivities extends Component {
     return (
       <div className={ style.recentActivities }>
         <CMSContent className='carousel-title' content={ title } />
-        <HorizontalScrolling>
+        <HorizontalScrolling trackingContentType={ constants.CAROUSEL_TYPES.ACTIVITY }>
           <CMSContent className='carousel-description' content={ description } />
           {
             recentActivities.map(officer => <OfficerCard officer={ officer } key={ officer.id } />)
