@@ -22,7 +22,7 @@ nginx:
   configuration_name: cpdb-mobile
   access_log: "{{ _logs }}/access_log"
   error_log: "{{ _logs }}/error_log"
-  server_name: mb.cpdp.co
+  server_name: m.cpdp.co
   ssl_cert_file: /etc/ssl/cpdb.crt
   ssl_key_file: /etc/ssl/cpdb.key
   enable_https: yes
