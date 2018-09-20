@@ -23,6 +23,8 @@ nginx:
   access_log: "{{ _logs }}/access_log"
   error_log: "{{ _logs }}/error_log"
   server_name: ms.cpdp.co
+  ssl_cert_file: /etc/ssl/cpdb.crt
+  ssl_key_file: /etc/ssl/cpdb.key
   enable_https: yes
   desktop_server_name: staging.cpdp.co
 
