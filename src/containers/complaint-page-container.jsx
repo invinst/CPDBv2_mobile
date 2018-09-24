@@ -7,7 +7,8 @@ import { complaintSelector } from 'selectors/complaint-page';
 
 const mapStateToProps = (state, ownProps) => ({
   complaintId: ownProps.params.complaintId,
-  complaint: complaintSelector(state, ownProps)
+  complaint: complaintSelector(state, ownProps),
+  pathname: ownProps.location.pathname,
 });
 
 const mapDispatchToProps = {

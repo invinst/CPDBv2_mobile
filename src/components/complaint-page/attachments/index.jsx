@@ -7,6 +7,7 @@ import audio from 'img/ic-audio.svg';
 import video from 'img/ic-video.svg';
 import CRRequestDocumentButtonContainer from 'containers/common/cr-request-document-container';
 import styles from './attachments.sass';
+import * as GATracking from 'utils/google_analytics_tracking';
 
 
 const TYPE_TO_ICONS = {
@@ -14,6 +15,15 @@ const TYPE_TO_ICONS = {
 };
 
 class Attachments extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(url) {
+    const { pathname } = this.props;
+    GATracking.trackAttachmentClick(pathname, url);
+  }
 
   render() {
     const { attachments, complaintId } = this.props;
@@ -32,7 +42,11 @@ class Attachments extends Component {
         <div className='attachment-list'>
           {
             attachments.map((attachment, idx) => (
-              <a href={ attachment.url } key={ idx } className='attachment'>
+              <a
+                href={ attachment.url }
+                key={ idx } className='attachment'
+                onClick={ this.handleClick(attachment.url) }
+              >
                 <div className='attachment-thumbnail-wrapper'>
                   <Image
                     className={ cx('attachment-thumbnail', attachment.fileType) }
@@ -52,7 +66,8 @@ class Attachments extends Component {
 
 Attachments.propTypes = {
   attachments: PropTypes.array,
-  complaintId: PropTypes.string
+  complaintId: PropTypes.string,
+  pathname: PropTypes.string,
 };
 
 Attachments.defaultProps = {
