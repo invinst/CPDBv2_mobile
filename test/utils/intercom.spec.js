@@ -26,7 +26,7 @@ describe('Intercom utils', function () {
     showIntercomMessages(true);
     window.Intercom.calledWith('show').should.be.true();
 
-    window.Intercom.reset();
+    window.Intercom.resetHistory();
 
     showIntercomMessages(false);
     window.Intercom.calledWith('hide').should.be.true();

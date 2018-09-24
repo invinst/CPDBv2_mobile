@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { get } from 'lodash';
 
 import NewDocumentAllegations from 'components/landing-page/new-document-allegations';
 import { requestNewDocumentAllegations } from 'actions/landing-page';
@@ -11,7 +12,7 @@ const mapStateToProps = (state, ownProps) => ({
   newDocumentAllegations: newDocumentAllegationsSelector(state),
   description: cmsSelector(state, 'landingPage', 'carousel_document_desc'),
   title: cmsSelector(state, 'landingPage', 'carousel_document_title'),
-  pathname: ownProps.location.pathname,
+  pathname: get(ownProps, 'location.pathname'),
 });
 
 const mapDispatchToProps = {

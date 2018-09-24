@@ -20,7 +20,7 @@ describe('<ComplaintSummaries />', () => {
     );
     requestComplaintSummariesSpy.called.should.be.false();
 
-    requestComplaintSummariesSpy.reset();
+    requestComplaintSummariesSpy.resetHistory();
     mount(
       <ComplaintSummaries
         requestComplaintSummaries={ requestComplaintSummariesSpy }

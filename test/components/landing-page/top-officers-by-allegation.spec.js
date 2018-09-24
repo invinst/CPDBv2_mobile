@@ -29,8 +29,8 @@ describe('<TopOfficersByAllegation />', () => {
     requestTopOfficersByAllegationSpy.called.should.be.false();
     requestCMSSpy.called.should.be.false();
 
-    requestTopOfficersByAllegationSpy.reset();
-    requestCMSSpy.reset();
+    requestTopOfficersByAllegationSpy.resetHistory();
+    requestCMSSpy.resetHistory();
     mount(
       <TopOfficersByAllegation
         requestTopOfficersByAllegation={ requestTopOfficersByAllegationSpy }
