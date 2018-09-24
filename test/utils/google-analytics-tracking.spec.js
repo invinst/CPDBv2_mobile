@@ -87,4 +87,17 @@ describe('GATracking utils', function () {
       }).should.be.true();
     });
   });
+
+  describe('trackAttachmentClick', function () {
+    it('should send event analytic', function () {
+      GATracking.trackAttachmentClick('/', '/complaint/123456/');
+
+      window.ga.calledWith('send', {
+        hitType: 'event',
+        eventCategory: 'attachment_click',
+        eventAction: 'click',
+        eventLabel: 'Source URL: / - Target URL: /complaint/123456/',
+      }).should.be.true();
+    });
+  });
 });
