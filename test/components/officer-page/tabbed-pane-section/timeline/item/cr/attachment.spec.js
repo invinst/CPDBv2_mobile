@@ -7,15 +7,15 @@ import Attachments from 'components/officer-page/tabbed-pane-section/timeline/it
 
 describe('Attachments component', function () {
   const attachments = [{
-    url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-1-of-3.html',
+    url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-1-of-3.pdf',
     previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
     fileType: 'document',
   }, {
-    url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-2-of-3.html',
+    url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-2-of-3.pdf',
     previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif',
     fileType: 'document',
   }, {
-    url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-3-of-3.html',
+    url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-3-of-3.pdf',
     previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p3-normal.gif',
     fileType: 'document',
   }];
@@ -43,7 +43,7 @@ describe('Attachments component', function () {
     const instance = shallow(<Attachments attachments={ attachments } />);
     instance.find('.image').simulate('click', { preventDefault() {} });
     stubOpen.calledWith(
-      'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-1-of-3.html'
+      'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-1-of-3.pdf'
     ).should.be.true();
     stubOpen.restore();
   });
