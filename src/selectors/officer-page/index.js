@@ -50,7 +50,7 @@ export const officerSummarySelector = createSelector(
       unit: getOfficerUnitDisplay(officer),
       rank: getOfficerRank(officer),
       demographic: getOfficerDemographic(officer),
-      badge: officer.badge,
+      badge: isEmpty(officer.badge) ? 'Unknown' : officer.badge,
       historicBadges: officer['historic_badges'],
       careerDuration: getCareerDuration(officer['date_of_appt'], officer['date_of_resignation']),
     };
