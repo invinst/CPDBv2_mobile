@@ -44,7 +44,7 @@ describe('ComplaintPage component', function () {
     );
     requestComplaintSpy.called.should.be.false();
 
-    requestComplaintSpy.reset();
+    requestComplaintSpy.resetHistory();
 
     mount(
       <Provider store={ store }>

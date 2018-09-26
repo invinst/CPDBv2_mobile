@@ -3,6 +3,7 @@ import cx from 'classnames';
 
 import styles from './attachments.sass';
 import { ATTACHMENT_TYPES } from 'constants/officer-page/tabbed-pane-section/timeline';
+import * as GATracking from 'utils/google_analytics_tracking';
 
 
 export default class Attachments extends Component {
@@ -15,7 +16,9 @@ export default class Attachments extends Component {
   // this is necessary at we cannot use nested anchors
   handleClick(e) {
     e.preventDefault();
-    const url = this.props.attachments[0].url;
+    const { pathname, attachments } = this.props;
+    const url = attachments[0].url;
+    GATracking.trackAttachmentClick(pathname, url);
     window.open(url, '_blank');
   }
 
@@ -39,4 +42,5 @@ export default class Attachments extends Component {
 
 Attachments.propTypes = {
   attachments: PropTypes.array,
+  pathname: PropTypes.string,
 };

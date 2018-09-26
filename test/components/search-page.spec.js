@@ -160,7 +160,7 @@ describe('<SearchPage />', function () {
       params: 'params'
     }).should.be.true();
 
-    pushBreadcrumbsSpy.reset();
+    pushBreadcrumbsSpy.resetHistory();
     wrapper.setProps({ location: 'changed' });
     pushBreadcrumbsSpy.calledWith({
       location: 'changed',
