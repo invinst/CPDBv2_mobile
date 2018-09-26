@@ -44,3 +44,12 @@ export const trackOpenExplainer = (officerId) => {
     eventValue: officerId
   });
 };
+
+export const trackAttachmentClick = (sourceUrl, targetUrl) => {
+  window.ga('send', {
+    hitType: 'event',
+    eventCategory: 'attachment_click',
+    eventAction: 'click',
+    eventLabel: `Source URL: ${sourceUrl} - Target URL: ${targetUrl}`,
+  });
+};

@@ -66,4 +66,5 @@ export default class Item extends Component {
 
 Item.propTypes = {
   item: PropTypes.object,
+  pathname: PropTypes.string,
 };

@@ -259,6 +259,36 @@ describe('officer-page selectors', () => {
 
       should(officerSummarySelector(state, notFoundProps)).be.null();
     });
+
+    it('should return Unknown badge if there is unknown badge', function () {
+      const emptyBadgeState = {
+        officerPage: {
+          officers: {
+            data: {
+              11: {
+                'full_name': 'Officer 11',
+                rank: null,
+                unit: {
+                  'unit_id': 123,
+                },
+                'date_of_appt': '2015-09-23',
+                badge: '',
+                'historic_badges': ['1', '2'],
+              }
+            }
+          }
+        }
+      };
+      officerSummarySelector(emptyBadgeState, props).should.eql({
+        name: 'Officer 11',
+        rank: 'N/A',
+        unit: '',
+        demographic: '',
+        badge: 'Unknown',
+        historicBadges: ['1', '2'],
+        careerDuration: 'SEP 23, 2015 — Present',
+      });
+    });
   });
 
   describe('officerMetricsSelector', function () {

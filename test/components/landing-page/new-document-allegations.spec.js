@@ -20,7 +20,7 @@ describe('<NewDocumentAllegations />', () => {
     );
     requestNewDocumentAllegationsSpy.called.should.be.false();
 
-    requestNewDocumentAllegationsSpy.reset();
+    requestNewDocumentAllegationsSpy.resetHistory();
     mount(
       <NewDocumentAllegations
         requestNewDocumentAllegations={ requestNewDocumentAllegationsSpy }

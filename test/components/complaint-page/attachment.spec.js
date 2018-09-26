@@ -2,9 +2,11 @@ import React from 'react';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
+import { stub } from 'sinon';
 
 import Attachments from 'components/complaint-page/attachments';
 import RequestDocumentButton from 'components/common/request-document/request-document-button';
+import * as GATracking from 'utils/google_analytics_tracking';
 
 
 describe('Attachments component', function () {
@@ -40,5 +42,31 @@ describe('Attachments component', function () {
     requestButton.prop('isRequested').should.be.false();
     requestButton.prop('message').should.equal('');
     requestButton.prop('customClassName').should.equal('request-button-container');
+  });
+
+  it('should track click event', function () {
+    const store = configureStore()({
+      complaintPage: {
+        attachmentRequest: {
+          message: '',
+          subscribedCRIds: {}
+        }
+      }
+    });
+    const stubTrackAttachmentClick = stub(GATracking, 'trackAttachmentClick');
+    const attachments = [{
+      'url': 'https://www.documentcloud.org/documents/4769822-CRID-1002813-CR.html'
+    }];
+    const wrapper = mount(
+      <Provider store={ store }>
+        <Attachments attachments={ attachments } pathname='/complaint/123456/'/>
+      </Provider>
+    );
+    wrapper.find('.attachment').simulate('click');
+    stubTrackAttachmentClick.should.be.calledWith(
+      '/complaint/123456/',
+      'https://www.documentcloud.org/documents/4769822-CRID-1002813-CR.html'
+    );
+    stubTrackAttachmentClick.restore();
   });
 });

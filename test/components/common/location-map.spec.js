@@ -19,7 +19,7 @@ describe('LocationMap component', function () {
   it('should reset marker location on rerender', function () {
     const wrapper = mount(<LocationMap lng={ 0 } lat={ 0 } />);
     const instance = wrapper.instance();
-    instance.marker.setLngLat.reset();
+    instance.marker.setLngLat.resetHistory();
 
     wrapper.setProps({ lng: 1, lat: 1 });
 

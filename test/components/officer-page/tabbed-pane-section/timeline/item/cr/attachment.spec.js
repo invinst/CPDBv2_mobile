@@ -1,6 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { stub } from 'sinon';
+import * as GATracking from 'utils/google_analytics_tracking';
 
 import Attachments from 'components/officer-page/tabbed-pane-section/timeline/item/cr/attachments';
 
@@ -51,5 +52,21 @@ describe('Attachments component', function () {
   it('should render null when there are no attachments', function () {
     const instance = shallow(<Attachments attachments={ [] } />);
     instance.find('.test-wrapper').exists().should.be.false();
+  });
+
+  it('should track click event', function () {
+    const stubTrackAttachmentClick = stub(GATracking, 'trackAttachmentClick');
+    const attachments = [{
+      url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-1-of-3.html',
+      previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
+      fileType: 'document',
+    }];
+    const wrapper = mount(<Attachments attachments={ attachments } pathname='/officer/123456/'/>);
+    wrapper.find('.image').simulate('click');
+    stubTrackAttachmentClick.should.be.calledWith(
+      '/officer/123456/',
+      'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-1-of-3.html'
+    );
+    stubTrackAttachmentClick.restore();
   });
 });

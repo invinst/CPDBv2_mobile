@@ -20,7 +20,7 @@ describe('<RecentActivities />', () => {
     );
     requestRecentActivitiesSpy.called.should.be.false();
 
-    requestRecentActivitiesSpy.reset();
+    requestRecentActivitiesSpy.resetHistory();
     mount(
       <RecentActivities
         requestRecentActivities={ requestRecentActivitiesSpy }
