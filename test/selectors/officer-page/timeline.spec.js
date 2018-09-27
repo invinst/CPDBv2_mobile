@@ -59,13 +59,13 @@ describe('Officer new timeline selectors', function () {
       const attachments = [
         {
           title: 'CRID 1004717 CR',
-          url: 'https://www.documentcloud.org/documents/3518956-CRID-1004717-CR.html',
+          url: 'https://www.documentcloud.org/documents/3518956-CRID-1004717-CR.pdf',
           'preview_image_url': 'https://assets.documentcloud.org/documents/3518956/pages/CRID-1004717-CR-p1-normal.gif',
           'file_type': 'document',
         },
         {
           title: 'CRID 303350 CR',
-          url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.html',
+          url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.pdf',
           'preview_image_url': 'https://assets.documentcloud.org/documents/3518955/pages/CRID-303350-CR-p1-normal.gif',
           'file_type': 'document',
         },
@@ -85,13 +85,13 @@ describe('Officer new timeline selectors', function () {
       attachmentsTransform(attachments).should.eql([
         {
           title: 'CRID 1004717 CR',
-          url: 'https://www.documentcloud.org/documents/3518956-CRID-1004717-CR.html',
+          url: 'https://www.documentcloud.org/documents/3518956-CRID-1004717-CR.pdf',
           previewImageUrl: 'https://assets.documentcloud.org/documents/3518956/pages/CRID-1004717-CR-p1-normal.gif',
           fileType: 'document',
         },
         {
           title: 'CRID 303350 CR',
-          url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.html',
+          url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.pdf',
           previewImageUrl: 'https://assets.documentcloud.org/documents/3518955/pages/CRID-303350-CR-p1-normal.gif',
           fileType: 'document',
         },
@@ -132,13 +132,13 @@ describe('Officer new timeline selectors', function () {
         attachments: [
           {
             title: 'CRID 1004717 CR',
-            url: 'https://www.documentcloud.org/documents/3518956-CRID-1004717-CR.html',
+            url: 'https://www.documentcloud.org/documents/3518956-CRID-1004717-CR.pdf',
             'preview_image_url': 'https://assets.documentcloud.org/documents/3518956/pages/CRID-1004717-CR-p1.gif',
             'file_type': 'document',
           },
           {
             title: 'CRID 303350 CR',
-            url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.html',
+            url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.pdf',
             'preview_image_url': 'https://assets.documentcloud.org/documents/3518955/pages/CRID-303350-CR-p1.gif',
             'file_type': 'document',
           }
@@ -160,13 +160,13 @@ describe('Officer new timeline selectors', function () {
         attachments: [
           {
             title: 'CRID 1004717 CR',
-            url: 'https://www.documentcloud.org/documents/3518956-CRID-1004717-CR.html',
+            url: 'https://www.documentcloud.org/documents/3518956-CRID-1004717-CR.pdf',
             previewImageUrl: 'https://assets.documentcloud.org/documents/3518956/pages/CRID-1004717-CR-p1.gif',
             fileType: 'document',
           },
           {
             title: 'CRID 303350 CR',
-            url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.html',
+            url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.pdf',
             previewImageUrl: 'https://assets.documentcloud.org/documents/3518955/pages/CRID-303350-CR-p1.gif',
             fileType: 'document',
           }
@@ -628,7 +628,7 @@ describe('Officer new timeline selectors', function () {
                   outcome: 'No Action Taken',
                   attachments: [
                     {
-                      url: 'https://www.documentcloud.org/documents/3518950-CRID-294088-CR.html',
+                      url: 'https://www.documentcloud.org/documents/3518950-CRID-294088-CR.pdf',
                       'preview_image_url':
                         'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif',
                       title: 'CRID 294088 CR',
@@ -770,7 +770,7 @@ describe('Officer new timeline selectors', function () {
               previewImageUrl:
                 'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif',
               title: 'CRID 294088 CR',
-              url: 'https://www.documentcloud.org/documents/3518950-CRID-294088-CR.html',
+              url: 'https://www.documentcloud.org/documents/3518950-CRID-294088-CR.pdf',
               fileType: 'document',
             }
           ],

@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
-import documentUrl from 'selectors/common/document-url';
+
 
 const officerCardTransform = officer => ({
   ...officer,
@@ -29,7 +29,6 @@ export const newDocumentAllegationsSelector = createSelector(
     documentCount: complaint.num_recent_documents,
     document: {
       previewImageUrl: get(complaint, 'latest_document.preview_image_url', null),
-      url: documentUrl(get(complaint, 'latest_document.url', null))
     }
   }))
 );
