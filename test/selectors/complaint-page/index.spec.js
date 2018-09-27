@@ -111,7 +111,7 @@ describe('complaint-page selectors', () => {
                 },
                 {
                   'file_type': 'document',
-                  'url': 'http://document.io/file.html',
+                  'url': 'http://document.io/file.pdf',
                   'preview_image_url': 'http://preview.document',
                   'title': 'document'
                 }

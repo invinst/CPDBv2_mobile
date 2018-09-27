@@ -18,7 +18,7 @@ describe('<LegalModalContent />', () => {
     );
     wrapper.find('.close-button-wrapper').simulate('click');
     closeModalSpy.called.should.be.true();
-    closeModalSpy.reset();
+    closeModalSpy.resetHistory();
     wrapper.find('.confirm-button').simulate('click');
     closeModalSpy.called.should.be.true();
   });

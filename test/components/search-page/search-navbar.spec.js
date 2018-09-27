@@ -85,8 +85,8 @@ describe('<SearchNavbar />', function () {
     spyScrollToCategory.calledWith('officers').should.be.true();
     spyUpdateActiveCategory.calledWith('officers').should.be.true();
 
-    spyScrollToCategory.reset();
-    spyUpdateActiveCategory.reset();
+    spyScrollToCategory.resetHistory();
+    spyUpdateActiveCategory.resetHistory();
 
     wrapper.find('button').at(1).simulate('click');
     spyScrollToCategory.calledWith('crs').should.be.true();

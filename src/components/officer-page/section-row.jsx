@@ -10,7 +10,7 @@ class SectionRow extends Component {
       <div className={ style.sectionRow }>
         <div className='label'>{ label }</div>
         <div className='value'>
-          { value || 'N/A' }
+          { value }
           { children }
         </div>
       </div>

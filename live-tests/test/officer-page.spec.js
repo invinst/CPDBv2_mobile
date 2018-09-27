@@ -165,7 +165,7 @@ const mockTimeline = [
     outcome: 'No Action Taken',
     attachments: [
       {
-        url: 'https://www.documentcloud.org/documents/3518950-CRID-294088-CR.html',
+        url: 'https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf',
         'preview_image_url': 'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif',
         title: 'CRID 294088 CR',
         'file_type': 'document',
@@ -206,7 +206,7 @@ const mockTimeline = [
         'file_type': 'video',
       },
       {
-        url: 'https://www.documentcloud.org/documents/3518954-CRID-299780-CR.html',
+        url: 'https://assets.documentcloud.org/documents/3518954/CRID-299780-CR.pdf',
         'preview_image_url': 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
         title: 'CRID 294088 CR',
         'file_type': 'document',
@@ -660,7 +660,7 @@ describe('OfficerPage test', function () {
           const handles = result.value;
           this.client.switchWindow(handles[handles.length - 1]);
         });
-        this.client.assert.urlEquals('https://www.documentcloud.org/documents/3518950-CRID-294088-CR.html');
+        this.client.assert.urlEquals('https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf');
       });
 
       it('should go to trr page when clicking on an trr timeline item', function () {
