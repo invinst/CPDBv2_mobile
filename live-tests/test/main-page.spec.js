@@ -64,7 +64,7 @@ describe('MainPageTest', function () {
     footer.expect.element('@roadmap').text.to.equal('Roadmap');
     footer.expect.element('@roadmap').to.have.attribute('href').equals('http://roadmap.cpdp.co/');
 
-    footer.expect.element('@logo').to.have.attribute('href').equals('https://invisible.institute/introduction');
+    footer.expect.element('@logo').to.have.attribute('href').equals('https://invisible.institute/cpdp');
   });
 
   it('should open and close legal modal', function () {
