@@ -9,11 +9,10 @@ import RequestDocumentButton from 'components/common/request-document/request-do
 
 describe('<Attachment />', function () {
 
-  it('should be render enough contents', function () {
+  it('should render enough contents', function () {
     const wrapper = shallow(<Attachment trrId={ 123 }/>);
 
     wrapper.find('.title').text().should.containEql('ATTACHMENTS');
-    wrapper.find('.subtitle').text().should.equal('May contain graphic content');
   });
 
   it('should render request document button', function () {
