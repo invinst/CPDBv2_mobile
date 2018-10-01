@@ -9,7 +9,7 @@ class Attachment extends Component {
 
     return (
       <div className={ style.attachment }>
-        <div className='header'>
+        <div className='attachment-header'>
           <div className='title'>
             There are no documents that have been made public yet.
           </div>
