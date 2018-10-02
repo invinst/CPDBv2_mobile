@@ -36,7 +36,7 @@ export default class SearchNavbar extends Component {
       activeCategory = categories[0].id;
     }
 
-    const links = categories.map(
+    const links = categories.length <= 1 ? null : categories.map(
       (category, index) => {
         const classNames = cx(
           'category-link',
