@@ -44,7 +44,7 @@ class Footer extends Component {
           <div className='item contact-item' onClick={ this.openContact }>Contact</div>
         </div>
         <a
-          href='https://invisible.institute/introduction'
+          href='https://invisible.institute/cpdp'
           className='invist-logo-link'
           target='_blank'>
           <img className='invist-logo' src={ invistLogoImage } alt='Invisible Institute' />

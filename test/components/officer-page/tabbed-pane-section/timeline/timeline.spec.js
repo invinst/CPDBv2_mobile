@@ -62,4 +62,9 @@ describe('Timeline component', function () {
     mount(<Timeline items={ [] } officerId={ 123 } getOfficerTimeline={ stubGetOfficerTimeline }/>);
     stubGetOfficerTimeline.calledWith(123).should.be.true();
   });
+
+  it('should should show timeline label', function () {
+    const wrapper = shallow(<Timeline items={ [] } officerId={ 123 } />);
+    wrapper.find('.timeline-label').text().should.equal('OFFICER TIMELINE');
+  });
 });
