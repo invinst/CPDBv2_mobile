@@ -49,6 +49,11 @@ jobs:
               export WEBPACK_ENV=staging
             fi && \
             yarn dist
+
+      - run:
+          name: Clean old builds on azure storage
+          command: ./bin/clean-old-build-on-azure-storage.js
+
       - run:
           name: Copy static files to azure storage
           command: ./bin/copy-to-azure-storage.js

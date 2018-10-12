@@ -15,7 +15,7 @@ if (process.env.CIRCLE_BRANCH === 'master') {
   accountKey = process.env.AZURE_STORAGE_PROD_ACCOUNT_KEY;
 }
 
-const BUILDS_KEEP = 2;
+const BUILDS_KEEP = 1;
 
 const blobService = Promise.promisifyAll(azure.createBlobService(accountName, accountKey));
 
