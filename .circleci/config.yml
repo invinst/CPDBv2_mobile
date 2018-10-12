@@ -26,22 +26,32 @@ jobs:
       - run: yarn run live-test
   deploy:
     docker:
-      - image: circleci/python:3.6.4
+      - image: circleci/node:8.11.3-browsers
 
     steps:
       - checkout
+      - run: sudo npm install i -g yarn@1.7.0
       - restore_cache:
+          name: Restore Yarn Package Cache
           keys:
-            - pip-packages-{{ checksum "Pipfile.lock" }}
-
-      - run: pipenv install
-
-      - save_cache:
-          paths:
-            - ~/.local/share/virtualenvs
-          key: pip-packages-{{ checksum "Pipfile.lock" }}
-
-      - run: pipenv run ansible-playbook -i ansible/staging ansible/deploy.yml
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      - run:
+          name: Build assets
+          command: |
+            if [ $CIRCLE_BRANCH == "master" ]
+            then
+              export AZURE_STORAGE_ACCOUNT_NAME=$AZURE_STORAGE_PROD_ACCOUNT_NAME
+            else
+              export AZURE_STORAGE_ACCOUNT_NAME=$AZURE_STORAGE_STAGING_ACCOUNT_NAME
+              export WEBPACK_ENV=staging
+            fi && \
+            yarn dist
+      - run:
+          name: Copy static files to azure storage
+          command: ./bin/copy-to-azure-storage.js
 
 workflows:
   version: 2
@@ -53,4 +63,6 @@ workflows:
             - test
           filters:
             branches:
-              only: staging
+              only:
+                - staging
+                - master
