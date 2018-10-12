@@ -76,7 +76,7 @@ const uploadStaticFilesWithExtension = (directory, contentType, ext) => {
 
 blobService.createContainerIfNotExistsAsync(container, { publicAccessLevel: 'blob' }).then(() => {
   return Promise.all([
-    uploadStaticFile('index.html', distPath('index.html'), 'text/html'),
+    uploadFile(container, 'index.html', distPath('index.html'), 'text/html', 'no-cache', undefined),
     assetsFileWithExtension('.js').then(files => {
       const filePath = path.join('assets', files[0]);
       return uploadStaticFile(filePath, distPath(filePath), 'application/javascript');
