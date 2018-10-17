@@ -24,7 +24,8 @@ jobs:
       - run: yarn run lint
       - run: yarn run ci-test
       - run: yarn run live-test
-  deploy:
+
+  build:
     docker:
       - image: circleci/node:8.11.3-browsers
 
@@ -41,29 +42,62 @@ jobs:
       - run:
           name: Build assets
           command: |
-            if [ $CIRCLE_BRANCH == "master" ]
+            if [ $CIRCLE_BRANCH == "staging" ]
             then
-              export AZURE_STORAGE_ACCOUNT_NAME=$AZURE_STORAGE_PROD_ACCOUNT_NAME
-            else
-              export AZURE_STORAGE_ACCOUNT_NAME=$AZURE_STORAGE_STAGING_ACCOUNT_NAME
               export WEBPACK_ENV=staging
             fi && \
             yarn dist
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
 
+  push_image:
+    docker:
+      - image: docker:18.06.1-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: cp -R /tmp/workspace/dist ./dist
+      - run: echo "build-$CIRCLE_BUILD_NUM" > buildnum
+      - persist_to_workspace:
+          root: .
+          paths:
+            - buildnum
       - run:
-          name: Clean old builds on azure storage
-          command: ./bin/clean-old-build-on-azure-storage.js
+          name: Build and push image
+          command: |
+            docker build -t cpdbdev/mobile-frontend:$(cat buildnum) .
+            docker login -u cpdbdev -p $DOCKER_PASSWORD
+            docker push cpdbdev/mobile-frontend:$(cat buildnum)
 
+  deploy:
+    docker:
+      - image: cpdbdev/kubectl:v1.11.3
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
       - run:
-          name: Copy static files to azure storage
-          command: ./bin/copy-to-azure-storage.js
+          name: Apply deployment
+          command: |
+            if [ $CIRCLE_BRANCH == "master" ]
+            then
+              export NAMESPACE=production
+            else
+              export NAMESPACE=staging
+            fi
+            echo $KUBECONFIG_JSON > /root/project/config.json
+            IMAGE_TAG=$(cat /tmp/workspace/buildnum) templater mobile-frontend.yml | kubectl --kubeconfig /root/project/config.json apply -f - --namespace=$NAMESPACE
 
 workflows:
   version: 2
   test_and_deploy:
     jobs:
       - test
-      - deploy:
+      - build:
           requires:
             - test
           filters:
@@ -71,3 +105,9 @@ workflows:
               only:
                 - staging
                 - master
+      - push_image:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - push_image

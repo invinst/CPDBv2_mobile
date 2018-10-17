@@ -5,17 +5,7 @@ const srcPath = path.join(__dirname, '/../src');
 const defaultPort = 9967;
 
 const staticFileBase = () => {
-  if (process.env.WEBPACK_ENV === 'staging' || process.env.WEBPACK_ENV === 'production') {
-    return [
-      'https://',
-      process.env.AZURE_STORAGE_ACCOUNT_NAME,
-      '.blob.core.windows.net/',
-      process.env.AZURE_STATICFILES_CONTAINER,
-      '/assets/'
-    ].join('');
-  }
-
-  return 'assets/';
+  return '/assets/';
 };
 
 function getDefaultModules() {
