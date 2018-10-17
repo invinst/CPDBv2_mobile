@@ -131,7 +131,6 @@ describe('<OfficerPage />', function () {
 
     wrapper.setProps({ pathName: '/officer/123/' });
 
-
     window.history.replaceState.called.should.be.true();
     const args = window.history.replaceState.getCall(0).args;
     args[2].should.equal('/officer/123/officer-11/');

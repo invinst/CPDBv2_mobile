@@ -25,7 +25,6 @@ class OfficerPage extends Component {
     this.state = { historicBadgesExpanded: false };
 
     this.toggleHistoricBadges = this.toggleHistoricBadges.bind(this);
-    console.warn('constructor');
   }
 
   componentDidMount() {
@@ -34,13 +33,11 @@ class OfficerPage extends Component {
       fetchOfficer(pk);
     }
     hasCMS || requestCMS();
-    console.warn('componentDidMount');
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pk, pathName } = nextProps;
-    const officerSlug = kebabCase(nextProps.summary.name);
-    console.warn('componentWillReceiveProps', pk, pathName, officerSlug);
+    const { pk, pathName, summary } = nextProps;
+    const officerSlug = summary ? kebabCase(summary.name) : '';
     const correctPathName = `/officer/${pk}/${officerSlug}/`;
     if (!isEmpty(officerSlug) && pathName !== correctPathName) {
       window.history.replaceState(window.history.state, document.title, correctPathName);
