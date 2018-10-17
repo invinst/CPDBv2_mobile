@@ -113,6 +113,32 @@ describe('<OfficerPage />', function () {
     spyfetchOfficer.calledWith(123).should.be.true();
   });
 
+
+  it('should replace with correct pathname', function () {
+    spy(window.history, 'replaceState');
+
+    const wrapper = shallow(
+      <OfficerPage
+        loading={ false }
+        found={ true }
+        fetchOfficer={ noop }
+        summary={ this.summary }
+        metrics={ this.metrics }
+        pathName='/officer/123/'
+        pk={ 123 }
+      />
+    );
+
+    wrapper.setProps({ pathName: '/officer/123/' });
+
+
+    window.history.replaceState.called.should.be.true();
+    const args = window.history.replaceState.getCall(0).args;
+    args[2].should.equal('/officer/123/officer-11/');
+
+    window.history.replaceState.restore();
+  });
+
   it('should render Header', function () {
     const wrapper = shallow(
       <OfficerPage
