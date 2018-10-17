@@ -31,6 +31,15 @@ http {
         listen 80 default_server;
         server_name _;
         root /usr/share/nginx/html;
+
+        if ($http_user_agent !~* '(iPhone|iPod|Android|Blackberry|Windows Phone|Opera Mini|WebOS|SymbianOS|IEMobile|Maemo)') {
+            set $mode 'Desktop';
+        }
+
+        if ($mode = 'Desktop') {
+            return 301 https://{{DESKTOP_SERVER_NAME}}$request_uri;
+        }
+
         location / {
             try_files $uri /index.html;
         }

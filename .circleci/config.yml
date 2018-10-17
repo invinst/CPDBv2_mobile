@@ -69,6 +69,13 @@ jobs:
       - run:
           name: Build and push image
           command: |
+            if [ $CIRCLE_BRANCH == "master" ]
+            then
+              export DESKTOP_SERVER_NAME=cpdp.co
+            else
+              export DESKTOP_SERVER_NAME=staging.cpdp.co
+            fi
+            sed -e "s/{{DESKTOP_SERVER_NAME}}/$DESKTOP_SERVER_NAME/" nginx.conf.template > nginx.conf
             docker build -t cpdbdev/mobile-frontend:$(cat buildnum) .
             docker login -u cpdbdev -p $DOCKER_PASSWORD
             docker push cpdbdev/mobile-frontend:$(cat buildnum)
