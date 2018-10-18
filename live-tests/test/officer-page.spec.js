@@ -375,6 +375,16 @@ describe('OfficerPage test', function () {
       });
     });
 
+    it('should redirect to correct path name when only officer id is provided', function (client) {
+      client.assert.urlContains('/officer/2235/kevin-osborn/');
+    });
+
+    it('should redirect to correct path name when the officer name is incorrect', function (client) {
+      client.url('/officer/2235/somethingwrong/');
+      client.waitForElementVisible('body', TIMEOUT);
+      client.assert.urlContains('/officer/2235/kevin-osborn/');
+    });
+
     it('should render officer radar chart', function () {
       const officerPage = this.officerPage;
       const animatedRadarChart = officerPage.section.animatedRadarChart;
