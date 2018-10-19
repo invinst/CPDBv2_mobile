@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { push as pushBreadcrumbs } from 'redux-breadcrumb-trail';
 
 import OfficerPage from 'components/officer-page';
 import { fetchOfficer, requestCMS } from 'actions/officer-page';
@@ -21,12 +22,15 @@ function mapStateToProps(state, ownProps) {
     }
   };
   return {
+    location: ownProps.location,
+    routes: ownProps.routes,
+    params: ownProps.params,
     loading: state.officerPage.officers.isRequesting,
     found: state.officerPage.officers.isSuccess,
     summary: officerSummarySelector(state, props),
     metrics: officerMetricsSelector(state, props),
     threeCornerPercentile: officerYearlyPercentileSelector(state, props),
-    pk,
+    requestOfficerId: pk,
     hasCMS: hasCMS(state, 'officerPage'),
     noDataCMSContent: cmsSelector(state, 'officerPage', 'no_data_explain_text')
   };
@@ -34,7 +38,8 @@ function mapStateToProps(state, ownProps) {
 
 const mapDispatchToProps = {
   requestCMS,
-  fetchOfficer
+  fetchOfficer,
+  pushBreadcrumbs
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OfficerPage));

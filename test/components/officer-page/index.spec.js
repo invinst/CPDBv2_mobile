@@ -21,7 +21,6 @@ const mockStore = configureStore();
 
 describe('<OfficerPage />', function () {
   beforeEach(function () {
-    this.pk = 33;
     this.summary = {
       name: 'Officer 11',
       unit: 'Unit 001 - description',
@@ -68,6 +67,28 @@ describe('<OfficerPage />', function () {
     wrapper.find(NotMatchedOfficerPage).should.have.length(1);
   });
 
+  it('should set to the correct officer if there is officer alias', function () {
+    const pushBreadcrumbSpy = spy();
+    const wrapper = shallow(
+      <OfficerPage
+        loading={ false }
+        found={ false }
+        getOfficerSummary={ noop }
+        pushBreadcrumbs={ pushBreadcrumbSpy }
+      />
+    );
+
+    wrapper.setProps({
+      requestOfficerId: 456,
+      summary: { id: 123 },
+      routes: [],
+      location: {},
+      params: {}
+    });
+
+    pushBreadcrumbSpy.calledWith({ routes: [], location: { pathname: 'officer/123/' }, params: { id: 123 } });
+  });
+
   it('should be tracked by Google Analytics when mounted', function () {
     const store = mockStore({
       suggestionApp: { query: '' },
@@ -101,7 +122,7 @@ describe('<OfficerPage />', function () {
 
     const wrapper = shallow(
       <OfficerPage
-        pk={ 123 }
+        requestOfficerId={ 123 }
         loading={ false }
         found={ false }
         fetchOfficer={ spyfetchOfficer }
