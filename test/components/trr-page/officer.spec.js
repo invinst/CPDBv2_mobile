@@ -32,7 +32,7 @@ describe('<Officer />', function () {
 
     const wrapper = shallow(<Officer { ...officer }/>);
 
-    wrapper.find('Link').prop('to').should.equal('/officer/456/');
+    wrapper.find('Link').prop('to').should.equal('/officer/456/donovan-markiewicz/');
 
     const radarChart = wrapper.find(RadarChart);
     radarChart.prop('data').should.deepEqual([

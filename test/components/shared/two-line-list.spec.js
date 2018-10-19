@@ -38,13 +38,13 @@ describe('<TwoLineList />', function () {
       {
         label: 'John',
         sublabel: 'Badge #1',
-        url: '/officer/1',
+        url: '/officer/1/john/',
         onClick: onClick1
       },
       {
         label: 'Snow',
         sublabel: 'Badge #2',
-        url: '/officer/2',
+        url: '/officer/2/snow/',
         onClick: onClick2
       }
     ];
@@ -54,11 +54,11 @@ describe('<TwoLineList />', function () {
     links.should.have.length(2);
 
     links.at(0).text().should.eql('JohnBadge #1');
-    links.at(0).prop('to').should.eql('/officer/1');
+    links.at(0).prop('to').should.eql('/officer/1/john/');
     links.at(0).prop('onClick').should.equal(onClick1);
 
     links.at(1).text().should.eql('SnowBadge #2');
-    links.at(1).prop('to').should.eql('/officer/2');
+    links.at(1).prop('to').should.eql('/officer/2/snow/');
     links.at(1).prop('onClick').should.equal(onClick2);
   });
 

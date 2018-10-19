@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
-import { isEmpty, kebabCase, noop } from 'lodash';
+import { isEmpty, noop } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
@@ -17,6 +17,7 @@ import { roundedPercentile } from 'utils/calculation';
 import navigationArrow from 'img/disclosure-indicator.svg';
 import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
 import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
+import { officerUrl } from 'utils/url-util';
 
 
 class OfficerPage extends Component {
@@ -37,9 +38,9 @@ class OfficerPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { pk, pathName, summary } = nextProps;
-    const officerSlug = summary ? kebabCase(summary.name) : '';
-    const correctPathName = `/officer/${pk}/${officerSlug}/`;
-    if (!isEmpty(officerSlug) && pathName !== correctPathName) {
+    const name = summary ? summary.name : '';
+    const correctPathName = officerUrl(pk, name);
+    if (name && pathName !== correctPathName) {
       window.history.replaceState(window.history.state, document.title, correctPathName);
     }
   }

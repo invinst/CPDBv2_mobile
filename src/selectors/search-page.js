@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
+import { officerUrl } from 'utils/url-util';
 
 
 export const officersSelector = createSelector(
@@ -18,7 +19,7 @@ export const officersSelector = createSelector(
         name: officer.name,
         badge: officer.badge ? `Badge #${officer.badge}` : '',
         percentile: extractPercentile(officer.percentile),
-        url: `${constants.OFFICER_PATH}${officer.id}/`
+        url: officerUrl(officer.id, officer.name)
       }))
     };
   }
