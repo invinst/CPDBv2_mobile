@@ -208,6 +208,7 @@ export default {
   COMPLAINT_API_ENDPOINT: '/mobile/cr/',
   TRR_API_ENDPOINT: '/mobile/trr/',
   TOP_OFFICERS_BY_ALLEGATION_ENDPOINT: '/officers/top-by-allegation/',
+  OFFICERS_API_ENDPOINT: '/mobile/officers/',
   RECENT_ACTIVITIES_ENDPOINT: '/activity-grid/',
   NEW_DOCUMENT_ALLEGATIONS_ENDPOINT: '/cr/list-by-new-document/',
   COMPLAINT_SUMMARIES_ENDPOINT: '/cr/complaint-summaries/',
@@ -238,6 +239,7 @@ export default {
   COMPLAINT_PATH: '/complaint/',
   TRR_PATH: '/trr/',
   EMBED_TOP_OFFICER_PATH: '/embed/top-officers-page',
+  EMBED_OFFICERS_PATH: '/embed/officers-page/',
 
   // Routes that don't have their corresponding component.
   // NavigationUtil.goUp() skips all of these.

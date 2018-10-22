@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { spy } from 'sinon';
 
-import HorizontalScrolling from 'components/landing-page/horizontal-scrolling';
+import HorizontalScrolling from 'components/common/horizontal-scrolling';
 import * as GATracking from 'utils/google_analytics_tracking';
 
 
