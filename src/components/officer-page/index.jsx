@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
-import { isEmpty, noop } from 'lodash';
+import { isEmpty, kebabCase, noop } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
@@ -36,14 +36,21 @@ class OfficerPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { requestOfficerId, summary, location, routes, params, pushBreadcrumbs } = nextProps;
-    if (summary && requestOfficerId != summary.id) {
-      const officerPath = `officer/${summary.id}/`;
-      global.history.replaceState(global.history.state, document.title, officerPath);
-      location.pathname = officerPath;
-      params.id = summary.id.toString();
-      pushBreadcrumbs({ location, routes, params });
+    const { summary, location, params } = nextProps;
+    if (!summary) {
+      return;
     }
+
+    const officerSlug = summary ? kebabCase(summary.name) : '';
+    let correctPathName = `officer/${summary.id}/`;
+    if (!isEmpty(officerSlug)) {
+      correctPathName += `${officerSlug}/`;
+    }
+
+    global.history.replaceState(global.history.state, document.title, correctPathName);
+    location.pathname = correctPathName;
+    params.id = summary.id.toString();
+    params.fullName = officerSlug;
   }
 
   toggleHistoricBadges() {
@@ -178,16 +185,15 @@ OfficerPage.propTypes = {
   threeCornerPercentile: PropTypes.array,
   noDataCMSContent: PropTypes.object,
   hasCMS: PropTypes.bool,
-  pushBreadcrumbs: PropTypes.func,
   requestLandingPage: PropTypes.func,
   location: PropTypes.object,
-  params: PropTypes.object,
-  routes: PropTypes.array,
+  params: PropTypes.object
 };
 
 OfficerPage.defaultProps = {
   requestCMS: noop,
-  pushBreadcrumbs: noop
+  location: {},
+  params: {}
 };
 
 export default OfficerPage;

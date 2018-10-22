@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { push as pushBreadcrumbs } from 'redux-breadcrumb-trail';
 
 import OfficerPage from 'components/officer-page';
 import { fetchOfficer, requestCMS } from 'actions/officer-page';
@@ -23,7 +22,6 @@ function mapStateToProps(state, ownProps) {
   };
   return {
     location: ownProps.location,
-    routes: ownProps.routes,
     params: ownProps.params,
     loading: state.officerPage.officers.isRequesting,
     found: state.officerPage.officers.isSuccess,
@@ -38,8 +36,7 @@ function mapStateToProps(state, ownProps) {
 
 const mapDispatchToProps = {
   requestCMS,
-  fetchOfficer,
-  pushBreadcrumbs
+  fetchOfficer
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OfficerPage));

@@ -22,6 +22,7 @@ const mockStore = configureStore();
 describe('<OfficerPage />', function () {
   beforeEach(function () {
     this.summary = {
+      id: 123,
       name: 'Officer 11',
       unit: 'Unit 001 - description',
       demographic: '26 years old, race, male.',
@@ -132,6 +133,32 @@ describe('<OfficerPage />', function () {
 
     wrapper.instance().componentDidMount();
     spyfetchOfficer.calledWith(123).should.be.true();
+  });
+
+
+  it('should replace with correct pathname', function () {
+    spy(window.history, 'replaceState');
+
+    const wrapper = shallow(
+      <OfficerPage
+        loading={ false }
+        found={ true }
+        fetchOfficer={ noop }
+        metrics={ this.metrics }
+      />
+    );
+
+    wrapper.setProps({ summary: null });
+    window.history.replaceState.called.should.be.false();
+    window.history.replaceState.resetHistory();
+
+    wrapper.setProps({ summary: this.summary });
+
+    window.history.replaceState.called.should.be.true();
+    const args = window.history.replaceState.getCall(0).args;
+    args[2].should.equal('officer/123/officer-11/');
+
+    window.history.replaceState.restore();
   });
 
   it('should render Header', function () {
