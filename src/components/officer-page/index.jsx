@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
-import { isEmpty, noop } from 'lodash';
+import { isEmpty, kebabCase, noop } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
@@ -33,6 +33,15 @@ class OfficerPage extends Component {
       fetchOfficer(pk);
     }
     hasCMS || requestCMS();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { pk, pathName, summary } = nextProps;
+    const officerSlug = summary ? kebabCase(summary.name) : '';
+    const correctPathName = `/officer/${pk}/${officerSlug}/`;
+    if (!isEmpty(officerSlug) && pathName !== correctPathName) {
+      window.history.replaceState(window.history.state, document.title, correctPathName);
+    }
   }
 
   toggleHistoricBadges() {
@@ -157,6 +166,7 @@ class OfficerPage extends Component {
 
 OfficerPage.propTypes = {
   pk: PropTypes.number,
+  pathName: PropTypes.string,
   fetchOfficer: PropTypes.func.isRequired,
   requestCMS: PropTypes.func,
   loading: PropTypes.bool,

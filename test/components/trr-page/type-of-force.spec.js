@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import should from 'should';
 
 import TypeOfForce from 'components/trr-page/type-of-force';
 
@@ -16,5 +17,10 @@ describe('<TypeOfForce />', function () {
     lowerForceTypes.should.have.length(2);
     lowerForceTypes.at(0).text().should.equal('↑Member Presence');
     lowerForceTypes.at(1).text().should.equal('↑Verbal Commands');
+  });
+
+  it('should render nothing if forceTypes is undefined', function () {
+    const wrapper = shallow(<TypeOfForce />);
+    should(wrapper.getNode()).be.null();
   });
 });

@@ -9,11 +9,12 @@ class Attachment extends Component {
 
     return (
       <div className={ style.attachment }>
-        <div className='title'>
-          ATTACHMENTS
-          <TRRRequestDocumentButtonContainer trrId={ this.props.trrId }/>
+        <div className='attachment-header'>
+          <div className='title'>
+            There are no documents that have been made public yet.
+          </div>
+          <TRRRequestDocumentButtonContainer trrId={ this.props.trrId } customClassName='request-button-container' />
         </div>
-        <div className='subtitle'>May contain graphic content</div>
       </div>
     );
   }

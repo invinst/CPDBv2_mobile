@@ -21,6 +21,7 @@ function mapStateToProps(state, ownProps) {
     }
   };
   return {
+    pathname: ownProps.pathname,
     loading: state.officerPage.officers.isRequesting,
     found: state.officerPage.officers.isSuccess,
     summary: officerSummarySelector(state, props),

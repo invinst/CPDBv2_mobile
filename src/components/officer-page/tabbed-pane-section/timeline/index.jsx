@@ -47,6 +47,7 @@ export default class Timeline extends Component {
   render() {
     return (
       <div className={ cx(style.officerTimeline, 'test--officer-timeline') }>
+        <div className='timeline-label'>OFFICER TIMELINE</div>
         { this.renderItems() }
       </div>
     );
