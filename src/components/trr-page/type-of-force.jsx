@@ -5,6 +5,12 @@ import style from './type-of-force.sass';
 
 class TypeOfForce extends Component {
   render() {
+    const { forceTypes } = this.props;
+
+    if (!forceTypes) {
+      return null;
+    }
+
     const [topForceType, ...theRest] = this.props.forceTypes;
 
     return (
