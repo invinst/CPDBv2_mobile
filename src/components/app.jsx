@@ -78,7 +78,7 @@ const App = React.createClass({
           component={ TopOfficersByAllegationContainer }
         />
         <Route
-          path={ `${constants.EMBED_OFFICERS_PATH}` }
+          path={ constants.EMBED_OFFICERS_PATH }
           component={ OfficersContainer }
         />
 
