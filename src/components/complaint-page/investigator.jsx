@@ -30,6 +30,13 @@ const Investigator = ({ investigators=[] }) => {
                   />
               </div>
               <div className='name'>{ investigator['full_name'] }</div>
+              <div className='badge-wrapper'>
+                {
+                  investigator.badge ? (
+                    <span className='badge'>{ investigator.badge }</span>
+                  ) : null
+                }
+              </div>
             </SafeLink>
           );
         })
