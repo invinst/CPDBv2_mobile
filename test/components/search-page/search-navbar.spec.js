@@ -136,7 +136,7 @@ describe('<SearchNavbar />', function () {
       this.stubInstantScrollToTop.calledWith().should.be.true();
     });
 
-    it('should render the chosenCategory as active no matter what', function () {
+    it('should not render category links if only one exists', function () {
       const categories = [
         {
           id: 'officers',
@@ -147,12 +147,11 @@ describe('<SearchNavbar />', function () {
       const wrapper = mount(
         <SearchNavbar
           categories={ categories }
-          activeCategory='crs'
-          chosenCategory='officers'
+          activeCategory='officers'
         />
       );
 
-      wrapper.find('.category-link.active').text().should.eql('Officers');
+      wrapper.find('.category-link').exists().should.eql(false);
     });
   });
 });
