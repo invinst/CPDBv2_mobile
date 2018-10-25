@@ -11,8 +11,8 @@ class HorizontalScrolling extends React.Component {
     super(props);
     this.swiper = null;
 
-    this.state = { activeIndex: 0 };
-    this.handleSlideChange = this.handleSlideChange.bind(this);
+    this.handleSlideNext = this.handleSlideNext.bind(this);
+    this.handleSlidePrev = this.handleSlidePrev.bind(this);
   }
 
   componentDidMount() {
@@ -22,7 +22,8 @@ class HorizontalScrolling extends React.Component {
       direction: 'horizontal',
       slidesOffsetAfter: 32,
       on: {
-        slideChange: this.handleSlideChange,
+        slideNextTransitionStart: this.handleSlideNext,
+        slidePrevTransitionStart: this.handleSlidePrev,
       }
     };
     this.swiper = new Swiper(this.el, { ...defaultOptions, ...this.props.slideOptions });
@@ -35,16 +36,14 @@ class HorizontalScrolling extends React.Component {
     }
   }
 
-  handleSlideChange() {
-    const activeIndex = this.swiper.activeIndex;
-    const lastActiveIndex = this.state.activeIndex;
+  handleSlideNext() {
+    const { trackingContentType } = this.props;
+    GATracking.trackSwipeLanddingPageCarousel('right', trackingContentType);
+  }
 
-    if (activeIndex !== lastActiveIndex) {
-      const direction = activeIndex > lastActiveIndex ? 'right' : 'left';
-      GATracking.trackSwipeLanddingPageCarousel(direction, this.props.trackingContentType);
-    }
-
-    this.setState({ activeIndex });
+  handleSlidePrev() {
+    const { trackingContentType } = this.props;
+    GATracking.trackSwipeLanddingPageCarousel('left', trackingContentType);
   }
 
   render() {

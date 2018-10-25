@@ -2203,11 +2203,11 @@ dom-serializer@0, dom-serializer@~0.1.0:
     domelementtype "~1.1.1"
     entities "~1.1.1"
 
-dom7@^2.0.6:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/dom7/-/dom7-2.0.7.tgz#43940bff361cc0e5f38c349b055fd60c10309b89"
+dom7@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/dom7/-/dom7-2.1.2.tgz#a914070c0abe8465384997a9c4f34475f67f75bd"
   dependencies:
-    ssr-window "^1.0.0"
+    ssr-window "^1.0.1"
 
 domain-browser@^1.1.1:
   version "1.1.7"
@@ -6769,7 +6769,7 @@ sshpk@^1.7.0:
     jsbn "~0.1.0"
     tweetnacl "~0.14.0"
 
-ssr-window@^1.0.0:
+ssr-window@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-1.0.1.tgz#30752a6a4666e7767f0b7e6aa6fc2fdbd0d9b369"
 
@@ -6990,12 +6990,12 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
-swiper@^4.3.3:
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-4.3.3.tgz#92e39c806ead23a18e5c3251dfba1ae9ce76270e"
+swiper@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-4.4.1.tgz#9eeca17c5bfa4a27663963b2640119e5fc668255"
   dependencies:
-    dom7 "^2.0.6"
-    ssr-window "^1.0.0"
+    dom7 "^2.1.2"
+    ssr-window "^1.0.1"
 
 symbol-observable@^1.0.2:
   version "1.0.4"
