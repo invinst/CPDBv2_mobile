@@ -18,6 +18,7 @@ const fixedHeaderHeight = (
 const resultComponentMappings = {
   dateCRs: CRSearchResult,
   dateTRRs: TRRSearchResult,
+  dateOfficers: OfficerSearchResult,
   officers: OfficerSearchResult,
   crs: CRSearchResult,
   trrs: TRRSearchResult,
@@ -67,7 +68,7 @@ export default class SearchCategory extends Component {
   }
 
   renderResults() {
-    const { saveToRecent, categoryId, showAllButton } = this.props;
+    const { saveToRecent, categoryId, showAllButton, categoryFilter } = this.props;
     const ResultComponent = resultComponentMappings[categoryId];
 
     if (typeof ResultComponent === 'undefined') {
@@ -79,7 +80,7 @@ export default class SearchCategory extends Component {
       items = items.slice(0, 5);
     }
 
-    return <ResultComponent items={ items } saveToRecent={ saveToRecent }/>;
+    return <ResultComponent items={ items } saveToRecent={ saveToRecent } categoryFilter={ categoryFilter }/>;
   }
 
   render() {
@@ -109,6 +110,7 @@ SearchCategory.propTypes = {
   items: PropTypes.array,
   title: PropTypes.string,
   categoryId: PropTypes.string,
+  categoryFilter: PropTypes.string,
   showAllButton: PropTypes.bool,
   allButtonClickHandler: PropTypes.func,
   saveToRecent: PropTypes.func,

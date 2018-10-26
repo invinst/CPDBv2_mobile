@@ -19,6 +19,7 @@ describe('<TRRSearchResult />', () => {
       <TRRSearchResult
         items={ trrs }
         saveToRecent={ () => {} }
+        categoryFilter='TRR'
       />
     );
 
@@ -38,6 +39,7 @@ describe('<TRRSearchResult />', () => {
       <TRRSearchResult
         items={ trrs }
         saveToRecent={ saveToRecentSpy }
+        categoryFilter='TRR'
       />
     );
 

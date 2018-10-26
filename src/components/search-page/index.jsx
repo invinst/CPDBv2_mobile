@@ -81,6 +81,7 @@ export default class SearchPage extends Component {
       const searchCategory = (
         <SearchCategory
           categoryId={ cat.id }
+          categoryFilter={ cat.filter }
           allButtonClickHandler={ this.chooseCategory.bind(this, cat) }
           showAllButton={ showAllButton }
           title={ cat.longName || cat.name }
