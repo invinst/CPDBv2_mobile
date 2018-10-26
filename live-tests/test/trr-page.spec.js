@@ -67,7 +67,7 @@ describe('TRRPageTest', function () {
   it('should go to officer page when clicking on the officer row', function (client) {
     this.trrPage.section.officer.expect.element('@officerRow').text.to.contain('Donovan Markiewicz');
     this.trrPage.section.officer.click('@officerRow');
-    client.assert.urlEquals(client.page.officerPage().url(583));
+    client.assert.urlContains('/officer/583/donovan-markiewicz/');
   });
 
   it('should show request document modal when clicks on "Request Document"', function () {

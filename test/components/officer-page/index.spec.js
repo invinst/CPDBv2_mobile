@@ -21,8 +21,8 @@ const mockStore = configureStore();
 
 describe('<OfficerPage />', function () {
   beforeEach(function () {
-    this.pk = 33;
     this.summary = {
+      id: 123,
       name: 'Officer 11',
       unit: 'Unit 001 - description',
       demographic: '26 years old, race, male.',
@@ -68,6 +68,28 @@ describe('<OfficerPage />', function () {
     wrapper.find(NotMatchedOfficerPage).should.have.length(1);
   });
 
+  it('should set to the correct officer if there is officer alias', function () {
+    const pushBreadcrumbSpy = spy();
+    const wrapper = shallow(
+      <OfficerPage
+        loading={ false }
+        found={ false }
+        getOfficerSummary={ noop }
+        pushBreadcrumbs={ pushBreadcrumbSpy }
+      />
+    );
+
+    wrapper.setProps({
+      requestOfficerId: 456,
+      summary: { id: 123 },
+      routes: [],
+      location: {},
+      params: {}
+    });
+
+    pushBreadcrumbSpy.calledWith({ routes: [], location: { pathname: 'officer/123/' }, params: { id: 123 } });
+  });
+
   it('should be tracked by Google Analytics when mounted', function () {
     const store = mockStore({
       suggestionApp: { query: '' },
@@ -101,7 +123,7 @@ describe('<OfficerPage />', function () {
 
     const wrapper = shallow(
       <OfficerPage
-        pk={ 123 }
+        requestOfficerId={ 123 }
         loading={ false }
         found={ false }
         fetchOfficer={ spyfetchOfficer }
@@ -122,18 +144,19 @@ describe('<OfficerPage />', function () {
         loading={ false }
         found={ true }
         fetchOfficer={ noop }
-        summary={ this.summary }
         metrics={ this.metrics }
-        pathName='/officer/123/'
-        pk={ 123 }
       />
     );
 
-    wrapper.setProps({ pathName: '/officer/123/' });
+    wrapper.setProps({ summary: null });
+    window.history.replaceState.called.should.be.false();
+    window.history.replaceState.resetHistory();
+
+    wrapper.setProps({ summary: this.summary });
 
     window.history.replaceState.called.should.be.true();
     const args = window.history.replaceState.getCall(0).args;
-    args[2].should.equal('/officer/123/officer-11/');
+    args[2].should.equal('officer/123/officer-11/');
 
     window.history.replaceState.restore();
   });
