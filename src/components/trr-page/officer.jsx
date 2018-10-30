@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import { kebabCase } from 'lodash';
 
 import navigationArrow from 'img/disclosure-indicator.svg';
 import style from './officer.sass';
@@ -23,7 +24,7 @@ class Officer extends Component {
       <div className={ style.trrOfficer }>
         <Link
           className='officer-row'
-          to={ `/officer/${officerId}/` }
+          to={ `/officer/${officerId}/${kebabCase(fullName)}/` }
         >
           <div className='officer-visual-token'>
             <RadarChart { ...visualTokenConfig }/>
