@@ -129,7 +129,7 @@
     "should-sinon": "^0.0.6",
     "string": "^3.3.1",
     "superagent": "^3.7.0",
-    "swiper": "^4.3.3",
+    "swiper": "^4.4.1",
     "yargs-parser": "^5.0.0"
   }
 }
