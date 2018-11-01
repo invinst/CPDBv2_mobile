@@ -96,6 +96,22 @@ describe('<OfficerPage />', function () {
     spyfetchOfficer.called.should.be.false();
   });
 
+  it('should not fetch officer data if officer id is empty', function () {
+    const spyfetchOfficer = spy();
+
+    const wrapper = shallow(
+      <OfficerPage
+        pk={ null }
+        loading={ false }
+        found={ true }
+        fetchOfficer={ spyfetchOfficer }
+      />
+    );
+
+    wrapper.instance().componentDidMount();
+    spyfetchOfficer.called.should.be.false();
+  });
+
   it('should fetch officer data if summary is not available', function () {
     const spyfetchOfficer = spy();
 

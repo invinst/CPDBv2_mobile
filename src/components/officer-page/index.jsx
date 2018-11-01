@@ -29,7 +29,7 @@ class OfficerPage extends Component {
 
   componentDidMount() {
     const { summary, pk, fetchOfficer, requestCMS, hasCMS } = this.props;
-    if (!summary) {
+    if (!summary && pk) {
       fetchOfficer(pk);
     }
     hasCMS || requestCMS();
