@@ -18,6 +18,7 @@ import navigationArrow from 'img/disclosure-indicator.svg';
 import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
 import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
 import { officerUrl } from 'utils/url-util';
+import CoaccusalsContainer from 'containers/officer-page/coaccusals-container';
 
 
 class OfficerPage extends Component {
@@ -166,6 +167,7 @@ class OfficerPage extends Component {
         </div>
         { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
         <OfficerTimelineContainer officerId={ id }/>
+        <CoaccusalsContainer officerId={ id }/>
         <BottomPadding />
       </StickyContainer>
     );
