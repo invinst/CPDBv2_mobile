@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import cx from 'classnames';
+import ClampLines from 'react-clamp-lines';
 
 import Image from 'components/shared/image';
 import document from 'img/ic-document.jpg';
@@ -10,7 +11,7 @@ import styles from './attachments.sass';
 import * as GATracking from 'utils/google_analytics_tracking';
 
 
-const TYPE_TO_ICONS = {
+const ICON_TYPES = {
   document, audio, video
 };
 
@@ -51,10 +52,17 @@ class Attachments extends Component {
                   <Image
                     className={ cx('attachment-thumbnail', attachment.fileType) }
                     src={ attachment.previewImageUrl }
-                    fallback={ TYPE_TO_ICONS[attachment.fileType] }
-                    />
+                    fallback={ ICON_TYPES[attachment.fileType] }
+                  />
                 </div>
-                <div className='attachment-title'>{ attachment.title }</div>
+                <ClampLines
+                  className='attachment-title'
+                  text={ attachment.title }
+                  lines='2'
+                  ellipsis='...'
+                  moreText='Expand'
+                  lessText='Collapse'
+                />
               </a>
             ))
           }

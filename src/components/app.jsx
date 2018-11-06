@@ -9,7 +9,7 @@ import MainPageContainer from 'containers/main-page-container';
 import AboutPageContainer from 'containers/about-page-container';
 import SearchPageContainer from 'containers/search-page-container';
 import OfficerPageContainer from 'containers/officer-page-container';
-import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
+import OfficerAttachmentsTabContainer from 'containers/officer-page/officer-attachments-container';
 import ComplaintPageContainer from 'containers/complaint-page-container';
 import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
@@ -58,7 +58,14 @@ const App = React.createClass({
           <Route
             path={ `${constants.OFFICER_PATH}:id(/:fullName)` }
             breadcrumb={ BreadcrumbItemContainer }
-            component={ OfficerPageContainer } />
+            component={ OfficerPageContainer }> >
+          </Route>
+
+          <Route
+            path={ `${constants.OFFICER_PATH}:id(/:fullName)/documents/` }
+            component={ OfficerAttachmentsTabContainer }
+            breadcrumb={ BreadcrumbItemContainer }
+          />
 
           <Route
             path={ `${constants.COMPLAINT_PATH}:complaintId/` }

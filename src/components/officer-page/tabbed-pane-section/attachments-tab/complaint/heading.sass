@@ -1,0 +1,68 @@
+@import 'variables'
+
+$height: 58px
+
+:local(.officer-attachments-tab-complaint-heading)
+  background-color: inherit
+  height: $height
+  line-height: $height 1px
+  cursor: pointer
+  padding: 0 8px
+  box-sizing: border-box
+  display: block
+
+  &:hover
+    background-color: white
+
+  .attachments-box
+    border-bottom: solid 1px $alto-solid
+    padding: 13px 0
+
+    .kind-wrapper
+      width: 24px
+      display: inline-block
+      margin-right: 8px
+
+      .kind
+        width: 24px
+        border: solid 1px $champagne
+        color: $bright-orange
+        background-color: inherit
+        line-height: 16px
+        height: 24px
+        display: inline-block
+        text-align: center
+        padding: 4px 0
+
+        &.active
+          color: $scarlet-color
+          background-color: $champagne
+
+    .detail
+      display: inline-block
+      vertical-align: middle
+
+      .category
+        color: $thunder
+        line-height: 18px
+        font-size: 14px
+
+        &:hover
+          color: $accent-blue
+
+      .finding
+        font-weight: 300
+        line-height: 14px
+        font-size: 12px
+        color: $gandalf-gray
+
+    .date
+      display: inline-block
+      vertical-align: middle
+      float: right
+      font-size: 12px
+      padding: 8px 0
+      line-height: 16px
+      color: $gandalf-gray
+      font-weight: 300
+      text-align: right
