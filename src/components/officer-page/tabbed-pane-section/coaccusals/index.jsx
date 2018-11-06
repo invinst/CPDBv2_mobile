@@ -1,18 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import { isEmpty } from 'lodash';
 
 import OfficerCard from './officer-card';
 import style from './coaccusals.sass';
 
 
 export default class Coaccusals extends Component {
-  componentDidMount() {
-    const { getOfficerCoaccusals, officerId, coaccusalGroups } = this.props;
-    if (isEmpty(coaccusalGroups)) {
-      getOfficerCoaccusals(officerId);
-    }
-  }
-
   render() {
     const { coaccusalGroups } = this.props;
 
@@ -22,13 +14,13 @@ export default class Coaccusals extends Component {
           coaccusalGroups.map((group) => (
             <div key={ group.name } className='coaccusals-group'>
               <div className='coaccusals-group-name'>{ group.name }</div>
-              <div>
+              <div className='coaccusals-group-items'>
                 {
                   group.coaccusals.map((coaccusal, cardIndex) => (
                     <OfficerCard
                       { ...coaccusal }
                       key={ cardIndex }
-                      displayInline={ true }
+                      extraClassName='inline-officer-card'
                     />
                   ))
                 }
@@ -43,6 +35,4 @@ export default class Coaccusals extends Component {
 
 Coaccusals.propTypes = {
   coaccusalGroups: PropTypes.array,
-  getOfficerCoaccusals: PropTypes.func,
-  officerId: PropTypes.number,
 };

@@ -10,11 +10,11 @@ import pluralize from 'pluralize';
 
 export class OfficerCard extends Component {
   render() {
-    const { officerId, fullName, rank, percentile, coaccusalCount, displayInline } = this.props;
+    const { officerId, fullName, rank, percentile, coaccusalCount, extraClassName } = this.props;
     return (
       <Link
         to={ `${constants.OFFICER_PATH}${officerId}/` }
-        className={ cx(style.officerCard, { 'display-inline': displayInline }, 'test--officer-card') }>
+        className={ cx(style.officerCard, extraClassName, 'test--officer-card') }>
         <div className='radar-chart'>
           <RadarChart
             radius={ 170 }
@@ -44,7 +44,7 @@ OfficerCard.propTypes = {
   rank: PropTypes.string,
   percentile: PropTypes.object,
   coaccusalCount: PropTypes.number,
-  displayInline: PropTypes.bool,
+  extraClassName: PropTypes.string,
 };
 
 export default OfficerCard;

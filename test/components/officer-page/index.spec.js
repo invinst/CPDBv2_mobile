@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount, shallow } from 'enzyme';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import { cloneDeep, noop } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
@@ -14,7 +14,7 @@ import LoadingPage from 'components/shared/loading-page';
 import NotMatchedOfficerPage from 'components/officer-page/not-matched-officer-page';
 import SectionRow from 'components/officer-page/section-row';
 import MetricWidget from 'components/officer-page/metric-widget';
-import TimeLine from 'components/officer-page/tabbed-pane-section/timeline';
+import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 
 
 const mockStore = configureStore();
@@ -68,6 +68,28 @@ describe('<OfficerPage />', function () {
     wrapper.find(NotMatchedOfficerPage).should.have.length(1);
   });
 
+  it('should set to the correct officer if there is officer alias', function () {
+    const pushBreadcrumbSpy = spy();
+    const wrapper = shallow(
+      <OfficerPage
+        loading={ false }
+        found={ false }
+        getOfficerSummary={ noop }
+        pushBreadcrumbs={ pushBreadcrumbSpy }
+      />
+    );
+
+    wrapper.setProps({
+      requestOfficerId: 456,
+      summary: { id: 123 },
+      routes: [],
+      location: {},
+      params: {}
+    });
+
+    pushBreadcrumbSpy.calledWith({ routes: [], location: { pathname: 'officer/123/' }, params: { id: 123 } });
+  });
+
   it('should be tracked by Google Analytics when mounted', function () {
     const store = mockStore({
       suggestionApp: { query: '' },
@@ -89,6 +111,8 @@ describe('<OfficerPage />', function () {
         found={ true }
         fetchOfficer={ spyfetchOfficer }
         summary={ this.summary }
+        getOfficerTimeline={ noop }
+        getOfficerCoaccusals={ noop }
       />
     );
 
@@ -106,6 +130,8 @@ describe('<OfficerPage />', function () {
         found={ false }
         fetchOfficer={ spyfetchOfficer }
         summary={ null }
+        getOfficerCoaccusals={ noop }
+        getOfficerTimeline={ noop }
       />
     );
 
@@ -204,6 +230,22 @@ describe('<OfficerPage />', function () {
           unitName: '153',
           year: 2000,
         }]
+      },
+      isSuccess: {
+        11: true
+      }
+    };
+    const coaccusals = {
+      data: {
+        11: [{
+          officerId: 123,
+          fullName: 'Edward May',
+          rank: 'Detective',
+          coaccusalCount: 4,
+        }]
+      },
+      isSuccess: {
+        11: true
       }
     };
     const stateData = {
@@ -263,6 +305,7 @@ describe('<OfficerPage />', function () {
           }
         },
         timeline: timeline,
+        coaccusals: coaccusals,
         cms: [
           {
             type: 'rich_text',
@@ -499,6 +542,7 @@ describe('<OfficerPage />', function () {
             }
           },
           timeline: timeline,
+          coaccusals: coaccusals,
           cms: [
             {
               type: 'rich_text',
@@ -564,6 +608,7 @@ describe('<OfficerPage />', function () {
             }
           },
           timeline: timeline,
+          coaccusals: coaccusals,
           cms: [
             {
               type: 'rich_text',
@@ -607,14 +652,37 @@ describe('<OfficerPage />', function () {
       should(metricsProp[5].description).be.null();
     });
 
-    it('should render officer Timeline', function () {
+    it('should render TabbedPaneSection component', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
           <OfficerPageContainer params={ { id: 11 } } />
         </Provider>
       );
-      wrapper.find(TimeLine).exists().should.be.true();
+      wrapper.find(TabbedPaneSection).exists().should.be.true();
+    });
+
+    it('should get officer timeline and officer coaccusals after the component is mounted', function () {
+      const stubGetOfficerTimeline = stub();
+      const stubGetOfficerCoaccusals = stub();
+
+      const wrapper = shallow(
+        <OfficerPage
+          requestOfficerId={ 123 }
+          loading={ false }
+          found={ false }
+          fetchOfficer={ noop }
+          summary={ null }
+          isTimelineSuccess={ false }
+          isCoaccusalSuccess={ false }
+          getOfficerCoaccusals={ stubGetOfficerCoaccusals }
+          getOfficerTimeline={ stubGetOfficerTimeline }
+        />
+      );
+
+      wrapper.instance().componentDidMount();
+      stubGetOfficerTimeline.calledWith(123).should.be.true();
+      stubGetOfficerCoaccusals.calledWith(123).should.be.true();
     });
   });
 });

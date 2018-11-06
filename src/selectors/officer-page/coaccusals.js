@@ -1,4 +1,4 @@
-import { get, groupBy, findIndex, keys, reverse } from 'lodash';
+import { get, groupBy, findIndex, keys, reverse, isEmpty } from 'lodash';
 import { createSelector } from 'reselect';
 import pluralize from 'pluralize';
 
@@ -43,4 +43,13 @@ export const coaccusalGroupsSelector = createSelector(
     const groupedCoaccusals = groupBy(transformedCoaccusals, mapCoaccusalToGroup);
     return keys(groupedCoaccusals).map((key) => ({ name: key, coaccusals: groupedCoaccusals[key] }));
   }
+);
+
+export const hasCoaccusalSelector = createSelector(
+  getCoaccusals,
+  coaccusals => !isEmpty(coaccusals)
+);
+
+export const isCoaccusalSuccess = (state, officerId) => get(
+  state.officerPage.coaccusals.isSuccess, String(officerId), false
 );

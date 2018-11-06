@@ -17,8 +17,9 @@ import { roundedPercentile } from 'utils/calculation';
 import navigationArrow from 'img/disclosure-indicator.svg';
 import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
 import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
-import { officerUrl } from 'utils/url-util';
 import CoaccusalsContainer from 'containers/officer-page/coaccusals-container';
+import { officerUrl } from 'utils/url-util';
+import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 
 
 class OfficerPage extends Component {
@@ -30,11 +31,13 @@ class OfficerPage extends Component {
   }
 
   componentDidMount() {
-    const { summary, requestOfficerId, fetchOfficer, requestCMS, hasCMS } = this.props;
-    if (!summary) {
-      fetchOfficer(requestOfficerId);
+    this._fetchData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.requestOfficerId !== this.props.requestOfficerId) {
+      this._fetchData();
     }
-    hasCMS || requestCMS();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,6 +53,33 @@ class OfficerPage extends Component {
       location.pathname = correctPathName;
       params.id = summary.id.toString();
       params.fullName = kebabCase(summary.name);
+    }
+  }
+
+  _fetchData() {
+    const {
+      summary,
+      requestOfficerId,
+      fetchOfficer,
+      requestCMS,
+      hasCMS,
+      getOfficerCoaccusals,
+      getOfficerTimeline,
+      isCoaccusalSuccess,
+      isTimelineSuccess
+    } = this.props;
+
+    if (!summary) {
+      fetchOfficer(requestOfficerId);
+    }
+    hasCMS || requestCMS();
+
+    if (!isTimelineSuccess) {
+      getOfficerTimeline(requestOfficerId);
+    }
+
+    if (!isCoaccusalSuccess) {
+      getOfficerCoaccusals(requestOfficerId);
     }
   }
 
@@ -111,7 +141,18 @@ class OfficerPage extends Component {
   }
 
   render() {
-    const { loading, found, summary, requestOfficerId, threeCornerPercentile, metrics, noDataCMSContent } = this.props;
+    const {
+      loading,
+      found,
+      summary,
+      requestOfficerId,
+      threeCornerPercentile,
+      metrics,
+      noDataCMSContent,
+      hasCoaccusal,
+      currentTab,
+      changeOfficerTab
+    } = this.props;
 
     if (loading) {
       return (
@@ -166,8 +207,12 @@ class OfficerPage extends Component {
           <SectionRow label='Career' value={ careerDuration }/>
         </div>
         { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
-        <OfficerTimelineContainer officerId={ id }/>
-        <CoaccusalsContainer officerId={ id }/>
+        <TabbedPaneSection
+          changeOfficerTab={ changeOfficerTab }
+          currentTab={ currentTab }
+          hasCoaccusal={ hasCoaccusal }
+          officerId={ id }
+        />
         <BottomPadding />
       </StickyContainer>
     );
@@ -190,6 +235,13 @@ OfficerPage.propTypes = {
   location: PropTypes.object,
   params: PropTypes.object,
   pathName: PropTypes.string,
+  hasCoaccusal: PropTypes.bool,
+  currentTab: PropTypes.string,
+  changeOfficerTab: PropTypes.func,
+  getOfficerCoaccusals: PropTypes.func,
+  getOfficerTimeline: PropTypes.func,
+  isTimelineSuccess: PropTypes.bool,
+  isCoaccusalSuccess: PropTypes.bool,
 };
 
 OfficerPage.defaultProps = {

@@ -1,4 +1,4 @@
-import { coaccusalGroupsSelector } from 'selectors/officer-page/coaccusals';
+import { coaccusalGroupsSelector, hasCoaccusalSelector, isCoaccusalSuccess } from 'selectors/officer-page/coaccusals';
 
 
 describe('Officer coaccusals selectors', function () {
@@ -151,6 +151,70 @@ describe('Officer coaccusals selectors', function () {
           ]
         },
       ]);
+    });
+  });
+
+  describe('hasCoaccusalSelector', function () {
+    it('should return false when there is no data', function () {
+      const state = {
+        officerPage: {
+          coaccusals: {
+            data: {}
+          }
+        }
+      };
+      hasCoaccusalSelector(state).should.be.false();
+    });
+
+    it('should return true when have data', function () {
+      const state = {
+        officerPage: {
+          coaccusals: {
+            data: {
+              8562: [{
+                id: 1,
+                'full_name': 'Jerome Finnigan',
+                'coaccusal_count': 4,
+                rank: 'Po As Detective',
+                percentile: {
+                  'percentile_trr': '95.0000',
+                  'percentile_allegation_internal': '94.0000',
+                  'percentile_allegation_civilian': '93.0000',
+                }
+              }]
+            }
+          }
+        }
+      };
+      hasCoaccusalSelector(state, 8562).should.be.true();
+    });
+  });
+
+  describe('isCoaccusalSuccess', function () {
+    it('should return default value', function () {
+      const state = {
+        officerPage: {
+          coaccusals: {
+            isSuccess: {
+              123: true
+            }
+          }
+        }
+      };
+      isCoaccusalSuccess(state, 8562).should.be.false();
+    });
+
+    it('should return correct value', function () {
+      const state = {
+        officerPage: {
+          coaccusals: {
+            isSuccess: {
+              8562: true
+            }
+          }
+        }
+      };
+      isCoaccusalSuccess(state, 8562).should.be.true();
     });
   });
 });

@@ -1,6 +1,9 @@
+import { createAction } from 'redux-actions';
+
 import { get } from 'actions/common/async-action';
 import { v2Url } from 'utils/url-util';
 import constants from 'constants';
+import { CHANGE_OFFICER_ID, CHANGE_OFFICER_TAB } from 'constants/officer-page';
 
 
 export const OFFICER_REQUEST_START = 'OFFICER_REQUEST_START';
@@ -27,3 +30,7 @@ export const OFFICER_PAGE_CMS_REQUEST_FAILURE = 'OFFICER_PAGE_CMS_REQUEST_FAILUR
 export const requestCMS = () => (get(v2Url(constants.OFFICER_PAGE_CMS_API_ENDPOINT), [
   OFFICER_PAGE_CMS_REQUEST_START, OFFICER_PAGE_CMS_REQUEST_SUCCESS, OFFICER_PAGE_CMS_REQUEST_FAILURE]
 )());
+
+export const changeOfficerId = createAction(CHANGE_OFFICER_ID);
+
+export const changeOfficerTab = createAction(CHANGE_OFFICER_TAB);
