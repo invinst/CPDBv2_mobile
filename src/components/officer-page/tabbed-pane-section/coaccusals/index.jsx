@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import cx from 'classnames';
 
 import OfficerCard from './officer-card';
 import style from './coaccusals.sass';
@@ -9,7 +10,7 @@ export default class Coaccusals extends Component {
     const { coaccusalGroups } = this.props;
 
     return (
-      <div className={ style.officerCoaccusals }>
+      <div className={ cx(style.officerCoaccusals, 'test--officer-coaccusals') }>
         {
           coaccusalGroups.map((group) => (
             <div key={ group.name } className='coaccusals-group'>
@@ -20,7 +21,7 @@ export default class Coaccusals extends Component {
                     <OfficerCard
                       { ...coaccusal }
                       key={ cardIndex }
-                      extraClassName='inline-officer-card'
+                      customStyle={ style.inlineOfficerCard }
                     />
                   ))
                 }

@@ -16,8 +16,6 @@ import MetricWidget from './metric-widget';
 import { roundedPercentile } from 'utils/calculation';
 import navigationArrow from 'img/disclosure-indicator.svg';
 import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
-import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
-import CoaccusalsContainer from 'containers/officer-page/coaccusals-container';
 import { officerUrl } from 'utils/url-util';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 
@@ -34,12 +32,6 @@ class OfficerPage extends Component {
     this._fetchData();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.requestOfficerId !== this.props.requestOfficerId) {
-      this._fetchData();
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     const { pathName, summary, location, params } = nextProps;
     if (!summary) {
@@ -53,6 +45,12 @@ class OfficerPage extends Component {
       location.pathname = correctPathName;
       params.id = summary.id.toString();
       params.fullName = kebabCase(summary.name);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.requestOfficerId !== this.props.requestOfficerId) {
+      this._fetchData();
     }
   }
 

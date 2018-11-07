@@ -201,6 +201,16 @@ module.exports = {
         firstRankChangeItem: nthRankChangeSection(1),
         secondRankChangeItem: nthRankChangeSection(2),
       }
-    }
+    },
+    coaccusalsTab: {
+      selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[2]',
+      locateStrategy: 'xpath',
+    },
+    coaccusals: {
+      selector: '.test--officer-coaccusals',
+      elements: {
+        firstCoaccusalCard: '.test--officer-card',
+      },
+    },
   }
 };
