@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
-import { isEmpty, noop } from 'lodash';
+import { isEmpty, kebabCase, noop } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
@@ -37,11 +37,18 @@ class OfficerPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { requestOfficerId, pathName, summary } = nextProps;
-    const name = summary ? summary.name : '';
-    const correctPathName = officerUrl(requestOfficerId, name);
+    const { pathName, summary, location, params } = nextProps;
+    if (!summary) {
+      return;
+    }
+    const name = summary.name;
+    const correctPathName = officerUrl(summary.id, name);
     if (name && pathName !== correctPathName) {
       window.history.replaceState(window.history.state, document.title, correctPathName);
+
+      location.pathname = correctPathName;
+      params.id = summary.id.toString();
+      params.fullName = kebabCase(summary.name);
     }
   }
 

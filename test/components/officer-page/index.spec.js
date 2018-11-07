@@ -68,28 +68,6 @@ describe('<OfficerPage />', function () {
     wrapper.find(NotMatchedOfficerPage).should.have.length(1);
   });
 
-  it('should set to the correct officer if there is officer alias', function () {
-    const pushBreadcrumbSpy = spy();
-    const wrapper = shallow(
-      <OfficerPage
-        loading={ false }
-        found={ false }
-        getOfficerSummary={ noop }
-        pushBreadcrumbs={ pushBreadcrumbSpy }
-      />
-    );
-
-    wrapper.setProps({
-      requestOfficerId: 456,
-      summary: { id: 123 },
-      routes: [],
-      location: {},
-      params: {}
-    });
-
-    pushBreadcrumbSpy.calledWith({ routes: [], location: { pathname: 'officer/123/' }, params: { id: 123 } });
-  });
-
   it('should be tracked by Google Analytics when mounted', function () {
     const store = mockStore({
       suggestionApp: { query: '' },
@@ -153,6 +131,27 @@ describe('<OfficerPage />', function () {
     window.history.replaceState.resetHistory();
 
     wrapper.setProps({ summary: this.summary });
+
+    window.history.replaceState.called.should.be.true();
+    const args = window.history.replaceState.getCall(0).args;
+    args[2].should.equal('/officer/123/officer-11/');
+
+    window.history.replaceState.restore();
+  });
+
+  it('should replace with correct pathname if there is officer alias', function () {
+    spy(window.history, 'replaceState');
+
+    const wrapper = shallow(
+      <OfficerPage
+        requestOfficerId={ 456 }
+        loading={ false }
+        found={ true }
+        fetchOfficer={ noop }
+      />
+    );
+
+    wrapper.setProps({ summary: this.summary, });
 
     window.history.replaceState.called.should.be.true();
     const args = window.history.replaceState.getCall(0).args;
