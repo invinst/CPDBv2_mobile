@@ -14,7 +14,7 @@ describe('<OfficerItem />', () => {
     const wrapper = shallow(
       <OfficerItem
         name='Peter'
-        url='/officer/1'
+        url='/officer/1/peter/'
         saveToRecent={ saveToRecentSpy }
       />
     );
@@ -23,7 +23,7 @@ describe('<OfficerItem />', () => {
     saveToRecentSpy.calledWith({
       type: 'Officer',
       title: 'Peter',
-      url: '/officer/1'
+      url: '/officer/1/peter/'
     }).should.be.true();
   });
 });

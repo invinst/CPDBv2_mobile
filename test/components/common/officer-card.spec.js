@@ -34,7 +34,7 @@ describe('<OfficerCard />', () => {
     const wrapper = shallow(<OfficerCard officer={ officer } />);
 
     const link = wrapper.find(Link);
-    link.prop('to').should.equal('/officer/13788/');
+    link.prop('to').should.equal('/officer/13788/broderick-jones/');
     should(link.prop('target')).be.null();
 
     const radarChart = link.find(RadarChart);
@@ -76,7 +76,7 @@ describe('<OfficerCard />', () => {
     const wrapper = shallow(<OfficerCard officer={ officer } openCardInNewPage={ true }/>);
 
     const link = wrapper.find(Link);
-    link.prop('to').should.equal('/officer/13788/');
+    link.prop('to').should.equal('/officer/13788/broderick-jones/');
     link.prop('target').should.equal('_blank');
   });
 });

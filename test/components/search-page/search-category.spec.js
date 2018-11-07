@@ -207,13 +207,13 @@ describe('<SearchCategory />', function () {
       const officers = [
         {
           name: 'John',
-          url: '/officer/1',
+          url: '/officer/1/john/',
           badge: 'Badge #1',
           percentile: {}
         },
         {
           name: 'Snow',
-          url: '/officer/2',
+          url: '/officer/2/snow/',
           badge: 'Badge #2',
           percentile: {}
         }
