@@ -17,7 +17,7 @@ describe('<LandingPage />', function () {
   it('should render fake search input box that links to search page', function () {
     const wrapper = shallow(<LandingPage />);
     const searchBar = wrapper.find('Link.search-bar');
-    searchBar.prop('children').should.containEql('Search by officer name or badge number');
+    searchBar.prop('children').should.containEql('Search by officer name/badge or date');
     searchBar.prop('to').should.eql(constants.SEARCH_PATH);
   });
 
