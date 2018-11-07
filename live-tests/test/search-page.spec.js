@@ -100,7 +100,7 @@ describe('SearchPageTest', function () {
 
     const suggestedOfficer = suggested.section.officer;
 
-    suggested.expect.section('@officer').to.have.attribute('href').which.contains('/officer/30291/');
+    suggested.expect.section('@officer').to.have.attribute('href').which.contains('/officer/30291/john-tobler/');
     suggestedOfficer.expect.element('@label').text.to.contain('Officer');
     suggestedOfficer.expect.element('@value').text.to.contain('John Tobler');
   });

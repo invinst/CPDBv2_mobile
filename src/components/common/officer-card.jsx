@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import pluralize from 'pluralize';
 
 import RadarChart from 'components/common/radar-chart';
-import constants from 'constants';
+import { officerUrl } from 'utils/url-util';
 import style from './officer-card.sass';
 
 
@@ -11,7 +11,7 @@ const OfficerCard = ({ officer, openCardInNewPage }) => {
   const { percentile } = officer;
   return (
     <Link
-      to={ `${constants.OFFICER_PATH}${officer.id}/` }
+      to={ officerUrl(officer.id, officer.full_name) }
       target={ openCardInNewPage ? '_blank' : null }
       className={ style.officerCard }>
       <div className='radar-chart'>

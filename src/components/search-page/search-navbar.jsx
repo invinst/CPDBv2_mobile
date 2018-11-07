@@ -4,7 +4,7 @@ import cx from 'classnames';
 import clearIcon from 'img/ic-clear.svg';
 import { instantScrollToTop } from 'utils/navigation-util';
 import style from './search-navbar.sass';
-import HorizontalScrolling from 'components/landing-page/horizontal-scrolling';
+import HorizontalScrolling from 'components/common/horizontal-scrolling';
 
 
 export default class SearchNavbar extends Component {

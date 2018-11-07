@@ -61,10 +61,10 @@ describe('Attachments component', function () {
       previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
       fileType: 'document',
     }];
-    const wrapper = mount(<Attachments attachments={ attachments } pathname='/officer/123456/'/>);
+    const wrapper = mount(<Attachments attachments={ attachments } pathname='/officer/123456/john-henry/'/>);
     wrapper.find('.image').simulate('click');
     stubTrackAttachmentClick.should.be.calledWith(
-      '/officer/123456/',
+      '/officer/123456/john-henry/',
       'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-1-of-3.html'
     );
     stubTrackAttachmentClick.restore();

@@ -5,48 +5,7 @@ var api = require(__dirname + '/../mock-api');
 var utils = require(__dirname + '/../utils');
 const { TIMEOUT } = require(__dirname + '/../constants');
 
-const mockLandingPageCms = {
-  fields: [
-    {
-      'type': 'rich_text',
-      'name': 'carousel_allegation_title',
-      'value': {
-        'entityMap': {},
-        'blocks': [
-          {
-            'text': 'The 1%',
-            'entityRanges': [],
-            'depth': 0,
-            'key': '0f97e',
-            'type': 'unstyled',
-            'inlineStyleRanges': [],
-            'data': {}
-          }
-        ]
-      }
-    },
-    {
-      'type': 'rich_text',
-      'name': 'carousel_allegation_desc',
-      'value': {
-        'entityMap': {},
-        'blocks': [
-          {
-            'text': 'Officers with a higher complaint rate than 99% of the rest of the police force',
-            'entityRanges': [],
-            'depth': 0,
-            'key': '1eda3',
-            'type': 'unstyled',
-            'inlineStyleRanges': [],
-            'data': {}
-          }
-        ]
-      }
-    },
-  ]
-};
-
-const mockTopByAllegation = [
+const mockOfficers = [
   {
     'id': 13788,
     'full_name': 'Broderick Jones',
@@ -85,33 +44,36 @@ const mockTopByAllegation = [
   },
 ];
 
-describe('EmbedTopOfficerPage', function () {
+describe('EmbedOfficerPage', function () {
   beforeEach(function (client, done) {
-    api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
-    api.mock('GET', '/api/v2/officers/top-by-allegation/', 200, mockTopByAllegation);
-    this.embedTopOfficersPage = client.page.embedTopOfficersPage();
-    this.embedTopOfficersPage.navigate();
+    api.mock('GET', '/api/v2/mobile/officers/?ids=13788,8658', 200, mockOfficers);
+    this.embedOfficersPage = client.page.embedOfficersPage();
+    this.embedOfficersPage.navigate(
+      this.embedOfficersPage.url('?ids=13788,8658&title=Some%20title&description=Some%20description')
+    );
     client.waitForElementVisible('body', TIMEOUT);
     done();
   });
 
   afterEach(function (client, done) {
     client.end(function () {
-
       done();
     });
   });
 
-  it('should show officer cards', function (client) {
-    const cards = this.embedTopOfficersPage.section.cards;
+  it('should show title, description and officer cards', function (client) {
+    this.embedOfficersPage.expect.element('@title').text.to.equal('Some title');
+    this.embedOfficersPage.expect.element('@description').text.to.equal('Some description');
+
+    const cards = this.embedOfficersPage.section.cards;
     client.elements(cards.locateStrategy, cards.selector, function (result) {
       assert.equal(result.value.length, 2);
     });
   });
 
   it('should go to officer summary page when click to card', function (client) {
-    this.embedTopOfficersPage.click('@firstCard');
+    this.embedOfficersPage.click('@firstCard');
     utils.switchToRecentTab(client);
-    this.embedTopOfficersPage.assert.urlContains('/officer/13788/broderick-jones/');
+    this.embedOfficersPage.assert.urlContains('/officer/13788/');
   });
 });
