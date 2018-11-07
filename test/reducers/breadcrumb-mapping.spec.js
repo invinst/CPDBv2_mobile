@@ -23,7 +23,7 @@ describe('breadcrumbMapping reducer', function () {
       type: OFFICER_REQUEST_SUCCESS,
       payload: { 'officer_id': 123, 'full_name': 'Kevin Osborn' }
     }).should.deepEqual({
-      'officer/123/': 'Kevin Osborn'
+      'officer/123/kevin-osborn/': 'Kevin Osborn'
     });
   });
 

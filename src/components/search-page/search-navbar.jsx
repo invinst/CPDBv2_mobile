@@ -3,6 +3,7 @@ import cx from 'classnames';
 
 import clearIcon from 'img/ic-clear.svg';
 import { instantScrollToTop } from 'utils/navigation-util';
+import style from './search-navbar.sass';
 
 export default class SearchNavbar extends Component {
   clearChosenCategoryButton() {
@@ -36,17 +37,12 @@ export default class SearchNavbar extends Component {
       activeCategory = categories[0].id;
     }
 
-    const links = categories.map(
+    const links = categories.length <= 1 ? null : categories.map(
       (category, index) => {
-        const classNames = cx(
-          'category-link',
-          { 'active': activeCategory === category.id }
-        );
-
         return (
           <button key={ index }
             onClick={ () => { scrollToCategory(category.id); updateActiveCategory(category.id); } }
-            className={ classNames }>
+            className={ cx('category-link', { 'active': activeCategory === category.id }) }>
             { category.filter }
           </button>
         );
@@ -56,7 +52,7 @@ export default class SearchNavbar extends Component {
     const clearChosenCategoryButton = this.clearChosenCategoryButton();
 
     return (
-      <div className='categories'>
+      <div className={ style.categories }>
         { links }
         { clearChosenCategoryButton }
       </div>

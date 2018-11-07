@@ -40,7 +40,7 @@ describe('<Officer />', function () {
       { axis: 'Internal Allegations', value: 11.1 },
       { axis: 'Civilian Allegations', value: 22.2 }
     ]);
-    radarChart.prop('backgroundColor').should.deepEqual('#ed6154')
+    radarChart.prop('backgroundColor').should.deepEqual('#ed6154');
 
     wrapper.find('.rank').text().should.equal('Officer');
     wrapper.find('.full-name').text().should.equal('Donovan Markiewicz');

@@ -29,17 +29,17 @@ class OfficerPage extends Component {
   }
 
   componentDidMount() {
-    const { summary, pk, fetchOfficer, requestCMS, hasCMS } = this.props;
+    const { summary, requestOfficerId, fetchOfficer, requestCMS, hasCMS } = this.props;
     if (!summary) {
-      fetchOfficer(pk);
+      fetchOfficer(requestOfficerId);
     }
     hasCMS || requestCMS();
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pk, pathName, summary } = nextProps;
+    const { requestOfficerId, pathName, summary } = nextProps;
     const name = summary ? summary.name : '';
-    const correctPathName = officerUrl(pk, name);
+    const correctPathName = officerUrl(requestOfficerId, name);
     if (name && pathName !== correctPathName) {
       window.history.replaceState(window.history.state, document.title, correctPathName);
     }
@@ -103,7 +103,7 @@ class OfficerPage extends Component {
   }
 
   render() {
-    const { loading, found, summary, pk, threeCornerPercentile, metrics, noDataCMSContent } = this.props;
+    const { loading, found, summary, requestOfficerId, threeCornerPercentile, metrics, noDataCMSContent } = this.props;
 
     if (loading) {
       return (
@@ -113,11 +113,11 @@ class OfficerPage extends Component {
 
     if (!found || !summary || !metrics) {
       return (
-        <NotMatchedOfficerPage id={ pk } />
+        <NotMatchedOfficerPage id={ requestOfficerId } />
       );
     }
 
-    const { name, demographic, badge, historicBadges, rank, unit, careerDuration } = summary;
+    const { id, name, demographic, badge, historicBadges, rank, unit, careerDuration } = summary;
     const { historicBadgesExpanded } = this.state;
 
 
@@ -125,7 +125,7 @@ class OfficerPage extends Component {
       <StickyContainer className={ style.officerSummary }>
         <Sticky><Header /></Sticky>
         <AnimatedRadarChart
-          officerId={ pk }
+          officerId={ id }
           percentileData={ threeCornerPercentile }
           noDataCMSContent={ noDataCMSContent }/>
         <h1 className='officer-name header' onClick={ scrollToTop() }>
@@ -158,7 +158,7 @@ class OfficerPage extends Component {
           <SectionRow label='Career' value={ careerDuration }/>
         </div>
         { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
-        <OfficerTimelineContainer officerId={ pk }/>
+        <OfficerTimelineContainer officerId={ id }/>
         <BottomPadding />
       </StickyContainer>
     );
@@ -166,8 +166,7 @@ class OfficerPage extends Component {
 }
 
 OfficerPage.propTypes = {
-  pk: PropTypes.number,
-  pathName: PropTypes.string,
+  requestOfficerId: PropTypes.number,
   fetchOfficer: PropTypes.func.isRequired,
   requestCMS: PropTypes.func,
   loading: PropTypes.bool,
@@ -178,10 +177,16 @@ OfficerPage.propTypes = {
   threeCornerPercentile: PropTypes.array,
   noDataCMSContent: PropTypes.object,
   hasCMS: PropTypes.bool,
+  requestLandingPage: PropTypes.func,
+  location: PropTypes.object,
+  params: PropTypes.object,
+  pathName: PropTypes.string,
 };
 
 OfficerPage.defaultProps = {
-  requestCMS: noop
+  requestCMS: noop,
+  location: {},
+  params: {}
 };
 
 export default OfficerPage;
