@@ -17,6 +17,7 @@ import { roundedPercentile } from 'utils/calculation';
 import navigationArrow from 'img/disclosure-indicator.svg';
 import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
 import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
+import { officerUrl } from 'utils/url-util';
 
 
 class OfficerPage extends Component {
@@ -36,21 +37,19 @@ class OfficerPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { summary, location, params } = nextProps;
+    const { pathName, summary, location, params } = nextProps;
     if (!summary) {
       return;
     }
+    const name = summary.name;
+    const correctPathName = officerUrl(summary.id, name);
+    if (name && pathName !== correctPathName) {
+      window.history.replaceState(window.history.state, document.title, correctPathName);
 
-    const officerSlug = summary ? kebabCase(summary.name) : '';
-    let correctPathName = `officer/${summary.id}/`;
-    if (!isEmpty(officerSlug)) {
-      correctPathName += `${officerSlug}/`;
+      location.pathname = correctPathName;
+      params.id = summary.id.toString();
+      params.fullName = kebabCase(summary.name);
     }
-
-    global.history.replaceState(global.history.state, document.title, correctPathName);
-    location.pathname = correctPathName;
-    params.id = summary.id.toString();
-    params.fullName = officerSlug;
   }
 
   toggleHistoricBadges() {
@@ -187,7 +186,8 @@ OfficerPage.propTypes = {
   hasCMS: PropTypes.bool,
   requestLandingPage: PropTypes.func,
   location: PropTypes.object,
-  params: PropTypes.object
+  params: PropTypes.object,
+  pathName: PropTypes.string,
 };
 
 OfficerPage.defaultProps = {

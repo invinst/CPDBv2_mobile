@@ -38,12 +38,16 @@ class HorizontalScrolling extends React.Component {
 
   handleSlideNext() {
     const { trackingContentType } = this.props;
-    GATracking.trackSwipeLanddingPageCarousel('right', trackingContentType);
+    if (trackingContentType) {
+      GATracking.trackSwipeLanddingPageCarousel('right', trackingContentType);
+    }
   }
 
   handleSlidePrev() {
     const { trackingContentType } = this.props;
-    GATracking.trackSwipeLanddingPageCarousel('left', trackingContentType);
+    if (trackingContentType) {
+      GATracking.trackSwipeLanddingPageCarousel('left', trackingContentType);
+    }
   }
 
   render() {
@@ -71,7 +75,7 @@ HorizontalScrolling.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   slideOptions: PropTypes.object,
-  trackingContentType: PropTypes.string.isRequired
+  trackingContentType: PropTypes.string
 };
 
 export default HorizontalScrolling;
