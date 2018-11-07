@@ -264,6 +264,12 @@ export default {
       path: 'DATE > TRR'
     },
     {
+      name: 'DATE > OFFICERS',
+      filter: 'DATE > OFFICERS',
+      id: 'dateOfficers',
+      path: 'DATE > OFFICERS'
+    },
+    {
       name: 'Officers',
       filter: 'Officers',
       id: 'officers',

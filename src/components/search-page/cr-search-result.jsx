@@ -4,9 +4,9 @@ import { Link } from 'react-router';
 import style from './cr-search-result.sass';
 
 
-const CRSearchResult = ({ items, saveToRecent }) => {
+const CRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
   const handleClick = (name, url) => saveToRecent({
-    type: 'CR',
+    type: categoryFilter,
     title: name,
     url: url
   });
@@ -33,7 +33,8 @@ const CRSearchResult = ({ items, saveToRecent }) => {
 
 CRSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
-  items: PropTypes.array
+  items: PropTypes.array,
+  categoryFilter: PropTypes.string
 };
 
 CRSearchResult.defaultProps = {

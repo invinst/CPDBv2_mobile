@@ -16,6 +16,7 @@ describe('<OfficerItem />', () => {
         name='Peter'
         url='/officer/1/peter/'
         saveToRecent={ saveToRecentSpy }
+        categoryFilter='Officer'
       />
     );
 
