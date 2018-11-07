@@ -1,4 +1,4 @@
-export const get = (url, types) => ((params, adapter, urlSuffix='', meta) => {
+export const get = (url, types) => ((params, adapter=undefined, urlSuffix='', meta) => {
   const action = {
     types,
     payload: {
