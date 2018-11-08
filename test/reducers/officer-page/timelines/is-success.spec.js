@@ -1,16 +1,14 @@
-import {
-  OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE
-} from 'actions/officer-page/timeline';
 import isSuccess from 'reducers/officer-page/timeline/is-success';
 import {
   OFFICER_TIMELINE_ITEMS_REQUEST_START,
   OFFICER_TIMELINE_ITEMS_REQUEST_SUCCESS,
+  OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE,
 } from 'actions/officer-page/timeline';
 
 
 describe('isSuccess reducer', function () {
   it('should return initial state', function () {
-    isSuccess(undefined, {}).should.be.true();
+    isSuccess(undefined, {}).should.be.false();
   });
 
   it('should handle OFFICER_TIMELINE_REQUEST_START', function () {

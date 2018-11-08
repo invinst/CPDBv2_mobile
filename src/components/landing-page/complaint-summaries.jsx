@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { isEmpty } from 'lodash';
 
 import CMSContent from './cms-content';
-import HorizontalScrolling from './horizontal-scrolling';
+import HorizontalScrolling from 'components/common/horizontal-scrolling';
 import ComplaintSummaryCard from './complaint-summary-card';
 import style from './complaint-summaries.sass';
 import constants from 'constants';

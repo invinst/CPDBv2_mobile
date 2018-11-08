@@ -11,6 +11,7 @@ export const v2Url = function (endpoint) {
   }).s;
 };
 
-export const officerUrl = (officerId, fullName) => {
-  return officerId && `${constants.OFFICER_PATH}${officerId}/${kebabCase(fullName)}/`;
+export const officerUrl = (officerId, name = '') => {
+  const nameSuffix = name && `${kebabCase(name)}/`;
+  return officerId && `${constants.OFFICER_PATH}${officerId}/${nameSuffix}`;
 };

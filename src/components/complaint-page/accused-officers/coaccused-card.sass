@@ -2,45 +2,14 @@
 
 :local(.coaccused-card)
   width: calc(50% - 4px)
-  height: 257px
-  border: 1px solid $alto-solid
-  border-radius: 2px
-  box-sizing: border-box
   margin-top: 8px
-  text-decoration: none
 
-  .radar-chart
-    width: 100%
-    height: 60px
-    background-color: red
-
-  .officer-info
-    height: 76px
-    background-color: $wild-sand
-    padding: 11px 8px 0
-    overflow: hidden
-    box-sizing: border-box
-
-  .officer-rank
-    font-size: 12px
-    font-weight: 400
-    color: $gandalf-gray
-    white-space: nowrap
-    overflow: hidden
-
-  .officer-name
-    height: 36px
-    font-size: 14px
-    font-weight: 400
-    color: $thunder
-    overflow: hidden
-
-  .accused-info
-    padding: 0 8px
-    background-color: $white
-    height: 119px
-    display: inline-block
-    width: 100%
+:local(.officer-card-accused-info)
+  padding: 0 8px
+  background-color: $white
+  height: 119px
+  display: inline-block
+  width: 100%
 
   .category
     height: 36px
@@ -71,7 +40,7 @@
       &.disciplined
         background-color: $azalea
         border: 1px solid $azalea
-      
+
       &.sustained
         background-color: $champagne
         border: 1px solid $champagne

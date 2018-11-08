@@ -162,3 +162,7 @@ export const getNewTimelineItems = (state, officerId) => {
   }
   return processors.reduce((accItems, processor) => processor(accItems), transformedItems);
 };
+
+export const isTimelineSuccess = (state, officerId) => get(
+  state.officerPage.timeline.isSuccess, String(officerId), false
+);

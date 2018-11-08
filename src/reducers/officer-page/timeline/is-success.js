@@ -11,6 +11,6 @@ const isSuccess = handleActions({
   [OFFICER_TIMELINE_ITEMS_REQUEST_START]: (state, action) => (true),
   [OFFICER_TIMELINE_ITEMS_REQUEST_SUCCESS]: (state, action) => (true),
   [OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE]: (state, action) => (false)
-}, true);
+}, false);
 
 export default isSuccess;

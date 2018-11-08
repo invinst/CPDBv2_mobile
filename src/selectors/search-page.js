@@ -2,26 +2,29 @@ import { createSelector } from 'reselect';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
+import { officerUrl } from 'utils/url-util';
 
+
+export const officerFormatter = (officers) => {
+  if (!officers) {
+    return { data: [] };
+  }
+
+  return {
+    isShowingAll: officers.isShowingAll,
+    data: officers.data.map((officer) => ({
+      id: officer.id,
+      name: officer.name,
+      badge: officer.badge ? `Badge #${officer.badge}` : '',
+      percentile: extractPercentile(officer.percentile),
+      url: officerUrl(officer.id, officer.name)
+    }))
+  };
+};
 
 export const officersSelector = createSelector(
   (state) => state.suggestionApp.suggestions.OFFICER,
-  (officers) => {
-    if (!officers) {
-      return { data: [] };
-    }
-
-    return {
-      isShowingAll: officers.isShowingAll,
-      data: officers.data.map((officer) => ({
-        id: officer.id,
-        name: officer.name,
-        badge: officer.badge ? `Badge #${officer.badge}` : '',
-        percentile: extractPercentile(officer.percentile),
-        url: `${constants.OFFICER_PATH}${officer.id}/`
-      }))
-    };
-  }
+  officerFormatter
 );
 
 export const unitsSelector = createSelector(
@@ -102,4 +105,9 @@ export const suggestedSelector = createSelector(
 export const recentSelector = createSelector(
   (state) => state.suggestionApp.initialSuggestions.recent,
   (recent) => recent
+);
+
+export const dateOfficersSelector = createSelector(
+  (state) => state.suggestionApp.suggestions['DATE > OFFICERS'],
+  officerFormatter
 );

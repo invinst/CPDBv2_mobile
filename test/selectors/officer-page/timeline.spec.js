@@ -9,7 +9,8 @@ import {
   getNewTimelineItems,
   trrTransform,
   yearItem,
-  fillRankChange
+  fillRankChange,
+  isTimelineSuccess
 } from 'selectors/officer-page/timeline';
 
 
@@ -850,6 +851,34 @@ describe('Officer new timeline selectors', function () {
         }
       ])
       ;
+    });
+  });
+
+  describe('isTimelineSuccess', function () {
+    it('should return default value', function () {
+      const state = {
+        officerPage: {
+          timeline: {
+            isSuccess: {
+              123: true
+            }
+          }
+        }
+      };
+      isTimelineSuccess(state, 8562).should.be.false();
+    });
+
+    it('should return correct value', function () {
+      const state = {
+        officerPage: {
+          timeline: {
+            isSuccess: {
+              8562: true
+            }
+          }
+        }
+      };
+      isTimelineSuccess(state, 8562).should.be.true();
     });
   });
 });

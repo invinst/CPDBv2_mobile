@@ -16,7 +16,8 @@ import MetricWidget from './metric-widget';
 import { roundedPercentile } from 'utils/calculation';
 import navigationArrow from 'img/disclosure-indicator.svg';
 import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
-import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
+import { officerUrl } from 'utils/url-util';
+import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 
 
 class OfficerPage extends Component {
@@ -28,29 +29,56 @@ class OfficerPage extends Component {
   }
 
   componentDidMount() {
-    const { summary, requestOfficerId, fetchOfficer, requestCMS, hasCMS } = this.props;
+    this._fetchData();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { pathName, summary, location, params } = nextProps;
+    if (!summary) {
+      return;
+    }
+    const name = summary.name;
+    const correctPathName = officerUrl(summary.id, name);
+    if (name && pathName !== correctPathName) {
+      window.history.replaceState(window.history.state, document.title, correctPathName);
+
+      location.pathname = correctPathName;
+      params.id = summary.id.toString();
+      params.fullName = kebabCase(summary.name);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.requestOfficerId !== this.props.requestOfficerId) {
+      this._fetchData();
+    }
+  }
+
+  _fetchData() {
+    const {
+      summary,
+      requestOfficerId,
+      fetchOfficer,
+      requestCMS,
+      hasCMS,
+      getOfficerCoaccusals,
+      getOfficerTimeline,
+      isCoaccusalSuccess,
+      isTimelineSuccess
+    } = this.props;
+
     if (!summary) {
       fetchOfficer(requestOfficerId);
     }
     hasCMS || requestCMS();
-  }
 
-  componentWillReceiveProps(nextProps) {
-    const { summary, location, params } = nextProps;
-    if (!summary) {
-      return;
+    if (!isTimelineSuccess) {
+      getOfficerTimeline(requestOfficerId);
     }
 
-    const officerSlug = summary ? kebabCase(summary.name) : '';
-    let correctPathName = `officer/${summary.id}/`;
-    if (!isEmpty(officerSlug)) {
-      correctPathName += `${officerSlug}/`;
+    if (!isCoaccusalSuccess) {
+      getOfficerCoaccusals(requestOfficerId);
     }
-
-    global.history.replaceState(global.history.state, document.title, correctPathName);
-    location.pathname = correctPathName;
-    params.id = summary.id.toString();
-    params.fullName = officerSlug;
   }
 
   toggleHistoricBadges() {
@@ -111,7 +139,18 @@ class OfficerPage extends Component {
   }
 
   render() {
-    const { loading, found, summary, requestOfficerId, threeCornerPercentile, metrics, noDataCMSContent } = this.props;
+    const {
+      loading,
+      found,
+      summary,
+      requestOfficerId,
+      threeCornerPercentile,
+      metrics,
+      noDataCMSContent,
+      hasCoaccusal,
+      currentTab,
+      changeOfficerTab
+    } = this.props;
 
     if (loading) {
       return (
@@ -166,7 +205,12 @@ class OfficerPage extends Component {
           <SectionRow label='Career' value={ careerDuration }/>
         </div>
         { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
-        <OfficerTimelineContainer officerId={ id }/>
+        <TabbedPaneSection
+          changeOfficerTab={ changeOfficerTab }
+          currentTab={ currentTab }
+          hasCoaccusal={ hasCoaccusal }
+          officerId={ id }
+        />
         <BottomPadding />
       </StickyContainer>
     );
@@ -187,7 +231,15 @@ OfficerPage.propTypes = {
   hasCMS: PropTypes.bool,
   requestLandingPage: PropTypes.func,
   location: PropTypes.object,
-  params: PropTypes.object
+  params: PropTypes.object,
+  pathName: PropTypes.string,
+  hasCoaccusal: PropTypes.bool,
+  currentTab: PropTypes.string,
+  changeOfficerTab: PropTypes.func,
+  getOfficerCoaccusals: PropTypes.func,
+  getOfficerTimeline: PropTypes.func,
+  isTimelineSuccess: PropTypes.bool,
+  isCoaccusalSuccess: PropTypes.bool,
 };
 
 OfficerPage.defaultProps = {

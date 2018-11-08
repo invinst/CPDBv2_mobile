@@ -5,9 +5,9 @@ import RadarChart from 'components/common/radar-chart';
 import style from './officer-item.sass';
 
 
-const OfficerItem = ({ name, badge, url, percentile, saveToRecent }) => {
-  const handleClick = (name, url) => saveToRecent({
-    type: 'Officer',
+const OfficerItem = ({ name, badge, url, percentile, saveToRecent, categoryFilter }) => {
+  const handleClick = (categoryFilter, name, url) => saveToRecent({
+    type: categoryFilter,
     title: name,
     url: url
   });
@@ -16,7 +16,7 @@ const OfficerItem = ({ name, badge, url, percentile, saveToRecent }) => {
     <Link
       to={ url }
       className={ style.officerItem }
-      onClick={ () => handleClick(name, url) }>
+      onClick={ () => handleClick(categoryFilter, name, url) }>
       <div className='radar-chart-wrapper'>
         <RadarChart
           radius={ 150 }
@@ -37,7 +37,8 @@ OfficerItem.propTypes = {
   badge: PropTypes.string,
   url: PropTypes.string,
   percentile: PropTypes.object,
-  saveToRecent: PropTypes.func
+  saveToRecent: PropTypes.func,
+  categoryFilter: PropTypes.string
 };
 
 OfficerItem.defaultProps = {
