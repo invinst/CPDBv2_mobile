@@ -90,18 +90,6 @@ describe('<OfficerPage />', function () {
     pushBreadcrumbSpy.calledWith({ routes: [], location: { pathname: 'officer/123/' }, params: { id: 123 } });
   });
 
-  it('should be tracked by Google Analytics when mounted', function () {
-    const store = mockStore({
-      suggestionApp: { query: '' },
-      breadcrumb: { breadcrumbs: [] }
-    });
-    mount(
-      <Provider store={ store }>
-        <OfficerPage loading={ false } found={ false } getOfficerSummary={ noop } fetchOfficer={ noop }/>
-      </Provider>
-    );
-  });
-
   it('should not fetch officer data if summary is already available', function () {
     const spyfetchOfficer = spy();
 
@@ -683,6 +671,32 @@ describe('<OfficerPage />', function () {
       wrapper.instance().componentDidMount();
       stubGetOfficerTimeline.calledWith(123).should.be.true();
       stubGetOfficerCoaccusals.calledWith(123).should.be.true();
+    });
+
+    it('should get officer timeline and officer coaccusals if the component is updated', function () {
+      const stubGetOfficerTimeline = stub();
+      const stubGetOfficerCoaccusals = stub();
+      const prevProps = {
+        requestOfficerId: 123
+      };
+
+      const wrapper = shallow(
+        <OfficerPage
+          requestOfficerId={ 456 }
+          loading={ false }
+          found={ false }
+          fetchOfficer={ noop }
+          summary={ null }
+          isTimelineSuccess={ false }
+          isCoaccusalSuccess={ false }
+          getOfficerCoaccusals={ stubGetOfficerCoaccusals }
+          getOfficerTimeline={ stubGetOfficerTimeline }
+        />
+      );
+
+      wrapper.instance().componentDidUpdate(prevProps);
+      stubGetOfficerTimeline.calledWith(456).should.be.true();
+      stubGetOfficerCoaccusals.calledWith(456).should.be.true();
     });
   });
 });
