@@ -4,9 +4,9 @@ import { Link } from 'react-router';
 import style from './trr-search-result.sass';
 
 
-const TRRSearchResult = ({ items, saveToRecent }) => {
+const TRRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
   const handleClick = (name, url) => saveToRecent({
-    type: 'TRR',
+    type: categoryFilter,
     title: name,
     url: url
   });
@@ -33,7 +33,8 @@ const TRRSearchResult = ({ items, saveToRecent }) => {
 
 TRRSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
-  items: PropTypes.array
+  items: PropTypes.array,
+  categoryFilter: PropTypes.string
 };
 
 TRRSearchResult.defaultProps = {

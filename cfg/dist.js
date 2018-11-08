@@ -1,24 +1,26 @@
 'use strict';
 
-let path = require('path');
-let webpack = require('webpack');
-let HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-let baseConfig = require('./base');
-let defaultSettings = require('./defaults');
+const baseConfig = require('./base');
+const defaultSettings = require('./defaults');
 
 // Add needed plugins here
-let BowerWebpackPlugin = require('bower-webpack-plugin');
+const BowerWebpackPlugin = require('bower-webpack-plugin');
 
 let config = Object.assign({}, baseConfig, {
   entry: './src/index',
   output: {
     path: path.join(__dirname, '/../dist/assets'),
     filename: 'app.[hash].js',
-    publicPath: `.${defaultSettings.publicPath}`
+    publicPath: defaultSettings.staticFileBase
   },
   cache: false,
   plugins: [
+    new CleanWebpackPlugin('dist', { root: path.join(__dirname, '..') }),
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
@@ -32,6 +34,7 @@ let config = Object.assign({}, baseConfig, {
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html.template',
+      favicon: './src/img/favicon.ico',
       filename: '../index.html'
     }),
   ],

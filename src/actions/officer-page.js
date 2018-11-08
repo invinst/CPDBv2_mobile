@@ -17,7 +17,7 @@ export const fetchOfficer = (id) => {
     ]
   );
 
-  return getFunc({}, undefined, `${id}/`);
+  return getFunc({}, undefined, `${id}/`, { id: id });
 };
 
 export const OFFICER_PAGE_CMS_REQUEST_START = 'OFFICER_PAGE_CMS_REQUEST_START';

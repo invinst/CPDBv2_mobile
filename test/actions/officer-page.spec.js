@@ -16,6 +16,7 @@ describe('officer actions', function () {
   describe('fetchOfficer', function () {
     it('should return right action', function () {
       fetchOfficer(11).should.eql({
+        meta: { id: 11 },
         types: [OFFICER_REQUEST_START, OFFICER_REQUEST_SUCCESS, OFFICER_REQUEST_FAILURE],
         payload: {
           request: {

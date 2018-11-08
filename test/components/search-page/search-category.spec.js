@@ -207,13 +207,13 @@ describe('<SearchCategory />', function () {
       const officers = [
         {
           name: 'John',
-          url: '/officer/1',
+          url: '/officer/1/john/',
           badge: 'Badge #1',
           percentile: {}
         },
         {
           name: 'Snow',
-          url: '/officer/2',
+          url: '/officer/2/snow/',
           badge: 'Badge #2',
           percentile: {}
         }
@@ -224,12 +224,14 @@ describe('<SearchCategory />', function () {
           items={ officers }
           categoryId='officers'
           saveToRecent={ spySaveToRecent }
+          categoryFilter='Officer'
         />
       );
 
       const officerElement = wrapper.find(OfficerSearchResult);
       officerElement.exists().should.be.true();
       officerElement.prop('items').should.be.eql(officers);
+      officerElement.prop('categoryFilter').should.be.eql('Officer');
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
 
     });
@@ -252,12 +254,14 @@ describe('<SearchCategory />', function () {
           items={ crs }
           categoryId='crs'
           saveToRecent={ spySaveToRecent }
+          categoryFilter='CR'
         />
       );
 
       const officerElement = wrapper.find(CRSearchResult);
       officerElement.exists().should.be.true();
       officerElement.prop('items').should.be.eql(crs);
+      officerElement.prop('categoryFilter').should.be.eql('CR');
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
@@ -279,12 +283,14 @@ describe('<SearchCategory />', function () {
           items={ trrs }
           categoryId='trrs'
           saveToRecent={ spySaveToRecent }
+          categoryFilter='TRR'
         />
       );
 
       const officerElement = wrapper.find(TRRSearchResult);
       officerElement.exists().should.be.true();
       officerElement.prop('items').should.be.eql(trrs);
+      officerElement.prop('categoryFilter').should.be.eql('TRR');
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
@@ -306,12 +312,14 @@ describe('<SearchCategory />', function () {
           items={ dateCRs }
           categoryId='dateCRs'
           saveToRecent={ spySaveToRecent }
+          categoryFilter='DATE > CR'
         />
       );
 
       const officerElement = wrapper.find(CRSearchResult);
       officerElement.exists().should.be.true();
       officerElement.prop('items').should.be.eql(dateCRs);
+      officerElement.prop('categoryFilter').should.be.eql('DATE > CR');
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
@@ -333,12 +341,47 @@ describe('<SearchCategory />', function () {
           items={ dateTRRs }
           categoryId='dateTRRs'
           saveToRecent={ spySaveToRecent }
+          categoryFilter='DATE > TRR'
         />
       );
 
       const officerElement = wrapper.find(TRRSearchResult);
       officerElement.exists().should.be.true();
       officerElement.prop('items').should.be.eql(dateTRRs);
+      officerElement.prop('categoryFilter').should.be.eql('DATE > TRR');
+      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+    });
+
+    it('should render dateOfficers with officer component', function () {
+      const spySaveToRecent = spy();
+      const officers = [
+        {
+          name: 'Jerome Finnigan',
+          url: '/officer/1',
+          badge: 'Badge #1',
+          percentile: {}
+        },
+        {
+          name: 'Edward May',
+          url: '/officer/2',
+          badge: 'Badge #2',
+          percentile: {}
+        }
+      ];
+
+      const wrapper = mount(
+        <SearchCategory
+          items={ officers }
+          categoryId='dateOfficers'
+          saveToRecent={ spySaveToRecent }
+          categoryFilter='DATE > OFFICERS'
+        />
+      );
+
+      const officerElement = wrapper.find(OfficerSearchResult);
+      officerElement.exists().should.be.true();
+      officerElement.prop('items').should.be.eql(officers);
+      officerElement.prop('categoryFilter').should.be.eql('DATE > OFFICERS');
       officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
   });

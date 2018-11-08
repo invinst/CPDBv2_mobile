@@ -8,7 +8,8 @@ import {
   crsSelector,
   trrsSelector,
   dateCRsSelector,
-  dateTRRsSelector
+  dateTRRsSelector,
+  dateOfficersSelector
 } from 'selectors/search-page';
 
 describe('search-page selectors', () => {
@@ -50,7 +51,7 @@ describe('search-page selectors', () => {
           name: 'Name',
           badge: '',
           percentile: null,
-          url: `${constants.OFFICER_PATH}1/`,
+          url: `${constants.OFFICER_PATH}1/name/`,
         }]
       });
     });
@@ -68,7 +69,7 @@ describe('search-page selectors', () => {
         id: 1,
         name: 'Name',
         badge: 'Badge #12314',
-        url: `${constants.OFFICER_PATH}1/`,
+        url: `${constants.OFFICER_PATH}1/name/`,
         percentile: null
       };
 
@@ -353,6 +354,50 @@ describe('search-page selectors', () => {
       trrsSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
         data: expectedTrrs
+      });
+    });
+  });
+
+  describe('dateOfficersSelector', () => {
+    it('should return empty when there is no DATE > OFFICERS', () => {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+          }
+        }
+      };
+
+      dateOfficersSelector(state).should.be.eql({ data: [] });
+    });
+
+    it('should return correct values for DATE > OFFICERS suggestion', function () {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            ['DATE > OFFICERS']: {
+              isShowingAll: true,
+              data: [
+                {
+                  'id': 123,
+                  'name': 'Jerome Finnigan',
+                  'badge': '56789',
+                  'percentile': null
+                }
+              ]
+            }
+          }
+        }
+      };
+
+      dateOfficersSelector(state).should.be.eql({
+        isShowingAll: true,
+        data: [{
+          id: 123,
+          name: 'Jerome Finnigan',
+          badge: 'Badge #56789',
+          percentile: null,
+          url: `${constants.OFFICER_PATH}123/jerome-finnigan/`,
+        }]
       });
     });
   });

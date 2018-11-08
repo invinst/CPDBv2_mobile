@@ -46,6 +46,7 @@ export const officerSummarySelector = createSelector(
       return null;
     }
     return {
+      id: officer['officer_id'],
       name: officer['full_name'],
       unit: getOfficerUnitDisplay(officer),
       rank: getOfficerRank(officer),

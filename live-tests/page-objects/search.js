@@ -11,7 +11,9 @@ const nthRow = (n) => ({
   selector: `a:nth-child(${n})`,
   elements: {
     itemType: '.item-type',
-    itemID: '.item-id'
+    itemID: '.item-id',
+    officerName: '.officer-name',
+    officerBadge: '.officer-badge'
   }
 });
 
@@ -27,6 +29,7 @@ module.exports = {
     recentHeader: '#search-category-recent',
     dateCRsHeader: '#search-category-dateCRs',
     dateTRRsHeader: '#search-category-dateTRRs',
+    dateOfficersHeader: '#search-category-dateOfficers',
     crsHeader: '#search-category-crs',
     trrsHeader: '#search-category-trrs',
     officersHeader: '#search-category-officers',
@@ -53,6 +56,7 @@ module.exports = {
 
     dateCRs: resultsSection('dateCRs'),
     dateTRRs: resultsSection('dateTRRs'),
+    dateOfficers: resultsSection('dateOfficers'),
     officers: {
       selector: '.results.officers',
       sections: {

@@ -32,7 +32,7 @@ describe('<Officer />', function () {
 
     const wrapper = shallow(<Officer { ...officer }/>);
 
-    wrapper.find('Link').prop('to').should.equal('/officer/456/');
+    wrapper.find('Link').prop('to').should.equal('/officer/456/donovan-markiewicz/');
 
     const radarChart = wrapper.find(RadarChart);
     radarChart.prop('data').should.deepEqual([
@@ -40,7 +40,7 @@ describe('<Officer />', function () {
       { axis: 'Internal Allegations', value: 11.1 },
       { axis: 'Civilian Allegations', value: 22.2 }
     ]);
-    radarChart.prop('backgroundColor').should.deepEqual('#ed6154')
+    radarChart.prop('backgroundColor').should.deepEqual('#ed6154');
 
     wrapper.find('.rank').text().should.equal('Officer');
     wrapper.find('.full-name').text().should.equal('Donovan Markiewicz');
