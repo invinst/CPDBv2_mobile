@@ -1,9 +1,8 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import AttachmentsTab from 'components/officer-page/tabbed-pane-section/attachments-tab';
 import Complaint from 'components/officer-page/tabbed-pane-section/attachments-tab/complaint';
-import { stub } from 'sinon';
 
 
 describe('AttachmentsTab component', function () {
@@ -48,11 +47,5 @@ describe('AttachmentsTab component', function () {
     complaintComponents.should.have.length(2);
     complaintComponents.at(0).prop('complaint').should.eql(complaint0);
     complaintComponents.at(1).prop('complaint').should.eql(complaint1);
-  });
-
-  it('should get officer timeline after the component is mounted', function () {
-    const stubGetOfficerTimeline = stub();
-    mount(<AttachmentsTab complaints={ [] } officerId={ 123 } getOfficerTimeline={ stubGetOfficerTimeline }/>);
-    stubGetOfficerTimeline.calledWith(123).should.be.true();
   });
 });

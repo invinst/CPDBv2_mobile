@@ -226,10 +226,10 @@ describe('<OfficerPage />', function () {
     const coaccusals = {
       data: {
         11: [{
-          officerId: 123,
-          fullName: 'Edward May',
-          rank: 'Detective',
-          coaccusalCount: 4,
+          'id': 123,
+          'full_name': 'Edward May',
+          'rank': 'Detective',
+          'coaccusal_count': 4,
         }]
       },
       isSuccess: {
@@ -380,7 +380,7 @@ describe('<OfficerPage />', function () {
         </Provider>
       );
 
-      wrapper.find('.officer-name').text().should.equal('Kenneth Wojtan');
+      wrapper.find('.officer-name.header').text().should.equal('Kenneth Wojtan');
       wrapper.find('.officer-demographic').text().should.equal('60 years old, white, male.');
 
       const rows = wrapper.find(SectionRow);
@@ -641,13 +641,19 @@ describe('<OfficerPage />', function () {
     });
 
     it('should render TabbedPaneSection component', function () {
-      const workingStore = mockStore(stateData);
+      let requestingSummary = cloneDeep(stateData);
+      requestingSummary.officerPage.currentTab = 'COACCUSALS';
+      const workingStore = mockStore(requestingSummary);
       const wrapper = mount(
         <Provider store={ workingStore }>
           <OfficerPageContainer params={ { id: 11 } } />
         </Provider>
       );
-      wrapper.find(TabbedPaneSection).exists().should.be.true();
+      const tabbedPaneSection = wrapper.find(TabbedPaneSection);
+      tabbedPaneSection.prop('officerId').should.equal(11);
+      tabbedPaneSection.prop('currentTab').should.equal('COACCUSALS');
+      tabbedPaneSection.prop('hasCoaccusal').should.equal(true);
+      tabbedPaneSection.prop('hasAttachment').should.equal(false);
     });
 
     it('should get officer timeline and officer coaccusals after the component is mounted', function () {

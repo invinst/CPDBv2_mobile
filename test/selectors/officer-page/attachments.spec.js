@@ -1,6 +1,7 @@
 import {
   attachmentsComplaintTransform,
   complaintsWithAttachmentsSelector,
+  hasAttachmentSelector
 } from 'selectors/officer-page/attachments';
 
 
@@ -31,6 +32,20 @@ describe('Officer attachments selectors', function () {
         'file_type': 'document',
       },
     ],
+  };
+
+  const complaintWithoutAttachment = {
+    category: 'CR',
+    coaccused: 8,
+    crid: '303345',
+    date: '2005-01-27',
+    finding: 'Unfounded',
+    kind: 'CR',
+    outcome: 'No Action Taken',
+    rank: 'Police Officer',
+    subcategory: 'Unnecessary Display Of Weapon / Off Duty',
+    'unit_description': 'Mobile Strike Force',
+    'unit_name': '153',
   };
 
   const result = {
@@ -87,13 +102,36 @@ describe('Officer attachments selectors', function () {
           },
         },
       };
-      const props = {
-        params: {
-          id: 1
-        }
-      };
 
-      complaintsWithAttachmentsSelector(state, props).should.eql([result]);
+      complaintsWithAttachmentsSelector(state, 1).should.eql([result]);
+    });
+  });
+
+  describe('hasComplaintSelector', function () {
+    it('should return false if complaint has no attachment', function () {
+      const state = {
+        officerPage: {
+          timeline: {
+            data: {
+              1: [complaintWithoutAttachment]
+            },
+          },
+        },
+      };
+      hasAttachmentSelector(state, 1).should.be.false();
+    });
+
+    it('should return true if any complaint has attachment', function () {
+      const state = {
+        officerPage: {
+          timeline: {
+            data: {
+              1: [complaint, complaintWithoutAttachment]
+            },
+          },
+        },
+      };
+      hasAttachmentSelector(state, 1).should.be.true();
     });
   });
 });

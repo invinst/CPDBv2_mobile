@@ -8,8 +8,8 @@ import { complaintsWithAttachmentsSelector } from 'selectors/officer-page/attach
 
 function mapStateToProps(state, ownProps) {
   return {
-    complaints: complaintsWithAttachmentsSelector(state, ownProps),
-    officerId: ownProps.params.id
+    complaints: complaintsWithAttachmentsSelector(state, ownProps.officerId),
+    officerId: ownProps.officerId
   };
 }
 

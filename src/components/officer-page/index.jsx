@@ -148,6 +148,7 @@ class OfficerPage extends Component {
       metrics,
       noDataCMSContent,
       hasCoaccusal,
+      hasAttachment,
       currentTab,
       changeOfficerTab
     } = this.props;
@@ -209,6 +210,7 @@ class OfficerPage extends Component {
           changeOfficerTab={ changeOfficerTab }
           currentTab={ currentTab }
           hasCoaccusal={ hasCoaccusal }
+          hasAttachment={ hasAttachment }
           officerId={ id }
         />
         <BottomPadding />
@@ -219,7 +221,7 @@ class OfficerPage extends Component {
 
 OfficerPage.propTypes = {
   requestOfficerId: PropTypes.number,
-  fetchOfficer: PropTypes.func.isRequired,
+  fetchOfficer: PropTypes.func,
   requestCMS: PropTypes.func,
   loading: PropTypes.bool,
   found: PropTypes.bool,
@@ -234,6 +236,7 @@ OfficerPage.propTypes = {
   params: PropTypes.object,
   pathName: PropTypes.string,
   hasCoaccusal: PropTypes.bool,
+  hasAttachment: PropTypes.bool,
   currentTab: PropTypes.string,
   changeOfficerTab: PropTypes.func,
   getOfficerCoaccusals: PropTypes.func,

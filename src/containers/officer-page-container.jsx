@@ -14,6 +14,7 @@ import { hasCoaccusalSelector, isCoaccusalSuccess } from 'selectors/officer-page
 import { isTimelineSuccess } from 'selectors/officer-page/timeline';
 import { getOfficerTimeline } from 'actions/officer-page/timeline';
 import { getOfficerCoaccusals } from 'actions/officer-page/coaccusals';
+import { hasAttachmentSelector } from 'selectors/officer-page/attachments';
 
 
 function mapStateToProps(state, ownProps) {
@@ -37,6 +38,7 @@ function mapStateToProps(state, ownProps) {
     hasCMS: hasCMS(state, 'officerPage'),
     noDataCMSContent: cmsSelector(state, 'officerPage', 'no_data_explain_text'),
     hasCoaccusal: hasCoaccusalSelector(state, pk),
+    hasAttachment: hasAttachmentSelector(state, pk),
     currentTab: getCurrentTab(state),
     isCoaccusalSuccess: isCoaccusalSuccess(state, pk),
     isTimelineSuccess: isTimelineSuccess(state, pk),
