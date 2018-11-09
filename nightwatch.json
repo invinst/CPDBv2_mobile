@@ -2,6 +2,7 @@
   "src_folders" : ["live-tests/live-test-setup.js"],
   "output_folder" : "",
   "page_objects_path" : "./live-tests/page-objects",
+  "custom_commands_path": "./live-tests/utils",
 
   "selenium" : {
     "start_process" : true,

@@ -342,9 +342,12 @@ const mockOfficerPageCms = {
 };
 
 describe('OfficerPage test', function () {
+  afterEach(function (client, done) {
+    done();
+  });
+
   describe('OfficerPage not enough data for radar chart', function () {
     beforeEach(function (client, done) {
-      this.client = client;
       api.mock('GET', '/api/v2/cms-pages/officer-page/', 200, mockOfficerPageCms);
       api.mock('GET', '/api/v2/mobile/officers/2234/', 200, officerNotEnoughPercentile);
 
@@ -352,12 +355,6 @@ describe('OfficerPage test', function () {
       this.officerPage.navigate(this.officerPage.url(2234));
       client.waitForElementVisible('body', TIMEOUT);
       done();
-    });
-
-    afterEach(function (client, done) {
-      client.end(function () {
-        done();
-      });
     });
 
     it('should render officer no data radar chart', function () {
@@ -373,7 +370,6 @@ describe('OfficerPage test', function () {
   describe('OfficerPage has radar chart', function () {
     beforeEach(function (client, done) {
       api.mock('GET', '/api/v2/cms-pages/officer-page/', 200, mockOfficerPageCms);
-      this.client = client;
       api.mock('GET', '/api/v2/mobile/officers/2235/', 200, officer2235);
       api.mock('GET', '/api/v2/mobile/officers/2234/', 200, officerNotEnoughPercentile);
       api.mock('GET', '/api/v2/mobile/officers/2235/new-timeline-items/', 200, mockTimeline);
@@ -382,12 +378,6 @@ describe('OfficerPage test', function () {
       this.officerPage = client.page.officerPage();
       this.officerPage.navigate(this.officerPage.url(2235));
       done();
-    });
-
-    afterEach(function (client, done) {
-      client.end(function () {
-        done();
-      });
     });
 
     it('should redirect to correct path name when only officer id is provided', function (client) {
@@ -681,11 +671,8 @@ describe('OfficerPage test', function () {
 
       it('should go to attachment source page when clicking on the attachment thumbnail', function (client) {
         this.timeline.click('@attachmentThumbnail');
-        this.client.windowHandles(result => {
-          const handles = result.value;
-          this.client.switchWindow(handles[handles.length - 1]);
-        });
-        this.client.assert.urlEquals('https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf');
+        client.switchToRecentTab();
+        this.timeline.assert.urlEquals('https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf');
       });
 
       it('should go to trr page when clicking on an trr timeline item', function () {
@@ -699,13 +686,36 @@ describe('OfficerPage test', function () {
         this.coaccusals = this.officerPage.section.coaccusals;
         done();
       });
+
       it('should navigate to officer page when clicking on coaccusals card', function (client) {
         this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/');
 
-        this.officerPage.section.coaccusalsTab.click();
+        this.officerPage.click('@coaccusalsTabButton');
         this.coaccusals.click('@firstCoaccusalCard');
 
         this.coaccusals.assert.urlContains('/officer/27778/carl-suchocki/');
+      });
+    });
+
+    describe('Attachments', function () {
+      beforeEach(function (client, done) {
+        this.attachments = this.officerPage.section.attachments;
+        this.officerPage.click('@attachmentsTabButton');
+        done();
+      });
+
+      it('should navigate to officer complaint when clicking on complaint header', function () {
+        this.attachments.section.firstComplaint.waitForElementVisible('@heading', TIMEOUT);
+        this.attachments.section.firstComplaint.click('@heading');
+        this.attachments.assert.urlContains('/complaint/294088/');
+      });
+
+      it('should go to attachment source page when clicking on the attachment', function (client) {
+        this.attachments.section.firstComplaint.click('@firstAttachment');
+        client.switchToRecentTab();
+        client.assert.urlEquals(
+          'https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf'
+        );
       });
     });
   });
