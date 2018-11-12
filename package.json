@@ -72,7 +72,7 @@
     "karma-webpack": "^1.7.0",
     "minimist": "^1.2.0",
     "mocha": "^2.2.5",
-    "nightwatch": "^0.9.8",
+    "nightwatch": "^0.9.21",
     "node-sass": "^3.4.2",
     "null-loader": "^0.1.1",
     "open": "0.0.5",

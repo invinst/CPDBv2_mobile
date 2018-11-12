@@ -55,9 +55,7 @@ describe('EmbedOfficerPage', function () {
   });
 
   afterEach(function (client, done) {
-    client.end(function () {
-      done();
-    });
+    done();
   });
 
   it('should show title, description and officer cards', function (client) {

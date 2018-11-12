@@ -95,10 +95,7 @@ describe('EmbedTopOfficerPage', function () {
   });
 
   afterEach(function (client, done) {
-    client.end(function () {
-
-      done();
-    });
+    done();
   });
 
   it('should show officer cards', function (client) {
