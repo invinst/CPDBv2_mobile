@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: mobile-frontend
-        image: cpdbdev/mobile-frontend:{{IMAGE_TAG}}
+        image: cpdbdev/mobile-frontend:${IMAGE_TAG}
         imagePullPolicy: Always
         resources:
           requests:
