@@ -4,6 +4,7 @@ import {
   officerSummarySelector,
   officerMetricsSelector,
   officerYearlyPercentileSelector,
+  getCurrentTab,
 } from 'selectors/officer-page';
 
 
@@ -356,6 +357,17 @@ describe('officer-page selectors', () => {
       };
 
       should(officerMetricsSelector(state, notFoundProps)).be.null();
+    });
+  });
+
+  describe('getCurrentTab', function () {
+    it('should return correct current tab', function () {
+      const state = {
+        officerPage: {
+          currentTab: 'COACCUSALS',
+        }
+      };
+      getCurrentTab(state).should.eql('COACCUSALS');
     });
   });
 });

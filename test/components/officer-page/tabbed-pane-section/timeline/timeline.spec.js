@@ -56,15 +56,4 @@ describe('Timeline component', function () {
     items.at(3).prop('hasBorderBottom').should.equal(false);
     items.at(4).prop('hasBorderBottom').should.equal(false);
   });
-
-  it('should get officer timeline after the component is mounted', function () {
-    const stubGetOfficerTimeline = stub();
-    mount(<Timeline items={ [] } officerId={ 123 } getOfficerTimeline={ stubGetOfficerTimeline }/>);
-    stubGetOfficerTimeline.calledWith(123).should.be.true();
-  });
-
-  it('should should show timeline label', function () {
-    const wrapper = shallow(<Timeline items={ [] } officerId={ 123 } />);
-    wrapper.find('.timeline-label').text().should.equal('OFFICER TIMELINE');
-  });
 });
