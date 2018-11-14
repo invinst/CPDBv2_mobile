@@ -1,8 +1,10 @@
 import S from 'string';
 import config from 'config';
-import { kebabCase } from 'lodash';
+import { kebabCase, invert } from 'lodash';
 
 import constants from 'constants';
+import { TAB_MAP } from 'constants/officer-page';
+
 
 export const v2Url = function (endpoint) {
   return S('{{baseUrl}}{{endpoint}}').template({
@@ -11,7 +13,9 @@ export const v2Url = function (endpoint) {
   }).s;
 };
 
-export const officerUrl = (officerId, name = '') => {
+export const officerUrl = (officerId, name = '', tab = '') => {
   const nameSuffix = name && `${kebabCase(name)}/`;
-  return officerId && `${constants.OFFICER_PATH}${officerId}/${nameSuffix}`;
+  const tabName = invert(TAB_MAP)[tab];
+  const tabSuffix = tabName ? `${tabName}/` : '';
+  return officerId && `${constants.OFFICER_PATH}${officerId}/${nameSuffix}${tabSuffix}`;
 };

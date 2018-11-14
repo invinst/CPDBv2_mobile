@@ -18,6 +18,7 @@ import navigationArrow from 'img/disclosure-indicator.svg';
 import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
 import { officerUrl } from 'utils/url-util';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
+import { TAB_MAP, OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
 
 
 class OfficerPage extends Component {
@@ -25,33 +26,39 @@ class OfficerPage extends Component {
     super(props);
     this.state = { historicBadgesExpanded: false };
 
+    const { firstParam, secondParam } = props.params;
+    const tabName = secondParam || firstParam;
+    this.state = {
+      currentTab: TAB_MAP[tabName] || OFFICER_PAGE_TAB_NAMES.TIMELINE
+    };
+
     this.toggleHistoricBadges = this.toggleHistoricBadges.bind(this);
+    this.changeTab = this.changeTab.bind(this);
   }
 
   componentDidMount() {
     this._fetchData();
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { pathName, summary, location, params } = nextProps;
-    if (!summary) {
-      return;
-    }
-    const name = summary.name;
-    const correctPathName = officerUrl(summary.id, name);
-    if (name && pathName !== correctPathName) {
-      window.history.replaceState(window.history.state, document.title, correctPathName);
-
-      location.pathname = correctPathName;
-      params.id = summary.id.toString();
-      params.fullName = kebabCase(summary.name);
-    }
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps.requestOfficerId !== this.props.requestOfficerId) {
       this._fetchData();
     }
+
+    const { pathName, summary } = this.props;
+    if (!summary) {
+      return;
+    }
+    const name = summary.name;
+    const correctPathName = officerUrl(summary.id, name, this.state.currentTab);
+    if (name && pathName !== correctPathName) {
+      window.history.replaceState(window.history.state, document.title, correctPathName);
+    }
+  }
+
+  changeTab(tab) {
+    if (tab in OFFICER_PAGE_TAB_NAMES)
+      this.setState({ currentTab: tab });
   }
 
   _fetchData() {
@@ -149,8 +156,6 @@ class OfficerPage extends Component {
       noDataCMSContent,
       hasCoaccusal,
       hasAttachment,
-      currentTab,
-      changeOfficerTab
     } = this.props;
 
     if (loading) {
@@ -207,8 +212,8 @@ class OfficerPage extends Component {
         </div>
         { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
         <TabbedPaneSection
-          changeOfficerTab={ changeOfficerTab }
-          currentTab={ currentTab }
+          changeOfficerTab={ this.changeTab }
+          currentTab={ this.state.currentTab }
           hasCoaccusal={ hasCoaccusal }
           hasAttachment={ hasAttachment }
           officerId={ id }
@@ -237,8 +242,6 @@ OfficerPage.propTypes = {
   pathName: PropTypes.string,
   hasCoaccusal: PropTypes.bool,
   hasAttachment: PropTypes.bool,
-  currentTab: PropTypes.string,
-  changeOfficerTab: PropTypes.func,
   getOfficerCoaccusals: PropTypes.func,
   getOfficerTimeline: PropTypes.func,
   isTimelineSuccess: PropTypes.bool,

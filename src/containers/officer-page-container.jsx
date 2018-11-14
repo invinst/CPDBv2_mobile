@@ -2,12 +2,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import OfficerPage from 'components/officer-page';
-import { fetchOfficer, requestCMS, changeOfficerTab } from 'actions/officer-page';
+import { fetchOfficer, requestCMS } from 'actions/officer-page';
 import {
   officerSummarySelector,
   officerMetricsSelector,
   officerYearlyPercentileSelector,
-  getCurrentTab,
 } from 'selectors/officer-page';
 import { cmsSelector, hasCMS } from 'selectors/common/cms';
 import { hasCoaccusalSelector, isCoaccusalSuccess } from 'selectors/officer-page/coaccusals';
@@ -39,7 +38,6 @@ function mapStateToProps(state, ownProps) {
     noDataCMSContent: cmsSelector(state, 'officerPage', 'no_data_explain_text'),
     hasCoaccusal: hasCoaccusalSelector(state, pk),
     hasAttachment: hasAttachmentSelector(state, pk),
-    currentTab: getCurrentTab(state),
     isCoaccusalSuccess: isCoaccusalSuccess(state, pk),
     isTimelineSuccess: isTimelineSuccess(state, pk),
   };
@@ -48,7 +46,6 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = {
   requestCMS,
   fetchOfficer,
-  changeOfficerTab,
   getOfficerTimeline,
   getOfficerCoaccusals
 };

@@ -5,4 +5,8 @@ export const OFFICER_PAGE_TAB_NAMES = {
 };
 
 export const CHANGE_OFFICER_ID = 'CHANGE_OFFICER_ID';
-export const CHANGE_OFFICER_TAB = 'CHANGE_OFFICER_TAB';
+
+export const TAB_MAP = {
+  coaccusals: OFFICER_PAGE_TAB_NAMES.COACCUSALS,
+  documents: OFFICER_PAGE_TAB_NAMES.ATTACHMENTS
+};
