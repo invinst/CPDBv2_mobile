@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
-import { isEmpty, kebabCase, noop } from 'lodash';
+import { isEmpty, noop } from 'lodash';
 import classnames from 'classnames';
 import pluralize from 'pluralize';
 
@@ -251,7 +251,11 @@ OfficerPage.propTypes = {
 OfficerPage.defaultProps = {
   requestCMS: noop,
   location: {},
-  params: {}
+  params: {},
+  fetchOfficer: noop,
+  requestLandingPage: noop,
+  getOfficerCoaccusals: noop,
+  getOfficerTimeline: noop,
 };
 
 export default OfficerPage;

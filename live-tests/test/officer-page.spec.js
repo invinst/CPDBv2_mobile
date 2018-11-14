@@ -688,34 +688,47 @@ describe('OfficerPage test', function () {
       });
 
       it('should navigate to officer page when clicking on coaccusals card', function (client) {
-        this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/');
-
         this.officerPage.click('@coaccusalsTabButton');
+        this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
+
         this.coaccusals.click('@firstCoaccusalCard');
 
         this.coaccusals.assert.urlContains('/officer/27778/carl-suchocki/');
+      });
+
+      it('should be able to be accessed directly via url', function () {
+        this.officerPage.navigate(this.officerPage.url(2235, 'coaccusals'));
+        this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
       });
     });
 
     describe('Attachments', function () {
       beforeEach(function (client, done) {
         this.attachments = this.officerPage.section.attachments;
-        this.officerPage.click('@attachmentsTabButton');
         done();
       });
 
       it('should navigate to officer complaint when clicking on complaint header', function () {
+        this.officerPage.click('@attachmentsTabButton');
+        this.attachments.assert.urlContains('/officer/2235/kevin-osborn/documents/');
         this.attachments.section.firstComplaint.waitForElementVisible('@heading', TIMEOUT);
         this.attachments.section.firstComplaint.click('@heading');
         this.attachments.assert.urlContains('/complaint/294088/');
       });
 
       it('should go to attachment source page when clicking on the attachment', function (client) {
+        this.officerPage.click('@attachmentsTabButton');
+        this.attachments.assert.urlContains('/officer/2235/kevin-osborn/documents/');
         this.attachments.section.firstComplaint.click('@firstAttachment');
         client.switchToRecentTab();
         client.assert.urlEquals(
           'https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf'
         );
+      });
+
+      it('should be able to be accessed directly via url', function () {
+        this.officerPage.navigate(this.officerPage.url(2235, 'documents'));
+        this.attachments.assert.urlContains('/officer/2235/kevin-osborn/documents/');
       });
     });
   });

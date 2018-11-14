@@ -98,8 +98,9 @@ const nthRankChangeSection = (n) => ({
 });
 
 module.exports = {
-  url: function (id) {
-    return `${this.api.globals.clientUrl}/officer/${id}/`;
+  url: function (id, tab = '') {
+    const tabSuffix = tab ? `${tab}/` : '';
+    return `${this.api.globals.clientUrl}/officer/${id}/${tabSuffix}`;
   },
 
   elements: {
