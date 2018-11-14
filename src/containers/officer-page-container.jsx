@@ -25,13 +25,14 @@ function mapStateToProps(state, ownProps) {
     }
   };
   return {
-    pathname: ownProps.pathname,
+    location: ownProps.location,
+    params: ownProps.params,
     loading: state.officerPage.officers.isRequesting,
     found: state.officerPage.officers.isSuccess,
     summary: officerSummarySelector(state, props),
     metrics: officerMetricsSelector(state, props),
     threeCornerPercentile: officerYearlyPercentileSelector(state, props),
-    pk,
+    requestOfficerId: pk,
     hasCMS: hasCMS(state, 'officerPage'),
     noDataCMSContent: cmsSelector(state, 'officerPage', 'no_data_explain_text')
   };

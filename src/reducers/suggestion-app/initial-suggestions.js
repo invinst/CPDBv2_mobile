@@ -1,11 +1,11 @@
 import { handleActions } from 'redux-actions';
-import constants from 'constants';
 
 import {
   FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS,
   FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
   SEARCH_SAVE_TO_RECENT
 } from 'actions/suggestion';
+import { officerUrl } from 'utils/url-util';
 
 const defaultState = {
   recent: {
@@ -34,7 +34,7 @@ export default handleActions({
             case 'OFFICER':
               type = 'Officer';
               title = data.name;
-              url = `${constants.OFFICER_PATH}${data.id}/`;
+              url = officerUrl(data.id, data.name);
               break;
             case 'UNIT':
               type = 'Unit';

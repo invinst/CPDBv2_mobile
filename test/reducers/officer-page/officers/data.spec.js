@@ -12,14 +12,16 @@ describe('officer data reducer', function () {
 
     officerData({ 1: { 'full_name': 'An officer' } }, {
       type: OFFICER_REQUEST_SUCCESS,
-      payload: officerResult
+      payload: officerResult,
+      meta: { id: 1 }
     }).should.eql({
       1: officerResult
     });
 
     officerData({ 2: { 'full_name': 'An officer' } }, {
       type: OFFICER_REQUEST_SUCCESS,
-      payload: officerResult
+      payload: officerResult,
+      meta: { id: 1 }
     }).should.eql({
       2: { 'full_name': 'An officer' },
       1: officerResult
