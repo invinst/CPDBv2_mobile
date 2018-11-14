@@ -112,6 +112,6 @@ describe('EmbedTopOfficerPage', function () {
   it('should go to officer summary page when click to card', function (client) {
     this.embedTopOfficersPage.click('@firstCard');
     utils.switchToRecentTab(client);
-    this.embedTopOfficersPage.assert.urlContains('/officer/13788/');
+    this.embedTopOfficersPage.assert.urlContains('/officer/13788/broderick-jones/');
   });
 });

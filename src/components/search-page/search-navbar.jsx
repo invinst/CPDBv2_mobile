@@ -4,6 +4,8 @@ import cx from 'classnames';
 import clearIcon from 'img/ic-clear.svg';
 import { instantScrollToTop } from 'utils/navigation-util';
 import style from './search-navbar.sass';
+import HorizontalScrolling from 'components/common/horizontal-scrolling';
+
 
 export default class SearchNavbar extends Component {
   clearChosenCategoryButton() {
@@ -53,8 +55,10 @@ export default class SearchNavbar extends Component {
 
     return (
       <div className={ style.categories }>
-        { links }
-        { clearChosenCategoryButton }
+        <HorizontalScrolling>
+          { links }
+          { clearChosenCategoryButton }
+        </HorizontalScrolling>
       </div>
     );
   }

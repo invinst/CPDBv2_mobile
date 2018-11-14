@@ -234,6 +234,20 @@ const mockTimeline = [
   }
 ];
 
+const mockCoaccusals = [
+  {
+    id: 27778,
+    'full_name': 'Carl Suchocki',
+    rank: 'Police Officer',
+    percentile: {
+      'percentile_trr': '49.1036',
+      'percentile_allegation_civilian': '99.2525',
+      'percentile_allegation_internal': '79.9133'
+    },
+    'coaccusal_count': 47
+  },
+];
+
 const mockOfficerPageCms = {
   fields: [
     {
@@ -363,6 +377,7 @@ describe('OfficerPage test', function () {
       api.mock('GET', '/api/v2/mobile/officers/2235/', 200, officer2235);
       api.mock('GET', '/api/v2/mobile/officers/2234/', 200, officerNotEnoughPercentile);
       api.mock('GET', '/api/v2/mobile/officers/2235/new-timeline-items/', 200, mockTimeline);
+      api.mock('GET', '/api/v2/mobile/officers/2235/coaccusals/', 200, mockCoaccusals);
 
       this.officerPage = client.page.officerPage();
       this.officerPage.navigate(this.officerPage.url(2235));
@@ -664,7 +679,7 @@ describe('OfficerPage test', function () {
         this.timeline.assert.urlContains('/complaint/294088/');
       });
 
-      it('should go to attachment source page when clicking on the attachment thumbnail', function () {
+      it('should go to attachment source page when clicking on the attachment thumbnail', function (client) {
         this.timeline.click('@attachmentThumbnail');
         this.client.windowHandles(result => {
           const handles = result.value;
@@ -676,6 +691,21 @@ describe('OfficerPage test', function () {
       it('should go to trr page when clicking on an trr timeline item', function () {
         this.timeline.click('@trrItem');
         this.timeline.assert.urlContains('/trr/1/');
+      });
+    });
+
+    describe('Coaccusals', function () {
+      beforeEach(function (client, done) {
+        this.coaccusals = this.officerPage.section.coaccusals;
+        done();
+      });
+      it('should navigate to officer page when clicking on coaccusals card', function (client) {
+        this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/');
+
+        this.officerPage.section.coaccusalsTab.click();
+        this.coaccusals.click('@firstCoaccusalCard');
+
+        this.coaccusals.assert.urlContains('/officer/27778/carl-suchocki/');
       });
     });
   });

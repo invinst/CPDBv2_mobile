@@ -1,5 +1,6 @@
 import S from 'string';
 import config from 'config';
+import { kebabCase } from 'lodash';
 
 import constants from 'constants';
 
@@ -10,4 +11,7 @@ export const v2Url = function (endpoint) {
   }).s;
 };
 
-export const officerUrl = (officerId) => officerId && `${constants.OFFICER_PATH}${officerId}/`;
+export const officerUrl = (officerId, name = '') => {
+  const nameSuffix = name && `${kebabCase(name)}/`;
+  return officerId && `${constants.OFFICER_PATH}${officerId}/${nameSuffix}`;
+};

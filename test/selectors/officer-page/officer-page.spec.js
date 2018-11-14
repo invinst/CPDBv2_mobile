@@ -4,6 +4,7 @@ import {
   officerSummarySelector,
   officerMetricsSelector,
   officerYearlyPercentileSelector,
+  getCurrentTab,
 } from 'selectors/officer-page';
 
 
@@ -97,6 +98,7 @@ describe('officer-page selectors', () => {
         officers: {
           data: {
             11: {
+              'officer_id': 11,
               'full_name': 'Officer 11',
               unit: {
                 'unit_name': '001',
@@ -117,6 +119,7 @@ describe('officer-page selectors', () => {
 
     it('should return summary', function () {
       officerSummarySelector(state, props).should.eql({
+        id: 11,
         name: 'Officer 11',
         rank: 'rank',
         unit: 'Unit 001 - description',
@@ -133,6 +136,7 @@ describe('officer-page selectors', () => {
           officers: {
             data: {
               11: {
+                'officer_id': 11,
                 'full_name': 'Officer 11',
                 rank: null,
                 unit: {
@@ -149,6 +153,7 @@ describe('officer-page selectors', () => {
         }
       };
       officerSummarySelector(nullRankState, props).should.eql({
+        id: 11,
         name: 'Officer 11',
         rank: 'N/A',
         unit: 'description',
@@ -165,6 +170,7 @@ describe('officer-page selectors', () => {
           officers: {
             data: {
               11: {
+                'officer_id': 11,
                 'full_name': 'Officer 11',
                 rank: null,
                 unit: {
@@ -179,6 +185,7 @@ describe('officer-page selectors', () => {
         }
       };
       officerSummarySelector(emptyDemographicState, props).should.eql({
+        id: 11,
         name: 'Officer 11',
         rank: 'N/A',
         unit: 'Unit 001',
@@ -195,6 +202,7 @@ describe('officer-page selectors', () => {
           officers: {
             data: {
               11: {
+                'officer_id': 11,
                 'full_name': 'Officer 11',
                 rank: null,
                 unit: {
@@ -209,6 +217,7 @@ describe('officer-page selectors', () => {
         }
       };
       officerSummarySelector(emptyUnitState, props).should.eql({
+        id: 11,
         name: 'Officer 11',
         rank: 'N/A',
         unit: '',
@@ -225,6 +234,7 @@ describe('officer-page selectors', () => {
           officers: {
             data: {
               11: {
+                'officer_id': 11,
                 'full_name': 'Officer 11',
                 unit: {
                   'unit_name': '001',
@@ -240,6 +250,7 @@ describe('officer-page selectors', () => {
         }
       };
       officerSummarySelector(missingRankState, props).should.eql({
+        id: 11,
         name: 'Officer 11',
         rank: '',
         unit: 'Unit 001 - description',
@@ -266,6 +277,7 @@ describe('officer-page selectors', () => {
           officers: {
             data: {
               11: {
+                'officer_id': 11,
                 'full_name': 'Officer 11',
                 rank: null,
                 unit: {
@@ -280,6 +292,7 @@ describe('officer-page selectors', () => {
         }
       };
       officerSummarySelector(emptyBadgeState, props).should.eql({
+        id: 11,
         name: 'Officer 11',
         rank: 'N/A',
         unit: '',
@@ -344,6 +357,17 @@ describe('officer-page selectors', () => {
       };
 
       should(officerMetricsSelector(state, notFoundProps)).be.null();
+    });
+  });
+
+  describe('getCurrentTab', function () {
+    it('should return correct current tab', function () {
+      const state = {
+        officerPage: {
+          currentTab: 'COACCUSALS',
+        }
+      };
+      getCurrentTab(state).should.eql('COACCUSALS');
     });
   });
 });

@@ -20,7 +20,7 @@ const Investigator = ({ investigators=[] }) => {
           return (
             <SafeLink
               key={ idx }
-              to={ officerUrl(investigator['officer_id']) }
+              to={ officerUrl(investigator['officer_id'], investigator['full_name']) }
               className='investigator-row'
             >
               <div className='visual-token'>
@@ -30,6 +30,13 @@ const Investigator = ({ investigators=[] }) => {
                   />
               </div>
               <div className='name'>{ investigator['full_name'] }</div>
+              <div className='badge-wrapper'>
+                {
+                  investigator.badge ? (
+                    <span className='badge'>{ investigator.badge }</span>
+                  ) : null
+                }
+              </div>
             </SafeLink>
           );
         })

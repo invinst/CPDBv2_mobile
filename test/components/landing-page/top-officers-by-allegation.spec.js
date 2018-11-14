@@ -5,7 +5,7 @@ import { EditorState } from 'draft-js';
 import should from 'should';
 
 import TopOfficersByAllegation from 'components/landing-page/top-officers-by-allegation';
-import OfficerCard from 'components/landing-page/officer-card';
+import OfficerCard from 'components/common/officer-card';
 import * as IntercomUtils from 'utils/intercom';
 
 

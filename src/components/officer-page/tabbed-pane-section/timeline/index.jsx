@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { nth, isEmpty } from 'lodash';
+import { nth } from 'lodash';
 import cx from 'classnames';
 
 import style from './timeline.sass';
@@ -8,13 +8,6 @@ import { TIMELINE_ITEMS } from 'constants/officer-page/tabbed-pane-section/timel
 
 
 export default class Timeline extends Component {
-  componentDidMount() {
-    const { items, getOfficerTimeline, officerId } = this.props;
-    if (isEmpty(items)) {
-      getOfficerTimeline(officerId);
-    }
-  }
-
   renderItems() {
     const { items, pathname } = this.props;
     return (
@@ -47,7 +40,6 @@ export default class Timeline extends Component {
   render() {
     return (
       <div className={ cx(style.officerTimeline, 'test--officer-timeline') }>
-        <div className='timeline-label'>OFFICER TIMELINE</div>
         { this.renderItems() }
       </div>
     );
@@ -56,8 +48,6 @@ export default class Timeline extends Component {
 
 Timeline.propTypes = {
   items: PropTypes.array,
-  getOfficerTimeline: PropTypes.func,
-  officerId: PropTypes.number,
   pathname: PropTypes.string,
 };
 

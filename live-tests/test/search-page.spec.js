@@ -30,6 +30,21 @@ const mockSearchQueryResponseWithDate = {
     { id: '767' },
     { id: '773' }
   ],
+  'DATE > OFFICERS': [
+    {
+      id: 1234,
+      name: 'Jerome Finnigan',
+      badge: '6789',
+      percentile: {
+        'percentile_trr': '72.1048',
+        'percentile_allegation_civilian': '77.0532',
+        'percentile_allegation': '96.5674',
+        year: 2010,
+        id: 1234,
+        'percentile_allegation_internal': '98.5982',
+      }
+    }
+  ],
   OFFICER: [
     {
       id: 7694,
@@ -85,7 +100,7 @@ describe('SearchPageTest', function () {
 
     const suggestedOfficer = suggested.section.officer;
 
-    suggested.expect.section('@officer').to.have.attribute('href').which.contains('/officer/30291/');
+    suggested.expect.section('@officer').to.have.attribute('href').which.contains('/officer/30291/john-tobler/');
     suggestedOfficer.expect.element('@label').text.to.contain('Officer');
     suggestedOfficer.expect.element('@value').text.to.contain('John Tobler');
   });
@@ -175,6 +190,16 @@ describe('SearchPageTest', function () {
       trrs.section.secondRow.expect.element('@itemType').text.to.equal('TRR');
       trrs.section.secondRow.expect.element('@itemID').text.to.equal('873');
       trrs.expect.section('@thirdRow').to.be.not.present;
+    });
+
+    it('should able to show DATE > OFFICERS results', function () {
+      this.searchPage.setValue('@queryInput', '2004-04-23 ke');
+
+      const dateOfficers = this.searchPage.section.dateOfficers;
+      this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
+      this.searchPage.expect.element('@dateOfficersHeader').text.to.equal('DATE > OFFICERS');
+      dateOfficers.section.firstRow.expect.element('@officerName').text.to.equal('Jerome Finnigan');
+      dateOfficers.section.firstRow.expect.element('@officerBadge').text.to.equal('Badge #6789');
     });
   });
 });

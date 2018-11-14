@@ -16,7 +16,8 @@ import MetricWidget from './metric-widget';
 import { roundedPercentile } from 'utils/calculation';
 import navigationArrow from 'img/disclosure-indicator.svg';
 import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
-import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
+import { officerUrl } from 'utils/url-util';
+import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 
 
 class OfficerPage extends Component {
@@ -28,19 +29,55 @@ class OfficerPage extends Component {
   }
 
   componentDidMount() {
-    const { summary, pk, fetchOfficer, requestCMS, hasCMS } = this.props;
-    if (!summary) {
-      fetchOfficer(pk);
-    }
-    hasCMS || requestCMS();
+    this._fetchData();
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pk, pathName, summary } = nextProps;
-    const officerSlug = summary ? kebabCase(summary.name) : '';
-    const correctPathName = `/officer/${pk}/${officerSlug}/`;
-    if (!isEmpty(officerSlug) && pathName !== correctPathName) {
+    const { pathName, summary, location, params } = nextProps;
+    if (!summary) {
+      return;
+    }
+    const name = summary.name;
+    const correctPathName = officerUrl(summary.id, name);
+    if (name && pathName !== correctPathName) {
       window.history.replaceState(window.history.state, document.title, correctPathName);
+
+      location.pathname = correctPathName;
+      params.id = summary.id.toString();
+      params.fullName = kebabCase(summary.name);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.requestOfficerId !== this.props.requestOfficerId) {
+      this._fetchData();
+    }
+  }
+
+  _fetchData() {
+    const {
+      summary,
+      requestOfficerId,
+      fetchOfficer,
+      requestCMS,
+      hasCMS,
+      getOfficerCoaccusals,
+      getOfficerTimeline,
+      isCoaccusalSuccess,
+      isTimelineSuccess
+    } = this.props;
+
+    if (!summary && requestOfficerId) {
+      fetchOfficer(requestOfficerId);
+    }
+    hasCMS || requestCMS();
+
+    if (!isTimelineSuccess) {
+      getOfficerTimeline(requestOfficerId);
+    }
+
+    if (!isCoaccusalSuccess) {
+      getOfficerCoaccusals(requestOfficerId);
     }
   }
 
@@ -102,7 +139,18 @@ class OfficerPage extends Component {
   }
 
   render() {
-    const { loading, found, summary, pk, threeCornerPercentile, metrics, noDataCMSContent } = this.props;
+    const {
+      loading,
+      found,
+      summary,
+      requestOfficerId,
+      threeCornerPercentile,
+      metrics,
+      noDataCMSContent,
+      hasCoaccusal,
+      currentTab,
+      changeOfficerTab
+    } = this.props;
 
     if (loading) {
       return (
@@ -112,11 +160,11 @@ class OfficerPage extends Component {
 
     if (!found || !summary || !metrics) {
       return (
-        <NotMatchedOfficerPage id={ pk } />
+        <NotMatchedOfficerPage id={ requestOfficerId } />
       );
     }
 
-    const { name, demographic, badge, historicBadges, rank, unit, careerDuration } = summary;
+    const { id, name, demographic, badge, historicBadges, rank, unit, careerDuration } = summary;
     const { historicBadgesExpanded } = this.state;
 
 
@@ -124,7 +172,7 @@ class OfficerPage extends Component {
       <StickyContainer className={ style.officerSummary }>
         <Sticky><Header /></Sticky>
         <AnimatedRadarChart
-          officerId={ pk }
+          officerId={ id }
           percentileData={ threeCornerPercentile }
           noDataCMSContent={ noDataCMSContent }/>
         <h1 className='officer-name header' onClick={ scrollToTop() }>
@@ -157,7 +205,12 @@ class OfficerPage extends Component {
           <SectionRow label='Career' value={ careerDuration }/>
         </div>
         { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
-        <OfficerTimelineContainer officerId={ pk }/>
+        <TabbedPaneSection
+          changeOfficerTab={ changeOfficerTab }
+          currentTab={ currentTab }
+          hasCoaccusal={ hasCoaccusal }
+          officerId={ id }
+        />
         <BottomPadding />
       </StickyContainer>
     );
@@ -165,8 +218,7 @@ class OfficerPage extends Component {
 }
 
 OfficerPage.propTypes = {
-  pk: PropTypes.number,
-  pathName: PropTypes.string,
+  requestOfficerId: PropTypes.number,
   fetchOfficer: PropTypes.func.isRequired,
   requestCMS: PropTypes.func,
   loading: PropTypes.bool,
@@ -177,10 +229,23 @@ OfficerPage.propTypes = {
   threeCornerPercentile: PropTypes.array,
   noDataCMSContent: PropTypes.object,
   hasCMS: PropTypes.bool,
+  requestLandingPage: PropTypes.func,
+  location: PropTypes.object,
+  params: PropTypes.object,
+  pathName: PropTypes.string,
+  hasCoaccusal: PropTypes.bool,
+  currentTab: PropTypes.string,
+  changeOfficerTab: PropTypes.func,
+  getOfficerCoaccusals: PropTypes.func,
+  getOfficerTimeline: PropTypes.func,
+  isTimelineSuccess: PropTypes.bool,
+  isCoaccusalSuccess: PropTypes.bool,
 };
 
 OfficerPage.defaultProps = {
-  requestCMS: noop
+  requestCMS: noop,
+  location: {},
+  params: {}
 };
 
 export default OfficerPage;

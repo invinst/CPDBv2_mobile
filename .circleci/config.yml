@@ -6,51 +6,157 @@ jobs:
 
     steps:
       - checkout
-      - run: sudo npm install i -g yarn@1.7.0
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - v1-node-modules-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+            - v1-node-modules-{{ checksum "package.json" }}-
+            - v1-node-modules-
       - run:
-          name: Install Dependencies
-          command: yarn install
+          name: Install dependencies
+          command: |
+            sudo npm install i -g yarn@1.7.0
+            yarn install
 
       - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: v1-node-modules-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
           paths:
-            - /home/circleci/.cache/yarn/v1
+            - "/home/circleci/project/node_modules"
 
       - run: yarn run lint
       - run: yarn run ci-test
       - run: yarn run live-test
-  deploy:
+
+  build:
     docker:
-      - image: circleci/python:3.6.4
+      - image: circleci/node:8.11.3-browsers
 
     steps:
       - checkout
       - restore_cache:
           keys:
-            - pip-packages-{{ checksum "Pipfile.lock" }}
-
-      - run: pipenv install
-
-      - save_cache:
+            - v1-node-modules-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+            - v1-node-modules-{{ checksum "package.json" }}-
+            - v1-node-modules-
+      - run:
+          name: Install dependencies
+          command: |
+            sudo npm install i -g yarn@1.7.0
+            yarn install
+      - run:
+          name: Build assets
+          command: |
+            if [ $CIRCLE_BRANCH == "staging" ]
+            then
+              export WEBPACK_ENV=staging
+            fi && \
+            yarn dist
+      - persist_to_workspace:
+          root: .
           paths:
-            - ~/.local/share/virtualenvs
-          key: pip-packages-{{ checksum "Pipfile.lock" }}
+            - dist
 
-      - run: pipenv run ansible-playbook -i ansible/staging ansible/deploy.yml
+  test_nginx:
+    machine: true
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-node-modules-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+            - v1-node-modules-{{ checksum "package.json" }}-
+            - v1-node-modules-
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: cp -R /tmp/workspace/dist ./dist
+      - run:
+          name: Test nginx config
+          command: |
+            export DESKTOP_SERVER_NAME=staging.cpdp.co
+            sed -e "s/{{DESKTOP_SERVER_NAME}}/$DESKTOP_SERVER_NAME/" nginx.conf.template > nginx.conf
+            docker build -t cpdbdev/mobile-frontend:latest .
+            docker run --rm -d --name mobile-frontend cpdbdev/mobile-frontend:latest
+            docker run --rm -v $(pwd):/app -w /app --link mobile-frontend -e "MOBILE_DOMAIN=mobile-frontend" -e "DESKTOP_SERVER_NAME=$DESKTOP_SERVER_NAME" kkarczmarczyk/node-yarn:8.0-slim yarn test-nginx
+
+  push_image:
+    docker:
+      - image: docker:18.06.1-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: cp -R /tmp/workspace/dist ./dist
+      - run: echo "build-$CIRCLE_BUILD_NUM" > buildnum
+      - persist_to_workspace:
+          root: .
+          paths:
+            - buildnum
+      - run:
+          name: Build and push image
+          command: |
+            if [ $CIRCLE_BRANCH == "master" ]
+            then
+              export DESKTOP_SERVER_NAME=cpdp.co
+            else
+              export DESKTOP_SERVER_NAME=staging.cpdp.co
+            fi
+            sed -e "s/{{DESKTOP_SERVER_NAME}}/$DESKTOP_SERVER_NAME/" nginx.conf.template > nginx.conf
+            docker build -t cpdbdev/mobile-frontend:$(cat buildnum) .
+            docker login -u cpdbdev -p $DOCKER_PASSWORD
+            docker push cpdbdev/mobile-frontend:$(cat buildnum)
+
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    environment:
+      PROJECT_NAME: "CPDB"
+      GOOGLE_PROJECT_ID: "twitterbot-180604"
+      GOOGLE_COMPUTE_ZONE: "us-central1-a"
+      GOOGLE_CLUSTER_NAME: "cpdp-gke"
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Setup Google Cloud SDK
+          command: |
+            apt-get install -qq -y gettext
+            echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+            gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}
+      - run:
+          name: Apply deployment
+          command: |
+            if [ $CIRCLE_BRANCH == "master" ]
+            then
+              export NAMESPACE=production
+            else
+              export NAMESPACE=staging
+            fi
+            export IMAGE_TAG=$(cat /tmp/workspace/buildnum)
+            cat mobile-frontend.yml | envsubst | kubectl apply -f - --namespace=$NAMESPACE
 
 workflows:
   version: 2
   test_and_deploy:
     jobs:
       - test
-      - deploy:
+      - build:
           requires:
             - test
+      - test_nginx:
+          requires:
+            - build
+      - push_image:
+          requires:
+            - build
           filters:
             branches:
-              only: staging
+              only:
+                - staging
+                - master
+      - deploy:
+          requires:
+            - push_image
