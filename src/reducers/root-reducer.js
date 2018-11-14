@@ -7,6 +7,7 @@ import landingPage from './landing-page';
 import complaintPage from './complaint-page';
 import trrPage from './trr-page';
 import breadcrumbMapping from './breadcrumb-mapping';
+import embed from './embed';
 
 
 export default combineReducers({
@@ -16,5 +17,6 @@ export default combineReducers({
   officerPage,
   landingPage,
   complaintPage,
-  trrPage
+  trrPage,
+  embed
 });

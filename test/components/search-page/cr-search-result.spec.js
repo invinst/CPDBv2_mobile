@@ -19,6 +19,7 @@ describe('<CRSearchResult />', () => {
       <CRSearchResult
         items={ crs }
         saveToRecent={ () => {} }
+        categoryFilter='CR'
       />
     );
 
@@ -38,6 +39,7 @@ describe('<CRSearchResult />', () => {
       <CRSearchResult
         items={ crs }
         saveToRecent={ saveToRecentSpy }
+        categoryFilter='CR'
       />
     );
 

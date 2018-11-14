@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { isEmpty } from 'lodash';
 
 import CMSContent from './cms-content';
-import HorizontalScrolling from './horizontal-scrolling';
-import OfficerCard from './officer-card';
+import HorizontalScrolling from 'components/common/horizontal-scrolling';
+import OfficerCard from 'components/common/officer-card';
 import style from './recent-activities.sass';
 import constants from 'constants';
 

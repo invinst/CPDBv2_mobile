@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import navigationArrow from 'img/disclosure-indicator.svg';
 import style from './officer.sass';
 import RadarChart from 'components/common/radar-chart';
+import { officerUrl } from 'utils/url-util';
 
 
 class Officer extends Component {
@@ -23,7 +24,7 @@ class Officer extends Component {
       <div className={ style.trrOfficer }>
         <Link
           className='officer-row'
-          to={ `/officer/${officerId}/` }
+          to={ officerUrl(officerId, fullName) }
         >
           <div className='officer-visual-token'>
             <RadarChart { ...visualTokenConfig }/>

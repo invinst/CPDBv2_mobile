@@ -18,7 +18,7 @@ const CoaccusedCard = ({ officer }) => {
   const { percentile } = officer;
 
   return (
-    <Link className={ style.coaccusedCard } to={ officerUrl(officer.id) }>
+    <Link className={ style.coaccusedCard } to={ officerUrl(officer.id, officer.fullName) }>
       <div className='radar-chart'>
         <RadarChart
           radius={ 150 }

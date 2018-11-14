@@ -18,7 +18,7 @@ const PoliceWitness = ({ policeWitnesses=[] }) => {
       {
         policeWitnesses.map((policeWitness, idx) => (
           <Link
-            to={ officerUrl(policeWitness['officer_id']) }
+            to={ officerUrl(policeWitness['officer_id'], policeWitness['full_name']) }
             className='police-witness-row'
             key={ idx }
           >

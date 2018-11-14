@@ -9,12 +9,12 @@ import MainPageContainer from 'containers/main-page-container';
 import AboutPageContainer from 'containers/about-page-container';
 import SearchPageContainer from 'containers/search-page-container';
 import OfficerPageContainer from 'containers/officer-page-container';
-import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
 import ComplaintPageContainer from 'containers/complaint-page-container';
 import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
 import BreadcrumbItemContainer from 'containers/breadcrumb-container';
 import TopOfficersByAllegationContainer from 'containers/landing-page/top-officers-by-allegation';
+import OfficersContainer from 'containers/embed/officers';
 
 import 'swiper/dist/css/swiper.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -75,7 +75,12 @@ const App = React.createClass({
         </Route>
         <Route
           path={ constants.EMBED_TOP_OFFICER_PATH }
-          component={ TopOfficersByAllegationContainer } />
+          component={ TopOfficersByAllegationContainer }
+        />
+        <Route
+          path={ constants.EMBED_OFFICERS_PATH }
+          component={ OfficersContainer }
+        />
 
         <Redirect from='*' to='/'/>
       </Router>
