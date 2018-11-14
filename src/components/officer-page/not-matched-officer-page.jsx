@@ -15,7 +15,7 @@ const NotMatchedOfficerPage = React.createClass({
           Sorry!
         </h3>
         <div className='message-content'>
-          <span className='officer-id'>{ id }</span> is not in our database.
+          <span className='officer-id'>{ id || 'Officer' }</span> is not in our database.
         </div>
       </div>
     );
