@@ -26,7 +26,7 @@ export default class AttachmentsTab extends Component {
 }
 
 AttachmentsTab.defaultProps = {
-  complaints: () => {},
+  complaints: [],
 };
 
 AttachmentsTab.propTypes = {

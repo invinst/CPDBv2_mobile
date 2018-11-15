@@ -5,10 +5,6 @@ import style from './complaint.sass';
 
 
 export default class Complaint extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { complaint } = this.props;
     return (
