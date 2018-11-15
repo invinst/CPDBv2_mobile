@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import { isNaN } from 'lodash';
+
 import OfficerPage from 'components/officer-page';
 import { fetchOfficer, requestCMS } from 'actions/officer-page';
 import {
@@ -17,7 +19,9 @@ import { hasAttachmentSelector } from 'selectors/officer-page/attachments';
 
 
 function mapStateToProps(state, ownProps) {
-  const pk = Number.parseInt(ownProps.params.id);
+  const parsedId = Number.parseInt(ownProps.params.id);
+  const pk = isNaN(parsedId) ? null : parsedId;
+
   const props = {
     ...ownProps,
     params: {

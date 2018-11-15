@@ -42,7 +42,13 @@ http {
             alias /usr/share/nginx/html/;
         }
 
+        location /embed/officers {
+            alias /usr/share/nginx/html/;
+        }
+
         location ~* ^/assets/ {
+            expires 1h;
+            add_header Cache-Control "public";
             try_files $uri /index.html;
         }
 

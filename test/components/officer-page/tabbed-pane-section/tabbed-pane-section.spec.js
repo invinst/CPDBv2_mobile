@@ -67,7 +67,7 @@ describe('TabbedPaneSection component', function () {
   it('should render coaccusals tab', function () {
     const wrapper = mount(
       <Provider store={ store }>
-        <TabbedPaneSection currentTab={ OFFICER_PAGE_TAB_NAMES.COACCUSALS }/>
+        <TabbedPaneSection currentTab={ OFFICER_PAGE_TAB_NAMES.COACCUSALS } hasCoaccusal={ true } />
       </Provider>
     );
 
