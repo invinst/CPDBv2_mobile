@@ -114,8 +114,6 @@ describe('<OfficerPage />', function () {
         loading={ false }
         found={ true }
         fetchOfficer={ spyfetchOfficer }
-        getOfficerCoaccusals={ noop }
-        getOfficerTimeline={ noop }
       />
     );
 
