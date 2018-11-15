@@ -49,7 +49,7 @@ Img.defaultProps = {
 
 Img.propTypes = {
   src: PropTypes.string,
-  fallback: PropTypes.string
+  fallback: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 };
 
 export default Img;

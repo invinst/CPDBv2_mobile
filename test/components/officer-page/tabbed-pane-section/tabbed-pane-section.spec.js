@@ -8,14 +8,15 @@ import { OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import Timeline from 'components/officer-page/tabbed-pane-section/timeline';
 import Coaccusals from 'components/officer-page/tabbed-pane-section/coaccusals';
+import AttachmentsTab from 'components/officer-page/tabbed-pane-section/attachments-tab';
 
 
 describe('TabbedPaneSection component', function () {
   const mockStore = MockStore();
   const store = mockStore({
     officerPage: {
-      timeline: {},
-      coaccusals: [],
+      timeline: { data: {} },
+      coaccusals: { data: {} },
     },
     popups: [],
   });
@@ -54,13 +55,13 @@ describe('TabbedPaneSection component', function () {
   });
 
   it('should render timeline tab', function () {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Provider store={ store }>
         <TabbedPaneSection currentTab={ OFFICER_PAGE_TAB_NAMES.TIMELINE }/>
       </Provider>
     );
 
-    wrapper.find(Timeline).should.be.ok();
+    wrapper.find(Timeline).exists().should.be.true();
   });
 
   it('should render coaccusals tab', function () {
@@ -70,7 +71,17 @@ describe('TabbedPaneSection component', function () {
       </Provider>
     );
 
-    wrapper.find(Coaccusals).should.be.ok();
+    wrapper.find(Coaccusals).exists().should.be.true();
+  });
+
+  it('should render attachments tab', function () {
+    const wrapper = mount(
+      <Provider store={ store }>
+        <TabbedPaneSection currentTab={ OFFICER_PAGE_TAB_NAMES.ATTACHMENTS }/>
+      </Provider>
+    );
+
+    wrapper.find(AttachmentsTab).exists().should.be.true();
   });
 
   it('should call changeOfficerTab when clicking tab name', function () {

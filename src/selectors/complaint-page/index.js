@@ -48,7 +48,7 @@ const sortByOfficerInBreadcrumb = breadcrumbs => officer => {
 };
 
 const sortByOfficerFinding = officer => {
-  return officer.finding === 'Sustained' ? 0 : 1;
+  return officer.finalFinding === 'Sustained' ? 0 : 1;
 };
 
 const sortByOfficerComplaint = officer => -officer.allegationCount;

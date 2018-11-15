@@ -34,9 +34,7 @@ describe('MainPageTest', function () {
   });
 
   afterEach(function (client, done) {
-    client.end(function () {
-      done();
-    });
+    done();
   });
 
   it('should show homepage with logo and navigation links', function (client) {

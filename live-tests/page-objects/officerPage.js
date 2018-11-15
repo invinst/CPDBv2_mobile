@@ -98,12 +98,21 @@ const nthRankChangeSection = (n) => ({
 });
 
 module.exports = {
-  url: function (id) {
-    return `${this.api.globals.clientUrl}/officer/${id}/`;
+  url: function (id, tab = '') {
+    const tabSuffix = tab ? `${tab}/` : '';
+    return `${this.api.globals.clientUrl}/officer/${id}/${tabSuffix}`;
   },
 
   elements: {
     officerName: '.officer-name',
+    coaccusalsTabButton: {
+      selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[2]',
+      locateStrategy: 'xpath',
+    },
+    attachmentsTabButton: {
+      selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[3]',
+      locateStrategy: 'xpath',
+    },
   },
 
   sections: {
@@ -202,14 +211,30 @@ module.exports = {
         secondRankChangeItem: nthRankChangeSection(2),
       }
     },
-    coaccusalsTab: {
-      selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[2]',
-      locateStrategy: 'xpath',
-    },
     coaccusals: {
       selector: '.test--officer-coaccusals',
       elements: {
         firstCoaccusalCard: '.test--officer-card',
+      },
+    },
+    attachments: {
+      selector: '//div[contains(@class, "attachments-tab__officer-attachments-tab")]',
+      locateStrategy: 'xpath',
+      sections: {
+        firstComplaint: {
+          selector: '//div[contains(@class, "complaint__officer-attachments-tab-complaint")]',
+          locateStrategy: 'xpath',
+          elements: {
+            firstAttachment: {
+              selector: '//a[contains(@class, "attachment__officer-attachments-tab-complaint-attachment")]',
+              locateStrategy: 'xpath',
+            },
+            heading: {
+              selector: '//a[contains(@class, "heading__officer-attachments-tab-complaint-heading")]',
+              locateStrategy: 'xpath',
+            }
+          }
+        },
       },
     },
   }

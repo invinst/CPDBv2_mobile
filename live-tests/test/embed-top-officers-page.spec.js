@@ -2,7 +2,6 @@
 
 var assert = require('assert');
 var api = require(__dirname + '/../mock-api');
-var utils = require(__dirname + '/../utils');
 const { TIMEOUT } = require(__dirname + '/../constants');
 
 const mockLandingPageCms = {
@@ -96,10 +95,7 @@ describe('EmbedTopOfficerPage', function () {
   });
 
   afterEach(function (client, done) {
-    client.end(function () {
-
-      done();
-    });
+    done();
   });
 
   it('should show officer cards', function (client) {
@@ -111,7 +107,7 @@ describe('EmbedTopOfficerPage', function () {
 
   it('should go to officer summary page when click to card', function (client) {
     this.embedTopOfficersPage.click('@firstCard');
-    utils.switchToRecentTab(client);
+    client.switchToRecentTab();
     this.embedTopOfficersPage.assert.urlContains('/officer/13788/broderick-jones/');
   });
 });
