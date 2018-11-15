@@ -1,0 +1,40 @@
+@import 'variables'
+
+:local(.officer-attachments-tab-complaint-attachment)
+  background-color: inherit
+  height: 132px
+  width: 120px
+  display: flex
+  flex-flow: column
+  text-align: center
+  padding-top: 14px
+  vertical-align: bottom
+  overflow: hidden
+  text-decoration: none
+  justify-content: flex-start
+  align-items: center
+
+  .attachment-thumbnail-wrapper
+    border: solid 1px $alto-solid
+    height: 60px
+    width: 45px
+    display: flex
+    justify-content: center
+    margin-bottom: 8px
+
+    .attachment-thumbnail
+      width: 100%
+
+      &.audio, &.video
+        width: 30%
+
+  .attachment-title
+    color: $gandalf-gray
+    width: 104px
+    height: 36px
+    font-weight: 400
+    font-size: 14px
+    line-height: 18px
+
+    .clamp-lines__button
+      display: none

@@ -4,7 +4,6 @@ import timeline from './timeline';
 import officers from './officers';
 import cms from './cms';
 import coaccusals from './coaccusals';
-import currentTab from './currentTab';
 
 
 export default combineReducers({
@@ -12,5 +11,4 @@ export default combineReducers({
   officers,
   cms,
   coaccusals,
-  currentTab,
 });

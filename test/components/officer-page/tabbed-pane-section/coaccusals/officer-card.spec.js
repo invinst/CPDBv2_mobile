@@ -28,7 +28,7 @@ describe('CoaccusalCard', () => {
   it('should render footer correctly', () => {
     const wrapper = mount(<OfficerCard { ...officer } />);
 
-    const baseCard = wrapper.find(BaseOfficerCard)
+    const baseCard = wrapper.find(BaseOfficerCard);
     const link = baseCard.find(Link);
 
     link.find('.coaccusal-count').text().should.equal('11 Coaccusals');

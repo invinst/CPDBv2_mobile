@@ -52,7 +52,7 @@ latest chromedriver. If on mac:
 ```bash
 brew update
 brew cask install java
-brew install chromedriver  # or `brew upgrade chromedriver`
+brew cask install chromedriver  # or `brew cask upgrade chromedriver`
 ```
 
 (we're using Chrome 59 with chromedriver 2.31 at the time of writing)

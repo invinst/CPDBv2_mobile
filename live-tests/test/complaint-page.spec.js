@@ -96,9 +96,7 @@ describe('ComplaintPageTest', function () {
   });
 
   afterEach(function (client, done) {
-    client.end(function () {
-      done();
-    });
+    done();
   });
 
   it('should show proper header with CR title', function (client) {

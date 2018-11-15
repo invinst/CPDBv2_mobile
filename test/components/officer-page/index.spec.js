@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { mount, shallow } from 'enzyme';
 import { spy, stub } from 'sinon';
-import { cloneDeep, noop } from 'lodash';
+import { cloneDeep } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
 
@@ -15,6 +15,7 @@ import NotMatchedOfficerPage from 'components/officer-page/not-matched-officer-p
 import SectionRow from 'components/officer-page/section-row';
 import MetricWidget from 'components/officer-page/metric-widget';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
+import { OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
 
 
 const mockStore = configureStore();
@@ -62,8 +63,7 @@ describe('<OfficerPage />', function () {
       <OfficerPage
         loading={ false }
         found={ false }
-        getOfficerSummary={ noop }
-        />
+      />
     );
     wrapper.find(NotMatchedOfficerPage).should.have.length(1);
   });
@@ -74,7 +74,6 @@ describe('<OfficerPage />', function () {
       <OfficerPage
         loading={ false }
         found={ false }
-        getOfficerSummary={ noop }
         pushBreadcrumbs={ pushBreadcrumbSpy }
       />
     );
@@ -99,13 +98,11 @@ describe('<OfficerPage />', function () {
         found={ true }
         fetchOfficer={ spyfetchOfficer }
         summary={ this.summary }
-        getOfficerTimeline={ noop }
-        getOfficerCoaccusals={ noop }
       />
     );
 
     wrapper.instance().componentDidMount();
-    spyfetchOfficer.called.should.be.false();
+    spyfetchOfficer.should.not.be.called();
   });
 
   it('should not fetch officer data if officer id is empty', function () {
@@ -117,8 +114,6 @@ describe('<OfficerPage />', function () {
         loading={ false }
         found={ true }
         fetchOfficer={ spyfetchOfficer }
-        getOfficerCoaccusals={ noop }
-        getOfficerTimeline={ noop }
       />
     );
 
@@ -136,8 +131,6 @@ describe('<OfficerPage />', function () {
         found={ false }
         fetchOfficer={ spyfetchOfficer }
         summary={ null }
-        getOfficerCoaccusals={ noop }
-        getOfficerTimeline={ noop }
       />
     );
 
@@ -145,51 +138,165 @@ describe('<OfficerPage />', function () {
     spyfetchOfficer.calledWith(123).should.be.true();
   });
 
-  it('should replace with correct pathname', function () {
-    spy(window.history, 'replaceState');
+  describe('Path name', function () {
+    beforeEach(function () {
+      spy(window.history, 'replaceState');
+    });
 
-    const wrapper = shallow(
-      <OfficerPage
-        requestOfficerId={ 123 }
-        loading={ false }
-        found={ true }
-        fetchOfficer={ noop }
-        metrics={ this.metrics }
-      />
-    );
+    afterEach(function () {
+      window.history.replaceState.restore();
+    });
 
-    wrapper.setProps({ summary: null });
-    window.history.replaceState.called.should.be.false();
-    window.history.replaceState.resetHistory();
+    it('should be replaced with correct one', function () {
+      const wrapper = shallow(
+        <OfficerPage
+          requestOfficerId={ 123 }
+          loading={ false }
+          found={ true }
+          metrics={ this.metrics }
+        />,
+        { lifecycleExperimental: true }
+      );
 
-    wrapper.setProps({ summary: this.summary });
+      wrapper.setProps({ summary: null });
+      window.history.replaceState.should.not.be.called();
+      window.history.replaceState.resetHistory();
 
-    window.history.replaceState.called.should.be.true();
-    const args = window.history.replaceState.getCall(0).args;
-    args[2].should.equal('/officer/123/officer-11/');
+      wrapper.setProps({ summary: this.summary });
 
-    window.history.replaceState.restore();
-  });
+      window.history.replaceState.should.be.called();
+      const args = window.history.replaceState.getCall(0).args;
+      args[2].should.equal('/officer/123/officer-11/');
+    });
 
-  it('should replace with correct pathname if there is officer alias', function () {
-    spy(window.history, 'replaceState');
+    it('should be corrected if there is officer alias', function () {
+      const wrapper = shallow(
+        <OfficerPage
+          requestOfficerId={ 456 }
+          loading={ false }
+          found={ true }
+        />,
+        { lifecycleExperimental: true }
+      );
 
-    const wrapper = shallow(
-      <OfficerPage
-        requestOfficerId={ 456 }
-        loading={ false }
-        found={ true }
-        fetchOfficer={ noop }
-      />
-    );
+      wrapper.setProps({ summary: this.summary, });
 
-    wrapper.setProps({ summary: this.summary, });
+      window.history.replaceState.should.be.called();
+      const args = window.history.replaceState.getCall(0).args;
+      args[2].should.equal('/officer/123/officer-11/');
+    });
 
-    window.history.replaceState.called.should.be.true();
-    const args = window.history.replaceState.getCall(0).args;
-    args[2].should.equal('/officer/123/officer-11/');
+    it('should be corrected in case secondParam is a valid tab name', function () {
+      const wrapper = shallow(
+        <OfficerPage
+          requestOfficerId={ 123 }
+          loading={ false }
+          found={ true }
+          metrics={ this.metrics }
+          params={ { firstParam: '3213', secondParam: 'documents' } }
+        />,
+        { lifecycleExperimental: true }
+      );
+      wrapper.setProps({ summary: this.summary, });
 
-    window.history.replaceState.restore();
+      const tabbedPaneSection = wrapper.find(TabbedPaneSection);
+      tabbedPaneSection.prop('currentTab').should.eql(OFFICER_PAGE_TAB_NAMES.ATTACHMENTS);
+
+      window.history.replaceState.should.be.called();
+      const args = window.history.replaceState.getCall(0).args;
+      args[2].should.equal('/officer/123/officer-11/documents/');
+    });
+
+    it('should be corrected in case secondParam is an invalid tab name', function () {
+      const wrapper = shallow(
+        <OfficerPage
+          requestOfficerId={ 123 }
+          loading={ false }
+          found={ true }
+          metrics={ this.metrics }
+          params={ { firstParam: '', secondParam: 'document' } }
+        />,
+        { lifecycleExperimental: true }
+      );
+      wrapper.setProps({ summary: this.summary, });
+
+      const tabbedPaneSection = wrapper.find(TabbedPaneSection);
+      tabbedPaneSection.prop('currentTab').should.eql(OFFICER_PAGE_TAB_NAMES.TIMELINE);
+
+      window.history.replaceState.should.be.called();
+      const args = window.history.replaceState.getCall(0).args;
+      args[2].should.equal('/officer/123/officer-11/');
+    });
+
+    it('should be corrected in case firstParam is a valid tab name', function () {
+      const wrapper = shallow(
+        <OfficerPage
+          requestOfficerId={ 123 }
+          loading={ false }
+          found={ true }
+          metrics={ this.metrics }
+          params={ { firstParam: 'documents', secondParam: '' } }
+        />,
+        { lifecycleExperimental: true }
+      );
+      wrapper.setProps({ summary: this.summary, });
+
+      const tabbedPaneSection = wrapper.find(TabbedPaneSection);
+      tabbedPaneSection.prop('currentTab').should.eql(OFFICER_PAGE_TAB_NAMES.ATTACHMENTS);
+
+      window.history.replaceState.should.be.called();
+      const args = window.history.replaceState.getCall(0).args;
+      args[2].should.equal('/officer/123/officer-11/documents/');
+    });
+
+    it('should be corrected in case firstParam is an invalid tab name', function () {
+      const wrapper = shallow(
+        <OfficerPage
+          requestOfficerId={ 123 }
+          loading={ false }
+          found={ true }
+          metrics={ this.metrics }
+          params={ { firstParam: 'document', secondParam: '' } }
+        />,
+        { lifecycleExperimental: true }
+      );
+      wrapper.setProps({ summary: this.summary, });
+
+      const tabbedPaneSection = wrapper.find(TabbedPaneSection);
+      tabbedPaneSection.prop('currentTab').should.eql(OFFICER_PAGE_TAB_NAMES.TIMELINE);
+
+      window.history.replaceState.should.be.called();
+      const args = window.history.replaceState.getCall(0).args;
+      args[2].should.equal('/officer/123/officer-11/');
+    });
+
+    it('should be changed when tab is changed', function () {
+      const wrapper = shallow(
+        <OfficerPage
+          requestOfficerId={ 123 }
+          loading={ false }
+          found={ true }
+          metrics={ this.metrics }
+          params={ { firstParam: 'document', secondParam: '' } }
+        />,
+        { lifecycleExperimental: true }
+      );
+      wrapper.setProps({ summary: this.summary, });
+
+      const tabbedPaneSection = wrapper.find(TabbedPaneSection);
+      tabbedPaneSection.prop('currentTab').should.eql(OFFICER_PAGE_TAB_NAMES.TIMELINE);
+
+      window.history.replaceState.should.be.called();
+      window.history.replaceState.getCall(0).args[2].should.equal('/officer/123/officer-11/');
+
+      window.history.replaceState.resetHistory();
+
+      const instance = wrapper.instance();
+      instance.changeTab(OFFICER_PAGE_TAB_NAMES.COACCUSALS);
+
+      window.history.replaceState.should.be.called();
+      window.history.replaceState.getCall(0).args[2].should.equal('/officer/123/officer-11/coaccusals/');
+    });
   });
 
   it('should render Header', function () {
@@ -197,7 +304,6 @@ describe('<OfficerPage />', function () {
       <OfficerPage
         loading={ false }
         found={ true }
-        fetchOfficer={ noop }
         summary={ this.summary }
         metrics={ this.metrics }
       />
@@ -211,7 +317,6 @@ describe('<OfficerPage />', function () {
       <OfficerPage
         loading={ false }
         found={ true }
-        fetchOfficer={ noop }
         summary={ this.summary }
         metrics={ this.metrics }
       />
@@ -244,10 +349,10 @@ describe('<OfficerPage />', function () {
     const coaccusals = {
       data: {
         11: [{
-          officerId: 123,
-          fullName: 'Edward May',
-          rank: 'Detective',
-          coaccusalCount: 4,
+          'id': 123,
+          'full_name': 'Edward May',
+          'rank': 'Detective',
+          'coaccusal_count': 4,
         }]
       },
       isSuccess: {
@@ -398,7 +503,7 @@ describe('<OfficerPage />', function () {
         </Provider>
       );
 
-      wrapper.find('.officer-name').text().should.equal('Kenneth Wojtan');
+      wrapper.find('.officer-name.header').text().should.equal('Kenneth Wojtan');
       wrapper.find('.officer-demographic').text().should.equal('60 years old, white, male.');
 
       const rows = wrapper.find(SectionRow);
@@ -662,10 +767,14 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } } />
+          <OfficerPageContainer params={ { id: 11, firstParam: 'coaccusals' } } />
         </Provider>
       );
-      wrapper.find(TabbedPaneSection).exists().should.be.true();
+      const tabbedPaneSection = wrapper.find(TabbedPaneSection);
+      tabbedPaneSection.prop('officerId').should.equal(11);
+      tabbedPaneSection.prop('currentTab').should.equal('COACCUSALS');
+      tabbedPaneSection.prop('hasCoaccusal').should.equal(true);
+      tabbedPaneSection.prop('hasAttachment').should.equal(false);
     });
 
     it('should get officer timeline and officer coaccusals after the component is mounted', function () {
@@ -677,7 +786,6 @@ describe('<OfficerPage />', function () {
           requestOfficerId={ 123 }
           loading={ false }
           found={ false }
-          fetchOfficer={ noop }
           summary={ null }
           isTimelineSuccess={ false }
           isCoaccusalSuccess={ false }
@@ -703,7 +811,6 @@ describe('<OfficerPage />', function () {
           requestOfficerId={ 456 }
           loading={ false }
           found={ false }
-          fetchOfficer={ noop }
           summary={ null }
           isTimelineSuccess={ false }
           isCoaccusalSuccess={ false }

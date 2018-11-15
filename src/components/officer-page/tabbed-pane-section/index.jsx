@@ -4,6 +4,7 @@ import cx from 'classnames';
 
 import OfficerTimelineContainer from 'containers/officer-page/officer-timeline-container';
 import CoaccusalsContainer from 'containers/officer-page/coaccusals-container';
+import OfficerAttachmentsTabContainer from 'containers/officer-page/officer-attachments-container';
 import { OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
 import style from './tabbed-pane-section.sass';
 
@@ -14,6 +15,7 @@ export default class TabbedPaneSection extends Component {
       currentTab,
       changeOfficerTab,
       hasCoaccusal,
+      hasAttachment,
       officerId
     } = this.props;
     const tabbedPaneMap = {
@@ -24,6 +26,10 @@ export default class TabbedPaneSection extends Component {
       [OFFICER_PAGE_TAB_NAMES.COACCUSALS]: {
         component: CoaccusalsContainer,
         show: hasCoaccusal,
+      },
+      [OFFICER_PAGE_TAB_NAMES.ATTACHMENTS]: {
+        component: OfficerAttachmentsTabContainer,
+        show: hasAttachment,
       },
     };
     const CurrentComponent = get(tabbedPaneMap, `${currentTab}.component`, null);
@@ -54,5 +60,6 @@ TabbedPaneSection.propTypes = {
   officerId: PropTypes.number,
   currentTab: PropTypes.string,
   changeOfficerTab: PropTypes.func,
-  hasCoaccusal: PropTypes.bool
+  hasCoaccusal: PropTypes.bool,
+  hasAttachment: PropTypes.bool
 };

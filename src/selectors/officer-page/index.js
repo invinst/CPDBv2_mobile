@@ -9,8 +9,6 @@ const getOfficer = (state, props) => (
   state.officerPage.officers.data[props.params.id] || null
 );
 
-export const getCurrentTab = state => state.officerPage.currentTab;
-
 export const officerYearlyPercentileSelector = createSelector(
   [getOfficer],
   (officer) => compact(map(get(officer, 'percentiles', []), extractPercentile))

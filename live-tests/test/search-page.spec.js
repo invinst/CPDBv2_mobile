@@ -83,9 +83,7 @@ describe('SearchPageTest', function () {
 
   afterEach(function (client, done) {
     api.cleanMock();
-    client.end(function () {
-      done();
-    });
+    done();
   });
 
   it('should show search page with suggested items', function () {

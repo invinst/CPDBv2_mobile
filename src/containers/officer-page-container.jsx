@@ -4,18 +4,18 @@ import { withRouter } from 'react-router';
 import { isNaN } from 'lodash';
 
 import OfficerPage from 'components/officer-page';
-import { fetchOfficer, requestCMS, changeOfficerTab } from 'actions/officer-page';
+import { fetchOfficer, requestCMS } from 'actions/officer-page';
 import {
   officerSummarySelector,
   officerMetricsSelector,
   officerYearlyPercentileSelector,
-  getCurrentTab,
 } from 'selectors/officer-page';
 import { cmsSelector, hasCMS } from 'selectors/common/cms';
 import { hasCoaccusalSelector, isCoaccusalSuccess } from 'selectors/officer-page/coaccusals';
 import { isTimelineSuccess } from 'selectors/officer-page/timeline';
 import { getOfficerTimeline } from 'actions/officer-page/timeline';
 import { getOfficerCoaccusals } from 'actions/officer-page/coaccusals';
+import { hasAttachmentSelector } from 'selectors/officer-page/attachments';
 
 
 function mapStateToProps(state, ownProps) {
@@ -41,7 +41,7 @@ function mapStateToProps(state, ownProps) {
     hasCMS: hasCMS(state, 'officerPage'),
     noDataCMSContent: cmsSelector(state, 'officerPage', 'no_data_explain_text'),
     hasCoaccusal: hasCoaccusalSelector(state, pk),
-    currentTab: getCurrentTab(state),
+    hasAttachment: hasAttachmentSelector(state, pk),
     isCoaccusalSuccess: isCoaccusalSuccess(state, pk),
     isTimelineSuccess: isTimelineSuccess(state, pk),
   };
@@ -50,7 +50,6 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = {
   requestCMS,
   fetchOfficer,
-  changeOfficerTab,
   getOfficerTimeline,
   getOfficerCoaccusals
 };
