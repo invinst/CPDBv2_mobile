@@ -21,7 +21,7 @@ describe('MainPage component', function () {
     );
     wrapper.instance().componentDidMount();
 
-    spyRouteChanged.calledWith('dummy/').should.be.true();
+    spyRouteChanged.calledWith({ from: '', to: 'dummy/' }).should.be.true();
   });
 
   it('should not render bottom padding element if not at root', function () {
@@ -60,7 +60,7 @@ describe('MainPage component', function () {
     );
 
     wrapper.instance().componentDidUpdate(prevProps);
-    spyRouteChanged.calledWith('current-url/').should.be.true();
+    spyRouteChanged.calledWith({ from: 'prev-url/', to: 'current-url/'}).should.be.true();
   });
 
   it('should not dispatch routeChaged action if location has not changed', function () {

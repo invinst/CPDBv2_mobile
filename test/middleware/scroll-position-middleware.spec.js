@@ -1,17 +1,15 @@
-import should from 'should';
-import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
 import { stub } from 'sinon';
 
+import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
 import * as NavigationUtil from 'utils/navigation-util';
+
 
 describe('scrollPositionMiddleware', function () {
   beforeEach(function () {
     this.stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
-    this.stubInstantScrollTo = stub(NavigationUtil, 'instantScrollTo');
   });
 
   afterEach(function () {
-    this.stubInstantScrollTo.restore();
     this.stubInstantScrollToTop.restore();
   });
 
@@ -26,18 +24,32 @@ describe('scrollPositionMiddleware', function () {
 
     next.calledWith(action).should.be.true();
     result.should.be.eql(store);
-    this.stubInstantScrollTo.called.should.be.false();
     this.stubInstantScrollToTop.called.should.be.false();
   });
 
   it('should scroll to top if route changed', function () {
     const store = {};
     const next = stub();
-    const action = { type: 'ROUTE_CHANGED', payload: 'search/' };
+    const action = { type: 'ROUTE_CHANGED', payload: { from: '/', to: 'search/'} };
 
     scrollPositionMiddleware(store)(next)(action);
 
-    this.stubInstantScrollTo.called.should.be.false();
     this.stubInstantScrollToTop.called.should.be.true();
+  });
+
+  it('should not scroll to top if changed officer tab', function () {
+    const store = {};
+    const next = stub();
+    const action = {
+      type: 'ROUTE_CHANGED',
+      payload: {
+        from: 'officer/123/jerome-finnigan/',
+        to: 'officer/123/jerome-finnigan/coaccusals/'
+      }
+    };
+
+    scrollPositionMiddleware(store)(next)(action);
+
+    this.stubInstantScrollToTop.called.should.be.false();
   });
 });
