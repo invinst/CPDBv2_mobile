@@ -46,6 +46,7 @@ describe('nginx config', () => {
     preventIframe('/cr/123/'),
     preventIframe('/trr/123/'),
     allowIframe('/embed/top-officers-page/'),
+    allowIframe('/embed/officers/'),
     allowIframe('/assets/favicon.ico'),
     desktopRedirect('/'),
     desktopRedirect('/officer/123/jerome-finnigan'),
