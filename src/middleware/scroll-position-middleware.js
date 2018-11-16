@@ -10,7 +10,7 @@ if ('scrollRestoration' in window.history) {
 }
 
 function getPathSegments(pathname, limit) {
-  return compact(pathname.split('/')).slice(0, limit)
+  return compact(pathname.split('/')).slice(0, limit);
 }
 
 const scrollPositionMiddleware = store => next => action => {
