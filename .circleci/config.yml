@@ -162,3 +162,8 @@ workflows:
           requires:
             - push_image
             - test_nginx
+          filters:
+            branches:
+              only:
+                - staging
+                - master
