@@ -16,6 +16,7 @@ jobs:
           name: Install dependencies
           command: |
             sudo npm install i -g yarn@1.7.0
+            sudo chown circleci /usr/local/bin/yarn
             yarn install
 
       - save_cache:
