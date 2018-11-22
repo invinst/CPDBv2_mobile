@@ -19,6 +19,7 @@ import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
 import { officerUrl } from 'utils/url-util';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import { TAB_MAP, OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
+import AppHistory from 'utils/history';
 
 
 class OfficerPage extends Component {
@@ -45,14 +46,14 @@ class OfficerPage extends Component {
       this._fetchData();
     }
 
-    const { pathName, summary } = this.props;
+    const { summary, location } = this.props;
     if (!summary) {
       return;
     }
     const name = summary.name;
     const correctPathName = officerUrl(summary.id, name, this.state.currentTab);
-    if (name && pathName !== correctPathName) {
-      window.history.replaceState(window.history.state, document.title, correctPathName);
+    if (name && ('/' + location.pathname) !== correctPathName) {
+      AppHistory.replace(correctPathName);
     }
   }
 
@@ -239,7 +240,6 @@ OfficerPage.propTypes = {
   requestLandingPage: PropTypes.func,
   location: PropTypes.object,
   params: PropTypes.object,
-  pathName: PropTypes.string,
   hasCoaccusal: PropTypes.bool,
   hasAttachment: PropTypes.bool,
   getOfficerCoaccusals: PropTypes.func,
