@@ -56,6 +56,7 @@ const App = React.createClass({
           </Route>
 
           <Route
+            breadcrumbKey={ `${constants.OFFICER_PATH}:id` }
             path={ `${constants.OFFICER_PATH}:id(/:firstParam)(/:secondParam)` }
             breadcrumb={ BreadcrumbItemContainer }
             component={ OfficerPageContainer }> >
