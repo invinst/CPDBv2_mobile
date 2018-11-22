@@ -16,6 +16,7 @@ jobs:
           name: Install dependencies
           command: |
             sudo npm install i -g yarn@1.7.0
+            sudo chown circleci /usr/local/bin/yarn
             yarn install
 
       - save_cache:
@@ -139,6 +140,14 @@ jobs:
             export IMAGE_TAG=$(cat /tmp/workspace/buildnum)
             cat mobile-frontend.yml | envsubst | kubectl apply -f - --namespace=$NAMESPACE
 
+  notfiy_slack:
+    docker:
+      - image: alpine/git:latest
+    steps:
+      - checkout
+      - run: bin/notfiy_slack.sh
+
+
 workflows:
   version: 2
   test_and_deploy:
@@ -161,3 +170,9 @@ workflows:
       - deploy:
           requires:
             - push_image
+      - notfiy_slack:
+          requires:
+            - deploy
+          filters:
+            branches:
+              only: master
