@@ -75,7 +75,11 @@ class OfficerPage extends Component {
       isTimelineSuccess
     } = this.props;
 
-    if (!summary && requestOfficerId) {
+    if (!requestOfficerId) {
+      return;
+    }
+
+    if (!summary) {
       fetchOfficer(requestOfficerId);
     }
     hasCMS || requestCMS();
