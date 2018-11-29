@@ -107,6 +107,8 @@ describe('<OfficerPage />', function () {
 
   it('should not fetch officer data if officer id is empty', function () {
     const spyfetchOfficer = spy();
+    const spyGetOfficerTimeline = spy();
+    const spyGetOfficerCoaccusals = spy();
 
     const wrapper = shallow(
       <OfficerPage
@@ -114,11 +116,15 @@ describe('<OfficerPage />', function () {
         loading={ false }
         found={ true }
         fetchOfficer={ spyfetchOfficer }
+        getOfficerTimeline={ spyGetOfficerTimeline }
+        getOfficerCoaccusals={ spyGetOfficerCoaccusals }
       />
     );
 
     wrapper.instance().componentDidMount();
     spyfetchOfficer.called.should.be.false();
+    spyGetOfficerTimeline.called.should.be.false();
+    spyGetOfficerCoaccusals.called.should.be.false();
   });
 
   it('should fetch officer data if summary is not available', function () {
