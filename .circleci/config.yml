@@ -181,7 +181,13 @@ workflows:
       - deploy:
           requires:
             - push_image
-      - notify_slack:
+            - test_nginx
+          filters:
+            branches:
+              only:
+                - staging
+                - master
+      - notfiy_slack:
           requires:
             - deploy
           filters:

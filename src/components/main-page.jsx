@@ -9,13 +9,13 @@ class MainPage extends Component {
   componentDidMount() {
     const { fetchSuggestedSearchItems, routeChanged, location } = this.props;
     fetchSuggestedSearchItems();
-    routeChanged(location.pathname);
+    routeChanged({ from: '', to: location.pathname });
   }
 
   componentDidUpdate(prevProps) {
     const { location, routeChanged } = this.props;
     if (location.pathname !== prevProps.location.pathname) {
-      routeChanged(location.pathname);
+      routeChanged({ from: prevProps.location.pathname, to: location.pathname });
     }
   }
 
