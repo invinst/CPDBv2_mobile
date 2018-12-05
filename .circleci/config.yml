@@ -140,14 +140,23 @@ jobs:
             export IMAGE_TAG=$(cat /tmp/workspace/buildnum)
             cat mobile-frontend.yml | envsubst | kubectl apply -f - --namespace=$NAMESPACE
 
-  notfiy_slack:
+  notify_slack:
     docker:
       - image: python:3.7-alpine
     steps:
       - run: apk add git
       - run: pip install requests
       - checkout
-      - run: bin/notfiy_slack.py
+      - run: bin/notify_slack.py
+
+  reset_staging_branch:
+    docker:
+      - image: alpine/git:latest
+    steps:
+      - checkout
+      - run: git checkout staging
+      - run: git reset --hard origin/develop
+      - run: git push --force origin staging
 
 
 workflows:
@@ -172,7 +181,19 @@ workflows:
       - deploy:
           requires:
             - push_image
+            - test_nginx
+          filters:
+            branches:
+              only:
+                - staging
+                - master
       - notfiy_slack:
+          requires:
+            - deploy
+          filters:
+            branches:
+              only: master
+      - reset_staging_branch:
           requires:
             - deploy
           filters:

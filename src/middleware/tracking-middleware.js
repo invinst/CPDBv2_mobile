@@ -7,7 +7,7 @@ import * as GATracking from 'utils/google_analytics_tracking';
 
 const EVENTS = {
   [ROUTE_CHANGED]: (store, action) => {
-    GATracking.trackPageView(action.payload);
+    GATracking.trackPageView(action.payload.to);
   },
 
   [SEARCH_INPUT_CHANGED]: (store, action) => {
