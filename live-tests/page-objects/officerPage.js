@@ -171,8 +171,6 @@ module.exports = {
       selector: '.officer-summary-body',
       elements: {
         demographic: '.officer-demographic',
-        badgeToggle: '.historic-badges-toggle',
-        historicBadgesContainer: '.historic-badges-container'
       },
 
       sections: {
