@@ -10,6 +10,8 @@ import MarkerTooltip from './marker-tooltip';
 import SimpleMarkerTooltip from './simple-marker-tooltip';
 import Marker from './marker';
 import styles from './map.sass';
+import { isIOS } from "react-device-detect";
+import MultiTouch from 'mapbox-gl-multitouch';
 
 export default class Map extends Component {
   componentWillReceiveProps(nextProps, nextState) {
@@ -29,6 +31,9 @@ export default class Map extends Component {
         scrollZoom: false,
       });
       this.map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+      if (isIOS) {
+        this.map.addControl(new MultiTouch());
+      }
 
       this.props.markers.map(marker => {
         this.addMarker(marker);
