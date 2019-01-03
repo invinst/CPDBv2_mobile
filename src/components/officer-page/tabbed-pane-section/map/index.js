@@ -10,7 +10,7 @@ import MarkerTooltip from './marker-tooltip';
 import SimpleMarkerTooltip from './simple-marker-tooltip';
 import Marker from './marker';
 import styles from './map.sass';
-import { isIOS } from "react-device-detect";
+import { isIOS } from 'react-device-detect';
 import MultiTouch from 'mapbox-gl-multitouch';
 
 export default class Map extends Component {
@@ -32,6 +32,7 @@ export default class Map extends Component {
       });
       this.map.addControl(new mapboxgl.NavigationControl(), 'top-left');
       if (isIOS) {
+        /* istanbul ignore next */
         this.map.addControl(new MultiTouch());
       }
 

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { get, keys } from 'lodash';
+import { get, keys, filter } from 'lodash';
 import cx from 'classnames';
 
 import HorizontalScrolling from 'components/common/horizontal-scrolling';
@@ -12,16 +12,13 @@ import style from './tabbed-pane-section.sass';
 
 
 export default class TabbedPaneSection extends Component {
-  render() {
+  _tabbedPaneMap() {
     const {
-      currentTab,
-      changeOfficerTab,
       hasCoaccusal,
       hasAttachment,
       hasMapMarker,
-      officerId
     } = this.props;
-    const tabbedPaneMap = {
+    return {
       [OFFICER_PAGE_TAB_NAMES.TIMELINE]: {
         component: OfficerTimelineContainer,
         show: true,
@@ -39,44 +36,40 @@ export default class TabbedPaneSection extends Component {
         show: hasAttachment,
       },
     };
+  }
+
+  _tabs(tabbedPaneMap) {
+    const {
+      currentTab,
+      changeOfficerTab,
+    } = this.props;
+
+    return (
+      <HorizontalScrolling centeredContent={ true } className='tabbed-pane-section-menu'>
+        {
+          filter(keys(tabbedPaneMap), (paneName) => get(tabbedPaneMap, `${paneName}.show`)).map(paneName => (
+            <span
+              key={ paneName }
+              className={ cx('tabbed-pane-tab-name', { 'active': paneName === currentTab }) }
+              onClick={ () => changeOfficerTab(paneName) }
+            >
+              { paneName }
+            </span>
+          ))
+        }
+      </HorizontalScrolling>
+    );
+  }
+
+  render() {
+    const { currentTab, officerId } = this.props;
+    const tabbedPaneMap = this._tabbedPaneMap();
     const CurrentComponent = get(tabbedPaneMap, `${currentTab}.component`, null);
     return (
       <div className={ style.tabbedPaneSection }>
-        <HorizontalScrolling>
-          <div className='tabbed-pane-section-menu'>
-            {
-              keys(tabbedPaneMap).map(paneName => (
-                get(tabbedPaneMap, `${paneName}.show`) ? (
-                  <span
-                    key={ paneName }
-                    className={ cx('tabbed-pane-tab-name', { 'active': paneName === currentTab }) }
-                    onClick={ () => changeOfficerTab(paneName) }
-                  >
-                    { paneName }
-                  </span>
-                ) : null
-              ))
-            }
-          </div>
-        </HorizontalScrolling>
+        { this._tabs(tabbedPaneMap) }
         { CurrentComponent ? <CurrentComponent officerId={ officerId }/> : null }
-        <HorizontalScrolling>
-          <div className='tabbed-pane-section-menu'>
-            {
-              keys(tabbedPaneMap).map(paneName => (
-                get(tabbedPaneMap, `${paneName}.show`) ? (
-                  <span
-                    key={ paneName }
-                    className={ cx('tabbed-pane-tab-name', { 'active': paneName === currentTab }) }
-                    onClick={ () => changeOfficerTab(paneName) }
-                  >
-                    { paneName }
-                  </span>
-                ) : null
-              ))
-            }
-          </div>
-        </HorizontalScrolling>
+        { this._tabs(tabbedPaneMap) }
       </div>
     );
   }
