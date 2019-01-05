@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import ClampLines from 'react-clamp-lines';
 
 import Attachment from 'components/officer-page/tabbed-pane-section/attachments-tab/complaint/attachment';
-import Image from 'components/shared/image';
 
 
 describe('Attachment component', function () {
@@ -21,8 +20,8 @@ describe('Attachment component', function () {
     link.prop('href').should.eql('https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-3-of-3.html');
     link.prop('target').should.eql('_blank');
 
-    const previewImage = wrapper.find(Image);
-    previewImage.prop('src').should.eql(
+    const previewImage = wrapper.find('.attachment-thumbnail');
+    previewImage.prop('style').backgroundImage.should.containEql(
       'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif'
     );
 
@@ -35,9 +34,9 @@ describe('Attachment component', function () {
 
   it('should render document preview image correctly', function () {
     const wrapper = shallow(<Attachment attachment={ attachment }/>);
-    const previewImage = wrapper.find(Image);
+    const previewImage = wrapper.find('.attachment-thumbnail');
     previewImage.prop('className').should.containEql('document');
-    previewImage.prop('src').should.equal(
+    previewImage.prop('style').backgroundImage.should.containEql(
       'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif'
     );
   });
@@ -51,8 +50,8 @@ describe('Attachment component', function () {
     };
 
     const wrapper = shallow(<Attachment attachment={ videoAttachment }/>);
-    const previewImage = wrapper.find(Image);
+    const previewImage = wrapper.find('.attachment-thumbnail');
     previewImage.prop('className').should.containEql('video');
-    previewImage.prop('src').should.equal('/src/img/ic-video.svg');
+    previewImage.prop('style').backgroundImage.should.containEql('/src/img/ic-video.svg');
   });
 });

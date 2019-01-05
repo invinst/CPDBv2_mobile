@@ -1,4 +1,4 @@
-import { get, rangeRight, slice, isEmpty, compact } from 'lodash';
+import { get, rangeRight, slice, isEmpty, compact, isNull } from 'lodash';
 import moment from 'moment';
 
 import { TIMELINE_ITEMS, ATTACHMENT_TYPES } from 'constants/officer-page/tabbed-pane-section/timeline';
@@ -27,7 +27,9 @@ export const attachmentsTransform = (attachments) => {
       if (fileType === ATTACHMENT_TYPES.AUDIO) {
         previewImageUrl = '/img/ic-audio.svg';
       } else if (fileType === ATTACHMENT_TYPES.VIDEO) {
-        previewImageUrl = '/img/ic-video.svg';
+        if (isNull(previewImageUrl)) {
+          previewImageUrl = '/img/ic-video.svg';
+        }
       }
       return {
         title: attachment.title,

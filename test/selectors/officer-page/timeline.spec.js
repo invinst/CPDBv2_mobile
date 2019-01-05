@@ -82,6 +82,12 @@ describe('Officer new timeline selectors', function () {
           'preview_image_url': null,
           'file_type': 'video',
         },
+        {
+          title: 'Video Clip',
+          url: 'https://player.vimeo.com/video/165206300',
+          'preview_image_url': 'https://vimeo.com/123456',
+          'file_type': 'video',
+        },
       ];
       attachmentsTransform(attachments).should.eql([
         {
@@ -106,6 +112,12 @@ describe('Officer new timeline selectors', function () {
           title: 'Video Clip',
           url: 'https://player.vimeo.com/video/165206070',
           previewImageUrl: '/img/ic-video.svg',
+          fileType: 'video',
+        },
+        {
+          title: 'Video Clip',
+          url: 'https://player.vimeo.com/video/165206300',
+          previewImageUrl: 'https://vimeo.com/123456',
           fileType: 'video',
         },
       ]);

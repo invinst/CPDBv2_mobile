@@ -17,7 +17,7 @@ describe('Attachments component', function () {
 
     wrapper.find('.label').text().should.eql('There are no documents that have been made public yet.');
 
-    wrapper.setProps({ attachments: ['abc'] });
+    wrapper.setProps({ attachments: [{fileType: 'video', title: 'Video Clip'}] });
 
     wrapper.find('.label').text().should.eql('ATTACHMENTS');
   });
@@ -55,7 +55,8 @@ describe('Attachments component', function () {
     });
     const stubTrackAttachmentClick = stub(GATracking, 'trackAttachmentClick');
     const attachments = [{
-      'url': 'https://www.documentcloud.org/documents/4769822-CRID-1002813-CR.html'
+      'url': 'https://www.documentcloud.org/documents/4769822-CRID-1002813-CR.html',
+      'fileType': 'document',
     }];
     const wrapper = mount(
       <Provider store={ store }>
