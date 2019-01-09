@@ -168,6 +168,7 @@ class OfficerPage extends Component {
       noDataCMSContent,
       hasCoaccusal,
       hasAttachment,
+      hasMapMarker,
     } = this.props;
 
     if (loading) {
@@ -207,6 +208,7 @@ class OfficerPage extends Component {
           currentTab={ this.state.currentTab }
           hasCoaccusal={ hasCoaccusal }
           hasAttachment={ hasAttachment }
+          hasMapMarker={ hasMapMarker }
           officerId={ id }
         />
         <BottomPadding />
@@ -232,6 +234,7 @@ OfficerPage.propTypes = {
   params: PropTypes.object,
   hasCoaccusal: PropTypes.bool,
   hasAttachment: PropTypes.bool,
+  hasMapMarker: PropTypes.bool,
   getOfficerCoaccusals: PropTypes.func,
   getOfficerTimeline: PropTypes.func,
   isTimelineSuccess: PropTypes.bool,

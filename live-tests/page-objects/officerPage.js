@@ -105,12 +105,16 @@ module.exports = {
 
   elements: {
     officerName: '.officer-name',
-    coaccusalsTabButton: {
+    mapTabButton: {
       selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[2]',
       locateStrategy: 'xpath',
     },
-    attachmentsTabButton: {
+    coaccusalsTabButton: {
       selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[3]',
+      locateStrategy: 'xpath',
+    },
+    attachmentsTabButton: {
+      selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[4]',
       locateStrategy: 'xpath',
     },
   },
@@ -214,6 +218,9 @@ module.exports = {
       elements: {
         firstCoaccusalCard: '.test--officer-card',
       },
+    },
+    map: {
+      selector: '.test--map',
     },
     attachments: {
       selector: '//div[contains(@class, "attachments-tab__officer-attachments-tab")]',

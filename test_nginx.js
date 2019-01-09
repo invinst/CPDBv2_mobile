@@ -15,7 +15,7 @@ describe('nginx config', () => {
 
   const preventIframe = path => Object.assign({}, empty, {
     path,
-    code: 200,
+    expectedCode: 200,
     headers: {
       'user-agent': mobileAgentStr
     },
@@ -25,7 +25,7 @@ describe('nginx config', () => {
 
   const allowIframe = path => Object.assign({}, empty, {
     path,
-    code: 200,
+    expectedCode: 200,
     headers: {
       'user-agent': mobileAgentStr
     },
@@ -35,9 +35,19 @@ describe('nginx config', () => {
 
   const desktopRedirect = path => Object.assign({}, empty, {
     path,
-    code: 301,
+    expectedCode: 301,
     title: `mobile redirect for ${path}`,
     expectedHeaders: { 'location': `https://${process.env.DESKTOP_SERVER_NAME}${path}` }
+  });
+
+  const redirect = (path, toPath) => Object.assign({}, empty, {
+    path,
+    title: `redirect from ${path} to ${toPath}`,
+    headers: {
+      'user-agent': mobileAgentStr
+    },
+    expectedCode: 301,
+    expectedHeaders: { 'location': `http://${process.env.MOBILE_DOMAIN}${toPath}` }
   });
 
   const testCases = [
@@ -52,6 +62,8 @@ describe('nginx config', () => {
     desktopRedirect('/officer/123/jerome-finnigan'),
     desktopRedirect('/cr/123/'),
     desktopRedirect('/trr/123/'),
+    redirect('/officer/robbin-parker/21860', '/officer/21860/robbin-parker/'),
+    redirect('/officer/robbin-parker/21860/', '/officer/21860/robbin-parker/')
   ];
 
   const func = testCase => done => {
@@ -60,7 +72,7 @@ describe('nginx config', () => {
       url: `${baseUrl}${testCase.path}`,
       headers: testCase.headers
     }, (error, response, body) => {
-      response.statusCode.should.eql(testCase.code);
+      response.statusCode.should.eql(testCase.expectedCode);
       for (let pair of _.toPairs(testCase.expectedHeaders)) {
         const [header, value] = pair;
         response.headers[header].should.eql(value);

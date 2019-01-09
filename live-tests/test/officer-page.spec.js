@@ -724,5 +724,17 @@ describe('OfficerPage test', function () {
         this.attachments.assert.urlContains('/officer/2235/kevin-osborn/documents/');
       });
     });
+
+    describe('Map', function () {
+      beforeEach(function (client, done) {
+        this.map = this.officerPage.section.map;
+        done();
+      });
+
+      it('should add map suffix when click on map tab', function () {
+        this.officerPage.click('@mapTabButton');
+        this.map.assert.urlContains('/officer/2235/kevin-osborn/map/');
+      });
+    });
   });
 });
