@@ -9,6 +9,8 @@ const getOfficer = (state, props) => (
   state.officerPage.officers.data[props.params.id] || null
 );
 
+export const getOfficerInfo = (state, officerId) => get(state.officerPage.officers.data, String(officerId), []);
+
 export const officerYearlyPercentileSelector = createSelector(
   [getOfficer],
   (officer) => compact(map(get(officer, 'percentiles', []), extractPercentile))
@@ -51,7 +53,7 @@ export const officerSummarySelector = createSelector(
       unit: getOfficerUnitDisplay(officer),
       rank: getOfficerRank(officer),
       demographic: getOfficerDemographic(officer),
-      badge: isEmpty(officer.badge) ? 'Unknown' : officer.badge,
+      badge: officer.badge,
       historicBadges: officer['historic_badges'],
       careerDuration: getCareerDuration(officer['date_of_appt'], officer['date_of_resignation']),
     };

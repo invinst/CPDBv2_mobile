@@ -5375,6 +5375,11 @@ map-obj@^1.0.0, map-obj@^1.0.1:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
   integrity sha1-2TPOuSBdgr3PSIb2dCvcK03qFG0=
 
+mapbox-gl-multitouch@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/mapbox-gl-multitouch/-/mapbox-gl-multitouch-1.0.3.tgz#db8bbe86a15d8398e3315d97305c9edde3f0f0d7"
+  integrity sha512-lpTFL2Sp7hK867mkMOZe2DvdS5eEHxWfMc7aSWCRDMgSq9IjPubsiix3FPs+IqcbkYmR+IUrzvH9RWBOXVs2cg==
+
 mapbox-gl-supported@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/mapbox-gl-supported/-/mapbox-gl-supported-1.2.0.tgz#cbd34df894206cadda9a33c8d9a4609f26bb1989"
@@ -6893,6 +6898,11 @@ react-clamp-lines@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-clamp-lines/-/react-clamp-lines-1.1.0.tgz#81a2ac556aac098479ce7ac031e30b88310cdaa7"
   integrity sha512-qCKywFxxsI4PY2AMT8KEMH9Q2zNeEjFN6iXr5k+e73a7PZbb0x+V4HxJPMTP0+aP2mz+lwFec3RMKPlodvdXMg==
 
+react-device-detect@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/react-device-detect/-/react-device-detect-1.6.1.tgz#3730e74e25fd79be19ac99fc6a07e751255b9232"
+  integrity sha512-TTmKu3JK3W7gWrjnm4K1OS0v5CMtkFtG4pIrQvZ8mJu6xvqfmXnkMO5jkh3Tz2homaFYIaJ6Pzbx4E51mg5neA==
+
 react-dom@^15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.4.2.tgz#015363f05b0a1fd52ae9efdd3a0060d90695208f"
@@ -8303,10 +8313,10 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
-swiper@^4.4.1:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-4.4.1.tgz#9eeca17c5bfa4a27663963b2640119e5fc668255"
-  integrity sha512-hLjeei+E2EioFUBI4XzqUDkvZu9d6TAOWVFbrCXSrOhY9bzgXYC28dfMRHOs8IgU5WAZ7bbMR8lF706TzKf9nw==
+swiper@^4.4.6:
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-4.4.6.tgz#0dfa9d66e39811c73e96ea55cea61047a4091667"
+  integrity sha512-F9NDtijQt+etiOe6JAEH+Cb+QKzwwFpi08FlOIQv8ALdoQ8tvAX/38a/28E5XxalAkChsHCutwkBCzDxDXTGiA==
   dependencies:
     dom7 "^2.1.2"
     ssr-window "^1.0.1"
