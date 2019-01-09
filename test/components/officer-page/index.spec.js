@@ -432,6 +432,207 @@ describe('<OfficerPage />', function () {
       }
     };
 
+    const emptyBadgeStateData = {
+      breadcrumb: {
+        breadcrumbs: []
+      },
+      officerPage: {
+        officers: {
+          isRequesting: false,
+          isSuccess: true,
+          data: {
+            11: {
+              'officer_id': 11,
+              'full_name': 'Kenneth Wojtan',
+              active: true,
+              'allegation_count': 104,
+              badge: '',
+              'historic_badges': ['8547', '8546'],
+              'birth_year': 1957,
+              'civilian_compliment_count': 4,
+              'complaint_percentile': 99.895,
+              'date_of_appt': '1993-12-13',
+              'date_of_resignation': '2017-01-15',
+              'discipline_count': 1,
+              gender: 'Male',
+              'honorable_mention_count': 55,
+              'honorable_mention_percentile': 85.87,
+              'major_award_count': 0,
+              race: 'White',
+              rank: 'Police Officer',
+              'sustained_count': 1,
+              'trr_count': 3,
+              unit: {
+                'unit_id': 6,
+                description: 'District 005',
+                'unit_name': '005',
+              },
+              percentiles: [
+                {
+                  'officer_id': 1,
+                  year: 2006,
+                  'percentile_allegation_civilian': '66.251',
+                  'percentile_allegation_internal': '0.023',
+                  'percentile_trr': '0.049',
+                  'percentile_allegation': '41.001',
+                },
+                {
+                  'officer_id': 1,
+                  year: 2007,
+                  'percentile_allegation_civilian': '75.065',
+                  'percentile_allegation_internal': '0.022',
+                  'percentile_trr': '0.046',
+                  'percentile_allegation': '31.201'
+                }
+              ]
+            }
+          }
+        },
+        timeline: timeline,
+        coaccusals: coaccusals,
+        cms: [
+          {
+            type: 'rich_text',
+            name: 'triangle_description'
+          }
+        ]
+      }
+    };
+
+    const emptyHistoricBadgeStateData = {
+      breadcrumb: {
+        breadcrumbs: []
+      },
+      officerPage: {
+        officers: {
+          isRequesting: false,
+          isSuccess: true,
+          data: {
+            11: {
+              'officer_id': 11,
+              'full_name': 'Kenneth Wojtan',
+              active: true,
+              'allegation_count': 104,
+              badge: '8548',
+              'historic_badges': [],
+              'birth_year': 1957,
+              'civilian_compliment_count': 4,
+              'complaint_percentile': 99.895,
+              'date_of_appt': '1993-12-13',
+              'date_of_resignation': '2017-01-15',
+              'discipline_count': 1,
+              gender: 'Male',
+              'honorable_mention_count': 55,
+              'honorable_mention_percentile': 85.87,
+              'major_award_count': 0,
+              race: 'White',
+              rank: 'Police Officer',
+              'sustained_count': 1,
+              'trr_count': 3,
+              unit: {
+                'unit_id': 6,
+                description: 'District 005',
+                'unit_name': '005',
+              },
+              percentiles: [
+                {
+                  'officer_id': 1,
+                  year: 2006,
+                  'percentile_allegation_civilian': '66.251',
+                  'percentile_allegation_internal': '0.023',
+                  'percentile_trr': '0.049',
+                  'percentile_allegation': '41.001',
+                },
+                {
+                  'officer_id': 1,
+                  year: 2007,
+                  'percentile_allegation_civilian': '75.065',
+                  'percentile_allegation_internal': '0.022',
+                  'percentile_trr': '0.046',
+                  'percentile_allegation': '31.201'
+                }
+              ]
+            }
+          }
+        },
+        timeline: timeline,
+        coaccusals: coaccusals,
+        cms: [
+          {
+            type: 'rich_text',
+            name: 'triangle_description'
+          }
+        ]
+      }
+    };
+
+    const emptyBadgeAndHistoricBadgeStateData = {
+      breadcrumb: {
+        breadcrumbs: []
+      },
+      officerPage: {
+        officers: {
+          isRequesting: false,
+          isSuccess: true,
+          data: {
+            11: {
+              'officer_id': 11,
+              'full_name': 'Kenneth Wojtan',
+              active: true,
+              'allegation_count': 104,
+              badge: '',
+              'historic_badges': [],
+              'birth_year': 1957,
+              'civilian_compliment_count': 4,
+              'complaint_percentile': 99.895,
+              'date_of_appt': '1993-12-13',
+              'date_of_resignation': '2017-01-15',
+              'discipline_count': 1,
+              gender: 'Male',
+              'honorable_mention_count': 55,
+              'honorable_mention_percentile': 85.87,
+              'major_award_count': 0,
+              race: 'White',
+              rank: 'Police Officer',
+              'sustained_count': 1,
+              'trr_count': 3,
+              unit: {
+                'unit_id': 6,
+                description: 'District 005',
+                'unit_name': '005',
+              },
+              percentiles: [
+                {
+                  'officer_id': 1,
+                  year: 2006,
+                  'percentile_allegation_civilian': '66.251',
+                  'percentile_allegation_internal': '0.023',
+                  'percentile_trr': '0.049',
+                  'percentile_allegation': '41.001',
+                },
+                {
+                  'officer_id': 1,
+                  year: 2007,
+                  'percentile_allegation_civilian': '75.065',
+                  'percentile_allegation_internal': '0.022',
+                  'percentile_trr': '0.046',
+                  'percentile_allegation': '31.201'
+                }
+              ]
+            }
+          }
+        },
+        timeline: timeline,
+        coaccusals: coaccusals,
+        cms: [
+          {
+            type: 'rich_text',
+            name: 'triangle_description'
+          }
+        ]
+      }
+    };
+
     it('should return LoadingPage if request is not complete', function () {
       let requestingSummary = cloneDeep(stateData);
       requestingSummary.officerPage.officers.isRequesting = true;
@@ -523,46 +724,52 @@ describe('<OfficerPage />', function () {
       unitRow.find('.label').text().should.equal('Unit');
       careerRow.find('.label').text().should.equal('Career');
 
-      badgeRow.find('.value').text().should.containEql('8548');
+      badgeRow.find('.value').text().should.eql('8548, 8547, 8546');
       rankRow.find('.value').text().should.equal('Police Officer');
       unitRow.find('.value').text().should.equal('Unit 005 - District 005');
       careerRow.find('.value').text().should.equal('DEC 13, 1993 — JAN 15, 2017');
-
-      badgeRow.find('.historic-badges-toggle').text().should.equal('Previously');
     });
 
-    it('should show historic badges when clicking on Previously Button', function () {
-      const workingStore = mockStore(stateData);
+    it('should only render historic badge when badge is empty', function () {
+      const workingStore = mockStore(emptyBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
           <OfficerPageContainer params={ { id: 11 } }/>
         </Provider>
       );
 
-      const rows = wrapper.find(SectionRow);
-      const badgeRow = rows.at(0);
-      const historicBadgesToggle = badgeRow.find('.historic-badges-toggle');
-      historicBadgesToggle.simulate('click');
+      const badgeRow = wrapper.find(SectionRow).at(0);
 
-      const historicBadges = wrapper.find('.historic-badges-container');
-      historicBadges.text().should.equal('8547, 8546');
-      historicBadges.prop('className').should.containEql('expanded');
+      badgeRow.find('.label').text().should.equal('Badge');
+      badgeRow.find('.value').text().should.eql('8547, 8546');
     });
 
-    it('should hide Previously Button when historic badges is empty', function () {
-      let nohistoricBadgesData = cloneDeep(stateData);
-      nohistoricBadgesData.officerPage.officers.data[11]['historic_badges'] = [];
-      const workingStore = mockStore(nohistoricBadgesData);
+    it('should only render badge when historic badge is empty', function () {
+      const workingStore = mockStore(emptyHistoricBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
           <OfficerPageContainer params={ { id: 11 } }/>
         </Provider>
       );
 
-      const rows = wrapper.find(SectionRow);
-      const badgeRow = rows.at(0);
-      badgeRow.find('.historic-badges-toggle').exists().should.be.false();
-      badgeRow.find('.value').text().should.equal('8548');
+      const badgeRow = wrapper.find(SectionRow).at(0);
+
+      badgeRow.find('.label').text().should.equal('Badge');
+      badgeRow.find('.value').text().should.eql('8548');
+    });
+
+    it('should render Unknown when both badge and historic badge are empty', function () {
+      const workingStore = mockStore(emptyBadgeAndHistoricBadgeStateData);
+      const wrapper = mount(
+        <Provider store={ workingStore }>
+          <OfficerPageContainer params={ { id: 11 } }/>
+        </Provider>
+      );
+
+      const badgeRow = wrapper.find(SectionRow).at(0);
+
+      badgeRow.find('.label').text().should.equal('Badge');
+      badgeRow.find('.value').text().should.eql('Unknown');
     });
 
     it('should render officer metrics with correct props', function () {
