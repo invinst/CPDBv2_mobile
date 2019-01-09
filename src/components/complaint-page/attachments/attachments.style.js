@@ -1,4 +1,3 @@
-/* istanbul ignore next */
 const fileTypeSpecificThumbnailStyle = {
   audio: () => ({
     backgroundImage: 'url(/img/ic-audio.svg)'

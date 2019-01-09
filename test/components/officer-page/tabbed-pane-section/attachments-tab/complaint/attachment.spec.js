@@ -41,7 +41,7 @@ describe('Attachment component', function () {
     );
   });
 
-  it('should render other types preview image correctly', function () {
+  it('should render video preview image correctly', function () {
     const videoAttachment = {
       title: 'Video Clip',
       url: 'https://player.vimeo.com/video/165206078',
@@ -53,5 +53,18 @@ describe('Attachment component', function () {
     const previewImage = wrapper.find('.attachment-thumbnail');
     previewImage.prop('className').should.containEql('video');
     previewImage.prop('style').backgroundImage.should.containEql('/src/img/ic-video.svg');
+  });
+
+  it('should render audio preview image correctly', function () {
+    const audioAttachment = {
+      title: 'Audio',
+      url: 'https://player.vimeo.com/video/165206078',
+      fileType: 'audio'
+    };
+
+    const wrapper = shallow(<Attachment attachment={ audioAttachment }/>);
+    const previewImage = wrapper.find('.attachment-thumbnail');
+    previewImage.prop('className').should.containEql('audio');
+    previewImage.prop('style').backgroundImage.should.containEql('/img/ic-audio.svg');
   });
 });
