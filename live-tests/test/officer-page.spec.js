@@ -412,7 +412,7 @@ describe('OfficerPage test', function () {
       summary.expect.element('@demographic').text.to.equal('60 years old, white, male.');
 
       summary.section.badge.expect.element('@label').text.to.equal('Badge');
-      summary.section.badge.expect.element('@value').text.to.contain('8548');
+      summary.section.badge.expect.element('@value').text.to.equal('8548, 8547, 8546');
 
       summary.section.rank.expect.element('@label').text.to.equal('Rank');
       summary.section.rank.expect.element('@value').text.to.contain('Police Officer');
@@ -422,13 +422,6 @@ describe('OfficerPage test', function () {
 
       summary.section.career.expect.element('@label').text.to.equal('Career');
       summary.section.career.expect.element('@value').text.to.contain('DEC 13, 1993 — JAN 15, 2017');
-
-      summary.expect.element('@historicBadgesContainer').to.have.css('max-height').which.equal('0px');
-
-      summary.click('@badgeToggle');
-
-      summary.expect.element('@historicBadgesContainer').text.to.equal('8547, 8546');
-      summary.expect.element('@historicBadgesContainer').to.have.css('max-height').which.equal('80px').after(500);
     });
 
     it('should render officer metrics correctly', function () {
@@ -729,6 +722,18 @@ describe('OfficerPage test', function () {
       it('should be able to be accessed directly via url', function () {
         this.officerPage.navigate(this.officerPage.url(2235, 'documents'));
         this.attachments.assert.urlContains('/officer/2235/kevin-osborn/documents/');
+      });
+    });
+
+    describe('Map', function () {
+      beforeEach(function (client, done) {
+        this.map = this.officerPage.section.map;
+        done();
+      });
+
+      it('should add map suffix when click on map tab', function () {
+        this.officerPage.click('@mapTabButton');
+        this.map.assert.urlContains('/officer/2235/kevin-osborn/map/');
       });
     });
   });

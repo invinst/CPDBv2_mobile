@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
-import { isEmpty, noop } from 'lodash';
-import classnames from 'classnames';
+import { isEmpty, noop, clone, reduce } from 'lodash';
 import pluralize from 'pluralize';
 
 import { scrollToTop } from 'utils/navigation-util';
@@ -14,7 +13,6 @@ import style from './officer-page.sass';
 import AnimatedRadarChart from './radar-chart';
 import MetricWidget from './metric-widget';
 import { roundedPercentile } from 'utils/calculation';
-import navigationArrow from 'img/disclosure-indicator.svg';
 import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
 import { officerUrl } from 'utils/url-util';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
@@ -25,15 +23,12 @@ import AppHistory from 'utils/history';
 class OfficerPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { historicBadgesExpanded: false };
-
     const { firstParam, secondParam } = props.params;
     const tabName = secondParam || firstParam;
     this.state = {
       currentTab: TAB_MAP[tabName] || OFFICER_PAGE_TAB_NAMES.TIMELINE
     };
 
-    this.toggleHistoricBadges = this.toggleHistoricBadges.bind(this);
     this.changeTab = this.changeTab.bind(this);
   }
 
@@ -93,8 +88,20 @@ class OfficerPage extends Component {
     }
   }
 
-  toggleHistoricBadges() {
-    this.setState({ historicBadgesExpanded: !this.state.historicBadgesExpanded });
+  badges() {
+    const { badge, historicBadges } = this.props.summary;
+    let allBadges = clone(historicBadges) || [];
+    if (badge)
+      allBadges.unshift(<span className='current-badge'>{ badge }</span>);
+
+    if (isEmpty(allBadges))
+      allBadges.unshift('Unknown');
+
+    return (
+      <span>
+        { reduce(allBadges, (prev, curr) => [prev, ', ', curr]) }
+      </span>
+    );
   }
 
   getMetricWidgetData() {
@@ -161,6 +168,7 @@ class OfficerPage extends Component {
       noDataCMSContent,
       hasCoaccusal,
       hasAttachment,
+      hasMapMarker,
     } = this.props;
 
     if (loading) {
@@ -175,9 +183,7 @@ class OfficerPage extends Component {
       );
     }
 
-    const { id, name, demographic, badge, historicBadges, rank, unit, careerDuration } = summary;
-    const { historicBadgesExpanded } = this.state;
-
+    const { id, name, demographic, rank, unit, careerDuration } = summary;
 
     return (
       <StickyContainer className={ style.officerSummary }>
@@ -191,26 +197,7 @@ class OfficerPage extends Component {
         </h1>
         <div className='officer-summary-body'>
           <div className='officer-demographic'>{ demographic }</div>
-          <SectionRow label='Badge' value={ badge }>
-            {
-              !isEmpty(historicBadges) &&
-              <span className='historic-badges-toggle' onClick={ this.toggleHistoricBadges }>
-                Previously
-                <img
-                  className={ classnames('toggle-arrow', { expanded: historicBadgesExpanded }) }
-                  src={ navigationArrow }
-                />
-              </span>
-            }
-          </SectionRow>
-          {
-            !isEmpty(historicBadges) &&
-            <div className={ classnames('historic-badges-container', { expanded: historicBadgesExpanded }) }>
-              <div className='historic-badges'>
-                { historicBadges.join(', ') }
-              </div>
-            </div>
-          }
+          <SectionRow label='Badge' value={ this.badges() } />
           <SectionRow label='Rank' value={ rank } />
           <SectionRow label='Unit' value={ unit } />
           <SectionRow label='Career' value={ careerDuration }/>
@@ -221,6 +208,7 @@ class OfficerPage extends Component {
           currentTab={ this.state.currentTab }
           hasCoaccusal={ hasCoaccusal }
           hasAttachment={ hasAttachment }
+          hasMapMarker={ hasMapMarker }
           officerId={ id }
         />
         <BottomPadding />
@@ -246,6 +234,7 @@ OfficerPage.propTypes = {
   params: PropTypes.object,
   hasCoaccusal: PropTypes.bool,
   hasAttachment: PropTypes.bool,
+  hasMapMarker: PropTypes.bool,
   getOfficerCoaccusals: PropTypes.func,
   getOfficerTimeline: PropTypes.func,
   isTimelineSuccess: PropTypes.bool,

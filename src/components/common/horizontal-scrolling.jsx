@@ -16,17 +16,19 @@ class HorizontalScrolling extends React.Component {
   }
 
   componentDidMount() {
+    const { centeredContent, slideOptions } = this.props;
     const defaultOptions = {
       spaceBetween: 8,
       slidesPerView: 'auto',
       direction: 'horizontal',
       slidesOffsetAfter: 32,
+      centerInsufficientSlides: centeredContent,
       on: {
         slideNextTransitionStart: this.handleSlideNext,
         slidePrevTransitionStart: this.handleSlidePrev,
       }
     };
-    this.swiper = new Swiper(this.el, { ...defaultOptions, ...this.props.slideOptions });
+    this.swiper = new Swiper(this.el, { ...defaultOptions, ...slideOptions });
   }
 
   componentDidUpdate() {
@@ -75,7 +77,8 @@ HorizontalScrolling.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   slideOptions: PropTypes.object,
-  trackingContentType: PropTypes.string
+  trackingContentType: PropTypes.string,
+  centeredContent: PropTypes.bool,
 };
 
 export default HorizontalScrolling;
