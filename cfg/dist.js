@@ -4,6 +4,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const baseConfig = require('./base');
 const defaultSettings = require('./defaults');
@@ -25,6 +26,9 @@ let config = Object.assign({}, baseConfig, {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),
+    new CopyWebpackPlugin([
+      { from: 'src/img', to: 'img' }
+    ]),
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
     }),

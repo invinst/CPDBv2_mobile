@@ -14,19 +14,15 @@
   justify-content: flex-start
   align-items: center
 
-  .attachment-thumbnail-wrapper
+  .attachment-thumbnail
     border: solid 1px $alto-solid
     height: 60px
     width: 45px
-    display: flex
-    justify-content: center
-    margin-bottom: 8px
+    margin: 0 auto
+    background: $wild-sand no-repeat center center
 
-    .attachment-thumbnail
-      width: 100%
-
-      &.audio, &.video
-        width: 30%
+    &.document
+      background-size: cover
 
   .attachment-title
     color: $gandalf-gray

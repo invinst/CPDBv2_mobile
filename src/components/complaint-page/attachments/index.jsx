@@ -1,18 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 import cx from 'classnames';
 
-import Image from 'components/shared/image';
-import document from 'img/ic-document.jpg';
-import audio from 'img/ic-audio.svg';
-import video from 'img/ic-video.svg';
 import CRRequestDocumentButtonContainer from 'containers/common/cr-request-document-container';
 import styles from './attachments.sass';
 import * as GATracking from 'utils/google_analytics_tracking';
+import { thumbnailStyle } from './attachments.style';
 
-
-const TYPE_TO_ICONS = {
-  document, audio, video
-};
 
 class Attachments extends Component {
   constructor(props) {
@@ -47,13 +40,10 @@ class Attachments extends Component {
                 key={ idx } className='attachment'
                 onClick={ this.handleClick(attachment.url) }
               >
-                <div className='attachment-thumbnail-wrapper'>
-                  <Image
-                    className={ cx('attachment-thumbnail', attachment.fileType) }
-                    src={ attachment.previewImageUrl }
-                    fallback={ TYPE_TO_ICONS[attachment.fileType] }
-                    />
-                </div>
+                <div
+                  className={ cx('attachment-thumbnail', attachment.fileType) }
+                  style={ thumbnailStyle(attachment.fileType, attachment.previewImageUrl) }
+                />
                 <div className='attachment-title'>{ attachment.title }</div>
               </a>
             ))
