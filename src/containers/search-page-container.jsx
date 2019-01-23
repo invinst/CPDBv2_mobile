@@ -19,7 +19,8 @@ import {
   trrsSelector,
   suggestedSelector,
   recentSelector,
-  dateOfficersSelector
+  dateOfficersSelector,
+  investigatorCRsSelector
 } from 'selectors/search-page';
 
 
@@ -28,6 +29,7 @@ function mapStateToProps(state, ownProps) {
     query: state.suggestionApp.query,
     officers: officersSelector(state),
     dateCRs: dateCRsSelector(state),
+    investigatorCRs: investigatorCRsSelector(state),
     dateTRRs: dateTRRsSelector(state),
     dateOfficers: dateOfficersSelector(state),
     crs: crsSelector(state),

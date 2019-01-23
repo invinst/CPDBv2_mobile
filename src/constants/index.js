@@ -292,7 +292,13 @@ export default {
       filter: 'Units',
       id: 'units',
       path: 'UNIT'
-    }
+    },
+    {
+      name: 'INVESTIGATOR > CR',
+      filter: 'INVESTIGATOR > CR',
+      id: 'investigatorCRs',
+      path: 'INVESTIGATOR > CR'
+    },
   ],
 
   // These should match their SASS counterparts in styles/Variables.sass

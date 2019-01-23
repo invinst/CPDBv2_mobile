@@ -31,6 +31,7 @@ module.exports = {
     dateTRRsHeader: '#search-category-dateTRRs',
     dateOfficersHeader: '#search-category-dateOfficers',
     crsHeader: '#search-category-crs',
+    investigatorCRsHeader: '#search-category-investigatorCRs',
     trrsHeader: '#search-category-trrs',
     officersHeader: '#search-category-officers',
   },
@@ -70,6 +71,7 @@ module.exports = {
       }
     },
     crs: resultsSection('crs'),
+    investigatorCRs: resultsSection('investigatorCRs'),
     trrs: resultsSection('trrs'),
   }
 };
