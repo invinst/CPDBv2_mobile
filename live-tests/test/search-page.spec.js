@@ -168,6 +168,20 @@ describe('SearchPageTest', function () {
       investigatorCRs.section.secondRow.expect.element('@itemID').text.to.equal('654321');
       investigatorCRs.expect.section('@thirdRow').to.be.not.present;
     });
+
+    it('should able to show INVESTIGATOR > CR results via query parameter', function () {
+      this.searchPage.navigate(this.searchPage.url('Kelvin'));
+
+      this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR > CR');
+
+      const investigatorCRs = this.searchPage.section.investigatorCRs;
+
+      investigatorCRs.section.firstRow.expect.element('@itemType').text.to.equal('CR');
+      investigatorCRs.section.firstRow.expect.element('@itemID').text.to.equal('123456');
+      investigatorCRs.section.secondRow.expect.element('@itemType').text.to.equal('CR');
+      investigatorCRs.section.secondRow.expect.element('@itemID').text.to.equal('654321');
+      investigatorCRs.expect.section('@thirdRow').to.be.not.present;
+    });
   });
 
   context('search for "2004-04-23 ke"', function () {

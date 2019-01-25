@@ -47,7 +47,7 @@ class OfficerPage extends Component {
     }
     const name = summary.name;
     const correctPathName = officerUrl(summary.id, name, this.state.currentTab);
-    if (name && ('/' + location.pathname) !== correctPathName) {
+    if (name && (location.pathname !== correctPathName)) {
       AppHistory.replace(correctPathName);
     }
   }

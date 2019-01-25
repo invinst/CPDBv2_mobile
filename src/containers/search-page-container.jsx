@@ -5,6 +5,7 @@ import { push as pushBreadcrumbs } from 'redux-breadcrumb-trail';
 import SearchPage from 'components/search-page';
 import {
   inputChanged,
+  queryChanged,
   suggestTerm,
   suggestAllFromCategory,
   saveToRecent,
@@ -43,6 +44,7 @@ function mapStateToProps(state, ownProps) {
 
 const mapDispatchToProps = {
   inputChanged,
+  queryChanged,
   suggestTerm,
   suggestAllFromCategory,
   saveToRecent,

@@ -1,7 +1,7 @@
 import { reduce, values } from 'lodash';
 
 import { ROUTE_CHANGED } from 'actions/navigation';
-import { SEARCH_INPUT_CHANGED, SUGGEST_ALL_REQUEST_SUCCESS, SUGGESTION_REQUEST_SUCCESS } from 'actions/suggestion';
+import { SEARCH_QUERY_CHANGED, SUGGEST_ALL_REQUEST_SUCCESS, SUGGESTION_REQUEST_SUCCESS } from 'actions/suggestion';
 import * as GATracking from 'utils/google_analytics_tracking';
 
 
@@ -10,7 +10,7 @@ const EVENTS = {
     GATracking.trackPageView(action.payload.to);
   },
 
-  [SEARCH_INPUT_CHANGED]: (store, action) => {
+  [SEARCH_QUERY_CHANGED]: (store, action) => {
     GATracking.trackSearchQuery(action.payload);
   },
 

@@ -20,7 +20,9 @@ const Investigator = ({ investigators=[] }) => {
           return (
             <SafeLink
               key={ idx }
-              to={ officerUrl(investigator['officer_id'], investigator['full_name']) }
+              to={ investigator['officer_id'] ? officerUrl(investigator['officer_id'], investigator['full_name']) :
+                `/search/?terms=${investigator['full_name']}`
+              }
               className='investigator-row'
             >
               <div className='visual-token'>

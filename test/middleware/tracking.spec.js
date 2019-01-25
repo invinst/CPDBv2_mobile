@@ -2,7 +2,7 @@ import { stub } from 'sinon';
 
 import trackingMiddleware from 'middleware/tracking-middleware';
 import { ROUTE_CHANGED } from 'actions/navigation';
-import { SEARCH_INPUT_CHANGED, SUGGEST_ALL_REQUEST_SUCCESS, SUGGESTION_REQUEST_SUCCESS } from 'actions/suggestion';
+import { SEARCH_QUERY_CHANGED, SUGGEST_ALL_REQUEST_SUCCESS, SUGGESTION_REQUEST_SUCCESS } from 'actions/suggestion';
 import * as GATracking from 'utils/google_analytics_tracking';
 
 
@@ -26,12 +26,12 @@ describe('trackingMiddleware', function () {
     GATracking.trackPageView.restore();
   });
 
-  it('should track search query on CHANGE_SEARCH_QUERY', function () {
+  it('should track search query on SEARCH_QUERY_CHANGED', function () {
     stub(GATracking, 'trackSearchQuery');
 
     let dispatched;
     const dispatchAction = {
-      type: SEARCH_INPUT_CHANGED,
+      type: SEARCH_QUERY_CHANGED,
       payload: 'abc'
     };
 

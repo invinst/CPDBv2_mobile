@@ -20,6 +20,7 @@ export default class SearchPage extends Component {
     this.searchInput.inputElement.focus();
     IntercomTracking.trackSearchPage();
     showIntercomLauncher(false);
+    this.updateResults();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -27,17 +28,28 @@ export default class SearchPage extends Component {
     pushBreadcrumbs({ location, params, routes });
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.query !== prevProps.query) {
+      this.updateResults();
+    }
+  }
+
   componentWillUnmount() {
     showIntercomLauncher(true);
   }
 
-  onInputChange(event) {
-    const { suggestTerm, inputChanged } = this.props;
-    const query = event.currentTarget.value;
+  updateResults() {
+    const { query, suggestTerm, queryChanged } = this.props;
 
-    if (this.isLongEnoughQuery(query)) {
+    if (query && this.isLongEnoughQuery(query)) {
       suggestTerm({ term: query }, undefined, '');
     }
+    queryChanged(query);
+  }
+
+  onInputChange(event) {
+    const { inputChanged } = this.props;
+    const query = event.currentTarget.value;
 
     inputChanged(query);
   }
@@ -195,6 +207,7 @@ export default class SearchPage extends Component {
 SearchPage.propTypes = {
   query: PropTypes.string,
   inputChanged: PropTypes.func,
+  queryChanged: PropTypes.func,
   suggestTerm: PropTypes.func,
   officers: PropTypes.object,
   suggestAllFromCategory: PropTypes.func,
