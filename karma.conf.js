@@ -5,7 +5,7 @@ module.exports = function (config) {
     basePath: '',
     browsers: ['ChromeHeadless'],
     files: [
-      'test/loadtests.js'
+      'test/load_srcs_and_tests.js'
     ],
     port: 8080,
     captureTimeout: 100000,
@@ -16,7 +16,7 @@ module.exports = function (config) {
     singleRun: true,
     reporters: ['mocha', 'coverage'],
     preprocessors: {
-      'test/loadtests.js': ['webpack', 'sourcemap']
+      'test/load_srcs_and_tests.js': ['webpack', 'sourcemap']
     },
     webpack: webpackCfg,
     webpackServer: {
