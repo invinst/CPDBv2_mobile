@@ -21,6 +21,7 @@ const resultComponentMappings = {
   dateOfficers: OfficerSearchResult,
   officers: OfficerSearchResult,
   crs: CRSearchResult,
+  investigatorCRs: CRSearchResult,
   trrs: TRRSearchResult,
   recent: SuggestedSearchResult,
   suggested: SuggestedSearchResult
