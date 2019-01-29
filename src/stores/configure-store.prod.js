@@ -10,6 +10,7 @@ import trackingMiddleware from 'middleware/tracking-middleware';
 
 
 export default function configureStore(initialState) {
+  /* istanbul ignore next */
   return createStore(
     rootReducer,
     initialState,

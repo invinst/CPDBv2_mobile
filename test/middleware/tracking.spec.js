@@ -1,6 +1,6 @@
 import { stub } from 'sinon';
 
-import trackingMiddleware from 'middleware/tracking';
+import trackingMiddleware from 'middleware/tracking-middleware';
 import { ROUTE_CHANGED } from 'actions/navigation';
 import { SEARCH_INPUT_CHANGED, SUGGEST_ALL_REQUEST_SUCCESS, SUGGESTION_REQUEST_SUCCESS } from 'actions/suggestion';
 import * as GATracking from 'utils/google_analytics_tracking';
@@ -13,7 +13,9 @@ describe('trackingMiddleware', function () {
     let dispatched;
     const dispatchAction = {
       type: ROUTE_CHANGED,
-      payload: 'abc'
+      payload: {
+        to: 'abc'
+      }
     };
 
     trackingMiddleware({})(action => dispatched = action)(dispatchAction);
