@@ -18,8 +18,11 @@ const nthRow = (n) => ({
 });
 
 module.exports = {
-  url: function () {
-    return `${this.api.globals.clientUrl}/search/`;
+  url: function (query = '') {
+    let result = `${this.api.globals.clientUrl}/search/`;
+    if (query)
+      result = `${result}?terms=${query}`;
+    return result;
   },
 
   elements: {

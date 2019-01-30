@@ -13,7 +13,13 @@ const mockComplaint = {
   'involvements': [
     {
       'involved_type': 'investigator',
-      'full_name': 'Peter Parker'
+      'full_name': 'Peter Parker',
+      'officer_id': 1,
+    },
+    {
+      'involved_type': 'investigator',
+      'full_name': 'Edward May',
+      'officer_id': null,
     },
     {
       'involved_type': 'police_witness',
@@ -131,6 +137,16 @@ describe('ComplaintPageTest', function () {
     );
     this.complaintPage.expect.element('@firstInvestigator').text.to.contain('Peter Parker');
     this.complaintPage.expect.element('@incidentDate').text.to.equal('APR 30, 2012');
+  });
+
+  it('should go to officer page when click on investigator which is an officer', function (client) {
+    this.complaintPage.click('@firstInvestigator');
+    client.assert.urlContains('/officer/1/peter-parker');
+  });
+
+  it('should go to search page when click on investigator which is not an officer', function (client) {
+    this.complaintPage.click('@secondInvestigator');
+    client.assert.urlContains('/search/?terms=Edward%20May');
   });
 
   it('should show proper cr location', function () {

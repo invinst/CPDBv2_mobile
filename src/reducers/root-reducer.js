@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
 import { reducer as breadcrumb } from 'redux-breadcrumb-trail';
 
 import suggestionApp from './suggestion-app';
@@ -14,6 +15,7 @@ export default combineReducers({
   breadcrumb,
   breadcrumbMapping,
   suggestionApp,
+  routing: routerReducer,
   officerPage,
   landingPage,
   complaintPage,
