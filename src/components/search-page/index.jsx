@@ -41,7 +41,7 @@ export default class SearchPage extends Component {
   updateResults() {
     const { query, suggestTerm, queryChanged } = this.props;
 
-    if (query && this.isLongEnoughQuery(query)) {
+    if (this.isLongEnoughQuery(query)) {
       suggestTerm({ term: query }, undefined, '');
     }
     queryChanged(query);
