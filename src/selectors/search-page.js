@@ -111,3 +111,8 @@ export const dateOfficersSelector = createSelector(
   (state) => state.suggestionApp.suggestions['DATE > OFFICERS'],
   officerFormatter
 );
+
+export const investigatorCRsSelector = createSelector(
+  (state) => state.suggestionApp.suggestions['INVESTIGATOR > CR'],
+  crFormatter
+);

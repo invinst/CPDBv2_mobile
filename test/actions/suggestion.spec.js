@@ -1,9 +1,10 @@
 import {
-  suggestTerm, suggestAllFromCategory, fetchSuggestedSearchItems, focus, blur, clear, inputChanged, reset, saveToRecent,
-  SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE,
+  suggestTerm, suggestAllFromCategory, fetchSuggestedSearchItems, focus, blur, clear, inputChanged, queryChanged,
+  reset, saveToRecent, SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE,
   SUGGEST_ALL_REQUEST_START, SUGGEST_ALL_REQUEST_SUCCESS, SUGGEST_ALL_REQUEST_FAILURE,
   FETCH_SUGGESTED_SEARCH_ITEMS_START, FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS, FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
-  SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_INPUT_CHANGED, SEARCH_RESET, SEARCH_SAVE_TO_RECENT
+  SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_INPUT_CHANGED, SEARCH_RESET, SEARCH_SAVE_TO_RECENT,
+  SEARCH_QUERY_CHANGED
 } from 'actions/suggestion';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -91,6 +92,16 @@ describe('suggestions actions', function () {
       const query = 'query';
       inputChanged(query).should.eql({
         type: SEARCH_INPUT_CHANGED,
+        payload: query
+      });
+    });
+  });
+
+  describe('queryChanged', function () {
+    it('should return right action', function () {
+      const query = 'query';
+      queryChanged(query).should.eql({
+        type: SEARCH_QUERY_CHANGED,
         payload: query
       });
     });

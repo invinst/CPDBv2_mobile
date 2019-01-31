@@ -11,4 +11,9 @@ if (['staging', 'production'].includes(config.appEnv)) {
   configureStore = configureDev;
 }
 
-export default configureStore;
+let store;
+
+export default (...args) => {
+  store = store || configureStore(...args);
+  return store;
+};

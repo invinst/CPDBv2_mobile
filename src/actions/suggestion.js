@@ -22,6 +22,7 @@ export const SEARCH_FOCUS = 'SEARCH_FOCUS';
 export const SEARCH_BLUR = 'SEARCH_BLUR';
 export const SEARCH_CLEAR = 'SEARCH_CLEAR';
 export const SEARCH_INPUT_CHANGED = 'SEARCH_INPUT_CHANGED';
+export const SEARCH_QUERY_CHANGED = 'SEARCH_QUERY_CHANGED';
 export const SEARCH_RESET = 'SEARCH_RESET';
 
 export const UPDATE_ACTIVE_CATEGORY = 'UPDATE_ACTIVE_CATEGORY';
@@ -64,6 +65,7 @@ export const focus = createAction(SEARCH_FOCUS);
 export const blur = createAction(SEARCH_BLUR);
 export const clear = createAction(SEARCH_CLEAR);
 export const inputChanged = createAction(SEARCH_INPUT_CHANGED);
+export const queryChanged = createAction(SEARCH_QUERY_CHANGED);
 export const reset = createAction(SEARCH_RESET);
 
 export const updateActiveCategory = createAction(UPDATE_ACTIVE_CATEGORY);

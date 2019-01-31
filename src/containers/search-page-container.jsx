@@ -5,6 +5,7 @@ import { push as pushBreadcrumbs } from 'redux-breadcrumb-trail';
 import SearchPage from 'components/search-page';
 import {
   inputChanged,
+  queryChanged,
   suggestTerm,
   suggestAllFromCategory,
   saveToRecent,
@@ -19,7 +20,8 @@ import {
   trrsSelector,
   suggestedSelector,
   recentSelector,
-  dateOfficersSelector
+  dateOfficersSelector,
+  investigatorCRsSelector
 } from 'selectors/search-page';
 
 
@@ -28,6 +30,7 @@ function mapStateToProps(state, ownProps) {
     query: state.suggestionApp.query,
     officers: officersSelector(state),
     dateCRs: dateCRsSelector(state),
+    investigatorCRs: investigatorCRsSelector(state),
     dateTRRs: dateTRRsSelector(state),
     dateOfficers: dateOfficersSelector(state),
     crs: crsSelector(state),
@@ -41,6 +44,7 @@ function mapStateToProps(state, ownProps) {
 
 const mapDispatchToProps = {
   inputChanged,
+  queryChanged,
   suggestTerm,
   suggestAllFromCategory,
   saveToRecent,

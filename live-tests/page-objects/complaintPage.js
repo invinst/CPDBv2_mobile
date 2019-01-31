@@ -18,6 +18,10 @@ module.exports = {
       selector: '(//div[contains(@class, "investigator-row")])[1]',
       locateStrategy: 'xpath'
     },
+    secondInvestigator: {
+      selector: '(//div[contains(@class, "investigator-row")])[2]',
+      locateStrategy: 'xpath'
+    },
     requestDocumentButton: '.request-button',
     incidentDate: '.incident-date-value'
   },

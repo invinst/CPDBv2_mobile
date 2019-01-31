@@ -32,35 +32,23 @@
         float: none
 
   .attachment-list
-    display: flex
-    flex-flow: row
-    flex-wrap: wrap
-    align-items: center
-    justify-content: flex-start
-
     .attachment
-      display: flex
       padding: 5px
-      width: 120px
+      width: 140px
+      display: inline-block
       text-decoration: none
-      height: 120px
       align-items: center
-      justify-content: flex-start
-      flex-flow: column
-
-
-    .attachment-thumbnail-wrapper
-      width: 45px
-      height: 53px
-      border: solid 1px #979797
-      display: flex
-      justify-content: center
+      vertical-align: top
 
     .attachment-thumbnail
-      width: 100%
+      width: 45px
+      height: 60px
+      border: solid 1px $soft-gray
+      margin: 0 auto
+      background: $wild-sand no-repeat center center
 
-      &.audio, &.video
-        width: 30%
+      &.document
+        background-size: cover
 
     .attachment-title
       font-size: 14px

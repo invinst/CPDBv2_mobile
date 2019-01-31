@@ -2,16 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import ClampLines from 'react-clamp-lines';
 import cx from 'classnames';
 
-import Image from 'components/shared/image';
-import document from 'img/ic-document.jpg';
-import audio from 'img/ic-audio.svg';
-import video from 'img/ic-video.svg';
 import style from './attachment.sass';
-
-
-const TYPE_TO_ICONS = {
-  document, audio, video
-};
+import { thumbnailStyle } from 'components/complaint-page/attachments/attachments.style';
 
 
 class Attachment extends Component {
@@ -23,13 +15,10 @@ class Attachment extends Component {
         className={ style.officerAttachmentsTabComplaintAttachment }
         target='_blank'
       >
-        <div className='attachment-thumbnail-wrapper'>
-          <Image
-            className={ cx('attachment-thumbnail', fileType) }
-            src={ previewImageUrl }
-            fallback={ TYPE_TO_ICONS[fileType] }
-          />
-        </div>
+        <div
+          className={ cx('attachment-thumbnail', fileType) }
+          style={ thumbnailStyle(fileType, previewImageUrl) }
+        />
         <ClampLines
           className='attachment-title'
           text={ title }

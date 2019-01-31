@@ -111,10 +111,11 @@ describe('<SearchPage />', function () {
     it('should call suggestTerm if query is of sufficient length', () => {
       const dummyEvent = { currentTarget: { value: 'foo' } };
       const spySuggestTerm = spy();
-      const wrapper = shallow(
+      const wrapper = mount(
         <SearchPage
           query={ '' }
           inputChanged={ () => {} }
+          queryChanged={ () => {} }
           suggestTerm={ spySuggestTerm }
         />
       );
@@ -122,24 +123,29 @@ describe('<SearchPage />', function () {
 
       instance.onInputChange(dummyEvent);
 
+      wrapper.setProps({ query: 'foo' });
+
       spySuggestTerm.calledWith({ term: 'foo' }, undefined, '').should.be.true();
     });
 
     it('should NOT call suggestTerm if query is empty or too short', () => {
       const spySuggestTerm = spy();
-      const wrapper = shallow(
+      const wrapper = mount(
         <SearchPage
           query={ '' }
           inputChanged={ () => {} }
+          queryChanged={ () => {} }
           suggestTerm={ spySuggestTerm }
         />
       );
       const instance = wrapper.instance();
 
       instance.onInputChange({ currentTarget: { value: '' } });
+      wrapper.setProps({ query: '' });
       spySuggestTerm.called.should.be.false();
 
       instance.onInputChange({ currentTarget: { value: 'f' } });
+      wrapper.setProps({ query: 'f' });
       spySuggestTerm.called.should.be.false();
     });
   });
@@ -149,6 +155,7 @@ describe('<SearchPage />', function () {
     const wrapper = mount(
       <SearchPage
         pushBreadcrumbs={ pushBreadcrumbsSpy }
+        queryChanged={ () => {} }
         location='location'
         routes='routes'
         params='params'
@@ -170,7 +177,7 @@ describe('<SearchPage />', function () {
   });
 
   it('should focus the input element when mounted', () => {
-    const wrapper = shallow(<SearchPage />);
+    const wrapper = shallow(<SearchPage queryChanged={ () => {} } />);
     const instance = wrapper.instance();
     const spyFocus = spy();
 
@@ -216,7 +223,7 @@ describe('<SearchPage />', function () {
     });
 
     it('should set this.searchInput ref to its own instance', function () {
-      const wrapper = mount(<SearchPage />);
+      const wrapper = mount(<SearchPage queryChanged={ () => {} } />);
 
       const refInstance = wrapper.instance().searchInput;
       (typeof refInstance).should.not.eql('undefined');
@@ -412,13 +419,13 @@ describe('<SearchPage />', function () {
   describe('Intercom', function () {
     describe('Intercom launcher', function () {
       it('should hide intercom launcher when mounted', function () {
-        mount(<SearchPage/>);
+        mount(<SearchPage queryChanged={ () => {} }/>);
 
         IntercomUtils.showIntercomLauncher.calledWith(false).should.be.true();
       });
 
       it('should show intercom launcher again when unmounted', function () {
-        const wrapper = mount(<SearchPage/>);
+        const wrapper = mount(<SearchPage queryChanged={ () => {} }/>);
         wrapper.unmount();
 
         IntercomUtils.showIntercomLauncher.calledWith(true).should.be.true();
@@ -435,7 +442,7 @@ describe('<SearchPage />', function () {
       });
 
       it('should track Intercom with search page', function () {
-        mount(<SearchPage/>);
+        mount(<SearchPage queryChanged={ () => {} }/>);
         IntercomTracking.trackSearchPage.called.should.be.true();
       });
     });

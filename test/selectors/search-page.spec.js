@@ -9,7 +9,8 @@ import {
   trrsSelector,
   dateCRsSelector,
   dateTRRsSelector,
-  dateOfficersSelector
+  dateOfficersSelector,
+  investigatorCRsSelector
 } from 'selectors/search-page';
 
 describe('search-page selectors', () => {
@@ -310,6 +311,50 @@ describe('search-page selectors', () => {
       crsSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
         data: expectedCrs
+      });
+    });
+  });
+
+  describe('investigatorCRsSelector', () => {
+    it('should return empty when there are no INVESTIGATOR > CR data', () => {
+      const state = {
+        suggestionApp: {
+          suggestions: {
+          }
+        }
+      };
+
+      investigatorCRsSelector(state).should.be.eql({ data: [] });
+    });
+
+    it('should return INVESTIGATOR > CR data correctly', () => {
+      const isShowingAll = true;
+      const investigatorCR = [
+        {
+          'crid': '123456'
+        },
+      ];
+      const expectedinvestigatorCR = [
+        {
+          'crid': '123456',
+          'url': '/complaint/123456/'
+        },
+      ];
+
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            'INVESTIGATOR > CR': {
+              isShowingAll: isShowingAll,
+              data: investigatorCR
+            }
+          }
+        }
+      };
+
+      investigatorCRsSelector(state).should.be.eql({
+        isShowingAll: isShowingAll,
+        data: expectedinvestigatorCR
       });
     });
   });

@@ -30,10 +30,6 @@ function getDefaultModules() {
         loader: 'style-loader!css-loader!postcss-loader!less-loader'
       },
       {
-        test: /\.styl/,
-        loader: 'style-loader!css-loader!postcss-loader!stylus-loader'
-      },
-      {
         test: /\.(png|jpg|gif|eot|ttf|woff|woff2)$/,
         loader: 'url-loader?limit=8192',
         options: {

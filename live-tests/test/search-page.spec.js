@@ -70,6 +70,13 @@ const mockSearchQueryResponseWithDate = {
   ],
 };
 
+const mockInvestigatorCRSearchResponse = {
+  'INVESTIGATOR > CR': [
+    { crid: '123456', id: '123456' },
+    { crid: '654321', id: '654321' }
+  ],
+};
+
 
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
@@ -139,6 +146,41 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'wh');
       this.searchPage.section.officers.section.firstRow.click();
       client.assert.urlEquals(this.officerPage.url(9876));
+    });
+  });
+
+  context('search for Kelvin', function () {
+    beforeEach(function (client, done) {
+      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
+      done();
+    });
+
+    it('should show results that match search query', function () {
+      this.searchPage.setValue('@queryInput', 'Kelvin');
+
+      this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR > CR');
+
+      const investigatorCRs = this.searchPage.section.investigatorCRs;
+
+      investigatorCRs.section.firstRow.expect.element('@itemType').text.to.equal('CR');
+      investigatorCRs.section.firstRow.expect.element('@itemID').text.to.equal('123456');
+      investigatorCRs.section.secondRow.expect.element('@itemType').text.to.equal('CR');
+      investigatorCRs.section.secondRow.expect.element('@itemID').text.to.equal('654321');
+      investigatorCRs.expect.section('@thirdRow').to.be.not.present;
+    });
+
+    it('should able to show INVESTIGATOR > CR results via query parameter', function () {
+      this.searchPage.navigate(this.searchPage.url('Kelvin'));
+
+      this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR > CR');
+
+      const investigatorCRs = this.searchPage.section.investigatorCRs;
+
+      investigatorCRs.section.firstRow.expect.element('@itemType').text.to.equal('CR');
+      investigatorCRs.section.firstRow.expect.element('@itemID').text.to.equal('123456');
+      investigatorCRs.section.secondRow.expect.element('@itemType').text.to.equal('CR');
+      investigatorCRs.section.secondRow.expect.element('@itemID').text.to.equal('654321');
+      investigatorCRs.expect.section('@thirdRow').to.be.not.present;
     });
   });
 
