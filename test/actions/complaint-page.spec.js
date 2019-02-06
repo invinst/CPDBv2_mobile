@@ -6,7 +6,7 @@ import {
   COMPLAINT_REQUEST_FAILURE,
   COMPLAINT_REQUEST_DOC_REQUEST_START,
   COMPLAINT_REQUEST_DOC_REQUEST_SUCCESS,
-  COMPLAINT_REQUEST_DOC_REQUEST_FAILURE
+  COMPLAINT_REQUEST_DOC_REQUEST_FAILURE,
 } from 'actions/complaint-page';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -30,7 +30,7 @@ describe('ComplaintPage actions', function () {
   });
 
   describe('requestDocument', function () {
-    it('shoulr return right action', function () {
+    it('should return right action', function () {
       requestDocument({ id: 123, email: 'valid@email.com' }).should.eql({
         types: [
           COMPLAINT_REQUEST_DOC_REQUEST_START,

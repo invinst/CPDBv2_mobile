@@ -7,6 +7,18 @@ import { thumbnailStyle } from 'components/complaint-page/attachments/attachment
 
 
 class Attachment extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    const { onTrackingAttachment, attachment } = this.props;
+    onTrackingAttachment(
+      { attachmentId: attachment['id'], sourcePage: 'Officer Page - Attachments Tab', app: 'Mobile' }
+    );
+  }
+
   render() {
     const { title, url, previewImageUrl, fileType } = this.props.attachment;
     return (
@@ -14,6 +26,7 @@ class Attachment extends Component {
         href={ url }
         className={ style.officerAttachmentsTabComplaintAttachment }
         target='_blank'
+        onClick={ this.handleClick }
       >
         <div
           className={ cx('attachment-thumbnail', fileType) }
@@ -32,6 +45,11 @@ class Attachment extends Component {
 
 Attachment.propTypes = {
   attachment: PropTypes.object,
+  onTrackingAttachment: PropTypes.func,
+};
+
+Attachment.defaultProps = {
+  onTrackingAttachment: () => {},
 };
 
 export default Attachment;
