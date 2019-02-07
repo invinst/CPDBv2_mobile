@@ -71,7 +71,7 @@ describe('<SearchPage />', function () {
       instance.getCategoriesWithSuggestions().should.eql([
         {
           id: 'officers',
-          name: 'Officers',
+          name: 'OFFICERS',
           path: 'OFFICER',
           filter: 'Officers'
         }
