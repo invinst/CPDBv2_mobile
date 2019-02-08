@@ -113,3 +113,5 @@ export const complaintSelector = createSelector(
     };
   }
 );
+
+export const getCMSRequested = state => state.complaintPage.cmsRequested;

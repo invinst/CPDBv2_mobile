@@ -1,4 +1,4 @@
-import { complaintSelector } from 'selectors/complaint-page';
+import { complaintSelector, getCMSRequested } from 'selectors/complaint-page';
 import should from 'should';
 
 describe('complaint-page selectors', () => {
@@ -278,5 +278,10 @@ describe('complaint-page selectors', () => {
     };
 
     complaintSelector(state, props).coaccused.map(obj => obj.id).should.eql([2, 1]);
+  });
+
+  it('getCMSRequested', () => {
+    getCMSRequested({ complaintPage: { cmsRequested: true } }).should.be.true();
+    getCMSRequested({ complaintPage: { cmsRequested: false } }).should.be.false();
   });
 });

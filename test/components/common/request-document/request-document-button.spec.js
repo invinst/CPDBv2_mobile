@@ -13,8 +13,11 @@ describe('RequestDocumentButton component', function () {
 
     wrapper.find('.request-button').text().should.equal('Request Documents');
 
-    wrapper.setProps({ isRequested: true });
+    wrapper.setProps({ hasData: true });
+    wrapper.find('.request-button').text().should.equal('New Document Notifications');
 
+
+    wrapper.setProps({ isRequested: true });
     wrapper.find('.request-button').text().should.equal('Documents Requested✔');
   });
 

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
+import { noop } from 'lodash';
 
 import Header from 'components/shared/header';
 import BottomPadding from 'components/shared/bottom-padding';
@@ -19,14 +20,15 @@ import style from './complaint-page.sass';
 
 export default class ComplaintPage extends Component {
   componentDidMount() {
-    const { complaint, requestComplaint, complaintId } = this.props;
+    const { complaint, requestComplaint, complaintId, cmsRequested, requestCMS } = this.props;
     if (!complaint) {
       requestComplaint(complaintId);
     }
+    cmsRequested || requestCMS();
   }
 
   render() {
-    const { complaint, complaintId, pathname } = this.props;
+    const { complaint, complaintId, pathname, noAttachmentMessage } = this.props;
 
     if (!complaint) {
       return null;
@@ -46,7 +48,12 @@ export default class ComplaintPage extends Component {
             <Victim victims={ complaint.victims } />
             <Complainant complainants={ complaint.complainants } />
             <Summary summary={ complaint.summary } />
-            <Attachments attachments={ complaint.attachments } complaintId={ complaintId } pathname={ pathname }/>
+            <Attachments
+              attachments={ complaint.attachments }
+              complaintId={ complaintId }
+              pathname={ pathname }
+              noAttachmentMessage={ noAttachmentMessage }
+            />
             <InvestigationTimeline
               startDate={ complaint.startDate }
               endDate={ complaint.endDate }
@@ -72,9 +79,13 @@ ComplaintPage.propTypes = {
   requestComplaint: PropTypes.func,
   complaintId: PropTypes.string,
   complaint: PropTypes.object,
-  pathname: PropTypes.string
+  pathname: PropTypes.string,
+  requestCMS: PropTypes.func,
+  cmsRequested: PropTypes.bool,
+  noAttachmentMessage: PropTypes.string,
 };
 
 ComplaintPage.defaultProps = {
-  requestComplaint: () => {}
+  requestComplaint: () => {},
+  requestCMS: noop,
 };
