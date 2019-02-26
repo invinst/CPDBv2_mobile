@@ -14,7 +14,6 @@ module.exports = {
       elements: {
         legal: '.item:nth-child(1)',
         github: '.item:nth-child(2)',
-        roadmap: '.item:nth-child(3)',
         logo: '.invist-logo-link'
       }
     },

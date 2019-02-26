@@ -140,11 +140,11 @@ export default class SearchPage extends Component {
     if (!this.isLongEnoughQuery(query)) {
       categories = [
         {
-          name: 'Recent',
+          name: 'RECENT',
           id: 'recent'
         },
         {
-          name: 'Suggested',
+          name: 'SUGGESTED',
           id: 'suggested'
         }
       ].filter((cat) => {
