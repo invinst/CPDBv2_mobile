@@ -37,7 +37,6 @@ class Attachments extends Component {
           <CRRequestDocumentButtonContainer
             crid={ complaintId }
             customClassName='request-button-container'
-            hasData={ !noAttachment }
           />
         </div>
         <div className='attachment-list'>

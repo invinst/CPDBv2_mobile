@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import { get, compact, startCase, toLower, upperFirst } from 'lodash';
 import { getCurrentAge, getCareerDuration, formatDate } from 'utils/date';
 import { extractPercentile } from 'selectors/common/percentile';
+import { cmsSelector } from 'selectors/common/cms';
 
 
 const getTRR = (state, props) => state.trrPage.trrs[props.params.trrId];
@@ -61,3 +62,9 @@ export const trrSelector = createSelector(
     };
   }
 );
+
+export const getCMSRequested = state => state.trrPage.cmsRequested;
+
+export const requestDocumentButtonMessage = state => cmsSelector(state, 'trrPage', 'document_request_instruction');
+
+export const buttonText = () => 'Request Documents';

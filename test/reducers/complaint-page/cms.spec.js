@@ -1,6 +1,4 @@
-import { COMPLAINT_PAGE_CMS_REQUEST_SUCCESS,
-  COMPLAINT_PAGE_CMS_REQUEST_FAILURE
-} from 'actions/complaint-page';
+import { COMPLAINT_PAGE_CMS_REQUEST_SUCCESS, COMPLAINT_PAGE_CMS_REQUEST_FAILURE } from 'actions/complaint-page';
 import cms from 'reducers/complaint-page/cms';
 
 

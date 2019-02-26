@@ -28,9 +28,7 @@ export default class RequestDocumentContent extends Component {
       closeModal,
       message,
       isRequested,
-      hasData,
       documentRequestMessage,
-      newDocumentNotificationMessage
     } = this.props;
     const showMessage = message && (isRequested || this.state.warning);
 
@@ -38,7 +36,7 @@ export default class RequestDocumentContent extends Component {
       <form onSubmit={ this.handleSubmit } className={ style.requestDocumentContent }>
         <div className='request-document-inputs'>
           <div className='instruction-text'>
-            <CMSContent content={ hasData ? newDocumentNotificationMessage : documentRequestMessage } />
+            <CMSContent content={ documentRequestMessage } />
           </div>
           <input
             ref='email'
@@ -66,7 +64,5 @@ RequestDocumentContent.propTypes = {
   closeModal: PropTypes.func,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isRequested: PropTypes.bool,
-  hasData: PropTypes.bool,
   documentRequestMessage: PropTypes.string,
-  newDocumentNotificationMessage: PropTypes.string,
 };

@@ -16,7 +16,7 @@ describe('<ComplaintDocumentCard />', () => {
 
   it('should track click event', function () {
     const stubTrackAttachmentClick = stub(GATracking, 'trackAttachmentClick');
-    const allegation ={
+    const allegation = {
       'crid': '123456'
     };
     const complaintDocumentCard = () => (

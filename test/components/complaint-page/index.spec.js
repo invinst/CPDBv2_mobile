@@ -33,6 +33,9 @@ describe('ComplaintPage component', function () {
         attachmentRequest: {
           message: '',
           subscribedCRIds: {}
+        },
+        complaints: {
+          '123': {}
         }
       }
     });

@@ -1,11 +1,12 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import { get, compact, sortBy } from 'lodash';
+import { get, compact, sortBy, isEmpty } from 'lodash';
 
 import constants from 'constants';
 import { getFindingOutcomeMix } from './finding-outcome-mix';
 import { extractPercentile } from 'selectors/common/percentile';
 import { breadcrumbSelector } from 'selectors/common/breadcrumbs';
+import { cmsSelector } from 'selectors/common/cms';
 
 
 const getComplaint = (state, props) => state.complaintPage.complaints[props.params.complaintId];
@@ -115,3 +116,17 @@ export const complaintSelector = createSelector(
 );
 
 export const getCMSRequested = state => state.complaintPage.cmsRequested;
+
+const hasAttachmentSelector = createSelector(
+  (state, props) => state.complaintPage.complaints[props.crid],
+  complaint => !isEmpty(get(complaint, 'attachments'))
+);
+
+export const requestDocumentButtonMessage = (state, props) => (
+  hasAttachmentSelector(state, props) ? cmsSelector(state, 'complaintPage', 'new_document_notification') :
+    cmsSelector(state, 'complaintPage', 'document_request_instruction')
+);
+
+export const buttonText = (state, props) => (
+  hasAttachmentSelector(state, props) ? 'New Document Notifications': 'Request Documents'
+);

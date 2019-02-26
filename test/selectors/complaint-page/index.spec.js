@@ -1,5 +1,8 @@
-import { complaintSelector, getCMSRequested } from 'selectors/complaint-page';
+import { complaintSelector, getCMSRequested, buttonText, requestDocumentButtonMessage } from 'selectors/complaint-page';
 import should from 'should';
+import * as draftjsUtils from 'utils/draftjs';
+import { stub } from 'sinon';
+import SearchCategory from "components/search-page/search-category";
 
 describe('complaint-page selectors', () => {
   describe('complaintSelector', () => {
@@ -283,5 +286,125 @@ describe('complaint-page selectors', () => {
   it('getCMSRequested', () => {
     getCMSRequested({ complaintPage: { cmsRequested: true } }).should.be.true();
     getCMSRequested({ complaintPage: { cmsRequested: false } }).should.be.false();
+  });
+
+  describe('buttonText selector', function () {
+    it('should return New Document Notifications if we have attachments', function () {
+      const state = {
+        breadcrumb: {
+          breadcrumbs: []
+        },
+        complaintPage: {
+          complaints: {
+            '123': {
+              crid: '123',
+              attachments: [{
+                url: 'https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf',
+                'preview_image_url': 'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088.pdf',
+                title: 'CRID 294088 CR',
+                'file_type': 'document',
+              }]
+            }
+          }
+        }
+      };
+
+      const props = {
+        crid: '123'
+      };
+      buttonText(state, props).should.eql('New Document Notifications');
+    });
+
+    it('should return Request Documents if we have no attachment', function () {
+      const state = {
+        breadcrumb: {
+          breadcrumbs: []
+        },
+        complaintPage: {
+          complaints: {
+            '123': {
+              crid: '123',
+              attachments: []
+            }
+          }
+        }
+      };
+
+      const props = {
+        crid: '123'
+      };
+      buttonText(state, props).should.eql('Request Documents');
+    });
+  });
+
+  describe('requestDocumentButtonMessage selector', function () {
+    beforeEach(function () {
+      stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
+    });
+
+    afterEach(function () {
+      draftjsUtils.convertContentStateToEditorState.restore();
+    });
+
+    it('should return document request instruction message', function () {
+      const state = {
+        complaintPage: {
+          cms: [
+            {
+              name: 'document_request_instruction',
+              value: 'This is document request instruction message'
+            },
+            {
+              name: 'new_document_notification',
+              value: 'This is new document notification instruction message'
+            }
+          ],
+          complaints: {
+            '123': {
+              crid: '123',
+              attachments: []
+            }
+          }
+        }
+      };
+
+      const props = {
+        crid: '123'
+      };
+      requestDocumentButtonMessage(state, props).should.eql('This is document request instruction message');
+    });
+
+    it('should return new document notification instruction message', function () {
+      const state = {
+        complaintPage: {
+          cms: [
+            {
+              name: 'document_request_instruction',
+              value: 'This is document request instruction message'
+            },
+            {
+              name: 'new_document_notification',
+              value: 'This is new document notification instruction message'
+            }
+          ],
+          complaints: {
+            '123': {
+              crid: '123',
+              attachments: [{
+                url: 'https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf',
+                'preview_image_url': 'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088.pdf',
+                title: 'CRID 294088 CR',
+                'file_type': 'document',
+              }]
+            }
+          }
+        }
+      };
+
+      const props = {
+        crid: '123'
+      };
+      requestDocumentButtonMessage(state, props).should.eql('This is new document notification instruction message');
+    });
   });
 });

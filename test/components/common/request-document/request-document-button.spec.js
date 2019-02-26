@@ -9,11 +9,11 @@ import RequestDocumentContent from 'components/common/request-document/request-d
 
 describe('RequestDocumentButton component', function () {
   it('should have correct text', function () {
-    const wrapper = shallow(<RequestDocumentButton isRequested={ false }/>);
+    const wrapper = shallow(<RequestDocumentButton isRequested={ false } buttonText='Request Documents'/>);
 
     wrapper.find('.request-button').text().should.equal('Request Documents');
 
-    wrapper.setProps({ hasData: true });
+    wrapper.setProps({ buttonText: 'New Document Notifications' });
     wrapper.find('.request-button').text().should.equal('New Document Notifications');
 
 

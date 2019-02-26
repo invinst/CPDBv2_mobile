@@ -10,9 +10,7 @@ describe('RequestDocumentContent component', function () {
   it('should initial render form with text box for request document button', function () {
     const wrapper = shallow(
       <RequestDocumentContent
-        hasData={ false }
         documentRequestMessage='We’ll notify you when the document is made available.'
-        newDocumentNotificationMessage=''
       />
     );
 
@@ -23,9 +21,7 @@ describe('RequestDocumentContent component', function () {
   it('should initial render form with text box for new document notification button', function () {
     const wrapper = shallow(
       <RequestDocumentContent
-        hasData={ true }
-        documentRequestMessage=''
-        newDocumentNotificationMessage='We’ll notify you when we have new documents.'
+        documentRequestMessage='We’ll notify you when we have new documents.'
       />
     );
     const cmsContent = wrapper.find(CMSContent);
@@ -36,9 +32,7 @@ describe('RequestDocumentContent component', function () {
   it('should initial render form with text box and "Request", "Cancel" button', function () {
     const wrapper = shallow(
       <RequestDocumentContent
-        hasData={ false }
         documentRequestMessage='We’ll notify you when the document is made available.'
-        newDocumentNotificationMessage=''
       />
     );
 

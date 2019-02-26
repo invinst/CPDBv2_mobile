@@ -34,6 +34,9 @@ describe('Attachments component', function () {
         attachmentRequest: {
           message: '',
           subscribedCRIds: {}
+        },
+        complaints: {
+          'CR123': {}
         }
       }
     });
@@ -56,6 +59,9 @@ describe('Attachments component', function () {
         attachmentRequest: {
           message: '',
           subscribedCRIds: {}
+        },
+        complaints: {
+          'CR123': {}
         }
       }
     });
@@ -66,7 +72,7 @@ describe('Attachments component', function () {
     }];
     const wrapper = mount(
       <Provider store={ store }>
-        <Attachments attachments={ attachments } pathname='/complaint/123456/'/>
+        <Attachments attachments={ attachments } pathname='/complaint/123456/' complaintId='CR123'/>
       </Provider>
     );
     wrapper.find('.attachment').simulate('click');

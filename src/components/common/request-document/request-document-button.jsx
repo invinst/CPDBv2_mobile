@@ -47,9 +47,8 @@ export default class RequestDocumentButton extends Component {
       requestDocument,
       message,
       customClassName,
-      hasData,
       documentRequestMessage,
-      newDocumentNotificationMessage
+      buttonText,
     } = this.props;
     return (
       <div className={ `${style.requestDocumentButton} ${customClassName}` }>
@@ -58,9 +57,7 @@ export default class RequestDocumentButton extends Component {
           onClick={ isRequested ? noop : this.openRequestForm }
         >
           {
-            isRequested
-              ? <span>Documents Requested<span className='check-mark'>✔</span></span>
-              : hasData ? 'New Document Notifications' : 'Request Documents'
+            isRequested ? <span>Documents Requested<span className='check-mark'>✔</span></span> : buttonText
           }
         </div>
         <Modal isOpen={ this.state.requestFormOpened } style={ this.modalStyles }>
@@ -70,9 +67,7 @@ export default class RequestDocumentButton extends Component {
             requestDocument={ requestDocument }
             message={ message }
             isRequested={ isRequested }
-            hasData={ hasData }
             documentRequestMessage={ documentRequestMessage }
-            newDocumentNotificationMessage={ newDocumentNotificationMessage }
           />
         </Modal>
       </div>
@@ -82,17 +77,15 @@ export default class RequestDocumentButton extends Component {
 
 RequestDocumentButton.propTypes = {
   isRequested: PropTypes.bool,
-  hasData: PropTypes.bool,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   requestDocument: PropTypes.func,
   message: PropTypes.string,
   customClassName: PropTypes.string,
   documentRequestMessage: PropTypes.string,
-  newDocumentNotificationMessage: PropTypes.string,
+  buttonText: PropTypes.string,
 };
 
 RequestDocumentButton.defaultProps = {
   isRequested: false,
-  hasData: false,
   customClassName: '',
 };
