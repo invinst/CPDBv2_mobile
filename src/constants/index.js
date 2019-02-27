@@ -216,7 +216,7 @@ export default {
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
   SIMPLE_SERVER_DATE_FORMAT: 'YYYY-MM-DD',
-  SEARCH_INCIDENT_DATE_FORMAT: 'MMM Do, YYYY',
+  SEARCH_INCIDENT_DATE_FORMAT: 'MM/DD/YYYY',
   FIRST_AVAILABLE_DATE_FORMAT: 'DD/MM/YYYY',
   FIRST_AVAILABLE_DATE: '02/01/1970',
 
@@ -270,13 +270,13 @@ export default {
       path: 'DATE > OFFICERS'
     },
     {
-      name: 'Officers',
+      name: 'OFFICERS',
       filter: 'Officers',
       id: 'officers',
       path: 'OFFICER'
     },
     {
-      name: 'COMPLAINT RECORDS',
+      name: 'COMPLAINT RECORDS (CRs)',
       filter: 'CR',
       id: 'crs',
       path: 'CR'
@@ -288,7 +288,7 @@ export default {
       path: 'TRR'
     },
     {
-      name: 'Units',
+      name: 'UNITS',
       filter: 'Units',
       id: 'units',
       path: 'UNIT'
@@ -309,7 +309,6 @@ export default {
   NEW_DIVIDER_WEIGHT: 2,
   INVINST_GITHUB_URL: 'https://github.com/invinst/',
   QA_URL: 'http://how.cpdp.works/',
-  ROADMAP_URL: 'http://roadmap.cpdp.co/',
   CAROUSEL_TYPES: {
     'COMPLAINT': 'COMPLAINT',
     'ACTIVITY': 'ACTIVITY',

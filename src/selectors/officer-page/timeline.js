@@ -36,6 +36,7 @@ export const attachmentsTransform = (attachments) => {
         url: attachment.url,
         previewImageUrl: previewImageUrl,
         fileType: fileType,
+        id: attachment['id']
       };
     });
   }

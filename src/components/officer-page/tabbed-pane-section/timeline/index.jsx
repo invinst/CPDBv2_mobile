@@ -9,7 +9,7 @@ import { TIMELINE_ITEMS } from 'constants/officer-page/tabbed-pane-section/timel
 
 export default class Timeline extends Component {
   renderItems() {
-    const { items, pathname } = this.props;
+    const { items, pathname, onTrackingAttachment } = this.props;
     return (
       <div>
         {
@@ -29,6 +29,8 @@ export default class Timeline extends Component {
                 key={ item.key }
                 hasBorderBottom={ hasBorderBottom }
                 pathname={ pathname }
+                onTrackingAttachment={ onTrackingAttachment }
+
               />
             );
           })
@@ -49,6 +51,8 @@ export default class Timeline extends Component {
 Timeline.propTypes = {
   items: PropTypes.array,
   pathname: PropTypes.string,
+  onTrackingAttachment: PropTypes.func
+
 };
 
 Timeline.defaultProps = {

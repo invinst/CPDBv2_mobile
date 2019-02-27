@@ -70,4 +70,36 @@ describe('Attachments component', function () {
     );
     stubTrackAttachmentClick.restore();
   });
+
+  it('should track click on attachment event', function () {
+    const store = configureStore()({
+      complaintPage: {
+        attachmentRequest: {
+          message: '',
+          subscribedCRIds: {}
+        }
+      }
+    });
+    const stubOnTrackingAttachment = stub();
+    const attachments = [{
+      'url': 'https://www.documentcloud.org/documents/4769822-CRID-1002813-CR.html',
+      'fileType': 'document',
+      'id': '123456',
+    }];
+    const wrapper = mount(
+      <Provider store={ store }>
+        <Attachments
+          attachments={ attachments }
+          pathname='/complaint/123456/'
+          onTrackingAttachment={ stubOnTrackingAttachment }
+        />
+      </Provider>
+    );
+    wrapper.find('.attachment').simulate('click');
+    stubOnTrackingAttachment.should.be.calledWith({
+      attachmentId: '123456',
+      sourcePage: 'CR Page',
+      app: 'Mobile',
+    });
+  });
 });

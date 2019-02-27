@@ -199,13 +199,21 @@ describe('search-page selectors', () => {
       const isShowingAll = true;
       const dateCRs = [
         {
-          'crid': '1'
+          category: 'Use Of Force',
+          crid: '1027271',
+          highlight: {
+            summary: ['On July', 'an off-duty'],
+          },
+          id: '1027271',
+          'incident_date': '2009-06-13'
         },
       ];
       const expectedDateCrs = [
         {
-          'crid': '1',
-          'url': '/complaint/1/'
+          crid: '1027271',
+          url: '/complaint/1027271/',
+          incidentDate: '06/13/2009',
+          category: 'Use Of Force'
         },
       ];
 
@@ -287,13 +295,36 @@ describe('search-page selectors', () => {
       const isShowingAll = true;
       const crs = [
         {
-          'crid': '1'
+          category: 'Use Of Force',
+          crid: '1027271',
+          highlight: {
+            summary: ['On July', 'an off-duty'],
+          },
+          id: '1027271',
+          'incident_date': '2009-06-13',
         },
+        {
+          category: 'Domestic',
+          crid: '1049273',
+          highlight: {
+            summary: ['On October', 'regarding an incident that occurred'],
+          },
+          id: '1049273',
+          'incident_date': '2011-10-13',
+        }
       ];
       const expectedCrs = [
         {
-          'crid': '1',
-          'url': '/complaint/1/'
+          crid: '1027271',
+          url: '/complaint/1027271/',
+          category: 'Use Of Force',
+          incidentDate: '06/13/2009',
+        },
+        {
+          crid: '1049273',
+          url: '/complaint/1049273/',
+          category: 'Domestic',
+          incidentDate: '10/13/2011',
         },
       ];
 
@@ -331,13 +362,21 @@ describe('search-page selectors', () => {
       const isShowingAll = true;
       const investigatorCR = [
         {
-          'crid': '123456'
+          category: 'Use Of Force',
+          crid: '1027271',
+          highlight: {
+            summary: ['On July', 'an off-duty'],
+          },
+          id: '1027271',
+          'incident_date': '2009-06-13',
         },
       ];
-      const expectedinvestigatorCR = [
+      const expectedInvestigatorCR = [
         {
-          'crid': '123456',
-          'url': '/complaint/123456/'
+          crid: '1027271',
+          url: '/complaint/1027271/',
+          incidentDate: '06/13/2009',
+          category: 'Use Of Force',
         },
       ];
 
@@ -354,7 +393,7 @@ describe('search-page selectors', () => {
 
       investigatorCRsSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
-        data: expectedinvestigatorCR
+        data: expectedInvestigatorCR
       });
     });
   });

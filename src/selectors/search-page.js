@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import moment from 'moment';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
@@ -56,7 +57,9 @@ const crFormatter = (crs) => {
     isShowingAll: crs.isShowingAll,
     data: crs.data.map((cr) => ({
       crid: cr.crid,
-      url: `${constants.COMPLAINT_PATH}${cr.crid}/`
+      url: `${constants.COMPLAINT_PATH}${cr.crid}/`,
+      incidentDate: moment(cr.incident_date).format(constants.SEARCH_INCIDENT_DATE_FORMAT),
+      category: cr.category,
     }))
   };
 };

@@ -40,7 +40,6 @@ class Footer extends Component {
         <div className='footer-items'>
           <div className='item legal-item' onClick={ this.openModal }>Legal</div>
           <a className='item' target='_blank' href={ constants.INVINST_GITHUB_URL }>Github</a>
-          <a className='item' target='_blank' href={ constants.ROADMAP_URL }>Roadmap</a>
           <div className='item contact-item' onClick={ this.openContact }>Contact</div>
         </div>
         <a
