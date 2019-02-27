@@ -309,7 +309,6 @@ export default {
   NEW_DIVIDER_WEIGHT: 2,
   INVINST_GITHUB_URL: 'https://github.com/invinst/',
   QA_URL: 'http://how.cpdp.works/',
-  ROADMAP_URL: 'http://roadmap.cpdp.co/',
   CAROUSEL_TYPES: {
     'COMPLAINT': 'COMPLAINT',
     'ACTIVITY': 'ACTIVITY',

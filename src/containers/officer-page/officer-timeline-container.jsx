@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 
 import TimeLine from 'components/officer-page/tabbed-pane-section/timeline';
 import { getNewTimelineItems } from 'selectors/officer-page/timeline';
+import { trackingClickAttachment } from 'actions/common/analytic';
 import { get } from 'lodash';
 
 
@@ -14,5 +15,8 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
+const mapDispatchToProps = {
+  onTrackingAttachment: trackingClickAttachment,
+};
 
-export default withRouter(connect(mapStateToProps)(TimeLine));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TimeLine));

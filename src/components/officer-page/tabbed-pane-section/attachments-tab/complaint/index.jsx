@@ -6,14 +6,14 @@ import style from './complaint.sass';
 
 export default class Complaint extends Component {
   render() {
-    const { complaint } = this.props;
+    const { complaint, onTrackingAttachment } = this.props;
     return (
       <div className={ style.officerAttachmentsTabComplaint }>
         <Heading complaint={ complaint } />
         <div className='attachments'>
           {
             complaint.attachments.map((attachment, index) =>
-              <Attachment attachment={ attachment } key={ index } />
+              <Attachment attachment={ attachment } key={ index } onTrackingAttachment={ onTrackingAttachment }/>
             )
           }
         </div>
@@ -24,4 +24,5 @@ export default class Complaint extends Component {
 
 Complaint.propTypes = {
   complaint: PropTypes.object,
+  onTrackingAttachment: PropTypes.func,
 };

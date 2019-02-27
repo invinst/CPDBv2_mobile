@@ -7,7 +7,7 @@ import style from './attachments-tab.sass';
 export default class AttachmentsTab extends Component {
 
   render() {
-    const { complaints } = this.props;
+    const { complaints, onTrackingAttachment } = this.props;
     return (
       <div className={ style.officerAttachmentsTab }>
         {
@@ -16,6 +16,7 @@ export default class AttachmentsTab extends Component {
               <Complaint
                 complaint={ complaint }
                 key={ index }
+                onTrackingAttachment={ onTrackingAttachment }
               />
             );
           })
@@ -32,4 +33,5 @@ AttachmentsTab.defaultProps = {
 AttachmentsTab.propTypes = {
   complaints: PropTypes.array,
   officerId: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  onTrackingAttachment: PropTypes.func,
 };
