@@ -50,20 +50,31 @@ describe('nginx config', () => {
     expectedHeaders: { 'location': `http://${process.env.MOBILE_DOMAIN}${toPath}` }
   });
 
+  const notRedirect = (path) => Object.assign({}, empty, {
+    path,
+    headers: {
+      'user-agent': mobileAgentStr
+    },
+    title: `not redirect from ${path}`,
+    expectedCode: 200
+  });
+
   const testCases = [
     preventIframe('/'),
-    preventIframe('/officer/123/jerome-finnigan'),
+    preventIframe('/officer/123/jerome-finnigan/'),
     preventIframe('/cr/123/'),
     preventIframe('/trr/123/'),
     allowIframe('/embed/top-officers-page/'),
     allowIframe('/embed/officers/'),
     allowIframe('/assets/favicon.ico'),
     desktopRedirect('/'),
-    desktopRedirect('/officer/123/jerome-finnigan'),
+    desktopRedirect('/officer/123/jerome-finnigan/'),
     desktopRedirect('/cr/123/'),
     desktopRedirect('/trr/123/'),
-    redirect('/officer/robbin-parker/21860', '/officer/21860/robbin-parker/'),
-    redirect('/officer/robbin-parker/21860/', '/officer/21860/robbin-parker/')
+    redirect('/officer/robbin-parker/21860/', '/officer/21860/robbin-parker/'),
+    redirect('/documents', '/documents/'),
+    redirect('/documents?match=abc', '/documents/?match=abc'),
+    notRedirect('/documents/abc.pdf'),
   ];
 
   const func = testCase => done => {
