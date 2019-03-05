@@ -29,6 +29,7 @@ export const newDocumentAllegationsSelector = createSelector(
     documentCount: complaint.num_recent_documents,
     document: {
       previewImageUrl: get(complaint, 'latest_document.preview_image_url', null),
+      id: get(complaint, 'latest_document.id', null),
     }
   }))
 );

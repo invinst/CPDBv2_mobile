@@ -16,9 +16,11 @@ export default class Attachments extends Component {
   // this is necessary at we cannot use nested anchors
   handleClick(e) {
     e.preventDefault();
-    const { pathname, attachments } = this.props;
+    const { pathname, attachments, onTrackingAttachment } = this.props;
     const url = attachments[0].url;
+    const id = attachments[0]['id'];
     GATracking.trackAttachmentClick(pathname, url);
+    onTrackingAttachment({ attachmentId: id, sourcePage: 'Officer Page - Timeline Tab', app: 'Mobile' });
     window.open(url, '_blank');
   }
 
@@ -43,4 +45,9 @@ export default class Attachments extends Component {
 Attachments.propTypes = {
   attachments: PropTypes.array,
   pathname: PropTypes.string,
+  onTrackingAttachment: PropTypes.func,
+};
+
+Attachments.defaultProps = {
+  onTrackingAttachment: () => {},
 };

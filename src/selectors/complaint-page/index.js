@@ -73,7 +73,8 @@ const attachmentTransform = attachment => ({
   fileType: attachment['file_type'],
   previewImageUrl: attachment['preview_image_url'],
   title: attachment['title'],
-  url: attachment['url']
+  url: attachment['url'],
+  id: attachment['id']
 });
 
 const involvedAs = type => involvement => involvement['involved_type'] === type;

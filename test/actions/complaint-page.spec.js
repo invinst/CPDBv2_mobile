@@ -34,7 +34,7 @@ describe('ComplaintPage actions', function () {
   });
 
   describe('requestDocument', function () {
-    it('shoulr return right action', function () {
+    it('should return right action', function () {
       requestDocument({ id: 123, email: 'valid@email.com' }).should.eql({
         types: [
           COMPLAINT_REQUEST_DOC_REQUEST_START,

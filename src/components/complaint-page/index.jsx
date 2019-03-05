@@ -28,7 +28,7 @@ export default class ComplaintPage extends Component {
   }
 
   render() {
-    const { complaint, complaintId, pathname, noAttachmentMessage } = this.props;
+    const { complaint, complaintId, pathname, onTrackingAttachment, noAttachmentMessage } = this.props;
 
     if (!complaint) {
       return null;
@@ -52,6 +52,7 @@ export default class ComplaintPage extends Component {
               attachments={ complaint.attachments }
               complaintId={ complaintId }
               pathname={ pathname }
+              onTrackingAttachment={ onTrackingAttachment }
               noAttachmentMessage={ noAttachmentMessage }
             />
             <InvestigationTimeline
@@ -80,6 +81,7 @@ ComplaintPage.propTypes = {
   complaintId: PropTypes.string,
   complaint: PropTypes.object,
   pathname: PropTypes.string,
+  onTrackingAttachment: PropTypes.func,
   requestCMS: PropTypes.func,
   cmsRequested: PropTypes.bool,
   noAttachmentMessage: PropTypes.string,

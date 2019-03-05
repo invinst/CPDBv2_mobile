@@ -19,7 +19,7 @@ export default class NewDocumentAllegations extends Component {
   }
 
   render() {
-    const { newDocumentAllegations, description, title, pathname } = this.props;
+    const { newDocumentAllegations, description, title, pathname, onTrackingAttachment } = this.props;
 
     return (
       <div className={ style.newDocumentAllegations }>
@@ -28,7 +28,12 @@ export default class NewDocumentAllegations extends Component {
           <CMSContent className='carousel-description' content={ description } />
           {
             newDocumentAllegations.map(allegation => (
-              <ComplaintDocumentCard allegation={ allegation } key={ allegation.crid } pathname={ pathname } />
+              <ComplaintDocumentCard
+                allegation={ allegation }
+                key={ allegation.crid }
+                pathname={ pathname }
+                onTrackingAttachment={ onTrackingAttachment }
+              />
             ))
           }
         </HorizontalScrolling>
@@ -48,4 +53,5 @@ NewDocumentAllegations.propTypes = {
   description: PropTypes.object,
   title: PropTypes.object,
   pathname: PropTypes.string,
+  onTrackingAttachment: PropTypes.func,
 };

@@ -110,13 +110,15 @@ describe('complaint-page selectors', () => {
                   'file_type': 'audio',
                   'url': 'http://audio.io',
                   'preview_image_url': 'http://preview.audio',
-                  'title': 'audio'
+                  'title': 'audio',
+                  'id': '123456',
                 },
                 {
                   'file_type': 'document',
                   'url': 'http://document.io/file.pdf',
                   'preview_image_url': 'http://preview.document',
-                  'title': 'document'
+                  'title': 'document',
+                  'id': '654321'
                 }
               ]
             }
@@ -179,13 +181,15 @@ describe('complaint-page selectors', () => {
             'fileType': 'audio',
             'url': 'http://audio.io',
             'previewImageUrl': 'http://preview.audio',
-            'title': 'audio'
+            'title': 'audio',
+            'id': '123456',
           },
           {
             'fileType': 'document',
             'url': 'http://document.io/file.pdf',
             'previewImageUrl': 'http://preview.document',
-            'title': 'document'
+            'title': 'document',
+            'id': '654321'
           }
         ]
       });

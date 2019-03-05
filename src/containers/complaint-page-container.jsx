@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 
 import ComplaintPage from 'components/complaint-page';
 import { requestComplaint, requestCMS } from 'actions/complaint-page';
+import { trackingClickAttachment } from 'actions/common/analytic';
 import { complaintSelector, getCMSRequested } from 'selectors/complaint-page';
 import { cmsSelector } from 'selectors/common/cms';
 import { get } from 'lodash';
@@ -17,6 +18,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {
   requestComplaint,
+  onTrackingAttachment: trackingClickAttachment,
   requestCMS
 };
 
