@@ -1,8 +1,14 @@
-import { complaintSelector, getCMSRequested, buttonText, requestDocumentButtonMessage } from 'selectors/complaint-page';
 import should from 'should';
-import * as draftjsUtils from 'utils/draftjs';
 import { stub } from 'sinon';
-import SearchCategory from "components/search-page/search-category";
+
+import * as draftjsUtils from 'utils/draftjs';
+import {
+  complaintSelector,
+  getCMSRequested,
+  buttonText,
+  requestDocumentButtonMessage
+} from 'selectors/complaint-page';
+
 
 describe('complaint-page selectors', () => {
   describe('complaintSelector', () => {
