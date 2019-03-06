@@ -2,7 +2,7 @@ import should from 'should';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CMSContent from 'components/landing-page/cms-content';
+import CMSContent from 'components/common/cms-content';
 
 describe('<CMSContent />', () => {
   it('should be renderable', () => {

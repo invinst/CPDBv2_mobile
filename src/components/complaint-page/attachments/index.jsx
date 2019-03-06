@@ -5,6 +5,7 @@ import CRRequestDocumentButtonContainer from 'containers/common/cr-request-docum
 import styles from './attachments.sass';
 import * as GATracking from 'utils/google_analytics_tracking';
 import { thumbnailStyle } from './attachments.style';
+import CMSContent from 'components/common/cms-content';
 
 
 class Attachments extends Component {
@@ -20,7 +21,7 @@ class Attachments extends Component {
   }
 
   render() {
-    const { attachments, complaintId } = this.props;
+    const { attachments, complaintId, noAttachmentMessage } = this.props;
     const noAttachment = attachments.length === 0;
 
     return (
@@ -28,10 +29,16 @@ class Attachments extends Component {
         <div className={ cx('header', { 'no-attachment': noAttachment }) }>
           <div className='label'>
             {
-              noAttachment ? 'There are no documents that have been made public yet.' : 'ATTACHMENTS'
+              noAttachment ?
+                <CMSContent
+                  content={ noAttachmentMessage }
+                /> : 'ATTACHMENTS'
             }
           </div>
-          <CRRequestDocumentButtonContainer crid={ complaintId } customClassName='request-button-container'/>
+          <CRRequestDocumentButtonContainer
+            crid={ complaintId }
+            customClassName='request-button-container'
+          />
         </div>
         <div className='attachment-list'>
           {
@@ -60,6 +67,7 @@ Attachments.propTypes = {
   complaintId: PropTypes.string,
   pathname: PropTypes.string,
   onTrackingAttachment: PropTypes.func,
+  noAttachmentMessage: PropTypes.string,
 };
 
 Attachments.defaultProps = {

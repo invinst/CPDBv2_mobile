@@ -1,12 +1,16 @@
 import {
   requestComplaint,
   requestDocument,
+  requestCMS,
   COMPLAINT_REQUEST_START,
   COMPLAINT_REQUEST_SUCCESS,
   COMPLAINT_REQUEST_FAILURE,
   COMPLAINT_REQUEST_DOC_REQUEST_START,
   COMPLAINT_REQUEST_DOC_REQUEST_SUCCESS,
   COMPLAINT_REQUEST_DOC_REQUEST_FAILURE,
+  COMPLAINT_PAGE_CMS_REQUEST_START,
+  COMPLAINT_PAGE_CMS_REQUEST_SUCCESS,
+  COMPLAINT_PAGE_CMS_REQUEST_FAILURE
 } from 'actions/complaint-page';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -45,6 +49,25 @@ describe('ComplaintPage actions', function () {
             },
             method: 'POST',
             adapter: undefined
+          }
+        }
+      });
+    });
+  });
+
+  describe('requestCMS', function () {
+    it('should return right action', function () {
+      requestCMS().should.eql({
+        types: [
+          COMPLAINT_PAGE_CMS_REQUEST_START,
+          COMPLAINT_PAGE_CMS_REQUEST_SUCCESS,
+          COMPLAINT_PAGE_CMS_REQUEST_FAILURE
+        ],
+        payload: {
+          request: {
+            url: `${v2Url(constants.COMPLAINT_PAGE_CMS_API_ENDPOINT)}`,
+            adapter: undefined,
+            params: undefined
           }
         }
       });

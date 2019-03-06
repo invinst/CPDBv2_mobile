@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
+import { noop } from 'lodash';
 
 import style from './trr-page.sass';
 import BottomPadding from 'components/shared/bottom-padding';
@@ -11,10 +12,11 @@ import Info from 'components/trr-page/info';
 export default class TRRPage extends Component {
 
   componentDidMount() {
-    const { trr, requestTRR, trrId } = this.props;
+    const { trr, requestTRR, trrId, cmsRequested, requestCMS } = this.props;
     if (!trr) {
       requestTRR(trrId);
     }
+    cmsRequested || requestCMS();
   }
 
   render() {
@@ -41,5 +43,11 @@ export default class TRRPage extends Component {
 TRRPage.propTypes = {
   requestTRR: PropTypes.func,
   trrId: PropTypes.number,
-  trr: PropTypes.object
+  trr: PropTypes.object,
+  requestCMS: PropTypes.func,
+  cmsRequested: PropTypes.bool,
+};
+
+TRRPage.defaultProps = {
+  requestCMS: noop
 };

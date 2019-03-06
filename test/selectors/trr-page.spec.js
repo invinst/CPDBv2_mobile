@@ -1,6 +1,8 @@
 import should from 'should';
+import { stub } from 'sinon';
 
-import { trrSelector } from 'selectors/trr-page';
+import { trrSelector, getCMSRequested, buttonText, requestDocumentButtonMessage } from 'selectors/trr-page';
+import * as draftjsUtils from 'utils/draftjs';
 
 
 describe('trr-page selectors', () => {
@@ -150,6 +152,42 @@ describe('trr-page selectors', () => {
           beat: '612',
         },
       });
+    });
+  });
+
+  describe('getCMSRequested selector', function () {
+    it('should return the correct state of the cms requested', function () {
+      getCMSRequested({ trrPage: { cmsRequested: true } }).should.be.true();
+      getCMSRequested({ trrPage: { cmsRequested: false } }).should.be.false();
+    });
+  });
+
+  describe('buttonText selector', function () {
+    it('should return Request Documents', function () {
+      buttonText().should.eql('Request Documents');
+    });
+  });
+
+  describe('requestDocumentButtonMessage selector', function () {
+    it('should return document request instruction message', function () {
+      stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
+      const state = {
+        trrPage: {
+          cms: [
+            {
+              name: 'document_request_instruction',
+              value: 'This is document request instruction message'
+            },
+            {
+              name: 'some_fake_document',
+              value: 'This is some fake message'
+            }
+          ],
+        }
+      };
+
+      requestDocumentButtonMessage(state).should.eql('This is document request instruction message');
+      draftjsUtils.convertContentStateToEditorState.restore();
     });
   });
 });

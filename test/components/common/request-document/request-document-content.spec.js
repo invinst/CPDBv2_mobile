@@ -3,14 +3,40 @@ import { shallow, mount } from 'enzyme';
 import { spy, useFakeTimers, stub } from 'sinon';
 
 import RequestDocumentContent from 'components/common/request-document/request-document-content';
+import CMSContent from 'components/common/cms-content';
 
 
 describe('RequestDocumentContent component', function () {
-  it('should initial render form with text box and "Request", "Cancel" button', function () {
-    const wrapper = shallow(<RequestDocumentContent/>);
-    const instance = wrapper.instance();
+  it('should initial render form with text box for request document button', function () {
+    const wrapper = shallow(
+      <RequestDocumentContent
+        documentRequestMessage='We’ll notify you when the document is made available.'
+      />
+    );
 
-    wrapper.text().should.containEql('We’ll notify you when the document is made available');
+    const cmsContent = wrapper.find(CMSContent);
+    cmsContent.at(0).prop('content').should.equal('We’ll notify you when the document is made available.');
+  });
+
+  it('should initial render form with text box for new document notification button', function () {
+    const wrapper = shallow(
+      <RequestDocumentContent
+        documentRequestMessage='We’ll notify you when we have new documents.'
+      />
+    );
+    const cmsContent = wrapper.find(CMSContent);
+
+    cmsContent.at(0).prop('content').should.equal('We’ll notify you when we have new documents.');
+  });
+
+  it('should initial render form with text box and "Request", "Cancel" button', function () {
+    const wrapper = shallow(
+      <RequestDocumentContent
+        documentRequestMessage='We’ll notify you when the document is made available.'
+      />
+    );
+
+    const instance = wrapper.instance();
     instance.state.warning.should.be.false();
 
     const inputs = wrapper.find('input');

@@ -7,7 +7,7 @@ import StaticRadarChart from 'components/common/radar-chart';
 import RadarExplainer from './explainer';
 import style from './radar-chart.sass';
 import { hasEnoughRadarChartData } from 'utils/visual-token';
-import CMSContent from 'components/landing-page/cms-content';
+import CMSContent from 'components/common/cms-content';
 import * as IntercomTracking from 'utils/intercom-tracking';
 import * as GATracking from 'utils/google_analytics_tracking';
 

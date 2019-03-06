@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 
 import DescriptionContent from 'components/officer-page/radar-chart/explainer/description-content';
-import CMSContent from 'components/landing-page/cms-content';
+import CMSContent from 'components/common/cms-content';
 
 
 describe('DescriptionContent component', function () {

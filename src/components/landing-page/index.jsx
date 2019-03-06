@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 import constants from 'constants';
-import CMSContent from 'components/landing-page/cms-content';
+import CMSContent from 'components/common/cms-content';
 import BottomPadding from 'components/shared/bottom-padding';
 import TopOfficersByAllegation from 'containers/landing-page/top-officers-by-allegation';
 import RecentActivities from 'containers/landing-page/recent-activities';
