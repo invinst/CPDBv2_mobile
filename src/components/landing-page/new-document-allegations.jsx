@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { isEmpty } from 'lodash';
 
-import CMSContent from './cms-content';
+import CMSContent from 'components/common/cms-content';
 import HorizontalScrolling from 'components/common/horizontal-scrolling';
 import ComplaintDocumentCard from './complaint-document-card';
 import style from './new-document-allegations.sass';

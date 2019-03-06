@@ -7,15 +7,21 @@ import { stub } from 'sinon';
 import Attachments from 'components/complaint-page/attachments';
 import RequestDocumentButton from 'components/common/request-document/request-document-button';
 import * as GATracking from 'utils/google_analytics_tracking';
+import CMSContent from 'components/common/cms-content';
 
 
 describe('Attachments component', function () {
   it('should render header', function () {
     const wrapper = shallow(
-      <Attachments attachments={ [] } complaintId='CR123'/>
+      <Attachments
+        attachments={ [] }
+        complaintId='CR123'
+        noAttachmentMessage='There are no documents that have been made public yet.'
+      />
     );
 
-    wrapper.find('.label').text().should.eql('There are no documents that have been made public yet.');
+    const cmsContent = wrapper.find(CMSContent);
+    cmsContent.at(0).prop('content').should.equal('There are no documents that have been made public yet.');
 
     wrapper.setProps({ attachments: [{fileType: 'video', title: 'Video Clip'}] });
 
@@ -28,6 +34,9 @@ describe('Attachments component', function () {
         attachmentRequest: {
           message: '',
           subscribedCRIds: {}
+        },
+        complaints: {
+          'CR123': {}
         }
       }
     });
@@ -50,6 +59,9 @@ describe('Attachments component', function () {
         attachmentRequest: {
           message: '',
           subscribedCRIds: {}
+        },
+        complaints: {
+          'CR123': {}
         }
       }
     });
@@ -60,7 +72,7 @@ describe('Attachments component', function () {
     }];
     const wrapper = mount(
       <Provider store={ store }>
-        <Attachments attachments={ attachments } pathname='/complaint/123456/'/>
+        <Attachments attachments={ attachments } pathname='/complaint/123456/' complaintId='CR123'/>
       </Provider>
     );
     wrapper.find('.attachment').simulate('click');
@@ -77,6 +89,9 @@ describe('Attachments component', function () {
         attachmentRequest: {
           message: '',
           subscribedCRIds: {}
+        },
+        complaints: {
+          '123': {}
         }
       }
     });

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import style from './description-content.sass';
-import CMSContent from 'components/landing-page/cms-content';
+import CMSContent from 'components/common/cms-content';
 
 
 export default class DescriptionContent extends Component {

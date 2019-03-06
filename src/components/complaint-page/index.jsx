@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
+import { noop } from 'lodash';
 
 import Header from 'components/shared/header';
 import BottomPadding from 'components/shared/bottom-padding';
@@ -19,14 +20,15 @@ import style from './complaint-page.sass';
 
 export default class ComplaintPage extends Component {
   componentDidMount() {
-    const { complaint, requestComplaint, complaintId } = this.props;
+    const { complaint, requestComplaint, complaintId, cmsRequested, requestCMS } = this.props;
     if (!complaint) {
       requestComplaint(complaintId);
     }
+    cmsRequested || requestCMS();
   }
 
   render() {
-    const { complaint, complaintId, pathname, onTrackingAttachment } = this.props;
+    const { complaint, complaintId, pathname, onTrackingAttachment, noAttachmentMessage } = this.props;
 
     if (!complaint) {
       return null;
@@ -51,6 +53,7 @@ export default class ComplaintPage extends Component {
               complaintId={ complaintId }
               pathname={ pathname }
               onTrackingAttachment={ onTrackingAttachment }
+              noAttachmentMessage={ noAttachmentMessage }
             />
             <InvestigationTimeline
               startDate={ complaint.startDate }
@@ -79,8 +82,12 @@ ComplaintPage.propTypes = {
   complaint: PropTypes.object,
   pathname: PropTypes.string,
   onTrackingAttachment: PropTypes.func,
+  requestCMS: PropTypes.func,
+  cmsRequested: PropTypes.bool,
+  noAttachmentMessage: PropTypes.string,
 };
 
 ComplaintPage.defaultProps = {
-  requestComplaint: () => {}
+  requestComplaint: () => {},
+  requestCMS: noop,
 };

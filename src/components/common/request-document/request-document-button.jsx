@@ -41,7 +41,15 @@ export default class RequestDocumentButton extends Component {
   }
 
   render() {
-    const { isRequested, id, requestDocument, message, customClassName } = this.props;
+    const {
+      isRequested,
+      id,
+      requestDocument,
+      message,
+      customClassName,
+      documentRequestMessage,
+      buttonText,
+    } = this.props;
     return (
       <div className={ `${style.requestDocumentButton} ${customClassName}` }>
         <div
@@ -49,9 +57,7 @@ export default class RequestDocumentButton extends Component {
           onClick={ isRequested ? noop : this.openRequestForm }
         >
           {
-            isRequested
-              ? <span>Documents Requested<span className='check-mark'>✔</span></span>
-              : 'Request Documents'
+            isRequested ? <span>Documents Requested<span className='check-mark'>✔</span></span> : buttonText
           }
         </div>
         <Modal isOpen={ this.state.requestFormOpened } style={ this.modalStyles }>
@@ -61,6 +67,7 @@ export default class RequestDocumentButton extends Component {
             requestDocument={ requestDocument }
             message={ message }
             isRequested={ isRequested }
+            documentRequestMessage={ documentRequestMessage }
           />
         </Modal>
       </div>
@@ -74,6 +81,8 @@ RequestDocumentButton.propTypes = {
   requestDocument: PropTypes.func,
   message: PropTypes.string,
   customClassName: PropTypes.string,
+  documentRequestMessage: PropTypes.string,
+  buttonText: PropTypes.string,
 };
 
 RequestDocumentButton.defaultProps = {

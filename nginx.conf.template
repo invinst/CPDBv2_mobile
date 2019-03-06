@@ -30,6 +30,8 @@ http {
         server_name _;
         root /usr/share/nginx/html;
 
+        rewrite ^([^.]*[^/])$ $1/ permanent;
+
         if ($http_user_agent !~* '(iPhone|iPod|Android|Blackberry|Windows Phone|Opera Mini|WebOS|SymbianOS|IEMobile|Maemo)') {
             set $mode 'Desktop';
         }
