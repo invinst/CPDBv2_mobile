@@ -38,19 +38,19 @@ describe('landing page selectors', function () {
           {
             id: 123,
             percentile: null,
-            type: 'coaccused_pair'
+            kind: 'coaccused_pair'
           },
           {
             id: 124,
             percentile: null,
-            type: 'single_officer'
+            kind: 'single_officer'
           },
         ]
       }
     }).should.deepEqual([{
       id: 124,
       percentile: null,
-      type: 'single_officer'
+      kind: 'single_officer'
     }]);
   });
 

@@ -19,7 +19,7 @@ export const topOfficersByAllegationSelector = createSelector(
 export const recentActivitiesSelector = createSelector(
   state => state.landingPage.recentActivities || [],
   //TODO: Below filter should be removed when Officer Pairing Card is implemented
-  officers => chain(officers).filter({ type: 'single_officer' }).take(20).map(officerCardTransform).value()
+  officers => chain(officers).filter({ kind: 'single_officer' }).take(20).map(officerCardTransform).value()
 );
 
 export const newDocumentAllegationsSelector = createSelector(
