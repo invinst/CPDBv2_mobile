@@ -8,7 +8,7 @@ import styles from './cr.sass';
 
 export default class Cr extends Component {
   render() {
-    const { item, hasBorderBottom, pathname } = this.props;
+    const { item, hasBorderBottom, pathname, onTrackingAttachment } = this.props;
 
     return (
       <Link
@@ -22,7 +22,11 @@ export default class Cr extends Component {
             <div className='finding'>{ item.finding }, { item.outcome }</div>
           </span>
           <span className='right'>
-            <Attachments attachments={ item.attachments } pathname={ pathname } />
+            <Attachments
+              attachments={ item.attachments }
+              pathname={ pathname }
+              onTrackingAttachment={ onTrackingAttachment }
+            />
             <span className='date'>{ item.date }</span>
           </span>
         </div>
@@ -34,5 +38,6 @@ export default class Cr extends Component {
 Cr.propTypes = {
   item: PropTypes.object,
   hasBorderBottom: PropTypes.bool,
-  pathname: PropTypes.string
+  pathname: PropTypes.string,
+  onTrackingAttachment: PropTypes.func
 };

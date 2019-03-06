@@ -15,9 +15,11 @@ class ComplaintDocumentCard extends React.Component {
   }
 
   handleClick() {
-    const { allegation, pathname } = this.props;
+    const { allegation, pathname, onTrackingAttachment } = this.props;
+    const document = get(allegation, 'document', {});
     const url = `${constants.COMPLAINT_PATH}${allegation.crid}/`;
     GATracking.trackAttachmentClick(pathname, url);
+    onTrackingAttachment({ attachmentId: document['id'], sourcePage: 'Landing Page', app: 'Mobile' });
   }
 
   render() {
@@ -46,6 +48,11 @@ class ComplaintDocumentCard extends React.Component {
 ComplaintDocumentCard.propTypes = {
   allegation: PropTypes.object,
   pathname: PropTypes.string,
+  onTrackingAttachment: PropTypes.func
+};
+
+ComplaintDocumentCard.defaultProps = {
+  onTrackingAttachment: () => {},
 };
 
 export default ComplaintDocumentCard;

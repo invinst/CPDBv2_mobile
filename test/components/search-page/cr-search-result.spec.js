@@ -10,9 +10,18 @@ describe('<CRSearchResult />', () => {
 
   it('should render crs correctly', () => {
     const crs = [
-      { crid: '1' },
-      { crid: '2' },
-      { crid: '3' },
+      {
+        crid: '1027271',
+        url: '/complaint/1027271/',
+        category: 'Use Of Force',
+        incidentDate: '06/13/2009'
+      },
+      {
+        crid: '1049273',
+        url: '/complaint/1049273/',
+        category: 'Domestic',
+        incidentDate: '10/13/2011'
+      }
     ];
 
     const wrapper = shallow(
@@ -24,7 +33,18 @@ describe('<CRSearchResult />', () => {
     );
 
     wrapper.should.be.ok();
-    wrapper.find(Link).should.have.length(3);
+    const links = wrapper.find(Link);
+    links.should.have.length(2);
+
+    const firstLink = links.at(0);
+    firstLink.prop('to').should.eql('/complaint/1027271/');
+    firstLink.find('.item-id').text().should.eql('CRID 1027271 • 06/13/2009');
+    firstLink.find('.item-type').text().should.eql('Use Of Force');
+
+    const secondLink = links.at(1);
+    secondLink.prop('to').should.eql('/complaint/1049273/');
+    secondLink.find('.item-id').text().should.eql('CRID 1049273 • 10/13/2011');
+    secondLink.find('.item-type').text().should.eql('Domestic');
   });
 
   it('should call saveToRecent when click on item', function () {

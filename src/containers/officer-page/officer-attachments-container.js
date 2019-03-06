@@ -4,6 +4,7 @@ import React from 'react';
 
 import AttachmentsTab from 'components/officer-page/tabbed-pane-section/attachments-tab';
 import { complaintsWithAttachmentsSelector } from 'selectors/officer-page/attachments';
+import { trackingClickAttachment } from 'actions/common/analytic';
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -12,4 +13,8 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(AttachmentsTab));
+const mapDispatchToProps = {
+  onTrackingAttachment: trackingClickAttachment,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AttachmentsTab));

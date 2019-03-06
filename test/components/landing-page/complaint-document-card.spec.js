@@ -34,4 +34,32 @@ describe('<ComplaintDocumentCard />', () => {
     );
     stubTrackAttachmentClick.restore();
   });
+
+  it('should track click on attachment event', function () {
+    const stubOnTrackingAttachment = stub();
+    const allegation ={
+      'crid': '123456',
+      'document': {
+        'id': '654321'
+      }
+    };
+    const complaintDocumentCard = () => (
+      <ComplaintDocumentCard
+        allegation={ allegation }
+        pathname='/'
+        onTrackingAttachment={ stubOnTrackingAttachment }
+      />
+    );
+    const wrapper = mount(
+      <Router history={ createMemoryHistory() }>
+        <Route path='/' component={ complaintDocumentCard } />
+      </Router>
+    );
+    wrapper.find('Link').simulate('click');
+    stubOnTrackingAttachment.should.be.calledWith({
+      attachmentId: '654321',
+      sourcePage: 'Landing Page',
+      app: 'Mobile',
+    });
+  });
 });

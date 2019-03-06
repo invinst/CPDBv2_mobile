@@ -1,8 +1,9 @@
 @import 'variables'
 
 :local(.cr-search-result)
-  .search-item
+  .cr-search-item
     display: flex
+    flex-direction: column
     padding: 11px 0
     border-bottom: 1px solid $alto-solid
     text-decoration: none
@@ -12,9 +13,8 @@
       font-weight: 400
       color: $thunder
       margin-right: 8px
-      width: 18px
 
     .item-id
-      font-size: 14px
+      font-size: 12px
       font-weight: 400
       color: $greyish

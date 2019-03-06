@@ -13,9 +13,10 @@ class Attachments extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(url) {
-    const { pathname } = this.props;
+  handleClick(url, id) {
+    const { pathname, onTrackingAttachment } = this.props;
     GATracking.trackAttachmentClick(pathname, url);
+    onTrackingAttachment({ attachmentId: id, sourcePage: 'CR Page', app: 'Mobile' });
   }
 
   render() {
@@ -38,7 +39,7 @@ class Attachments extends Component {
               <a
                 href={ attachment.url }
                 key={ idx } className='attachment'
-                onClick={ this.handleClick(attachment.url) }
+                onClick={ () => this.handleClick(attachment.url, attachment.id) }
               >
                 <div
                   className={ cx('attachment-thumbnail', attachment.fileType) }
@@ -58,10 +59,12 @@ Attachments.propTypes = {
   attachments: PropTypes.array,
   complaintId: PropTypes.string,
   pathname: PropTypes.string,
+  onTrackingAttachment: PropTypes.func,
 };
 
 Attachments.defaultProps = {
   attachments: [],
+  onTrackingAttachment: () => {},
 };
 
 export default Attachments;

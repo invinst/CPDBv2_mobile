@@ -23,8 +23,24 @@ const mockSearchQueryResponse = {
 
 const mockSearchQueryResponseWithDate = {
   'DATE > CR': [
-    { crid: '297449', id: '38221' },
-    { crid: '297473', id: '38245' }
+    {
+      crid: '297449',
+      id: '38221',
+      category: 'Domestic',
+      highlight: {
+        summary: ['On October', 'regarding an incident that occurred'],
+      },
+      'incident_date': '2011-10-13',
+    },
+    {
+      crid: '297473',
+      id: '38245',
+      category: 'Use Of Force',
+      highlight: {
+        summary: ['On July', 'an off-duty'],
+      },
+      'incident_date': '2009-06-13',
+    }
   ],
   'DATE > TRR': [
     { id: '767' },
@@ -61,8 +77,24 @@ const mockSearchQueryResponseWithDate = {
     }
   ],
   'CR': [
-    { crid: '397449', id: '48221' },
-    { crid: '397473', id: '48245' }
+    {
+      crid: '397449',
+      id: '48221',
+      category: 'Unknown',
+      highlight: {
+        summary: ['On July', 'an off-duty'],
+      },
+      'incident_date': '2009-06-13',
+    },
+    {
+      crid: '397473',
+      id: '48245',
+      category: 'Domestic',
+      highlight: {
+        summary: ['On October', 'regarding an incident that occurred'],
+      },
+      'incident_date': '2011-10-13',
+    }
   ],
   'TRR': [
     { id: '867' },
@@ -72,8 +104,24 @@ const mockSearchQueryResponseWithDate = {
 
 const mockInvestigatorCRSearchResponse = {
   'INVESTIGATOR > CR': [
-    { crid: '123456', id: '123456' },
-    { crid: '654321', id: '654321' }
+    {
+      crid: '123456',
+      id: '123456',
+      category: 'Unknown',
+      highlight: {
+        summary: ['On July', 'an off-duty'],
+      },
+      'incident_date': '2009-06-13',
+    },
+    {
+      crid: '654321',
+      id: '654321',
+      category: 'Domestic',
+      highlight: {
+        summary: ['On October', 'regarding an incident that occurred'],
+      },
+      'incident_date': '2011-10-13',
+    }
   ],
 };
 
@@ -161,11 +209,10 @@ describe('SearchPageTest', function () {
       this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR > CR');
 
       const investigatorCRs = this.searchPage.section.investigatorCRs;
-
-      investigatorCRs.section.firstRow.expect.element('@itemType').text.to.equal('CR');
-      investigatorCRs.section.firstRow.expect.element('@itemID').text.to.equal('123456');
-      investigatorCRs.section.secondRow.expect.element('@itemType').text.to.equal('CR');
-      investigatorCRs.section.secondRow.expect.element('@itemID').text.to.equal('654321');
+      investigatorCRs.section.firstRow.expect.element('@itemType').text.to.equal('Unknown');
+      investigatorCRs.section.firstRow.expect.element('@itemID').text.to.equal('CRID 123456 • 06/13/2009');
+      investigatorCRs.section.secondRow.expect.element('@itemType').text.to.equal('Domestic');
+      investigatorCRs.section.secondRow.expect.element('@itemID').text.to.equal('CRID 654321 • 10/13/2011');
       investigatorCRs.expect.section('@thirdRow').to.be.not.present;
     });
 
@@ -176,10 +223,10 @@ describe('SearchPageTest', function () {
 
       const investigatorCRs = this.searchPage.section.investigatorCRs;
 
-      investigatorCRs.section.firstRow.expect.element('@itemType').text.to.equal('CR');
-      investigatorCRs.section.firstRow.expect.element('@itemID').text.to.equal('123456');
-      investigatorCRs.section.secondRow.expect.element('@itemType').text.to.equal('CR');
-      investigatorCRs.section.secondRow.expect.element('@itemID').text.to.equal('654321');
+      investigatorCRs.section.firstRow.expect.element('@itemType').text.to.equal('Unknown');
+      investigatorCRs.section.firstRow.expect.element('@itemID').text.to.equal('CRID 123456 • 06/13/2009');
+      investigatorCRs.section.secondRow.expect.element('@itemType').text.to.equal('Domestic');
+      investigatorCRs.section.secondRow.expect.element('@itemID').text.to.equal('CRID 654321 • 10/13/2011');
       investigatorCRs.expect.section('@thirdRow').to.be.not.present;
     });
   });
@@ -196,10 +243,10 @@ describe('SearchPageTest', function () {
       const dateCRs = this.searchPage.section.dateCRs;
       this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
       this.searchPage.expect.element('@dateCRsHeader').text.to.equal('DATE > COMPLAINT RECORDS');
-      dateCRs.section.firstRow.expect.element('@itemType').text.to.equal('CR');
-      dateCRs.section.firstRow.expect.element('@itemID').text.to.equal('297449');
-      dateCRs.section.secondRow.expect.element('@itemType').text.to.equal('CR');
-      dateCRs.section.secondRow.expect.element('@itemID').text.to.equal('297473');
+      dateCRs.section.firstRow.expect.element('@itemType').text.to.equal('Domestic');
+      dateCRs.section.firstRow.expect.element('@itemID').text.to.equal('CRID 297449 • 10/13/2011');
+      dateCRs.section.secondRow.expect.element('@itemType').text.to.equal('Use Of Force');
+      dateCRs.section.secondRow.expect.element('@itemID').text.to.equal('CRID 297473 • 06/13/2009');
       dateCRs.expect.section('@thirdRow').to.be.not.present;
 
       this.searchPage.expect.element('@dateTRRsHeader').text.to.equal('DATE > TACTICAL RESPONSE REPORTS');
@@ -215,12 +262,12 @@ describe('SearchPageTest', function () {
       officers.section.firstRow.expect.element('@officerName').text.to.equal('William Eaker');
       officers.section.firstRow.expect.element('@officerBadge').text.to.equal('Badge #6056');
 
-      this.searchPage.expect.element('@crsHeader').text.to.equal('COMPLAINT RECORDS');
+      this.searchPage.expect.element('@crsHeader').text.to.equal('COMPLAINT RECORDS (CRs)');
       const crs = this.searchPage.section.crs;
-      crs.section.firstRow.expect.element('@itemType').text.to.equal('CR');
-      crs.section.firstRow.expect.element('@itemID').text.to.equal('397449');
-      crs.section.secondRow.expect.element('@itemType').text.to.equal('CR');
-      crs.section.secondRow.expect.element('@itemID').text.to.equal('397473');
+      crs.section.firstRow.expect.element('@itemType').text.to.equal('Unknown');
+      crs.section.firstRow.expect.element('@itemID').text.to.equal('CRID 397449 • 06/13/2009');
+      crs.section.secondRow.expect.element('@itemType').text.to.equal('Domestic');
+      crs.section.secondRow.expect.element('@itemID').text.to.equal('CRID 397473 • 10/13/2011');
       crs.expect.section('@thirdRow').to.be.not.present;
 
       this.searchPage.expect.element('@trrsHeader').text.to.equal('TACTICAL RESPONSE REPORTS');

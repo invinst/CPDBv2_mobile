@@ -19,10 +19,10 @@ const CRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
             <Link
               key={ item.crid }
               to={ item.url }
-              className='search-item'
+              className='cr-search-item'
               onClick={ () => handleClick(item.crid, item.url) }>
-              <div className='item-type'>CR</div>
-              <div className='item-id'>{ item.crid }</div>
+              <div className='item-id'>CRID { item.crid } • { item.incidentDate }</div>
+              <div className='item-type'>{ item.category }</div>
             </Link>
           );
         })

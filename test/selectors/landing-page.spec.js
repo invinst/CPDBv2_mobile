@@ -67,6 +67,7 @@ describe('landing page selectors', function () {
             'num_recent_documents': 2,
             'latest_document': {
               'preview_image_url': 'preview_link',
+              'id': '123456',
             }
           }
         ]
@@ -76,6 +77,7 @@ describe('landing page selectors', function () {
       documentCount: 2,
       document: {
         previewImageUrl: 'preview_link',
+        id: '123456'
       }
     }]);
   });
