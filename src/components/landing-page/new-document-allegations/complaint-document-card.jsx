@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { get } from 'lodash';
-import pluralize from 'pluralize';
 
 import constants from 'constants';
 import style from './complaint-document-card.sass';
@@ -25,6 +24,7 @@ class ComplaintDocumentCard extends React.Component {
   render() {
     const { allegation } = this.props;
     const document = get(allegation, 'document', {});
+    const { incidentDate, category } = allegation;
     return (
       <Link
         to={ `${constants.COMPLAINT_PATH}${allegation.crid}/` }
@@ -35,10 +35,8 @@ class ComplaintDocumentCard extends React.Component {
           <img className='preview-image' src={ document.previewImageUrl } />
         </div>
         <div className='complaint-info'>
-          <div className='crid'>CR { allegation.crid }</div>
-          <div className='num-recent-documents'>
-            { `${allegation.documentCount} new ${pluralize('attachment', allegation.documentCount)}` }
-          </div>
+          <div className='complaint-info-incident-date'>{ incidentDate }</div>
+          <div className='complaint-info-category'>{ category }</div>
         </div>
       </Link>
     );
@@ -48,6 +46,8 @@ class ComplaintDocumentCard extends React.Component {
 ComplaintDocumentCard.propTypes = {
   allegation: PropTypes.object,
   pathname: PropTypes.string,
+  incidentDate: PropTypes.string,
+  category: PropTypes.string,
   onTrackingAttachment: PropTypes.func
 };
 

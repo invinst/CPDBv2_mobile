@@ -5,7 +5,7 @@ import { Router, Route, createMemoryHistory } from 'react-router';
 
 import * as GATracking from 'utils/google_analytics_tracking';
 
-import ComplaintDocumentCard from 'components/landing-page/complaint-document-card';
+import ComplaintDocumentCard from 'components/landing-page/new-document-allegations/complaint-document-card';
 
 
 describe('<ComplaintDocumentCard />', () => {

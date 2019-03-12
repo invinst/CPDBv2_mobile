@@ -1,11 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { isEmpty } from 'lodash';
 
-import CMSContent from 'components/common/cms-content';
-import HorizontalScrolling from 'components/common/horizontal-scrolling';
 import ComplaintDocumentCard from './complaint-document-card';
-import style from './new-document-allegations.sass';
-import constants from 'constants';
+import CarouselWrapper from '../carousel-wrapper';
 
 
 export default class NewDocumentAllegations extends Component {
@@ -22,22 +19,18 @@ export default class NewDocumentAllegations extends Component {
     const { newDocumentAllegations, description, title, pathname, onTrackingAttachment } = this.props;
 
     return (
-      <div className={ style.newDocumentAllegations }>
-        <CMSContent className='carousel-title' content={ title } />
-        <HorizontalScrolling trackingContentType={ constants.CAROUSEL_TYPES.DOCUMENT }>
-          <CMSContent className='carousel-description' content={ description } />
-          {
-            newDocumentAllegations.map(allegation => (
-              <ComplaintDocumentCard
-                allegation={ allegation }
-                key={ allegation.crid }
-                pathname={ pathname }
-                onTrackingAttachment={ onTrackingAttachment }
-              />
-            ))
-          }
-        </HorizontalScrolling>
-      </div>
+      <CarouselWrapper title={ title } description={ description }>
+        {
+          newDocumentAllegations.map(allegation => (
+            <ComplaintDocumentCard
+              allegation={ allegation }
+              key={ allegation.crid }
+              pathname={ pathname }
+              onTrackingAttachment={ onTrackingAttachment }
+            />
+          ))
+        }
+      </CarouselWrapper>
     );
   }
 }
