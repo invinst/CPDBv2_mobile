@@ -46,8 +46,6 @@ class ComplaintDocumentCard extends React.Component {
 ComplaintDocumentCard.propTypes = {
   allegation: PropTypes.object,
   pathname: PropTypes.string,
-  incidentDate: PropTypes.string,
-  category: PropTypes.string,
   onTrackingAttachment: PropTypes.func
 };
 
