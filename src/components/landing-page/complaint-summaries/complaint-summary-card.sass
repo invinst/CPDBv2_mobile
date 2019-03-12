@@ -11,24 +11,26 @@
   display: block
   font-weight: 300
 
-  .complaint-info
-    padding: 8px
-    background-color: $wild-sand
-
-    .incident-date
-      font-size: 12px
-      color: $gandalf-gray
-
-    .category
-      color: $thunder
-      font-size: 14px
-      white-space: nowrap
-      overflow: hidden
+  .incident-date
+    height: 30px
+    padding: 12px 8px 8px 8px
+    font-size: 12px
+    color: $boulder
+    box-sizing: border-box
 
   .complaint-summary
-    height: 112px
-    margin: 8px
+    height: calc(100% - 36px)
+    margin: 0 8px 6px 8px
     font-size: 12px
-    color: $gandalf-gray
-    overflow: hidden
+    color: $thunder
     box-sizing: border-box
+    position: relative
+    overflow: hidden
+
+    .gradient
+      height: 44px
+      position: absolute
+      left: 0
+      right: 0
+      bottom: 0
+      background-image: linear-gradient(to bottom, $transparent-color, white)
