@@ -38,7 +38,6 @@ let config = Object.assign({}, baseConfig, {
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html.template',
-      favicon: './src/img/favicon.ico',
       filename: '../index.html'
     }),
   ],
