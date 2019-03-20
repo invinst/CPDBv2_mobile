@@ -69,7 +69,7 @@ export default class SearchCategory extends Component {
   }
 
   renderResults() {
-    const { saveToRecent, categoryId, showAllButton, categoryFilter } = this.props;
+    const { saveToRecent, categoryId, showAllButton, categoryFilter, addItemToPinboard } = this.props;
     const ResultComponent = resultComponentMappings[categoryId];
 
     if (typeof ResultComponent === 'undefined') {
@@ -81,7 +81,12 @@ export default class SearchCategory extends Component {
       items = items.slice(0, 5);
     }
 
-    return <ResultComponent items={ items } saveToRecent={ saveToRecent } categoryFilter={ categoryFilter }/>;
+    return <ResultComponent
+      items={ items }
+      saveToRecent={ saveToRecent }
+      categoryFilter={ categoryFilter }
+      addItemToPinboard={ addItemToPinboard }
+    />;
   }
 
   render() {
@@ -117,5 +122,6 @@ SearchCategory.propTypes = {
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
   updateActiveCategory: PropTypes.func,
-  fixedHeaderHeight: PropTypes.number
+  fixedHeaderHeight: PropTypes.number,
+  addItemToPinboard: PropTypes.func,
 };

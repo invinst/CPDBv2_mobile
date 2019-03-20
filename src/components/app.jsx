@@ -15,6 +15,7 @@ import LandingPageContainer from 'containers/landing-page-container';
 import BreadcrumbItemContainer from 'containers/breadcrumb-container';
 import TopOfficersByAllegationContainer from 'containers/landing-page/top-officers-by-allegation';
 import OfficersContainer from 'containers/embed/officers';
+import PinboardPageContainer from 'containers/pinboard-page-container';
 
 import 'swiper/dist/css/swiper.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -82,6 +83,10 @@ const App = React.createClass({
         <Route
           path={ constants.EMBED_OFFICERS_PATH }
           component={ OfficersContainer }
+        />
+        <Route
+          path={ `${constants.PINBOARD_PATH}:pinboardId/(:pinboardTitle/)` }
+          component={ PinboardPageContainer }
         />
 
         <Redirect from='*' to='/'/>

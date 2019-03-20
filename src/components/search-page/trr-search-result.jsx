@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
 
+import SearchItem from './search-item';
 import style from './trr-search-result.sass';
 
 
@@ -16,14 +16,14 @@ const TRRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
       {
         items.map((item) => {
           return (
-            <Link
+            <SearchItem
               key={ item.id }
-              to={ item.url }
-              className='search-item'
-              onClick={ () => handleClick(item.id, item.url) }>
+              url={ item.url }
+              onClick={ () => handleClick(item.id, item.url) }
+              hasPinButton={ false }>
               <div className='item-type'>TRR</div>
               <div className='item-id'>{ item.id }</div>
-            </Link>
+            </SearchItem>
           );
         })
       }

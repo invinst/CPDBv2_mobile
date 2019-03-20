@@ -47,7 +47,7 @@ BaseOfficerCard.propTypes = {
   percentile: PropTypes.object,
   openCardInNewPage: PropTypes.bool,
   bottomContent: PropTypes.node,
-  customStyle: PropTypes.object,
+  customStyle: PropTypes.string,
 };
 
 export default BaseOfficerCard;

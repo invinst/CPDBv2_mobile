@@ -1,0 +1,25 @@
+@import 'variables'
+
+%pinned-style
+  background-color: $pudding-matcha !important
+  border: 1px solid $pudding-matcha !important
+  background-image: url('/img/ic-plus_green.svg') !important
+
+\:local(.wrapper)
+  width: 32px
+  height: 32px
+  background-position: center
+  background-repeat: no-repeat
+  background-image: url('/img/ic-plus_light.svg')
+  background-size: 12px 12px
+  background-color: $snow-color
+  box-sizing: border-box
+  display: inline-block
+  float: left
+  top: 3px
+  right: 16px
+  border: 1px solid $alto-solid
+  border-radius: 2px
+
+  &.is-pinned
+    @extend %pinned-style

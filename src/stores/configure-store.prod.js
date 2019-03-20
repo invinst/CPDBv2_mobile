@@ -7,6 +7,7 @@ import rootReducer from 'reducers/root-reducer';
 import localStorageConfig from './local-storage-config';
 import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
 import trackingMiddleware from 'middleware/tracking-middleware';
+import createOrUpdatePinboardMiddleware from 'middleware/create-or-update-pinboard-middleware';
 
 
 export default function configureStore(initialState) {
@@ -15,7 +16,13 @@ export default function configureStore(initialState) {
     rootReducer,
     initialState,
     compose(
-      applyMiddleware(thunk, configuredAxiosMiddleware, scrollPositionMiddleware, trackingMiddleware),
+      applyMiddleware(
+        thunk,
+        configuredAxiosMiddleware,
+        scrollPositionMiddleware,
+        trackingMiddleware,
+        createOrUpdatePinboardMiddleware,
+      ),
       persistState(()=>{}, localStorageConfig)
     )
   );

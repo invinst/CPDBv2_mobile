@@ -9,6 +9,7 @@ import ClearableInput from './clearable-input';
 import { showIntercomLauncher } from 'utils/intercom';
 import style from './search-page.sass';
 import * as IntercomTracking from 'utils/intercom-tracking';
+import PinboardBar from './pinboard-bar';
 
 
 export default class SearchPage extends Component {
@@ -101,6 +102,7 @@ export default class SearchPage extends Component {
           saveToRecent={ this.props.saveToRecent }
           updateActiveCategory={ this.props.updateActiveCategory }
           activeCategory={ this.props.activeCategory }
+          addItemToPinboard={ this.props.addItemToPinboard }
           />
       );
 
@@ -134,7 +136,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query, activeCategory, chosenCategory, router } = this.props;
+    const { query, activeCategory, chosenCategory, router, pinboard } = this.props;
     let categories;
 
     if (!this.isLongEnoughQuery(query)) {
@@ -192,6 +194,8 @@ export default class SearchPage extends Component {
             clearChosenCategory={ this.props.updateChosenCategory.bind(this, '') }
           />
 
+          <PinboardBar pinboard={ pinboard }/>
+
         </div>
 
         <div className='category-details-container'>
@@ -223,6 +227,8 @@ SearchPage.propTypes = {
   location: PropTypes.object,
   params: PropTypes.object,
   routes: PropTypes.array,
+  pinboard: PropTypes.object,
+  addItemToPinboard: PropTypes.func,
 };
 
 SearchPage.defaultProps = {

@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+
+import SearchItem from './search-item';
+
 
 class SuggestedSearchResult extends Component {
 
@@ -9,10 +11,15 @@ class SuggestedSearchResult extends Component {
     const onClick = saveToRecent.bind(this, { url, type, title });
 
     return (
-      <Link className={ `row suggested ${type.toLowerCase()}` } to={ url } onClick={ onClick } key={ index }>
+      <SearchItem
+        key={ index }
+        url={ url }
+        onClick={ onClick }
+        hasPinButton={ false }
+        className={ `row suggested ${type.toLowerCase()}` }>
         <span className='suggested-type'>{ type }</span>
         <span className='suggested-title'>{ title }</span>
-      </Link>
+      </SearchItem>
     );
   }
 

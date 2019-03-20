@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
 
-import RadarChart from 'components/common/radar-chart';
+import SearchItem from './search-item';
 import style from './officer-item.sass';
 
 
-const OfficerItem = ({ name, badge, url, percentile, saveToRecent, categoryFilter }) => {
+const OfficerItem = ({ item, name, badge, url, percentile, saveToRecent, categoryFilter, addItemToPinboard }) => {
   const handleClick = (categoryFilter, name, url) => saveToRecent({
     type: categoryFilter,
     title: name,
@@ -13,22 +12,19 @@ const OfficerItem = ({ name, badge, url, percentile, saveToRecent, categoryFilte
   });
 
   return (
-    <Link
-      to={ url }
-      className={ style.officerItem }
-      onClick={ () => handleClick(categoryFilter, name, url) }>
-      <div className='radar-chart-wrapper'>
-        <RadarChart
-          radius={ 150 }
-          backgroundColor={ percentile && percentile.visualTokenBackground }
-          data={ percentile && percentile.items }
-       />
-      </div>
-      <div className='officer-info'>
+    <SearchItem
+      url={ url }
+      onClick={ () => handleClick(categoryFilter, name, url) }
+      hasPinButton={ true }
+      addItemToPinboard={ addItemToPinboard }
+      id={ item.id }
+      isPinned={ item.isPinned }
+      type={ item.type }>
+      <div className={ style.officerInfo }>
         <div className='officer-name'>{ name }</div>
         <div className='officer-badge'>{ badge }</div>
       </div>
-    </Link>
+    </SearchItem>
   );
 };
 
@@ -38,7 +34,9 @@ OfficerItem.propTypes = {
   url: PropTypes.string,
   percentile: PropTypes.object,
   saveToRecent: PropTypes.func,
-  categoryFilter: PropTypes.string
+  categoryFilter: PropTypes.string,
+  addItemToPinboard: PropTypes.func,
+  item: PropTypes.object,
 };
 
 OfficerItem.defaultProps = {

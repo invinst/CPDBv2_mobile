@@ -40,3 +40,15 @@ export const post = (url, types) => ((data, adapter) => ({
     }
   }
 }));
+
+export const put = (url, types) => ((data, adapter) => ({
+  types,
+  payload: {
+    request: {
+      method: 'PUT',
+      url,
+      data,
+      adapter
+    }
+  }
+}));

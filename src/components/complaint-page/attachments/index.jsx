@@ -67,7 +67,7 @@ Attachments.propTypes = {
   complaintId: PropTypes.string,
   pathname: PropTypes.string,
   onTrackingAttachment: PropTypes.func,
-  noAttachmentMessage: PropTypes.string,
+  noAttachmentMessage: PropTypes.object,
 };
 
 Attachments.defaultProps = {
