@@ -125,6 +125,22 @@ const mockInvestigatorCRSearchResponse = {
   ],
 };
 
+const updatePinboardResponse = {
+  'id': 1,
+  'title': '',
+  'officer_ids': [],
+  'crids': [],
+  'description': 'Description',
+};
+
+const createPinboardResponse = {
+  'id': 1,
+  'title': '',
+  'officer_ids': [],
+  'crids': ['123456'],
+  'description': 'Description',
+};
+
 
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
@@ -141,7 +157,7 @@ describe('SearchPageTest', function () {
     done();
   });
 
-  it('should show search page with suggested items', function () {
+  it('should show search page with suggested items', function (client) {
     const searchPage = this.searchPage;
 
     searchPage.expect.element('@queryInput').to.be.visible;
@@ -203,7 +219,7 @@ describe('SearchPageTest', function () {
       done();
     });
 
-    it('should show results that match search query', function () {
+    it('should show results that match search query', function (client) {
       this.searchPage.setValue('@queryInput', 'Kelvin');
 
       this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR > CR');
@@ -287,6 +303,49 @@ describe('SearchPageTest', function () {
       this.searchPage.expect.element('@dateOfficersHeader').text.to.equal('DATE > OFFICERS');
       dateOfficers.section.firstRow.expect.element('@officerName').text.to.equal('Jerome Finnigan');
       dateOfficers.section.firstRow.expect.element('@officerBadge').text.to.equal('Badge #6789');
+    });
+  });
+
+  context('pinboard functionalities', function () {
+    beforeEach(function (client, done) {
+      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
+      api.mockPost(
+        '/api/v2/mobile/pinboards/', 201,
+        { 'officer_ids': [], crids: ['123456'] },
+        createPinboardResponse
+      );
+      api.mockPut(
+        '/api/v2/mobile/pinboards/1/', 200,
+        { 'officer_ids': [], crids: [], title: '' },
+        updatePinboardResponse
+      );
+      done();
+    });
+
+    it('should display pinboard button with correct text when items are added/removed', function (client) {
+      this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty');
+
+      const investigatorCRs = this.searchPage.section.investigatorCRs;
+
+      investigatorCRs.section.firstRow.click('@pinButton');
+      this.searchPage.waitForElementVisible('@pinboardBar', TIMEOUT);
+      this.searchPage.expect.element('@pinboardBar').text.to.equal('Pinboard (1)');
+
+      investigatorCRs.section.firstRow.click('@pinButton');
+      this.searchPage.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty');
+    });
+
+    it('should display pinboard button that links to pinboard page when pinboard is not empty', function (client) {
+      this.searchPage.setValue('@queryInput', 'Kelvin');
+
+      this.searchPage.click('@pinboardBar');
+      client.assert.urlContains('/search/');
+
+      this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
+      this.searchPage.waitForElementVisible('@pinboardBar', TIMEOUT);
+      this.searchPage.click('@pinboardBar');
+      client.assert.urlContains('/pinboard/1/untitled-pinboard/');
     });
   });
 });

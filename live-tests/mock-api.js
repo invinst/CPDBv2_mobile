@@ -26,6 +26,21 @@ var buildApi = function () {
       response.status(status).send(data);
     };
   };
+
+  var mockPut = function (uri, status, body, data) {
+    var method = 'PUT';
+    if (!(method in handleMap)) {
+      handleMap[method] = {};
+    }
+    if (!(uri in handleMap[method])) {
+      handleMap[method][uri] = {};
+    }
+
+    handleMap[method][uri][hashBody(body)] = function (response) {
+      response.status(status).send(data);
+    };
+  };
+
   var cleanMock = function () {
     handleMap = {};
   };
@@ -33,7 +48,7 @@ var buildApi = function () {
   var call = function (req) {
     var uri = req.originalUrl;
     var return404 = (response) => response.status(404).send();
-    if (req.method === 'POST') {
+    if (req.method === 'POST' || req.method === 'PUT') {
       return ((handleMap[req.method] || {})[uri] || {})[hashBody(req.body)] || return404;
     } else {
       return (handleMap[req.method] || {})[uri] || return404;
@@ -43,6 +58,7 @@ var buildApi = function () {
   return {
     mock: mock,
     mockPost: mockPost,
+    mockPut: mockPut,
     cleanMock: cleanMock,
     call: call
   };

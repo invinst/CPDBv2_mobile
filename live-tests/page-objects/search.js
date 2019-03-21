@@ -13,7 +13,8 @@ const nthRow = (n) => ({
     itemType: '.item-type',
     itemID: '.item-id',
     officerName: '.officer-name',
-    officerBadge: '.officer-badge'
+    officerBadge: '.officer-badge',
+    pinButton: '.item-pin-btn',
   }
 });
 
@@ -37,6 +38,7 @@ module.exports = {
     investigatorCRsHeader: '#search-category-investigatorCRs',
     trrsHeader: '#search-category-trrs',
     officersHeader: '#search-category-officers',
+    pinboardBar: '.test--pinboard-bar',
   },
 
   sections: {
