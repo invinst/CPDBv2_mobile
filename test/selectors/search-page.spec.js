@@ -20,7 +20,8 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboard: null,
       };
 
       officersSelector(state).should.be.eql({ data: [] });
@@ -34,7 +35,7 @@ describe('search-page selectors', () => {
               isShowingAll: true,
               data: [
                 {
-                  'id': 1,
+                  'id': '1',
                   'name': 'Name',
                   'badge': null,
                   'percentile': null
@@ -42,17 +43,20 @@ describe('search-page selectors', () => {
               ]
             }
           }
-        }
+        },
+        pinboard: null,
       };
 
       officersSelector(state).should.be.eql({
         isShowingAll: true,
         data: [{
-          id: 1,
+          id: '1',
           name: 'Name',
           badge: '',
           percentile: null,
           url: `${constants.OFFICER_PATH}1/name/`,
+          isPinned: false,
+          type: 'OFFICER',
         }]
       });
     });
@@ -60,18 +64,20 @@ describe('search-page selectors', () => {
     it('should return officer data when there are officers', () => {
       const isShowingAll = true;
       const officer = {
-        'id': 1,
+        'id': '1',
         'name': 'Name',
         'badge': '12314',
         'percentile': null
       };
 
       const expectedOfficer = {
-        id: 1,
+        id: '1',
         name: 'Name',
         badge: 'Badge #12314',
         url: `${constants.OFFICER_PATH}1/name/`,
-        percentile: null
+        percentile: null,
+        isPinned: true,
+        type: 'OFFICER',
       };
 
       const state = {
@@ -82,6 +88,11 @@ describe('search-page selectors', () => {
               data: [officer]
             }
           }
+        },
+        pinboard: {
+          id: 99,
+          'officer_ids': [1],
+          crids: [],
         }
       };
 
@@ -189,7 +200,8 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboard: null,
       };
 
       dateCRsSelector(state).should.be.eql({ data: [] });
@@ -213,7 +225,9 @@ describe('search-page selectors', () => {
           crid: '1027271',
           url: '/complaint/1027271/',
           incidentDate: '06/13/2009',
-          category: 'Use Of Force'
+          category: 'Use Of Force',
+          type: 'CR',
+          isPinned: false,
         },
       ];
 
@@ -225,6 +239,11 @@ describe('search-page selectors', () => {
               data: dateCRs
             }
           }
+        },
+        pinboard: {
+          id: 99,
+          'officer_ids': [],
+          crids: ['1027272']
         }
       };
 
@@ -285,7 +304,8 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboard: null,
       };
 
       crsSelector(state).should.be.eql({ data: [] });
@@ -319,12 +339,16 @@ describe('search-page selectors', () => {
           url: '/complaint/1027271/',
           category: 'Use Of Force',
           incidentDate: '06/13/2009',
+          type: 'CR',
+          isPinned: false,
         },
         {
           crid: '1049273',
           url: '/complaint/1049273/',
           category: 'Domestic',
           incidentDate: '10/13/2011',
+          type: 'CR',
+          isPinned: true,
         },
       ];
 
@@ -336,6 +360,11 @@ describe('search-page selectors', () => {
               data: crs
             }
           }
+        },
+        pinboard: {
+          id: 99,
+          'officer_ids': [1],
+          crids: ['1049273'],
         }
       };
 
@@ -352,7 +381,8 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboard: null,
       };
 
       investigatorCRsSelector(state).should.be.eql({ data: [] });
@@ -377,6 +407,8 @@ describe('search-page selectors', () => {
           url: '/complaint/1027271/',
           incidentDate: '06/13/2009',
           category: 'Use Of Force',
+          type: 'CR',
+          isPinned: false,
         },
       ];
 
@@ -388,7 +420,8 @@ describe('search-page selectors', () => {
               data: investigatorCR
             }
           }
-        }
+        },
+        pinboard: null,
       };
 
       investigatorCRsSelector(state).should.be.eql({
@@ -448,7 +481,8 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboard: null,
       };
 
       dateOfficersSelector(state).should.be.eql({ data: [] });
@@ -470,7 +504,8 @@ describe('search-page selectors', () => {
               ]
             }
           }
-        }
+        },
+        pinboard: null,
       };
 
       dateOfficersSelector(state).should.be.eql({
@@ -481,6 +516,8 @@ describe('search-page selectors', () => {
           badge: 'Badge #56789',
           percentile: null,
           url: `${constants.OFFICER_PATH}123/jerome-finnigan/`,
+          type: 'OFFICER',
+          isPinned: false,
         }]
       });
     });

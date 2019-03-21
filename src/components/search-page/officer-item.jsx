@@ -41,7 +41,8 @@ OfficerItem.propTypes = {
 
 OfficerItem.defaultProps = {
   percentile: {},
-  saveToRecent: () => {}
+  saveToRecent: () => {},
+  item: {},
 };
 
 export default OfficerItem;
