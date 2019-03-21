@@ -83,43 +83,6 @@ describe('NavigationUtil', function () {
   });
 
 
-  describe('scrollToElement', function () {
-    afterEach(function () {
-      if (this.stubQuerySelector) {
-        this.stubQuerySelector.restore();
-      }
-    });
-
-    it('should set appropriate scrollTop value', function () {
-      this.stubQuerySelector = stub(document, 'querySelector');
-      this.stubQuerySelector.withArgs('#target').returns({ offsetTop: 200 });
-      this.stubQuerySelector.withArgs('#offset').returns({ offsetHeight: 50 });
-      // Have to set body size so that it can actually scroll
-      document.body.style.height = '9999px';
-      document.body.style.width = '99px';
-
-      NavigationUtil.scrollToElement('#target', '#offset');
-
-      window.pageYOffset.should.be.eql(150);
-
-      window.scrollTo(0, 0);
-    });
-
-    it('should do nothing if target element does not exist', function () {
-      this.stubQuerySelector = stub(document, 'querySelector');
-      this.stubQuerySelector.withArgs('#target').returns(null);
-      this.stubQuerySelector.withArgs('#offset').returns({ offsetHeight: 50 });
-      // Have to set body size so that it can actually scroll
-      document.body.style.height = '9999px';
-      document.body.style.width = '99px';
-
-      NavigationUtil.scrollToElement('#target', '#offset');
-
-      window.pageYOffset.should.be.eql(0);
-    });
-  });
-
-
   describe('instantScrollToTop', function () {
     it('should scroll whole body to top', function () {
       // Have to set body size so that it can actually scroll

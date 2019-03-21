@@ -27,34 +27,6 @@ describe('<SearchPage />', function () {
     wrapper.should.be.ok();
   });
 
-  it('should render categories returned by getCategoriesWithSuggestions when it has query', () => {
-    const dummyCategories = [
-      {
-        name: 'Any',
-        id: 'any',
-        path: 'ANY'
-      }
-    ];
-    stub(SearchPage.prototype, 'getCategoriesWithSuggestions').callsFake( () => dummyCategories);
-
-    const wrapper = shallow(
-      <SearchPage
-        query={ 'ab' }
-        suggestAllFromCategory={ () => {} }
-        any={ { isShowingAll: false } }
-        inputChanged={ () => {} }
-        activeCategory='any'
-       />
-    );
-
-    const navbar = wrapper.find('SearchNavbar');
-    navbar.prop('categories').should.equal(dummyCategories);
-    navbar.prop('activeCategory').should.be.eql('any');
-    navbar.prop('scrollToCategory').should.equal(wrapper.instance().scrollToCategory);
-
-    SearchPage.prototype.getCategoriesWithSuggestions.restore();
-  });
-
   describe('getCategoriesWithSuggestions', () => {
     it('should return defined categories with data from props', () => {
       const wrapper = shallow(
@@ -76,17 +48,6 @@ describe('<SearchPage />', function () {
           filter: 'Officers'
         }
       ]);
-    });
-  });
-
-  describe('scrollToCategory', () => {
-    it('should call scrollToElement with a correct selector', () => {
-      const stubScrollToElement = stub(NavigationUtil, 'scrollToElement');
-      const wrapper = shallow(<SearchPage query={ '' } />);
-      wrapper.instance().scrollToCategory('an-id');
-
-      stubScrollToElement.calledWith('#search-category-an-id', '#search-page-header').should.be.true();
-      stubScrollToElement.restore();
     });
   });
 

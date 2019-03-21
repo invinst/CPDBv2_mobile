@@ -57,22 +57,6 @@ export function scrollToTop(ast=animatedScrollTo) {
 }
 
 
-export function scrollToElement(targetElementSelector, offsetElementSelector) {
-  const targetElement = document.querySelector(targetElementSelector);
-  if (!targetElement) {
-    return;
-  }
-  const offsetElement = document.querySelector(offsetElementSelector);
-
-  let offset = 0;
-  if (offsetElement) {
-    offset = offsetElement.offsetHeight;
-  }
-
-  const newPosition = targetElement.offsetTop - offset;
-  window.scrollTo(0, newPosition);
-}
-
 export function instantScrollToTop() {
   window.scrollTo(0, 0);
 }

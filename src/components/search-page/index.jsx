@@ -2,9 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import ReactHeight from 'react-height';
 
 import constants from 'constants';
-import { scrollToElement, goUp } from 'utils/navigation-util';
+import { goUp } from 'utils/navigation-util';
 import SearchCategory from './search-category';
-import SearchNavbar from './search-navbar';
 import ClearableInput from './clearable-input';
 import { showIntercomLauncher } from 'utils/intercom';
 import style from './search-page.sass';
@@ -57,11 +56,6 @@ export default class SearchPage extends Component {
 
   isLongEnoughQuery(query) {
     return typeof query === 'string' && query.length >= 2;
-  }
-
-  scrollToCategory(categoryId) {
-    const target = '#search-category-' + categoryId;
-    scrollToElement(target, '#search-page-header');
   }
 
   getCategoriesWithSuggestions() {
@@ -136,7 +130,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query, activeCategory, chosenCategory, router, pinboard } = this.props;
+    const { query, chosenCategory, router, pinboard } = this.props;
     let categories;
 
     if (!this.isLongEnoughQuery(query)) {
@@ -184,15 +178,6 @@ export default class SearchPage extends Component {
               Cancel
             </button>
           </div>
-
-          <SearchNavbar
-            categories={ categories }
-            activeCategory={ activeCategory }
-            scrollToCategory={ this.scrollToCategory }
-            updateActiveCategory={ this.props.updateActiveCategory }
-            chosenCategory={ this.props.chosenCategory }
-            clearChosenCategory={ this.props.updateChosenCategory.bind(this, '') }
-          />
 
           <PinboardBar pinboard={ pinboard }/>
 
