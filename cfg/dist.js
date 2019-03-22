@@ -27,7 +27,8 @@ let config = Object.assign({}, baseConfig, {
       'process.env.NODE_ENV': '"production"'
     }),
     new CopyWebpackPlugin([
-      { from: 'src/img', to: 'img' }
+      { from: 'src/img', to: 'img' },
+      { from: 'src/static', to: 'static' }
     ]),
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
