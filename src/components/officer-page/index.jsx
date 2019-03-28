@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
-import { isEmpty, noop, clone, reduce } from 'lodash';
+import { isEmpty, noop, clone, reduce, values } from 'lodash';
 import pluralize from 'pluralize';
 
 import { scrollToTop } from 'utils/navigation-util';
@@ -53,7 +53,7 @@ class OfficerPage extends Component {
   }
 
   changeTab(tab) {
-    if (tab in OFFICER_PAGE_TAB_NAMES)
+    if (values(OFFICER_PAGE_TAB_NAMES).includes(tab))
       this.setState({ currentTab: tab });
   }
 
