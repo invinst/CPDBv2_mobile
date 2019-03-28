@@ -43,7 +43,7 @@ getListBlobs().then((blobs) => {
 
   const filteredBlobs = _.filter(
     blobs,
-    blob => !_.includes(['index.html', 'assets/favicon.ico'], blob.name)
+    blob => !_.includes(['index.html'], blob.name)
   );
 
   filteredBlobs.forEach(blob => {
