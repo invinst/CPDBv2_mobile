@@ -6,6 +6,7 @@ import should from 'should';
 
 import TopOfficersByAllegation from 'components/landing-page/top-officers-by-allegation';
 import OfficerCard from 'components/common/officer-card';
+import CarouselWrapper from 'components/landing-page/carousel-wrapper';
 import * as IntercomUtils from 'utils/intercom';
 
 
@@ -65,9 +66,9 @@ describe('<TopOfficersByAllegation />', () => {
         description={ descriptionCMSContent }
       />
     );
-
-    wrapper.find('.carousel-title').prop('content').should.equal(titleCMSContent);
-    wrapper.find('.carousel-description').prop('content').should.equal(descriptionCMSContent);
+    const carouselWrapper = wrapper.find(CarouselWrapper);
+    carouselWrapper.prop('title').should.equal(titleCMSContent);
+    carouselWrapper.prop('description').should.equal(descriptionCMSContent);
 
     const officers = wrapper.find(OfficerCard);
     officers.should.have.length(2);
