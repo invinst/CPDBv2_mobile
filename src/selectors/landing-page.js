@@ -1,9 +1,8 @@
 import { createSelector } from 'reselect';
 import { get, compact, take, chain } from 'lodash';
-import moment from 'moment';
 
-import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
+import { formatDate } from 'utils/date';
 
 
 const officerCardTransform = officer => ({
@@ -26,7 +25,8 @@ export const newDocumentAllegationsSelector = createSelector(
   state => take(state.landingPage.newDocumentAllegations, 20),
   complaints => complaints.map(complaint => ({
     crid: complaint.crid,
-    documentCount: complaint.num_recent_documents,
+    category: get(complaint, 'category', 'Unknown'),
+    incidentDate: formatDate(get(complaint, 'incident_date'), false),
     document: {
       previewImageUrl: get(complaint, 'latest_document.preview_image_url', null),
       id: get(complaint, 'latest_document.id', null),
@@ -37,15 +37,10 @@ export const newDocumentAllegationsSelector = createSelector(
 export const complaintSummariesSelector = createSelector(
   state => take(state.landingPage.complaintSummaries, 20),
   complaints => complaints.map(complaint => {
-    const incidentDate = complaint.incident_date
-      ? moment(complaint.incident_date).format(constants.SIMPLE_DATE_FORMAT).toUpperCase()
-      : null;
-
     return {
       crid: complaint.crid,
       summary: complaint.summary,
-      categories: compact(complaint.category_names).join(', '),
-      incidentDate: incidentDate
+      incidentDate: formatDate(get(complaint, 'incident_date'), false),
     };
   })
 );
