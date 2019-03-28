@@ -1,12 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { isEmpty, noop } from 'lodash';
 
-import CMSContent from 'components/common/cms-content';
-import HorizontalScrolling from 'components/common/horizontal-scrolling';
 import OfficerCard from 'components/common/officer-card';
-import style from './top-officers-by-allegation.sass';
 import { showIntercomLauncher } from 'utils/intercom';
-import classnames from 'classnames';
+import CarouselWrapper from './carousel-wrapper';
 import constants from 'constants';
 
 
@@ -32,17 +29,18 @@ export default class TopOfficersByAllegation extends Component {
     const { topOfficersByAllegation, description, title, embed } = this.props;
 
     return (
-      <div className={ classnames(style.topOfficersByAllegation, { embed: embed } ) }>
-        <CMSContent className='carousel-title' content={ title } />
-        <HorizontalScrolling trackingContentType={ constants.CAROUSEL_TYPES.ALLEGATION }>
-          <CMSContent className='carousel-description' content={ description } />
-          {
-            topOfficersByAllegation.map(
-              officer => <OfficerCard officer={ officer } key={ officer.id } openCardInNewPage={ embed } />
-            )
-          }
-        </HorizontalScrolling>
-      </div>
+      <CarouselWrapper
+        title={ title }
+        description={ description }
+        embed={ embed }
+        trackingContentType={ constants.CAROUSEL_TYPES.ALLEGATION }
+      >
+        {
+          topOfficersByAllegation.map(
+            officer => <OfficerCard officer={ officer } key={ officer.id } openCardInNewPage={ embed } />
+          )
+        }
+      </CarouselWrapper>
     );
   }
 }

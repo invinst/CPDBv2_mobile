@@ -11,11 +11,11 @@ const ComplaintSummaryCard = ({ allegation }) => {
       to={ `${constants.COMPLAINT_PATH}${allegation.crid}/` }
       className={ style.complaintSummaryCard }
     >
-      <div className='complaint-info'>
-        <div className='incident-date'>{ allegation.incidentDate }</div>
-        <div className='category'>{ allegation.categories }</div>
+      <div className='incident-date'>{ allegation.incidentDate }</div>
+      <div className='complaint-summary'>
+        { allegation.summary }
+        <div className='gradient'/>
       </div>
-      <div className='complaint-summary'>{ allegation.summary }</div>
     </Link>
   );
 };
