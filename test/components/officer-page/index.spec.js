@@ -302,6 +302,17 @@ describe('<OfficerPage />', function () {
 
       window.history.replaceState.should.be.called();
       window.history.replaceState.getCall(0).args[2].should.equal('/officer/123/officer-11/coaccusals/');
+
+      window.history.replaceState.resetHistory();
+      instance.changeTab(OFFICER_PAGE_TAB_NAMES.ATTACHMENTS);
+
+      window.history.replaceState.should.be.called();
+      window.history.replaceState.getCall(0).args[2].should.equal('/officer/123/officer-11/documents/');
+
+      window.history.replaceState.resetHistory();
+      instance.changeTab('DOCUMENT');
+
+      window.history.replaceState.should.should.not.be.called();
     });
   });
 

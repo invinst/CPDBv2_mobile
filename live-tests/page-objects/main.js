@@ -4,7 +4,7 @@ module.exports = {
   },
   elements: {
     title: '.site-title',
-    searchLink: 'a[href="/search/"]'
+    searchLink: 'a[href="/search/"]',
   },
 
   sections: {
