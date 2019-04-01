@@ -214,7 +214,7 @@ export default {
   RECENT_ACTIVITIES_ENDPOINT: '/activity-grid/',
   NEW_DOCUMENT_ALLEGATIONS_ENDPOINT: '/cr/list-by-new-document/',
   COMPLAINT_SUMMARIES_ENDPOINT: '/cr/complaint-summaries/',
-  PINBOARDS_API_ENDPOINT: '/mobile/pinboards/',
+  PINBOARDS_API_ENDPOINT: '/pinboards/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
