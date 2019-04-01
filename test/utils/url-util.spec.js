@@ -12,8 +12,8 @@ describe('URL util module', function () {
     it('should return correct officer url', function () {
       officerUrl(123).should.eql('/officer/123/');
       officerUrl(123, 'Kevin Wang').should.eql('/officer/123/kevin-wang/');
-      officerUrl(123, 'Kevin Wang', 'ATTACHMENTS').should.eql('/officer/123/kevin-wang/documents/');
-      officerUrl(123, 'Kevin Wang', 'ATTACHMENT').should.eql('/officer/123/kevin-wang/');
+      officerUrl(123, 'Kevin Wang', 'DOCUMENTS').should.eql('/officer/123/kevin-wang/documents/');
+      officerUrl(123, 'Kevin Wang', 'DOCUMENT').should.eql('/officer/123/kevin-wang/');
       officerUrl(123, 'Kevin Wang', 'COACCUSALS').should.eql('/officer/123/kevin-wang/coaccusals/');
       officerUrl(123, 'Kevin Wang', 'TIMELINE').should.eql('/officer/123/kevin-wang/');
     });

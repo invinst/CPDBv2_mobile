@@ -64,7 +64,8 @@ describe('landing page selectors', function () {
         newDocumentAllegations: [
           {
             'crid': '123214',
-            'num_recent_documents': 2,
+            'category': 'Operation/Personnel Violations',
+            'incident_date': '2004-04-23',
             'latest_document': {
               'preview_image_url': 'preview_link',
               'id': '123456',
@@ -74,11 +75,12 @@ describe('landing page selectors', function () {
       }
     }).should.eql([{
       crid: '123214',
-      documentCount: 2,
       document: {
         previewImageUrl: 'preview_link',
         id: '123456'
-      }
+      },
+      category: 'Operation/Personnel Violations',
+      incidentDate: 'Apr 23, 2004',
     }]);
   });
 
@@ -94,13 +96,11 @@ describe('landing page selectors', function () {
             'crid': '12345',
             'summary': 'summary',
             'incident_date': '2016-04-18',
-            'category_names': ['Use Of Force', 'Verbal Abuse']
           },
           {
             'crid': '12346',
             'summary': 'summary',
             'incident_date': null,
-            'category_names': ['Use Of Force']
           }
         ]
       }
@@ -108,14 +108,12 @@ describe('landing page selectors', function () {
       {
         crid: '12345',
         summary: 'summary',
-        incidentDate: 'APR 18, 2016',
-        categories: 'Use Of Force, Verbal Abuse'
+        incidentDate: 'Apr 18, 2016',
       },
       {
         crid: '12346',
         summary: 'summary',
         incidentDate: null,
-        categories: 'Use Of Force'
       }
     ]);
   });
