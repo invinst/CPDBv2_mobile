@@ -10,6 +10,7 @@ import trrPage from './trr-page';
 import breadcrumbMapping from './breadcrumb-mapping';
 import embed from './embed';
 import pinboard from './pinboard';
+import pinboardPage from './pinboard-page';
 
 
 export default combineReducers({
@@ -23,4 +24,5 @@ export default combineReducers({
   trrPage,
   embed,
   pinboard,
+  pinboardPage,
 });

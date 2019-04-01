@@ -1,4 +1,4 @@
-import { createPinboard, updatePinboard, fetchPinboard } from 'actions/pinboard';
+import { createPinboard, updatePinboard, fetchPinboard, fetchPinboardSocialGraph } from 'actions/pinboard';
 import {
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
@@ -9,6 +9,9 @@ import {
   PINBOARD_FETCH_REQUEST_START,
   PINBOARD_FETCH_REQUEST_SUCCESS,
   PINBOARD_FETCH_REQUEST_FAILURE,
+  PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_START,
+  PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_SUCCESS,
+  PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_FAILURE,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -82,6 +85,25 @@ describe('pinboard actions', function () {
         payload: {
           request: {
             url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/`),
+            params: undefined,
+            adapter: undefined,
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchPinboardSocialGraph', function () {
+    it('shoud return correct action', function () {
+      fetchPinboardSocialGraph('1').should.deepEqual({
+        types: [
+          PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_START,
+          PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_SUCCESS,
+          PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}1/social-graph/`,
             params: undefined,
             adapter: undefined,
           }
