@@ -11,7 +11,6 @@ const store = configureStore();
 
 // init tracking
 window.ga('create', config.gaTrackingId, 'auto');
-window.ga('send', 'pageview');
 window.Intercom('boot', { 'app_id': config.intercomAppId } );
 
 

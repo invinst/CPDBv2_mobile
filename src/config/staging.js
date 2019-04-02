@@ -7,7 +7,7 @@ let config = {
   baseUrlV1: 'http://m.cpdb.co',
   baseUrlV2: 'https://stagingapi.cpdp.co/api/v1',
   baseUrlV2V2: 'https://stagingapi.cpdp.co/api/v2',
-  gaTrackingId: 'UA-63671047-1',
+  gaTrackingId: 'UA-63671047-3',
   intercomAppId: 'gbsby1ik'
 };
 
