@@ -130,6 +130,7 @@ const updatePinboardResponse = {
   'title': '',
   'officer_ids': [],
   'crids': [],
+  'trr_ids': [],
   'description': 'Description',
 };
 
@@ -138,6 +139,7 @@ const createPinboardResponse = {
   'title': '',
   'officer_ids': [],
   'crids': ['123456'],
+  'trr_ids': [],
   'description': 'Description',
 };
 
@@ -311,12 +313,12 @@ describe('SearchPageTest', function () {
       api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
       api.mockPost(
         '/api/v2/pinboards/', 201,
-        { 'officer_ids': [], crids: ['123456'] },
+        { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
         createPinboardResponse
       );
       api.mockPut(
         '/api/v2/pinboards/1/', 200,
-        { 'officer_ids': [], crids: [], title: '' },
+        { 'officer_ids': [], crids: [], 'trr_ids': [], title: '' },
         updatePinboardResponse
       );
       done();

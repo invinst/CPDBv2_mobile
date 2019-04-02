@@ -17,7 +17,7 @@ import { v2Url } from 'utils/url-util';
 describe('pinboard actions', function () {
   describe('createPinboard', function () {
     it('should return correct action', function () {
-      createPinboard({ officerIds: [], crids: ['abc'] }).should.deepEqual({
+      createPinboard({ officerIds: [], crids: ['abc'], trrIds: ['1'] }).should.deepEqual({
         types: [
           PINBOARD_CREATE_REQUEST_START,
           PINBOARD_CREATE_REQUEST_SUCCESS,
@@ -30,7 +30,8 @@ describe('pinboard actions', function () {
             adapter: undefined,
             data: {
               'officer_ids': [],
-              crids: ['abc']
+              crids: ['abc'],
+              'trr_ids': ['1'],
             }
           }
         }
@@ -44,7 +45,8 @@ describe('pinboard actions', function () {
         id: '1',
         title: 'Title',
         officerIds: ['1'],
-        crids: []
+        crids: [],
+        trrIds: [],
       };
       updatePinboard(pinboard).should.deepEqual({
         types: [
@@ -60,7 +62,8 @@ describe('pinboard actions', function () {
             data: {
               title: 'Title',
               'officer_ids': ['1'],
-              crids: []
+              crids: [],
+              'trr_ids': [],
             }
           }
         }

@@ -93,6 +93,7 @@ describe('search-page selectors', () => {
           id: 99,
           'officer_ids': [1],
           crids: [],
+          'trr_ids': [],
         }
       };
 
@@ -243,7 +244,8 @@ describe('search-page selectors', () => {
         pinboard: {
           id: 99,
           'officer_ids': [],
-          crids: ['1027272']
+          crids: ['1027272'],
+          'trr_ids': [],
         }
       };
 
@@ -260,7 +262,8 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboard: null,
       };
 
       dateTRRsSelector(state).should.be.eql({ data: [] });
@@ -276,7 +279,9 @@ describe('search-page selectors', () => {
       const expectedDateTRRs = [
         {
           'id': '1',
-          'url': '/trr/1/'
+          'url': '/trr/1/',
+          'isPinned': false,
+          'type': 'TRR',
         },
       ];
 
@@ -288,6 +293,11 @@ describe('search-page selectors', () => {
               data: dateTRRs
             }
           }
+        },
+        pinboard: {
+          'officer_ids': [],
+          crids: [],
+          'trr_ids': ['2'],
         }
       };
 
@@ -365,6 +375,7 @@ describe('search-page selectors', () => {
           id: 99,
           'officer_ids': [1],
           crids: ['1049273'],
+          'trr_ids': [1],
         }
       };
 
@@ -437,7 +448,8 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboard: null,
       };
 
       trrsSelector(state).should.be.eql({ data: [] });
@@ -453,7 +465,9 @@ describe('search-page selectors', () => {
       const expectedTrrs = [
         {
           'id': '1',
-          'url': '/trr/1/'
+          'url': '/trr/1/',
+          'isPinned': true,
+          'type': 'TRR',
         },
       ];
 
@@ -465,6 +479,11 @@ describe('search-page selectors', () => {
               data: trrs
             }
           }
+        },
+        pinboard: {
+          'officer_ids': [],
+          crids: [],
+          'trr_ids': ['1'],
         }
       };
 
