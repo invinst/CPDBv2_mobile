@@ -109,7 +109,7 @@ describe('create-or-update-pinboard-middleware', function () {
         url: '',
         itemsCount: 1,
         ownedByCurrentUser: true,
-      }));
+      })).should.be.true();
     });
 
     it('should dispatch createPinboard if user does not own the pinboard', function () {
@@ -120,8 +120,8 @@ describe('create-or-update-pinboard-middleware', function () {
       });
       const store = createStore(OwnedPinboardFactory.build({
         id: '99',
-        officerIds: ['2'],
-        ownedByCurrentUser: true,
+        'officer_ids': ['2'],
+        ownedByCurrentUser: false,
       }));
       let dispatched;
 
@@ -135,8 +135,8 @@ describe('create-or-update-pinboard-middleware', function () {
         officerIds: ['2', '1'],
         url: '',
         itemsCount: 1,
-        ownedByCurrentUser: true,
-      }));
+        ownedByCurrentUser: false,
+      })).should.be.true();
     });
   });
 
@@ -150,8 +150,8 @@ describe('create-or-update-pinboard-middleware', function () {
       const store = createStore(OwnedPinboardFactory.build({
         id: '99',
         crids: ['2', '1'],
-        officerIds: ['a'],
-        ownedByCurrentUser: false,
+        'officer_ids': ['a'],
+        ownedByCurrentUser: true,
       }));
       let dispatched;
 
@@ -165,8 +165,8 @@ describe('create-or-update-pinboard-middleware', function () {
         officerIds: ['a'],
         url: '',
         itemsCount: 3,
-        ownedByCurrentUser: false,
-      }));
+        ownedByCurrentUser: true,
+      })).should.be.true();
     });
 
     it('should dispatch createPinboard if user does not own the pinboard', function () {
@@ -178,7 +178,7 @@ describe('create-or-update-pinboard-middleware', function () {
       const store = createStore(OwnedPinboardFactory.build({
         id: '99',
         crids: ['1'],
-        officerIds: ['a'],
+        'officer_ids': ['a'],
         ownedByCurrentUser: false,
       }));
       let dispatched;
@@ -194,7 +194,7 @@ describe('create-or-update-pinboard-middleware', function () {
         url: '',
         itemsCount: 2,
         ownedByCurrentUser: false,
-      }));
+      })).should.be.true();
     });
   });
 });
