@@ -9,7 +9,6 @@ const PINBOARD_ATTR_MAP = {
   'OFFICER': 'officerIds'
 };
 
-
 const addItem = (pinboard, item) => {
   const key = PINBOARD_ATTR_MAP[item.type];
   pinboard[key].push(item.id);
