@@ -1,0 +1,36 @@
+@import 'variables'
+
+:local(.complaint-summary-card)
+  width: 148px
+  height: 176px
+  margin-right: 8px
+  border: 1px solid $alto-solid
+  box-sizing: border-box
+  background-color: $white
+  text-decoration: none
+  display: block
+  font-weight: 300
+
+  .incident-date
+    height: 30px
+    padding: 12px 8px 8px 8px
+    font-size: 12px
+    color: $boulder
+    box-sizing: border-box
+
+  .complaint-summary
+    height: calc(100% - 36px)
+    margin: 0 8px 6px 8px
+    font-size: 12px
+    color: $thunder
+    box-sizing: border-box
+    position: relative
+    overflow: hidden
+
+    .gradient
+      height: 44px
+      position: absolute
+      left: 0
+      right: 0
+      bottom: 0
+      background: linear-gradient(to bottom, $black0-color, white)

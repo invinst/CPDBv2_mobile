@@ -32,7 +32,7 @@ class Attachments extends Component {
               noAttachment ?
                 <CMSContent
                   content={ noAttachmentMessage }
-                /> : 'ATTACHMENTS'
+                /> : 'DOCUMENTS'
             }
           </div>
           <CRRequestDocumentButtonContainer
