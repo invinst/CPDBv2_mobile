@@ -54,6 +54,7 @@ describe('create-or-update-pinboard-middleware', function () {
       title: '',
       officerIds: [],
       crids: ['1'],
+      trrIds: [],
       description: '',
       url: '',
       itemsCount: 0,
@@ -77,6 +78,31 @@ describe('create-or-update-pinboard-middleware', function () {
       title: '',
       officerIds: ['1'],
       crids: [],
+      trrIds: [],
+      description: '',
+      url: '',
+      itemsCount: 0,
+      ownedByCurrentUser: false,
+    })).should.be.true();
+  });
+
+  it('should dispatch createPinboard action if a first TRR item is added to pinboard', function () {
+    const action = createAddItemToPinboardAction({
+      id: '1',
+      type: 'TRR',
+      isPinned: false,
+    });
+    const store = createStore(OwnedPinboardFactory.build());
+    let dispatched;
+
+    createOrUpdatePinboardMiddleware(store)(action => dispatched = action)(action);
+    dispatched.should.eql(action);
+    store.dispatch.calledWith(createPinboard({
+      id: null,
+      title: '',
+      officerIds: [],
+      crids: [],
+      trrIds: ['1'],
       description: '',
       url: '',
       itemsCount: 0,
@@ -105,11 +131,12 @@ describe('create-or-update-pinboard-middleware', function () {
         title: '',
         crids: ['2', '1'],
         officerIds: [],
+        trrIds: [],
         description: '',
         url: '',
         itemsCount: 1,
         ownedByCurrentUser: true,
-      }));
+      })).should.be.true();
     });
 
     it('should dispatch createPinboard if user does not own the pinboard', function () {
@@ -120,8 +147,8 @@ describe('create-or-update-pinboard-middleware', function () {
       });
       const store = createStore(OwnedPinboardFactory.build({
         id: '99',
-        officerIds: ['2'],
-        ownedByCurrentUser: true,
+        'officer_ids': ['2'],
+        ownedByCurrentUser: false,
       }));
       let dispatched;
 
@@ -133,10 +160,11 @@ describe('create-or-update-pinboard-middleware', function () {
         description: '',
         crids: [],
         officerIds: ['2', '1'],
+        trrIds: [],
         url: '',
         itemsCount: 1,
-        ownedByCurrentUser: true,
-      }));
+        ownedByCurrentUser: false,
+      })).should.be.true();
     });
   });
 
@@ -150,8 +178,9 @@ describe('create-or-update-pinboard-middleware', function () {
       const store = createStore(OwnedPinboardFactory.build({
         id: '99',
         crids: ['2', '1'],
-        officerIds: ['a'],
-        ownedByCurrentUser: false,
+        'officer_ids': ['a'],
+        'trr_ids': ['1'],
+        ownedByCurrentUser: true,
       }));
       let dispatched;
 
@@ -163,10 +192,11 @@ describe('create-or-update-pinboard-middleware', function () {
         description: '',
         crids: ['2'],
         officerIds: ['a'],
+        trrIds: ['1'],
         url: '',
-        itemsCount: 3,
-        ownedByCurrentUser: false,
-      }));
+        itemsCount: 4,
+        ownedByCurrentUser: true,
+      })).should.be.true();
     });
 
     it('should dispatch createPinboard if user does not own the pinboard', function () {
@@ -178,7 +208,8 @@ describe('create-or-update-pinboard-middleware', function () {
       const store = createStore(OwnedPinboardFactory.build({
         id: '99',
         crids: ['1'],
-        officerIds: ['a'],
+        'officer_ids': ['a'],
+        'trr_ids': ['1'],
         ownedByCurrentUser: false,
       }));
       let dispatched;
@@ -191,10 +222,11 @@ describe('create-or-update-pinboard-middleware', function () {
         description: '',
         crids: ['1'],
         officerIds: ['a'],
+        trrIds: ['1'],
         url: '',
-        itemsCount: 2,
+        itemsCount: 3,
         ownedByCurrentUser: false,
-      }));
+      })).should.be.true();
     });
   });
 });

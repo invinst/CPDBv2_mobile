@@ -4,7 +4,7 @@ import SearchItem from './search-item';
 import style from './trr-search-result.sass';
 
 
-const TRRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
+const TRRSearchResult = ({ items, saveToRecent, categoryFilter, addItemToPinboard }) => {
   const handleClick = (name, url) => saveToRecent({
     type: categoryFilter,
     title: name,
@@ -20,9 +20,15 @@ const TRRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
               key={ item.id }
               url={ item.url }
               onClick={ () => handleClick(item.id, item.url) }
-              hasPinButton={ false }>
-              <div className='item-type'>TRR</div>
-              <div className='item-id'>{ item.id }</div>
+              hasPinButton={ true }
+              addItemToPinboard={ addItemToPinboard }
+              id={ item.id }
+              isPinned={ item.isPinned }
+              type={ item.type }>
+              <div className='item-info'>
+                <div className='item-type'>TRR</div>
+                <div className='item-id'>{ item.id }</div>
+              </div>
             </SearchItem>
           );
         })
@@ -34,7 +40,8 @@ const TRRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
 TRRSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
   items: PropTypes.array,
-  categoryFilter: PropTypes.string
+  categoryFilter: PropTypes.string,
+  addItemToPinboard: PropTypes.func,
 };
 
 TRRSearchResult.defaultProps = {

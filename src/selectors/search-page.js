@@ -87,7 +87,7 @@ export const dateCRsSelector = createSelector(
   crFormatter,
 );
 
-const trrFormatter = (trrs) => {
+const trrFormatter = (trrs, pinboardItems) => {
   if (!trrs) {
     return { data: [] };
   }
@@ -96,18 +96,22 @@ const trrFormatter = (trrs) => {
     isShowingAll: trrs.isShowingAll,
     data: trrs.data.map((trr) => ({
       id: trr.id,
-      url: `${constants.TRR_PATH}${trr.id}/`
+      url: `${constants.TRR_PATH}${trr.id}/`,
+      isPinned: isItemPinned('TRR', trr.id, pinboardItems),
+      type: 'TRR',
     }))
   };
 };
 
 export const trrsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.TRR,
+  pinboardItemsSelector,
   trrFormatter
 );
 
 export const dateTRRsSelector = createSelector(
   (state) => state.suggestionApp.suggestions['DATE > TRR'],
+  pinboardItemsSelector,
   trrFormatter
 );
 

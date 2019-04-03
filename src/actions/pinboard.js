@@ -21,23 +21,23 @@ export const ADD_ITEM_TO_PINBOARD = 'ADD_ITEM_TO_PINBOARD';
 
 export const addItemToPinboard = createAction(ADD_ITEM_TO_PINBOARD);
 
-export const createPinboard = ({ officerIds, crids }) => post(
+export const createPinboard = ({ officerIds, crids, trrIds }) => post(
   v2Url(constants.PINBOARDS_API_ENDPOINT),
   [
     PINBOARD_CREATE_REQUEST_START,
     PINBOARD_CREATE_REQUEST_SUCCESS,
     PINBOARD_CREATE_REQUEST_FAILURE,
   ]
-)({ 'officer_ids': officerIds, crids: crids });
+)({ 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds });
 
-export const updatePinboard = ({ id, title, officerIds, crids }) => put(
+export const updatePinboard = ({ id, title, officerIds, crids, trrIds }) => put(
   `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/`,
   [
     PINBOARD_UPDATE_REQUEST_START,
     PINBOARD_UPDATE_REQUEST_SUCCESS,
     PINBOARD_UPDATE_REQUEST_FAILURE,
   ]
-)({ title: title, 'officer_ids': officerIds, crids: crids });
+)({ title: title, 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds });
 
 export const fetchPinboard = id => get(
   `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/`,
