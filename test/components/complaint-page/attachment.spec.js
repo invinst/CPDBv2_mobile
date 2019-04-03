@@ -23,9 +23,9 @@ describe('Attachments component', function () {
     const cmsContent = wrapper.find(CMSContent);
     cmsContent.at(0).prop('content').should.equal('There are no documents that have been made public yet.');
 
-    wrapper.setProps({ attachments: [{fileType: 'video', title: 'Video Clip'}] });
+    wrapper.setProps({ attachments: [{ fileType: 'video', title: 'Video Clip' }] });
 
-    wrapper.find('.label').text().should.eql('ATTACHMENTS');
+    wrapper.find('.label').text().should.eql('DOCUMENTS');
   });
 
   it('should render request document button', function () {
