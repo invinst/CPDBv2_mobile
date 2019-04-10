@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Marker from 'components/officer-page/tabbed-pane-section/map/marker';
+import Marker from 'components/common/allegations-map/marker';
 
 
 describe('Marker component', function () {

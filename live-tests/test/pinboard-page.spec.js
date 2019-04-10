@@ -136,6 +136,96 @@ const socialGraphData = {
   ],
 };
 
+const geographicData = [
+  {
+    'date': '2008-05-27',
+    'crid': '1016899',
+    'category': 'Illegal Search',
+    'coaccused_count': 13,
+    'kind': 'CR',
+    'victims': [
+      {
+        'gender': 'Female',
+        'race': 'Black'
+      },
+      {
+        'gender': 'Female',
+        'race': 'Black'
+      }
+    ]
+  },
+  {
+    'date': '1981-05-31',
+    'crid': 'C147074',
+    'category': 'Use Of Force',
+    'coaccused_count': 3,
+    'kind': 'CR',
+    'point': {
+      'lon': -87.6183565,
+      'lat': 41.8095411
+    },
+    'victims': []
+  },
+  {
+    'date': '1981-05-31',
+    'crid': 'C147074',
+    'category': 'Use Of Force',
+    'coaccused_count': 3,
+    'kind': 'CR',
+    'point': {
+      'lon': -87.6183565,
+      'lat': 41.8095411
+    },
+    'victims': []
+  },
+  {
+    'date': '1986-02-15',
+    'crid': 'C150021',
+    'category': 'Drug / Alcohol Abuse',
+    'coaccused_count': 1,
+    'kind': 'CR',
+    'point': {
+      'lon': -87.6276846,
+      'lat': 41.8683196
+    },
+    'victims': []
+  },
+  {
+    'date': '1987-05-21',
+    'crid': 'C156113',
+    'category': 'False Arrest',
+    'coaccused_count': 4,
+    'kind': 'CR',
+    'point': {
+      'lon': -87.705456,
+      'lat': 41.873988
+    },
+    'victims': []
+  },
+  {
+    'trr_id': 2188,
+    'date': '2004-07-03',
+    'kind': 'FORCE',
+    'taser': false,
+    'firearm_used': false,
+    'point': {
+      'lon': -87.613242,
+      'lat': 41.6445969
+    }
+  },
+  {
+    'trr_id': 6238,
+    'date': '2005-01-21',
+    'kind': 'FORCE',
+    'taser': false,
+    'firearm_used': false,
+    'point': {
+      'lon': -87.6013364,
+      'lat': 41.6936152
+    }
+  },
+];
+
 function waitForGraphAnimationEnd(client, pinboardPage) {
   pinboardPage.expect.section('@currentDate').to.be.visible;
   client.waitForText(
@@ -166,6 +256,7 @@ describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
     api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, pinboardData);
     api.mock('GET', '/api/v2/pinboards/5cd06f2b/social-graph/', 200, socialGraphData);
+    api.mock('GET', '/api/v2/pinboards/5cd06f2b/geographic-data/', 200, geographicData);
 
     this.pinboardPage = client.page.pinboardPage();
     this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
@@ -184,6 +275,10 @@ describe('Pinboard Page', function () {
       pinboardPage.expect.element('@pinboardDescription').to.be.visible;
       pinboardPage.expect.element('@pinboardTitle').text.to.equal('Pinboard Title');
       pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description');
+
+      pinboardPage.expect.section('@pinboardPaneMenu').to.be.visible;
+      pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('NETWORK');
+      pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('GEOGRAPHIC');
     });
   });
 
@@ -312,6 +407,19 @@ describe('Pinboard Page', function () {
       client.getValue(searchInput.selector, function (result) {
         assert.equal(result.value, 'Thomas Kampenga');
       });
+    });
+  });
+
+  context('Geographic section', function () {
+    it('should render geographic section', function () {
+      const pinboardPage = this.pinboardPage;
+      pinboardPage.expect.section('@pinboardPaneMenu').to.be.visible;
+      pinboardPage.section.pinboardPaneMenu.click('@geographicPaneName');
+
+      pinboardPage.expect.element('@complaintText').text.to.equal('Complaint');
+      pinboardPage.expect.element('@complaintNumber').text.to.equal('5');
+      pinboardPage.expect.element('@trrText').text.to.equal('Use of Force Report');
+      pinboardPage.expect.element('@trrNumber').text.to.equal('2');
     });
   });
 });
