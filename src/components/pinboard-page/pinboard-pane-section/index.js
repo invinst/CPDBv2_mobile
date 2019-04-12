@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { get, keys } from 'lodash';
+import { get, keys, startCase, toLower } from 'lodash';
 import cx from 'classnames';
 
 import GeographicContainer from 'containers/pinboard-page/geographic-container';
@@ -37,7 +37,7 @@ export default class PinboardPaneSection extends Component {
                   className={ cx('pinboard-pane-tab-name', { 'active': paneName === currentTab }) }
                   onClick={ () => changePinboardTab(paneName) }
                 >
-                  { paneName }
+                  { startCase(toLower(paneName)) }
                 </span>
               ) : null
             ))

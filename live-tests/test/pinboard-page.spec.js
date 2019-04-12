@@ -277,8 +277,8 @@ describe('Pinboard Page', function () {
       pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description');
 
       pinboardPage.expect.section('@pinboardPaneMenu').to.be.visible;
-      pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('NETWORK');
-      pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('GEOGRAPHIC');
+      pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('Network');
+      pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('Geographic');
     });
   });
 

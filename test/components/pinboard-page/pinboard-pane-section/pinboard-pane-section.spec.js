@@ -33,8 +33,8 @@ describe('PinboardPaneSection component', function () {
     const tabNames = wrapper.find('.pinboard-pane-tab-name');
 
     tabNames.should.have.length(2);
-    tabNames.at(0).text().should.be.eql('NETWORK');
-    tabNames.at(1).text().should.be.eql('GEOGRAPHIC');
+    tabNames.at(0).text().should.be.eql('Network');
+    tabNames.at(1).text().should.be.eql('Geographic');
   });
 
   it('should hide the tabs with no data', function () {
@@ -50,7 +50,7 @@ describe('PinboardPaneSection component', function () {
     const tabNames = wrapper.find('.pinboard-pane-tab-name');
 
     tabNames.should.have.length(1);
-    tabNames.at(0).text().should.be.eql('NETWORK');
+    tabNames.at(0).text().should.be.eql('Network');
   });
 
   it('should render network tab', function () {
