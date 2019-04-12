@@ -35,6 +35,29 @@ describe('PinboardPaneSection component', function () {
     tabNames.should.have.length(2);
     tabNames.at(0).text().should.be.eql('Network');
     tabNames.at(1).text().should.be.eql('Geographic');
+
+    const activeTab = wrapper.find('.active');
+    activeTab.at(0).text().should.be.eql('Network');
+  });
+
+  it('should render correct active tab', function () {
+    wrapper = mount(
+      <Provider store={ store }>
+        <PinboardPaneSection
+          currentTab='GEOGRAPHIC'
+          hasMapMarker={ true }
+        />
+      </Provider>
+    );
+
+    const tabNames = wrapper.find('.pinboard-pane-tab-name');
+
+    tabNames.should.have.length(2);
+    tabNames.at(0).text().should.be.eql('Network');
+    tabNames.at(1).text().should.be.eql('Geographic');
+
+    const activeTab = wrapper.find('.active');
+    activeTab.at(0).text().should.be.eql('Geographic');
   });
 
   it('should hide the tabs with no data', function () {
