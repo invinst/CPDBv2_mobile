@@ -40,3 +40,8 @@ export const pinboardItemsSelector = createSelector(
     'TRR': trrIds,
   })
 );
+
+export const pinboardICRIDsSelector = createSelector(
+  getPinboard,
+  ({ crids }) => crids
+);
