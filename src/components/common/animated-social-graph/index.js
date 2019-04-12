@@ -128,9 +128,10 @@ export default class AnimatedSocialGraph extends Component {
               className={ cx(sliderStyles.slider, 'test--timeline-slider') }
             />
             <div className='graph-actions'>
-              <button className='toggle-timeline-btn' onClick={ this.toggleTimeline }>
-                <div className={ refreshIntervalId ? 'pause-icon' : 'play-icon' }/>
-              </button>
+              <button
+                className={ cx('toggle-timeline-btn', refreshIntervalId ? 'pause-icon' : 'play-icon') }
+                onClick={ this.toggleTimeline }
+              />
               <span className='current-date-label'>{ currentDateString }</span>
               { this.searchForm() }
               <div className='clearfix'/>

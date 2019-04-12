@@ -20,26 +20,21 @@
 
       .toggle-timeline-btn
         float: left
+        box-sizing: border-box
         width: 24px
         height: 24px
+        padding: 7px 0
         border: 1px solid $alto-solid
         border-radius: 12px
         outline: none
+        background-size: 7px 8px
+        background: white center no-repeat
 
-        .play-icon
-          box-sizing: border-box
-          width: 9px
-          height: 12px
-          border-top: 6px solid transparent
-          border-left: 9px solid $accent-blue
-          border-bottom: 6px solid transparent
+        &.pause-icon
+          background-image: url('/img/ic-pause.svg')
 
-        .pause-icon
-          box-sizing: border-box
-          width: 9px
-          height: 8px
-          border-right: 3px solid $accent-blue
-          border-left: 3px solid $accent-blue
+        &.play-icon
+          background-image: url('/img/ic-play.svg')
 
       .current-date-label
         float: left
