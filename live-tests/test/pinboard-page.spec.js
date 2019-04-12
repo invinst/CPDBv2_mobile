@@ -248,13 +248,20 @@ describe('Pinboard Page', function () {
 
     it('should pause timeline when click on toggle timeline button', function (client) {
       const pinboardPage = this.pinboardPage;
-      pinboardPage.waitForElementVisible('@startDate', TIMEOUT);
+      const timeline = pinboardPage.section.timeline;
+      waitForGraphAnimationEnd(client, pinboardPage);
+
+      client.waitForAttribute('.toggle-timeline-btn', 'class', function (className) {
+        return className === 'toggle-timeline-btn play-icon';
+      });
+
+      timeline.click('@toggleTimelineButton');
 
       client.waitForText(pinboardPage.section.currentDate.selector, (text) => {
-        return text === '1994-01-10';
+        return text === '1999-02-08';
       }, 2000, 'expected timeline reaches specific date after 0.9s');
 
-      pinboardPage.section.timeline.click('@toggleTimelineButton');
+      timeline.click('@toggleTimelineButton');
 
       const graphNodes = pinboardPage.section.graphNodes;
       client.elements(graphNodes.locateStrategy, graphNodes.selector, function (graphNodes) {
@@ -262,7 +269,7 @@ describe('Pinboard Page', function () {
       });
       const graphLinks = pinboardPage.section.graphLinks;
       client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
-        assert.equal(graphLinks.value.length, 10);
+        assert.equal(graphLinks.value.length, 32);
       });
 
       pinboardPage.section.timeline.click('@toggleTimelineButton');
