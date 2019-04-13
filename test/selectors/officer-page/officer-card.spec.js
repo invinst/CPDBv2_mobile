@@ -30,7 +30,6 @@ describe('officerCardTransform', function () {
         }],
         textColor: '#DFDFDF',
         visualTokenBackground: '#f52524',
-        officerId: undefined,
         year: undefined,
       },
     });

@@ -691,7 +691,6 @@ describe('<OfficerPage />', function () {
           axis: 'Civilian Allegations',
           value: 66.251
         }],
-        officerId: 1,
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
         year: 2006,
@@ -706,7 +705,6 @@ describe('<OfficerPage />', function () {
           axis: 'Civilian Allegations',
           value: 75.065
         }],
-        officerId: 1,
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
         year: 2007,

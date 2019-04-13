@@ -48,4 +48,20 @@ describe('<HorizontalScrolling />', () => {
 
     GATracking.trackSwipeLanddingPageCarousel.restore();
   });
+
+  it('should loadMore when reaching the end', () => {
+    const loadMoreSpy = spy();
+    const wrapper = mount(
+      <HorizontalScrolling trackingContentType='contentType' hasMore={ true } loadMore={ loadMoreSpy }>
+        <div>Child 1</div>
+        <div>Child 2</div>
+        <div>Child 3</div>
+      </HorizontalScrolling>
+    );
+
+    const instance = wrapper.instance();
+    instance.handleReachEnd();
+
+    loadMoreSpy.should.be.called();
+  });
 });

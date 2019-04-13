@@ -1,17 +1,30 @@
 import { Promise } from 'es6-promise';
-import { stub } from 'sinon';
+import { stub, spy } from 'sinon';
+import { browserHistory } from 'react-router';
 
 import createOrUpdatePinboardMiddleware from 'middleware/create-or-update-pinboard-middleware';
-import { ADD_ITEM_TO_PINBOARD } from 'actions/pinboard';
-import { createPinboard, updatePinboard } from 'actions/pinboard';
+import {
+  createPinboard,
+  updatePinboard,
+  fetchPinboard,
+  fetchPinboardSocialGraph,
+  fetchPinboardGeographicData,
+  fetchPinboardRelevantCoaccusals,
+  fetchPinboardRelevantComplaints,
+  fetchPinboardRelevantDocuments,
+  ADD_ITEM_TO_PINBOARD,
+  PINBOARD_CREATE_REQUEST_SUCCESS,
+  PINBOARD_UPDATE_REQUEST_SUCCESS,
+} from 'actions/pinboard';
 import { OwnedPinboardFactory } from 'utils/tests/factories/pinboard';
 
 
 describe('create-or-update-pinboard-middleware', function () {
-  const createStore = (pinboard) => ({
+  const createStore = (pinboard, pathname='') => ({
     getState: () => {
       return {
-        pinboard
+        pinboard,
+        routing: { locationBeforeTransitions: { pathname } }
       };
     },
     dispatch: stub().usingPromise(Promise).resolves('abc')
@@ -108,6 +121,49 @@ describe('create-or-update-pinboard-middleware', function () {
       itemsCount: 0,
       ownedByCurrentUser: false,
     })).should.be.true();
+  });
+
+  it('should handle PINBOARD_CREATE_REQUEST_SUCCESS when on pinboard page', function () {
+    spy(browserHistory, 'push');
+
+    const store = createStore(OwnedPinboardFactory.build(), '/pinboard/abc123/');
+    const action = { type: PINBOARD_CREATE_REQUEST_SUCCESS, payload: { id: 'def456' } };
+    createOrUpdatePinboardMiddleware(store)(() => {})(action);
+    browserHistory.push.should.be.calledWith('/pinboard/def456/');
+
+    browserHistory.push.restore();
+  });
+
+  it('should not handle PINBOARD_CREATE_REQUEST_SUCCESS when not on pinboard page', function () {
+    spy(browserHistory, 'push');
+
+    const store = createStore(OwnedPinboardFactory.build(), '/not-pinboard/abc123/');
+    const action = { type: PINBOARD_CREATE_REQUEST_SUCCESS, payload: { id: 'def456' } };
+    createOrUpdatePinboardMiddleware(store)(() => {})(action);
+    browserHistory.push.should.not.be.called();
+
+    browserHistory.push.restore();
+  });
+
+  it('should handle PINBOARD_UPDATE_REQUEST_SUCCESS when on pinboard page', function () {
+    const store = createStore(OwnedPinboardFactory.build(), '/pinboard/abc123/');
+    const action = { type: PINBOARD_UPDATE_REQUEST_SUCCESS, payload: { id: 'def456' } };
+    createOrUpdatePinboardMiddleware(store)(() => {})(action);
+
+    store.dispatch.should.be.calledWith(fetchPinboard('def456'));
+    store.dispatch.should.be.calledWith(fetchPinboardSocialGraph('def456'));
+    store.dispatch.should.be.calledWith(fetchPinboardGeographicData('def456'));
+    store.dispatch.should.be.calledWith(fetchPinboardRelevantDocuments('def456'));
+    store.dispatch.should.be.calledWith(fetchPinboardRelevantCoaccusals('def456'));
+    store.dispatch.should.be.calledWith(fetchPinboardRelevantComplaints('def456'));
+  });
+
+  it('should not handle PINBOARD_UPDATE_REQUEST_SUCCESS when not on pinboard page', function () {
+    const store = createStore(OwnedPinboardFactory.build(), '/not-pinboard/abc123/');
+    const action = { type: PINBOARD_UPDATE_REQUEST_SUCCESS, payload: { id: 'def456' } };
+    createOrUpdatePinboardMiddleware(store)(() => {})(action);
+
+    store.dispatch.should.not.be.called();
   });
 
   context('when an item is added', function () {
