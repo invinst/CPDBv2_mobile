@@ -425,11 +425,7 @@ describe('Pinboard Page', function () {
       relevantDocumentsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
 
       const documentCard = relevantDocumentsSection.section.documentCard;
-      client.elements(
-        'css selector',
-        `${relevantDocumentsSection.selector} ${documentCard.selector}`,
-        cards => assert.equal(cards.value.length, 4)
-      );
+      client.assertCount(`${relevantDocumentsSection.selector} ${documentCard.selector}`, 4);
 
       const firstDocumentCard = relevantDocumentsSection.section.documentCard;
       firstDocumentCard.expect.element('@plusButton').to.be.present;
@@ -444,31 +440,16 @@ describe('Pinboard Page', function () {
       const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
       const documentCard = relevantDocumentsSection.section.documentCard;
       const cardSelector = `${relevantDocumentsSection.selector} ${documentCard.selector}`;
-      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 4));
+      client.assertCount(cardSelector, 4);
 
       const nthCardSelector = n => relevantDocumentsSection.selector +
         ` .swiper-slide:nth-child(${n}) > div:first-child`;
 
-      _.times(
-        3,
-        idx => client
-          .moveToElement(nthCardSelector(idx + 2), 50, 50)
-          .mouseButtonDown(0)
-          .moveToElement(nthCardSelector(idx + 2), -150, 50)
-          .mouseButtonUp(0)
-      );
-      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 8));
+      _.times(3, idx => client.dragAndDrop(nthCardSelector(idx + 2), -200, 0));
+      client.assertCount(cardSelector, 8);
 
-      _.times(
-        4,
-        idx => client
-          .moveToElement(nthCardSelector(idx + 5), 50, 50)
-          .mouseButtonDown(0)
-          .moveToElement(nthCardSelector(idx + 5), -150, 50)
-          .mouseButtonUp(0)
-      );
-
-      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 10));
+      _.times(4, idx => client.dragAndDrop(nthCardSelector(idx + 5), -200, 0));
+      client.assertCount(cardSelector, 10);
     });
 
     it('should go to complaint page when clicking on category', function (client) {
@@ -512,11 +493,7 @@ describe('Pinboard Page', function () {
       relevantComplaintsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
 
       const complaintCard = relevantComplaintsSection.section.complaintCard;
-      client.elements(
-        'css selector',
-        `${relevantComplaintsSection.selector} ${complaintCard.selector}`,
-        cards => assert.equal(cards.value.length, 4)
-      );
+      client.assertCount(`${relevantComplaintsSection.selector} ${complaintCard.selector}`, 4);
 
       const firstComplaintCard = relevantComplaintsSection.section.complaintCard;
       firstComplaintCard.expect.element('@plusButton').to.be.present;
@@ -531,33 +508,16 @@ describe('Pinboard Page', function () {
       const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
       const complaintCard = relevantComplaintsSection.section.complaintCard;
       const cardSelector = `${relevantComplaintsSection.selector} ${complaintCard.selector}`;
-      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 4));
+      client.assertCount(cardSelector, 4);
 
       const nthCardSelector = n => relevantComplaintsSection.selector +
         ` .swiper-slide:nth-child(${n}) > div:first-child`;
 
-      _.times(
-        3,
-        idx => client
-          .moveToElement(nthCardSelector(idx + 2), 50, 50)
-          .mouseButtonDown(0)
-          .moveToElement(nthCardSelector(idx + 2), -150, 50)
-          .mouseButtonUp(0)
-          .pause(50)
-      );
-      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 8));
+      _.times(3, idx => client.dragAndDrop(nthCardSelector(idx + 2), -200, 0));
+      client.assertCount(cardSelector, 8);
 
-      _.times(
-        4,
-        idx => client
-          .moveToElement(nthCardSelector(idx + 5), 50, 50)
-          .mouseButtonDown(0)
-          .moveToElement(nthCardSelector(idx + 5), -150, 50)
-          .mouseButtonUp(0)
-          .pause(50)
-      );
-
-      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 10));
+      _.times(4, idx => client.dragAndDrop(nthCardSelector(idx + 5), -200, 0));
+      client.assertCount(cardSelector, 10);
     });
 
     it('should go to complaint page when clicking on category', function (client) {
@@ -599,7 +559,7 @@ describe('Pinboard Page', function () {
 
       const coaccusalCard = relevantCoaccusalsSection.section.coaccusalCard;
       const cardSelector = `${relevantCoaccusalsSection.selector} ${coaccusalCard.selector}`;
-      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 4));
+      client.assertCount(cardSelector, 4);
 
       const firstCoaccusalCard = coaccusalCard;
       firstCoaccusalCard.expect.element('@plusButton').to.be.present;
@@ -613,33 +573,16 @@ describe('Pinboard Page', function () {
       const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
       const coaccusalCard = relevantCoaccusalsSection.section.coaccusalCard;
       const cardSelector = `${relevantCoaccusalsSection.selector} ${coaccusalCard.selector}`;
-      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 4));
+      client.assertCount(cardSelector, 4);
 
       const nthCardSelector = n => relevantCoaccusalsSection.selector +
         ` .swiper-slide:nth-child(${n}) > a:first-child`;
 
-      _.times(
-        3,
-        idx => client
-          .moveToElement(nthCardSelector(idx + 2), 50, 50)
-          .mouseButtonDown(0)
-          .moveToElement(nthCardSelector(idx + 2), -50, 50)
-          .mouseButtonUp(0)
-          .pause(50)
-      );
-      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 8));
+      _.times(3, idx => client.dragAndDrop(nthCardSelector(idx + 2), -100, 0));
+      client.assertCount(cardSelector, 8);
 
-      _.times(
-        4,
-        idx => client
-          .moveToElement(nthCardSelector(idx + 5), 50, 50)
-          .mouseButtonDown(0)
-          .moveToElement(nthCardSelector(idx + 5), -50, 50)
-          .mouseButtonUp(0)
-          .pause(50)
-      );
-
-      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 10));
+      _.times(4, idx => client.dragAndDrop(nthCardSelector(idx + 5), -100, 0));
+      client.assertCount(cardSelector, 10);
     });
 
     it('should go to officer page when clicking on a nameWrapper', function (client) {
