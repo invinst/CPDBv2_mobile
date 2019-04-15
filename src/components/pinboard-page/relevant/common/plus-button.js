@@ -2,6 +2,8 @@ import React, { PropTypes, Component } from 'react';
 import cx from 'classnames';
 
 import styles from './plus-button.sass';
+import plus from 'img/ic-clear-plus.svg';
+import darkPlus from 'img/ic-clear-plus-dark.svg';
 
 
 export class PlusButton extends Component {
@@ -16,10 +18,10 @@ export class PlusButton extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, darkMode } = this.props;
     return (
       <div className={ cx(styles.plusButton, className) } onClick={ this.handleClick }>
-        <div className='inner-circle'/>
+        <img className='inner-plus' src={ darkMode ? darkPlus : plus }/>
       </div>
     );
   }
@@ -28,6 +30,11 @@ export class PlusButton extends Component {
 PlusButton.propTypes = {
   onClick: PropTypes.func,
   className: PropTypes.string,
+  darkMode: PropTypes.bool,
+};
+
+PlusButton.defaultProps = {
+  darkMode: false
 };
 
 export default PlusButton;

@@ -83,8 +83,7 @@ describe('<RelevantDocumentCard />', function () {
     baseComplaintCard.prop('leftChild').props.target.should.eql('_blank');
     baseComplaintCard.prop('leftChild').type.should.be.eql('a');
 
-    const previewImg = wrapper.find('img');
-    previewImg.prop('className').should.eql('document-card-thumbnail-img');
+    const previewImg = wrapper.find('.document-card-thumbnail-img');
     previewImg.prop('src').should.eql(
       'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
     );

@@ -16,7 +16,7 @@ describe('<PlusButton />', function () {
     );
     wrapper.prop('className').should.eql('custom-class-name');
 
-    wrapper.find('.inner-circle').exists().should.be.true();
+    wrapper.find('.inner-plus').exists().should.be.true();
     wrapper.simulate('click', { preventDefault: () => {} });
     onClickStub.should.be.calledOnce();
   });

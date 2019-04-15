@@ -53,6 +53,8 @@ describe('<RelevantCoaccusalCard />', function () {
     wrapper.find('.coaccusal-count').text().should.eql('11 coaccusals');
 
     const plusButton = wrapper.find(PlusButton);
+    plusButton.prop('darkMode').should.be.true();
+
     plusButton.simulate('click', { preventDefault: () => {} });
 
     addItemToPinboardStub.should.calledOnce();

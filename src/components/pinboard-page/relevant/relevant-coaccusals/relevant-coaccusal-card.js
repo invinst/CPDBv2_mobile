@@ -51,7 +51,7 @@ export class RelevantCoaccusalCard extends Component {
           <p className='bold-text officer-card-name'>{ fullName }</p>
         </div>
         <div className='coaccusal-count'>{ pluralize('coaccusal', coaccusalCount, true) }</div>
-        <PlusButton onClick={ this.handleClick }/>
+        <PlusButton onClick={ this.handleClick } darkMode={ true }/>
       </Link>
     );
   }
