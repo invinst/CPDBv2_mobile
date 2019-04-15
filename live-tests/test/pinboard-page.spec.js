@@ -315,14 +315,14 @@ const firstRelevantComplaint = {
   'officers': [
     {
       'id': 123,
-      'rank': 'Detective',
-      'full_name': 'Richard Sullivan',
+      'rank': 'Sergeant',
+      'full_name': 'Carl Suchocki',
       'coaccusal_count': 53,
     },
-    ..._.times(9, index => ({
+    ..._.times(8, index => ({
       'id': index,
-      'rank': 'Officer',
-      'full_name': 'Baudilio Lopez',
+      'rank': 'Police officer',
+      'full_name': 'Queen Jones',
       'coaccusal_count': 47,
     }))
   ]
@@ -404,8 +404,8 @@ describe('Pinboard Page', function () {
     done();
   });
 
-  context('pinboard section', function () {
-    it('should render correctly', function () {
+  context('pinboard section', function (client) {
+    it('should render correctly', function (client) {
       const pinboardPage = this.pinboardPage;
       pinboardPage.expect.element('@pinboardTitle').to.be.visible;
       pinboardPage.expect.element('@pinboardDescription').to.be.visible;
@@ -415,6 +415,243 @@ describe('Pinboard Page', function () {
       pinboardPage.expect.section('@pinboardPaneMenu').to.be.visible;
       pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('Network');
       pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('Geographic');
+    });
+  });
+
+  context('relevant documents section', function () {
+    it('should render document cards', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.expect.element('@title').text.to.equal('DOCUMENTS');
+      relevantDocumentsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
+
+      const documentCard = relevantDocumentsSection.section.documentCard;
+      client.elements(
+        'css selector',
+        `${relevantDocumentsSection.selector} ${documentCard.selector}`,
+        cards => assert.equal(cards.value.length, 4)
+      );
+
+      const firstDocumentCard = relevantDocumentsSection.section.documentCard;
+      firstDocumentCard.expect.element('@plusButton').to.be.present;
+      firstDocumentCard.expect.element('@incidentDate').text.to.equal('Apr 23, 2004');
+      firstDocumentCard.expect.element('@category').text.to.equal('Lockup Procedures');
+      firstDocumentCard.expect.element('@firstTopOfficerName').text.to.equal('R. Sullivan');
+      firstDocumentCard.expect.element('@secondTopOfficerName').text.to.equal('B. Lopez');
+      firstDocumentCard.expect.element('@notShowingOfficerCount').text.to.equal('3+');
+    });
+
+    it('should request more when sliding to the end', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      const documentCard = relevantDocumentsSection.section.documentCard;
+      const cardSelector = `${relevantDocumentsSection.selector} ${documentCard.selector}`;
+      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 4));
+
+      const nthCardSelector = n => relevantDocumentsSection.selector +
+        ` .swiper-slide:nth-child(${n}) > div:first-child`;
+
+      _.times(
+        3,
+        idx => client
+          .moveToElement(nthCardSelector(idx + 2), 50, 50)
+          .mouseButtonDown(0)
+          .moveToElement(nthCardSelector(idx + 2), -150, 50)
+          .mouseButtonUp(0)
+      );
+      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 8));
+
+      _.times(
+        4,
+        idx => client
+          .moveToElement(nthCardSelector(idx + 5), 50, 50)
+          .mouseButtonDown(0)
+          .moveToElement(nthCardSelector(idx + 5), -150, 50)
+          .mouseButtonUp(0)
+      );
+
+      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 10));
+    });
+
+    it('should go to complaint page when clicking on category', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.section.documentCard.click('@category');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on incidentDate', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.section.documentCard.click('@incidentDate');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on topOfficers', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.section.documentCard.click('@topOfficers');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on remainingOfficers', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.section.documentCard.click('@remainingOfficers');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to document pdf link in new tab when clicking on left half of a complaint card', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.section.documentCard.click('@leftHalf');
+      client.switchToRecentTab();
+      client.assert.urlEquals(
+        'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf'
+      );
+    });
+  });
+
+  context('relevant complaints section', function () {
+    it('should render complaint cards', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.expect.element('@title').text.to.equal('COMPLAINTS');
+      relevantComplaintsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
+
+      const complaintCard = relevantComplaintsSection.section.complaintCard;
+      client.elements(
+        'css selector',
+        `${relevantComplaintsSection.selector} ${complaintCard.selector}`,
+        cards => assert.equal(cards.value.length, 4)
+      );
+
+      const firstComplaintCard = relevantComplaintsSection.section.complaintCard;
+      firstComplaintCard.expect.element('@plusButton').to.be.present;
+      firstComplaintCard.expect.element('@incidentDate').text.to.equal('Apr 23, 2004');
+      firstComplaintCard.expect.element('@category').text.to.equal('Lockup Procedures');
+      firstComplaintCard.expect.element('@firstTopOfficerName').text.to.equal('C. Suchocki');
+      firstComplaintCard.expect.element('@secondTopOfficerName').text.to.equal('Q. Jones');
+      firstComplaintCard.expect.element('@notShowingOfficerCount').text.to.equal('2+');
+    });
+
+    it('should request more when sliding to the end', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      const complaintCard = relevantComplaintsSection.section.complaintCard;
+      const cardSelector = `${relevantComplaintsSection.selector} ${complaintCard.selector}`;
+      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 4));
+
+      const nthCardSelector = n => relevantComplaintsSection.selector +
+        ` .swiper-slide:nth-child(${n}) > div:first-child`;
+
+      _.times(
+        3,
+        idx => client
+          .moveToElement(nthCardSelector(idx + 2), 50, 50)
+          .mouseButtonDown(0)
+          .moveToElement(nthCardSelector(idx + 2), -150, 50)
+          .mouseButtonUp(0)
+          .pause(50)
+      );
+      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 8));
+
+      _.times(
+        4,
+        idx => client
+          .moveToElement(nthCardSelector(idx + 5), 50, 50)
+          .mouseButtonDown(0)
+          .moveToElement(nthCardSelector(idx + 5), -150, 50)
+          .mouseButtonUp(0)
+          .pause(50)
+      );
+
+      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 10));
+    });
+
+    it('should go to complaint page when clicking on category', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.section.complaintCard.click('@category');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on incidentDate', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.section.complaintCard.click('@incidentDate');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on topOfficers', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.section.complaintCard.click('@topOfficers');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on remainingOfficers', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.section.complaintCard.click('@remainingOfficers');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on left half of a complaint card', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.section.complaintCard.click('@leftHalf');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+  });
+
+  context('relevant coaccusals section', function () {
+    it('should render coaccusal cards', function (client) {
+      const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
+      relevantCoaccusalsSection.expect.element('@title').text.to.equal('COACCUSALS');
+      relevantCoaccusalsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
+
+      const coaccusalCard = relevantCoaccusalsSection.section.coaccusalCard;
+      const cardSelector = `${relevantCoaccusalsSection.selector} ${coaccusalCard.selector}`;
+      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 4));
+
+      const firstCoaccusalCard = coaccusalCard;
+      firstCoaccusalCard.expect.element('@plusButton').to.be.present;
+      firstCoaccusalCard.expect.element('@radarChart').to.be.present;
+      firstCoaccusalCard.expect.element('@officerRank').text.to.equal('Detective');
+      firstCoaccusalCard.expect.element('@officerName').text.to.equal('Richard Sullivan');
+      firstCoaccusalCard.expect.element('@coaccusalCount').text.to.equal('53 coaccusals');
+    });
+
+    it('should request more when sliding to the end', function (client) {
+      const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
+      const coaccusalCard = relevantCoaccusalsSection.section.coaccusalCard;
+      const cardSelector = `${relevantCoaccusalsSection.selector} ${coaccusalCard.selector}`;
+      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 4));
+
+      const nthCardSelector = n => relevantCoaccusalsSection.selector +
+        ` .swiper-slide:nth-child(${n}) > a:first-child`;
+
+      _.times(
+        3,
+        idx => client
+          .moveToElement(nthCardSelector(idx + 2), 50, 50)
+          .mouseButtonDown(0)
+          .moveToElement(nthCardSelector(idx + 2), -50, 50)
+          .mouseButtonUp(0)
+          .pause(50)
+      );
+      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 8));
+
+      _.times(
+        4,
+        idx => client
+          .moveToElement(nthCardSelector(idx + 5), 50, 50)
+          .mouseButtonDown(0)
+          .moveToElement(nthCardSelector(idx + 5), -50, 50)
+          .mouseButtonUp(0)
+          .pause(50)
+      );
+
+      client.elements('css selector', cardSelector, cards => assert.equal(cards.value.length, 10));
+    });
+
+    it('should go to officer page when clicking on a nameWrapper', function (client) {
+      const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
+      relevantCoaccusalsSection.section.coaccusalCard.click('@nameWrapper');
+      client.assert.urlContains('/officer/123/richard-sullivan/');
+    });
+
+    it('should go to officer page when clicking on a coaccusalCount', function (client) {
+      const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
+      relevantCoaccusalsSection.section.coaccusalCard.click('@coaccusalCount');
+      client.assert.urlContains('/officer/123/richard-sullivan/');
     });
   });
 
