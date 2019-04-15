@@ -4,6 +4,7 @@ var _ = require('lodash');
 var assert = require('assert');
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
+const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationResponse');
 
 const pinboardData = {
   'id': '5cd06f2b',
@@ -226,6 +227,129 @@ const geographicData = [
   },
 ];
 
+const baseRelevantDocumentsUrl = '/api/v2/pinboards/5cd06f2b/relevant-documents/?';
+const baseRelevantCoaccusalsUrl = '/api/v2/pinboards/5cd06f2b/relevant-coaccusals/?';
+const baseRelevantComplaintsUrl = '/api/v2/pinboards/5cd06f2b/relevant-complaints/?';
+
+const firstRelevantDocumentOfficer = {
+  'id': 123,
+  rank: 'Detective',
+  'full_name': 'Richard Sullivan',
+  'coaccusal_count': 53,
+};
+const generateRelevantDocumentOfficer = (index) => ({
+  'id': index,
+  rank: 'Officer',
+  'full_name': 'Baudilio Lopez',
+  'coaccusal_count': 47,
+});
+const firstRelevantDocument = {
+  'preview_image_url': 'http://via.placeholder.com/121x157',
+  'url': 'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf',
+  'allegation': {
+    'crid': '1071234',
+    'category': 'Lockup Procedures',
+    'incident_date': '2004-04-23',
+    'officers': [firstRelevantDocumentOfficer].concat(_.times(9, generateRelevantDocumentOfficer))
+  },
+};
+const baseRelevantDocument = {
+  'preview_image_url': 'http://via.placeholder.com/121x157',
+  'url': 'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf',
+  'allegation': {
+    'crid': '1079876',
+    'category': 'Operations/Personnel Violation',
+    'incident_date': '2014-05-02',
+    'officers': []
+  }
+};
+const firstRelevantDocumentsResponse = getPaginationResponse(
+  baseRelevantDocumentsUrl,
+  (number) => [firstRelevantDocument, ..._.times(number - 1, () => baseRelevantDocument)],
+  4, 0, 10
+);
+const secondRelevantDocumentsResponse = getPaginationResponse(
+  baseRelevantDocumentsUrl,
+  (number) => _.times(number, () => baseRelevantDocument),
+  4, 4, 10
+);
+const lastRelevantDocumentsResponse = getPaginationResponse(
+  baseRelevantDocumentsUrl,
+  (number) => _.times(number, () => baseRelevantDocument),
+  4, 8, 10
+);
+
+const firstRelevantCoaccusal = {
+  'id': 123,
+  'rank': 'Detective',
+  'full_name': 'Richard Sullivan',
+  'coaccusal_count': 53,
+};
+const generateRelevantCoaccusal = (id) => ({
+  id,
+  'rank': 'Officer',
+  'full_name': 'Baudilio Lopez',
+  'coaccusal_count': 47,
+});
+const firstRelevantCoaccusalsResponse = getPaginationResponse(
+  baseRelevantCoaccusalsUrl,
+  (number) => [firstRelevantCoaccusal, ..._.times(number - 1, index => generateRelevantCoaccusal(index))],
+  4, 0, 10
+);
+const secondRelevantCoaccusalsResponse = getPaginationResponse(
+  baseRelevantCoaccusalsUrl,
+  (number) => _.times(number, index => generateRelevantCoaccusal(index + 20)),
+  4, 4, 10
+);
+const lastRelevantCoaccusalsResponse = getPaginationResponse(
+  baseRelevantCoaccusalsUrl,
+  (number) => _.times(number, index => generateRelevantCoaccusal(index + 40)),
+  4, 8, 10
+);
+
+const firstRelevantComplaint = {
+  'crid': '1071234',
+  'category': 'Lockup Procedures',
+  'incident_date': '2004-04-23',
+  'point': { lat: 50, lon: -87 },
+  'officers': [
+    {
+      'id': 123,
+      'rank': 'Detective',
+      'full_name': 'Richard Sullivan',
+      'coaccusal_count': 53,
+    },
+    ..._.times(9, index => ({
+      'id': index,
+      'rank': 'Officer',
+      'full_name': 'Baudilio Lopez',
+      'coaccusal_count': 47,
+    }))
+  ]
+};
+const generateRelevantComplaint = crid => ({
+  crid,
+  'category': 'Operations/Personnel Violation',
+  'incident_date': '2014-05-02',
+  'point': { lat: 45, lon: -87 },
+  'officers': []
+});
+const firstRelevantComplaintsResponse = getPaginationResponse(
+  baseRelevantComplaintsUrl,
+  (number) => [firstRelevantComplaint, ..._.times(number - 1, index => generateRelevantComplaint(`${index}`))],
+  4, 0, 10
+);
+const secondRelevantComplaintsResponse = getPaginationResponse(
+  baseRelevantComplaintsUrl,
+  (number) => _.times(number, index => generateRelevantComplaint(`${index + 20}`)),
+  4, 4, 10
+);
+const lastRelevantComplaintsResponse = getPaginationResponse(
+  baseRelevantComplaintsUrl,
+  (number) => _.times(number, index => generateRelevantComplaint(`${index + 40}`)),
+  4, 8, 10
+);
+
 function waitForGraphAnimationEnd(client, pinboardPage) {
   pinboardPage.expect.section('@currentDate').to.be.visible;
   client.waitForText(
@@ -257,6 +381,18 @@ describe('Pinboard Page', function () {
     api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, pinboardData);
     api.mock('GET', '/api/v2/pinboards/5cd06f2b/social-graph/', 200, socialGraphData);
     api.mock('GET', '/api/v2/pinboards/5cd06f2b/geographic-data/', 200, geographicData);
+
+    api.mock('GET', baseRelevantDocumentsUrl, 200, firstRelevantDocumentsResponse);
+    api.mock('GET', `${baseRelevantDocumentsUrl}limit=4&offset=4`, 200, secondRelevantDocumentsResponse);
+    api.mock('GET', `${baseRelevantDocumentsUrl}limit=4&offset=8`, 200, lastRelevantDocumentsResponse);
+
+    api.mock('GET', baseRelevantCoaccusalsUrl, 200, firstRelevantCoaccusalsResponse);
+    api.mock('GET', `${baseRelevantCoaccusalsUrl}limit=4&offset=4`, 200, secondRelevantCoaccusalsResponse);
+    api.mock('GET', `${baseRelevantCoaccusalsUrl}limit=4&offset=8`, 200, lastRelevantCoaccusalsResponse);
+
+    api.mock('GET', baseRelevantComplaintsUrl, 200, firstRelevantComplaintsResponse);
+    api.mock('GET', `${baseRelevantComplaintsUrl}limit=4&offset=4`, 200, secondRelevantComplaintsResponse);
+    api.mock('GET', `${baseRelevantComplaintsUrl}limit=4&offset=8`, 200, lastRelevantComplaintsResponse);
 
     this.pinboardPage = client.page.pinboardPage();
     this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
