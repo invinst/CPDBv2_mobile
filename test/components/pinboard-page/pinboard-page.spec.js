@@ -4,6 +4,7 @@ import { spy } from 'sinon';
 import { Provider } from 'react-redux';
 import MockStore from 'redux-mock-store';
 
+import Footer from 'components/footer';
 import PinboardPage from 'components/pinboard-page/index';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
 import RelevantCoaccusalsContainer from 'containers/pinboard-page/relevant/relevant-coaccusals';
@@ -77,5 +78,6 @@ describe('<PinboardPage />', function () {
     wrapper.find(RelevantCoaccusalsContainer).exists().should.be.true();
     wrapper.find(RelevantDocumentsContainer).exists().should.be.true();
     wrapper.find(RelevantComplaintsContainer).exists().should.be.true();
+    wrapper.find(Footer).exists().should.be.true();
   });
 });
