@@ -1,5 +1,10 @@
-import { createPinboard, updatePinboard, fetchPinboard } from 'actions/pinboard';
 import {
+  createPinboard,
+  updatePinboard,
+  fetchPinboard,
+  fetchPinboardComplaints,
+  fetchPinboardOfficers,
+  fetchPinboardTRRs,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -9,6 +14,15 @@ import {
   PINBOARD_FETCH_REQUEST_START,
   PINBOARD_FETCH_REQUEST_SUCCESS,
   PINBOARD_FETCH_REQUEST_FAILURE,
+  PINBOARD_COMPLAINTS_FETCH_REQUEST_START,
+  PINBOARD_COMPLAINTS_FETCH_REQUEST_SUCCESS,
+  PINBOARD_COMPLAINTS_FETCH_REQUEST_FAILURE,
+  PINBOARD_OFFICERS_FETCH_REQUEST_START,
+  PINBOARD_OFFICERS_FETCH_REQUEST_SUCCESS,
+  PINBOARD_OFFICERS_FETCH_REQUEST_FAILURE,
+  PINBOARD_TRRS_FETCH_REQUEST_START,
+  PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
+  PINBOARD_TRRS_FETCH_REQUEST_FAILURE,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -82,6 +96,63 @@ describe('pinboard actions', function () {
         payload: {
           request: {
             url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/`),
+            params: undefined,
+            adapter: undefined,
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchPinboardComplaints', function () {
+    it('should return correct action', function () {
+      fetchPinboardComplaints('1').should.deepEqual({
+        types: [
+          PINBOARD_COMPLAINTS_FETCH_REQUEST_START,
+          PINBOARD_COMPLAINTS_FETCH_REQUEST_SUCCESS,
+          PINBOARD_COMPLAINTS_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/complaints/`),
+            params: undefined,
+            adapter: undefined,
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchPinboardOfficers', function () {
+    it('should return correct action', function () {
+      fetchPinboardOfficers('1').should.deepEqual({
+        types: [
+          PINBOARD_OFFICERS_FETCH_REQUEST_START,
+          PINBOARD_OFFICERS_FETCH_REQUEST_SUCCESS,
+          PINBOARD_OFFICERS_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/officers/`),
+            params: undefined,
+            adapter: undefined,
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchPinboardTRRs', function () {
+    it('should return correct action', function () {
+      fetchPinboardTRRs('1').should.deepEqual({
+        types: [
+          PINBOARD_TRRS_FETCH_REQUEST_START,
+          PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
+          PINBOARD_TRRS_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/trrs/`),
             params: undefined,
             adapter: undefined,
           }
