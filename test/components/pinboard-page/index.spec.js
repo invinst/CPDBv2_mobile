@@ -4,6 +4,7 @@ import { spy } from 'sinon';
 
 import PinboardPage from 'components/pinboard-page';
 import PinnedSection from 'components/pinboard-page/pinned-section';
+import SearchBar from 'components/pinboard-page/search-bar';
 
 
 describe('<PinboardPage />', function () {
@@ -77,5 +78,14 @@ describe('<PinboardPage />', function () {
     wrapper.exists(PinnedSection).should.be.true();
     wrapper.find(PinnedSection).props().itemsByTypes.should.equal(itemsByTypes);
     wrapper.find(PinnedSection).props().removeItemInPinboardPage.should.equal(removeItemInPinboardPage);
+  });
+
+  it('should render SearchBar component', function () {
+    const wrapper = mount(<PinboardPage
+      params={ { pinboardId: '5cd06f2b' } }
+      pinboard={ { id: '5cd06f2b' } }
+    />);
+
+    wrapper.exists(SearchBar).should.be.true();
   });
 });

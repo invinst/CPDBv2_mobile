@@ -69,6 +69,12 @@ describe('Pinboard Page', function () {
     done();
   });
 
+  it('should go to search page when search bar is clicked', function (client) {
+    this.pinboardPage.click('@searchBar');
+    client.waitForElementVisible('body', TIMEOUT);
+    client.assert.urlContains('/search/');
+  });
+
   context('pinboard pinned section', function () {
     it('should render the pinned cards correctly', function (client) {
       const pinboardPage = this.pinboardPage;

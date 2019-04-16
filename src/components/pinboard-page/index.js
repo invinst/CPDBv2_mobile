@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 
+import styles from './pinboard-page.sass';
 import PinnedSection from './pinned-section';
+import SearchBar from './search-bar';
 
 
 export default class PinboardPage extends Component {
@@ -42,8 +43,10 @@ export default class PinboardPage extends Component {
   render() {
     const { itemsByTypes, removeItemInPinboardPage } = this.props;
     return (
-      <div>
-        <Link to='/search/'>Back to search page</Link>
+      <div className={ styles.pinboardPage }>
+        <div className='pinboard-header'>
+          <SearchBar />
+        </div>
         <PinnedSection
           itemsByTypes={ itemsByTypes }
           removeItemInPinboardPage={ removeItemInPinboardPage }/>
@@ -65,4 +68,8 @@ PinboardPage.propTypes = {
 
 PinboardPage.defaultProps = {
   itemsByTypes: {},
+  fetchPinboard: () => {},
+  fetchPinboardComplaints: () => {},
+  fetchPinboardOfficers: () => {},
+  fetchPinboardTRRs: () => {},
 };

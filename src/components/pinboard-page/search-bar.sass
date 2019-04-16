@@ -1,0 +1,28 @@
+@import 'variables'
+
+\:local(.wrapper)
+  box-sizing: border-box
+  width: 100%
+  height: 44px
+  border-top: 1.75px solid $black15-color
+  border-bottom: 1.75px solid $black15-color
+  padding: 0 16px
+  display: flex
+  align-items: center
+  cursor: pointer
+  text-decoration: none
+
+  .search-icon
+    background-image: url('/img/ic-search.svg')
+    background-position: center
+    background-repeat: no-repeat
+    background-size: contain
+    width: 12px
+    height: 12px
+    display: inline-block
+
+  .search-term
+    margin-left: 10px
+    font-size: 14px
+    font-weight: 300
+    color: $accent-blue

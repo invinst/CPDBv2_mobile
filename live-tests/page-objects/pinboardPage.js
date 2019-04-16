@@ -4,6 +4,10 @@ module.exports = {
     return `${this.api.globals.clientUrl}/pinboard/${pinboardId}/pinboard-title/`;
   },
 
+  elements: {
+    searchBar: '.test--search-bar',
+  },
+
   sections: {
     pinnedSection: {
       selector: '.test--pinned-section',
