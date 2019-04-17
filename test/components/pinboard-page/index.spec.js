@@ -54,10 +54,6 @@ describe('<PinboardPage />', function () {
   });
 
   it('should render PinnedSection component', function () {
-    const fetchPinboard = spy();
-    const fetchPinboardComplaints = spy();
-    const fetchPinboardOfficers = spy();
-    const fetchPinboardTRRs = spy();
     const itemsByTypes = {
       'OFFICER': [],
       'CR': [],
@@ -65,10 +61,6 @@ describe('<PinboardPage />', function () {
     };
     const removeItemInPinboardPage = spy();
     const wrapper = mount(<PinboardPage
-      fetchPinboard={ fetchPinboard }
-      fetchPinboardComplaints={ fetchPinboardComplaints }
-      fetchPinboardOfficers={ fetchPinboardOfficers }
-      fetchPinboardTRRs={ fetchPinboardTRRs }
       itemsByTypes={ itemsByTypes }
       removeItemInPinboardPage={ removeItemInPinboardPage }
       params={ { pinboardId: '5cd06f2b' } }
