@@ -4,24 +4,12 @@ module.exports = {
   },
 
   elements: {
-    socialGraphTitle: {
-      selector: '.sidenav-title',
-    },
-    coaccusalsThresholdText: {
-      selector: '.coaccusals-threshold-text',
-    },
-    startDate: {
-      selector: '.start-date-label',
-    },
-    endDate: {
-      selector: '.end-date-label',
-    },
-    pinboardTitle: {
-      selector: '.pinboard-title',
-    },
-    pinboardDescription: {
-      selector: '.pinboard-description',
-    },
+    socialGraphTitle: '.sidenav-title',
+    coaccusalsThresholdText:'.coaccusals-threshold-text',
+    startDate: '.start-date-label',
+    endDate: '.end-date-label',
+    pinboardTitle: '.pinboard-title',
+    pinboardDescription: '.pinboard-description',
     pinboardPaneMenu: {
       selector: '(//div[contains(@class, "pinboard-pane-section-menu")])',
       locateStrategy: 'xpath'
@@ -42,7 +30,6 @@ module.exports = {
       selector: '//div[contains(@class, "legend__legend")]//div[2]//span[contains(@class, "legend-row-number")]',
       locateStrategy: 'xpath'
     },
-
   },
 
   sections: {
@@ -55,9 +42,7 @@ module.exports = {
     timeline: {
       selector: '.graph-control-panel',
       elements: {
-        toggleTimelineButton: {
-          selector: '.toggle-timeline-btn',
-        }
+        toggleTimelineButton: '.toggle-timeline-btn',
       }
     },
     timelineSlider: {
