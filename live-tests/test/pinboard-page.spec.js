@@ -256,30 +256,33 @@ describe('Pinboard Page', function () {
       });
 
       timeline.click('@toggleTimelineButton');
+      const middleDays = [
+        '1992-03-08',
+        '1994-01-10',
+        '1994-03-07',
+        '1994-03-12',
+        '1994-04-17',
+        '1998-11-17',
+        '1999-02-08',
+        '1999-07-22',
+        '2006-03-15'
+      ];
+
+      client.waitForAttribute('.toggle-timeline-btn', 'class', function (className) {
+        return className === 'toggle-timeline-btn pause-icon';
+      });
 
       client.waitForText(pinboardPage.section.currentDate.selector, (text) => {
-        return text === '1999-02-08';
-      }, 2000, 'expected timeline reaches specific date after 0.9s');
+        return middleDays.indexOf(text) !== -1;
+      });
 
       timeline.click('@toggleTimelineButton');
-
-      const graphNodes = pinboardPage.section.graphNodes;
-      client.elements(graphNodes.locateStrategy, graphNodes.selector, function (graphNodes) {
-        assert.equal(graphNodes.value.length, 20);
-      });
-      const graphLinks = pinboardPage.section.graphLinks;
-      client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
-        assert.equal(graphLinks.value.length, 32);
+      client.waitForAttribute('.toggle-timeline-btn', 'class', function (className) {
+        return className === 'toggle-timeline-btn play-icon';
       });
 
-      pinboardPage.section.timeline.click('@toggleTimelineButton');
-      client.waitForText(pinboardPage.section.currentDate.selector, (text) => {return text === '2008-01-11';}, 15000);
-      client.elements(graphNodes.locateStrategy, graphNodes.selector, function (graphNodes) {
-        assert.equal(graphNodes.value.length, 20);
-      });
-      client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
-        assert.equal(graphLinks.value.length, 37);
-      });
+      timeline.click('@toggleTimelineButton');
+      waitForGraphAnimationEnd(client, pinboardPage);
     });
 
     it('should change the graph when click on specific part of the timeline', function (client) {
