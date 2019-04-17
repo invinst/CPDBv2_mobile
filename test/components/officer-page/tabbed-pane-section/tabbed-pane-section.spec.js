@@ -9,7 +9,7 @@ import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import Timeline from 'components/officer-page/tabbed-pane-section/timeline';
 import Coaccusals from 'components/officer-page/tabbed-pane-section/coaccusals';
 import AttachmentsTab from 'components/officer-page/tabbed-pane-section/attachments-tab';
-import Map from 'components/officer-page/tabbed-pane-section/map';
+import AllegationsMap from 'components/common/allegations-map';
 
 
 describe('TabbedPaneSection component', function () {
@@ -103,7 +103,7 @@ describe('TabbedPaneSection component', function () {
       </Provider>
     );
 
-    wrapper.find(Map).exists().should.be.true();
+    wrapper.find(AllegationsMap).exists().should.be.true();
   });
 
   it('should call changeOfficerTab when clicking on header tab name', function () {

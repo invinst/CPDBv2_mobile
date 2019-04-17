@@ -2,12 +2,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import AllegationsMap from 'components/common/allegations-map';
-import { mapLegendSelector, mapMarkersSelector } from 'selectors/officer-page/map';
+import { mapLegendSelector, mapMarkersSelector } from 'selectors/pinboard-page/geographic-data';
 
 function mapStateToProps(state, ownProps) {
   return {
-    legend: mapLegendSelector(state, ownProps.officerId),
-    markers: mapMarkersSelector(state, ownProps.officerId)
+    mapCustomClassName: 'pinboard-map',
+    legend: mapLegendSelector(state),
+    markers: mapMarkersSelector(state)
   };
 }
 
