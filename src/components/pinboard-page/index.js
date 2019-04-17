@@ -65,4 +65,8 @@ PinboardPage.propTypes = {
 
 PinboardPage.defaultProps = {
   itemsByTypes: {},
+  fetchPinboard: () => {},
+  fetchPinboardComplaints: () => {},
+  fetchPinboardOfficers: () => {},
+  fetchPinboardTRRs: () => {},
 };
