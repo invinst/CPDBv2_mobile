@@ -52,7 +52,7 @@ http {
             alias /usr/share/nginx/html/;
         }
 
-        location ~* ^/(img|fonts|assets)/ {
+        location ~* ^/(img|fonts|static)/ {
             expires 1h;
             add_header Cache-Control "public";
             try_files $uri /index.html;
