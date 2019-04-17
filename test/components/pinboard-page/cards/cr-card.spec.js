@@ -19,19 +19,19 @@ describe('Pinboard <CRCard />', function () {
     crCard.find('.cr-category').text().should.equal('Use Of Force');
   });
 
-  it('should render card map with style if point of item is not null', function () {
+  it('should render card map if point of item is not null', function () {
     const item = { point: { 'lat': 1.0, 'lon': 1.0 } };
     const crCard = mount(<CRCard item={ item }/>);
 
-    const map = crCard.find('.cr-card-map');
-    map.prop('style').should.have.property('background');
+    should(crCard.find('.cr-card-map').exists()).be.true();
+    should(crCard.find('.empty-map').exists()).be.false();
   });
 
-  it('should not render card map with style if point of item is null', function () {
+  it('should render empty card map if point of item is null', function () {
     const item = { point: null };
     const crCard = mount(<CRCard item={ item }/>);
 
-    const map = crCard.find('.cr-card-map');
-    should(map.prop('style')).be.undefined();
+    should(crCard.find('.cr-card-map').exists()).be.true();
+    should(crCard.find('.empty-map').exists()).be.true();
   });
 });

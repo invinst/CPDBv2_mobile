@@ -23,15 +23,15 @@ describe('Pinboard <TRRCard />', function () {
     const item = { point: { 'lat': 1.0, 'lon': 1.0 } };
     const trrCard = mount(<TRRCard item={ item }/>);
 
-    const map = trrCard.find('.trr-card-map');
-    map.prop('style').should.have.property('background');
+    should(trrCard.find('.trr-card-map').exists()).be.true();
+    should(trrCard.find('.empty-map').exists()).be.false();
   });
 
   it('should not render card map with style if point of item is null', function () {
     const item = { point: null };
     const trrCard = mount(<TRRCard item={ item }/>);
 
-    const map = trrCard.find('.trr-card-map');
-    should(map.prop('style')).be.undefined();
+    should(trrCard.find('.trr-card-map').exists()).be.true();
+    should(trrCard.find('.empty-map').exists()).be.true();
   });
 });
