@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router';
 import styles from './pinboard-page.sass';
 import PinnedSection from './pinned-section';
 import SearchBar from './search-bar';
+import Header from './header';
 
 
 export default class PinboardPage extends Component {
@@ -45,6 +46,7 @@ export default class PinboardPage extends Component {
     return (
       <div className={ styles.pinboardPage }>
         <div className='pinboard-header'>
+          <Header />
           <SearchBar />
         </div>
         <PinnedSection
