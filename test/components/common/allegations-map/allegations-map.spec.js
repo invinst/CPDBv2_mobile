@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Map from 'components/officer-page/tabbed-pane-section/map';
+import AllegationsMap from 'components/common/allegations-map';
 
 
 describe('Map component', function () {
@@ -51,13 +51,13 @@ describe('Map component', function () {
   }];
 
   it('should render officer map and legend', function () {
-    const wrapper = mount(<Map legend={ legend } markers={ markers } />);
+    const wrapper = mount(<AllegationsMap legend={ legend } markers={ markers } />);
     wrapper.find('.test--map').should.have.length(1);
     wrapper.find('.test--legend').should.have.length(1);
   });
 
   it('should rerender', function () {
-    const wrapper = mount(<Map legend={ legend } markers={ markers } />);
+    const wrapper = mount(<AllegationsMap legend={ legend } markers={ markers } />);
     wrapper.find('.test--map').should.have.length(1);
     wrapper.find('.test--legend').should.have.length(1);
 

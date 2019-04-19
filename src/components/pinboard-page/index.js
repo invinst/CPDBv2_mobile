@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
+import cx from 'classnames';
 
 import PinnedSection from './pinned-section';
+import styles from './pinboard-page.sass';
+import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
 
 
 export default class PinboardPage extends Component {
@@ -32,18 +34,39 @@ export default class PinboardPage extends Component {
       fetchPinboardComplaints,
       fetchPinboardOfficers,
       fetchPinboardTRRs,
+      fetchPinboardSocialGraph,
+      fetchPinboardGeographicData,
     } = this.props;
     fetchPinboard(id);
     fetchPinboardComplaints(id);
     fetchPinboardOfficers(id);
     fetchPinboardTRRs(id);
+    fetchPinboardSocialGraph(id);
+    fetchPinboardGeographicData(id);
   }
 
   render() {
-    const { itemsByTypes, removeItemInPinboardPage } = this.props;
+    const {
+      pinboard,
+      changePinboardTab,
+      currentTab,
+      hasMapMarker,
+      itemsByTypes,
+      removeItemInPinboardPage,
+    } = this.props;
     return (
-      <div>
-        <Link to='/search/'>Back to search page</Link>
+      <div className={ cx(styles.pinboardPage, 'pinboard-page') }>
+        <div className='pinboard-info'>
+          <div className='pinboard-title'>{ pinboard.title }</div>
+          <div className='pinboard-description'>{ pinboard.description }</div>
+        </div>
+        <div className='data-visualizations'>
+          <PinboardPaneSection
+            changePinboardTab={ changePinboardTab }
+            currentTab={ currentTab }
+            hasMapMarker={ hasMapMarker }
+          />
+        </div>
         <PinnedSection
           itemsByTypes={ itemsByTypes }
           removeItemInPinboardPage={ removeItemInPinboardPage }/>
@@ -61,6 +84,11 @@ PinboardPage.propTypes = {
   fetchPinboardOfficers: PropTypes.func,
   fetchPinboardTRRs: PropTypes.func,
   removeItemInPinboardPage: PropTypes.func,
+  fetchPinboardSocialGraph: PropTypes.func,
+  fetchPinboardGeographicData: PropTypes.func,
+  changePinboardTab: PropTypes.func,
+  currentTab: PropTypes.string,
+  hasMapMarker: PropTypes.bool,
 };
 
 PinboardPage.defaultProps = {
@@ -69,4 +97,6 @@ PinboardPage.defaultProps = {
   fetchPinboardComplaints: () => {},
   fetchPinboardOfficers: () => {},
   fetchPinboardTRRs: () => {},
+  fetchPinboardSocialGraph: () => {},
+  fetchPinboardGeographicData: () => {},
 };

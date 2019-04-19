@@ -5,6 +5,8 @@ import {
   fetchPinboardComplaints,
   fetchPinboardOfficers,
   fetchPinboardTRRs,
+  fetchPinboardSocialGraph,
+  fetchPinboardGeographicData,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -23,6 +25,12 @@ import {
   PINBOARD_TRRS_FETCH_REQUEST_START,
   PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
   PINBOARD_TRRS_FETCH_REQUEST_FAILURE,
+  PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_START,
+  PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_SUCCESS,
+  PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_FAILURE,
+  PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_START,
+  PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_SUCCESS,
+  PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_FAILURE,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -153,6 +161,44 @@ describe('pinboard actions', function () {
         payload: {
           request: {
             url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/trrs/`),
+            params: undefined,
+            adapter: undefined,
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchPinboardSocialGraph', function () {
+    it('shoud return correct action', function () {
+      fetchPinboardSocialGraph('268a5e58').should.deepEqual({
+        types: [
+          PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_START,
+          PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_SUCCESS,
+          PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}268a5e58/social-graph/`,
+            params: undefined,
+            adapter: undefined,
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchPinboardGeographicData', function () {
+    it('should return correct action', function () {
+      fetchPinboardGeographicData('268a5e58').should.deepEqual({
+        types: [
+          PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_START,
+          PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_SUCCESS,
+          PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}268a5e58/geographic-data/`,
             params: undefined,
             adapter: undefined,
           }

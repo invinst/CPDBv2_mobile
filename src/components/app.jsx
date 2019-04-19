@@ -15,7 +15,7 @@ import LandingPageContainer from 'containers/landing-page-container';
 import BreadcrumbItemContainer from 'containers/breadcrumb-container';
 import TopOfficersByAllegationContainer from 'containers/landing-page/top-officers-by-allegation';
 import OfficersContainer from 'containers/embed/officers';
-import PinboardPageContainer from 'containers/pinboard-page-container';
+import PinboardPageContainer from 'containers/pinboard-page';
 
 import 'swiper/dist/css/swiper.css';
 import 'mapbox-gl/dist/mapbox-gl.css';

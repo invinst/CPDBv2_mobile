@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import SimpleMarkerTooltip from 'components/officer-page/tabbed-pane-section/map/simple-marker-tooltip';
+import SimpleMarkerTooltip from 'components/common/allegations-map/simple-marker-tooltip';
 
 
 describe('SimpleMarkerTooltip component', function () {
