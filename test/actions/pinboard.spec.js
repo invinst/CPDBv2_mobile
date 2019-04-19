@@ -2,10 +2,11 @@ import {
   createPinboard,
   updatePinboard,
   fetchPinboard,
+  fetchPinboardComplaints,
+  fetchPinboardOfficers,
+  fetchPinboardTRRs,
   fetchPinboardSocialGraph,
-  fetchPinboardGeographicData
-} from 'actions/pinboard';
-import {
+  fetchPinboardGeographicData,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -15,13 +16,21 @@ import {
   PINBOARD_FETCH_REQUEST_START,
   PINBOARD_FETCH_REQUEST_SUCCESS,
   PINBOARD_FETCH_REQUEST_FAILURE,
+  PINBOARD_COMPLAINTS_FETCH_REQUEST_START,
+  PINBOARD_COMPLAINTS_FETCH_REQUEST_SUCCESS,
+  PINBOARD_COMPLAINTS_FETCH_REQUEST_FAILURE,
+  PINBOARD_OFFICERS_FETCH_REQUEST_START,
+  PINBOARD_OFFICERS_FETCH_REQUEST_SUCCESS,
+  PINBOARD_OFFICERS_FETCH_REQUEST_FAILURE,
+  PINBOARD_TRRS_FETCH_REQUEST_START,
+  PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
+  PINBOARD_TRRS_FETCH_REQUEST_FAILURE,
   PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_START,
   PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_SUCCESS,
   PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_FAILURE,
   PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_START,
   PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_SUCCESS,
-  PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_FAILURE
-
+  PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_FAILURE,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -55,7 +64,7 @@ describe('pinboard actions', function () {
   describe('updatePinboard', function () {
     it('should return correct action', function () {
       const pinboard = {
-        id: '1',
+        id: '66ef1560',
         title: 'Title',
         officerIds: ['1'],
         crids: [],
@@ -69,7 +78,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/`),
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/`),
             method: 'PUT',
             adapter: undefined,
             data: {
@@ -86,7 +95,7 @@ describe('pinboard actions', function () {
 
   describe('fetchPinboard', function () {
     it('shoud return correct action', function () {
-      fetchPinboard('1').should.deepEqual({
+      fetchPinboard('66ef1560').should.deepEqual({
         types: [
           PINBOARD_FETCH_REQUEST_START,
           PINBOARD_FETCH_REQUEST_SUCCESS,
@@ -94,7 +103,64 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/`),
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/`),
+            params: undefined,
+            adapter: undefined,
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchPinboardComplaints', function () {
+    it('should return correct action', function () {
+      fetchPinboardComplaints('66ef1560').should.deepEqual({
+        types: [
+          PINBOARD_COMPLAINTS_FETCH_REQUEST_START,
+          PINBOARD_COMPLAINTS_FETCH_REQUEST_SUCCESS,
+          PINBOARD_COMPLAINTS_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/complaints/`),
+            params: undefined,
+            adapter: undefined,
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchPinboardOfficers', function () {
+    it('should return correct action', function () {
+      fetchPinboardOfficers('66ef1560').should.deepEqual({
+        types: [
+          PINBOARD_OFFICERS_FETCH_REQUEST_START,
+          PINBOARD_OFFICERS_FETCH_REQUEST_SUCCESS,
+          PINBOARD_OFFICERS_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/officers/`),
+            params: undefined,
+            adapter: undefined,
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchPinboardTRRs', function () {
+    it('should return correct action', function () {
+      fetchPinboardTRRs('66ef1560').should.deepEqual({
+        types: [
+          PINBOARD_TRRS_FETCH_REQUEST_START,
+          PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
+          PINBOARD_TRRS_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/trrs/`),
             params: undefined,
             adapter: undefined,
           }
@@ -105,7 +171,7 @@ describe('pinboard actions', function () {
 
   describe('fetchPinboardSocialGraph', function () {
     it('shoud return correct action', function () {
-      fetchPinboardSocialGraph('1').should.deepEqual({
+      fetchPinboardSocialGraph('268a5e58').should.deepEqual({
         types: [
           PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_START,
           PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_SUCCESS,
@@ -113,7 +179,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}1/social-graph/`,
+            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}268a5e58/social-graph/`,
             params: undefined,
             adapter: undefined,
           }

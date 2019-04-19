@@ -1,25 +1,61 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import cx from 'classnames';
 
+import PinnedSection from './pinned-section';
 import styles from './pinboard-page.sass';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
 
 
 export default class PinboardPage extends Component {
+  constructor(props) {
+    super(props);
+    this.fetchPinboardData = this.fetchPinboardData.bind(this);
+  }
+
   componentDidMount() {
-    const { fetchPinboard, fetchPinboardSocialGraph, fetchPinboardGeographicData } = this.props;
-    const pinboardID = this.props.params.pinboardId;
-    fetchPinboard(pinboardID);
-    fetchPinboardSocialGraph(pinboardID);
-    fetchPinboardGeographicData(pinboardID);
+    this.fetchPinboardData(this.props.params.pinboardId);
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevID = prevProps.pinboard.id;
+    const currID = this.props.pinboard.id;
+
+    if (prevID !== currID) {
+      browserHistory.replace(`/pinboard/${currID}/`);
+
+      this.fetchPinboardData(currID);
+    }
+  }
+
+  fetchPinboardData(id) {
+    const {
+      fetchPinboard,
+      fetchPinboardComplaints,
+      fetchPinboardOfficers,
+      fetchPinboardTRRs,
+      fetchPinboardSocialGraph,
+      fetchPinboardGeographicData,
+    } = this.props;
+    fetchPinboard(id);
+    fetchPinboardComplaints(id);
+    fetchPinboardOfficers(id);
+    fetchPinboardTRRs(id);
+    fetchPinboardSocialGraph(id);
+    fetchPinboardGeographicData(id);
   }
 
   render() {
-    const { pinboard, changePinboardTab, currentTab, hasMapMarker } = this.props;
+    const {
+      pinboard,
+      changePinboardTab,
+      currentTab,
+      hasMapMarker,
+      itemsByTypes,
+      removeItemInPinboardPage,
+    } = this.props;
     return (
       <div className={ cx(styles.pinboardPage, 'pinboard-page') }>
-        <Link to='/search/'>Back to search page</Link>
         <div className='pinboard-info'>
           <div className='pinboard-title'>{ pinboard.title }</div>
           <div className='pinboard-description'>{ pinboard.description }</div>
@@ -31,15 +67,23 @@ export default class PinboardPage extends Component {
             hasMapMarker={ hasMapMarker }
           />
         </div>
+        <PinnedSection
+          itemsByTypes={ itemsByTypes }
+          removeItemInPinboardPage={ removeItemInPinboardPage }/>
       </div>
     );
   }
 }
 
 PinboardPage.propTypes = {
-  pinboard: PropTypes.object,
   params: PropTypes.object,
+  pinboard: PropTypes.object,
+  itemsByTypes: PropTypes.object,
   fetchPinboard: PropTypes.func,
+  fetchPinboardComplaints: PropTypes.func,
+  fetchPinboardOfficers: PropTypes.func,
+  fetchPinboardTRRs: PropTypes.func,
+  removeItemInPinboardPage: PropTypes.func,
   fetchPinboardSocialGraph: PropTypes.func,
   fetchPinboardGeographicData: PropTypes.func,
   changePinboardTab: PropTypes.func,
@@ -48,7 +92,11 @@ PinboardPage.propTypes = {
 };
 
 PinboardPage.defaultProps = {
+  itemsByTypes: {},
   fetchPinboard: () => {},
+  fetchPinboardComplaints: () => {},
+  fetchPinboardOfficers: () => {},
+  fetchPinboardTRRs: () => {},
   fetchPinboardSocialGraph: () => {},
   fetchPinboardGeographicData: () => {},
 };
