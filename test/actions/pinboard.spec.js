@@ -56,7 +56,7 @@ describe('pinboard actions', function () {
   describe('updatePinboard', function () {
     it('should return correct action', function () {
       const pinboard = {
-        id: '1',
+        id: '66ef1560',
         title: 'Title',
         officerIds: ['1'],
         crids: [],
@@ -70,7 +70,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/`),
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/`),
             method: 'PUT',
             adapter: undefined,
             data: {
@@ -87,7 +87,7 @@ describe('pinboard actions', function () {
 
   describe('fetchPinboard', function () {
     it('shoud return correct action', function () {
-      fetchPinboard('1').should.deepEqual({
+      fetchPinboard('66ef1560').should.deepEqual({
         types: [
           PINBOARD_FETCH_REQUEST_START,
           PINBOARD_FETCH_REQUEST_SUCCESS,
@@ -95,7 +95,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/`),
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/`),
             params: undefined,
             adapter: undefined,
           }
@@ -106,7 +106,7 @@ describe('pinboard actions', function () {
 
   describe('fetchPinboardComplaints', function () {
     it('should return correct action', function () {
-      fetchPinboardComplaints('1').should.deepEqual({
+      fetchPinboardComplaints('66ef1560').should.deepEqual({
         types: [
           PINBOARD_COMPLAINTS_FETCH_REQUEST_START,
           PINBOARD_COMPLAINTS_FETCH_REQUEST_SUCCESS,
@@ -114,7 +114,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/complaints/`),
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/complaints/`),
             params: undefined,
             adapter: undefined,
           }
@@ -125,7 +125,7 @@ describe('pinboard actions', function () {
 
   describe('fetchPinboardOfficers', function () {
     it('should return correct action', function () {
-      fetchPinboardOfficers('1').should.deepEqual({
+      fetchPinboardOfficers('66ef1560').should.deepEqual({
         types: [
           PINBOARD_OFFICERS_FETCH_REQUEST_START,
           PINBOARD_OFFICERS_FETCH_REQUEST_SUCCESS,
@@ -133,7 +133,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/officers/`),
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/officers/`),
             params: undefined,
             adapter: undefined,
           }
@@ -144,7 +144,7 @@ describe('pinboard actions', function () {
 
   describe('fetchPinboardTRRs', function () {
     it('should return correct action', function () {
-      fetchPinboardTRRs('1').should.deepEqual({
+      fetchPinboardTRRs('66ef1560').should.deepEqual({
         types: [
           PINBOARD_TRRS_FETCH_REQUEST_START,
           PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
@@ -152,7 +152,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}1/trrs/`),
+            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/trrs/`),
             params: undefined,
             adapter: undefined,
           }
