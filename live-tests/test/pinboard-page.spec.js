@@ -335,6 +335,7 @@ describe('Pinboard Page', function () {
       trrs.expect.element('@title').text.to.equal('TACTICAL RESPONSE REPORTS');
       firstCard.expect.element('@firstCardDate').text.to.equal('2012-01-01');
       firstCard.expect.element('@firstCardCategory').text.to.equal('Impact Weapon');
+    });
   });
 
   context('pinboard section', function () {

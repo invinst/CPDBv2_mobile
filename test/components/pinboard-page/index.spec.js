@@ -19,6 +19,7 @@ describe('<PinboardPage />', function () {
         fetchPinboardOfficers={ fetchPinboardOfficers }
         fetchPinboardTRRs={ fetchPinboardTRRs }
         params={ { pinboardId: '5cd06f2b' } }
+        pinboard={ { id: '5cd06f2b' } }
       />
     );
 
