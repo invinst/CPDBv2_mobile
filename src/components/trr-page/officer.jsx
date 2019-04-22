@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
-import navigationArrow from 'img/disclosure-indicator.svg';
 import style from './officer.sass';
 import RadarChart from 'components/common/radar-chart';
 import { officerUrl } from 'utils/url-util';
@@ -33,7 +32,7 @@ class Officer extends Component {
             <div className='rank'>Officer</div>
             <div className='full-name'>{ fullName }</div>
           </div>
-          <img className='navigation-arrow' src={ navigationArrow }/>
+          <img className='navigation-arrow' src='/img/disclosure-indicator.svg'/>
         </Link>
         <div className='row'>
           <div className='title'>{ demographic }</div>
@@ -45,7 +44,7 @@ class Officer extends Component {
         <div className='row'>
           <div className='title'>Unit</div>
           <div className='value'>{ unitDescription || unitName }</div>
-          <img className='navigation-arrow' src={ navigationArrow }/>
+          <img className='navigation-arrow' src='/img/disclosure-indicator.svg'/>
         </div>
         <div className='row'>
           <div className='title'>Assigned Beat</div>
