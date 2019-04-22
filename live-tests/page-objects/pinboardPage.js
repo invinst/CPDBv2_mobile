@@ -128,6 +128,31 @@ module.exports = {
         }
       }
     },
+    relevantComplaints: baseRelevantComplaints('complaint'),
+    relevantDocuments: baseRelevantComplaints('document'),
+    relevantCoaccusals: {
+      selector: '.relevant-coaccusals',
+      elements: {
+        title: '.relevant-infinite-carousel-title',
+        carouselTip: '.relevant-infinite-carousel-tip',
+      },
+      sections: {
+        coaccusalCard: {
+          selector: '.swiper-slide > a:first-child',
+          elements: {
+            plusButton: {
+              selector: '//div[contains(@class, "relevant-coaccusals")]//div[contains(@class, "plus-button")]',
+              locateStrategy: 'xpath',
+            },
+            radarChart: '.radar-chart-wrapper',
+            officerRank: '.officer-card-rank',
+            officerName: '.officer-card-name',
+            coaccusalCount: '.coaccusal-count',
+            nameWrapper: '.officer-card-name-wrapper',
+          }
+        }
+      }
+    },
   },
 
   elements: {
@@ -156,31 +181,6 @@ module.exports = {
     trrNumber: {
       selector: '//div[contains(@class, "legend__legend")]//div[2]//span[contains(@class, "legend-row-number")]',
       locateStrategy: 'xpath'
-    },
-    relevantComplaints: baseRelevantComplaints('complaint'),
-    relevantDocuments: baseRelevantComplaints('document'),
-    relevantCoaccusals: {
-      selector: '.relevant-coaccusals',
-      elements: {
-        title: '.relevant-infinite-carousel-title',
-        carouselTip: '.relevant-infinite-carousel-tip',
-      },
-      sections: {
-        coaccusalCard: {
-          selector: '.swiper-slide > a:first-child',
-          elements: {
-            plusButton: {
-              selector: '//div[contains(@class, "relevant-coaccusals")]//div[contains(@class, "plus-button")]',
-              locateStrategy: 'xpath',
-            },
-            radarChart: '.radar-chart-wrapper',
-            officerRank: '.officer-card-rank',
-            officerName: '.officer-card-name',
-            coaccusalCount: '.coaccusal-count',
-            nameWrapper: '.officer-card-name-wrapper',
-          }
-        }
-      }
     },
   },
 };
