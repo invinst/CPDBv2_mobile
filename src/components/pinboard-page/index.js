@@ -58,10 +58,8 @@ export default class PinboardPage extends Component {
     } = this.props;
     return (
       <div className={ cx(styles.pinboardPage, 'pinboard-page') }>
-        <div className='pinboard-header'>
-          <Header />
-          <SearchBar />
-        </div>
+        <Header />
+        <SearchBar />
         <div className='pinboard-info'>
           <div className='pinboard-title'>{ pinboard.title }</div>
           <div className='pinboard-description'>{ pinboard.description }</div>
