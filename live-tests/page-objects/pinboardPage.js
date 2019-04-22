@@ -3,6 +3,39 @@ module.exports = {
     return `${this.api.globals.clientUrl}/pinboard/${pinboardId}/pinboard-title/`;
   },
 
+  elements: {
+    searchBar: {
+      locateStrategy: 'xpath',
+      selector: '(//a[starts-with(@class, "search-bar")])',
+    },
+    socialGraphTitle: '.sidenav-title',
+    coaccusalsThresholdText: '.coaccusals-threshold-text',
+    startDate: '.start-date-label',
+    endDate: '.end-date-label',
+    pinboardTitle: '.pinboard-title',
+    pinboardDescription: '.pinboard-description',
+    pinboardPaneMenu: {
+      selector: '(//div[contains(@class, "pinboard-pane-section-menu")])',
+      locateStrategy: 'xpath'
+    },
+    complaintText: {
+      selector: '//div[contains(@class, "legend__legend")]//div[1]//span[contains(@class, "legend-row-text")]',
+      locateStrategy: 'xpath'
+    },
+    trrText: {
+      selector: '//div[contains(@class, "legend__legend")]//div[2]//span[contains(@class, "legend-row-text")]',
+      locateStrategy: 'xpath'
+    },
+    complaintNumber: {
+      selector: '//div[contains(@class, "legend__legend")]//div[1]//span[contains(@class, "legend-row-number")]',
+      locateStrategy: 'xpath'
+    },
+    trrNumber: {
+      selector: '//div[contains(@class, "legend__legend")]//div[2]//span[contains(@class, "legend-row-number")]',
+      locateStrategy: 'xpath'
+    },
+  },
+
   sections: {
     pinnedSection: {
       selector: '.test--pinned-section',
@@ -99,35 +132,6 @@ module.exports = {
           locateStrategy: 'xpath'
         }
       }
-    },
-  },
-
-  elements: {
-    socialGraphTitle: '.sidenav-title',
-    coaccusalsThresholdText: '.coaccusals-threshold-text',
-    startDate: '.start-date-label',
-    endDate: '.end-date-label',
-    pinboardTitle: '.pinboard-title',
-    pinboardDescription: '.pinboard-description',
-    pinboardPaneMenu: {
-      selector: '(//div[contains(@class, "pinboard-pane-section-menu")])',
-      locateStrategy: 'xpath'
-    },
-    complaintText: {
-      selector: '//div[contains(@class, "legend__legend")]//div[1]//span[contains(@class, "legend-row-text")]',
-      locateStrategy: 'xpath'
-    },
-    trrText: {
-      selector: '//div[contains(@class, "legend__legend")]//div[2]//span[contains(@class, "legend-row-text")]',
-      locateStrategy: 'xpath'
-    },
-    complaintNumber: {
-      selector: '//div[contains(@class, "legend__legend")]//div[1]//span[contains(@class, "legend-row-number")]',
-      locateStrategy: 'xpath'
-    },
-    trrNumber: {
-      selector: '//div[contains(@class, "legend__legend")]//div[2]//span[contains(@class, "legend-row-number")]',
-      locateStrategy: 'xpath'
     },
   },
 };

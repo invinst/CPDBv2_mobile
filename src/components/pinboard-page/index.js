@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import cx from 'classnames';
 
-import PinnedSection from './pinned-section';
 import styles from './pinboard-page.sass';
+import PinnedSection from './pinned-section';
+import SearchBar from './search-bar';
+import Header from './header';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
 
 
@@ -56,6 +58,8 @@ export default class PinboardPage extends Component {
     } = this.props;
     return (
       <div className={ cx(styles.pinboardPage, 'pinboard-page') }>
+        <Header />
+        <SearchBar />
         <div className='pinboard-info'>
           <div className='pinboard-title'>{ pinboard.title }</div>
           <div className='pinboard-description'>{ pinboard.description }</div>
