@@ -7,9 +7,7 @@ import MockStore from 'redux-mock-store';
 import Footer from 'components/footer';
 import PinboardPage from 'components/pinboard-page/index';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
-import RelevantCoaccusalsContainer from 'containers/pinboard-page/relevant/relevant-coaccusals';
-import RelevantDocumentsContainer from 'containers/pinboard-page/relevant/relevant-documents';
-import RelevantComplaintsContainer from 'containers/pinboard-page/relevant/relevant-complaints';
+import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
 
 
 describe('<PinboardPage />', function () {
@@ -45,12 +43,18 @@ describe('<PinboardPage />', function () {
     const fetchPinboard = spy();
     const fetchPinboardSocialGraph = spy();
     const fetchPinboardGeographicData = spy();
+    const fetchPinboardRelevantDocuments = spy();
+    const fetchPinboardRelevantCoaccusals = spy();
+    const fetchPinboardRelevantComplaints = spy();
     mount(
       <Provider store={ store }>
         <PinboardPage
           fetchPinboard={ fetchPinboard }
           fetchPinboardSocialGraph={ fetchPinboardSocialGraph }
           fetchPinboardGeographicData={ fetchPinboardGeographicData }
+          fetchPinboardRelevantDocuments={ fetchPinboardRelevantDocuments }
+          fetchPinboardRelevantCoaccusals={ fetchPinboardRelevantCoaccusals }
+          fetchPinboardRelevantComplaints={ fetchPinboardRelevantComplaints }
           pinboard={ pinboard }
           params={ { pinboardId: 1 } }
         />
@@ -60,6 +64,9 @@ describe('<PinboardPage />', function () {
     fetchPinboard.calledWith(1).should.be.true();
     fetchPinboardSocialGraph.calledWith(1).should.be.true();
     fetchPinboardGeographicData.calledWith(1).should.be.true();
+    fetchPinboardRelevantDocuments.calledWith(1).should.be.true();
+    fetchPinboardRelevantCoaccusals.calledWith(1).should.be.true();
+    fetchPinboardRelevantComplaints.calledWith(1).should.be.true();
   });
 
   it('should render pinboard page correctly', function () {
@@ -74,10 +81,7 @@ describe('<PinboardPage />', function () {
     wrapper.find('.pinboard-title').text().should.equal('This is pinboard title');
     wrapper.find('.pinboard-description').text().should.equal('This is pinboard description');
 
-    wrapper.find('.relevant-title').text().should.equal('Relevant');
-    wrapper.find(RelevantCoaccusalsContainer).exists().should.be.true();
-    wrapper.find(RelevantDocumentsContainer).exists().should.be.true();
-    wrapper.find(RelevantComplaintsContainer).exists().should.be.true();
+    wrapper.find(RelevantSectionContainer).exists().should.be.true();
     wrapper.find(Footer).exists().should.be.true();
   });
 });

@@ -34,4 +34,18 @@ describe('<RelevantInfiniteCarousel />', function () {
     carousel.find('.test--child-1').exists().should.be.true();
     carousel.find('.test--child-2').exists().should.be.true();
   });
+
+  it('should render nothing if there is no child', function () {
+    const loadMoreStub = spy();
+    const wrapper = shallow(
+      <RelevantInfiniteCarousel
+        childWidth={ 128 }
+        title='RelevantInfiniteCarousel Title'
+        hasMore={ true }
+        loadMore={ loadMoreStub }
+      />
+    );
+
+    wrapper.find('div').should.have.length(0);
+  });
 });

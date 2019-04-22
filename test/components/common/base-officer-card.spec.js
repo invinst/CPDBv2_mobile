@@ -65,4 +65,11 @@ describe('<BaseOfficerCard />', () => {
     link.prop('to').should.equal('/officer/13788/broderick-jones/');
     link.prop('target').should.equal('_blank');
   });
+
+  it('should not have href link if hasHrefLink is false', function () {
+    const wrapper = shallow(<BaseOfficerCard { ...officer } hasHrefLink={ false }/>);
+
+    const link = wrapper.find(Link);
+    should(link.prop('to')).be.null();
+  });
 });

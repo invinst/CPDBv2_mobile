@@ -3,7 +3,6 @@ import Modal from 'react-modal';
 
 import constants from 'constants';
 import { showIntercomMessages } from 'utils/intercom';
-import invistLogoImage from 'img/invist-logo.svg';
 import LegalModalContent from './legal-modal-content';
 import style from './footer.sass';
 
@@ -46,7 +45,7 @@ class Footer extends Component {
           href='https://invisible.institute/cpdp'
           className='invist-logo-link'
           target='_blank'>
-          <img className='invist-logo' src={ invistLogoImage } alt='Invisible Institute' />
+          <img className='invist-logo' src='/img/invist-logo.svg' alt='Invisible Institute' />
         </a>
         <Modal
           isOpen={ this.state.legalModalIsOpen }
