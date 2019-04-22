@@ -16,6 +16,9 @@ import {
   REMOVE_ITEM_IN_PINBOARD_PAGE,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_UPDATE_REQUEST_SUCCESS,
+  fetchPinboardOfficers,
+  fetchPinboardComplaints,
+  fetchPinboardTRRs,
 } from 'actions/pinboard';
 import { OwnedPinboardFactory } from 'utils/tests/factories/pinboard';
 
@@ -166,6 +169,9 @@ describe('create-or-update-pinboard-middleware', function () {
     store.dispatch.should.be.calledWith(fetchPinboardRelevantDocuments('def456'));
     store.dispatch.should.be.calledWith(fetchPinboardRelevantCoaccusals('def456'));
     store.dispatch.should.be.calledWith(fetchPinboardRelevantComplaints('def456'));
+    store.dispatch.should.be.calledWith(fetchPinboardOfficers('def456'));
+    store.dispatch.should.be.calledWith(fetchPinboardComplaints('def456'));
+    store.dispatch.should.be.calledWith(fetchPinboardTRRs('def456'));
   });
 
   it('should not handle PINBOARD_UPDATE_REQUEST_SUCCESS when not on pinboard page', function () {
