@@ -4,7 +4,10 @@ module.exports = {
   },
 
   elements: {
-    searchBar: '.test--search-bar',
+    searchBar: {
+      locateStrategy: 'xpath',
+      selector: '(//a[starts-with(@class, "search-bar")])',
+    },
     socialGraphTitle: '.sidenav-title',
     coaccusalsThresholdText: '.coaccusals-threshold-text',
     startDate: '.start-date-label',

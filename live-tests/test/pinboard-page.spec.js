@@ -314,7 +314,9 @@ describe('Pinboard Page', function () {
 
   it('should go to search page when search bar is clicked', function (client) {
     this.pinboardPage.click('@searchBar');
-    client.waitForElementVisible('body', TIMEOUT);
+    client.useXpath();
+    client.waitForElementVisible('//div[starts-with(@class, "search-page")]', TIMEOUT);
+    client.useCss();
     client.assert.urlContains('/search/');
   });
 
