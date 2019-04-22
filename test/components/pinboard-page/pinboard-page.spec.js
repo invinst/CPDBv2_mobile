@@ -4,6 +4,7 @@ import { spy } from 'sinon';
 import { Provider } from 'react-redux';
 import MockStore from 'redux-mock-store';
 
+import Footer from 'components/footer';
 import PinboardPage from 'components/pinboard-page/index';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
@@ -81,5 +82,6 @@ describe('<PinboardPage />', function () {
     wrapper.find('.pinboard-description').text().should.equal('This is pinboard description');
 
     wrapper.find(RelevantSectionContainer).exists().should.be.true();
+    wrapper.find(Footer).exists().should.be.true();
   });
 });

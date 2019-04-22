@@ -6,6 +6,7 @@ import PinnedSection from './pinned-section';
 import styles from './pinboard-page.sass';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
+import Footer from 'components/footer';
 
 
 export default class PinboardPage extends Component {
@@ -79,6 +80,7 @@ export default class PinboardPage extends Component {
           itemsByTypes={ itemsByTypes }
           removeItemInPinboardPage={ removeItemInPinboardPage }/>
         <RelevantSectionContainer pinboardId={ params.pinboardId }/>
+        <Footer />
       </div>
     );
   }
