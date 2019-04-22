@@ -8,7 +8,6 @@ import TopOfficersByAllegation from 'containers/landing-page/top-officers-by-all
 import RecentActivities from 'containers/landing-page/recent-activities';
 import NewDocumentAllegations from 'containers/landing-page/new-document-allegations';
 import ComplaintSummaries from 'containers/landing-page/complaint-summaries';
-import magnifyingGlassIcon from 'img/ic-magnifying-glass.svg';
 import style from './landing-page.sass';
 
 
@@ -38,7 +37,7 @@ export default class LandingPage extends Component {
           <CMSContent className='site-title' content={ title } />
           <CMSContent className='site-desc' content={ description } />
           <Link className='search-bar' to={ constants.SEARCH_PATH }>
-            <img src={ magnifyingGlassIcon } />Officer name, badge number, or date
+            <img src='/img/ic-magnifying-glass.svg' />Officer name, badge number, or date
           </Link>
         </div>
         <TopOfficersByAllegation />

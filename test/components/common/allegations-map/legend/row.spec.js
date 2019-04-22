@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import Row from 'components/officer-page/tabbed-pane-section/map/legend/row';
+import Row from 'components/common/allegations-map/legend/row';
 
 
 describe('Row component', function () {

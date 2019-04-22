@@ -15,9 +15,9 @@ const BowerWebpackPlugin = require('bower-webpack-plugin');
 let config = Object.assign({}, baseConfig, {
   entry: './src/index',
   output: {
-    path: path.join(__dirname, '/../dist/assets'),
+    path: path.join(__dirname, '/../dist'),
     filename: 'app.[hash].js',
-    publicPath: defaultSettings.staticFileBase
+    publicPath: defaultSettings.publicPath
   },
   cache: false,
   plugins: [
@@ -28,6 +28,7 @@ let config = Object.assign({}, baseConfig, {
     }),
     new CopyWebpackPlugin([
       { from: 'src/img', to: 'img' },
+      { from: 'src/fonts', to: 'fonts' },
       { from: 'src/static', to: 'static' }
     ]),
     new BowerWebpackPlugin({
@@ -39,7 +40,7 @@ let config = Object.assign({}, baseConfig, {
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html.template',
-      filename: '../index.html'
+      filename: 'index.html'
     }),
   ],
   module: defaultSettings.getDefaultModules()

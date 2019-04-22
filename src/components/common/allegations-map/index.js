@@ -3,17 +3,17 @@ import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 import cx from 'classnames';
 
-import { MAP_INFO, MAP_ITEMS, MAPBOX_STYLE } from 'constants/officer-page/tabbed-pane-section/map';
+import constants from 'constants';
 import { mapboxgl } from 'utils/mapbox';
 import Legend from './legend/index';
 import MarkerTooltip from './marker-tooltip';
 import SimpleMarkerTooltip from './simple-marker-tooltip';
 import Marker from './marker';
-import styles from './map.sass';
+import styles from './allegations-map.sass';
 import { isIOS } from 'react-device-detect';
 import MultiTouch from 'mapbox-gl-multitouch';
 
-export default class Map extends Component {
+export default class AllegationsMap extends Component {
   componentWillReceiveProps(nextProps, nextState) {
     nextProps.markers.map(marker => {
       this.addMarker(marker);
@@ -24,9 +24,9 @@ export default class Map extends Component {
     if (el && !this.map) {
       this.map = new mapboxgl.Map({
         container: el,
-        style: MAPBOX_STYLE,
-        zoom: MAP_INFO.ZOOM1,
-        center: [MAP_INFO.CENTER_LNG, MAP_INFO.CENTER_LAT],
+        style: constants.MAPBOX_STYLE,
+        zoom: constants.MAP_INFO.ZOOM1,
+        center: [constants.MAP_INFO.CENTER_LNG, constants.MAP_INFO.CENTER_LAT],
         interactive: true,
         scrollZoom: false,
       });
@@ -45,7 +45,7 @@ export default class Map extends Component {
   createPopup(marker) {
     const popup = new mapboxgl.Popup({ offset: 0, closeButton: false });
     let tooltip;
-    if (marker.kind === MAP_ITEMS.CR) {
+    if (marker.kind === constants.MAP_ITEMS.CR) {
       tooltip = (
         <MarkerTooltip
           id={ marker.id }
@@ -56,7 +56,7 @@ export default class Map extends Component {
           victims={ marker.victims }
         />
       );
-    } else if (marker.kind === MAP_ITEMS.FORCE) {
+    } else if (marker.kind === constants.MAP_ITEMS.FORCE) {
       tooltip = (
         <SimpleMarkerTooltip
           kind='TRR'
@@ -99,9 +99,10 @@ export default class Map extends Component {
   }
 }
 
-Map.propTypes = {
+AllegationsMap.propTypes = {
   legend: PropTypes.shape({
     allegationCount: PropTypes.number,
+    unsustainedCount: PropTypes.number,
     sustainedCount: PropTypes.number,
     useOfForceCount: PropTypes.number
   }),
@@ -140,11 +141,7 @@ Map.propTypes = {
   ])
 };
 
-Map.defaultProps = {
-  legend: {
-    allegationCount: 0,
-    sustainedCount: 0,
-    useOfForceCount: 0
-  },
+AllegationsMap.defaultProps = {
+  legend: {},
   markers: []
 };

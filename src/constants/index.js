@@ -318,5 +318,24 @@ export default {
     'ACTIVITY': 'ACTIVITY',
     'ALLEGATION': 'ALLEGATION',
     'DOCUMENT': 'DOCUMENT'
-  }
+  },
+
+  // Pinboard constants
+  PINBOARD_PAGE_TAB_NAMES: {
+    NETWORK: 'NETWORK',
+    GEOGRAPHIC: 'GEOGRAPHIC',
+  },
+
+  // Map constants
+  MAP_ITEMS: {
+    CR: 'CR',
+    FORCE: 'FORCE',
+  },
+  MAP_INFO: {
+    CENTER_LAT: 41.85677,
+    CENTER_LNG: -87.6024055,
+    ZOOM1: 9,
+    ZOOM2: 13,
+  },
+  MAPBOX_STYLE: 'mapbox://styles/invisibleinstitute/cj8ugtswqe8dx2ss2kwhfnvte'
 };
