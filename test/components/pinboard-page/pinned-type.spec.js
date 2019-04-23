@@ -7,7 +7,7 @@ import OfficerCard from 'components/pinboard-page/cards/officer-card';
 import TRRCard from 'components/pinboard-page/cards/trr-card';
 
 
-describe('PinnedType component', function () {
+describe('<PinnedType />', function () {
   it('should render CR cards', function () {
     const items = [{ 'id': '1' }, { 'id': '2' }];
     const pinnedType = mount(<PinnedType type='CR' items={ items } />);
