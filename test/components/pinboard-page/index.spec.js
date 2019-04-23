@@ -229,7 +229,5 @@ describe('<PinboardPage />', function () {
     );
 
     wrapper.find(PinboardPaneSection).should.have.length(1);
-    wrapper.find('.pinboard-title').text().should.equal('This is pinboard title');
-    wrapper.find('.pinboard-description').text().should.equal('This is pinboard description');
   });
 });

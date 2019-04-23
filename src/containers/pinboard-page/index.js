@@ -14,6 +14,7 @@ import {
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
+  updatePinboardInfo
 } from 'actions/pinboard';
 
 
@@ -35,6 +36,7 @@ const mapDispatchToProps = {
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
+  updatePinboardInfo
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PinboardPage);

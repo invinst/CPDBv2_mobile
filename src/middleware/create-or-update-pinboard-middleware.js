@@ -7,6 +7,7 @@ import {
   ADD_ITEM_IN_PINBOARD_PAGE,
   ORDER_PINBOARD,
   SAVE_PINBOARD,
+  UPDATE_PINBOARD_INFO,
   createPinboard,
   updatePinboard,
   fetchPinboardSocialGraph,
@@ -18,6 +19,8 @@ import {
   removeItemFromPinboardState,
   orderPinboardState,
   savePinboard,
+  updatePinboardInfoState,
+  performFetchPinboardRelatedData
 } from 'actions/pinboard';
 import { getPathname } from 'selectors/common/routing';
 
@@ -63,6 +66,12 @@ export default store => next => action => {
     });
   }
 
+  if (action.type === UPDATE_PINBOARD_INFO) {
+    Promise.all([store.dispatch(updatePinboardInfoState(action.payload))]).finally(() => {
+      store.dispatch(savePinboard());
+    });
+  }
+
   if (action.type === ORDER_PINBOARD) {
     Promise.all([store.dispatch(orderPinboardState(action.payload))]).finally(() => {
       store.dispatch(savePinboard());
@@ -81,7 +90,8 @@ export default store => next => action => {
       if (_.isEmpty(action.payload) || !_.isEqual(currentPinboard, savedPinboard)) {
         dispatchUpdateOrCreatePinboard(store, currentPinboard);
       } else {
-        if (_.startsWith(getPathname(state), '/pinboard/') && pinboardId) {
+        if (_.startsWith(getPathname(state), '/pinboard/') && pinboardId && pinboard.needRefreshData) {
+          store.dispatch(performFetchPinboardRelatedData());
           store.dispatch(fetchPinboardSocialGraph(pinboardId));
           store.dispatch(fetchPinboardGeographicData(pinboardId));
           store.dispatch(fetchPinboardRelevantDocuments(pinboardId));
