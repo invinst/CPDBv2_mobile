@@ -1,6 +1,7 @@
 'use strict';
 
 let path = require('path');
+const webpack = require('webpack');
 let srcPath = path.join(__dirname, '/../src/');
 
 let baseConfig = require('./base');
@@ -66,7 +67,10 @@ module.exports = {
   plugins: [
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
-    })
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"test"'
+    }),
   ],
   externals: {
     'cheerio': 'window',

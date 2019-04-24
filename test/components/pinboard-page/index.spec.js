@@ -115,10 +115,14 @@ describe('<PinboardPage />', function () {
   });
 
   it('should render SearchBar component', function () {
-    const wrapper = mount(<PinboardPage
-      params={ { pinboardId: '5cd06f2b' } }
-      pinboard={ { id: '5cd06f2b' } }
-    />);
+    const wrapper = mount(
+      <Provider store={ store }>
+        <PinboardPage
+          params={ { pinboardId: '5cd06f2b' } }
+          pinboard={ { id: '5cd06f2b' } }
+        />
+      </Provider>
+    );
 
     wrapper.exists(SearchBar).should.be.true();
   });
