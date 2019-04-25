@@ -3,9 +3,13 @@ import * as _ from 'lodash';
 import { ADD_ITEM_TO_PINBOARD, REMOVE_ITEM_IN_PINBOARD_PAGE } from 'actions/pinboard';
 import { getPinboard } from 'selectors/pinboard';
 import {
-  createPinboard, updatePinboard,
-  fetchPinboardComplaints, fetchPinboardOfficers,
+  createPinboard,
+  updatePinboard,
+  fetchPinboardComplaints,
+  fetchPinboardOfficers,
   fetchPinboardTRRs,
+  fetchPinboardSocialGraph,
+  fetchPinboardGeographicData,
 } from 'actions/pinboard';
 
 const PINBOARD_ATTR_MAP = {
@@ -34,13 +38,11 @@ const removeItem = (pinboard, item) => {
 export default store => next => action => {
   let pinboard = null;
   let item = null;
-  let pinboardAction = null;
 
   if (action.type === ADD_ITEM_TO_PINBOARD || action.type === REMOVE_ITEM_IN_PINBOARD_PAGE) {
     pinboard = getPinboard(store.getState());
     item = action.payload;
 
-    pinboardAction = pinboard.ownedByCurrentUser ? updatePinboard : createPinboard;
     item.isPinned ? removeItem(pinboard, item) : addItem(pinboard, item);
   }
 
@@ -48,22 +50,20 @@ export default store => next => action => {
     if (pinboard.id === null) {
       store.dispatch(createPinboard(pinboard));
     } else {
-      store.dispatch(pinboardAction(pinboard));
+      store.dispatch(updatePinboard(pinboard));
     }
   }
   else if (action.type === REMOVE_ITEM_IN_PINBOARD_PAGE) {
-    const pinboardPromise = store.dispatch(pinboardAction(pinboard));
-
     // TODO: test this async function
-    if (pinboard.ownedByCurrentUser) {
-      /* istanbul ignore next */
-      pinboardPromise.then(response => {
-        const pinboardID = response.payload.id;
-        const pinboardFetchSelected = PINBOARD_FETCH_SELECTED_MAP[action.payload.type];
+    /* istanbul ignore next */
+    store.dispatch(updatePinboard(pinboard)).then(response => {
+      const pinboardID = response.payload.id;
+      const pinboardFetchSelected = PINBOARD_FETCH_SELECTED_MAP[item.type];
 
-        store.dispatch(pinboardFetchSelected(pinboardID));
-      });
-    }
+      store.dispatch(pinboardFetchSelected(pinboardID));
+      store.dispatch(fetchPinboardSocialGraph(pinboardID));
+      store.dispatch(fetchPinboardGeographicData(pinboardID));
+    });
   }
   return next(action);
 };

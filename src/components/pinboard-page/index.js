@@ -16,7 +16,14 @@ export default class PinboardPage extends Component {
   }
 
   componentDidMount() {
-    this.fetchPinboardData(this.props.params.pinboardId);
+    const { pinboard, fetchPinboard, params } = this.props;
+    const idOnPath = params.pinboardId;
+    const idInStore = pinboard.id;
+
+    fetchPinboard(idOnPath);
+    if (idOnPath === idInStore) {
+      this.fetchPinboardData(idOnPath);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -25,21 +32,18 @@ export default class PinboardPage extends Component {
 
     if (prevID !== currID) {
       browserHistory.replace(`/pinboard/${currID}/`);
-
       this.fetchPinboardData(currID);
     }
   }
 
   fetchPinboardData(id) {
     const {
-      fetchPinboard,
       fetchPinboardComplaints,
       fetchPinboardOfficers,
       fetchPinboardTRRs,
       fetchPinboardSocialGraph,
       fetchPinboardGeographicData,
     } = this.props;
-    fetchPinboard(id);
     fetchPinboardComplaints(id);
     fetchPinboardOfficers(id);
     fetchPinboardTRRs(id);

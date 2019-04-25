@@ -1,5 +1,5 @@
 import { getPinboard, pinboardItemsSelector, getPinboardItems } from 'selectors/pinboard';
-import { OwnedPinboardFactory } from 'utils/tests/factories/pinboard';
+import { PinboardFactory } from 'utils/tests/factories/pinboard';
 
 
 describe('Pinboard selectors', function () {
@@ -24,7 +24,7 @@ describe('Pinboard selectors', function () {
 
     it('should return pinboard with correct format', function () {
       const state = {
-        pinboard: OwnedPinboardFactory.build({
+        pinboard: PinboardFactory.build({
           id: 1,
           title: 'Pinboard Title',
           'officer_ids': [12],
@@ -56,7 +56,7 @@ describe('Pinboard selectors', function () {
 
     it('should return correct format of pinboard whose title is empty', function () {
       const state = {
-        pinboard: OwnedPinboardFactory.build({
+        pinboard: PinboardFactory.build({
           id: 1,
           title: '',
           'officer_ids': [12],
@@ -90,7 +90,7 @@ describe('Pinboard selectors', function () {
   describe('pinboardItemsSelector', function () {
     it('should return ids of items by types', function () {
       const state = {
-        pinboard: OwnedPinboardFactory.build({
+        pinboard: PinboardFactory.build({
           'officer_ids': [12],
           crids: ['abc'],
           'trr_ids': [1],
@@ -108,7 +108,7 @@ describe('Pinboard selectors', function () {
   describe('getPinboardItems selector', function () {
     it('should return transformed items by types', function () {
       const state = {
-        pinboard: OwnedPinboardFactory.build({
+        pinboard: PinboardFactory.build({
           crItems: [{
             crid: '1000001',
             'incident_date': '2010-01-01',
