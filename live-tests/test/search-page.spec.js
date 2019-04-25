@@ -312,12 +312,12 @@ describe('SearchPageTest', function () {
     beforeEach(function (client, done) {
       api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
       api.mockPost(
-        '/api/v2/pinboards/', 201,
+        '/api/v2/mobile/pinboards/', 201,
         { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
         createPinboardResponse
       );
       api.mockPut(
-        '/api/v2/pinboards/1/', 200,
+        '/api/v2/mobile/pinboards/1/', 200,
         { 'officer_ids': [], crids: [], 'trr_ids': [], title: '' },
         updatePinboardResponse
       );

@@ -294,12 +294,12 @@ function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
 
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, pinboardData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/complaints/', 200, pinboardCRsData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/officers/', 200, pinboardOfficersData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/trrs/', 200, pinboardTRRsData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/social-graph/', 200, socialGraphData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/geographic-data/', 200, geographicData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, pinboardData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, pinboardCRsData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, pinboardOfficersData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, pinboardTRRsData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/social-graph/', 200, socialGraphData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/geographic-data/', 200, geographicData);
 
     this.pinboardPage = client.page.pinboardPage();
     this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
