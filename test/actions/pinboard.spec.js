@@ -37,6 +37,38 @@ import { v2Url } from 'utils/url-util';
 
 
 describe('pinboard actions', function () {
+  describe('removeItemInPinboardPage', function () {
+    it('should return correct action', function () {
+      removeItemInPinboardPage({
+        id: '1234',
+        type: 'OFFICER',
+      }).should.deepEqual({
+        type: REMOVE_ITEM_IN_PINBOARD_PAGE,
+        payload: {
+          id: '1234',
+          type: 'OFFICER',
+          isPinned: true,
+        },
+      });
+    });
+  });
+
+  describe('addItemInPinboardPage', function () {
+    it('should return correct action', function () {
+      addItemInPinboardPage({
+        id: '1234',
+        type: 'OFFICER',
+      }).should.deepEqual({
+        type: ADD_ITEM_IN_PINBOARD_PAGE,
+        payload: {
+          id: '1234',
+          type: 'OFFICER',
+          isPinned: false,
+        },
+      });
+    });
+  });
+
   describe('createPinboard', function () {
     it('should return correct action', function () {
       createPinboard({ officerIds: [], crids: ['abc'], trrIds: ['1'] }).should.deepEqual({

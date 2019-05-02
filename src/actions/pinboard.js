@@ -42,9 +42,11 @@ export const CHANGE_PINBOARD_TAB = 'CHANGE_PINBOARD_TAB';
 
 export const REMOVE_ITEM_IN_PINBOARD_PAGE = 'REMOVE_ITEM_IN_PINBOARD_PAGE';
 
-export const addItemToPinboard = createAction(ADD_ITEM_TO_PINBOARD);
+export const addItemToPinboard = createAction(ADD_ITEM_TO_PINBOARD,
+  item => ({ ...item, isPinned: false }));
 
-export const removeItemInPinboardPage = createAction(REMOVE_ITEM_IN_PINBOARD_PAGE);
+export const removeItemInPinboardPage = createAction(REMOVE_ITEM_IN_PINBOARD_PAGE,
+  item => ({ ...item, isPinned: true }));
 
 export const createPinboard = ({ officerIds, crids, trrIds }) => post(
   v2Url(constants.PINBOARDS_API_ENDPOINT),
