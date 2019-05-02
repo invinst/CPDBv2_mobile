@@ -8,7 +8,6 @@ const MAPBOX_ACCESS_TOKEN =
 const MAPBOX_API_URL = 'https://api.mapbox.com/styles/v1/mapbox';
 const MARKER_URL = 'https://cpdbv21777.blob.core.windows.net/assets/map-marker.png';
 
-
 _mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 
 if (config.appEnv === 'test') {
@@ -66,8 +65,6 @@ if (config.appEnv === 'test') {
   _mapboxgl.NavigationControl = navigationControlSpy;
 }
 
-export const mapboxgl = _mapboxgl;
-
 const getMapUrl = (lat, lon, width, height, mapStyle, zoom) => [
   MAPBOX_API_URL,
   mapStyle,
@@ -80,3 +77,5 @@ const getMapUrl = (lat, lon, width, height, mapStyle, zoom) => [
 export const getComplaintMapUrl = (lat, lon, width, height) => {
   return getMapUrl(lat, lon, width, height, 'streets-v10', 12);
 };
+
+export const mapboxgl = _mapboxgl;

@@ -3,14 +3,18 @@ import { connect } from 'react-redux';
 import { getPinboard, getPinboardItems } from 'selectors/pinboard';
 import PinboardPage from 'components/pinboard-page';
 import { hasMapMarkersSelector, getCurrentTab } from 'selectors/pinboard-page/geographic-data';
-import { fetchPinboard, fetchPinboardSocialGraph } from 'actions/pinboard';
 import {
   changePinboardTab,
+  fetchPinboard,
   fetchPinboardGeographicData,
+  fetchPinboardSocialGraph,
   fetchPinboardComplaints,
   fetchPinboardOfficers,
   fetchPinboardTRRs,
   removeItemInPinboardPage,
+  fetchPinboardRelevantDocuments,
+  fetchPinboardRelevantCoaccusals,
+  fetchPinboardRelevantComplaints,
 } from 'actions/pinboard';
 
 
@@ -31,6 +35,9 @@ const mapDispatchToProps = {
   fetchPinboardOfficers,
   fetchPinboardTRRs,
   removeItemInPinboardPage,
+  fetchPinboardRelevantDocuments,
+  fetchPinboardRelevantCoaccusals,
+  fetchPinboardRelevantComplaints,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PinboardPage);

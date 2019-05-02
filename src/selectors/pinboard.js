@@ -82,3 +82,8 @@ export const getPinboardItems = createSelector(
     'TRR': trrItems.map(trrPinnedTransform),
   })
 );
+
+export const pinboardICRIDsSelector = createSelector(
+  getPinboard,
+  ({ crids }) => crids
+);

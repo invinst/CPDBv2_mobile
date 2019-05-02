@@ -19,7 +19,6 @@ describe('<Officer />', function () {
       onDuty: 'Yes',
       inUniform: 'No',
       percentile: {
-        officerId: undefined,
         year: undefined,
         items: [
           { axis: 'Use of Force Reports', value: 99.9 },

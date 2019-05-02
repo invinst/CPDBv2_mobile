@@ -1,3 +1,31 @@
+const baseRelevantComplaints = (type) => ({
+  selector: `.relevant-${type}s`,
+  elements: {
+    title: '.relevant-infinite-carousel-title',
+    carouselTip: '.relevant-infinite-carousel-tip',
+  },
+  sections: {
+    [`${type}Card`]: {
+      selector: '.swiper-slide > div:first-child',
+      elements: {
+        plusButton: {
+          selector: `//div[contains(@class, "relevant-${type}s")]//div[contains(@class, "plus-button")]`,
+          locateStrategy: 'xpath',
+        },
+        incidentDate: '.incident-date',
+        category: '.category',
+        firstTopOfficerName: '.top-officer-row-officer-name',
+        secondTopOfficerName: '.top-officer-row:nth-child(2) .top-officer-row-officer-name',
+        notShowingOfficerCount: '.not-showing-officer-count',
+        leftHalf: '.left-half',
+        topOfficers: '.top-officers',
+        remainingOfficers: '.remaining-officers',
+      }
+    }
+  }
+});
+
+
 module.exports = {
   url: function (pinboardId) {
     return `${this.api.globals.clientUrl}/pinboard/${pinboardId}/pinboard-title/`;
@@ -130,6 +158,31 @@ module.exports = {
         geographicPaneName: {
           selector: '//span[contains(@class, "pinboard-pane-tab-name")][2]',
           locateStrategy: 'xpath'
+        }
+      }
+    },
+    relevantComplaints: baseRelevantComplaints('complaint'),
+    relevantDocuments: baseRelevantComplaints('document'),
+    relevantCoaccusals: {
+      selector: '.relevant-coaccusals',
+      elements: {
+        title: '.relevant-infinite-carousel-title',
+        carouselTip: '.relevant-infinite-carousel-tip',
+      },
+      sections: {
+        coaccusalCard: {
+          selector: '.swiper-slide > a:first-child',
+          elements: {
+            plusButton: {
+              selector: '//div[contains(@class, "relevant-coaccusals")]//div[contains(@class, "plus-button")]',
+              locateStrategy: 'xpath',
+            },
+            radarChart: '.radar-chart-wrapper',
+            officerRank: '.officer-card-rank',
+            officerName: '.officer-card-name',
+            coaccusalCount: '.coaccusal-count',
+            nameWrapper: '.officer-card-name-wrapper',
+          }
         }
       }
     },

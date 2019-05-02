@@ -19,12 +19,15 @@ export class BaseOfficerCard extends Component {
       topContent,
       customStyle,
       hasHrefLink,
+      setRef,
     } = this.props;
     return (
       <Link
         to={ hasHrefLink ? officerUrl(officerId, fullName) : null }
         target={ openCardInNewPage ? '_blank' : null }
-        className={ cx(style.baseOfficerCard, customStyle, 'test--officer-card') }>
+        className={ cx(style.baseOfficerCard, customStyle, 'test--officer-card') }
+        ref={ setRef }
+      >
         { topContent }
         <div className='radar-chart'>
           <RadarChart
@@ -53,6 +56,7 @@ BaseOfficerCard.propTypes = {
   topContent: PropTypes.node,
   customStyle: PropTypes.string,
   hasHrefLink: PropTypes.bool,
+  setRef: PropTypes.func,
 };
 
 BaseOfficerCard.defaultProps = {

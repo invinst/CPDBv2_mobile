@@ -1,12 +1,26 @@
 import * as _ from 'lodash';
+import { browserHistory } from 'react-router';
 
-import { ADD_ITEM_TO_PINBOARD, REMOVE_ITEM_IN_PINBOARD_PAGE } from 'actions/pinboard';
-import { getPinboard } from 'selectors/pinboard';
 import {
-  createPinboard, updatePinboard,
-  fetchPinboardComplaints, fetchPinboardOfficers,
+  ADD_ITEM_TO_PINBOARD,
+  REMOVE_ITEM_IN_PINBOARD_PAGE,
+  PINBOARD_CREATE_REQUEST_SUCCESS,
+  PINBOARD_UPDATE_REQUEST_SUCCESS,
+  createPinboard,
+  updatePinboard,
+  fetchPinboard,
+  fetchPinboardSocialGraph,
+  fetchPinboardGeographicData,
+  fetchPinboardRelevantDocuments,
+  fetchPinboardRelevantCoaccusals,
+  fetchPinboardRelevantComplaints,
+  fetchPinboardComplaints,
+  fetchPinboardOfficers,
   fetchPinboardTRRs,
 } from 'actions/pinboard';
+import { getPinboard } from 'selectors/pinboard';
+import { getPathname } from 'selectors/common/routing';
+
 
 const PINBOARD_ATTR_MAP = {
   'CR': 'crids',
@@ -63,6 +77,27 @@ export default store => next => action => {
 
         store.dispatch(pinboardFetchSelected(pinboardID));
       });
+    }
+  }
+  if (action.type === PINBOARD_CREATE_REQUEST_SUCCESS) {
+    const state = store.getState();
+    if (getPathname(state).match(/\/pinboard\/[\w\d]+/)) {
+      browserHistory.push(`/pinboard/${action.payload.id}/`);
+    }
+  }
+  if (action.type === PINBOARD_UPDATE_REQUEST_SUCCESS) {
+    const state = store.getState();
+    if (getPathname(state).match(/\/pinboard\/[\w\d]+/)) {
+      const pinboardID = action.payload.id;
+      store.dispatch(fetchPinboard(pinboardID));
+      store.dispatch(fetchPinboardSocialGraph(pinboardID));
+      store.dispatch(fetchPinboardGeographicData(pinboardID));
+      store.dispatch(fetchPinboardRelevantDocuments(pinboardID));
+      store.dispatch(fetchPinboardRelevantCoaccusals(pinboardID));
+      store.dispatch(fetchPinboardRelevantComplaints(pinboardID));
+      store.dispatch(fetchPinboardOfficers(pinboardID));
+      store.dispatch(fetchPinboardComplaints(pinboardID));
+      store.dispatch(fetchPinboardTRRs(pinboardID));
     }
   }
   return next(action);

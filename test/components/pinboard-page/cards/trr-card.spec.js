@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import should from 'should';
+import { Router, createMemoryHistory, Route } from 'react-router';
 
 import TRRCard from 'components/pinboard-page/cards/trr-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
@@ -33,5 +34,35 @@ describe('Pinboard <TRRCard />', function () {
 
     should(trrCard.find('.trr-card-map').exists()).be.true();
     should(trrCard.find('.empty-map').exists()).be.true();
+  });
+
+  it('should fade in when added', function () {
+    const item = {
+      trrDate: '10-10-2010',
+      category: 'Use Of Force',
+    };
+    const trrCard = mount(<TRRCard item={ item } isAdded={ true }/>);
+    const trrCardDOM = trrCard.getDOMNode();
+
+    trrCardDOM.className.should.containEql('hide');
+    trrCardDOM.className.should.containEql('fade-in');
+  });
+
+  it('should fade out when removed', function () {
+    const item = {
+      trrDate: '10-10-2010',
+      category: 'Use Of Force',
+    };
+    const wrapper = mount(
+      <Router history={ createMemoryHistory() }>
+        <Route path='/' component={ () => <TRRCard item={ item }/> } />
+      </Router>
+    );
+    const trrCard = wrapper.find(TRRCard);
+    const unpinButton = trrCard.find(ItemUnpinButton);
+
+    unpinButton.simulate('click');
+
+    trrCard.getDOMNode().className.should.containEql('fade-out');
   });
 });

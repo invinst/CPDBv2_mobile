@@ -37,4 +37,20 @@ describe('<PinnedType />', function () {
     trrCards.get(0).props.item.id.should.eql('1');
     trrCards.get(1).props.item.id.should.eql('2');
   });
+
+  // it('should render newly added item with correct props', function () {
+  //   const items = [{ 'id': '1' }, { 'id': '2' }];
+  //   instance = renderIntoDocument(<PinnedType type='TRR' items={ items } />);
+  //   const newItems = [{ 'id': '1' }, { 'id': '2' }, { 'id': '3' }];
+  //   instance = reRender(<PinnedType type='TRR' items={ newItems } />, instance);
+  //
+  //   const trrCards = scryRenderedComponentsWithType(instance, TRRCard);
+  //   trrCards.should.have.length(3);
+  //   trrCards[0].props.item.id.should.eql('1');
+  //   trrCards[0].props.isAdded.should.be.false();
+  //   trrCards[1].props.item.id.should.eql('2');
+  //   trrCards[1].props.isAdded.should.be.false();
+  //   trrCards[2].props.item.id.should.eql('3');
+  //   trrCards[2].props.isAdded.should.be.true();
+  // });
 });
