@@ -7,6 +7,7 @@ import {
   fetchPinboardTRRs,
   fetchPinboardSocialGraph,
   fetchPinboardGeographicData,
+  removeItemInPinboardPage,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -31,6 +32,7 @@ import {
   PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_START,
   PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_SUCCESS,
   PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_FAILURE,
+  REMOVE_ITEM_IN_PINBOARD_PAGE,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -48,22 +50,6 @@ describe('pinboard actions', function () {
           id: '1234',
           type: 'OFFICER',
           isPinned: true,
-        },
-      });
-    });
-  });
-
-  describe('addItemInPinboardPage', function () {
-    it('should return correct action', function () {
-      addItemInPinboardPage({
-        id: '1234',
-        type: 'OFFICER',
-      }).should.deepEqual({
-        type: ADD_ITEM_IN_PINBOARD_PAGE,
-        payload: {
-          id: '1234',
-          type: 'OFFICER',
-          isPinned: false,
         },
       });
     });
