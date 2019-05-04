@@ -8,6 +8,7 @@ import {
   PINBOARD_COMPLAINTS_FETCH_REQUEST_SUCCESS,
   PINBOARD_OFFICERS_FETCH_REQUEST_SUCCESS,
   PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
 } from 'actions/pinboard';
 
 
@@ -153,6 +154,19 @@ describe('Pinboard reducer', function () {
     ).should.deepEqual({
       id: 1,
       trrItems: [{ id: 2 }, { id: 3 }],
+    });
+  });
+
+  it('should handle PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS', function () {
+    pinboardReducer(
+      {},
+      {
+        type: PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
+        payload: { id: 1 }
+      }
+    ).should.deepEqual({
+      id: 1,
+      isPinboardRestored: true,
     });
   });
 });

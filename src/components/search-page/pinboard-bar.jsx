@@ -8,6 +8,11 @@ import style from './pinboard-bar.sass';
 export default class PinboardBar extends Component {
   render() {
     const { pinboard } = this.props;
+
+    if (!pinboard.isPinboardRestored) {
+      return null;
+    }
+
     if (pinboard.itemsCount === 0) {
       return (
         <span className={ cx('test--pinboard-bar', style.pinboardBar) }>

@@ -8,6 +8,7 @@ import {
   fetchPinboardSocialGraph,
   fetchPinboardGeographicData,
   removeItemInPinboardPage,
+  fetchLatestRetrievedPinboard,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -33,6 +34,9 @@ import {
   PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_SUCCESS,
   PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_FAILURE,
   REMOVE_ITEM_IN_PINBOARD_PAGE,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -217,6 +221,25 @@ describe('pinboard actions', function () {
         payload: {
           request: {
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}268a5e58/geographic-data/`,
+            params: undefined,
+            adapter: undefined,
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchLatestRetrievedPinboard', function () {
+    it('should return correct action', function () {
+      fetchLatestRetrievedPinboard().should.deepEqual({
+        types: [
+          PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START,
+          PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
+          PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}latest-retrieved-pinboard/`,
             params: undefined,
             adapter: undefined,
           }

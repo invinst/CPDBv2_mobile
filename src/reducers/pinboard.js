@@ -7,6 +7,7 @@ import {
   PINBOARD_COMPLAINTS_FETCH_REQUEST_SUCCESS,
   PINBOARD_OFFICERS_FETCH_REQUEST_SUCCESS,
   PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
 } from 'actions/pinboard';
 
 
@@ -34,5 +35,10 @@ export default handleActions({
   [PINBOARD_TRRS_FETCH_REQUEST_SUCCESS]: (state, action) => ({
     ...state,
     trrItems: action.payload,
-  })
+  }),
+  [PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS]: (state, action) => ({
+    ...action.payload,
+    ...state,
+    isPinboardRestored: true,
+  }),
 }, null);
