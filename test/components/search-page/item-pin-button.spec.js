@@ -16,18 +16,18 @@ describe('<ItemPinButton />', function () {
     wrapper.find('span').hasClass('is-pinned').should.be.false();
   });
 
-  it('should call addItemToPinboard action when cliked on', function () {
-    const addItemToPinboard = stub();
+  it('should call addItemInPinboardPage action when cliked on', function () {
+    const addOrRemoveItemInPinboard = stub();
     const wrapper = mount(
       <ItemPinButton
-        addItemToPinboard={ addItemToPinboard }
+        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
         isPinned={ false }
         type='CR'
         id='1'
       />
     );
     wrapper.find('span').simulate('click');
-    addItemToPinboard.calledWith({
+    addOrRemoveItemInPinboard.calledWith({
       type: 'CR',
       id: '1',
       isPinned: false,

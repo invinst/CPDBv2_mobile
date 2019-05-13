@@ -9,9 +9,9 @@ export default class ItemPinButton extends Component {
     e.preventDefault();
     e.stopPropagation();
 
-    const { addItemToPinboard, type, id, isPinned } = this.props;
+    const { addOrRemoveItemInPinboard, type, id, isPinned } = this.props;
 
-    addItemToPinboard({
+    addOrRemoveItemInPinboard({
       type: type,
       id: id,
       isPinned: isPinned,
@@ -34,7 +34,7 @@ ItemPinButton.propTypes = {
   id: PropTypes.string,
   type: PropTypes.string,
   isPinned: PropTypes.bool,
-  addItemToPinboard: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
 };
 
 ItemPinButton.defaultProps = {

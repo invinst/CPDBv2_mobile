@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+import { map, entries } from 'lodash';
 
 import { get, post, put } from 'actions/common/async-action';
 import constants from 'constants';
@@ -37,19 +38,35 @@ export const PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_FAILURE = 'PINBOARD_GEOGRAPH
 export const PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_START = 'PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_START';
 export const PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_SUCCESS = 'PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_SUCCESS';
 
+export const PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_START = 'PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_START';
+export const PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_SUCCESS = 'PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_SUCCESS';
+export const PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_FAILURE = 'PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_FAILURE';
+
+export const PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_START = 'PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_START';
+export const PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_SUCCESS = 'PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_SUCCESS';
+export const PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_FAILURE = 'PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_FAILURE';
+
+export const PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_START = 'PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_START';
+export const PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_SUCCESS = 'PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_SUCCESS';
+export const PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_FAILURE = 'PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_FAILURE';
+
 export const PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START = 'PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START';
 export const PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS = 'PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS';
 export const PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE = 'PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE';
 
-export const ADD_ITEM_TO_PINBOARD = 'ADD_ITEM_TO_PINBOARD';
+export const ADD_OR_REMOVE_ITEM_IN_PINBOARD = 'ADD_OR_REMOVE_ITEM_IN_PINBOARD';
 export const CHANGE_PINBOARD_TAB = 'CHANGE_PINBOARD_TAB';
 
 export const REMOVE_ITEM_IN_PINBOARD_PAGE = 'REMOVE_ITEM_IN_PINBOARD_PAGE';
+export const ADD_ITEM_IN_PINBOARD_PAGE = 'ADD_ITEM_IN_PINBOARD_PAGE';
 
-export const addItemToPinboard = createAction(ADD_ITEM_TO_PINBOARD);
+export const addOrRemoveItemInPinboard = createAction(ADD_OR_REMOVE_ITEM_IN_PINBOARD);
 
 export const removeItemInPinboardPage = createAction(REMOVE_ITEM_IN_PINBOARD_PAGE,
   item => ({ ...item, isPinned: true }));
+
+export const addItemInPinboardPage = createAction(ADD_ITEM_IN_PINBOARD_PAGE,
+  item => ({ ...item, isPinned: false }));
 
 export const createPinboard = ({ officerIds, crids, trrIds }) => post(
   v2Url(constants.PINBOARDS_API_ENDPOINT),
@@ -124,6 +141,38 @@ export const fetchPinboardGeographicData = id => get(
 )();
 
 export const changePinboardTab = createAction(CHANGE_PINBOARD_TAB);
+
+const getWithPaginate = (pinboardRelevantAPI, types) => (id, params) => {
+  const queryString = map(entries(params), ([key, val]) => `${key}=${val}`).join('&');
+  const url = `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/${pinboardRelevantAPI}/?${queryString}`;
+
+  return get(url, types)();
+};
+
+export const fetchPinboardRelevantDocuments = getWithPaginate(
+  'relevant-documents',
+  [
+    PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_START,
+    PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_SUCCESS,
+    PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_FAILURE,
+  ]
+);
+export const fetchPinboardRelevantCoaccusals = getWithPaginate(
+  'relevant-coaccusals',
+  [
+    PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_START,
+    PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_SUCCESS,
+    PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_FAILURE,
+  ]
+);
+export const fetchPinboardRelevantComplaints = getWithPaginate(
+  'relevant-complaints',
+  [
+    PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_START,
+    PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_SUCCESS,
+    PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_FAILURE,
+  ]
+);
 
 export const fetchLatestRetrievedPinboard = () => get(
   `${v2Url(constants.PINBOARDS_API_ENDPOINT)}latest-retrieved-pinboard/`,

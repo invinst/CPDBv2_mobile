@@ -1,4 +1,4 @@
-import { getPinboard, pinboardItemsSelector, getPinboardItems } from 'selectors/pinboard';
+import { getPinboard, pinboardItemsSelector, getPinboardItems, pinboardICRIDsSelector } from 'selectors/pinboard';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 
 
@@ -179,7 +179,6 @@ describe('Pinboard selectors', function () {
                 value: 98.4344,
               },
             ],
-            officerId: undefined,
             textColor: '#231F20',
             visualTokenBackground: '#ff4f13',
             year: 2016,
@@ -195,6 +194,20 @@ describe('Pinboard selectors', function () {
           point: { lon: 1, lat: 1 },
         }],
       });
+    });
+  });
+
+  describe('pinboardICRIDsSelector', function () {
+    it('should return pined crids', function () {
+      const state = {
+        pinboard: PinboardFactory.build({
+          'officer_ids': [12],
+          crids: ['abc', 'def'],
+          'trr_ids': [1],
+        })
+      };
+
+      pinboardICRIDsSelector(state).should.eql(['abc', 'def']);
     });
   });
 });

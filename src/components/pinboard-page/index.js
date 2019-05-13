@@ -7,6 +7,8 @@ import PinnedSection from './pinned-section';
 import SearchBar from './search-bar';
 import Header from './header';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
+import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
+import Footer from 'components/footer';
 
 
 export default class PinboardPage extends Component {
@@ -43,12 +45,18 @@ export default class PinboardPage extends Component {
       fetchPinboardTRRs,
       fetchPinboardSocialGraph,
       fetchPinboardGeographicData,
+      fetchPinboardRelevantDocuments,
+      fetchPinboardRelevantCoaccusals,
+      fetchPinboardRelevantComplaints,
     } = this.props;
     fetchPinboardComplaints(id);
     fetchPinboardOfficers(id);
     fetchPinboardTRRs(id);
     fetchPinboardSocialGraph(id);
     fetchPinboardGeographicData(id);
+    fetchPinboardRelevantDocuments(id);
+    fetchPinboardRelevantCoaccusals(id);
+    fetchPinboardRelevantComplaints(id);
   }
 
   render() {
@@ -59,6 +67,7 @@ export default class PinboardPage extends Component {
       hasMapMarker,
       itemsByTypes,
       removeItemInPinboardPage,
+      params,
     } = this.props;
     return (
       <div className={ cx(styles.pinboardPage, 'pinboard-page') }>
@@ -78,6 +87,8 @@ export default class PinboardPage extends Component {
         <PinnedSection
           itemsByTypes={ itemsByTypes }
           removeItemInPinboardPage={ removeItemInPinboardPage }/>
+        <RelevantSectionContainer pinboardId={ params.pinboardId }/>
+        <Footer />
       </div>
     );
   }
@@ -94,6 +105,9 @@ PinboardPage.propTypes = {
   removeItemInPinboardPage: PropTypes.func,
   fetchPinboardSocialGraph: PropTypes.func,
   fetchPinboardGeographicData: PropTypes.func,
+  fetchPinboardRelevantDocuments: PropTypes.func,
+  fetchPinboardRelevantCoaccusals: PropTypes.func,
+  fetchPinboardRelevantComplaints: PropTypes.func,
   changePinboardTab: PropTypes.func,
   currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
@@ -107,4 +121,7 @@ PinboardPage.defaultProps = {
   fetchPinboardTRRs: () => {},
   fetchPinboardSocialGraph: () => {},
   fetchPinboardGeographicData: () => {},
+  fetchPinboardRelevantDocuments: () => {},
+  fetchPinboardRelevantCoaccusals: () => {},
+  fetchPinboardRelevantComplaints: () => {},
 };

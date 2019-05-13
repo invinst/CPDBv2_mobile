@@ -5,7 +5,7 @@ import OfficerItem from './officer-item';
 
 class OfficerSearchResult extends Component {
   render() {
-    const { items, saveToRecent, categoryFilter, addItemToPinboard } = this.props;
+    const { items, saveToRecent, categoryFilter, addOrRemoveItemInPinboard } = this.props;
 
     return (
       <div>
@@ -16,7 +16,7 @@ class OfficerSearchResult extends Component {
               saveToRecent={ saveToRecent }
               categoryFilter={ categoryFilter }
               item={ officer }
-              addItemToPinboard={ addItemToPinboard }
+              addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
               { ...officer }
             />
           ))
@@ -30,7 +30,7 @@ OfficerSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
   items: PropTypes.array,
   categoryFilter: PropTypes.string,
-  addItemToPinboard: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
 };
 
 OfficerSearchResult.defaultProps = {

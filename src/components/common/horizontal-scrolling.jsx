@@ -13,17 +13,23 @@ class HorizontalScrolling extends React.Component {
 
     this.handleSlideNext = this.handleSlideNext.bind(this);
     this.handleSlidePrev = this.handleSlidePrev.bind(this);
+    this.onSnapIndexChange = this.onSnapIndexChange.bind(this);
   }
 
   componentDidMount() {
-    const { centeredContent, slideOptions } = this.props;
+    const { centeredContent, slideOptions, spaceBetween } = this.props;
     const defaultOptions = {
-      spaceBetween: 8,
+      spaceBetween,
       slidesPerView: 'auto',
       direction: 'horizontal',
       slidesOffsetAfter: 32,
       centerInsufficientSlides: centeredContent,
       on: {
+        snapIndexChange: () => {
+          if (!this.swiper) return;
+          const { activeIndex, isEnd } = this.swiper;
+          this.onSnapIndexChange(activeIndex, isEnd);
+        },
         slideNextTransitionStart: this.handleSlideNext,
         slidePrevTransitionStart: this.handleSlidePrev,
       }
@@ -35,6 +41,13 @@ class HorizontalScrolling extends React.Component {
     /* istanbul ignore next */
     if (this.swiper) {
       this.swiper.update();
+    }
+  }
+
+  onSnapIndexChange(activeIndex, isEnd) {
+    const { children, loadMoreThreshold, hasMore, loadMore } = this.props;
+    if (isEnd || children.length - activeIndex <= loadMoreThreshold) {
+      hasMore && loadMore();
     }
   }
 
@@ -79,6 +92,17 @@ HorizontalScrolling.propTypes = {
   slideOptions: PropTypes.object,
   trackingContentType: PropTypes.string,
   centeredContent: PropTypes.bool,
+  loadMore: PropTypes.func,
+  hasMore: PropTypes.bool,
+  spaceBetween: PropTypes.number,
+  loadMoreThreshold: PropTypes.number,
+};
+
+HorizontalScrolling.defaultProps = {
+  hasMore: false,
+  loadMore: () => {},
+  spaceBetween: 8,
+  loadMoreThreshold: 2,
 };
 
 export default HorizontalScrolling;

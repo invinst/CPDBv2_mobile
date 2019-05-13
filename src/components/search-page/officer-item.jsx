@@ -4,7 +4,7 @@ import SearchItem from './search-item';
 import style from './officer-item.sass';
 
 
-const OfficerItem = ({ item, name, badge, url, percentile, saveToRecent, categoryFilter, addItemToPinboard }) => {
+const OfficerItem = ({ item, name, badge, url, percentile, saveToRecent, categoryFilter, addOrRemoveItemInPinboard }) => {
   const handleClick = (categoryFilter, name, url) => saveToRecent({
     type: categoryFilter,
     title: name,
@@ -16,7 +16,7 @@ const OfficerItem = ({ item, name, badge, url, percentile, saveToRecent, categor
       url={ url }
       onClick={ () => handleClick(categoryFilter, name, url) }
       hasPinButton={ true }
-      addItemToPinboard={ addItemToPinboard }
+      addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
       id={ item.id }
       isPinned={ item.isPinned }
       type={ item.type }>
@@ -35,7 +35,7 @@ OfficerItem.propTypes = {
   percentile: PropTypes.object,
   saveToRecent: PropTypes.func,
   categoryFilter: PropTypes.string,
-  addItemToPinboard: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
   item: PropTypes.object,
 };
 

@@ -4,7 +4,7 @@ import SearchItem from './search-item';
 import style from './cr-search-result.sass';
 
 
-const CRSearchResult = ({ items, saveToRecent, categoryFilter, addItemToPinboard }) => {
+const CRSearchResult = ({ items, saveToRecent, categoryFilter, addOrRemoveItemInPinboard }) => {
   const handleClick = (name, url) => saveToRecent({
     type: categoryFilter,
     title: name,
@@ -21,7 +21,7 @@ const CRSearchResult = ({ items, saveToRecent, categoryFilter, addItemToPinboard
               url={ item.url }
               onClick={ () => handleClick(item.crid, item.url) }
               hasPinButton={ true }
-              addItemToPinboard={ addItemToPinboard }
+              addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
               id={ item.crid }
               isPinned={ item.isPinned }
               type={ item.type }>
@@ -41,7 +41,7 @@ CRSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
   items: PropTypes.array,
   categoryFilter: PropTypes.string,
-  addItemToPinboard: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
 };
 
 CRSearchResult.defaultProps = {

@@ -4,6 +4,7 @@ var _ = require('lodash');
 var assert = require('assert');
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
+const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationResponse');
 
 const pinboardData = {
   'id': '5cd06f2b',
@@ -266,6 +267,129 @@ const geographicData = [
   },
 ];
 
+const baseRelevantDocumentsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-documents/?';
+const baseRelevantCoaccusalsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-coaccusals/?';
+const baseRelevantComplaintsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-complaints/?';
+
+const firstRelevantDocumentOfficer = {
+  'id': 123,
+  rank: 'Detective',
+  'full_name': 'Richard Sullivan',
+  'coaccusal_count': 53,
+};
+const generateRelevantDocumentOfficer = (index) => ({
+  'id': index,
+  rank: 'Officer',
+  'full_name': 'Baudilio Lopez',
+  'coaccusal_count': 47,
+});
+const firstRelevantDocument = {
+  'preview_image_url': 'http://via.placeholder.com/121x157',
+  'url': 'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf',
+  'allegation': {
+    'crid': '1071234',
+    'category': 'Lockup Procedures',
+    'incident_date': '2004-04-23',
+    'officers': [firstRelevantDocumentOfficer].concat(_.times(9, generateRelevantDocumentOfficer))
+  },
+};
+const baseRelevantDocument = {
+  'preview_image_url': 'http://via.placeholder.com/121x157',
+  'url': 'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf',
+  'allegation': {
+    'crid': '1079876',
+    'category': 'Operations/Personnel Violation',
+    'incident_date': '2014-05-02',
+    'officers': []
+  }
+};
+const firstRelevantDocumentsResponse = getPaginationResponse(
+  baseRelevantDocumentsUrl,
+  (number) => [firstRelevantDocument, ..._.times(number - 1, () => baseRelevantDocument)],
+  4, 0, 10
+);
+const secondRelevantDocumentsResponse = getPaginationResponse(
+  baseRelevantDocumentsUrl,
+  (number) => _.times(number, () => baseRelevantDocument),
+  4, 4, 10
+);
+const lastRelevantDocumentsResponse = getPaginationResponse(
+  baseRelevantDocumentsUrl,
+  (number) => _.times(number, () => baseRelevantDocument),
+  4, 8, 10
+);
+
+const firstRelevantCoaccusal = {
+  'id': 123,
+  'rank': 'Detective',
+  'full_name': 'Richard Sullivan',
+  'coaccusal_count': 53,
+};
+const generateRelevantCoaccusal = (id) => ({
+  id,
+  'rank': 'Officer',
+  'full_name': 'Baudilio Lopez',
+  'coaccusal_count': 47,
+});
+const firstRelevantCoaccusalsResponse = getPaginationResponse(
+  baseRelevantCoaccusalsUrl,
+  (number) => [firstRelevantCoaccusal, ..._.times(number - 1, index => generateRelevantCoaccusal(index))],
+  4, 0, 10
+);
+const secondRelevantCoaccusalsResponse = getPaginationResponse(
+  baseRelevantCoaccusalsUrl,
+  (number) => _.times(number, index => generateRelevantCoaccusal(index + 20)),
+  4, 4, 10
+);
+const lastRelevantCoaccusalsResponse = getPaginationResponse(
+  baseRelevantCoaccusalsUrl,
+  (number) => _.times(number, index => generateRelevantCoaccusal(index + 40)),
+  4, 8, 10
+);
+
+const firstRelevantComplaint = {
+  'crid': '1071234',
+  'category': 'Lockup Procedures',
+  'incident_date': '2004-04-23',
+  'point': { lat: 50, lon: -87 },
+  'officers': [
+    {
+      'id': 123,
+      'rank': 'Sergeant',
+      'full_name': 'Carl Suchocki',
+      'coaccusal_count': 53,
+    },
+    ..._.times(8, index => ({
+      'id': index,
+      'rank': 'Police officer',
+      'full_name': 'Queen Jones',
+      'coaccusal_count': 47,
+    }))
+  ]
+};
+const generateRelevantComplaint = crid => ({
+  crid,
+  'category': 'Operations/Personnel Violation',
+  'incident_date': '2014-05-02',
+  'point': { lat: 45, lon: -87 },
+  'officers': []
+});
+const firstRelevantComplaintsResponse = getPaginationResponse(
+  baseRelevantComplaintsUrl,
+  (number) => [firstRelevantComplaint, ..._.times(number - 1, index => generateRelevantComplaint(`${index}`))],
+  4, 0, 10
+);
+const secondRelevantComplaintsResponse = getPaginationResponse(
+  baseRelevantComplaintsUrl,
+  (number) => _.times(number, index => generateRelevantComplaint(`${index + 20}`)),
+  4, 4, 10
+);
+const lastRelevantComplaintsResponse = getPaginationResponse(
+  baseRelevantComplaintsUrl,
+  (number) => _.times(number, index => generateRelevantComplaint(`${index + 40}`)),
+  4, 8, 10
+);
+
 function waitForGraphAnimationEnd(client, pinboardPage) {
   pinboardPage.expect.section('@currentDate').to.be.visible;
   client.waitForText(
@@ -294,12 +418,24 @@ function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
 
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, pinboardData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/complaints/', 200, pinboardCRsData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/officers/', 200, pinboardOfficersData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/trrs/', 200, pinboardTRRsData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/social-graph/', 200, socialGraphData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/geographic-data/', 200, geographicData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, pinboardData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, pinboardCRsData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, pinboardOfficersData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, pinboardTRRsData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/social-graph/', 200, socialGraphData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/geographic-data/', 200, geographicData);
+
+    api.mock('GET', baseRelevantDocumentsUrl, 200, firstRelevantDocumentsResponse);
+    api.mock('GET', `${baseRelevantDocumentsUrl}limit=4&offset=4`, 200, secondRelevantDocumentsResponse);
+    api.mock('GET', `${baseRelevantDocumentsUrl}limit=4&offset=8`, 200, lastRelevantDocumentsResponse);
+
+    api.mock('GET', baseRelevantCoaccusalsUrl, 200, firstRelevantCoaccusalsResponse);
+    api.mock('GET', `${baseRelevantCoaccusalsUrl}limit=4&offset=4`, 200, secondRelevantCoaccusalsResponse);
+    api.mock('GET', `${baseRelevantCoaccusalsUrl}limit=4&offset=8`, 200, lastRelevantCoaccusalsResponse);
+
+    api.mock('GET', baseRelevantComplaintsUrl, 200, firstRelevantComplaintsResponse);
+    api.mock('GET', `${baseRelevantComplaintsUrl}limit=4&offset=4`, 200, secondRelevantComplaintsResponse);
+    api.mock('GET', `${baseRelevantComplaintsUrl}limit=4&offset=8`, 200, lastRelevantComplaintsResponse);
 
     this.pinboardPage = client.page.pinboardPage();
     this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
@@ -346,8 +482,8 @@ describe('Pinboard Page', function () {
     });
   });
 
-  context('pinboard section', function () {
-    it('should render correctly', function () {
+  context('pinboard section', function (client) {
+    it('should render correctly', function (client) {
       const pinboardPage = this.pinboardPage;
       pinboardPage.expect.element('@pinboardTitle').to.be.visible;
       pinboardPage.expect.element('@pinboardDescription').to.be.visible;
@@ -357,6 +493,187 @@ describe('Pinboard Page', function () {
       pinboardPage.expect.section('@pinboardPaneMenu').to.be.visible;
       pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('Network');
       pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('Geographic');
+    });
+  });
+
+  context('relevant documents section', function () {
+    it('should render document cards', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.expect.element('@title').text.to.equal('DOCUMENTS');
+      relevantDocumentsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
+
+      const documentCard = relevantDocumentsSection.section.documentCard;
+      client.assertCount(`${relevantDocumentsSection.selector} ${documentCard.selector}`, 4);
+
+      const firstDocumentCard = relevantDocumentsSection.section.documentCard;
+      firstDocumentCard.expect.element('@plusButton').to.be.present;
+      firstDocumentCard.expect.element('@incidentDate').text.to.equal('Apr 23, 2004');
+      firstDocumentCard.expect.element('@category').text.to.equal('Lockup Procedures');
+      firstDocumentCard.expect.element('@firstTopOfficerName').text.to.equal('R. Sullivan');
+      firstDocumentCard.expect.element('@secondTopOfficerName').text.to.equal('B. Lopez');
+      firstDocumentCard.expect.element('@notShowingOfficerCount').text.to.equal('3+');
+    });
+
+    it('should request more when sliding to the end', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      const documentCard = relevantDocumentsSection.section.documentCard;
+      const cardSelector = `${relevantDocumentsSection.selector} ${documentCard.selector}`;
+      client.assertCount(cardSelector, 4);
+
+      const nthCardSelector = n => relevantDocumentsSection.selector +
+        ` .swiper-slide:nth-child(${n}) > div:first-child`;
+
+      _.times(3, idx => client.dragAndDrop(nthCardSelector(idx + 2), -200, 0));
+      client.assertCount(cardSelector, 8);
+
+      _.times(4, idx => client.dragAndDrop(nthCardSelector(idx + 5), -200, 0));
+      client.assertCount(cardSelector, 10);
+    });
+
+    it('should go to complaint page when clicking on category', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.section.documentCard.click('@category');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on incidentDate', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.section.documentCard.click('@incidentDate');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on topOfficers', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.section.documentCard.click('@topOfficers');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on remainingOfficers', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.section.documentCard.click('@remainingOfficers');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to document pdf link in new tab when clicking on left half of a complaint card', function (client) {
+      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+      relevantDocumentsSection.section.documentCard.click('@leftHalf');
+      client.switchToRecentTab();
+      client.assert.urlEquals(
+        'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf'
+      );
+    });
+  });
+
+  context('relevant complaints section', function () {
+    it('should render complaint cards', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.expect.element('@title').text.to.equal('COMPLAINTS');
+      relevantComplaintsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
+
+      const complaintCard = relevantComplaintsSection.section.complaintCard;
+      client.assertCount(`${relevantComplaintsSection.selector} ${complaintCard.selector}`, 4);
+
+      const firstComplaintCard = relevantComplaintsSection.section.complaintCard;
+      firstComplaintCard.expect.element('@plusButton').to.be.present;
+      firstComplaintCard.expect.element('@incidentDate').text.to.equal('Apr 23, 2004');
+      firstComplaintCard.expect.element('@category').text.to.equal('Lockup Procedures');
+      firstComplaintCard.expect.element('@firstTopOfficerName').text.to.equal('C. Suchocki');
+      firstComplaintCard.expect.element('@secondTopOfficerName').text.to.equal('Q. Jones');
+      firstComplaintCard.expect.element('@notShowingOfficerCount').text.to.equal('2+');
+    });
+
+    it('should request more when sliding to the end', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      const complaintCard = relevantComplaintsSection.section.complaintCard;
+      const cardSelector = `${relevantComplaintsSection.selector} ${complaintCard.selector}`;
+      client.pause(200);
+      client.assertCount(cardSelector, 4);
+
+      const nthCardSelector = n => relevantComplaintsSection.selector +
+        ` .swiper-slide:nth-child(${n}) > div:first-child`;
+
+      _.times(3, idx => client.dragAndDrop(nthCardSelector(idx + 2), -200, 0));
+      client.assertCount(cardSelector, 8);
+
+      _.times(4, idx => client.dragAndDrop(nthCardSelector(idx + 5), -200, 0));
+      client.assertCount(cardSelector, 10);
+    });
+
+    it('should go to complaint page when clicking on category', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.section.complaintCard.click('@category');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on incidentDate', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.section.complaintCard.click('@incidentDate');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on topOfficers', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.section.complaintCard.click('@topOfficers');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on remainingOfficers', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.section.complaintCard.click('@remainingOfficers');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+
+    it('should go to complaint page when clicking on left half of a complaint card', function (client) {
+      const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+      relevantComplaintsSection.section.complaintCard.click('@leftHalf');
+      client.assert.urlContains('/complaint/1071234/');
+    });
+  });
+
+  context('relevant coaccusals section', function () {
+    it('should render coaccusal cards', function (client) {
+      const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
+      relevantCoaccusalsSection.expect.element('@title').text.to.equal('COACCUSALS');
+      relevantCoaccusalsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
+
+      const coaccusalCard = relevantCoaccusalsSection.section.coaccusalCard;
+      const cardSelector = `${relevantCoaccusalsSection.selector} ${coaccusalCard.selector}`;
+      client.assertCount(cardSelector, 4);
+
+      const firstCoaccusalCard = coaccusalCard;
+      firstCoaccusalCard.expect.element('@plusButton').to.be.present;
+      firstCoaccusalCard.expect.element('@radarChart').to.be.present;
+      firstCoaccusalCard.expect.element('@officerRank').text.to.equal('Detective');
+      firstCoaccusalCard.expect.element('@officerName').text.to.equal('Richard Sullivan');
+      firstCoaccusalCard.expect.element('@coaccusalCount').text.to.equal('53 coaccusals');
+    });
+
+    it('should request more when sliding to the end', function (client) {
+      const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
+      const coaccusalCard = relevantCoaccusalsSection.section.coaccusalCard;
+      const cardSelector = `${relevantCoaccusalsSection.selector} ${coaccusalCard.selector}`;
+      client.assertCount(cardSelector, 4);
+
+      const nthCardSelector = n => relevantCoaccusalsSection.selector +
+        ` .swiper-slide:nth-child(${n}) > a:first-child`;
+
+      _.times(3, idx => client.dragAndDrop(nthCardSelector(idx + 2), -100, 0));
+      client.assertCount(cardSelector, 8);
+
+      _.times(4, idx => client.dragAndDrop(nthCardSelector(idx + 5), -100, 0));
+      client.assertCount(cardSelector, 10);
+    });
+
+    it('should go to officer page when clicking on a nameWrapper', function (client) {
+      const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
+      relevantCoaccusalsSection.section.coaccusalCard.click('@nameWrapper');
+      client.assert.urlContains('/officer/123/richard-sullivan/');
+    });
+
+    it('should go to officer page when clicking on a coaccusalCount', function (client) {
+      const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
+      relevantCoaccusalsSection.section.coaccusalCard.click('@coaccusalCount');
+      client.assert.urlContains('/officer/123/richard-sullivan/');
     });
   });
 

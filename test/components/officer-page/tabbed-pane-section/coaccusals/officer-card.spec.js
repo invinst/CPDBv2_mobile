@@ -16,7 +16,6 @@ describe('CoaccusalCard', () => {
         { axis: 'Internal Allegations', value: 87.828 },
         { axis: 'Civilian Allegations', value: 99.9817 },
       ],
-      officerId: undefined,
       textColor: '#231F20',
       visualTokenBackground: '#f95125',
       year: undefined,
