@@ -19,6 +19,7 @@ describe('Pinboard selectors', function () {
         crItems: [],
         officerItems: [],
         trrItems: [],
+        isPinboardRestored: false,
       });
     });
 
@@ -35,6 +36,7 @@ describe('Pinboard selectors', function () {
           crItems: [{ crid: 'abc' }],
           officerItems: [{ id: 12 }],
           trrItems: [{ id: 1 }],
+          isPinboardRestored: false,
         }),
       };
 
@@ -51,6 +53,7 @@ describe('Pinboard selectors', function () {
         crItems: [{ crid: 'abc' }],
         officerItems: [{ id: 12 }],
         trrItems: [{ id: 1 }],
+        isPinboardRestored: false,
       });
     });
 
@@ -67,6 +70,7 @@ describe('Pinboard selectors', function () {
           crItems: [{ crid: 'abc' }],
           officerItems: [{ id: 12 }],
           trrItems: [{ id: 1 }],
+          isPinboardRestored: false,
         }),
       };
 
@@ -83,6 +87,7 @@ describe('Pinboard selectors', function () {
         crItems: [{ crid: 'abc' }],
         officerItems: [{ id: 12 }],
         trrItems: [{ id: 1 }],
+        isPinboardRestored: false,
       });
     });
   });
