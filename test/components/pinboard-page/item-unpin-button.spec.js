@@ -20,7 +20,6 @@ describe('<ItemUnpinButton />', function () {
     removeItemInPinboardPage.calledWith({
       type: 'CR',
       id: '1',
-      isPinned: true,
     }).should.be.true();
     onClick.should.be.calledOnce();
   });

@@ -8,7 +8,7 @@ import BaseComplaintCard from 'components/pinboard-page/relevant/common/base-com
 
 describe('<RelevantDocumentCard />', function () {
   it('should render enough content correctly', function () {
-    const addItemToPinboardStub = stub();
+    const addItemInPinboardPageStub = stub();
     const officers = [{
       fullName: 'Scott Mc Kenna',
       id: 32172,
@@ -65,7 +65,7 @@ describe('<RelevantDocumentCard />', function () {
         url='https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
         previewImageUrl='https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
         allegation={ allegation }
-        addItemToPinboard={ addItemToPinboardStub }
+        addItemInPinboardPage={ addItemInPinboardPageStub }
         pinned={ false }
       />
     );
@@ -75,7 +75,7 @@ describe('<RelevantDocumentCard />', function () {
     baseComplaintCard.prop('incidentDate').should.eql('Feb 1, 2018');
     baseComplaintCard.prop('category').should.eql('False Arrest');
     baseComplaintCard.prop('officers').should.eql(officers);
-    baseComplaintCard.prop('addItemToPinboard').should.eql(addItemToPinboardStub);
+    baseComplaintCard.prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
     baseComplaintCard.prop('pinned').should.be.false();
     baseComplaintCard.prop('leftChild').props.href.should.eql(
       'https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'

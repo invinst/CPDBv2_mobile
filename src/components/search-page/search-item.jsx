@@ -9,7 +9,7 @@ import style from './search-item.sass';
 export default class SearchItem extends Component {
   render() {
     const {
-      url, onClick, hasPinButton, addItemToPinboard,
+      url, onClick, hasPinButton, addOrRemoveItemInPinboard,
       id, isPinned, type, className,
     } = this.props;
 
@@ -22,7 +22,7 @@ export default class SearchItem extends Component {
         {
           hasPinButton &&
           <ItemPinButton
-            addItemToPinboard={ addItemToPinboard }
+            addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
             id={ id }
             isPinned={ isPinned }
             type={ type }
@@ -42,7 +42,7 @@ SearchItem.propTypes = {
   url: PropTypes.string,
   onClick: PropTypes.func,
   hasPinButton: PropTypes.bool,
-  addItemToPinboard: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
   id: PropTypes.string,
   isPinned: PropTypes.bool,
   type: PropTypes.string,

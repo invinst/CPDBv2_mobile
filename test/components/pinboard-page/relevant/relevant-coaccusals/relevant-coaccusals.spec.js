@@ -22,12 +22,12 @@ describe('<RelevantCoaccusals />', function () {
       rank: 'Police Officer',
       coaccusalCount: 0,
     }];
-    const addItemToPinboardStub = stub();
+    const addItemInPinboardPageStub = stub();
     const fetchPinboardRelevantCoaccusalsStub = stub();
 
     const wrapper = shallow(
       <RelevantCoaccusals
-        addItemToPinboard={ addItemToPinboardStub }
+        addItemInPinboardPage={ addItemInPinboardPageStub }
         fetchPinboardRelevantCoaccusals={ fetchPinboardRelevantCoaccusalsStub }
         coaccusals={ coaccusals }
         hasMore={ true }
@@ -42,13 +42,13 @@ describe('<RelevantCoaccusals />', function () {
 
     const relevantCoaccusalCards = relevantInfiniteCarousel.find(RelevantCoaccusalCard);
     relevantCoaccusalCards.should.have.length(2);
-    relevantCoaccusalCards.at(0).prop('addItemToPinboard').should.eql(addItemToPinboardStub);
+    relevantCoaccusalCards.at(0).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
     relevantCoaccusalCards.at(0).prop('id').should.eql(123);
     relevantCoaccusalCards.at(0).prop('fullName').should.eql('Jerome Finnigan');
     relevantCoaccusalCards.at(0).prop('percentile').should.eql({});
     relevantCoaccusalCards.at(0).prop('rank').should.eql('Officer');
     relevantCoaccusalCards.at(0).prop('coaccusalCount').should.eql(11);
-    relevantCoaccusalCards.at(1).prop('addItemToPinboard').should.eql(addItemToPinboardStub);
+    relevantCoaccusalCards.at(1).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
     relevantCoaccusalCards.at(1).prop('id').should.eql(456);
     relevantCoaccusalCards.at(1).prop('fullName').should.eql('Jerome Turbyville');
     relevantCoaccusalCards.at(1).prop('percentile').should.eql({});

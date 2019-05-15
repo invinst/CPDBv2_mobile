@@ -46,7 +46,7 @@ describe('<BaseComplaintCard />', function () {
       id: 8,
       percentile: { year: 2015, items: [] }
     }];
-    const addItemToPinboard = spy();
+    const addItemInPinboardPage = spy();
     const wrapper = shallow(
       <BaseComplaintCard
         leftChild={ <div className='test--left-child'/> }
@@ -56,7 +56,7 @@ describe('<BaseComplaintCard />', function () {
         incidentDate='Apr 4, 2015'
         category='Unknown'
         officers={ officers }
-        addItemToPinboard={ addItemToPinboard }
+        addItemInPinboardPage={ addItemInPinboardPage }
         pinned={ false }
       />
     );
@@ -109,7 +109,7 @@ describe('<BaseComplaintCard />', function () {
   });
 
   it('should hide PlusButton if pinned', function () {
-    const addItemToPinboard = spy();
+    const addItemInPinboardPage = spy();
     const wrapper = shallow(
       <BaseComplaintCard
         leftChild={ <div className='test--left-child'/> }
@@ -119,7 +119,7 @@ describe('<BaseComplaintCard />', function () {
         incidentDate='Apr 4, 2015'
         category='Unknown'
         officers={ [] }
-        addItemToPinboard={ addItemToPinboard }
+        addItemInPinboardPage={ addItemInPinboardPage }
         pinned={ true }
       />
     );
@@ -127,8 +127,8 @@ describe('<BaseComplaintCard />', function () {
     rightHalf.find(PlusButton).exists().should.be.false();
   });
 
-  it('should call addItemToPinboard when clicking on PlusButton', function () {
-    const addItemToPinboard = spy();
+  it('should call addItemInPinboardPage when clicking on PlusButton', function () {
+    const addItemInPinboardPage = spy();
     const wrapper = shallow(
       <BaseComplaintCard
         leftChild={ <div className='test--left-child'/> }
@@ -138,13 +138,13 @@ describe('<BaseComplaintCard />', function () {
         incidentDate='Apr 4, 2015'
         category='Unknown'
         officers={ [] }
-        addItemToPinboard={ addItemToPinboard }
+        addItemInPinboardPage={ addItemInPinboardPage }
         pinned={ false }
       />
     );
     const rightHalf = wrapper.find(Link);
     const plusButton = rightHalf.find(PlusButton);
     plusButton.simulate('click', { preventDefault: () => {} } );
-    addItemToPinboard.should.be.calledWith({ type: 'CR', id: '123', isPinned: false });
+    addItemInPinboardPage.should.be.calledWith({ type: 'CR', id: '123' });
   });
 });

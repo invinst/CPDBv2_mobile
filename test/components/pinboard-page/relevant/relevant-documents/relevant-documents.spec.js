@@ -83,12 +83,12 @@ describe('<RelevantComplaints />', function () {
       previewImageUrl: 'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif',
       pinned: false
     }];
-    const addItemToPinboardStub = stub();
+    const addItemInPinboardPageStub = stub();
     const fetchPinboardRelevantDocumentsStub = stub();
 
     const wrapper = shallow(
       <RelevantDocuments
-        addItemToPinboard={ addItemToPinboardStub }
+        addItemInPinboardPage={ addItemInPinboardPageStub }
         fetchPinboardRelevantDocuments={ fetchPinboardRelevantDocumentsStub }
         documents={ documents }
         hasMore={ true }
@@ -112,7 +112,7 @@ describe('<RelevantComplaints />', function () {
     );
     relevantDocumentCards.at(0).prop('allegation').should.eql(firstAllegation);
     relevantDocumentCards.at(0).prop('pinned').should.be.true();
-    relevantDocumentCards.at(0).prop('addItemToPinboard').should.eql(addItemToPinboardStub);
+    relevantDocumentCards.at(0).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
 
     relevantDocumentCards.at(1).prop('url').should.eql(
       'https://www.documentcloud.org/documents/3518950-CRID-294088-CR.html'
@@ -122,7 +122,7 @@ describe('<RelevantComplaints />', function () {
     );
     relevantDocumentCards.at(1).prop('allegation').should.eql(secondAllegation);
     relevantDocumentCards.at(1).prop('pinned').should.be.false();
-    relevantDocumentCards.at(1).prop('addItemToPinboard').should.eql(addItemToPinboardStub);
+    relevantDocumentCards.at(1).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
 
     relevantInfiniteCarousel.prop('loadMore')();
     fetchPinboardRelevantDocumentsStub.should.be.calledOnce();

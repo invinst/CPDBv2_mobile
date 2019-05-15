@@ -8,6 +8,7 @@ import localStorageConfig from './local-storage-config';
 import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
 import trackingMiddleware from 'middleware/tracking-middleware';
 import createOrUpdatePinboardMiddleware from 'middleware/create-or-update-pinboard-middleware';
+import restorePinboardSession from 'middleware/restore-pinboard-session';
 
 
 export default function configureStore(initialState) {
@@ -22,6 +23,7 @@ export default function configureStore(initialState) {
         scrollPositionMiddleware,
         trackingMiddleware,
         createOrUpdatePinboardMiddleware,
+        restorePinboardSession,
       ),
       persistState(()=>{}, localStorageConfig)
     )

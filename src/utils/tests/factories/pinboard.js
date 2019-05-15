@@ -8,17 +8,8 @@ export const PinboardFactory = Factory.define('pinboard')
   .attr('officer_ids', () => [])
   .attr('crids', () => [])
   .attr('trr_ids', () => [])
-  .attr('description', '');
-
-/* istanbul ignore next */
-export const OwnedPinboardFactory = Factory.define('pinboard')
-  .attr('id', null)
-  .attr('title', () => '')
-  .attr('officer_ids', () => [])
-  .attr('crids', () => [])
-  .attr('trr_ids', () => [])
   .attr('description', '')
-  .attr('ownedByCurrentUser', false)
   .attr('crItems', () => [])
   .attr('officerItems', () => [])
-  .attr('trrItems', () => []);
+  .attr('trrItems', () => [])
+  .attr('isPinboardRestored', () => false);

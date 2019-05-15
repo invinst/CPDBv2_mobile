@@ -96,7 +96,7 @@ export default class SearchPage extends Component {
           saveToRecent={ this.props.saveToRecent }
           updateActiveCategory={ this.props.updateActiveCategory }
           activeCategory={ this.props.activeCategory }
-          addItemToPinboard={ this.props.addItemToPinboard }
+          addOrRemoveItemInPinboard={ this.props.addOrRemoveItemInPinboard }
           />
       );
 
@@ -213,7 +213,7 @@ SearchPage.propTypes = {
   params: PropTypes.object,
   routes: PropTypes.array,
   pinboard: PropTypes.object,
-  addItemToPinboard: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
 };
 
 SearchPage.defaultProps = {

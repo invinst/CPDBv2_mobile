@@ -7,14 +7,13 @@ import style from './item-unpin-button.sass';
 export default class ItemUnpinButton extends Component {
   handleUnpinButtonClick() {
     const { removeItemInPinboardPage, onClick } = this.props;
-    const { type, id, isPinned } = this.props.item;
+    const { type, id } = this.props.item;
 
     onClick();
 
     removeItemInPinboardPage({
       type: type,
       id: id,
-      isPinned: isPinned,
     });
   }
 

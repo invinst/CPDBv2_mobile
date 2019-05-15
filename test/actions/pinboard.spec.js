@@ -10,6 +10,9 @@ import {
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
+  removeItemInPinboardPage,
+  addItemInPinboardPage,
+  fetchLatestRetrievedPinboard,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -43,12 +46,49 @@ import {
   PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_START,
   PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_SUCCESS,
   PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_FAILURE,
+  REMOVE_ITEM_IN_PINBOARD_PAGE,
+  ADD_ITEM_IN_PINBOARD_PAGE,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
 
 
 describe('pinboard actions', function () {
+  describe('removeItemInPinboardPage', function () {
+    it('should return correct action', function () {
+      removeItemInPinboardPage({
+        id: '1234',
+        type: 'OFFICER',
+      }).should.deepEqual({
+        type: REMOVE_ITEM_IN_PINBOARD_PAGE,
+        payload: {
+          id: '1234',
+          type: 'OFFICER',
+          isPinned: true,
+        },
+      });
+    });
+  });
+
+  describe('addItemInPinboardPage', function () {
+    it('should return correct action', function () {
+      addItemInPinboardPage({
+        id: '1234',
+        type: 'OFFICER',
+      }).should.deepEqual({
+        type: ADD_ITEM_IN_PINBOARD_PAGE,
+        payload: {
+          id: '1234',
+          type: 'OFFICER',
+          isPinned: false,
+        },
+      });
+    });
+  });
+
   describe('createPinboard', function () {
     it('should return correct action', function () {
       createPinboard({ officerIds: [], crids: ['abc'], trrIds: ['1'] }).should.deepEqual({
@@ -328,6 +368,25 @@ describe('pinboard actions', function () {
         payload: {
           request: {
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-complaints/?limit=20&offset=20`,
+            params: undefined,
+            adapter: undefined,
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchLatestRetrievedPinboard', function () {
+    it('should return correct action', function () {
+      fetchLatestRetrievedPinboard().should.deepEqual({
+        types: [
+          PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START,
+          PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
+          PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}latest-retrieved-pinboard/`,
             params: undefined,
             adapter: undefined,
           }

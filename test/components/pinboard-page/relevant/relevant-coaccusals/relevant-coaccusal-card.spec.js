@@ -11,11 +11,11 @@ import PlusButton from 'components/pinboard-page/relevant/common/plus-button';
 
 describe('<RelevantCoaccusalCard />', function () {
   it('should render enough content correctly', function () {
-    const addItemToPinboardStub = stub();
+    const addItemInPinboardPageStub = stub();
 
     const wrapper = shallow(
       <RelevantCoaccusalCard
-        addItemToPinboard={ addItemToPinboardStub }
+        addItemInPinboardPage={ addItemInPinboardPageStub }
         id={ 123 }
         fullName='Jerome Finnigan'
         rank='Officer'
@@ -57,16 +57,16 @@ describe('<RelevantCoaccusalCard />', function () {
 
     plusButton.simulate('click', { preventDefault: () => {} });
 
-    addItemToPinboardStub.should.calledOnce();
-    addItemToPinboardStub.should.calledWith({ type: 'OFFICER', id: '123', isPinned: false });
+    addItemInPinboardPageStub.should.calledOnce();
+    addItemInPinboardPageStub.should.calledWith({ type: 'OFFICER', id: '123' });
   });
 
   it('should render pluralize coaccusalCount and handle no percentile data', function () {
-    const addItemToPinboardStub = stub();
+    const addItemInPinboardPageStub = stub();
 
     const wrapper = shallow(
       <RelevantCoaccusalCard
-        addItemToPinboard={ addItemToPinboardStub }
+        addItemInPinboardPage={ addItemInPinboardPageStub }
         id={ 123 }
         fullName='Jerome Finnigan'
         rank='Officer'

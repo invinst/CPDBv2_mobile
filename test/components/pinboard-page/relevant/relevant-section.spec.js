@@ -26,7 +26,7 @@ describe('<RelevantSection />', function () {
     const fetchPinboardRelevantDocuments = spy();
     const fetchPinboardRelevantCoaccusals = spy();
     const fetchPinboardRelevantComplaints = spy();
-    const addItemToPinboard = spy();
+    const addItemInPinboardPage = spy();
 
     const wrapper = shallow(
       <RelevantSection
@@ -34,7 +34,7 @@ describe('<RelevantSection />', function () {
         fetchPinboardRelevantDocuments={ fetchPinboardRelevantDocuments }
         fetchPinboardRelevantCoaccusals={ fetchPinboardRelevantCoaccusals }
         fetchPinboardRelevantComplaints={ fetchPinboardRelevantComplaints }
-        addItemToPinboard={ addItemToPinboard }
+        addItemInPinboardPage={ addItemInPinboardPage }
         documents={ [{ id: 123 }] }
         coaccusals={ [{ id: 456 }] }
         complaints={ [{ id: 789 }] }
@@ -55,7 +55,7 @@ describe('<RelevantSection />', function () {
     relevantDocuments.prop('nextParams').should.eql({ limit: 19, offset: 20 });
     relevantDocuments.prop('hasMore').should.be.true();
     relevantDocuments.prop('fetchPinboardRelevantDocuments').should.equal(fetchPinboardRelevantDocuments);
-    relevantDocuments.prop('addItemToPinboard').should.equal(addItemToPinboard);
+    relevantDocuments.prop('addItemInPinboardPage').should.equal(addItemInPinboardPage);
 
     const relevantCoaccusals = wrapper.find(RelevantCoaccusals);
     relevantCoaccusals.prop('pinboardId').should.equal('66ef1560');
@@ -63,7 +63,7 @@ describe('<RelevantSection />', function () {
     relevantCoaccusals.prop('nextParams').should.eql({ limit: 21, offset: 22 });
     relevantCoaccusals.prop('hasMore').should.be.true();
     relevantCoaccusals.prop('fetchPinboardRelevantCoaccusals').should.equal(fetchPinboardRelevantCoaccusals);
-    relevantCoaccusals.prop('addItemToPinboard').should.equal(addItemToPinboard);
+    relevantCoaccusals.prop('addItemInPinboardPage').should.equal(addItemInPinboardPage);
 
     const relevantComplaints = wrapper.find(RelevantComplaints);
     relevantComplaints.prop('pinboardId').should.equal('66ef1560');
@@ -71,6 +71,6 @@ describe('<RelevantSection />', function () {
     relevantComplaints.prop('nextParams').should.eql({ limit: 23, offset: 24 });
     relevantComplaints.prop('hasMore').should.be.true();
     relevantComplaints.prop('fetchPinboardRelevantComplaints').should.equal(fetchPinboardRelevantComplaints);
-    relevantComplaints.prop('addItemToPinboard').should.equal(addItemToPinboard);
+    relevantComplaints.prop('addItemInPinboardPage').should.equal(addItemInPinboardPage);
   });
 });

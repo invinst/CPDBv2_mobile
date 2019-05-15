@@ -71,12 +71,12 @@ describe('<RelevantComplaints />', function () {
       },
       officers: [],
     }];
-    const addItemToPinboardStub = stub();
+    const addItemInPinboardPageStub = stub();
     const fetchPinboardRelevantComplaintsStub = stub();
 
     const wrapper = shallow(
       <RelevantComplaints
-        addItemToPinboard={ addItemToPinboardStub }
+        addItemInPinboardPage={ addItemInPinboardPageStub }
         fetchPinboardRelevantComplaints={ fetchPinboardRelevantComplaintsStub }
         complaints={ complaints }
         hasMore={ true }
@@ -97,14 +97,14 @@ describe('<RelevantComplaints />', function () {
     RelevantComplaintCards.at(0).prop('category').should.eql('False Arrest');
     RelevantComplaintCards.at(0).prop('officers').should.eql(firstOfficers);
     RelevantComplaintCards.at(0).prop('point').should.eql({ lat: 41.7924183, lon: -87.668458 });
-    RelevantComplaintCards.at(0).prop('addItemToPinboard').should.eql(addItemToPinboardStub);
+    RelevantComplaintCards.at(0).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
 
     RelevantComplaintCards.at(1).prop('crid').should.eql('1085255');
     RelevantComplaintCards.at(1).prop('incidentDate').should.eql('May 18, 2017');
     RelevantComplaintCards.at(1).prop('category').should.eql('Unknown');
     RelevantComplaintCards.at(1).prop('officers').should.eql([]);
     RelevantComplaintCards.at(1).prop('point').should.eql({ lat: 41.800831, lon: -87.6222052 });
-    RelevantComplaintCards.at(1).prop('addItemToPinboard').should.eql(addItemToPinboardStub);
+    RelevantComplaintCards.at(1).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
 
     relevantInfiniteCarousel.prop('loadMore')();
     fetchPinboardRelevantComplaintsStub.should.be.calledOnce();

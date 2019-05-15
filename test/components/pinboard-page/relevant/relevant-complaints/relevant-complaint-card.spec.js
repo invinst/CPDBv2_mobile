@@ -10,7 +10,7 @@ import BaseComplaintCard from 'components/pinboard-page/relevant/common/base-com
 
 describe('<RelevantComplaintCard />', function () {
   it('should render enough content correctly', function () {
-    const addItemToPinboardStub = stub();
+    const addItemInPinboardPageStub = stub();
     const officers = [{
       fullName: 'Scott Mc Kenna',
       id: 32172,
@@ -62,7 +62,7 @@ describe('<RelevantComplaintCard />', function () {
         category='False Arrest'
         officers={ officers }
         point={ { lat: 41.7924183, lon: -87.668458 } }
-        addItemToPinboard={ addItemToPinboardStub }
+        addItemInPinboardPage={ addItemInPinboardPageStub }
       />
     );
 
@@ -71,7 +71,7 @@ describe('<RelevantComplaintCard />', function () {
     baseComplaintCard.prop('incidentDate').should.eql('Feb 1, 2018');
     baseComplaintCard.prop('category').should.eql('False Arrest');
     baseComplaintCard.prop('officers').should.eql(officers);
-    baseComplaintCard.prop('addItemToPinboard').should.eql(addItemToPinboardStub);
+    baseComplaintCard.prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
     baseComplaintCard.prop('leftChild').props.to.should.eql('/complaint/123/');
     baseComplaintCard.prop('leftChild').props.style.should.eql({
       background: 'url(\"https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/' +
@@ -84,7 +84,7 @@ describe('<RelevantComplaintCard />', function () {
   });
 
   it('should render when no point', function () {
-    const addItemToPinboardStub = stub();
+    const addItemInPinboardPageStub = stub();
 
     const wrapper = shallow(
       <RelevantComplaintCard
@@ -92,7 +92,7 @@ describe('<RelevantComplaintCard />', function () {
         incidentDate='Feb 1, 2018'
         category='False Arrest'
         officers={ [] }
-        addItemToPinboard={ addItemToPinboardStub }
+        addItemInPinboardPage={ addItemInPinboardPageStub }
       />
     );
 
@@ -101,7 +101,7 @@ describe('<RelevantComplaintCard />', function () {
     baseComplaintCard.prop('incidentDate').should.eql('Feb 1, 2018');
     baseComplaintCard.prop('category').should.eql('False Arrest');
     baseComplaintCard.prop('officers').should.eql([]);
-    baseComplaintCard.prop('addItemToPinboard').should.eql(addItemToPinboardStub);
+    baseComplaintCard.prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
     baseComplaintCard.prop('leftChild').props.to.should.eql('/complaint/123/');
     should(baseComplaintCard.prop('leftChild').props.style).be.null();
     baseComplaintCard.prop('leftChild').type.should.be.eql(Link);

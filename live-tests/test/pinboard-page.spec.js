@@ -586,6 +586,7 @@ describe('Pinboard Page', function () {
       const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
       const complaintCard = relevantComplaintsSection.section.complaintCard;
       const cardSelector = `${relevantComplaintsSection.selector} ${complaintCard.selector}`;
+      client.pause(200);
       client.assertCount(cardSelector, 4);
 
       const nthCardSelector = n => relevantComplaintsSection.selector +
