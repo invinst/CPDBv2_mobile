@@ -3,11 +3,13 @@ import { browserHistory } from 'react-router';
 import cx from 'classnames';
 
 import styles from './pinboard-page.sass';
-import PinnedSection from './pinned-section';
 import SearchBar from './search-bar';
 import Header from './header';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
+import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
+import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
+import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import Footer from 'components/footer';
 
 
@@ -65,8 +67,6 @@ export default class PinboardPage extends Component {
       changePinboardTab,
       currentTab,
       hasMapMarker,
-      itemsByTypes,
-      removeItemInPinboardPage,
       params,
     } = this.props;
     return (
@@ -84,9 +84,11 @@ export default class PinboardPage extends Component {
             hasMapMarker={ hasMapMarker }
           />
         </div>
-        <PinnedSection
-          itemsByTypes={ itemsByTypes }
-          removeItemInPinboardPage={ removeItemInPinboardPage }/>
+        <div className='pinned-section'>
+          <PinnedOfficersContainer/>
+          <PinnedCRsContainer/>
+          <PinnedTRRsContainer/>
+        </div>
         <RelevantSectionContainer pinboardId={ params.pinboardId }/>
         <Footer />
       </div>
@@ -97,12 +99,10 @@ export default class PinboardPage extends Component {
 PinboardPage.propTypes = {
   params: PropTypes.object,
   pinboard: PropTypes.object,
-  itemsByTypes: PropTypes.object,
   fetchPinboard: PropTypes.func,
   fetchPinboardComplaints: PropTypes.func,
   fetchPinboardOfficers: PropTypes.func,
   fetchPinboardTRRs: PropTypes.func,
-  removeItemInPinboardPage: PropTypes.func,
   fetchPinboardSocialGraph: PropTypes.func,
   fetchPinboardGeographicData: PropTypes.func,
   fetchPinboardRelevantDocuments: PropTypes.func,

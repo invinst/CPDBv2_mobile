@@ -6,7 +6,9 @@ import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 
 import PinboardPage from 'components/pinboard-page';
-import PinnedSection from 'components/pinboard-page/pinned-section';
+import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
+import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
+import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import SearchBar from 'components/pinboard-page/search-bar';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section/index';
 
@@ -157,7 +159,7 @@ describe('<PinboardPage />', function () {
         params={ { pinboardId: '5cd06f2b' } }
         pinboard={ { id: '5e2372a0' } }
       />
-    ) } );
+    ) });
 
     replaceStub.calledWith('/pinboard/5e2372a0/');
     fetchPinboardComplaints.calledWith('5e2372a0').should.be.true();
@@ -190,9 +192,10 @@ describe('<PinboardPage />', function () {
       </Provider>
     );
 
-    wrapper.exists(PinnedSection).should.be.true();
-    wrapper.find(PinnedSection).props().itemsByTypes.should.equal(itemsByTypes);
-    wrapper.find(PinnedSection).props().removeItemInPinboardPage.should.equal(removeItemInPinboardPage);
+    wrapper.exists('.pinned-section').should.be.true();
+    wrapper.exists(PinnedOfficersContainer).should.be.true();
+    wrapper.exists(PinnedCRsContainer).should.be.true();
+    wrapper.exists(PinnedTRRsContainer).should.be.true();
   });
 
   it('should render SearchBar component', function () {

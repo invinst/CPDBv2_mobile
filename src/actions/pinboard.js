@@ -54,11 +54,12 @@ export const PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START = 'PINBOARD_LATEST_RE
 export const PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS = 'PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS';
 export const PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE = 'PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE';
 
-export const ADD_OR_REMOVE_ITEM_IN_PINBOARD = 'ADD_OR_REMOVE_ITEM_IN_PINBOARD';
 export const CHANGE_PINBOARD_TAB = 'CHANGE_PINBOARD_TAB';
 
-export const REMOVE_ITEM_IN_PINBOARD_PAGE = 'REMOVE_ITEM_IN_PINBOARD_PAGE';
+export const ADD_OR_REMOVE_ITEM_IN_PINBOARD = 'ADD_OR_REMOVE_ITEM_IN_PINBOARD';
 export const ADD_ITEM_IN_PINBOARD_PAGE = 'ADD_ITEM_IN_PINBOARD_PAGE';
+export const REMOVE_ITEM_IN_PINBOARD_PAGE = 'REMOVE_ITEM_IN_PINBOARD_PAGE';
+export const ORDER_PINBOARD = 'ORDER_PINBOARD';
 
 export const addOrRemoveItemInPinboard = createAction(ADD_OR_REMOVE_ITEM_IN_PINBOARD);
 
@@ -67,6 +68,8 @@ export const removeItemInPinboardPage = createAction(REMOVE_ITEM_IN_PINBOARD_PAG
 
 export const addItemInPinboardPage = createAction(ADD_ITEM_IN_PINBOARD_PAGE,
   item => ({ ...item, isPinned: false }));
+
+export const orderPinboard = createAction(ORDER_PINBOARD);
 
 export const createPinboard = ({ officerIds, crids, trrIds }) => post(
   v2Url(constants.PINBOARDS_API_ENDPOINT),
