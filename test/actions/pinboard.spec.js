@@ -1,3 +1,6 @@
+import { CancelToken } from 'axios';
+import { spy, stub } from 'sinon';
+
 import {
   createPinboard,
   updatePinboard,
@@ -67,6 +70,20 @@ import { v2Url } from 'utils/url-util';
 
 
 describe('pinboard actions', function () {
+  let cancel;
+
+  beforeEach(function () {
+    cancel = spy();
+    stub(CancelToken, 'source').returns({
+      token: 'token',
+      cancel
+    });
+  });
+
+  afterEach(function () {
+    CancelToken.source.restore();
+  });
+
   describe('removeItemInPinboardPage', function () {
     it('should return correct action', function () {
       removeItemInPinboardPage({
@@ -121,6 +138,12 @@ describe('pinboard actions', function () {
         }
       });
     });
+
+    it('should cancel old fetch requests if new request is called', function () {
+      createPinboard({ officerIds: [], crids: ['abc'], trrIds: [1] });
+      createPinboard({ officerIds: [], crids: ['abc'], trrIds: [1] });
+      cancel.called.should.be.true();
+    });
   });
 
   describe('updatePinboard', function () {
@@ -152,6 +175,19 @@ describe('pinboard actions', function () {
           }
         }
       });
+    });
+
+    it('should cancel old fetch requests if new request is called', function () {
+      const pinboard = {
+        id: '5cd06f2b',
+        title: 'Title',
+        officerIds: ['1'],
+        crids: [],
+        trrIds: ['1'],
+      };
+      updatePinboard(pinboard);
+      updatePinboard(pinboard);
+      cancel.called.should.be.true();
     });
   });
 
@@ -273,6 +309,7 @@ describe('pinboard actions', function () {
             url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/complaints/`),
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });
@@ -292,6 +329,7 @@ describe('pinboard actions', function () {
             url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/officers/`),
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });
@@ -311,6 +349,7 @@ describe('pinboard actions', function () {
             url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/trrs/`),
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });
@@ -330,6 +369,7 @@ describe('pinboard actions', function () {
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}268a5e58/social-graph/`,
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });
@@ -349,6 +389,7 @@ describe('pinboard actions', function () {
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}268a5e58/geographic-data/`,
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });
@@ -368,6 +409,7 @@ describe('pinboard actions', function () {
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-documents/?`,
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });
@@ -388,6 +430,7 @@ describe('pinboard actions', function () {
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-documents/?limit=20&offset=20`,
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });
@@ -407,6 +450,7 @@ describe('pinboard actions', function () {
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-coaccusals/?`,
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });
@@ -427,6 +471,7 @@ describe('pinboard actions', function () {
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-coaccusals/?limit=20&offset=20`,
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });
@@ -446,6 +491,7 @@ describe('pinboard actions', function () {
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-complaints/?`,
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });
@@ -466,6 +512,7 @@ describe('pinboard actions', function () {
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-complaints/?limit=20&offset=20`,
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });
