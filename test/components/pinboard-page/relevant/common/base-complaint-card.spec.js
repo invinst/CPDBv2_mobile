@@ -145,6 +145,12 @@ describe('<BaseComplaintCard />', function () {
     const rightHalf = wrapper.find(Link);
     const plusButton = rightHalf.find(PlusButton);
     plusButton.simulate('click', { preventDefault: () => {} } );
-    addItemInPinboardPage.should.be.calledWith({ type: 'CR', id: '123' });
+    addItemInPinboardPage.should.be.calledWith({
+      type: 'CR',
+      id: '123',
+      category: 'Unknown',
+      incidentDate: 'Apr 4, 2015',
+      point: undefined
+    });
   });
 });

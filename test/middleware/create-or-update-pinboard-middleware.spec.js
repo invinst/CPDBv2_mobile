@@ -1,54 +1,39 @@
 import { Promise } from 'es6-promise';
-import { stub } from 'sinon';
+import { stub, useFakeTimers } from 'sinon';
 
-import createOrUpdatePinboardMiddleware from 'middleware/create-or-update-pinboard-middleware';
+import createOrUpdatePinboard from 'middleware/create-or-update-pinboard-middleware';
 import {
   ADD_OR_REMOVE_ITEM_IN_PINBOARD,
-  REMOVE_ITEM_IN_PINBOARD_PAGE,
   ADD_ITEM_IN_PINBOARD_PAGE,
+  REMOVE_ITEM_IN_PINBOARD_PAGE,
   ORDER_PINBOARD,
+  SAVE_PINBOARD,
   createPinboard,
   updatePinboard,
+  orderPinboardState,
+  savePinboard,
+  addItemToPinboardState,
+  removeItemFromPinboardState,
+  fetchPinboardSocialGraph,
+  fetchPinboardGeographicData,
+  fetchPinboardRelevantDocuments,
+  fetchPinboardRelevantCoaccusals,
+  fetchPinboardRelevantComplaints,
 } from 'actions/pinboard';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 
 
-describe('create-or-update-pinboard-middleware', function () {
+describe('createOrUpdatePinboard middleware', function () {
   const createStore = (pinboard, pathname='') => ({
     getState: () => {
       return {
-        pinboard,
+        pinboardPage: {
+          pinboard
+        },
         routing: { locationBeforeTransitions: { pathname } }
       };
     },
     dispatch: stub().usingPromise(Promise).resolves('abc')
-  });
-
-  const createAddOrRemoveItemInPinboardAction = (item) => ({
-    type: ADD_OR_REMOVE_ITEM_IN_PINBOARD,
-    payload: {
-      id: item.id,
-      type: item.type,
-      isPinned: item.isPinned,
-    }
-  });
-
-  const createRemoveItemInPinboardPageAction = (item) => ({
-    type: REMOVE_ITEM_IN_PINBOARD_PAGE,
-    payload: {
-      id: item.id,
-      type: item.type,
-      isPinned: item.isPinned,
-    }
-  });
-
-  const createAddItemInPinboardPageAction = (item) => ({
-    type: ADD_ITEM_IN_PINBOARD_PAGE,
-    payload: {
-      id: item.id,
-      type: item.type,
-      isPinned: item.isPinned,
-    }
   });
 
   it('should not dispatch any action if action is not adding or removing items', function () {
@@ -58,257 +43,520 @@ describe('create-or-update-pinboard-middleware', function () {
     const store = createStore();
     let dispatched;
 
-    createOrUpdatePinboardMiddleware(store)(action => dispatched = action)(action);
+    createOrUpdatePinboard(store)(action => dispatched = action)(action);
     dispatched.should.eql(action);
     store.dispatch.called.should.be.false();
   });
 
-  context('handling ADD_OR_REMOVE_ITEM_IN_PINBOARD action', function () {
-    it('should dispatch createPinboard action if a first CR item is added to pinboard', function () {
-      const action = createAddOrRemoveItemInPinboardAction({
-        id: '1',
-        type: 'CR',
-        isPinned: false,
-      });
-      const store = createStore(PinboardFactory.build());
-      let dispatched;
-
-      createOrUpdatePinboardMiddleware(store)(action => dispatched = action)(action);
-      dispatched.should.eql(action);
-      store.dispatch.calledWith(createPinboard({
-        id: null,
-        title: '',
-        officerIds: [],
-        crids: ['1'],
-        trrIds: [],
-        description: '',
-        url: '',
-        itemsCount: 0,
-      })).should.be.true();
-    });
-
-    it('should dispatch createPinboard action if a first OFFICER item is added to pinboard', function () {
-      const action = createAddOrRemoveItemInPinboardAction({
-        id: '1',
+  it('should handle ORDER_PINBOARD and dispatch orderPinboardState', function (done) {
+    const action = {
+      type: ORDER_PINBOARD,
+      payload: {
         type: 'OFFICER',
-        isPinned: false,
-      });
-      const store = createStore(PinboardFactory.build());
-      let dispatched;
+        ids: ['123', '789', '456']
+      }
+    };
+    const store = createStore(PinboardFactory.build());
 
-      createOrUpdatePinboardMiddleware(store)(action => dispatched = action)(action);
-      dispatched.should.eql(action);
-      store.dispatch.calledWith(createPinboard({
-        id: null,
-        title: '',
-        officerIds: ['1'],
-        crids: [],
-        trrIds: [],
-        description: '',
-        url: '',
-        itemsCount: 0,
-      })).should.be.true();
-    });
+    let dispatched;
+    createOrUpdatePinboard(store)(action => dispatched = action)(action);
+    dispatched.should.eql(action);
 
-    it('should dispatch createPinboard action if a first TRR item is added to pinboard', function () {
-      const action = createAddOrRemoveItemInPinboardAction({
-        id: '1',
-        type: 'TRR',
-        isPinned: false,
-      });
-      const store = createStore(PinboardFactory.build());
-      let dispatched;
+    store.dispatch.should.be.calledWith(orderPinboardState({
+      type: 'OFFICER',
+      ids: ['123', '789', '456']
+    }));
 
-      createOrUpdatePinboardMiddleware(store)(action => dispatched = action)(action);
-      dispatched.should.eql(action);
-      store.dispatch.calledWith(createPinboard({
-        id: null,
-        title: '',
-        officerIds: [],
-        crids: [],
-        trrIds: ['1'],
-        description: '',
-        url: '',
-        itemsCount: 0,
-      })).should.be.true();
-    });
+    setTimeout(
+      () => {
+        store.dispatch.should.be.calledWith(savePinboard());
+        done();
+      },
+      50
+    );
+  });
 
-    it('should dispatch updatePinboard if successive items are added', function () {
-      const action = createAddOrRemoveItemInPinboardAction({
-        id: '1',
+  it('should handle ADD_OR_REMOVE_ITEM_IN_PINBOARD and dispatch addItemToPinboardState', function (done) {
+    const action = {
+      type: ADD_OR_REMOVE_ITEM_IN_PINBOARD,
+      payload: {
+        id: '123',
         type: 'CR',
         isPinned: false,
-      });
-      const store = createStore(PinboardFactory.build({
-        id: '99',
-        crids: ['2'],
-      }));
-      let dispatched;
+      }
+    };
+    const store = createStore(PinboardFactory.build());
 
-      createOrUpdatePinboardMiddleware(store)(action => dispatched = action)(action);
-      dispatched.should.eql(action);
-      store.dispatch.calledWith(updatePinboard({
-        id: '99',
-        title: '',
-        crids: ['2', '1'],
-        officerIds: [],
-        trrIds: [],
-        description: '',
-        url: '',
-        itemsCount: 1,
-      })).should.be.true();
-    });
+    let dispatched;
+    createOrUpdatePinboard(store)(action => dispatched = action)(action);
+    dispatched.should.eql(action);
 
-    it('should dispatch updatePinboard if an item is removed', function () {
-      const action = createAddOrRemoveItemInPinboardAction({
-        id: '1',
+    store.dispatch.should.be.calledWith(addItemToPinboardState({
+      id: '123',
+      type: 'CR',
+      isPinned: false,
+    }));
+
+    setTimeout(
+      () => {
+        store.dispatch.should.be.calledWith(savePinboard());
+        done();
+      },
+      50
+    );
+  });
+
+  it('should handle ADD_OR_REMOVE_ITEM_IN_PINBOARD and dispatch removeItemFromPinboardState', function (done) {
+    const action = {
+      type: ADD_OR_REMOVE_ITEM_IN_PINBOARD,
+      payload: {
+        id: '123',
         type: 'CR',
         isPinned: true,
-      });
-      const store = createStore(PinboardFactory.build({
-        id: '99',
-        crids: ['2', '1'],
-        'officer_ids': ['a'],
-        'trr_ids': ['1'],
-      }));
-      let dispatched;
+      }
+    };
+    const store = createStore(PinboardFactory.build());
 
-      createOrUpdatePinboardMiddleware(store)(action => dispatched = action)(action);
-      dispatched.should.eql(action);
-      store.dispatch.calledWith(updatePinboard({
-        id: '99',
-        title: '',
-        description: '',
-        crids: ['2'],
-        officerIds: ['a'],
-        trrIds: ['1'],
-        url: '',
-        itemsCount: 3,
-      })).should.be.true();
-    });
+    let dispatched;
+    createOrUpdatePinboard(store)(action => dispatched = action)(action);
+    dispatched.should.eql(action);
+
+    store.dispatch.should.be.calledWith(removeItemFromPinboardState({
+      id: '123',
+      type: 'CR',
+      isPinned: true,
+    }));
+
+    setTimeout(
+      () => {
+        store.dispatch.should.be.calledWith(savePinboard());
+        done();
+      },
+      50
+    );
   });
 
-  context('handling REMOVE_ITEM_IN_PINBOARD_PAGE', function () {
-    it('should dispatch updatePinboard if an item is removed', function () {
-      const action = createRemoveItemInPinboardPageAction({
-        id: '1',
+  it('should handle ADD_ITEM_IN_PINBOARD_PAGE and dispatch addItemToPinboardState', function (done) {
+    const action = {
+      type: ADD_ITEM_IN_PINBOARD_PAGE,
+      payload: {
+        id: '123',
         type: 'CR',
-        isPinned: true,
-      });
-      const store = createStore(PinboardFactory.build({
-        id: '99',
-        crids: ['2', '1'],
-        'officer_ids': ['a'],
-        'trr_ids': ['1'],
-      }));
-      let dispatched;
+      }
+    };
+    const store = createStore(PinboardFactory.build());
 
-      createOrUpdatePinboardMiddleware(store)(action => dispatched = action)(action);
-      dispatched.should.eql(action);
-      store.dispatch.calledWith(updatePinboard({
-        id: '99',
-        title: '',
-        description: '',
-        crids: ['2'],
-        officerIds: ['a'],
-        trrIds: ['1'],
-        url: '',
-        itemsCount: 3,
-      })).should.be.true();
-    });
+    let dispatched;
+    createOrUpdatePinboard(store)(action => dispatched = action)(action);
+    dispatched.should.eql(action);
+
+    store.dispatch.should.be.calledWith(addItemToPinboardState({
+      id: '123',
+      type: 'CR',
+    }));
+
+    setTimeout(
+      () => {
+        store.dispatch.should.be.calledWith(savePinboard());
+        done();
+      },
+      50
+    );
   });
 
-  context('handling ADD_ITEM_IN_PINBOARD_PAGE', function () {
-    it('should dispatch updatePinboard if an item is removed', function () {
-      const action = createAddItemInPinboardPageAction({
-        id: '1',
+  it('should handle REMOVE_ITEM_IN_PINBOARD_PAGE and dispatch removeItemFromPinboardState', function (done) {
+    const action = {
+      type: REMOVE_ITEM_IN_PINBOARD_PAGE,
+      payload: {
+        id: '123',
         type: 'CR',
-        isPinned: false,
-      });
-      const store = createStore(PinboardFactory.build({
-        id: '99',
-        crids: ['2'],
-        'officer_ids': ['a'],
-        'trr_ids': ['1'],
-      }));
-      let dispatched;
+      }
+    };
+    const store = createStore(PinboardFactory.build());
 
-      createOrUpdatePinboardMiddleware(store)(action => dispatched = action)(action);
-      dispatched.should.eql(action);
-      store.dispatch.calledWith(updatePinboard({
-        id: '99',
-        title: '',
-        description: '',
-        crids: ['2', '1'],
-        officerIds: ['a'],
-        trrIds: ['1'],
-        url: '',
-        itemsCount: 3,
-      })).should.be.true();
-    });
+    let dispatched;
+    createOrUpdatePinboard(store)(action => dispatched = action)(action);
+    dispatched.should.eql(action);
+
+    store.dispatch.should.be.calledWith(removeItemFromPinboardState({
+      id: '123',
+      type: 'CR',
+    }));
+
+    setTimeout(
+      () => {
+        store.dispatch.should.be.calledWith(savePinboard());
+        done();
+      },
+      50
+    );
   });
 
-  context('handling ORDER_PINBOARD', function () {
-    it('should handle CR type and dispatch updatePinboard', function () {
+  describe('handling SAVE_PINBOARD', function () {
+    it('should dispatch createPinboard', function (done) {
+      const action = {
+        type: SAVE_PINBOARD,
+        payload: null
+      };
       const store = createStore(PinboardFactory.build({
-        id: 'abc123',
-        crids: ['123', '456'],
-      }));
-      const action = { type: ORDER_PINBOARD, payload: { type: 'CR', ids: ['456', '123'] } };
-      createOrUpdatePinboardMiddleware(store)(() => {})(action);
-
-      store.dispatch.should.be.calledWith(updatePinboard({
-        id: 'abc123',
-        title: '',
-        description: '',
-        officerIds: [],
-        crids: ['456', '123'],
-        trrIds: [],
-        url: '',
-        itemsCount: 2,
-      }));
-    });
-
-    it('should handle OFFICER type and dispatch updatePinboard', function () {
-      const store = createStore(PinboardFactory.build({
-        'id': 'abc123',
+        'id': null,
         'officer_ids': [123, 456],
-        'ownedByCurrentUser': true,
+        'trr_ids': [789],
+        'crids': ['abc'],
+        'saving': false,
       }));
-      const action = { type: ORDER_PINBOARD, payload: { type: 'OFFICER', ids: ['456', '123'] } };
-      createOrUpdatePinboardMiddleware(store)(() => {})(action);
 
-      store.dispatch.should.be.calledWith(updatePinboard({
-        id: 'abc123',
+      let dispatched;
+      createOrUpdatePinboard(store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      store.dispatch.should.be.calledWith(createPinboard({
+        id: null,
         title: '',
         description: '',
-        officerIds: ['456', '123'],
+        officerIds: ['123', '456'],
+        crids: ['abc'],
+        trrIds: ['789'],
+      }));
+
+      setTimeout(
+        () => {
+          store.dispatch.should.be.calledWith(savePinboard());
+          done();
+        },
+        50
+      );
+    });
+
+    it('should dispatch updatePinboard', function (done) {
+      const action = {
+        type: SAVE_PINBOARD,
+        payload: null
+      };
+      const store = createStore(PinboardFactory.build({
+        'id': '66ef1560',
+        'officer_ids': [123, 456],
+        'saving': false,
+      }));
+
+      let dispatched;
+      createOrUpdatePinboard(store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      store.dispatch.should.be.calledWith(updatePinboard({
+        id: '66ef1560',
+        title: '',
+        description: '',
+        officerIds: ['123', '456'],
         crids: [],
         trrIds: [],
-        url: '',
-        itemsCount: 2,
       }));
+
+      setTimeout(
+        () => {
+          store.dispatch.should.be.calledWith(savePinboard());
+          done();
+        },
+        50
+      );
     });
 
-    it('should handle TRR type and dispatch updatePinboard', function () {
+    it('should dispatch nothing when saving is true', function () {
+      const action = {
+        type: SAVE_PINBOARD,
+        payload: null
+      };
       const store = createStore(PinboardFactory.build({
-        'id': 'abc123',
-        'trr_ids': [123, 456],
-        'ownedByCurrentUser': true,
+        'id': '66ef1560',
+        'officer_ids': [123, 456],
+        'saving': true,
       }));
-      const action = { type: ORDER_PINBOARD, payload: { type: 'TRR', ids: ['456', '123'] } };
-      createOrUpdatePinboardMiddleware(store)(() => {})(action);
 
-      store.dispatch.should.be.calledWith(updatePinboard({
-        id: 'abc123',
+      let dispatched;
+      createOrUpdatePinboard(store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      store.dispatch.should.not.be.called();
+    });
+
+    it('should dispatch updatePinboard when not up to date', function (done) {
+      const action = {
+        type: SAVE_PINBOARD,
+        payload: PinboardFactory.build({
+          'id': '66ef1560',
+          'officer_ids': [123],
+        })
+      };
+      const store = createStore(PinboardFactory.build({
+        'id': null,
+        'officer_ids': [123, 456],
+        'saving': false,
+      }));
+
+      let dispatched;
+      createOrUpdatePinboard(store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      store.dispatch.should.be.calledWith(createPinboard({
+        id: null,
         title: '',
         description: '',
-        officerIds: [],
+        officerIds: ['123', '456'],
         crids: [],
-        trrIds: ['456', '123'],
-        url: '',
-        itemsCount: 2,
+        trrIds: [],
       }));
+
+      setTimeout(
+        () => {
+          store.dispatch.should.be.calledWith(savePinboard());
+          done();
+        },
+        50
+      );
     });
+
+    it('should stop the loop if nothing else to save', function () {
+      const action = {
+        type: SAVE_PINBOARD,
+        payload: PinboardFactory.build({
+          'id': '66ef1560',
+          'officer_ids': [123, 456],
+        })
+      };
+      const store = createStore(PinboardFactory.build({
+        'id': '66ef1560',
+        'officer_ids': [123, 456],
+        'saving': false,
+      }));
+
+      let dispatched;
+      createOrUpdatePinboard(store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      store.dispatch.should.not.be.called();
+    });
+
+    it('should fetch data at end the loop when being on the pinboard page', function () {
+      const action = {
+        type: SAVE_PINBOARD,
+        payload: PinboardFactory.build({
+          'id': '66ef1560',
+          'officer_ids': [123, 456],
+        })
+      };
+      const store = createStore(
+        PinboardFactory.build({
+          'id': '66ef1560',
+          'officer_ids': [123, 456],
+          'saving': false,
+        }),
+        '/pinboard/66ef1560/'
+      );
+
+      let dispatched;
+      createOrUpdatePinboard(store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      store.dispatch.should.be.calledWith(fetchPinboardSocialGraph('66ef1560'));
+      store.dispatch.should.be.calledWith(fetchPinboardGeographicData('66ef1560'));
+      store.dispatch.should.be.calledWith(fetchPinboardRelevantDocuments('66ef1560'));
+      store.dispatch.should.be.calledWith(fetchPinboardRelevantCoaccusals('66ef1560'));
+      store.dispatch.should.be.calledWith(fetchPinboardRelevantComplaints('66ef1560'));
+    });
+
+    it('should retry saving on failure after 1 second', function (done) {
+      const action = {
+        type: SAVE_PINBOARD,
+        payload: PinboardFactory.build({ 'id': '66ef1560' })
+      };
+      const store = {
+        getState: () => {
+          return {
+            pinboardPage: {
+              pinboard: PinboardFactory.build({
+                'id': '66ef1560',
+                'officer_ids': [123, 456],
+                'saving': false,
+              })
+            },
+          };
+        },
+        dispatch: stub().usingPromise(Promise).rejects(new Error('abc'))
+      };
+
+      const realSetTimeout = setTimeout;
+      const clock = useFakeTimers();
+
+      let dispatched;
+      createOrUpdatePinboard(store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      store.dispatch.should.be.calledOnce();
+      store.dispatch.should.be.calledWith(updatePinboard({
+        id: '66ef1560',
+        title: '',
+        description: '',
+        officerIds: ['123', '456'],
+        crids: [],
+        trrIds: [],
+      }));
+
+      realSetTimeout(
+        () => {
+          clock.tick(1500);
+
+          store.dispatch.should.be.calledTwice();
+          store.dispatch.should.be.calledWith(savePinboard());
+
+          clock.restore();
+          done();
+        },
+        50,
+      );
+    });
+
+    it('should retry maximum 60 times', function (done) {
+      const action = {
+        type: SAVE_PINBOARD,
+        payload: null
+      };
+      const store = {
+        getState: () => {
+          return {
+            pinboardPage: {
+              pinboard: PinboardFactory.build({
+                'id': '66ef1560',
+                'officer_ids': [123, 456],
+                'saving': false,
+              })
+            },
+          };
+        },
+        dispatch: stub().usingPromise(Promise).resolves('abc')
+      };
+
+      createOrUpdatePinboard(store)(action => action)(action);
+
+      const failingStore = {
+        getState: () => {
+          return {
+            pinboardPage: {
+              pinboard: PinboardFactory.build({
+                'id': '66ef1560',
+                'officer_ids': [123, 456],
+                'saving': false,
+              })
+            },
+          };
+        },
+        dispatch: stub().usingPromise(Promise).rejects(new Error('abc'))
+      };
+
+      const realSetTimeout = setTimeout;
+      const clock = useFakeTimers();
+
+      function repeatSave(count) {
+        if (count < 61) {
+          createOrUpdatePinboard(failingStore)(action => action)(action);
+          realSetTimeout(
+            () => {
+              clock.tick(2000);
+              repeatSave(count + 1);
+            },
+            10
+          );
+        } else {
+          failingStore.dispatch.callCount.should.equal(121);
+          clock.restore();
+          done();
+        }
+      }
+
+      repeatSave(0);
+    });
+  });
+
+  it('should handle @@router/LOCATION_CHANGE and dispatch createPinboard', function (done) {
+    const action = {
+      type: '@@router/LOCATION_CHANGE',
+      payload: null
+    };
+    const store = createStore(PinboardFactory.build({
+      'id': null,
+      'officer_ids': [123, 456],
+      'saving': true,
+    }));
+
+    let dispatched;
+    createOrUpdatePinboard(store)(action => dispatched = action)(action);
+    dispatched.should.eql(action);
+
+    store.dispatch.should.be.calledWith(createPinboard({
+      id: null,
+      title: '',
+      description: '',
+      officerIds: ['123', '456'],
+      crids: [],
+      trrIds: [],
+    }));
+
+    setTimeout(
+      () => {
+        store.dispatch.should.be.calledWith(savePinboard());
+        done();
+      },
+      50
+    );
+  });
+
+  it('should handle @@router/LOCATION_CHANGE and dispatch updatePinboard', function (done) {
+    const action = {
+      type: '@@router/LOCATION_CHANGE',
+      payload: null
+    };
+    const store = createStore(PinboardFactory.build({
+      'id': '66ef1560',
+      'officer_ids': [123, 456],
+      'saving': true,
+    }));
+
+    let dispatched;
+    createOrUpdatePinboard(store)(action => dispatched = action)(action);
+    dispatched.should.eql(action);
+
+    store.dispatch.should.be.calledWith(updatePinboard({
+      id: '66ef1560',
+      title: '',
+      description: '',
+      officerIds: ['123', '456'],
+      crids: [],
+      trrIds: [],
+    }));
+
+    setTimeout(
+      () => {
+        store.dispatch.should.be.calledWith(savePinboard());
+        done();
+      },
+      50
+    );
+  });
+
+  it('should handle @@router/LOCATION_CHANGE and do nothing if not saving', function () {
+    const action = {
+      type: '@@router/LOCATION_CHANGE',
+      payload: null
+    };
+    const store = createStore(PinboardFactory.build({
+      'id': '66ef1560',
+      'officer_ids': [123, 456],
+      'saving': false,
+    }));
+
+    let dispatched;
+    createOrUpdatePinboard(store)(action => dispatched = action)(action);
+    dispatched.should.eql(action);
+
+    store.dispatch.should.not.be.called();
   });
 });

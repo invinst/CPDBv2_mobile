@@ -20,6 +20,7 @@ describe('<RelevantCoaccusalCard />', function () {
         fullName='Jerome Finnigan'
         rank='Officer'
         coaccusalCount={ 11 }
+        complaintCount={ 22 }
         percentile={ {
           officerId: 123,
           year: 2015,
@@ -58,7 +59,23 @@ describe('<RelevantCoaccusalCard />', function () {
     plusButton.simulate('click', { preventDefault: () => {} });
 
     addItemInPinboardPageStub.should.calledOnce();
-    addItemInPinboardPageStub.should.calledWith({ type: 'OFFICER', id: '123' });
+    addItemInPinboardPageStub.should.calledWith({
+      type: 'OFFICER',
+      id: '123',
+      complaintCount: 22,
+      fullName: 'Jerome Finnigan',
+      rank: 'Officer',
+      percentile: {
+        items: [
+          { axis: 'Use of Force Reports', value: 20.6 },
+          { axis: 'Internal Allegations', value: 10.1 },
+          { axis: 'Civilian Allegations', value: 52.5 }
+        ],
+        officerId: 123,
+        visualTokenBackground: '#ed7467',
+        year: 2015
+      }
+    });
   });
 
   it('should render pluralize coaccusalCount and handle no percentile data', function () {

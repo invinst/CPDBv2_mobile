@@ -61,6 +61,11 @@ export const ADD_ITEM_IN_PINBOARD_PAGE = 'ADD_ITEM_IN_PINBOARD_PAGE';
 export const REMOVE_ITEM_IN_PINBOARD_PAGE = 'REMOVE_ITEM_IN_PINBOARD_PAGE';
 export const ORDER_PINBOARD = 'ORDER_PINBOARD';
 
+export const ADD_ITEM_TO_PINBOARD_STATE = 'ADD_ITEM_TO_PINBOARD_STATE';
+export const REMOVE_ITEM_FROM_PINBOARD_STATE = 'REMOVE_ITEM_FROM_PINBOARD_STATE';
+export const ORDER_PINBOARD_STATE = 'ORDER_PINBOARD_STATE';
+export const SAVE_PINBOARD = 'SAVE_PINBOARD';
+
 export const addOrRemoveItemInPinboard = createAction(ADD_OR_REMOVE_ITEM_IN_PINBOARD);
 
 export const removeItemInPinboardPage = createAction(REMOVE_ITEM_IN_PINBOARD_PAGE,
@@ -68,6 +73,11 @@ export const removeItemInPinboardPage = createAction(REMOVE_ITEM_IN_PINBOARD_PAG
 
 export const addItemInPinboardPage = createAction(ADD_ITEM_IN_PINBOARD_PAGE,
   item => ({ ...item, isPinned: false }));
+
+export const addItemToPinboardState = createAction(ADD_ITEM_TO_PINBOARD_STATE);
+export const removeItemFromPinboardState = createAction(REMOVE_ITEM_FROM_PINBOARD_STATE);
+export const orderPinboardState = createAction(ORDER_PINBOARD_STATE);
+export const savePinboard = createAction(SAVE_PINBOARD);
 
 export const orderPinboard = createAction(ORDER_PINBOARD);
 
