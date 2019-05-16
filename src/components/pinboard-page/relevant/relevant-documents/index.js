@@ -20,9 +20,13 @@ export default class RelevantDocuments extends Component {
         className='relevant-documents'
       >
         {
-          documents.map((document, index) =>
-            <RelevantDocumentCard key={ index } { ...document } addItemInPinboardPage={ addItemInPinboardPage }/>
-          )
+          documents.map(document => (
+            <RelevantDocumentCard
+              key={ document.allegation.crid }
+              { ...document }
+              addItemInPinboardPage={ addItemInPinboardPage }
+            />
+          ))
         }
       </RelevantInfiniteCarousel>
     );
