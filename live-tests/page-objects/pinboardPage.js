@@ -66,7 +66,7 @@ module.exports = {
 
   sections: {
     pinnedSection: {
-      selector: '.test--pinned-section',
+      selector: 'div.pinned-section',
       sections: {
         officers: {
           selector: '.test--OFFICER-section',
@@ -75,7 +75,7 @@ module.exports = {
           },
           sections: {
             firstCard: {
-              selector: '.type-cards > a:first-child',
+              selector: '.type-cards > .pinned-grid-item:first-child',
               elements: {
                 firstCardUnpinBtn: '.test--item-unpin-button',
                 firstCardRank: '.officer-rank',
@@ -92,7 +92,7 @@ module.exports = {
           },
           sections: {
             firstCard: {
-              selector: '.type-cards > div:first-child',
+              selector: '.type-cards > .pinned-grid-item:first-child',
               elements: {
                 firstCardUnpinBtn: '.test--item-unpin-button',
                 firstCardDate: '.cr-incident-date',
@@ -108,7 +108,7 @@ module.exports = {
           },
           sections: {
             firstCard: {
-              selector: '.type-cards > div:first-child',
+              selector: '.type-cards > .pinned-grid-item:first-child',
               elements: {
                 firstCardUnpinBtn: '.test--item-unpin-button',
                 firstCardDate: '.trr-date',

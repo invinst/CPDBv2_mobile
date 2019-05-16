@@ -14,6 +14,7 @@ import {
   fetchPinboardComplaints,
   fetchPinboardOfficers,
   fetchPinboardTRRs,
+  ORDER_PINBOARD,
 } from 'actions/pinboard';
 import { getPinboard } from 'selectors/pinboard';
 
@@ -54,6 +55,15 @@ export default store => next => action => {
     item.isPinned ? removeItem(pinboard, item) : addItem(pinboard, item);
   }
 
+  if (action.type === ORDER_PINBOARD) {
+    const { type, ids } = action.payload;
+
+    pinboard = getPinboard(store.getState());
+    const key = PINBOARD_ATTR_MAP[type];
+    const currentIds = pinboard[key];
+    pinboard[key] = _.sortBy(currentIds, currentId => _.findIndex(ids, id => id === currentId.toString()));
+  }
+
   if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD) {
     if (pinboard.id === null) {
       store.dispatch(createPinboard(pinboard));
@@ -61,8 +71,11 @@ export default store => next => action => {
       store.dispatch(updatePinboard(pinboard));
     }
   }
-  else if (action.type === REMOVE_ITEM_IN_PINBOARD_PAGE ||
-    action.type === ADD_ITEM_IN_PINBOARD_PAGE) {
+  else if (
+    action.type === REMOVE_ITEM_IN_PINBOARD_PAGE ||
+    action.type === ADD_ITEM_IN_PINBOARD_PAGE ||
+    action.type === ORDER_PINBOARD
+  ) {
     // TODO: test this async function
     /* istanbul ignore next */
     store.dispatch(updatePinboard(pinboard)).then(response => {

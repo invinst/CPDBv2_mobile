@@ -6,6 +6,7 @@ import {
   ADD_OR_REMOVE_ITEM_IN_PINBOARD,
   REMOVE_ITEM_IN_PINBOARD_PAGE,
   ADD_ITEM_IN_PINBOARD_PAGE,
+  ORDER_PINBOARD,
   createPinboard,
   updatePinboard,
 } from 'actions/pinboard';
@@ -244,6 +245,70 @@ describe('create-or-update-pinboard-middleware', function () {
         url: '',
         itemsCount: 3,
       })).should.be.true();
+    });
+  });
+
+  context('handling ORDER_PINBOARD', function () {
+    it('should handle CR type and dispatch updatePinboard', function () {
+      const store = createStore(PinboardFactory.build({
+        id: 'abc123',
+        crids: ['123', '456'],
+      }));
+      const action = { type: ORDER_PINBOARD, payload: { type: 'CR', ids: ['456', '123'] } };
+      createOrUpdatePinboardMiddleware(store)(() => {})(action);
+
+      store.dispatch.should.be.calledWith(updatePinboard({
+        id: 'abc123',
+        title: '',
+        description: '',
+        officerIds: [],
+        crids: ['456', '123'],
+        trrIds: [],
+        url: '',
+        itemsCount: 2,
+      }));
+    });
+
+    it('should handle OFFICER type and dispatch updatePinboard', function () {
+      const store = createStore(PinboardFactory.build({
+        'id': 'abc123',
+        'officer_ids': [123, 456],
+        'ownedByCurrentUser': true,
+      }));
+      const action = { type: ORDER_PINBOARD, payload: { type: 'OFFICER', ids: ['456', '123'] } };
+      createOrUpdatePinboardMiddleware(store)(() => {})(action);
+
+      store.dispatch.should.be.calledWith(updatePinboard({
+        id: 'abc123',
+        title: '',
+        description: '',
+        officerIds: ['456', '123'],
+        crids: [],
+        trrIds: [],
+        url: '',
+        itemsCount: 2,
+      }));
+    });
+
+    it('should handle TRR type and dispatch updatePinboard', function () {
+      const store = createStore(PinboardFactory.build({
+        'id': 'abc123',
+        'trr_ids': [123, 456],
+        'ownedByCurrentUser': true,
+      }));
+      const action = { type: ORDER_PINBOARD, payload: { type: 'TRR', ids: ['456', '123'] } };
+      createOrUpdatePinboardMiddleware(store)(() => {})(action);
+
+      store.dispatch.should.be.calledWith(updatePinboard({
+        id: 'abc123',
+        title: '',
+        description: '',
+        officerIds: [],
+        crids: [],
+        trrIds: ['456', '123'],
+        url: '',
+        itemsCount: 2,
+      }));
     });
   });
 });
