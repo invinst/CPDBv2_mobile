@@ -22,7 +22,7 @@ export default class RelevantDocuments extends Component {
         {
           documents.map(document => (
             <RelevantDocumentCard
-              key={ document.allegation.crid }
+              key={ document.id }
               { ...document }
               addItemInPinboardPage={ addItemInPinboardPage }
             />

@@ -38,6 +38,7 @@ export const relevantComplaintTransform = allegation => ({
 export const relevantDocumentTransform = (document, crids) => ({
   previewImageUrl: document['preview_image_url'],
   url: document.url,
+  id: document.id,
   allegation: relevantComplaintTransform(document.allegation),
   pinned: includes(crids, document.allegation.crid),
 });

@@ -77,6 +77,7 @@ describe('RelevantDocuments selectors', function () {
       };
 
       relevantDocumentsSelector(state).should.eql([{
+        id: 16316,
         previewImageUrl: 'https://www.documentcloud.org/documents/CRID-1074534-TRR-Stegmiller-p1-normal.gif',
         url: 'https://www.documentcloud.org/documents/3037807/CRID-1074534-TRR-Stegmiller.pdf',
         allegation: {
@@ -117,6 +118,7 @@ describe('RelevantDocuments selectors', function () {
         pinned: false,
       },
       {
+        id: 2289,
         previewImageUrl: null,
         url: 'https://w.soundcloud.com/player/?url=https%3A/s=false&amp;visual=true',
         allegation: {

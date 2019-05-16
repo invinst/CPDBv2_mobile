@@ -46,6 +46,7 @@ describe('Pinboard Page transform selectors', function () {
       };
 
       relevantDocumentTransform(document, []).should.eql({
+        id: 16316,
         previewImageUrl: 'https://www.documentcloud.org/documents/CRID-1074534-TRR-Stegmiller-p1-normal.gif',
         url: 'https://www.documentcloud.org/documents/3037807/CRID-1074534-TRR-Stegmiller.pdf',
         allegation: {
@@ -102,6 +103,7 @@ describe('Pinboard Page transform selectors', function () {
       };
 
       relevantDocumentTransform(document, ['1074534', '1074535']).should.eql({
+        id: 16316,
         previewImageUrl: 'https://www.documentcloud.org/documents/CRID-1074534-TRR-Stegmiller-p1-normal.gif',
         url: 'https://www.documentcloud.org/documents/3037807/CRID-1074534-TRR-Stegmiller.pdf',
         allegation: {
@@ -154,6 +156,7 @@ describe('Pinboard Page transform selectors', function () {
       };
 
       relevantDocumentTransform(document, []).should.eql({
+        id: 16316,
         previewImageUrl: 'https://www.documentcloud.org/documents/CRID-1074534-TRR-Stegmiller-p1-normal.gif',
         url: 'https://www.documentcloud.org/documents/3037807/CRID-1074534-TRR-Stegmiller.pdf',
         allegation: {
