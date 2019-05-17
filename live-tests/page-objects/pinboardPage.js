@@ -81,6 +81,7 @@ module.exports = {
                 firstCardRank: '.officer-rank',
                 firstCardName: '.officer-name',
                 firstCardCRsCount: '.test--officer-cr-count',
+                undoCard: '.test--undo-card',
               },
             }
           },
