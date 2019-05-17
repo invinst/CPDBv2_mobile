@@ -133,6 +133,18 @@ describe('Pinboard Page', function () {
       firstCard.expect.element('@firstCardDate').text.to.equal('2012-01-01');
       firstCard.expect.element('@firstCardCategory').text.to.equal('Impact Weapon');
     });
+
+    it('should show undo card when click on unpin button', function () {
+      const pinboardPage = this.pinboardPage;
+      const pinnedSection = pinboardPage.section.pinnedSection;
+
+      const officers = pinnedSection.section.officers;
+      let firstCard = officers.section.firstCard;
+
+      firstCard.click('@firstCardUnpinBtn');
+
+      firstCard.expect.element('@undoCard').to.be.visible;
+    });
   });
 
   context('pinboard section', function () {
