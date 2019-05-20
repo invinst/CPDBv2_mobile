@@ -801,18 +801,6 @@ describe('Pinboard Page', function () {
         assert.equal(graphLinks.value.length, 14);
       });
     });
-
-    it('should be able to search', function (client) {
-      const pinboardPage = this.pinboardPage;
-      const searchInput = pinboardPage.section.searchInput;
-      pinboardPage.expect.section('@searchInput').to.be.visible;
-      client.setValue(searchInput.selector, 'Tho');
-      pinboardPage.expect.section('@firstSearchResultSuggestion').to.be.visible;
-      client.click(pinboardPage.section.firstSearchResultSuggestion.selector);
-      client.getValue(searchInput.selector, function (result) {
-        assert.equal(result.value, 'Thomas Kampenga');
-      });
-    });
   });
 
   context('Geographic section', function () {
