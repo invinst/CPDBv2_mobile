@@ -231,7 +231,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}268a5e58/social-graph/`,
+            url: `${v2Url(constants.SOCIAL_GRAPH_API_ENDPOINT)}network/?pinboard_id=268a5e58`,
             params: undefined,
             adapter: undefined,
           }
@@ -250,7 +250,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}268a5e58/geographic-data/`,
+            url: `${v2Url(constants.SOCIAL_GRAPH_API_ENDPOINT)}geographic/?pinboard_id=268a5e58`,
             params: undefined,
             adapter: undefined,
           }
