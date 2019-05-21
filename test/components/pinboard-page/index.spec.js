@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { spy, stub } from 'sinon';
 import * as ReactRouter from 'react-router';
 import MockStore from 'redux-mock-store';
@@ -11,6 +11,8 @@ import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
 import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import SearchBar from 'components/pinboard-page/search-bar';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section/index';
+import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
+import Footer from 'components/footer';
 
 
 describe('<PinboardPage />', function () {
@@ -187,7 +189,7 @@ describe('<PinboardPage />', function () {
           itemsByTypes={ itemsByTypes }
           removeItemInPinboardPage={ removeItemInPinboardPage }
           params={ { pinboardId: '5cd06f2b' } }
-          pinboard={ { id: '5cd06f2b' } }
+          pinboard={ { id: '5cd06f2b', 'crids': ['123'] } }
         />
       </Provider>
     );
@@ -203,7 +205,7 @@ describe('<PinboardPage />', function () {
       <Provider store={ store }>
         <PinboardPage
           params={ { pinboardId: '5cd06f2b' } }
-          pinboard={ { id: '5cd06f2b' } }
+          pinboard={ { id: '5cd06f2b', 'crids': ['123'] } }
         />
       </Provider>
     );
@@ -231,5 +233,69 @@ describe('<PinboardPage />', function () {
     wrapper.find(PinboardPaneSection).should.have.length(1);
     wrapper.find('.pinboard-title').text().should.equal('This is pinboard title');
     wrapper.find('.pinboard-description').text().should.equal('This is pinboard description');
+  });
+
+  it('should render EmptyPinboard instead of pinboard contents if pinboard is empty', function () {
+    const store = MockStore()({
+      pinboard: {
+        title: 'This is pinboard title',
+        description: 'This is pinboard description',
+      },
+      pinboardPage: {
+        graphData: {},
+        relevantDocuments: defaultPaginationState,
+        relevantCoaccusals: defaultPaginationState,
+        relevantComplaints: defaultPaginationState,
+      }
+    });
+
+    const pinboard = {
+      title: 'This is pinboard title',
+      description: 'This is pinboard description',
+    };
+
+    const wrapper = mount(
+      <Provider store={ store }>
+        <PinboardPage
+          params={ { pinboardId: '5cd06f2b' } }
+          pinboard={ pinboard }
+          isEmptyPinboard={ true }
+        />
+      </Provider>
+    );
+
+    wrapper.getDOMNode().className.should.containEql('empty');
+
+    wrapper.find(PinboardPaneSection).should.have.length(0);
+    wrapper.find('.pinboard-title').should.have.length(0);
+    wrapper.find('.pinboard-description').should.have.length(0);
+    wrapper.find(RelevantSectionContainer).should.have.length(0);
+
+    wrapper.find('.empty-pinboard-title').text().should.equal('Add');
+    wrapper.find('.empty-pinboard-description').text().should.containEql(
+      'Add officers, or complaint records through search.'
+    ).and.containEql('Or use an example pinboard as a baseline to get started.');
+
+    wrapper.find('.helper-row').should.have.length(2);
+    const helperHeaders = wrapper.find('.helper-header');
+    const helperTexts = wrapper.find('.helper-text');
+    const helperArrows = wrapper.find('.helper-arrow');
+
+    helperHeaders.should.have.length(2);
+    helperTexts.should.have.length(2);
+    helperArrows.should.have.length(2);
+
+    helperHeaders.at(0).text().should.equal('Repeaters');
+    helperHeaders.at(1).text().should.equal('Skullcap crew');
+    helperTexts.at(0).text().should.equal(
+      'Officers with at least 10 complaints against them generate 64% of all complaints.'
+    );
+    helperTexts.at(1).text().should.equal(
+      'Dogged by allegations of abuse, members of the group have been named in more than 20 federal lawsuits – yet h…'
+    );
+
+    wrapper.find('.arrow-head').exists().should.be.true();
+    wrapper.find('.arrow-shaft').exists().should.be.true();
+    wrapper.find(Footer).exists().should.be.true();
   });
 });

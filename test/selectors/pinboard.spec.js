@@ -1,4 +1,9 @@
-import { getPinboard, pinboardItemsSelector, pinboardICRIDsSelector } from 'selectors/pinboard';
+import {
+  getPinboard,
+  pinboardItemsSelector,
+  pinboardICRIDsSelector,
+  isEmptyPinboardSelector
+} from 'selectors/pinboard';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 
 
@@ -121,6 +126,56 @@ describe('Pinboard selectors', function () {
       };
 
       pinboardICRIDsSelector(state).should.eql(['abc', 'def']);
+    });
+  });
+
+  describe('isEmptyPinboardSelector', function () {
+    it('should return false if there is some crid', function () {
+      const state = {
+        pinboard: PinboardFactory.build({
+          'officer_ids': [],
+          crids: ['abc'],
+          'trr_ids': [],
+        })
+      };
+
+      isEmptyPinboardSelector(state).should.be.false();
+    });
+
+    it('should return false if there is some officer id', function () {
+      const state = {
+        pinboard: PinboardFactory.build({
+          'officer_ids': [1],
+          crids: [],
+          'trr_ids': [],
+        })
+      };
+
+      isEmptyPinboardSelector(state).should.be.false();
+    });
+
+    it('should return false if there is some trr id', function () {
+      const state = {
+        pinboard: PinboardFactory.build({
+          'officer_ids': [],
+          crids: [],
+          'trr_ids': [1],
+        })
+      };
+
+      isEmptyPinboardSelector(state).should.be.false();
+    });
+
+    it('should return true if there is no trr, cr or officer', function () {
+      const state = {
+        pinboard: PinboardFactory.build({
+          'officer_ids': [],
+          crids: [],
+          'trr_ids': [],
+        })
+      };
+
+      isEmptyPinboardSelector(state).should.be.true();
     });
   });
 });
