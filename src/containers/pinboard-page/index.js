@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { getPinboard } from 'selectors/pinboard';
+import { getPinboard, isEmptyPinboardSelector } from 'selectors/pinboard';
 import PinboardPage from 'components/pinboard-page';
 import { hasMapMarkersSelector, getCurrentTab } from 'selectors/pinboard-page/geographic-data';
 import {
@@ -22,6 +22,7 @@ const mapStateToProps = (state, ownProps) => ({
   pinboard: getPinboard(state),
   currentTab: getCurrentTab(state),
   hasMapMarker: hasMapMarkersSelector(state),
+  isEmptyPinboard: isEmptyPinboardSelector(state),
 });
 
 const mapDispatchToProps = {

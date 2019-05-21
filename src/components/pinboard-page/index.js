@@ -11,6 +11,7 @@ import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
 import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
 import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import Footer from 'components/footer';
+import EmptyPinboard from './empty-pinboard';
 
 
 export default class PinboardPage extends Component {
@@ -61,18 +62,22 @@ export default class PinboardPage extends Component {
     fetchPinboardRelevantComplaints(id);
   }
 
-  render() {
+  renderContent() {
     const {
       pinboard,
       changePinboardTab,
       currentTab,
       hasMapMarker,
       params,
+      isEmptyPinboard,
     } = this.props;
+
+    if (isEmptyPinboard) {
+      return EmptyPinboard;
+    }
+
     return (
-      <div className={ cx(styles.pinboardPage, 'pinboard-page') }>
-        <Header />
-        <SearchBar />
+      <div>
         <div className='pinboard-info'>
           <div className='pinboard-title'>{ pinboard.title }</div>
           <div className='pinboard-description'>{ pinboard.description }</div>
@@ -90,6 +95,18 @@ export default class PinboardPage extends Component {
           <PinnedTRRsContainer/>
         </div>
         <RelevantSectionContainer pinboardId={ params.pinboardId }/>
+      </div>
+    );
+  }
+
+  render() {
+    const { isEmptyPinboard } = this.props;
+
+    return (
+      <div className={ cx(styles.pinboardPage, 'pinboard-page', { 'empty': isEmptyPinboard }) }>
+        <Header />
+        <SearchBar />
+        { this.renderContent() }
         <Footer />
       </div>
     );
@@ -111,6 +128,7 @@ PinboardPage.propTypes = {
   changePinboardTab: PropTypes.func,
   currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
+  isEmptyPinboard: PropTypes.bool,
 };
 
 PinboardPage.defaultProps = {
