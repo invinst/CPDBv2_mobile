@@ -1,4 +1,4 @@
-export const get = (url, types) => ((params, adapter=undefined, urlSuffix='', meta) => {
+export const get = (url, types, cancelToken) => ((params, adapter=undefined, urlSuffix='', meta) => {
   const action = {
     types,
     payload: {
@@ -12,6 +12,10 @@ export const get = (url, types) => ((params, adapter=undefined, urlSuffix='', me
 
   if (typeof meta !== 'undefined') {
     action.meta = meta;
+  }
+
+  if (typeof cancelToken !== 'undefined') {
+    action.payload.request.cancelToken = cancelToken;
   }
 
   return action;

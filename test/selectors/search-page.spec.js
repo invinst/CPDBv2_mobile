@@ -21,7 +21,9 @@ describe('search-page selectors', () => {
           suggestions: {
           }
         },
-        pinboard: null,
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       officersSelector(state).should.be.eql({ data: [] });
@@ -44,7 +46,9 @@ describe('search-page selectors', () => {
             }
           }
         },
-        pinboard: null,
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       officersSelector(state).should.be.eql({
@@ -89,11 +93,13 @@ describe('search-page selectors', () => {
             }
           }
         },
-        pinboard: {
-          id: 99,
-          'officer_ids': [1],
-          crids: [],
-          'trr_ids': [],
+        pinboardPage: {
+          pinboard: {
+            id: 99,
+            'officer_ids': [1],
+            crids: [],
+            'trr_ids': [],
+          }
         }
       };
 
@@ -202,7 +208,9 @@ describe('search-page selectors', () => {
           suggestions: {
           }
         },
-        pinboard: null,
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       dateCRsSelector(state).should.be.eql({ data: [] });
@@ -241,11 +249,13 @@ describe('search-page selectors', () => {
             }
           }
         },
-        pinboard: {
-          id: 99,
-          'officer_ids': [],
-          crids: ['1027272'],
-          'trr_ids': [],
+        pinboardPage: {
+          pinboard: {
+            id: 99,
+            'officer_ids': [],
+            crids: ['1027272'],
+            'trr_ids': [],
+          }
         }
       };
 
@@ -263,7 +273,9 @@ describe('search-page selectors', () => {
           suggestions: {
           }
         },
-        pinboard: null,
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       dateTRRsSelector(state).should.be.eql({ data: [] });
@@ -294,10 +306,12 @@ describe('search-page selectors', () => {
             }
           }
         },
-        pinboard: {
-          'officer_ids': [],
-          crids: [],
-          'trr_ids': ['2'],
+        pinboardPage: {
+          pinboard: {
+            'officer_ids': [],
+            crids: [],
+            'trr_ids': ['2'],
+          }
         }
       };
 
@@ -315,7 +329,9 @@ describe('search-page selectors', () => {
           suggestions: {
           }
         },
-        pinboard: null,
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       crsSelector(state).should.be.eql({ data: [] });
@@ -371,11 +387,13 @@ describe('search-page selectors', () => {
             }
           }
         },
-        pinboard: {
-          id: 99,
-          'officer_ids': [1],
-          crids: ['1049273'],
-          'trr_ids': [1],
+        pinboardPage: {
+          pinboard: {
+            id: 99,
+            'officer_ids': [1],
+            crids: ['1049273'],
+            'trr_ids': [1],
+          }
         }
       };
 
@@ -393,7 +411,9 @@ describe('search-page selectors', () => {
           suggestions: {
           }
         },
-        pinboard: null,
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       investigatorCRsSelector(state).should.be.eql({ data: [] });
@@ -432,7 +452,9 @@ describe('search-page selectors', () => {
             }
           }
         },
-        pinboard: null,
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       investigatorCRsSelector(state).should.be.eql({
@@ -449,7 +471,9 @@ describe('search-page selectors', () => {
           suggestions: {
           }
         },
-        pinboard: null,
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       trrsSelector(state).should.be.eql({ data: [] });
@@ -480,10 +504,12 @@ describe('search-page selectors', () => {
             }
           }
         },
-        pinboard: {
-          'officer_ids': [],
-          crids: [],
-          'trr_ids': ['1'],
+        pinboardPage: {
+          pinboard: {
+            'officer_ids': [],
+            crids: [],
+            'trr_ids': ['1'],
+          }
         }
       };
 
@@ -501,7 +527,9 @@ describe('search-page selectors', () => {
           suggestions: {
           }
         },
-        pinboard: null,
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       dateOfficersSelector(state).should.be.eql({ data: [] });
@@ -524,7 +552,9 @@ describe('search-page selectors', () => {
             }
           }
         },
-        pinboard: null,
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       dateOfficersSelector(state).should.be.eql({

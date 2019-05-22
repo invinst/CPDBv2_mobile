@@ -284,6 +284,7 @@ const generateRelevantDocumentOfficer = (index) => ({
   'coaccusal_count': 47,
 });
 const firstRelevantDocument = {
+  'id': 123,
   'preview_image_url': 'http://via.placeholder.com/121x157',
   'url': 'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf',
   'allegation': {
@@ -293,7 +294,8 @@ const firstRelevantDocument = {
     'officers': [firstRelevantDocumentOfficer].concat(_.times(9, generateRelevantDocumentOfficer))
   },
 };
-const baseRelevantDocument = {
+const generateRelevantDocument = (id) => ({
+  id,
   'preview_image_url': 'http://via.placeholder.com/121x157',
   'url': 'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf',
   'allegation': {
@@ -302,20 +304,20 @@ const baseRelevantDocument = {
     'incident_date': '2014-05-02',
     'officers': []
   }
-};
+});
 const firstRelevantDocumentsResponse = getPaginationResponse(
   baseRelevantDocumentsUrl,
-  (number) => [firstRelevantDocument, ..._.times(number - 1, () => baseRelevantDocument)],
+  (number) => [firstRelevantDocument, ..._.range(1, number).map(generateRelevantDocument)],
   4, 0, 10
 );
 const secondRelevantDocumentsResponse = getPaginationResponse(
   baseRelevantDocumentsUrl,
-  (number) => _.times(number, () => baseRelevantDocument),
+  (number) => _.range(5, number + 5).map(generateRelevantDocument),
   4, 4, 10
 );
 const lastRelevantDocumentsResponse = getPaginationResponse(
   baseRelevantDocumentsUrl,
-  (number) => _.times(number, () => baseRelevantDocument),
+  (number) => _.range(9, number + 9).map(generateRelevantDocument),
   4, 8, 10
 );
 

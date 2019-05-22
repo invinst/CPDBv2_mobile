@@ -16,6 +16,7 @@ describe('Pinboard Page transform selectors', function () {
           'crid': '1074534',
           'category': 'Unknown',
           'incident_date': '2015-04-04',
+          'point': { 'lon': -87.6427175, 'lat': 41.7756769 },
           'officers': [{
             'id': 31859,
             'rank': 'Sergeant of Police',
@@ -45,12 +46,14 @@ describe('Pinboard Page transform selectors', function () {
       };
 
       relevantDocumentTransform(document, []).should.eql({
+        id: 16316,
         previewImageUrl: 'https://www.documentcloud.org/documents/CRID-1074534-TRR-Stegmiller-p1-normal.gif',
         url: 'https://www.documentcloud.org/documents/3037807/CRID-1074534-TRR-Stegmiller.pdf',
         allegation: {
           crid: '1074534',
           category: 'Unknown',
           incidentDate: 'Apr 4, 2015',
+          point: { 'lon': -87.6427175, 'lat': 41.7756769 },
           officers: [{
             id: 31859,
             fullName: 'Eric Cato',
@@ -94,11 +97,13 @@ describe('Pinboard Page transform selectors', function () {
           'crid': '1074534',
           'category': 'Unknown',
           'incident_date': '2015-04-04',
+          'point': null,
           'officers': []
         }
       };
 
       relevantDocumentTransform(document, ['1074534', '1074535']).should.eql({
+        id: 16316,
         previewImageUrl: 'https://www.documentcloud.org/documents/CRID-1074534-TRR-Stegmiller-p1-normal.gif',
         url: 'https://www.documentcloud.org/documents/3037807/CRID-1074534-TRR-Stegmiller.pdf',
         allegation: {
@@ -106,6 +111,7 @@ describe('Pinboard Page transform selectors', function () {
           category: 'Unknown',
           incidentDate: 'Apr 4, 2015',
           officers: [],
+          point: null,
         },
         pinned: true,
       });
@@ -120,6 +126,7 @@ describe('Pinboard Page transform selectors', function () {
           'crid': '1074534',
           'category': 'Unknown',
           'incident_date': '2015-04-04',
+          'point': null,
           'officers': [{
             'id': 31859,
             'rank': 'Sergeant of Police',
@@ -149,12 +156,14 @@ describe('Pinboard Page transform selectors', function () {
       };
 
       relevantDocumentTransform(document, []).should.eql({
+        id: 16316,
         previewImageUrl: 'https://www.documentcloud.org/documents/CRID-1074534-TRR-Stegmiller-p1-normal.gif',
         url: 'https://www.documentcloud.org/documents/3037807/CRID-1074534-TRR-Stegmiller.pdf',
         allegation: {
           crid: '1074534',
           category: 'Unknown',
           incidentDate: 'Apr 4, 2015',
+          point: null,
           officers: [{
             id: 31859,
             fullName: 'Short Name',
@@ -189,6 +198,7 @@ describe('Pinboard Page transform selectors', function () {
         'rank': 'Police Officer',
         'full_name': 'Johnny Patterson',
         'coaccusal_count': 24,
+        'allegation_count': 42,
         'percentile': {
           'year': 2006,
           'percentile_trr': '0.0000',
@@ -203,6 +213,7 @@ describe('Pinboard Page transform selectors', function () {
         rank: 'Police Officer',
         fullName: 'Johnny Patterson',
         coaccusalCount: 24,
+        complaintCount: 42,
         percentile: {
           year: 2006,
           items: [

@@ -6,14 +6,16 @@ describe('async-action', function () {
     it('should return the right action', function () {
       const url = '/url';
       const types = ['a', 'b', 'c'];
+      const cancelToken = 'token';
 
-      get(url, types)().should.eql({
+      get(url, types, cancelToken)().should.eql({
         types,
         payload: {
           request: {
             url,
             params: undefined,
-            adapter: undefined
+            adapter: undefined,
+            cancelToken: 'token',
           }
         }
       });

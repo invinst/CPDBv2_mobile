@@ -4,7 +4,6 @@ import { onSuccess, onError, getErrorMessage } from 'middleware/configured-axios
 
 describe('configured-axios-middleware', function () {
   const next = (action) => (action);
-  const requestUrl = '/request-url';
   const action = {
     type: 'REQUEST',
     payload: {
@@ -48,7 +47,9 @@ describe('configured-axios-middleware', function () {
   describe('onError', () => {
     it('should fire action with error with response without message', function () {
       const error = {
-        status: 400
+        response: {
+          status: 400
+        }
       };
 
       onError({ action, next, error }).should.eql({
@@ -75,7 +76,8 @@ describe('configured-axios-middleware', function () {
 
     it('should fire action with error with message in response', function () {
       const message = 'You\'ve entered an incorrect password.';
-      const error = {
+      const error = new Error();
+      error.response = {
         status: 400,
         data: { message }
       };
