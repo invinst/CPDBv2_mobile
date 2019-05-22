@@ -46,8 +46,7 @@ const App = React.createClass({
             component={ AboutPageContainer } />
 
           <Route
-            breadcrumbKey='/'
-            breadcrumb='cpdp'
+            breadcrumb='Search'
             path={ constants.SEARCH_PATH }
             component={ SearchPageContainer }>
             <Route
@@ -75,6 +74,12 @@ const App = React.createClass({
             component={ TRRPageContainer }
           />
 
+          <Route
+            path={ `${constants.PINBOARD_PATH}:pinboardId/(:pinboardTitle/)` }
+            breadcrumb={ BreadcrumbItemContainer }
+            component={ PinboardPageContainer }
+          />
+
         </Route>
         <Route
           path={ constants.EMBED_TOP_OFFICER_PATH }
@@ -83,10 +88,6 @@ const App = React.createClass({
         <Route
           path={ constants.EMBED_OFFICERS_PATH }
           component={ OfficersContainer }
-        />
-        <Route
-          path={ `${constants.PINBOARD_PATH}:pinboardId/(:pinboardTitle/)` }
-          component={ PinboardPageContainer }
         />
 
         <Redirect from='*' to='/'/>
