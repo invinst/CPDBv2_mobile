@@ -267,9 +267,9 @@ const geographicData = [
   },
 ];
 
-const baseRelevantDocumentsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-documents/?';
-const baseRelevantCoaccusalsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-coaccusals/?';
-const baseRelevantComplaintsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-complaints/?';
+const baseRelevantDocumentsUrl = '/api/v2/pinboards/5cd06f2b/relevant-documents/?';
+const baseRelevantCoaccusalsUrl = '/api/v2/pinboards/5cd06f2b/relevant-coaccusals/?';
+const baseRelevantComplaintsUrl = '/api/v2/pinboards/5cd06f2b/relevant-complaints/?';
 
 const firstRelevantDocumentOfficer = {
   'id': 123,
@@ -420,12 +420,12 @@ function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
 
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, pinboardData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, pinboardCRsData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, pinboardOfficersData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, pinboardTRRsData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/social-graph/', 200, socialGraphData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/geographic-data/', 200, geographicData);
+    api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, pinboardData);
+    api.mock('GET', '/api/v2/pinboards/5cd06f2b/complaints/', 200, pinboardCRsData);
+    api.mock('GET', '/api/v2/pinboards/5cd06f2b/officers/', 200, pinboardOfficersData);
+    api.mock('GET', '/api/v2/pinboards/5cd06f2b/trrs/', 200, pinboardTRRsData);
+    api.mock('GET', '/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b', 200, socialGraphData);
+    api.mock('GET', '/api/v2/mobile/social-graph/geographic/?pinboard_id=5cd06f2b', 200, geographicData);
 
     api.mock('GET', baseRelevantDocumentsUrl, 200, firstRelevantDocumentsResponse);
     api.mock('GET', `${baseRelevantDocumentsUrl}limit=4&offset=4`, 200, secondRelevantDocumentsResponse);
@@ -801,18 +801,6 @@ describe('Pinboard Page', function () {
 
       client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
         assert.equal(graphLinks.value.length, 14);
-      });
-    });
-
-    it('should be able to search', function (client) {
-      const pinboardPage = this.pinboardPage;
-      const searchInput = pinboardPage.section.searchInput;
-      pinboardPage.expect.section('@searchInput').to.be.visible;
-      client.setValue(searchInput.selector, 'Tho');
-      pinboardPage.expect.section('@firstSearchResultSuggestion').to.be.visible;
-      client.click(pinboardPage.section.firstSearchResultSuggestion.selector);
-      client.getValue(searchInput.selector, function (result) {
-        assert.equal(result.value, 'Thomas Kampenga');
       });
     });
   });
