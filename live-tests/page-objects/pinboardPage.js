@@ -32,6 +32,8 @@ module.exports = {
   },
 
   elements: {
+    header: '.header-parent',
+    highlightedMenuItem: '.menu-item.highlight',
     searchBar: {
       locateStrategy: 'xpath',
       selector: '(//a[starts-with(@class, "search-bar")])',

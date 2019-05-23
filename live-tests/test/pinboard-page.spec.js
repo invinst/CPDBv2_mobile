@@ -456,6 +456,19 @@ describe('Pinboard Page', function () {
     client.assert.urlContains('/search/');
   });
 
+  it('should go to landing page when clicking on header', function (client) {
+    const mainPage = client.page.main();
+
+    this.pinboardPage.click('@header');
+    client.assert.urlEquals(mainPage.url());
+  });
+
+  it('should stay on the same page when clicking on the menu item', function (client) {
+    this.pinboardPage.click('@highlightedMenuItem');
+    client.pause(100);
+    client.assert.urlContains('pinboard/5cd06f2b/');
+  });
+
   context('pinboard pinned section', function () {
     it('should render the pinned cards correctly', function (client) {
       const pinboardPage = this.pinboardPage;
