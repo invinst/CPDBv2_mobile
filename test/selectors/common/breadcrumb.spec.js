@@ -22,6 +22,16 @@ describe('breadcrumbs selectors', function () {
 
       breadcrumbTextSelector(state, { url: '/officer/123/jerome-finnigan/coaccusals/' }).should.eql('Jerome Finnigan');
     });
+
+    it('should return breadcrumb text for pinboard', () => {
+      const state = {
+        breadcrumbMapping: {
+          '/pinboard/6f540c04/': 'Pinboard'
+        }
+      };
+
+      breadcrumbTextSelector(state, { url: '/pinboard/6f540c04/untitled-pinboard/' }).should.eql('Pinboard');
+    });
   });
 
   describe('breadcrumbSelector', function () {
