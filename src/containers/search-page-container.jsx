@@ -23,7 +23,7 @@ import {
   dateOfficersSelector,
   investigatorCRsSelector
 } from 'selectors/search-page';
-import { getPinboard } from 'selectors/pinboard';
+import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import { addOrRemoveItemInPinboard } from 'actions/pinboard';
 
 

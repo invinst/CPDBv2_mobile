@@ -4,7 +4,9 @@ import SearchItem from './search-item';
 import style from './officer-item.sass';
 
 
-const OfficerItem = ({ item, name, badge, url, percentile, saveToRecent, categoryFilter, addOrRemoveItemInPinboard }) => {
+const OfficerItem = ({
+  item, name, badge, url, percentile, saveToRecent, categoryFilter, addOrRemoveItemInPinboard
+}) => {
   const handleClick = (categoryFilter, name, url) => saveToRecent({
     type: categoryFilter,
     title: name,

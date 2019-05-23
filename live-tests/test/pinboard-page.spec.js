@@ -267,9 +267,9 @@ const geographicData = [
   },
 ];
 
-const baseRelevantDocumentsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-documents/?';
-const baseRelevantCoaccusalsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-coaccusals/?';
-const baseRelevantComplaintsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-complaints/?';
+const baseRelevantDocumentsUrl = '/api/v2/pinboards/5cd06f2b/relevant-documents/?';
+const baseRelevantCoaccusalsUrl = '/api/v2/pinboards/5cd06f2b/relevant-coaccusals/?';
+const baseRelevantComplaintsUrl = '/api/v2/pinboards/5cd06f2b/relevant-complaints/?';
 
 const firstRelevantDocumentOfficer = {
   'id': 123,
@@ -284,6 +284,7 @@ const generateRelevantDocumentOfficer = (index) => ({
   'coaccusal_count': 47,
 });
 const firstRelevantDocument = {
+  'id': 123,
   'preview_image_url': 'http://via.placeholder.com/121x157',
   'url': 'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf',
   'allegation': {
@@ -293,7 +294,8 @@ const firstRelevantDocument = {
     'officers': [firstRelevantDocumentOfficer].concat(_.times(9, generateRelevantDocumentOfficer))
   },
 };
-const baseRelevantDocument = {
+const generateRelevantDocument = (id) => ({
+  id,
   'preview_image_url': 'http://via.placeholder.com/121x157',
   'url': 'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf',
   'allegation': {
@@ -302,20 +304,20 @@ const baseRelevantDocument = {
     'incident_date': '2014-05-02',
     'officers': []
   }
-};
+});
 const firstRelevantDocumentsResponse = getPaginationResponse(
   baseRelevantDocumentsUrl,
-  (number) => [firstRelevantDocument, ..._.times(number - 1, () => baseRelevantDocument)],
+  (number) => [firstRelevantDocument, ..._.range(1, number).map(generateRelevantDocument)],
   4, 0, 10
 );
 const secondRelevantDocumentsResponse = getPaginationResponse(
   baseRelevantDocumentsUrl,
-  (number) => _.times(number, () => baseRelevantDocument),
+  (number) => _.range(5, number + 5).map(generateRelevantDocument),
   4, 4, 10
 );
 const lastRelevantDocumentsResponse = getPaginationResponse(
   baseRelevantDocumentsUrl,
-  (number) => _.times(number, () => baseRelevantDocument),
+  (number) => _.range(9, number + 9).map(generateRelevantDocument),
   4, 8, 10
 );
 
@@ -418,12 +420,12 @@ function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
 
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, pinboardData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, pinboardCRsData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, pinboardOfficersData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, pinboardTRRsData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/social-graph/', 200, socialGraphData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/geographic-data/', 200, geographicData);
+    api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, pinboardData);
+    api.mock('GET', '/api/v2/pinboards/5cd06f2b/complaints/', 200, pinboardCRsData);
+    api.mock('GET', '/api/v2/pinboards/5cd06f2b/officers/', 200, pinboardOfficersData);
+    api.mock('GET', '/api/v2/pinboards/5cd06f2b/trrs/', 200, pinboardTRRsData);
+    api.mock('GET', '/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b', 200, socialGraphData);
+    api.mock('GET', '/api/v2/mobile/social-graph/geographic/?pinboard_id=5cd06f2b', 200, geographicData);
 
     api.mock('GET', baseRelevantDocumentsUrl, 200, firstRelevantDocumentsResponse);
     api.mock('GET', `${baseRelevantDocumentsUrl}limit=4&offset=4`, 200, secondRelevantDocumentsResponse);
@@ -812,18 +814,6 @@ describe('Pinboard Page', function () {
 
       client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
         assert.equal(graphLinks.value.length, 14);
-      });
-    });
-
-    it('should be able to search', function (client) {
-      const pinboardPage = this.pinboardPage;
-      const searchInput = pinboardPage.section.searchInput;
-      pinboardPage.expect.section('@searchInput').to.be.visible;
-      client.setValue(searchInput.selector, 'Tho');
-      pinboardPage.expect.section('@firstSearchResultSuggestion').to.be.visible;
-      client.click(pinboardPage.section.firstSearchResultSuggestion.selector);
-      client.getValue(searchInput.selector, function (result) {
-        assert.equal(result.value, 'Thomas Kampenga');
       });
     });
   });

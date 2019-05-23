@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { filter, isEmpty, countBy, indexOf } from 'lodash';
+import { isEmpty, countBy, indexOf } from 'lodash';
 import moment from 'moment';
 import * as d3 from 'd3';
 import * as jLouvain from 'jlouvain';
@@ -48,16 +48,13 @@ export default class SocialGraph extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { coaccusedData, timelineIdx, clickSearchState } = this.props;
+    const { coaccusedData, timelineIdx } = this.props;
 
     if (prevProps.coaccusedData !== coaccusedData) {
       this.drawGraph();
     } else {
       if (prevProps.timelineIdx !== timelineIdx) {
         this.filterAndRestart();
-      }
-      if (prevProps.clickSearchState !== clickSearchState) {
-        this.highlightNode();
       }
     }
   }
@@ -378,35 +375,6 @@ export default class SocialGraph extends Component {
     };
   }
 
-  highlightNode() {
-    const { officers, searchText } = this.props;
-    if (isEmpty(searchText))
-      return;
-    const currentNode = filter(officers, officer => officer.fullName === searchText)[0];
-
-    if (currentNode) {
-      const others = this.node.filter(function (d, i) {
-        return d.uid !== currentNode.id;
-      });
-
-      const selected = this.node.filter(function (d, i) {
-        return d.uid === currentNode.id;
-      });
-
-      selected.attr('r', 20);
-
-      others.style('opacity', '0');
-      this.link.style('opacity', '0');
-      d3.selectAll('.node, .link').transition()
-        .duration(5000)
-        .style('opacity', 1);
-
-      selected.transition().duration(2000).attr('r', function (d) {
-        return d.degree / 2 + 2;
-      });
-    }
-  }
-
   render() {
     const { officers } = this.props;
 
@@ -426,8 +394,6 @@ SocialGraph.propTypes = {
   collideNodes: PropTypes.bool,
   startTimelineFromBeginning: PropTypes.func,
   stopTimeline: PropTypes.func,
-  searchText: PropTypes.string,
-  clickSearchState: PropTypes.bool,
 };
 
 SocialGraph.defaultProps = {

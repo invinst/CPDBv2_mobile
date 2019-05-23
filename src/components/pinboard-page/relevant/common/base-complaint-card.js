@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router';
 import { take, slice } from 'lodash';
+import cx from 'classnames';
 
 import styles from './base-complaint-card.sass';
 import MiniVisualToken from './mini-officer-visual-token';
@@ -11,12 +12,20 @@ export class BaseComplaintCard extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+
+    this.state = { fade: false };
   }
 
   handleClick(e) {
-    const { crid, addItemInPinboardPage } = this.props;
     e.preventDefault();
-    addItemInPinboardPage({ type: 'CR', id: crid });
+
+    if (this.state.fade)
+      return;
+
+    this.setState({ fade: true });
+
+    const { crid, addItemInPinboardPage, incidentDate, category, point } = this.props;
+    addItemInPinboardPage({ type: 'CR', id: crid, incidentDate, category, point });
   }
 
   render() {
@@ -27,6 +36,7 @@ export class BaseComplaintCard extends Component {
       officers,
       leftChild,
       pinned,
+      fadePlusButtonOnly,
     } = this.props;
 
     const topOfficers = take(officers, 2);
@@ -34,7 +44,7 @@ export class BaseComplaintCard extends Component {
     const notShowingOfficerCount = officers.length - topOfficers.length - otherOfficers.length;
 
     return (
-      <div className={ styles.baseComplaintCard }>
+      <div className={ cx(styles.baseComplaintCard, { 'fade-out': !fadePlusButtonOnly && this.state.fade }) }>
         <div className='left-half'>
           { leftChild }
         </div>
@@ -59,7 +69,14 @@ export class BaseComplaintCard extends Component {
                 : null
             }
           </div>
-          { pinned ? null : <PlusButton onClick={ this.handleClick }/> }
+          { pinned ?
+            null : (
+              <PlusButton
+                className={ cx({ 'fade-out': fadePlusButtonOnly && this.state.fade }) }
+                onClick={ this.handleClick }
+              />
+            )
+          }
         </Link>
       </div>
     );
@@ -73,9 +90,15 @@ BaseComplaintCard.propTypes = {
   crid: PropTypes.string,
   incidentDate: PropTypes.string,
   category: PropTypes.string,
+  point: PropTypes.object,
   officers: PropTypes.arrayOf(PropTypes.object),
   addItemInPinboardPage: PropTypes.func,
   pinned: PropTypes.bool,
+  fadePlusButtonOnly: PropTypes.bool,
+};
+
+BaseComplaintCard.defaultProps = {
+  fadePlusButtonOnly: false
 };
 
 export default BaseComplaintCard;

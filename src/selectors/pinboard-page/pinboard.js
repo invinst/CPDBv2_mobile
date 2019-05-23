@@ -21,7 +21,7 @@ const countPinnedItems = pinboard => {
 };
 
 export const getPinboard = createSelector(
-  state => state.pinboard,
+  state => state.pinboardPage.pinboard,
   pinboard => ({
     id: get(pinboard, 'id', null) !== null ? pinboard['id'].toString() : null,
     title: get(pinboard, 'title', ''),

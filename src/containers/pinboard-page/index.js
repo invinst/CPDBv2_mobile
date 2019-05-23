@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { getPinboard, isEmptyPinboardSelector } from 'selectors/pinboard';
+import { getPinboard, isEmptyPinboardSelector } from 'selectors/pinboard-page/pinboard';
 import PinboardPage from 'components/pinboard-page';
 import { hasMapMarkersSelector, getCurrentTab } from 'selectors/pinboard-page/geographic-data';
 import {

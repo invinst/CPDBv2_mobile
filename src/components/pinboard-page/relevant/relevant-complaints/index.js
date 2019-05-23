@@ -20,9 +20,13 @@ export default class RelevantComplaints extends Component {
         className='relevant-complaints'
       >
         {
-          complaints.map((complaint, index) =>
-            <RelevantComplaintCard key={ index } { ...complaint } addItemInPinboardPage={ addItemInPinboardPage }/>
-          )
+          complaints.map(complaint => (
+            <RelevantComplaintCard
+              key={ complaint.crid }
+              { ...complaint }
+              addItemInPinboardPage={ addItemInPinboardPage }
+            />
+          ))
         }
       </RelevantInfiniteCarousel>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import should from 'should';
 import { Link } from 'react-router';
 import { stub } from 'sinon';
@@ -20,6 +20,7 @@ describe('<RelevantCoaccusalCard />', function () {
         fullName='Jerome Finnigan'
         rank='Officer'
         coaccusalCount={ 11 }
+        complaintCount={ 22 }
         percentile={ {
           officerId: 123,
           year: 2015,
@@ -58,7 +59,23 @@ describe('<RelevantCoaccusalCard />', function () {
     plusButton.simulate('click', { preventDefault: () => {} });
 
     addItemInPinboardPageStub.should.calledOnce();
-    addItemInPinboardPageStub.should.calledWith({ type: 'OFFICER', id: '123' });
+    addItemInPinboardPageStub.should.calledWith({
+      type: 'OFFICER',
+      id: '123',
+      complaintCount: 22,
+      fullName: 'Jerome Finnigan',
+      rank: 'Officer',
+      percentile: {
+        items: [
+          { axis: 'Use of Force Reports', value: 20.6 },
+          { axis: 'Internal Allegations', value: 10.1 },
+          { axis: 'Civilian Allegations', value: 52.5 }
+        ],
+        officerId: 123,
+        visualTokenBackground: '#ed7467',
+        year: 2015
+      }
+    });
   });
 
   it('should render pluralize coaccusalCount and handle no percentile data', function () {
@@ -89,5 +106,42 @@ describe('<RelevantCoaccusalCard />', function () {
     wrapper.find('.officer-card-rank').text().should.eql('Officer');
     wrapper.find('.officer-card-name').text().should.eql('Jerome Finnigan');
     wrapper.find('.coaccusal-count').text().should.eql('1 coaccusal');
+  });
+
+  it('should fade out when clicked on PlusButton', function () {
+    const addItemInPinboardPageStub = stub();
+    const preventDefaultStub = stub();
+
+    const wrapper = mount(
+      <RelevantCoaccusalCard
+        addItemInPinboardPage={ addItemInPinboardPageStub }
+        id={ 123 }
+        fullName='Jerome Finnigan'
+        rank='Officer'
+        coaccusalCount={ 1 }
+        percentile={ {} }
+      />
+    );
+
+    const instance = wrapper.instance();
+    const link = wrapper.find(Link);
+
+    instance.state.fade.should.be.false();
+    link.getDOMNode().className.should.not.containEql('fade-out');
+
+    instance.handleClick({ preventDefault: preventDefaultStub });
+
+    preventDefaultStub.should.be.calledOnce();
+    instance.state.fade.should.be.true();
+    addItemInPinboardPageStub.should.be.calledOnce();
+    link.getDOMNode().className.should.containEql('fade-out');
+
+    preventDefaultStub.resetHistory();
+    addItemInPinboardPageStub.resetHistory();
+    instance.handleClick({ preventDefault: preventDefaultStub });
+
+    preventDefaultStub.should.be.calledOnce();
+    instance.state.fade.should.be.true();
+    addItemInPinboardPageStub.should.not.be.called();
   });
 });
