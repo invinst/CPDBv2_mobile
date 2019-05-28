@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { isEqual, isEmpty } from 'lodash';
+import { isEqual } from 'lodash';
 
 import styles from './pinboard-info.sass';
 import AutosaveTextInput from 'components/common/autosave-inputs/autosave-text-input';
@@ -15,9 +15,8 @@ export default class PinboardInfo extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pinboard } = nextProps;
     const { isLoading } = this.state;
-    if (!isEmpty(pinboard.title) && !isEmpty(pinboard.description) && isLoading) {
+    if (isLoading) {
       this.setState({ isLoading: false });
     }
   }
