@@ -42,6 +42,7 @@ module.exports = {
     coaccusalsThresholdText: '.coaccusals-threshold-text',
     startDate: '.start-date-label',
     endDate: '.end-date-label',
+    playButton: '.play-icon',
     pinboardTitle: '.pinboard-title',
     pinboardDescription: '.pinboard-description',
     pinboardPaneMenu: {

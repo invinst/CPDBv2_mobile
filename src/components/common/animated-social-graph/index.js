@@ -17,7 +17,8 @@ export default class AnimatedSocialGraph extends Component {
     super(props);
     this.state = {
       timelineIdx: 0,
-      refreshIntervalId: null
+      refreshIntervalId: null,
+      isFirstTime: true,
     };
 
     this.startTimelineFromBeginning = this.startTimelineFromBeginning.bind(this);
@@ -25,6 +26,25 @@ export default class AnimatedSocialGraph extends Component {
     this.stopTimeline = this.stopTimeline.bind(this);
     this.intervalTickTimeline = this.intervalTickTimeline.bind(this);
     this.handleDateSliderChange = this.handleDateSliderChange.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { isVisible } = nextProps;
+    const { isFirstTime } = this.state;
+    if (!isFirstTime) {
+      if (isVisible) {
+        this.startTimeline();
+      } else {
+        this.stopTimeline();
+      }
+    } else {
+      this.setState({ isFirstTime: false });
+    }
+  }
+
+  shouldComponentUpdate(nextState) {
+    const { isFirstTime } = this.state;
+    return isFirstTime !== nextState.isFirstTime;
   }
 
   componentWillUnmount() {
@@ -149,4 +169,9 @@ AnimatedSocialGraph.propTypes = {
   officers: PropTypes.array,
   coaccusedData: PropTypes.array,
   listEvent: PropTypes.array,
+  isVisible: PropTypes.bool,
+};
+
+AnimatedSocialGraph.defaultProps = {
+  isVisible: true,
 };

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
+import TrackVisibility from 'react-on-screen';
 
 import styles from './pinboard-page.sass';
 import SearchBar from './search-bar';
@@ -37,11 +38,13 @@ export default class PinboardPage extends Component {
       <div>
         <PinboardInfoContainer />
         <div className='data-visualizations'>
-          <PinboardPaneSection
-            changePinboardTab={ changePinboardTab }
-            currentTab={ currentTab }
-            hasMapMarker={ hasMapMarker }
-          />
+          <TrackVisibility partialVisibility>
+            <PinboardPaneSection
+              changePinboardTab={ changePinboardTab }
+              currentTab={ currentTab }
+              hasMapMarker={ hasMapMarker }
+            />
+          </TrackVisibility>
         </div>
         <div className='pinned-section'>
           <PinnedOfficersContainer/>

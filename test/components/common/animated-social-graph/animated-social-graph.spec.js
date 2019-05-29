@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { spy, useFakeTimers } from 'sinon';
 import Slider from 'rc-slider';
 import should from 'should';
@@ -180,5 +180,57 @@ describe('AnimatedSocialGraph component', function () {
     const stopTimelineSpy = spy(instance, 'stopTimeline');
     wrapper.unmount();
     stopTimelineSpy.called.should.be.true();
+  });
+
+  it('should called startTimeline when visible', function () {
+    wrapper = shallow(
+      <AnimatedSocialGraph
+        officers={ officers }
+        coaccusedData={ coaccusedData }
+        listEvent={ listEvent }
+        expandedLink={ 'expanded_link' }
+      />
+    );
+
+    const instance = wrapper.instance();
+    const startTimelineSpy = spy(instance, 'startTimeline');
+
+    wrapper.setState({ isFirstTime: false });
+    wrapper.setProps({ isVisible: true });
+
+    startTimelineSpy.should.be.called();
+  });
+
+  it('should called stopTimeline when invisible', function () {
+    wrapper = shallow(
+      <AnimatedSocialGraph
+        officers={ officers }
+        coaccusedData={ coaccusedData }
+        listEvent={ listEvent }
+        expandedLink={ 'expanded_link' }
+      />
+    );
+
+    const instance = wrapper.instance();
+    const stopTimelineSpy = spy(instance, 'stopTimeline');
+
+    wrapper.setState({ isFirstTime: false });
+    wrapper.setProps({ isVisible: false });
+
+    stopTimelineSpy.should.be.called();
+  });
+
+  it('should set isFirstTime state to false if render first time', function () {
+    wrapper = shallow(
+      <AnimatedSocialGraph
+        officers={ officers }
+        coaccusedData={ coaccusedData }
+        listEvent={ listEvent }
+        expandedLink={ 'expanded_link' }
+      />
+    );
+
+    wrapper.setProps({ isVisible: false });
+    wrapper.state('isFirstTime').should.be.false();
   });
 });
