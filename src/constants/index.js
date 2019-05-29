@@ -327,6 +327,11 @@ export default {
     GEOGRAPHIC: 'GEOGRAPHIC',
   },
 
+  // Pinboard page constants
+  PINBOARD_PAGE: {
+    UNDO_CARD_VISIBLE_TIME: 1000,
+  },
+
   // Map constants
   MAP_ITEMS: {
     CR: 'CR',

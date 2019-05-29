@@ -3,12 +3,12 @@ import React, { Component, PropTypes } from 'react';
 import { noop } from 'lodash';
 import cx from 'classnames';
 
+import constants from 'constants';
 import styles from './with-undo-card.sass';
 
 
 export default function withUndoCard(
   WrappedComponent,
-  countdown,
   getText) {
   const DISPLAY = 'DISPLAY';
   const REMOVING = 'REMOVING';
@@ -44,7 +44,7 @@ export default function withUndoCard(
         const { removeItemInPinboardPage } = this.props;
 
         removeItemInPinboardPage(item);
-      }, countdown);
+      }, constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME);
     }
 
     undo() {

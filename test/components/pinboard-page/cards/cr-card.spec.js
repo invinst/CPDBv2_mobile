@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import should from 'should';
 import { Router, createMemoryHistory, Route } from 'react-router';
 
-import CRCard from 'components/pinboard-page/cards/cr-card';
+import CRCard, { CRCardWithUndo } from 'components/pinboard-page/cards/cr-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 
 
@@ -64,5 +64,26 @@ describe('Pinboard <CRCard />', function () {
     unpinButton.simulate('click');
 
     crCard.getDOMNode().className.should.containEql('fade-out');
+  });
+});
+
+describe('Pinboard <CRCardWithUndo />', function () {
+  it('should render remove text correctly', function () {
+    const item = {
+      incidentDate: '10-10-2010',
+      category: 'Use Of Force',
+    };
+
+    const wrapper = mount(
+      <Router history={ createMemoryHistory() }>
+        <Route path='/' component={ () => <CRCardWithUndo item={ item }/> } />
+      </Router>
+    );
+    const crCard = wrapper.find(CRCard);
+    const unpinButton = crCard.find(ItemUnpinButton);
+
+    unpinButton.simulate('click');
+
+    wrapper.find('.text').text().should.equal('CR removed.');
   });
 });
