@@ -6,6 +6,8 @@ import { mapStyle } from 'components/common/complaint-card.style';
 import ItemUnpinButton from '../item-unpin-button';
 import styles from './cr-card.sass';
 import { startAnimation } from 'utils/animation';
+import withUndoCard from './with-undo-card';
+
 
 export default class CRCard extends Component {
   constructor(props) {
@@ -72,3 +74,9 @@ CRCard.propTypes = {
 CRCard.defaultProps = {
   isAdded: false,
 };
+
+
+export const CRCardWithUndo = withUndoCard(
+  CRCard,
+  () => 'CR removed.'
+);

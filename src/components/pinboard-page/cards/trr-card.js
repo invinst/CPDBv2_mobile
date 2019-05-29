@@ -6,6 +6,8 @@ import { mapStyle } from 'components/common/complaint-card.style';
 import ItemUnpinButton from '../item-unpin-button';
 import styles from './trr-card.sass';
 import { startAnimation } from 'utils/animation';
+import withUndoCard from './with-undo-card';
+
 
 export default class TRRCard extends Component {
   constructor(props) {
@@ -72,3 +74,8 @@ TRRCard.propTypes = {
 TRRCard.defaultProps = {
   isAdded: false,
 };
+
+export const TRRCardWithUndo = withUndoCard(
+  TRRCard,
+  () => 'TRR removed.'
+);

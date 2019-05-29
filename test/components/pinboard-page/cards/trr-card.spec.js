@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import should from 'should';
 import { Router, createMemoryHistory, Route } from 'react-router';
 
-import TRRCard from 'components/pinboard-page/cards/trr-card';
+import TRRCard, { TRRCardWithUndo } from 'components/pinboard-page/cards/trr-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 
 
@@ -64,5 +64,26 @@ describe('Pinboard <TRRCard />', function () {
     unpinButton.simulate('click');
 
     trrCard.getDOMNode().className.should.containEql('fade-out');
+  });
+});
+
+describe('Pinboard <TRRCardWithUndo />', function () {
+  it('should render remove text correctly', function () {
+    const item = {
+      incidentDate: '10-10-2010',
+      category: 'Use Of Force',
+    };
+
+    const wrapper = mount(
+      <Router history={ createMemoryHistory() }>
+        <Route path='/' component={ () => <TRRCardWithUndo item={ item }/> } />
+      </Router>
+    );
+    const crCard = wrapper.find(TRRCard);
+    const unpinButton = crCard.find(ItemUnpinButton);
+
+    unpinButton.simulate('click');
+
+    wrapper.find('.text').text().should.equal('TRR removed.');
   });
 });

@@ -3,20 +3,12 @@ import { map, differenceBy, first, get, isEqual } from 'lodash';
 import cx from 'classnames';
 import { Muuri } from 'utils/muuri';
 
-import withUndoCard from './cards/with-undo-card';
-import OfficerCardComponent from './cards/officer-card';
-import CRCardComponent from './cards/cr-card';
-import TRRCardComponent from './cards/trr-card';
+import { OfficerCardWithUndo as OfficerCard } from './cards/officer-card';
+import { CRCardWithUndo as CRCard } from './cards/cr-card';
+import { TRRCardWithUndo as TRRCard } from './cards/trr-card';
 import style from './pinned-type.sass';
 import { getPageYBottomOffset, scrollByBottomOffset } from 'utils/navigation-util';
 import LoadingSpinner from 'components/common/loading-spinner';
-
-
-export const OfficerCard = withUndoCard(OfficerCardComponent, 1000,
-  props => `${get(props, 'item.fullName', '')} removed.`
-);
-export const CRCard = withUndoCard(CRCardComponent, 1000, () => 'CR removed.');
-export const TRRCard = withUndoCard(TRRCardComponent, 1000, () => 'TRR removed.');
 
 const CARD_MAP = {
   'OFFICER': OfficerCard,
