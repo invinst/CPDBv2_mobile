@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { spy, useFakeTimers } from 'sinon';
 import Slider from 'rc-slider';
-import Autocomplete from 'react-autocomplete';
 import should from 'should';
 
 import AnimatedSocialGraph from 'components/common/animated-social-graph';
@@ -68,68 +67,11 @@ describe('AnimatedSocialGraph component', function () {
     wrapper.setState({ timelineIdx: 1 });
     currentDate.text().should.eql('1989-12-11');
     slider.prop('value').should.eql(1);
-
-    const searchForm = wrapper.find(Autocomplete);
-    searchForm.prop('items').should.equal(officers);
-    searchForm.prop('inputProps').should.eql({ placeholder: 'Search', className: 'graph-search-input' });
-    searchForm.prop('value').should.equal('');
-    wrapper.setState({ searchInputText: 'Jerome Finnigan' });
-    searchForm.prop('value').should.equal('Jerome Finnigan');
   });
 
   it('should not render graph control panel if there is no event', function () {
     wrapper = mount(<AnimatedSocialGraph/>);
     wrapper.find('.graph-control-panel').should.have.length(0);
-    wrapper.find(Autocomplete).should.have.length(0);
-  });
-
-  it('should not render search form if there is no officer', function () {
-    wrapper = mount(<AnimatedSocialGraph listEvent={ listEvent }/>);
-    wrapper.find(Autocomplete).should.have.length(0);
-  });
-
-  it('should update clickSearchState value when click on search button', function () {
-    wrapper = mount(
-      <AnimatedSocialGraph
-        officers={ officers }
-        coaccusedData={ coaccusedData }
-        listEvent={ listEvent }
-      />
-    );
-
-    const searchButton = wrapper.find('.graph-search-btn');
-    searchButton.simulate('click');
-    wrapper.state('clickSearchState').should.be.true();
-  });
-
-  it('should update searchInputText value when input new officer', function () {
-    wrapper = mount(
-      <AnimatedSocialGraph
-        officers={ officers }
-        coaccusedData={ coaccusedData }
-        listEvent={ listEvent }
-      />
-    );
-
-    wrapper.state('searchInputText').should.equal('');
-    const searchInput = wrapper.find(Autocomplete);
-    searchInput.props().onChange({ target: { value: 'Jerome' } });
-    wrapper.state('searchInputText').should.equal('Jerome');
-  });
-
-  it('should update searchInputText value when click on the result in suggestion list', function () {
-    wrapper = mount(
-      <AnimatedSocialGraph
-        officers={ officers }
-        coaccusedData={ coaccusedData }
-        listEvent={ listEvent }
-      />
-    );
-
-    wrapper.state('searchInputText').should.equal('');
-    const searchInput = wrapper.find(Autocomplete);
-    searchInput.props().onSelect('Jerome Finnigan');
-    wrapper.state('searchInputText').should.equal('Jerome Finnigan');
   });
 
   it('should call toggle timeline', function () {
@@ -223,61 +165,6 @@ describe('AnimatedSocialGraph component', function () {
     should(wrapper.state('refreshIntervalId')).be.null();
     wrapper.state('timelineIdx').should.equal(1);
     clock.restore();
-  });
-
-  it('should render officer name with correct style', function () {
-    wrapper = mount(
-      <AnimatedSocialGraph
-        officers={ officers }
-        coaccusedData={ coaccusedData }
-        listEvent={ listEvent }
-      />
-    );
-
-    const graphSearchInput = wrapper.find(Autocomplete);
-    let renderItem = graphSearchInput.props().renderItem({ fullName: 'Jerome Finnigan', id: 123 }, true);
-    renderItem.props.children.should.equal('Jerome Finnigan');
-    renderItem.props.style.should.eql({ background: 'lightgray' });
-
-    renderItem = graphSearchInput.props().renderItem({ fullName: 'Jerome Finnigan', id: 123 }, false);
-    renderItem.props.children.should.equal('Jerome Finnigan');
-    renderItem.props.style.should.eql({ background: 'white' });
-  });
-
-  it('should return render item render result for autocomplete', function () {
-    wrapper = mount(
-      <AnimatedSocialGraph
-        officers={ officers }
-        coaccusedData={ coaccusedData }
-        listEvent={ listEvent }
-      />
-    );
-
-    const graphSearchInput = wrapper.find(Autocomplete);
-    let shouldItemRenderResult = graphSearchInput.props().shouldItemRender(
-      { fullName: 'Jerome Finnigan', id: 123 }
-      , 'Jerome'
-    );
-    shouldItemRenderResult.should.be.true();
-
-    shouldItemRenderResult = graphSearchInput.props().shouldItemRender(
-      { fullName: 'Jerome Finnigan', id: 123 }
-      , 'Tho'
-    );
-    shouldItemRenderResult.should.be.false();
-  });
-
-  it('should return item value for autocomplete', function () {
-    wrapper = mount(
-      <AnimatedSocialGraph
-        officers={ officers }
-        coaccusedData={ coaccusedData }
-        listEvent={ listEvent }
-      />
-    );
-
-    const graphSearchInput = wrapper.find(Autocomplete);
-    graphSearchInput.props().getItemValue({ fullName: 'Jerome Finnigan', id: 123 }).should.eql('Jerome Finnigan');
   });
 
   it('should call stopTimeline when componentWillUnmount', function () {

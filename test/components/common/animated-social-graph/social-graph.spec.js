@@ -445,27 +445,6 @@ describe('SocialGraph', function () {
     wrapper.getDOMNode().getElementsByClassName('link').length.should.eql(expectedLinks.length);
   });
 
-  it('should highlight node when clickSearchState changes', function () {
-    wrapper = mount(
-      <SocialGraph
-        officers={ officers }
-        coaccusedData={ coaccusedData }
-        listEvent={ listEvent }
-      />
-    );
-
-    wrapper.setProps({ searchText: 'Thomas Kampenga', clickSearchState: true });
-
-    const socialGraph = wrapper.getDOMNode();
-    let graphNodes = socialGraph.getElementsByClassName('node');
-    const currentNode = filter(graphNodes, node => node.style.opacity !== '0');
-    const otherNodes = filter(graphNodes, node => node.style.opacity === '0');
-    graphNodes.should.have.length(20);
-    otherNodes.should.have.length(19);
-    currentNode.should.have.length(1);
-    currentNode[0].getAttribute('r').should.eql('20');
-  });
-
   it('should return tooltip info when call graphTooltip', function () {
     wrapper = mount(
       <SocialGraph

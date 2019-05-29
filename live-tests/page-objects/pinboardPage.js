@@ -142,12 +142,6 @@ module.exports = {
     currentDate: {
       selector: '.current-date-label',
     },
-    searchInput: {
-      selector: '.graph-search-input',
-    },
-    firstSearchResultSuggestion: {
-      selector: '.graph-search-input-container div div',
-    },
     pinboardPaneMenu: {
       selector: '(//div[contains(@class, "pinboard-pane-section-menu")])',
       locateStrategy: 'xpath',
