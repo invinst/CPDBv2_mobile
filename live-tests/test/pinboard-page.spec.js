@@ -6,6 +6,59 @@ var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationResponse');
 
+const officer123 = {
+  'officer_id': 123,
+  'full_name': 'Richard Sullivan',
+  active: true,
+  'allegation_count': 104,
+  badge: '8548',
+  'historic_badges': ['8547', '8546'],
+  'birth_year': 1957,
+  'civilian_compliment_count': 4,
+  'complaint_percentile': 99.895,
+  'date_of_appt': '1993-12-13',
+  'date_of_resignation': '2017-01-15',
+  'discipline_count': 1,
+  gender: 'Male',
+  'honorable_mention_count': 55,
+  'honorable_mention_percentile': 85.87,
+  'major_award_count': 1,
+  race: 'White',
+  rank: 'Police Officer',
+  'sustained_count': 1,
+  'trr_count': 1,
+  unit: {
+    'unit_id': 6,
+    description: 'District 005',
+    'unit_name': '005',
+  },
+  percentiles: [
+    {
+      'officer_id': 123,
+      year: 2005,
+      'percentile_allegation_civilian': '66.251',
+      'percentile_allegation_internal': '0.023',
+      'percentile_allegation': '41.001',
+    },
+    {
+      'officer_id': 123,
+      year: 2006,
+      'percentile_allegation_civilian': '66.251',
+      'percentile_allegation_internal': '0.023',
+      'percentile_trr': '44.7',
+      'percentile_allegation': '41.001',
+    },
+    {
+      'officer_id': 123,
+      year: 2007,
+      'percentile_allegation_civilian': '0.022',
+      'percentile_allegation_internal': '75.065',
+      'percentile_trr': '0.046',
+      'percentile_allegation': '31.201'
+    }
+  ]
+};
+
 const pinboardData = {
   'id': '5cd06f2b',
   'title': 'Pinboard Title',
@@ -420,6 +473,7 @@ function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
 
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
+    api.mock('GET', '/api/v2/mobile/officers/123/', 200, officer123);
     api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, pinboardData);
     api.mock('GET', '/api/v2/pinboards/5cd06f2b/complaints/', 200, pinboardCRsData);
     api.mock('GET', '/api/v2/pinboards/5cd06f2b/officers/', 200, pinboardOfficersData);
@@ -456,6 +510,31 @@ describe('Pinboard Page', function () {
     client.waitForElementVisible('//div[starts-with(@class, "search-page")]', TIMEOUT);
     client.useCss();
     client.assert.urlContains('/search/');
+  });
+
+  it('should be able to get back via breadcrumbs after navigate to officer page', function (client) {
+    const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
+
+    relevantCoaccusalsSection.section.coaccusalCard.click('@coaccusalCount');
+    const officerPage = client.page.officerPage();
+
+    officerPage.expect.element('@officerName').text.to.equal('Richard Sullivan');
+    client.assert.urlContains('/officer/123/richard-sullivan/');
+
+    const breadcrumbs = officerPage.section.breadcrumbs;
+    client.assertCount('.breadcrumbs > .breadcrumb-item-wrapper', 3);
+
+    breadcrumbs.expect.element('@firstBreadcrumb').text.to.equal('cpdp');
+    breadcrumbs.expect.element('@secondBreadcrumb').text.to.equal('Pinboard - Pinboard Title');
+    breadcrumbs.expect.element('@thirdBreadcrumb').text.to.equal('Richard Sullivan');
+
+    client.waitForAttribute('.breadcrumb-item-wrapper:nth-child(3)', 'class', function (className) {
+      return className === 'breadcrumb-item-wrapper auto-width';
+    });
+
+    breadcrumbs.click('@secondBreadcrumb');
+
+    client.assert.urlContains('/pinboard/5cd06f2b/');
   });
 
   context('pinboard pinned section', function () {

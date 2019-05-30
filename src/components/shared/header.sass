@@ -9,6 +9,7 @@
   .breadcrumbs
     display: flex
     align-items: center
+    max-width: 100%
 
     .breadcrumb-item-wrapper
       color: $thunder
@@ -16,6 +17,14 @@
       font-weight: 400
       padding: 0 8px
       line-height: 14px
+      flex: 0
+      white-space: nowrap
+
+      &.auto-width
+        flex: 1
+        overflow: hidden
+        text-overflow: ellipsis
+        min-width: 72px
 
       a
         text-decoration: none
@@ -25,3 +34,4 @@
       height: 14px
       width: 8px
       line-height: 14px
+      flex: 0
