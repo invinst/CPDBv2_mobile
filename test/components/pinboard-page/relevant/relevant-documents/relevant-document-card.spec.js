@@ -77,6 +77,7 @@ describe('<RelevantDocumentCard />', function () {
     baseComplaintCard.prop('officers').should.eql(officers);
     baseComplaintCard.prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
     baseComplaintCard.prop('pinned').should.be.false();
+    baseComplaintCard.prop('fadePlusButtonOnly').should.be.true();
     baseComplaintCard.prop('leftChild').props.href.should.eql(
       'https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
     );

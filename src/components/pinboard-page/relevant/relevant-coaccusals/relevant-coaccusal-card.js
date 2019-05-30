@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router';
 import pluralize from 'pluralize';
 import { kebabCase } from 'lodash';
+import cx from 'classnames';
 
 import StaticRadarChart from 'components/common/radar-chart';
 import styles from './relevant-coaccusal-card.sass';
@@ -12,12 +13,34 @@ export class RelevantCoaccusalCard extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+
+    this.state = { fade: false };
   }
 
   handleClick(e) {
-    const { id, addItemInPinboardPage } = this.props;
     e.preventDefault();
-    addItemInPinboardPage({ type: 'OFFICER', id: id.toString() });
+
+    if (this.state.fade)
+      return;
+
+    this.setState({ fade: true });
+
+    const {
+      id,
+      addItemInPinboardPage,
+      fullName,
+      percentile,
+      complaintCount,
+      rank
+    } = this.props;
+    addItemInPinboardPage({
+      type: 'OFFICER',
+      id: id.toString(),
+      fullName,
+      percentile,
+      complaintCount,
+      rank,
+    });
   }
 
   render() {
@@ -34,7 +57,7 @@ export class RelevantCoaccusalCard extends Component {
     return (
       <Link
         to={ `/officer/${id}/${officerSlug}/` }
-        className={ styles.relevantCoaccusalCard }
+        className={ cx(styles.relevantCoaccusalCard, { 'fade-out': this.state.fade }) }
       >
         <div className='no-print radar-chart-wrapper'>
           <StaticRadarChart
@@ -63,6 +86,7 @@ RelevantCoaccusalCard.propTypes = {
   percentile: PropTypes.object,
   rank: PropTypes.string,
   coaccusalCount: PropTypes.number,
+  complaintCount: PropTypes.number,
   addItemInPinboardPage: PropTypes.func,
 };
 

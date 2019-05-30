@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { Link } from 'react-router';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
 import MiniVisualToken from 'components/pinboard-page/relevant/common/mini-officer-visual-token';
 import PlusButton from 'components/pinboard-page/relevant/common/plus-button';
@@ -108,6 +108,76 @@ describe('<BaseComplaintCard />', function () {
     rightHalf.find(PlusButton).exists().should.be.true();
   });
 
+  it('should fade out when clicked on PlusButton', function () {
+    const addItemInPinboardPage = stub();
+    const preventDefaultStub = stub();
+
+    const wrapper = mount(
+      <BaseComplaintCard
+        leftChild={ <div className='test--left-child'/> }
+        url='lvh.me'
+        previewImageUrl='img.lvh.me'
+        crid='123'
+        incidentDate='Apr 4, 2015'
+        category='Unknown'
+        officers={ [] }
+        addItemInPinboardPage={ addItemInPinboardPage }
+        pinned={ true }
+      />
+    );
+    const instance = wrapper.instance();
+
+    instance.state.fade.should.be.false();
+    wrapper.getDOMNode().className.should.not.containEql('fade-out');
+
+    instance.handleClick({ preventDefault: preventDefaultStub });
+
+    preventDefaultStub.should.be.calledOnce();
+    instance.state.fade.should.be.true();
+    addItemInPinboardPage.should.be.calledOnce();
+    wrapper.getDOMNode().className.should.containEql('fade-out');
+
+    preventDefaultStub.reset();
+    addItemInPinboardPage.reset();
+    instance.handleClick({ preventDefault: preventDefaultStub });
+
+    preventDefaultStub.should.be.calledOnce();
+    instance.state.fade.should.be.true();
+    addItemInPinboardPage.should.not.be.called();
+  });
+
+  it('should fade out PlusButton only if fadePlusButtonOnly is true', function () {
+    const addItemInPinboardPage = stub();
+    const preventDefaultStub = stub();
+
+    const wrapper = mount(
+      <BaseComplaintCard
+        leftChild={ <div className='test--left-child'/> }
+        url='lvh.me'
+        previewImageUrl='img.lvh.me'
+        crid='123'
+        incidentDate='Apr 4, 2015'
+        category='Unknown'
+        officers={ [] }
+        addItemInPinboardPage={ addItemInPinboardPage }
+        pinned={ false }
+        fadePlusButtonOnly={ true }
+      />
+    );
+    const instance = wrapper.instance();
+
+    instance.state.fade.should.be.false();
+    wrapper.getDOMNode().className.should.not.containEql('fade-out');
+
+    instance.handleClick({ preventDefault: preventDefaultStub });
+
+    preventDefaultStub.should.be.calledOnce();
+    instance.state.fade.should.be.true();
+    wrapper.getDOMNode().className.should.not.containEql('fade-out');
+
+    wrapper.find(PlusButton).getDOMNode().className.should.containEql('fade-out');
+  });
+
   it('should hide PlusButton if pinned', function () {
     const addItemInPinboardPage = spy();
     const wrapper = shallow(
@@ -145,6 +215,12 @@ describe('<BaseComplaintCard />', function () {
     const rightHalf = wrapper.find(Link);
     const plusButton = rightHalf.find(PlusButton);
     plusButton.simulate('click', { preventDefault: () => {} } );
-    addItemInPinboardPage.should.be.calledWith({ type: 'CR', id: '123' });
+    addItemInPinboardPage.should.be.calledWith({
+      type: 'CR',
+      id: '123',
+      category: 'Unknown',
+      incidentDate: 'Apr 4, 2015',
+      point: undefined
+    });
   });
 });

@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
-import { pinboardItemsSelector } from 'selectors/pinboard';
+import { pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
 
 

@@ -22,14 +22,14 @@ describe('<PinboardPage />', function () {
   };
 
   const store = MockStore()({
-    pinboard: {
-      title: 'This is pinboard title',
-      description: 'This is pinboard description',
-      'officer_ids': [1, 2],
-      'crids': ['123456', '654321'],
-      'trr_ids': ['123', '456'],
-    },
     pinboardPage: {
+      pinboard: {
+        title: 'This is pinboard title',
+        description: 'This is pinboard description',
+        'officer_ids': [1, 2],
+        'crids': ['123456', '654321'],
+        'trr_ids': ['123', '456'],
+      },
       graphData: {},
       relevantDocuments: defaultPaginationState,
       relevantCoaccusals: defaultPaginationState,

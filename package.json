@@ -102,7 +102,7 @@
     "webpack-dev-server": "^1.12.0"
   },
   "dependencies": {
-    "axios": "^0.12.0",
+    "axios": "^0.17.1",
     "classnames": "^2.2.5",
     "clipboard": "^1.7.1",
     "copy-webpack-plugin": "^4.5.2",
@@ -131,7 +131,6 @@
     "query-string": "^4.3.1",
     "rc-slider": "^8.6.7",
     "react": "^15.4.2",
-    "react-autocomplete": "^1.8.1",
     "react-clamp-lines": "^1.1.0",
     "react-device-detect": "^1.6.1",
     "react-dom": "^15.4.2",
@@ -145,7 +144,7 @@
     "react-sticky": "^5.0.5",
     "redux": "^3.5.2",
     "redux-actions": "^0.10.0",
-    "redux-axios-middleware": "^1.0.0",
+    "redux-axios-middleware": "4.0.0",
     "redux-breadcrumb-trail": "^0.6.0",
     "redux-localstorage": "^0.4.1",
     "redux-logger": "^2.6.1",
