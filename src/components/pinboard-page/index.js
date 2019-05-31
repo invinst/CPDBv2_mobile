@@ -32,12 +32,15 @@ export default class PinboardPage extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const prevID = prevProps.pinboard.id;
-    const currID = this.props.pinboard.id;
+    const prevPinboard = prevProps.pinboard;
+    const { pinboard } = this.props;
 
-    if (prevID !== currID) {
-      browserHistory.replace(`/pinboard/${currID}/`);
-      this.fetchPinboardData(currID);
+    if (prevPinboard.id !== pinboard.id) {
+      this.fetchPinboardData(pinboard.id);
+    }
+
+    if (prevPinboard.url !== pinboard.url) {
+      browserHistory.replace(pinboard.url);
     }
   }
 

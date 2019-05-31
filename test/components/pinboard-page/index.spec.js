@@ -140,7 +140,7 @@ describe('<PinboardPage />', function () {
           fetchPinboardRelevantCoaccusals={ fetchPinboardRelevantCoaccusals }
           fetchPinboardRelevantComplaints={ fetchPinboardRelevantComplaints }
           params={ { pinboardId: '5cd06f2b' } }
-          pinboard={ { id: '5cd06f2b' } }
+          pinboard={ { id: '5cd06f2b', url: '/pinboard/5cd06f2b/new-title/' } }
         />
       </Provider>
     );
@@ -161,7 +161,7 @@ describe('<PinboardPage />', function () {
       />
     ) });
 
-    replaceStub.calledWith('/pinboard/5e2372a0/');
+    replaceStub.calledWith('/pinboard/5cd06f2b/new-title/');
     fetchPinboardComplaints.calledWith('5e2372a0').should.be.true();
     fetchPinboardOfficers.calledWith('5e2372a0').should.be.true();
     fetchPinboardTRRs.calledWith('5e2372a0').should.be.true();

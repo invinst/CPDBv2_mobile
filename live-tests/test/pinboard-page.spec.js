@@ -546,7 +546,7 @@ describe('Pinboard Page', function () {
       pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('Geographic');
     });
 
-    it('should update title and description after editing and out focusing them', function () {
+    it('should update title and description after editing and out focusing them', function (client) {
       const pinboardPage = this.pinboardPage;
       pinboardPage.expect.element('@pinboardTitle').to.be.visible;
       pinboardPage.expect.element('@pinboardDescription').to.be.visible;
@@ -556,6 +556,7 @@ describe('Pinboard Page', function () {
       pinboardPage.getValue('@pinboardDescription', function (result) {
         assert.equal(result.value, 'Pinboard Description');
       });
+      client.assert.urlContains('/pinboard-title/');
 
       pinboardPage.click('@pinboardTitle');
       pinboardPage.clearValue('@pinboardTitle');
@@ -571,6 +572,7 @@ describe('Pinboard Page', function () {
       pinboardPage.getValue('@pinboardDescription', function (result) {
         assert.equal(result.value, 'Updated Description');
       });
+      client.assert.urlContains('/updated-title/');
     });
   });
 
