@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { mapboxgl } from 'utils/mapbox';
 
 import AllegationsMap from 'components/common/allegations-map';
 
@@ -64,5 +65,7 @@ describe('Map component', function () {
     wrapper.update();
     wrapper.find('.test--map').should.have.length(1);
     wrapper.find('.test--legend').should.have.length(1);
+    const marker = new mapboxgl.Marker();
+    marker.remove.callCount.should.equal(3);
   });
 });
