@@ -7,6 +7,7 @@ import CRCard from 'components/pinboard-page/cards/cr-card';
 import OfficerCard from 'components/pinboard-page/cards/officer-card';
 import TRRCard from 'components/pinboard-page/cards/trr-card';
 import * as murri from 'utils/muuri';
+import * as navigationUtil from 'utils/navigation-util';
 
 
 describe('<PinnedType />', function () {
@@ -55,6 +56,22 @@ describe('<PinnedType />', function () {
     trrCards.get(1).props.isAdded.should.be.false();
     trrCards.get(2).props.item.id.should.eql('3');
     trrCards.get(2).props.isAdded.should.be.true();
+  });
+
+  it('should maintain the scroll position', function () {
+    stub(navigationUtil, 'getPageYBottomOffset').returns(700);
+    stub(navigationUtil, 'scrollByBottomOffset');
+
+    const items = [{ 'id': '1' }, { 'id': '2' }];
+    const pinnedType = mount(<PinnedType type='TRR' items={ items } />);
+
+    const newItems = [{ 'id': '1' }, { 'id': '2' }, { 'id': '3' }];
+    pinnedType.setProps({ items: newItems });
+
+    navigationUtil.scrollByBottomOffset.should.be.calledWith(700);
+
+    navigationUtil.getPageYBottomOffset.restore();
+    navigationUtil.scrollByBottomOffset.restore();
   });
 
   it('should init Muuri grid', function () {
