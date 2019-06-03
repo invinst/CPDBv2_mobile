@@ -24,7 +24,7 @@ import {
   investigatorCRsSelector
 } from 'selectors/search-page';
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
-import { addOrRemoveItemInPinboard } from 'actions/pinboard';
+import { addOrRemoveItemInPinboard, createPinboard } from 'actions/pinboard';
 
 
 function mapStateToProps(state, ownProps) {
@@ -55,6 +55,7 @@ const mapDispatchToProps = {
   updateChosenCategory,
   pushBreadcrumbs,
   addOrRemoveItemInPinboard,
+  createPinboard,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchPage));

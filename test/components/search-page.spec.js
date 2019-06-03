@@ -3,13 +3,15 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
 import ReactHeight from 'react-height';
+import { Promise } from 'es6-promise';
+import { browserHistory } from 'react-router';
 
-import * as NavigationUtil from 'utils/navigation-util';
 import * as IntercomUtils from 'utils/intercom';
 import SearchPage from 'components/search-page';
 import SearchCategory from 'components/search-page/search-category';
 import constants from 'constants';
 import * as IntercomTracking from 'utils/intercom-tracking';
+
 
 describe('<SearchPage />', function () {
   beforeEach(function () {
@@ -22,7 +24,7 @@ describe('<SearchPage />', function () {
 
   it('should be renderable', () => {
     const wrapper = shallow(
-      <SearchPage query={ '' }/>
+      <SearchPage />
     );
     wrapper.should.be.ok();
   });
@@ -32,10 +34,8 @@ describe('<SearchPage />', function () {
       const wrapper = shallow(
         <SearchPage
           query={ 'ab' }
-          suggestAllFromCategory={ () => {} }
           officers={ { data: [1] } }
           undefined={ { data: [1] } }
-          inputChanged={ () => {} }
          />
       );
       const instance = wrapper.instance();
@@ -57,9 +57,7 @@ describe('<SearchPage />', function () {
       const spyInputChanged = spy();
       const wrapper = shallow(
         <SearchPage
-          query={ '' }
           inputChanged={ spyInputChanged }
-          suggestTerm={ () => {} }
         />
       );
       const instance = wrapper.instance();
@@ -74,9 +72,6 @@ describe('<SearchPage />', function () {
       const spySuggestTerm = spy();
       const wrapper = mount(
         <SearchPage
-          query={ '' }
-          inputChanged={ () => {} }
-          queryChanged={ () => {} }
           suggestTerm={ spySuggestTerm }
         />
       );
@@ -93,9 +88,6 @@ describe('<SearchPage />', function () {
       const spySuggestTerm = spy();
       const wrapper = mount(
         <SearchPage
-          query={ '' }
-          inputChanged={ () => {} }
-          queryChanged={ () => {} }
           suggestTerm={ spySuggestTerm }
         />
       );
@@ -116,7 +108,6 @@ describe('<SearchPage />', function () {
     const wrapper = mount(
       <SearchPage
         pushBreadcrumbs={ pushBreadcrumbsSpy }
-        queryChanged={ () => {} }
         location='location'
         routes='routes'
         params='params'
@@ -138,7 +129,7 @@ describe('<SearchPage />', function () {
   });
 
   it('should focus the input element when mounted', () => {
-    const wrapper = shallow(<SearchPage queryChanged={ () => {} } />);
+    const wrapper = shallow(<SearchPage />);
     const instance = wrapper.instance();
     const spyFocus = spy();
 
@@ -184,7 +175,7 @@ describe('<SearchPage />', function () {
     });
 
     it('should set this.searchInput ref to its own instance', function () {
-      const wrapper = mount(<SearchPage queryChanged={ () => {} } />);
+      const wrapper = mount(<SearchPage  />);
 
       const refInstance = wrapper.instance().searchInput;
       (typeof refInstance).should.not.eql('undefined');
@@ -286,11 +277,9 @@ describe('<SearchPage />', function () {
 
       const wrapper = shallow(
         <SearchPage
-          saveToRecent={ () => {} }
           query='qa'
           officers={ officersProp }
-          units={ unitsProp }
-          suggestAllFromCategory={ () => {} }/>
+          units={ unitsProp } />
       );
 
       const categoryDetails = wrapper.find('.category-details-container').children();
@@ -317,11 +306,9 @@ describe('<SearchPage />', function () {
 
       const wrapper = shallow(
         <SearchPage
-          saveToRecent={ () => {} }
           query='qa'
           officers={ officersProp }
-          units={ unitsProp }
-          suggestAllFromCategory={ () => {} }/>
+          units={ unitsProp } />
       );
 
       const searchCategory = wrapper.find(SearchCategory).at(0);
@@ -380,13 +367,13 @@ describe('<SearchPage />', function () {
   describe('Intercom', function () {
     describe('Intercom launcher', function () {
       it('should hide intercom launcher when mounted', function () {
-        mount(<SearchPage queryChanged={ () => {} }/>);
+        mount(<SearchPage />);
 
         IntercomUtils.showIntercomLauncher.calledWith(false).should.be.true();
       });
 
       it('should show intercom launcher again when unmounted', function () {
-        const wrapper = mount(<SearchPage queryChanged={ () => {} }/>);
+        const wrapper = mount(<SearchPage />);
         wrapper.unmount();
 
         IntercomUtils.showIntercomLauncher.calledWith(true).should.be.true();
@@ -403,9 +390,34 @@ describe('<SearchPage />', function () {
       });
 
       it('should track Intercom with search page', function () {
-        mount(<SearchPage queryChanged={ () => {} }/>);
+        mount(<SearchPage />);
         IntercomTracking.trackSearchPage.called.should.be.true();
       });
     });
+  });
+
+  it('should handle when click on pinboard button if pinboard does not exist', function (done) {
+    const createPinboard = stub().usingPromise(Promise).resolves({
+      payload: {
+        id: '5cd06f2b',
+        url: '/pinboard/5cd06f2b/'
+      }
+    });
+
+    const wrapper = mount(
+      <SearchPage
+        createPinboard={ createPinboard }
+      />
+    );
+
+    const browserHistoryPush = stub(browserHistory, 'push');
+    const pinboardButton = wrapper.find('.test--pinboard-bar');
+    pinboardButton.simulate('click');
+    createPinboard.calledWith({ officerIds: [], trrIds: [], crids: [] }).should.be.true();
+    setTimeout(() => {
+      browserHistoryPush.called.should.be.true();
+      browserHistoryPush.restore();
+      done();
+    }, 50);
   });
 });
