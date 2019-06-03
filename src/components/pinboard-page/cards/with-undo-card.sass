@@ -1,41 +1,74 @@
 @import 'variables'
 @import 'animations'
 
-
-\:local(.undo-card)
-  animation: fadeOut 1s ease-in-out forwards
-  background-color: $wild-sand
+%card
   box-sizing: border-box
   border: 1px solid $alto
   border-radius: 2px
   font-size: 14px
   font-weight: 300
   height: 176px
-  margin: 0 8px 8px 0
   position: relative
   width: 148px
 
+%undo-card-text
+  display: block
+  margin: 40px 8px 32px 8px
+  padding: 0 20px
+  min-height: 48px
+  text-align: center
+
+%undo-card-button
+  border-radius: 2px
+  font-family: $san-francisco-text-family
+  font-size: 14px
+  font-weight: 300
+  margin: 0 28px 16px 28px
+  outline: none
+  padding: 0
+  text-align: center
+  width: calc(100% - 56px)
+  height: 40px
+
+\:local(.undo-card-light)
+  @extend %card
+  animation: fadeOut 1s ease-in-out forwards
+  background-color: $wild-sand
+  border-color: $alto-solid
+
   .text
+    @extend %undo-card-text
     color: $mine-shaft-color
-    display: block
-    margin: 40px 8px 32px 8px
-    padding: 0 20px
-    min-height: 48px
-    text-align: center
 
   .undo-button
+    @extend %undo-card-button
     border: solid 1px $alto
     background-color: transparent
-    color: $mine-shaft-color
-    font-size: 14px
-    font-weight: 300
-    margin: 0 28px 16px 28px
-    outline: none
-    padding: 0
-    text-align: center
-    width: 88px
-    height: 40px
+    color: $thunder
 
     &:hover
       background-color: white
       color: $cash-green-color
+
+\:local(.undo-card-dark)
+  @extend %card
+  animation: fadeOut 1s ease-in-out forwards
+  background-color: $thunder
+  border-color: $mine-shaft-color
+
+  .text
+    @extend %undo-card-text
+    color: $alto-solid
+
+  .undo-button
+    @extend %undo-card-button
+    background-color: $mine-shaft-color
+    border: none
+    color: $alto-solid
+
+    &:hover
+      background-color: $boulder
+      color: white
+
+\:local(.wrapper)
+  width: 306px

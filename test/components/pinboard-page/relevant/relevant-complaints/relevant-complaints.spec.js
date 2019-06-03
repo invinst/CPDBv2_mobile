@@ -1,10 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { stub } from 'sinon';
 
 import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/relevant-infinite-carousel';
 import RelevantComplaints from 'components/pinboard-page/relevant/relevant-complaints';
-import RelevantComplaintCard from 'components/pinboard-page/relevant/relevant-complaints/relevant-complaint-card';
+import RelevantComplaintCard, { RelevantComplaintCardWithUndo }
+  from 'components/pinboard-page/relevant/relevant-complaints/relevant-complaint-card';
 
 
 describe('<RelevantComplaints />', function () {
@@ -74,7 +75,7 @@ describe('<RelevantComplaints />', function () {
     const addItemInPinboardPageStub = stub();
     const fetchPinboardRelevantComplaintsStub = stub();
 
-    const wrapper = shallow(
+    const wrapper = mount(
       <RelevantComplaints
         addItemInPinboardPage={ addItemInPinboardPageStub }
         fetchPinboardRelevantComplaints={ fetchPinboardRelevantComplaintsStub }
@@ -90,21 +91,23 @@ describe('<RelevantComplaints />', function () {
     relevantInfiniteCarousel.prop('hasMore').should.be.true();
 
     const RelevantComplaintCards = relevantInfiniteCarousel.find(RelevantComplaintCard);
+    const RelevantComplaintCardsWithUndo = relevantInfiniteCarousel.find(RelevantComplaintCardWithUndo);
     RelevantComplaintCards.should.have.length(2);
+    RelevantComplaintCardsWithUndo.should.have.length(2);
 
     RelevantComplaintCards.at(0).prop('crid').should.eql('1089128');
     RelevantComplaintCards.at(0).prop('incidentDate').should.eql('Feb 1, 2018');
     RelevantComplaintCards.at(0).prop('category').should.eql('False Arrest');
     RelevantComplaintCards.at(0).prop('officers').should.eql(firstOfficers);
     RelevantComplaintCards.at(0).prop('point').should.eql({ lat: 41.7924183, lon: -87.668458 });
-    RelevantComplaintCards.at(0).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
+    RelevantComplaintCardsWithUndo.at(0).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
 
     RelevantComplaintCards.at(1).prop('crid').should.eql('1085255');
     RelevantComplaintCards.at(1).prop('incidentDate').should.eql('May 18, 2017');
     RelevantComplaintCards.at(1).prop('category').should.eql('Unknown');
     RelevantComplaintCards.at(1).prop('officers').should.eql([]);
     RelevantComplaintCards.at(1).prop('point').should.eql({ lat: 41.800831, lon: -87.6222052 });
-    RelevantComplaintCards.at(1).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
+    RelevantComplaintCardsWithUndo.at(1).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
 
     relevantInfiniteCarousel.prop('loadMore')();
     fetchPinboardRelevantComplaintsStub.should.be.calledOnce();

@@ -1,15 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 
-import { noop } from 'lodash';
+import { get, noop } from 'lodash';
 import cx from 'classnames';
 
 import constants from 'constants';
 import styles from './with-undo-card.sass';
 
+const UNDO_CARD_THEMES = constants.PINBOARD_PAGE.UNDO_CARD_THEMES;
+const UNDO_CARD_VISIBLE_TIME = constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME;
+
 
 export default function withUndoCard(
   WrappedComponent,
-  getText) {
+  getText,
+  actionName,
+  settings={
+    theme: UNDO_CARD_THEMES.LIGHT,
+    keepVisible: false,
+    hasWrapper: false,
+  }) {
   const DISPLAY = 'DISPLAY';
   const REMOVING = 'REMOVING';
   const REMOVED = 'REMOVED';
@@ -19,7 +28,7 @@ export default function withUndoCard(
       super(props);
 
       this.state = {
-        state: DISPLAY
+        status: DISPLAY
       };
 
       this.removeItem = this.removeItem.bind(this);
@@ -33,45 +42,50 @@ export default function withUndoCard(
 
     removeItem(item) {
       this.setState({
-        state: REMOVING
+        status: REMOVING
       });
 
       this.countdown = setTimeout(() => {
         this.setState({
-          state: REMOVED
+          status: REMOVED
         });
 
-        const { removeItemInPinboardPage } = this.props;
-
-        removeItemInPinboardPage(item);
-      }, constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME);
+        get(this.props, actionName, noop)(item);
+      }, UNDO_CARD_VISIBLE_TIME);
     }
 
     undo() {
       clearTimeout(this.countdown);
 
       this.setState({
-        state: DISPLAY
+        status: DISPLAY
       });
     }
 
     render() {
-      const { state } = this.state;
+      const { status } = this.state;
+      const { theme, keepVisible, hasWrapper } = settings;
 
-      if (state === REMOVED) {
+      if (status === REMOVED && !keepVisible) {
         return null;
       }
 
-      if (state === REMOVING) {
+      if (status === REMOVING) {
+        const wrapperStyle = cx(
+          { [styles.undoCardLight]: theme === UNDO_CARD_THEMES.LIGHT },
+          { [styles.undoCardDark]: theme === UNDO_CARD_THEMES.DARK },
+          { [styles.wrapper]: hasWrapper }
+        );
+
         return (
-          <div className={ cx(styles.undoCard, 'test--undo-card') }>
+          <div className={ wrapperStyle }>
             <span className='text'>{ getText(this.props) }</span>
             <button className='undo-button' onClick={ this.undo }>Undo</button>
           </div>
         );
       }
 
-      return <WrappedComponent { ...this.props } removeItemInPinboardPage={ this.removeItem }/>;
+      return <WrappedComponent { ...this.props } { ...{ [actionName]: this.removeItem } }/>;
     }
   }
 

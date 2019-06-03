@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Router, createMemoryHistory, Route } from 'react-router';
+import { spy } from 'sinon';
 
 import OfficerCard, { OfficerCardWithUndo } from 'components/pinboard-page/cards/officer-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
@@ -24,17 +25,35 @@ describe('Pinboard <OfficerCard />', function () {
     officerCard.find('.test--officer-cr-count').text().should.equal('10 complaints');
   });
 
-  it('should fade in when added', function () {
+  it('should invoke removeItemInPinboardPage when clicking on ItemUnpinButton', function () {
+    const removeItemInPinboardPage = spy();
+
     const item = {
+      type: 'OFFICER',
+      isPinned: false,
+      id: 123,
       rank: 'Officer as Detective',
       fullName: 'James David',
       complaintCount: '10',
     };
-    const officerCard = mount(<OfficerCard item={ item } isAdded={ true }/>);
-    const officerCardDOM = officerCard.getDOMNode();
+    const wrapper = mount(
+      <Router history={ createMemoryHistory() }>
+        <Route path='/' component={ () =>
+          <OfficerCard
+            item={ item }
+            removeItemInPinboardPage={ removeItemInPinboardPage }
+          /> } />
+      </Router>
+    );
+    const unpinButton = wrapper.find(ItemUnpinButton);
 
-    officerCardDOM.className.should.containEql('hide');
-    officerCardDOM.className.should.containEql('fade-in');
+    unpinButton.simulate('click');
+
+    removeItemInPinboardPage.should.be.calledOnce();
+    removeItemInPinboardPage.should.be.calledWith({
+      type: 'OFFICER',
+      id: 123
+    });
   });
 });
 

@@ -13,6 +13,12 @@ import withUndoCard from './with-undo-card';
 
 
 export default class OfficerCard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.removeItem = this.removeItem.bind(this);
+  }
+
   componentDidMount() {
     const { isAdded } = this.props;
     if (isAdded) {
@@ -20,8 +26,15 @@ export default class OfficerCard extends Component {
     }
   }
 
+  removeItem() {
+    const { item, removeItemInPinboardPage } = this.props;
+    const { type, id } = item;
+
+    removeItemInPinboardPage({ type, id });
+  }
+
   render() {
-    const { item, removeItemInPinboardPage, isAdded } = this.props;
+    const { item, isAdded } = this.props;
     return (
       <BaseOfficerCard
         setRef={ el => this.el = el }
@@ -32,9 +45,7 @@ export default class OfficerCard extends Component {
         rank={ item.rank }
         percentile={ item.percentile }
         topContent={
-          <ItemUnpinButton
-            item={ item }
-            removeItemInPinboardPage={ removeItemInPinboardPage } />
+          <ItemUnpinButton onClick={ this.removeItem } />
         }
         bottomContent={
           <div className={ cx(style.officerComplaintsCount, 'test--officer-cr-count') }>
@@ -58,5 +69,6 @@ OfficerCard.defaultProps = {
 
 export const OfficerCardWithUndo = withUndoCard(
   OfficerCard,
-  props => `${get(props, 'item.fullName', '')} removed.`
+  props => `${get(props, 'item.fullName', '')} removed.`,
+  'removeItemInPinboardPage'
 );

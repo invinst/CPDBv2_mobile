@@ -324,6 +324,10 @@ export default {
   // Pinboard page constants
   PINBOARD_PAGE: {
     UNDO_CARD_VISIBLE_TIME: 1000,
+    UNDO_CARD_THEMES: {
+      LIGHT: 'light',
+      DARK: 'dark',
+    },
     TAB_NAMES: {
       NETWORK: 'NETWORK',
       GEOGRAPHIC: 'GEOGRAPHIC',

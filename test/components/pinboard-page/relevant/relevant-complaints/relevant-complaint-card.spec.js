@@ -2,58 +2,62 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import should from 'should';
 import { Link } from 'react-router';
-import { stub } from 'sinon';
+import { stub, useFakeTimers } from 'sinon';
 
-import RelevantComplaintCard from 'components/pinboard-page/relevant/relevant-complaints/relevant-complaint-card';
+import RelevantComplaintCard, { RelevantComplaintCardWithUndo }
+  from 'components/pinboard-page/relevant/relevant-complaints/relevant-complaint-card';
 import BaseComplaintCard from 'components/pinboard-page/relevant/common/base-complaint-card';
+import constants from 'constants';
+import PlusButton from 'components/pinboard-page/relevant/common/plus-button';
 
 
 describe('<RelevantComplaintCard />', function () {
+  const officers = [{
+    fullName: 'Scott Mc Kenna',
+    id: 32172,
+    shortName: 'S. Kenna',
+    percentile: {
+      textColor: '#DFDFDF',
+      visualTokenBackground: '#f0201e',
+      year: 2016,
+      items: [
+        { axis: 'Use of Force Reports', value: 63.0035 },
+        { axis: 'Internal Allegations', value: 88.3297 },
+        { axis: 'Civilian Allegations', value: 98.7841 }
+      ],
+    },
+  }, {
+    fullName: 'Edwin Utreras',
+    id: 32384,
+    shortName: 'E. Utreras',
+    percentile: {
+      textColor: '#DFDFDF',
+      visualTokenBackground: '#f0201e',
+      year: 2016,
+      items: [
+        { axis: 'Use of Force Reports', value: 78.2707 },
+        { axis: 'Internal Allegations', value: 0 },
+        { axis: 'Civilian Allegations', value: 98.5549 }
+      ],
+    },
+  }, {
+    fullName: 'Joy Mcclain',
+    id: 32176,
+    shortName: 'J. Mcclain',
+    percentile: {
+      textColor: '#DFDFDF',
+      visualTokenBackground: '#f52524',
+      year: 2016,
+      items: [
+        { axis: 'Use of Force Reports', value: 84.1654 },
+        { axis: 'Internal Allegations', value: 0 },
+        { axis: 'Civilian Allegations', value: 97.0899 },
+      ],
+    },
+  }];
+
   it('should render enough content correctly', function () {
     const addItemInPinboardPageStub = stub();
-    const officers = [{
-      fullName: 'Scott Mc Kenna',
-      id: 32172,
-      shortName: 'S. Kenna',
-      percentile: {
-        textColor: '#DFDFDF',
-        visualTokenBackground: '#f0201e',
-        year: 2016,
-        items: [
-          { axis: 'Use of Force Reports', value: 63.0035 },
-          { axis: 'Internal Allegations', value: 88.3297 },
-          { axis: 'Civilian Allegations', value: 98.7841 }
-        ],
-      },
-    }, {
-      fullName: 'Edwin Utreras',
-      id: 32384,
-      shortName: 'E. Utreras',
-      percentile: {
-        textColor: '#DFDFDF',
-        visualTokenBackground: '#f0201e',
-        year: 2016,
-        items: [
-          { axis: 'Use of Force Reports', value: 78.2707 },
-          { axis: 'Internal Allegations', value: 0 },
-          { axis: 'Civilian Allegations', value: 98.5549 }
-        ],
-      },
-    }, {
-      fullName: 'Joy Mcclain',
-      id: 32176,
-      shortName: 'J. Mcclain',
-      percentile: {
-        textColor: '#DFDFDF',
-        visualTokenBackground: '#f52524',
-        year: 2016,
-        items: [
-          { axis: 'Use of Force Reports', value: 84.1654 },
-          { axis: 'Internal Allegations', value: 0 },
-          { axis: 'Civilian Allegations', value: 97.0899 },
-        ],
-      },
-    }];
 
     const wrapper = mount(
       <RelevantComplaintCard
@@ -108,5 +112,57 @@ describe('<RelevantComplaintCard />', function () {
     baseComplaintCard.prop('leftChild').props.to.should.eql('/complaint/123/');
     should(baseComplaintCard.prop('leftChild').props.style).be.null();
     baseComplaintCard.prop('leftChild').type.should.be.eql(Link);
+  });
+
+  describe('RelevantComplaintCardWithUndo component', function () {
+    let clock;
+
+    beforeEach(function () {
+      clock = useFakeTimers();
+    });
+
+    afterEach(function () {
+      clock.restore();
+    });
+
+    it('should render remove text correctly', function () {
+      const addItemInPinboardPageStub = stub();
+      const wrapper = mount(
+        <RelevantComplaintCardWithUndo
+          crid='123'
+          incidentDate='Feb 1, 2018'
+          category='False Arrest'
+          officers={ [] }
+          point={ null }
+          addItemInPinboardPage={ addItemInPinboardPageStub }
+        />
+      );
+      const plusButton = wrapper.find(PlusButton);
+
+      plusButton.simulate('click');
+
+      wrapper.find('.text').text().should.equal('Complaint added.');
+    });
+
+    it('should not be reversed after the undo card disappears', function () {
+      const addItemInPinboardPageStub = stub();
+      const wrapper = mount(
+        <RelevantComplaintCardWithUndo
+          crid='123'
+          incidentDate='Feb 1, 2018'
+          category='False Arrest'
+          officers={ [] }
+          point={ null }
+          addItemInPinboardPage={ addItemInPinboardPageStub }
+        />
+      );
+      const plusButton = wrapper.find(PlusButton);
+
+      plusButton.simulate('click');
+
+      clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME + 50);
+
+      wrapper.isEmptyRender().should.be.true();
+    });
   });
 });
