@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { Router, createMemoryHistory, Route } from 'react-router';
 
 import CRCard, { CRCardWithUndo } from 'components/pinboard-page/cards/cr-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';

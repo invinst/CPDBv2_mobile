@@ -393,8 +393,6 @@ const lastRelevantComplaintsResponse = getPaginationResponse(
 );
 
 function waitForGraphAnimationEnd(client, pinboardPage) {
-  // pinboardPage.expect.section('@currentDate').to.be.visible;
-  // pinboardPage.waitForSectionVisible('@currentDate', TIMEOUT);
   client.waitForElementVisible(pinboardPage.section.currentDate.selector, TIMEOUT);
   client.waitForText(
     pinboardPage.section.currentDate.selector,
