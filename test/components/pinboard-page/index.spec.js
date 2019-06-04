@@ -4,6 +4,7 @@ import { spy, stub } from 'sinon';
 import * as ReactRouter from 'react-router';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { Router, createMemoryHistory, Route } from 'react-router';
 
 import PinboardPage from 'components/pinboard-page';
 import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';

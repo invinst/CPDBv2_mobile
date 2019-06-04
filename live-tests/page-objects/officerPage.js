@@ -97,6 +97,8 @@ const nthRankChangeSection = (n) => ({
   }
 });
 
+const nthBreadcrumb = n => `.breadcrumb-item-wrapper:nth-child(${ 1 + 2 * (n - 1) })`;
+
 module.exports = {
   url: function (id, tab = '') {
     const tabSuffix = tab ? `${tab}/` : '';
@@ -120,6 +122,15 @@ module.exports = {
   },
 
   sections: {
+    breadcrumbs: {
+      selector: '.breadcrumbs',
+      breadcrumbSelector: '.breadcrumbs > .breadcrumb-item-wrapper',
+      elements: {
+        firstBreadcrumb: nthBreadcrumb(1),
+        secondBreadcrumb: nthBreadcrumb(2),
+        thirdBreadcrumb: nthBreadcrumb(3),
+      }
+    },
     animatedRadarChart: {
       selector: '//div[contains(@class, "animated-radar-chart")]',
       locateStrategy: 'xpath',
