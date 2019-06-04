@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, createMemoryHistory, Route, Router } from 'react-router';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
 
@@ -16,9 +16,13 @@ describe('<Header /> of PinboardPage', function () {
 
   it('should preventDefault when clicking on menu item', function () {
     const preventDefault = spy();
-    const header = mount(<Header />);
+    const header = mount(
+      <Router history={ createMemoryHistory() }>
+        <Route path='/' component={ () => <Header /> } />
+      </Router>
+    );
 
-    header.find('.menu-item').simulate('click', { preventDefault: preventDefault });
+    header.find('.menu-item').simulate('click', { preventDefault });
     preventDefault.should.be.calledOnce();
   });
 });
