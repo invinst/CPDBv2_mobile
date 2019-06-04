@@ -20,7 +20,9 @@ export default class PinboardPage extends Component {
   }
 
   componentDidMount() {
-    const { pinboard, fetchPinboard, params } = this.props;
+    const { pinboard, fetchPinboard, params, pushBreadcrumbs, location, routes } = this.props;
+    pushBreadcrumbs({ location, routes, params });
+
     const idOnPath = params.pinboardId;
     const idInStore = pinboard.id;
 
@@ -98,6 +100,9 @@ export default class PinboardPage extends Component {
 
 PinboardPage.propTypes = {
   params: PropTypes.object,
+  routes: PropTypes.array,
+  pushBreadcrumbs: PropTypes.func,
+  location: PropTypes.object,
   pinboard: PropTypes.object,
   fetchPinboard: PropTypes.func,
   fetchPinboardComplaints: PropTypes.func,
@@ -124,4 +129,5 @@ PinboardPage.defaultProps = {
   fetchPinboardRelevantDocuments: () => {},
   fetchPinboardRelevantCoaccusals: () => {},
   fetchPinboardRelevantComplaints: () => {},
+  pushBreadcrumbs: () => {},
 };
