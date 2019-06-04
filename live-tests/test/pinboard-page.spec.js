@@ -800,6 +800,8 @@ describe('Pinboard Page', function () {
             2000
           );
 
+          client.pause(200);
+
           client.assertCount(this.pinboardPage.section.pinnedSection.section.officers.section.card.selector, 2);
 
           client.assertCount(relevantCoaccusalsSection.section.coaccusalCard.selector, 3);
@@ -902,6 +904,8 @@ describe('Pinboard Page', function () {
             2000
           );
 
+          client.pause(200);
+
           client.assertCount(this.pinboardPage.section.pinnedSection.section.crs.section.card.selector, 2);
 
           client.assertCount(relevantComplaintsSection.section.complaintCard.selector, 3);
@@ -996,6 +1000,8 @@ describe('Pinboard Page', function () {
             (text) => text === 'Lockup Procedures',
             2000
           );
+
+          client.pause(200);
 
           client.assertCount(this.pinboardPage.section.pinnedSection.section.crs.section.card.selector, 2);
 
