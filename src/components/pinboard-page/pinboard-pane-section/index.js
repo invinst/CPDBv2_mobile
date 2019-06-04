@@ -17,11 +17,11 @@ export default class PinboardPaneSection extends Component {
       isVisible,
     } = this.props;
     const pinboardPaneMap = {
-      [constants.PINBOARD_PAGE_TAB_NAMES.NETWORK]: {
+      [constants.PINBOARD_PAGE.TAB_NAMES.NETWORK]: {
         component: SocialGraphContainer,
         show: true,
       },
-      [constants.PINBOARD_PAGE_TAB_NAMES.GEOGRAPHIC]: {
+      [constants.PINBOARD_PAGE.TAB_NAMES.GEOGRAPHIC]: {
         component: GeographicContainer,
         show: hasMapMarker,
       },

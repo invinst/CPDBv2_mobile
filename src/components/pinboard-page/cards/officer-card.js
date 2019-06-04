@@ -13,21 +13,11 @@ import withUndoCard from './with-undo-card';
 
 
 export default class OfficerCard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
   componentDidMount() {
     const { isAdded } = this.props;
     if (isAdded) {
       startAnimation(() => findDOMNode(this.el).classList.add('fade-in'));
     }
-  }
-
-  handleClick() {
-    findDOMNode(this.el).classList.add('fade-out');
   }
 
   render() {
@@ -44,8 +34,7 @@ export default class OfficerCard extends Component {
         topContent={
           <ItemUnpinButton
             item={ item }
-            removeItemInPinboardPage={ removeItemInPinboardPage }
-            onClick={ this.handleClick } />
+            removeItemInPinboardPage={ removeItemInPinboardPage } />
         }
         bottomContent={
           <div className={ cx(style.officerComplaintsCount, 'test--officer-cr-count') }>

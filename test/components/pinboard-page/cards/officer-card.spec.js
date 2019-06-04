@@ -36,25 +36,6 @@ describe('Pinboard <OfficerCard />', function () {
     officerCardDOM.className.should.containEql('hide');
     officerCardDOM.className.should.containEql('fade-in');
   });
-
-  it('should fade out when removed', function () {
-    const item = {
-      rank: 'Officer as Detective',
-      fullName: 'James David',
-      complaintCount: '10',
-    };
-    const wrapper = mount(
-      <Router history={ createMemoryHistory() }>
-        <Route path='/' component={ () => <OfficerCard item={ item }/> } />
-      </Router>
-    );
-    const officerCard = wrapper.find(OfficerCard);
-    const unpinButton = officerCard.find(ItemUnpinButton);
-
-    unpinButton.simulate('click');
-
-    officerCard.getDOMNode().className.should.containEql('fade-out');
-  });
 });
 
 describe('OfficerCardWithUndo component', function () {
@@ -69,7 +50,7 @@ describe('OfficerCardWithUndo component', function () {
     };
     const wrapper = mount(
       <Router history={ createMemoryHistory() }>
-        <Route path='/' component={ () => <OfficerCardWithUndo item={ item }/> } />
+        <Route path='/' component={ () =>  } />
       </Router>
     );
     const officerCard = wrapper.find(OfficerCard);

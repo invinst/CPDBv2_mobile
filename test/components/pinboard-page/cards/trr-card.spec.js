@@ -47,24 +47,6 @@ describe('Pinboard <TRRCard />', function () {
     trrCardDOM.className.should.containEql('hide');
     trrCardDOM.className.should.containEql('fade-in');
   });
-
-  it('should fade out when removed', function () {
-    const item = {
-      trrDate: '10-10-2010',
-      category: 'Use Of Force',
-    };
-    const wrapper = mount(
-      <Router history={ createMemoryHistory() }>
-        <Route path='/' component={ () => <TRRCard item={ item }/> } />
-      </Router>
-    );
-    const trrCard = wrapper.find(TRRCard);
-    const unpinButton = trrCard.find(ItemUnpinButton);
-
-    unpinButton.simulate('click');
-
-    trrCard.getDOMNode().className.should.containEql('fade-out');
-  });
 });
 
 describe('Pinboard <TRRCardWithUndo />', function () {

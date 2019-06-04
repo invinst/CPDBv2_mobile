@@ -60,9 +60,9 @@ export const getCurrentTab = state => {
     isEmpty(state.pinboardPage.graphData.data['coaccused_data'])
     && isEmpty(state.pinboardPage.geographicData.data)
   ) {
-    return constants.PINBOARD_PAGE_TAB_NAMES.NETWORK;
+    return constants.PINBOARD_PAGE.TAB_NAMES.NETWORK;
   } else if (isEmpty(state.pinboardPage.graphData.data['coaccused_data'])) {
-    return constants.PINBOARD_PAGE_TAB_NAMES.GEOGRAPHIC;
+    return constants.PINBOARD_PAGE.TAB_NAMES.GEOGRAPHIC;
   }
   return state.pinboardPage.currentTab;
 };
