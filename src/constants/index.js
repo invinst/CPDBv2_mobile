@@ -321,15 +321,13 @@ export default {
     'DOCUMENT': 'DOCUMENT'
   },
 
-  // Pinboard constants
-  PINBOARD_PAGE_TAB_NAMES: {
-    NETWORK: 'NETWORK',
-    GEOGRAPHIC: 'GEOGRAPHIC',
-  },
-
   // Pinboard page constants
   PINBOARD_PAGE: {
     UNDO_CARD_VISIBLE_TIME: 1000,
+    TAB_NAMES: {
+      NETWORK: 'NETWORK',
+      GEOGRAPHIC: 'GEOGRAPHIC',
+    }
   },
 
   // Map constants

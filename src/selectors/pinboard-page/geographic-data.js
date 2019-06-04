@@ -56,9 +56,9 @@ export const mapMarkersSelector = createSelector(
 
 export const getCurrentTab = state => {
   if (isEmpty(state.pinboardPage.graphData['coaccused_data']) && isEmpty(state.pinboardPage.geographicData)) {
-    return constants.PINBOARD_PAGE_TAB_NAMES.NETWORK;
+    return constants.PINBOARD_PAGE.TAB_NAMES.NETWORK;
   } else if (isEmpty(state.pinboardPage.graphData['coaccused_data'])) {
-    return constants.PINBOARD_PAGE_TAB_NAMES.GEOGRAPHIC;
+    return constants.PINBOARD_PAGE.TAB_NAMES.GEOGRAPHIC;
   }
   return state.pinboardPage.currentTab;
 };

@@ -10,21 +10,11 @@ import withUndoCard from './with-undo-card';
 
 
 export default class CRCard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
   componentDidMount() {
     const { isAdded } = this.props;
     if (isAdded) {
       startAnimation(() => this.el.classList.add('fade-in'));
     }
-  }
-
-  handleClick() {
-    this.el.classList.add('fade-out');
   }
 
   render() {
@@ -42,8 +32,7 @@ export default class CRCard extends Component {
       <div className={ cx(styles.wrapper, { hide: isAdded }) } ref={ el => this.el = el }>
         <ItemUnpinButton
           item={ item }
-          removeItemInPinboardPage={ removeItemInPinboardPage }
-          onClick={ this.handleClick } />
+          removeItemInPinboardPage={ removeItemInPinboardPage } />
         {
         (point === null) ?
           <div className='cr-card-map empty-map' />
