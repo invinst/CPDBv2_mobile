@@ -8,7 +8,7 @@ import localStorageConfig from './local-storage-config';
 import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
 import trackingMiddleware from 'middleware/tracking-middleware';
 import createOrUpdatePinboardMiddleware from 'middleware/create-or-update-pinboard-middleware';
-import restorePinboardSession from 'middleware/restore-pinboard-session';
+import restoreAndRedirectPinboard from 'middleware/restore-and-redirect-pinboard';
 
 
 const logger = createLogger({
@@ -28,7 +28,7 @@ export default function configureStore(initialState) {
         scrollPositionMiddleware,
         trackingMiddleware,
         createOrUpdatePinboardMiddleware,
-        restorePinboardSession,
+        restoreAndRedirectPinboard,
       ),
       persistState(()=>{}, localStorageConfig),
       window.devToolsExtension ? window.devToolsExtension() : f => f

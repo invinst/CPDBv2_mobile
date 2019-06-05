@@ -16,56 +16,24 @@ import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
 
 
 export default class PinboardPage extends Component {
-  constructor(props) {
-    super(props);
-    this.fetchPinboardData = this.fetchPinboardData.bind(this);
-  }
-
   componentDidMount() {
-    const { pinboard, fetchPinboard, params, pushBreadcrumbs, location, routes } = this.props;
+    const { fetchPinboard, params, pushBreadcrumbs, location, routes } = this.props;
     pushBreadcrumbs({ location, routes, params });
 
     const idOnPath = params.pinboardId;
-    const idInStore = pinboard.id;
-
     fetchPinboard(idOnPath);
-    if (idOnPath === idInStore) {
-      this.fetchPinboardData(idOnPath);
-    }
   }
 
-  componentDidUpdate(prevProps) {
-    const prevPinboard = prevProps.pinboard;
-    const { pinboard } = this.props;
+  componentWillReceiveProps(nextProps) {
+    const { params, fetchPinboard } = this.props;
 
-    if (prevPinboard.id !== pinboard.id) {
-      this.fetchPinboardData(pinboard.id);
+    const idOnPath = params.pinboardId;
+    const nextIdOnPath = nextProps.params.pinboardId;
+    const nextIdInStore = nextProps.pinboard.id;
+
+    if (idOnPath !== nextIdOnPath && nextIdOnPath !== nextIdInStore) {
+      fetchPinboard(nextIdOnPath);
     }
-
-    if (prevPinboard.url !== pinboard.url) {
-      browserHistory.replace(pinboard.url);
-    }
-  }
-
-  fetchPinboardData(id) {
-    const {
-      fetchPinboardComplaints,
-      fetchPinboardOfficers,
-      fetchPinboardTRRs,
-      fetchPinboardSocialGraph,
-      fetchPinboardGeographicData,
-      fetchPinboardRelevantDocuments,
-      fetchPinboardRelevantCoaccusals,
-      fetchPinboardRelevantComplaints,
-    } = this.props;
-    fetchPinboardComplaints(id);
-    fetchPinboardOfficers(id);
-    fetchPinboardTRRs(id);
-    fetchPinboardSocialGraph(id);
-    fetchPinboardGeographicData(id);
-    fetchPinboardRelevantDocuments(id);
-    fetchPinboardRelevantCoaccusals(id);
-    fetchPinboardRelevantComplaints(id);
   }
 
   renderContent() {
@@ -122,14 +90,6 @@ PinboardPage.propTypes = {
   location: PropTypes.object,
   pinboard: PropTypes.object,
   fetchPinboard: PropTypes.func,
-  fetchPinboardComplaints: PropTypes.func,
-  fetchPinboardOfficers: PropTypes.func,
-  fetchPinboardTRRs: PropTypes.func,
-  fetchPinboardSocialGraph: PropTypes.func,
-  fetchPinboardGeographicData: PropTypes.func,
-  fetchPinboardRelevantDocuments: PropTypes.func,
-  fetchPinboardRelevantCoaccusals: PropTypes.func,
-  fetchPinboardRelevantComplaints: PropTypes.func,
   changePinboardTab: PropTypes.func,
   updatePinboardInfo: PropTypes.func,
   currentTab: PropTypes.string,
@@ -140,13 +100,5 @@ PinboardPage.propTypes = {
 PinboardPage.defaultProps = {
   itemsByTypes: {},
   fetchPinboard: () => {},
-  fetchPinboardComplaints: () => {},
-  fetchPinboardOfficers: () => {},
-  fetchPinboardTRRs: () => {},
-  fetchPinboardSocialGraph: () => {},
-  fetchPinboardGeographicData: () => {},
-  fetchPinboardRelevantDocuments: () => {},
-  fetchPinboardRelevantCoaccusals: () => {},
-  fetchPinboardRelevantComplaints: () => {},
   pushBreadcrumbs: () => {},
 };
