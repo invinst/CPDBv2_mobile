@@ -1,21 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { mount } from 'enzyme';
 
 import EmptyPinboard from 'components/pinboard-page/empty-pinboard';
-import { shallow } from 'enzyme/build';
+
 
 describe('EmptyPinboard element', function () {
   it('should have enough contents', function () {
-    class TestComponent extends Component {
-      render() {
-        return EmptyPinboard;
-      }
+    function TestComponent() {
+      return EmptyPinboard;
     }
 
-    const wrapper = shallow(
+    const wrapper = mount(
       <TestComponent/>
     );
-
-    wrapper.getDOMNode().className.should.containEql('responsive-container');
 
     wrapper.find('.empty-pinboard-title').text().should.equal('Add');
     wrapper.find('.empty-pinboard-description').text().should.containEql(
