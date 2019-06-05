@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
 import cx from 'classnames';
 
 import styles from './pinboard-page.sass';
@@ -17,23 +16,8 @@ import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
 
 export default class PinboardPage extends Component {
   componentDidMount() {
-    const { fetchPinboard, params, pushBreadcrumbs, location, routes } = this.props;
+    const { params, pushBreadcrumbs, location, routes } = this.props;
     pushBreadcrumbs({ location, routes, params });
-
-    const idOnPath = params.pinboardId;
-    fetchPinboard(idOnPath);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { params, fetchPinboard } = this.props;
-
-    const idOnPath = params.pinboardId;
-    const nextIdOnPath = nextProps.params.pinboardId;
-    const nextIdInStore = nextProps.pinboard.id;
-
-    if (idOnPath !== nextIdOnPath && nextIdOnPath !== nextIdInStore) {
-      fetchPinboard(nextIdOnPath);
-    }
   }
 
   renderContent() {
@@ -89,7 +73,6 @@ PinboardPage.propTypes = {
   pushBreadcrumbs: PropTypes.func,
   location: PropTypes.object,
   pinboard: PropTypes.object,
-  fetchPinboard: PropTypes.func,
   changePinboardTab: PropTypes.func,
   updatePinboardInfo: PropTypes.func,
   currentTab: PropTypes.string,
@@ -99,6 +82,5 @@ PinboardPage.propTypes = {
 
 PinboardPage.defaultProps = {
   itemsByTypes: {},
-  fetchPinboard: () => {},
   pushBreadcrumbs: () => {},
 };

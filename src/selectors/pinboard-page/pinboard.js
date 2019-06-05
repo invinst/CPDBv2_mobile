@@ -2,7 +2,7 @@ import { get, map, kebabCase, isEmpty, every } from 'lodash';
 import { createSelector } from 'reselect';
 
 
-const generatePinboardUrl = pinboard => {
+export const generatePinboardUrl = pinboard => {
   if (pinboard === null || pinboard['id'] === null) {
     return '';
   }
