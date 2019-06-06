@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { Link } from 'react-router';
 
+import config from 'config';
 import EmptyPinboard from 'components/pinboard-page/empty-pinboard';
 
 
@@ -19,22 +21,24 @@ describe('EmptyPinboard element', function () {
       'Add officers, or complaint records through search.'
     ).and.containEql('Or use an example pinboard as a baseline to get started.');
 
-    wrapper.find('.helper-row').should.have.length(2);
-    const helperHeaders = wrapper.find('.helper-header');
-    const helperTexts = wrapper.find('.helper-text');
-    const helperArrows = wrapper.find('.helper-arrow');
-    helperHeaders.should.have.length(2);
-    helperTexts.should.have.length(2);
-    helperArrows.should.have.length(2);
+    const links = wrapper.find(Link);
+    links.should.have.length(2);
 
-    helperHeaders.at(0).text().should.equal('Repeaters');
-    helperHeaders.at(1).text().should.equal('Skullcap crew');
-    helperTexts.at(0).text().should.equal(
+    links.at(0).prop('className').should.equal('helper-row');
+    links.at(0).prop('to').should.equal(`/pinboard/${config.WattsCrewPinboardId}/`);
+    links.at(0).find('.helper-header').text().should.equal('Repeaters');
+    links.at(0).find('.helper-text').text().should.equal(
       'Officers with at least 10 complaints against them generate 64% of all complaints.'
     );
-    helperTexts.at(1).text().should.equal(
+    links.at(0).find('.helper-arrow').exists().should.be.true();
+
+    links.at(1).prop('className').should.equal('helper-row');
+    links.at(1).prop('to').should.equal(`/pinboard/${config.SkullcapCrewPinboardId}/`);
+    links.at(1).find('.helper-header').text().should.equal('Skullcap crew');
+    links.at(1).find('.helper-text').text().should.equal(
       'Dogged by allegations of abuse, members of the group have been named in more than 20 federal lawsuits – yet h…'
     );
+    links.at(1).find('.helper-arrow').exists().should.be.true();
 
     wrapper.find('.arrow-head').exists().should.be.true();
     wrapper.find('.arrow-shaft').exists().should.be.true();
