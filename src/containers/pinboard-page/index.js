@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { push as pushBreadcrumbs } from 'redux-breadcrumb-trail';
 
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import PinboardPage from 'components/pinboard-page';
@@ -36,7 +38,8 @@ const mapDispatchToProps = {
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
-  updatePinboardInfo
+  pushBreadcrumbs,
+  updatePinboardInfo,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PinboardPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PinboardPage));

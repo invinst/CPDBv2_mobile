@@ -1,6 +1,7 @@
 import { OFFICER_REQUEST_SUCCESS } from 'actions/officer-page';
 import { COMPLAINT_REQUEST_SUCCESS } from 'actions/complaint-page';
 import { TRR_REQUEST_SUCCESS } from 'actions/trr-page';
+import { PINBOARD_FETCH_REQUEST_SUCCESS, PINBOARD_UPDATE_REQUEST_SUCCESS } from 'actions/pinboard';
 import breadcrumbMapping from 'reducers/breadcrumb-mapping';
 
 
@@ -14,7 +15,7 @@ describe('breadcrumbMapping reducer', function () {
       type: TRR_REQUEST_SUCCESS,
       payload: { id: 123 }
     }).should.deepEqual({
-      'trr/123/': 'TRR 123'
+      '/trr/123/': 'TRR 123'
     });
   });
 
@@ -23,7 +24,7 @@ describe('breadcrumbMapping reducer', function () {
       type: OFFICER_REQUEST_SUCCESS,
       payload: { 'officer_id': 123, 'full_name': 'Kevin Osborn' }
     }).should.deepEqual({
-      'officer/123/kevin-osborn/': 'Kevin Osborn'
+      '/officer/123/kevin-osborn/': 'Kevin Osborn'
     });
   });
 
@@ -32,7 +33,47 @@ describe('breadcrumbMapping reducer', function () {
       type: COMPLAINT_REQUEST_SUCCESS,
       payload: { crid: 123 }
     }).should.deepEqual({
-      'complaint/123/': 'CR 123'
+      '/complaint/123/': 'CR 123'
     });
+  });
+
+  it('should store pinboard breadcrumb text when successfully fetch pinboard page', function () {
+    breadcrumbMapping({}, {
+      type: PINBOARD_FETCH_REQUEST_SUCCESS,
+      payload: {
+        id: 'b3380b9b',
+        title: 'My pinboard',
+      }
+    }).should.eql({ '/pinboard/b3380b9b/': 'Pinboard - My pinboard' });
+  });
+
+  it('should store pinboard breadcrumb text when successfully fetch pinboard page but without title', function () {
+    breadcrumbMapping({}, {
+      type: PINBOARD_FETCH_REQUEST_SUCCESS,
+      payload: {
+        id: 'b3380b9b',
+        title: '',
+      }
+    }).should.eql({ '/pinboard/b3380b9b/': 'Pinboard' });
+  });
+
+  it('should store pinboard breadcrumb text when successfully update pinboard page', function () {
+    breadcrumbMapping({}, {
+      type: PINBOARD_UPDATE_REQUEST_SUCCESS,
+      payload: {
+        id: 'b3380b9b',
+        title: 'My pinboard',
+      }
+    }).should.eql({ '/pinboard/b3380b9b/': 'Pinboard - My pinboard' });
+  });
+
+  it('should store pinboard breadcrumb text when successfully update pinboard page but without title', function () {
+    breadcrumbMapping({}, {
+      type: PINBOARD_UPDATE_REQUEST_SUCCESS,
+      payload: {
+        id: 'b3380b9b',
+        title: '',
+      }
+    }).should.eql({ '/pinboard/b3380b9b/': 'Pinboard' });
   });
 });
