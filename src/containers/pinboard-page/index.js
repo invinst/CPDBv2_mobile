@@ -16,6 +16,7 @@ import {
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
+  updatePinboardInfo
 } from 'actions/pinboard';
 
 
@@ -38,6 +39,7 @@ const mapDispatchToProps = {
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
   pushBreadcrumbs,
+  updatePinboardInfo,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PinboardPage));

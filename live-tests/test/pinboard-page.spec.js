@@ -62,9 +62,9 @@ const officer123 = {
 const pinboardData = {
   'id': '5cd06f2b',
   'title': 'Pinboard Title',
-  'officer_ids': [1234],
+  'officer_ids': ['1234'],
   'crids': ['1234567'],
-  'trr_ids': [1234],
+  'trr_ids': ['1234'],
   'description': 'Pinboard Description',
 };
 
@@ -320,6 +320,40 @@ const geographicData = [
   },
 ];
 
+const updatePinboardTitleParams = () => ({
+  'title': 'Updated Title',
+  'officer_ids': ['1234'],
+  'crids': ['1234567'],
+  'trr_ids': ['1234'],
+  'description': 'Pinboard Description',
+});
+
+const updatedPinboardTitle = () => ({
+  'id': '5cd06f2b',
+  'title': 'Updated Title',
+  'officer_ids': ['1234'],
+  'crids': ['1234567'],
+  'trr_ids': ['1234'],
+  'description': 'Pinboard Description',
+});
+
+const updatePinboardDescriptionParams = () => ({
+  'title': 'Updated Title',
+  'officer_ids': ['1234'],
+  'crids': ['1234567'],
+  'trr_ids': ['1234'],
+  'description': 'Updated Description',
+});
+
+const updatedPinboardDescription = () => ({
+  'id': '5cd06f2b',
+  'title': 'Updated Title',
+  'officer_ids': ['1234'],
+  'crids': ['1234567'],
+  'trr_ids': ['1234'],
+  'description': 'Updated Description',
+});
+
 const baseRelevantDocumentsUrl = '/api/v2/pinboards/5cd06f2b/relevant-documents/?';
 const baseRelevantCoaccusalsUrl = '/api/v2/pinboards/5cd06f2b/relevant-coaccusals/?';
 const baseRelevantComplaintsUrl = '/api/v2/pinboards/5cd06f2b/relevant-complaints/?';
@@ -493,6 +527,17 @@ describe('Pinboard Page', function () {
     api.mock('GET', `${baseRelevantComplaintsUrl}limit=4&offset=4`, 200, secondRelevantComplaintsResponse);
     api.mock('GET', `${baseRelevantComplaintsUrl}limit=4&offset=8`, 200, lastRelevantComplaintsResponse);
 
+    api.mockPut(
+      '/api/v2/pinboards/5cd06f2b/', 200,
+      updatePinboardTitleParams(),
+      updatedPinboardTitle()
+    );
+    api.mockPut(
+      '/api/v2/pinboards/5cd06f2b/', 200,
+      updatePinboardDescriptionParams(),
+      updatedPinboardDescription()
+    );
+
     this.pinboardPage = client.page.pinboardPage();
     this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
     client.waitForElementVisible('body', TIMEOUT);
@@ -563,17 +608,50 @@ describe('Pinboard Page', function () {
     });
   });
 
-  context('pinboard section', function (client) {
-    it('should render correctly', function (client) {
+  context('pinboard section', function () {
+    it('should render correctly', function () {
       const pinboardPage = this.pinboardPage;
       pinboardPage.expect.element('@pinboardTitle').to.be.visible;
       pinboardPage.expect.element('@pinboardDescription').to.be.visible;
-      pinboardPage.expect.element('@pinboardTitle').text.to.equal('Pinboard Title');
-      pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description');
+      pinboardPage.getValue('@pinboardTitle', function (result) {
+        assert.equal(result.value, 'Pinboard Title');
+      });
+      pinboardPage.getValue('@pinboardDescription', function (result) {
+        assert.equal(result.value, 'Pinboard Description');
+      });
 
       pinboardPage.expect.section('@pinboardPaneMenu').to.be.visible;
       pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('Network');
       pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('Geographic');
+    });
+
+    it('should update title and description after editing and out focusing them', function (client) {
+      const pinboardPage = this.pinboardPage;
+      pinboardPage.expect.element('@pinboardTitle').to.be.visible;
+      pinboardPage.expect.element('@pinboardDescription').to.be.visible;
+      pinboardPage.getValue('@pinboardTitle', function (result) {
+        assert.equal(result.value, 'Pinboard Title');
+      });
+      pinboardPage.getValue('@pinboardDescription', function (result) {
+        assert.equal(result.value, 'Pinboard Description');
+      });
+      client.assert.urlContains('/pinboard-title/');
+
+      pinboardPage.click('@pinboardTitle');
+      pinboardPage.clearValue('@pinboardTitle');
+      pinboardPage.setValue('@pinboardTitle', 'Updated Title');
+      pinboardPage.click('@pinboardDescription');
+      pinboardPage.clearValue('@pinboardDescription');
+      pinboardPage.setValue('@pinboardDescription', 'Updated Description');
+      pinboardPage.click('@pinboardPaneMenu');
+
+      pinboardPage.getValue('@pinboardTitle', function (result) {
+        assert.equal(result.value, 'Updated Title');
+      });
+      pinboardPage.getValue('@pinboardDescription', function (result) {
+        assert.equal(result.value, 'Updated Description');
+      });
+      client.assert.urlContains('/updated-title/');
     });
   });
 

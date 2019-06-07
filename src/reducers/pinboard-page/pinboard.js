@@ -12,7 +12,9 @@ import {
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
   ADD_ITEM_TO_PINBOARD_STATE,
   REMOVE_ITEM_FROM_PINBOARD_STATE,
-  ORDER_PINBOARD_STATE
+  ORDER_PINBOARD_STATE,
+  PERFORM_FETCH_PINBOARD_RELATED_DATA,
+  UPDATE_PINBOARD_INFO_STATE
 } from 'actions/pinboard';
 
 
@@ -86,6 +88,12 @@ export default handleActions({
     ...state,
     saving: true,
   }),
+  [UPDATE_PINBOARD_INFO_STATE]: (state, action) => {
+    return {
+      ...state,
+      [action.payload.attr]: action.payload.value,
+    };
+  },
   [ADD_ITEM_TO_PINBOARD_STATE]: (state, action) => {
     const attr = PINBOARD_ATTR_MAP[action.payload.type];
     const ids = state[attr] || [];
@@ -94,6 +102,7 @@ export default handleActions({
     return {
       ...state,
       [attr]: _.includes(ids, newId) ? ids : ids.concat(newId),
+      needRefreshData: true,
     };
   },
   [REMOVE_ITEM_FROM_PINBOARD_STATE]: (state, action) => {
@@ -104,6 +113,7 @@ export default handleActions({
     return {
       ...state,
       [attr]: _.reject(ids, id => id === format(action.payload.id)),
+      needRefreshData: true,
     };
   },
   [ORDER_PINBOARD_STATE]: (state, action) => {
@@ -114,6 +124,12 @@ export default handleActions({
     return {
       ...state,
       [attr]: _.map(ids, format),
+    };
+  },
+  [PERFORM_FETCH_PINBOARD_RELATED_DATA]: (state, action) => {
+    return {
+      ...state,
+      needRefreshData: false,
     };
   },
 }, defaultState);

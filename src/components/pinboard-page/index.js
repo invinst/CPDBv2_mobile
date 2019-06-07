@@ -11,6 +11,7 @@ import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
 import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
 import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import Footer from 'components/footer';
+import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
 
 
 export default class PinboardPage extends Component {
@@ -33,12 +34,15 @@ export default class PinboardPage extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const prevID = prevProps.pinboard.id;
-    const currID = this.props.pinboard.id;
+    const prevPinboard = prevProps.pinboard;
+    const { pinboard } = this.props;
 
-    if (prevID !== currID) {
-      browserHistory.replace(`/pinboard/${currID}/`);
-      this.fetchPinboardData(currID);
+    if (prevPinboard.id !== pinboard.id) {
+      this.fetchPinboardData(pinboard.id);
+    }
+
+    if (prevPinboard.url !== pinboard.url) {
+      browserHistory.replace(pinboard.url);
     }
   }
 
@@ -65,34 +69,34 @@ export default class PinboardPage extends Component {
 
   render() {
     const {
-      pinboard,
       changePinboardTab,
       currentTab,
       hasMapMarker,
       params,
     } = this.props;
     return (
-      <div className={ cx(styles.pinboardPage, 'pinboard-page') }>
-        <Header />
-        <SearchBar />
-        <div className='pinboard-info'>
-          <div className='pinboard-title'>{ pinboard.title }</div>
-          <div className='pinboard-description'>{ pinboard.description }</div>
+      <div>
+        <div className='pinboard-header'>
+          <Header />
+          <SearchBar />
         </div>
-        <div className='data-visualizations'>
-          <PinboardPaneSection
-            changePinboardTab={ changePinboardTab }
-            currentTab={ currentTab }
-            hasMapMarker={ hasMapMarker }
-          />
+        <div className={ cx(styles.pinboardPage, 'pinboard-page') }>
+          <PinboardInfoContainer />
+          <div className='data-visualizations'>
+            <PinboardPaneSection
+              changePinboardTab={ changePinboardTab }
+              currentTab={ currentTab }
+              hasMapMarker={ hasMapMarker }
+            />
+          </div>
+          <div className='pinned-section'>
+            <PinnedOfficersContainer/>
+            <PinnedCRsContainer/>
+            <PinnedTRRsContainer/>
+          </div>
+          <RelevantSectionContainer pinboardId={ params.pinboardId }/>
+          <Footer />
         </div>
-        <div className='pinned-section'>
-          <PinnedOfficersContainer/>
-          <PinnedCRsContainer/>
-          <PinnedTRRsContainer/>
-        </div>
-        <RelevantSectionContainer pinboardId={ params.pinboardId }/>
-        <Footer />
       </div>
     );
   }
@@ -114,6 +118,7 @@ PinboardPage.propTypes = {
   fetchPinboardRelevantCoaccusals: PropTypes.func,
   fetchPinboardRelevantComplaints: PropTypes.func,
   changePinboardTab: PropTypes.func,
+  updatePinboardInfo: PropTypes.func,
   currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
 };

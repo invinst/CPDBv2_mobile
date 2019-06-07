@@ -56,6 +56,7 @@ export const PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS = 'PINBOARD_LATEST_
 export const PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE = 'PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE';
 
 export const CHANGE_PINBOARD_TAB = 'CHANGE_PINBOARD_TAB';
+export const UPDATE_PINBOARD_INFO = 'UPDATE_PINBOARD_INFO';
 
 export const ADD_OR_REMOVE_ITEM_IN_PINBOARD = 'ADD_OR_REMOVE_ITEM_IN_PINBOARD';
 export const ADD_ITEM_IN_PINBOARD_PAGE = 'ADD_ITEM_IN_PINBOARD_PAGE';
@@ -66,6 +67,10 @@ export const ADD_ITEM_TO_PINBOARD_STATE = 'ADD_ITEM_TO_PINBOARD_STATE';
 export const REMOVE_ITEM_FROM_PINBOARD_STATE = 'REMOVE_ITEM_FROM_PINBOARD_STATE';
 export const ORDER_PINBOARD_STATE = 'ORDER_PINBOARD_STATE';
 export const SAVE_PINBOARD = 'SAVE_PINBOARD';
+
+export const PERFORM_FETCH_PINBOARD_RELATED_DATA = 'PERFORM_FETCH_PINBOARD_RELATED_DATA';
+
+export const UPDATE_PINBOARD_INFO_STATE = 'UPDATE_PINBOARD_INFO_STATE';
 
 export const addOrRemoveItemInPinboard = createAction(ADD_OR_REMOVE_ITEM_IN_PINBOARD);
 
@@ -79,6 +84,10 @@ export const addItemToPinboardState = createAction(ADD_ITEM_TO_PINBOARD_STATE);
 export const removeItemFromPinboardState = createAction(REMOVE_ITEM_FROM_PINBOARD_STATE);
 export const orderPinboardState = createAction(ORDER_PINBOARD_STATE);
 export const savePinboard = createAction(SAVE_PINBOARD);
+export const updatePinboardInfo = createAction(UPDATE_PINBOARD_INFO, item => item);
+export const updatePinboardInfoState = createAction(UPDATE_PINBOARD_INFO_STATE);
+
+export const performFetchPinboardRelatedData = createAction(PERFORM_FETCH_PINBOARD_RELATED_DATA);
 
 export const orderPinboard = createAction(ORDER_PINBOARD);
 
@@ -104,14 +113,14 @@ export const createPinboard = cancelFetchRequests(
 );
 
 export const updatePinboard = cancelFetchRequests(
-  ({ id, title, officerIds, crids, trrIds }) => put(
+  ({ id, title, description, officerIds, crids, trrIds }) => put(
     `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/`,
     [
       PINBOARD_UPDATE_REQUEST_START,
       PINBOARD_UPDATE_REQUEST_SUCCESS,
       PINBOARD_UPDATE_REQUEST_FAILURE,
     ]
-  )({ title: title, 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds })
+  )({ title: title, description: description, 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds })
 );
 
 export const fetchPinboard = id => get(
