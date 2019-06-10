@@ -12,6 +12,7 @@ import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
 import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import Footer from 'components/footer';
 import EmptyPinboard from './empty-pinboard';
+import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
 
 
 export default class PinboardPage extends Component {
@@ -34,12 +35,15 @@ export default class PinboardPage extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const prevID = prevProps.pinboard.id;
-    const currID = this.props.pinboard.id;
+    const prevPinboard = prevProps.pinboard;
+    const { pinboard } = this.props;
 
-    if (prevID !== currID) {
-      browserHistory.replace(`/pinboard/${currID}/`);
-      this.fetchPinboardData(currID);
+    if (prevPinboard.id !== pinboard.id) {
+      this.fetchPinboardData(pinboard.id);
+    }
+
+    if (prevPinboard.url !== pinboard.url) {
+      browserHistory.replace(pinboard.url);
     }
   }
 
@@ -66,7 +70,6 @@ export default class PinboardPage extends Component {
 
   renderContent() {
     const {
-      pinboard,
       changePinboardTab,
       currentTab,
       hasMapMarker,
@@ -80,10 +83,7 @@ export default class PinboardPage extends Component {
 
     return (
       <div>
-        <div className='pinboard-info'>
-          <div className='pinboard-title'>{ pinboard.title }</div>
-          <div className='pinboard-description'>{ pinboard.description }</div>
-        </div>
+        <PinboardInfoContainer />
         <div className='data-visualizations'>
           <PinboardPaneSection
             changePinboardTab={ changePinboardTab }
@@ -131,6 +131,7 @@ PinboardPage.propTypes = {
   fetchPinboardRelevantCoaccusals: PropTypes.func,
   fetchPinboardRelevantComplaints: PropTypes.func,
   changePinboardTab: PropTypes.func,
+  updatePinboardInfo: PropTypes.func,
   currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,

@@ -151,6 +151,7 @@ describe('pinboard actions', function () {
       const pinboard = {
         id: '66ef1560',
         title: 'Title',
+        description: 'Description',
         officerIds: ['1'],
         crids: [],
         trrIds: [],
@@ -168,6 +169,7 @@ describe('pinboard actions', function () {
             adapter: undefined,
             data: {
               title: 'Title',
+              description: 'Description',
               'officer_ids': ['1'],
               crids: [],
               'trr_ids': [],

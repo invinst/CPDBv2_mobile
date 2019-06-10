@@ -13,4 +13,5 @@ export const PinboardFactory = Factory.define('pinboard')
   .attr('officerItems', () => [])
   .attr('trrItems', () => [])
   .attr('saving', () => false)
-  .attr('isPinboardRestored', () => false);
+  .attr('isPinboardRestored', () => false)
+  .attr('needRefreshData', () => false);
