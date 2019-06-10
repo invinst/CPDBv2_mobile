@@ -74,7 +74,6 @@ PinboardPage.propTypes = {
   location: PropTypes.object,
   pinboard: PropTypes.object,
   changePinboardTab: PropTypes.func,
-  updatePinboardInfo: PropTypes.func,
   currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,
