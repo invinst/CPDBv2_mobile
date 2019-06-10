@@ -8,16 +8,7 @@ import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-te
 
 
 describe('<PinboardInfo />', function () {
-  it('should not render when pinboard is empty', function () {
-    const wrapper = mount(
-      <PinboardInfo pinboard={ {} }/>
-    );
-
-    wrapper.find(AutosaveTextInput).exists().should.be.false();
-    wrapper.find(AutosaveTextareaInput).exists().should.be.false();
-  });
-
-  it('should not render correctly', function () {
+  it('should render correctly', function () {
     const updatePinboardInfoStub = stub();
     const pinboard = {
       title: 'This is pinboard title',
@@ -26,13 +17,10 @@ describe('<PinboardInfo />', function () {
 
     const wrapper = mount(
       <PinboardInfo
-        pinboard={ {} }
+        pinboard={ pinboard }
         updatePinboardInfo={ updatePinboardInfoStub }
       />
     );
-    wrapper.state('isLoading').should.be.true();
-    wrapper.setProps({ pinboard: pinboard });
-    wrapper.state('isLoading').should.be.false();
 
     const titleTextInput = wrapper.find(AutosaveTextInput);
     const descriptionTextareaInput = wrapper.find(AutosaveTextareaInput);
