@@ -36,6 +36,8 @@ function getPinboardData(store, pinboardId) {
 }
 
 export default store => next => action => {
+  const result = next(action);
+
   if (action.type === '@@router/LOCATION_CHANGE') {
     const idOnPath = getPinboardID(action.payload.pathname);
     const onPinboardPage = !!idOnPath;
@@ -72,5 +74,5 @@ export default store => next => action => {
     }
   }
 
-  return next(action);
+  return result;
 };
