@@ -1,6 +1,6 @@
 import should from 'should';
 
-import crItemsReducer from 'reducers/pinboard-page/cr-items';
+import crItemsReducer from 'reducers/pinboard-page/cr-items/cr-items';
 import {
   PINBOARD_COMPLAINTS_FETCH_REQUEST_SUCCESS,
   ADD_ITEM_IN_PINBOARD_PAGE,

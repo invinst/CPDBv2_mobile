@@ -6,7 +6,7 @@ import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/r
 
 export default class RelevantCoaccusals extends Component {
   loadMore() {
-    const { pinboardId, nextParams, fetchPinboardRelevantCoaccusals } = this.props;
+    const { pinboardId, nextParams, fetchPinboardRelevantCoaccusals, requesting } = this.props;
     fetchPinboardRelevantCoaccusals(pinboardId, nextParams);
   }
 
@@ -18,6 +18,7 @@ export default class RelevantCoaccusals extends Component {
         hasMore={ hasMore }
         loadMore={ this.loadMore.bind(this) }
         className='relevant-coaccusals'
+        requesting={ requesting }
       >
         {
           coaccusals.map(coaccusal =>
@@ -38,6 +39,7 @@ RelevantCoaccusals.propTypes = {
   addItemInPinboardPage: PropTypes.func,
   hasMore: PropTypes.bool,
   pinboardId: PropTypes.string,
+  requesting: PropTypes.bool,
 };
 
 RelevantCoaccusals.defaultProps = {

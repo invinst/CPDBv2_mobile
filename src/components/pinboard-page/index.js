@@ -73,7 +73,13 @@ export default class PinboardPage extends Component {
       currentTab,
       hasMapMarker,
       params,
+      initialRequested,
     } = this.props;
+
+    if (!initialRequested) {
+      return null;
+    }
+
     return (
       <div>
         <div className='pinboard-header'>
@@ -121,6 +127,7 @@ PinboardPage.propTypes = {
   updatePinboardInfo: PropTypes.func,
   currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
+  initialRequested: PropTypes.bool,
 };
 
 PinboardPage.defaultProps = {

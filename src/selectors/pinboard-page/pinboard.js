@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { createSelector } from 'reselect';
 
+export const getInitialRequested = state => _.get(state, 'pinboardPage.initialRequested', false);
 
 const generatePinboardUrl = pinboard => {
   if (pinboard === null || pinboard['id'] === null) {

@@ -5,6 +5,7 @@ import { push as pushBreadcrumbs } from 'redux-breadcrumb-trail';
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import PinboardPage from 'components/pinboard-page';
 import { hasMapMarkersSelector, getCurrentTab } from 'selectors/pinboard-page/geographic-data';
+import { getInitialRequested } from 'selectors/pinboard-page/pinboard';
 import {
   changePinboardTab,
   fetchPinboard,
@@ -16,7 +17,7 @@ import {
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
-  updatePinboardInfo
+  updatePinboardInfo,
 } from 'actions/pinboard';
 
 
@@ -25,6 +26,7 @@ const mapStateToProps = (state, ownProps) => ({
   pinboard: getPinboard(state),
   currentTab: getCurrentTab(state),
   hasMapMarker: hasMapMarkersSelector(state),
+  initialRequested: getInitialRequested(state),
 });
 
 const mapDispatchToProps = {
