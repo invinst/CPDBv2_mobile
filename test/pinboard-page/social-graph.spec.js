@@ -7,42 +7,45 @@ describe('PinboardPage selectors', function () {
       const state = {
         pinboardPage: {
           graphData: {
-            officers: [
-              {
-                'full_name': 'Jerome Finnigan',
-                'id': 1,
-              },
-              {
-                'full_name': 'Edward May',
-                'id': 2
-              }
-            ],
-            'coaccused_data': [
-              {
-                'officer_id_1': 1,
-                'officer_id_2': 2,
-                'incident_date': '1988-10-03T00:00:00Z',
-                'accussed_count': 1,
-              },
-              {
-                'officer_id_1': 3,
-                'officer_id_2': 4,
-                'incident_date': '1990-10-03T00:00:00Z',
-                'accussed_count': 5,
-              }
-            ],
-            'list_event': [
-              '1988-10-03 00:00:00+00:00',
-              '1989-12-11 00:00:00+00:00',
-              '1990-01-09 00:00:00+00:00',
-              '1990-12-13 00:00:00+00:00',
-              '1991-01-02 00:00:00+00:00',
-              '1991-01-06 00:00:00+00:00',
-              '1991-01-15 00:00:00+00:00',
-              '1991-02-18 00:00:00+00:00',
-              '1991-02-20 00:00:00+00:00',
-              '1991-03-06 00:00:00+00:00'
-            ]
+            requesting: false,
+            data: {
+              officers: [
+                {
+                  'full_name': 'Jerome Finnigan',
+                  'id': 1,
+                },
+                {
+                  'full_name': 'Edward May',
+                  'id': 2
+                }
+              ],
+              'coaccused_data': [
+                {
+                  'officer_id_1': 1,
+                  'officer_id_2': 2,
+                  'incident_date': '1988-10-03T00:00:00Z',
+                  'accussed_count': 1,
+                },
+                {
+                  'officer_id_1': 3,
+                  'officer_id_2': 4,
+                  'incident_date': '1990-10-03T00:00:00Z',
+                  'accussed_count': 5,
+                }
+              ],
+              'list_event': [
+                '1988-10-03 00:00:00+00:00',
+                '1989-12-11 00:00:00+00:00',
+                '1990-01-09 00:00:00+00:00',
+                '1990-12-13 00:00:00+00:00',
+                '1991-01-02 00:00:00+00:00',
+                '1991-01-06 00:00:00+00:00',
+                '1991-01-15 00:00:00+00:00',
+                '1991-02-18 00:00:00+00:00',
+                '1991-02-20 00:00:00+00:00',
+                '1991-03-06 00:00:00+00:00'
+              ]
+            }
           }
         }
       };

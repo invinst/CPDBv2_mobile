@@ -1,9 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
 import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/relevant-infinite-carousel';
 import HorizontalScrolling from 'components/common/horizontal-scrolling';
+import LoadingSpinner from 'components/common/loading-spinner';
 
 
 describe('<RelevantInfiniteCarousel />', function () {
@@ -15,6 +16,7 @@ describe('<RelevantInfiniteCarousel />', function () {
         title='RelevantInfiniteCarousel Title'
         hasMore={ true }
         loadMore={ loadMoreStub }
+        requesting={ false }
       >
         <div className='test--child-1'/>
         <div className='test--child-2'/>
@@ -43,9 +45,27 @@ describe('<RelevantInfiniteCarousel />', function () {
         title='RelevantInfiniteCarousel Title'
         hasMore={ true }
         loadMore={ loadMoreStub }
+        requesting={ false }
       />
     );
 
     wrapper.find('div').should.have.length(0);
+  });
+
+  it('should render LoadingSpinner if there is no child and questing is true', function () {
+    const loadMoreStub = stub();
+    const wrapper = shallow(
+      <RelevantInfiniteCarousel
+        childWidth={ 128 }
+        title='RelevantInfiniteCarousel Title'
+        hasMore={ true }
+        loadMore={ loadMoreStub }
+        requesting={ true }
+      />
+    );
+
+    const loadingSpinner = wrapper.find(LoadingSpinner);
+    loadingSpinner.prop('className').should.containEql('relevant-carousel-loading');
+    loadingSpinner.prop('fill').should.equal('white');
   });
 });

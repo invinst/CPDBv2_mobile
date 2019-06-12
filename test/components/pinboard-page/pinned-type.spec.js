@@ -7,6 +7,7 @@ import CRCard from 'components/pinboard-page/cards/cr-card';
 import OfficerCard from 'components/pinboard-page/cards/officer-card';
 import TRRCard from 'components/pinboard-page/cards/trr-card';
 import * as murri from 'utils/muuri';
+import LoadingSpinner from 'components/common/loading-spinner';
 
 
 describe('<PinnedType />', function () {
@@ -38,6 +39,13 @@ describe('<PinnedType />', function () {
     trrCards.should.have.length(2);
     trrCards.get(0).props.item.id.should.eql('1');
     trrCards.get(1).props.item.id.should.eql('2');
+  });
+
+  it('should render LoadingSpinner if requesting', function () {
+    const wrapper = mount(<PinnedType type='CR' items={ [] } requesting={ true }/>);
+
+    const loadingSpinner = wrapper.find(LoadingSpinner);
+    loadingSpinner.prop('className').should.equal('type-cards-loading');
   });
 
   it('should render newly added item with correct props', function () {

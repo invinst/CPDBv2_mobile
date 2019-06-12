@@ -1,4 +1,6 @@
+import React from 'react';
 import should from 'should'; // eslint-disable-line no-unused-vars
+import { mount } from 'enzyme';
 import { spy, stub, useFakeTimers } from 'sinon';
 
 import * as NavigationUtil from 'utils/navigation-util';
@@ -85,34 +87,34 @@ describe('NavigationUtil', function () {
 
   describe('instantScrollToTop', function () {
     it('should scroll whole body to top', function () {
-      // Have to set body size so that it can actually scroll
-      document.body.style.height = '9999px';
-      document.body.style.width = '99px';
-
-      window.scrollTo(0, 11);
-      window.pageYOffset.should.be.eql(11);
+      const scrollToStub = stub(window, 'scrollTo');
 
       NavigationUtil.instantScrollToTop();
 
-      window.pageYOffset.should.be.eql(0);
+      scrollToStub.should.be.calledOnce();
+      scrollToStub.should.be.calledWith(0, 0);
+
+      scrollToStub.restore();
     });
   });
 
-
   describe('getCurrentScrollPosition', function () {
-    beforeEach(function () {
-      // Set a great height so that body is scrollable
-      this.originalHeight = document.body.style.height;
-      document.body.style.height = '9999px';
-    });
+    it('should return body scrollTop', function () {
+      const scrollTopStub = stub(document.body, 'scrollTop').value(12);
 
-    afterEach(function () {
-      document.body.style.height = this.originalHeight;
-    });
-
-    it('should return correct value', function () {
-      window.scrollTo(0, 12);
       NavigationUtil.getCurrentScrollPosition().should.eql(12);
+
+      scrollTopStub.restore();
+    });
+
+    it('should return documentElement scrollTop if body scrollTop is undefined', function () {
+      const bodyScrollTopStub = stub(document.body, 'scrollTop').value(undefined);
+      const documentElementScrollTopStub = stub(document.documentElement, 'scrollTop').value(13);
+
+      NavigationUtil.getCurrentScrollPosition().should.eql(13);
+
+      bodyScrollTopStub.restore();
+      documentElementScrollTopStub.restore();
     });
   });
 

@@ -6,12 +6,12 @@ import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/r
 
 export default class RelevantCoaccusals extends Component {
   loadMore() {
-    const { pinboardId, nextParams, fetchPinboardRelevantCoaccusals, requesting } = this.props;
+    const { pinboardId, nextParams, fetchPinboardRelevantCoaccusals } = this.props;
     fetchPinboardRelevantCoaccusals(pinboardId, nextParams);
   }
 
   render() {
-    const { coaccusals, hasMore, addItemInPinboardPage } = this.props;
+    const { coaccusals, hasMore, addItemInPinboardPage, requesting } = this.props;
     return (
       <RelevantInfiniteCarousel
         title='COACCUSALS'

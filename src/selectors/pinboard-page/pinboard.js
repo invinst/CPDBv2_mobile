@@ -33,9 +33,9 @@ export const getPinboard = createSelector(
     url: generatePinboardUrl(pinboard),
     itemsCount: countPinnedItems(pinboard),
     ownedByCurrentUser: _.get(pinboard, 'ownedByCurrentUser', false),
-    crItems: _.get(pinboard, 'crItems', []),
-    officerItems: _.get(pinboard, 'officerItems', []),
-    trrItems: _.get(pinboard, 'trrItems', []),
+    crItems: _.get(pinboard, 'crItems.items', []),
+    officerItems: _.get(pinboard, 'officerItems.items', []),
+    trrItems: _.get(pinboard, 'trrItems.items', []),
     isPinboardRestored: _.get(pinboard, 'isPinboardRestored', false),
   })
 );

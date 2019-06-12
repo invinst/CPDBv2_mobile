@@ -142,4 +142,5 @@ PinboardPage.defaultProps = {
   fetchPinboardRelevantCoaccusals: () => {},
   fetchPinboardRelevantComplaints: () => {},
   pushBreadcrumbs: () => {},
+  initialRequested: true,
 };

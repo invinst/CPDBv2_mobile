@@ -4,7 +4,6 @@ import { spy, stub } from 'sinon';
 import * as ReactRouter from 'react-router';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import { Router, createMemoryHistory, Route } from 'react-router';
 
 import PinboardPage from 'components/pinboard-page';
 import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
@@ -18,7 +17,8 @@ describe('<PinboardPage />', function () {
   const defaultPaginationState = {
     items: [],
     count: 0,
-    pagination: { next: null, previous: null }
+    pagination: { next: null, previous: null },
+    requesting: false,
   };
 
   const store = MockStore()({
@@ -30,15 +30,20 @@ describe('<PinboardPage />', function () {
         'crids': ['123456', '654321'],
         'trr_ids': ['123', '456'],
       },
-      graphData: {},
+      graphData: { requesting: false, data: {} },
+      geographicData: { requesting: false, data: [] },
       relevantDocuments: defaultPaginationState,
       relevantCoaccusals: defaultPaginationState,
       relevantComplaints: defaultPaginationState,
+      crItems: { requesting: false, items: [] },
+      officerItems: { requesting: false, items: [] },
+      trrItems: { requesting: false, items: [] },
+      initialRequested: true,
     }
   });
 
   context('when the component is mounted', function () {
-    it('should dispatch only fetchPinboard if ID on params and in store are differenct', function () {
+    it('should dispatch only fetchPinboard if ID on params and in store are different', function () {
       const fetchPinboard = spy();
       const fetchPinboardComplaints = spy();
       const fetchPinboardOfficers = spy();
