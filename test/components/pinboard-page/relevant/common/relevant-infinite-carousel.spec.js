@@ -37,7 +37,7 @@ describe('<RelevantInfiniteCarousel />', function () {
     carousel.find('.test--child-2').exists().should.be.true();
   });
 
-  it('should render nothing if there is no child', function () {
+  it('should render nothing if there is no child and not requesting', function () {
     const loadMoreStub = spy();
     const wrapper = shallow(
       <RelevantInfiniteCarousel

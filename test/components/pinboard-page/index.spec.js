@@ -1,4 +1,5 @@
 import React from 'react';
+import should from 'should';
 import { mount } from 'enzyme';
 import { spy, stub } from 'sinon';
 import * as ReactRouter from 'react-router';
@@ -121,6 +122,18 @@ describe('<PinboardPage />', function () {
       fetchPinboardRelevantCoaccusals.calledWith('5cd06f2b').should.be.true();
       fetchPinboardRelevantComplaints.calledWith('5cd06f2b').should.be.true();
     });
+  });
+
+  it('should render nothing if initialRequested is false', function () {
+    const wrapper = mount(
+      <PinboardPage
+        params={ { pinboardId: '5cd06f2b' } }
+        pinboard={ { id: '5cd06f2b' } }
+        initialRequested={ false }
+      />
+    );
+
+    wrapper.find('div').should.have.length(0);
   });
 
   it('should replace url and get data on ID updated', function () {

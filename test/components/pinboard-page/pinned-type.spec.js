@@ -48,6 +48,12 @@ describe('<PinnedType />', function () {
     loadingSpinner.prop('className').should.equal('type-cards-loading');
   });
 
+  it('should render nothing if no items and not requesting', function () {
+    const wrapper = mount(<PinnedType type='CR' items={ [] } requesting={ false }/>);
+
+    wrapper.find('div').should.have.length(0);
+  });
+
   it('should render newly added item with correct props', function () {
     const items = [{ 'id': '1' }, { 'id': '2' }];
     const pinnedType = mount(<PinnedType type='TRR' items={ items } />);
