@@ -133,4 +133,37 @@ describe('NavigationUtil', function () {
       this.stubScrollTo.calledWith(0, 111).should.be.true();
     });
   });
+
+  describe('getPageYBottomOffset', function () {
+    beforeEach(function () {
+      this.stubOffsetHeight = stub(window.document.body, 'offsetHeight').value(1000);
+      this.stubPageYOffset = stub(window, 'pageYOffset').value(300);
+    });
+
+    afterEach(function () {
+      this.stubOffsetHeight.restore();
+      this.stubPageYOffset.restore();
+    });
+
+    it('should return distance to bottom', function () {
+      NavigationUtil.getPageYBottomOffset().should.equal(700);
+    });
+  });
+
+  describe('scrollByBottomOffset', function () {
+    beforeEach(function () {
+      this.stubOffsetHeight = stub(window.document.body, 'offsetHeight').value(1000);
+      this.stubScrollTo = stub(window, 'scrollTo');
+    });
+
+    afterEach(function () {
+      this.stubOffsetHeight.restore();
+      this.stubScrollTo.restore();
+    });
+
+    it('should return distance to bottom', function () {
+      NavigationUtil.scrollByBottomOffset(400);
+      this.stubScrollTo.should.be.calledWith(0, 600);
+    });
+  });
 });

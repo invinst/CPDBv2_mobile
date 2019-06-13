@@ -7,6 +7,7 @@ import OfficerCard from './cards/officer-card';
 import CRCard from './cards/cr-card';
 import TRRCard from './cards/trr-card';
 import style from './pinned-type.sass';
+import { getPageYBottomOffset, scrollByBottomOffset } from 'utils/navigation-util';
 import LoadingSpinner from 'components/common/loading-spinner';
 
 const CARD_MAP = {
@@ -20,6 +21,7 @@ export default class PinnedType extends Component {
   constructor(props) {
     super(props);
 
+    this.rendered = false;
     this.updateOrder = this.updateOrder.bind(this);
     this.removeItemInPinboardPage = this.removeItemInPinboardPage.bind(this);
   }
@@ -36,11 +38,14 @@ export default class PinnedType extends Component {
     ) {
       this.addedItem = first(differenceBy(nextProps.items, this.props.items, 'id'));
     }
+    this.bottomOffset = this.rendered ? getPageYBottomOffset() : null;
+    this.rendered = true;
   }
 
   componentDidUpdate() {
     this.gridMuuri && this.gridMuuri.destroy();
     this.initGrid();
+    this.bottomOffset && scrollByBottomOffset(this.bottomOffset);
   }
 
   initGrid() {
