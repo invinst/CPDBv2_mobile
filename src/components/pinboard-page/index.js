@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
 import cx from 'classnames';
 
 import styles from './pinboard-page.sass';
@@ -16,56 +15,9 @@ import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
 
 
 export default class PinboardPage extends Component {
-  constructor(props) {
-    super(props);
-    this.fetchPinboardData = this.fetchPinboardData.bind(this);
-  }
-
   componentDidMount() {
-    const { pinboard, fetchPinboard, params, pushBreadcrumbs, location, routes } = this.props;
+    const { params, pushBreadcrumbs, location, routes } = this.props;
     pushBreadcrumbs({ location, routes, params });
-
-    const idOnPath = params.pinboardId;
-    const idInStore = pinboard.id;
-
-    fetchPinboard(idOnPath);
-    if (idOnPath === idInStore) {
-      this.fetchPinboardData(idOnPath);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const prevPinboard = prevProps.pinboard;
-    const { pinboard } = this.props;
-
-    if (prevPinboard.id !== pinboard.id) {
-      this.fetchPinboardData(pinboard.id);
-    }
-
-    if (prevPinboard.url !== pinboard.url) {
-      browserHistory.replace(pinboard.url);
-    }
-  }
-
-  fetchPinboardData(id) {
-    const {
-      fetchPinboardComplaints,
-      fetchPinboardOfficers,
-      fetchPinboardTRRs,
-      fetchPinboardSocialGraph,
-      fetchPinboardGeographicData,
-      fetchPinboardRelevantDocuments,
-      fetchPinboardRelevantCoaccusals,
-      fetchPinboardRelevantComplaints,
-    } = this.props;
-    fetchPinboardComplaints(id);
-    fetchPinboardOfficers(id);
-    fetchPinboardTRRs(id);
-    fetchPinboardSocialGraph(id);
-    fetchPinboardGeographicData(id);
-    fetchPinboardRelevantDocuments(id);
-    fetchPinboardRelevantCoaccusals(id);
-    fetchPinboardRelevantComplaints(id);
   }
 
   renderContent() {
@@ -121,17 +73,7 @@ PinboardPage.propTypes = {
   pushBreadcrumbs: PropTypes.func,
   location: PropTypes.object,
   pinboard: PropTypes.object,
-  fetchPinboard: PropTypes.func,
-  fetchPinboardComplaints: PropTypes.func,
-  fetchPinboardOfficers: PropTypes.func,
-  fetchPinboardTRRs: PropTypes.func,
-  fetchPinboardSocialGraph: PropTypes.func,
-  fetchPinboardGeographicData: PropTypes.func,
-  fetchPinboardRelevantDocuments: PropTypes.func,
-  fetchPinboardRelevantCoaccusals: PropTypes.func,
-  fetchPinboardRelevantComplaints: PropTypes.func,
   changePinboardTab: PropTypes.func,
-  updatePinboardInfo: PropTypes.func,
   currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,
@@ -139,14 +81,5 @@ PinboardPage.propTypes = {
 
 PinboardPage.defaultProps = {
   itemsByTypes: {},
-  fetchPinboard: () => {},
-  fetchPinboardComplaints: () => {},
-  fetchPinboardOfficers: () => {},
-  fetchPinboardTRRs: () => {},
-  fetchPinboardSocialGraph: () => {},
-  fetchPinboardGeographicData: () => {},
-  fetchPinboardRelevantDocuments: () => {},
-  fetchPinboardRelevantCoaccusals: () => {},
-  fetchPinboardRelevantComplaints: () => {},
   pushBreadcrumbs: () => {},
 };
