@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { isEqual } from 'lodash';
 
 import styles from './pinboard-info.sass';
 import AutosaveTextInput from 'components/common/autosave-inputs/autosave-text-input';
@@ -7,27 +6,9 @@ import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-te
 
 
 export default class PinboardInfo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { isLoading } = this.state;
-    if (isLoading) {
-      this.setState({ isLoading: false });
-    }
-  }
-
-  shouldComponentUpdate(nextState) {
-    return !isEqual(this.state, nextState);
-  }
-
   render() {
     const { pinboard, updatePinboardInfo } = this.props;
-    return !this.state.isLoading ? (
+    return (
       <div className={ styles.pinboardInfo }>
         <AutosaveTextInput
           className='pinboard-title'
@@ -45,7 +26,7 @@ export default class PinboardInfo extends Component {
           textareaLineHeight={ 16 }
         />
       </div>
-    ) : null;
+    );
   }
 }
 
