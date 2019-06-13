@@ -28,6 +28,7 @@ export default class RelevantInfiniteCarousel extends Component {
             loadMore={ loadMore }
             className='relevant-infinite-horizontal-scrolling'
             spaceBetween={ 4 }
+            loadMoreThreshold={ 3 }
           >
             { children }
           </HorizontalScrolling>

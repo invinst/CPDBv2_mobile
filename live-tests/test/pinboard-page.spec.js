@@ -829,10 +829,10 @@ describe('Pinboard Page', function () {
       const nthCardSelector = n => relevantCoaccusalsSection.selector +
         ` .swiper-slide:nth-child(${n}) > a:first-child`;
 
-      _.times(3, idx => client.dragAndDrop(nthCardSelector(idx + 2), -100, 0));
+      _.times(1, idx => client.dragAndDrop(nthCardSelector(idx + 2), -148, 0));
       client.assertCount(cardSelector, 8);
 
-      _.times(4, idx => client.dragAndDrop(nthCardSelector(idx + 5), -100, 0));
+      _.times(6, idx => client.dragAndDrop(nthCardSelector(idx + 3), -148, 0));
       client.assertCount(cardSelector, 10);
     });
 
