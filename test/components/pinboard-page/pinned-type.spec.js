@@ -72,21 +72,23 @@ describe('<PinnedType />', function () {
     trrCards.get(2).props.isAdded.should.be.true();
   });
 
-  it('should maintain the scroll position since second rerender', function () {
+  it('should maintain the scroll position since render grid once', function () {
     stub(navigationUtil, 'getPageYBottomOffset').returns(700);
     stub(navigationUtil, 'scrollByBottomOffset');
 
-    const pinnedType = mount(<PinnedType type='TRR' items={ [] } />);
+    const pinnedType = mount(<PinnedType type='TRR' items={ [] } requesting={ false } />);
 
     pinnedType.find('div').should.have.length(0);
 
-    const items = [{ 'id': '1' }, { 'id': '2' }];
-    pinnedType.setProps({ items: items });
+    pinnedType.setProps({ items: [], requesting: true });
+    navigationUtil.scrollByBottomOffset.should.not.be.called();
 
+    const items = [{ 'id': '1' }, { 'id': '2' }];
+    pinnedType.setProps({ items: items, requesting: false });
     navigationUtil.scrollByBottomOffset.should.not.be.called();
 
     const otherItems = [{ 'id': '1' }, { 'id': '2' }, { 'id': '3' }];
-    pinnedType.setProps({ items: otherItems });
+    pinnedType.setProps({ items: otherItems, requesting: false });
 
     navigationUtil.scrollByBottomOffset.should.be.calledOnce();
     navigationUtil.scrollByBottomOffset.should.be.calledWith(700);

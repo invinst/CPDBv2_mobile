@@ -39,7 +39,6 @@ export default class PinnedType extends Component {
       this.addedItem = first(differenceBy(nextProps.items, this.props.items, 'id'));
     }
     this.bottomOffset = this.rendered ? getPageYBottomOffset() : null;
-    this.rendered = true;
   }
 
   componentDidUpdate() {
@@ -80,6 +79,7 @@ export default class PinnedType extends Component {
   }
 
   renderGrid() {
+    this.rendered = true;
     const { type, items } = this.props;
     const Card = CARD_MAP[type];
     this.itemElements = {};
