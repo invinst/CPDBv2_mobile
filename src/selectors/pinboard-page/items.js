@@ -17,7 +17,7 @@ const crPinnedTransform = (cr) => ({
   type: 'CR',
   isPinned: true,
   incidentDate: cr['incident_date'],
-  category: cr['most_common_category'],
+  category: cr['category'],
   point: cr['point'],
 });
 
