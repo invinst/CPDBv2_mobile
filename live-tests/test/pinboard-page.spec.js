@@ -73,7 +73,7 @@ const pinboardCRsData = [
     'crid': '1234567',
     'incident_date': '2010-01-01',
     'point': { 'lon': 1.0, 'lat': 1.0 },
-    'most_common_category': 'Use Of Force',
+    'category': 'Use Of Force',
   }
 ];
 
@@ -354,9 +354,9 @@ const updatedPinboardDescription = () => ({
   'description': 'Updated Description',
 });
 
-const baseRelevantDocumentsUrl = '/api/v2/pinboards/5cd06f2b/relevant-documents/?';
-const baseRelevantCoaccusalsUrl = '/api/v2/pinboards/5cd06f2b/relevant-coaccusals/?';
-const baseRelevantComplaintsUrl = '/api/v2/pinboards/5cd06f2b/relevant-complaints/?';
+const baseRelevantDocumentsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-documents/?';
+const baseRelevantCoaccusalsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-coaccusals/?';
+const baseRelevantComplaintsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-complaints/?';
 
 const firstRelevantDocumentOfficer = {
   'id': 123,
@@ -508,10 +508,10 @@ function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
     api.mock('GET', '/api/v2/mobile/officers/123/', 200, officer123);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, pinboardData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/complaints/', 200, pinboardCRsData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/officers/', 200, pinboardOfficersData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/trrs/', 200, pinboardTRRsData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, pinboardData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, pinboardCRsData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, pinboardOfficersData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, pinboardTRRsData);
     api.mock('GET', '/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b', 200, socialGraphData);
     api.mock('GET', '/api/v2/mobile/social-graph/geographic/?pinboard_id=5cd06f2b', 200, geographicData);
 
@@ -528,12 +528,12 @@ describe('Pinboard Page', function () {
     api.mock('GET', `${baseRelevantComplaintsUrl}limit=4&offset=8`, 200, lastRelevantComplaintsResponse);
 
     api.mockPut(
-      '/api/v2/pinboards/5cd06f2b/', 200,
+      '/api/v2/mobile/pinboards/5cd06f2b/', 200,
       updatePinboardTitleParams(),
       updatedPinboardTitle()
     );
     api.mockPut(
-      '/api/v2/pinboards/5cd06f2b/', 200,
+      '/api/v2/mobile/pinboards/5cd06f2b/', 200,
       updatePinboardDescriptionParams(),
       updatedPinboardDescription()
     );
