@@ -22,6 +22,7 @@ import {
   updatePinboardInfoState,
   performFetchPinboardRelatedData
 } from 'actions/pinboard';
+import { showToast } from 'actions/toast';
 import { getPathname } from 'selectors/common/routing';
 
 
@@ -53,9 +54,16 @@ function dispatchUpdateOrCreatePinboard(store, currentPinboard) {
 
 export default store => next => action => {
   if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD || action.type === ADD_ITEM_IN_PINBOARD_PAGE) {
-    const addOrRemove = action.payload.isPinned ? removeItemFromPinboardState : addItemToPinboardState;
+    let promises = [];
 
-    Promise.all([store.dispatch(addOrRemove(action.payload))]).finally(() => {
+    const addOrRemove = action.payload.isPinned ? removeItemFromPinboardState : addItemToPinboardState;
+    promises.push(store.dispatch(addOrRemove(action.payload)));
+
+    if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD) {
+      promises.push(store.dispatch(showToast(action.payload)));
+    }
+
+    Promise.all(promises).finally(() => {
       store.dispatch(savePinboard());
     });
   }

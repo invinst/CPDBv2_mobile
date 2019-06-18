@@ -1,6 +1,8 @@
 import React from 'react';
 import { Router, Route, IndexRoute, Redirect } from 'react-router';
 import Modal from 'react-modal';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import AppHistory from 'utils/history';
 import constants from 'constants';
@@ -23,75 +25,86 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import 'styles/fonts.sass';
 import 'styles/style.sass';
 import 'styles/helper.sass';
+import 'styles/toast.sass';
 
 Modal.setAppElement('body');
+toast.configure();
 
 const App = React.createClass({
   render() {
     return (
-      <Router history={ AppHistory }>
-        <Route
-          path='/(edit)'
-          component={ MainPageContainer }
-          breadcrumbKey='/'
-        >
-          <IndexRoute
+      <div>
+        <Router history={ AppHistory }>
+          <Route
+            path='/(edit)'
+            component={ MainPageContainer }
             breadcrumbKey='/'
-            breadcrumb='cpdp'
-            component={ LandingPageContainer } />
+          >
+            <IndexRoute
+              breadcrumbKey='/'
+              breadcrumb='cpdp'
+              component={ LandingPageContainer } />
 
-          <Route
-            breadcrumbKey={ constants.ABOUT_PATH }
-            path={ constants.ABOUT_PATH }
-            component={ AboutPageContainer } />
-
-          <Route
-            breadcrumb='Search'
-            path={ constants.SEARCH_PATH }
-            component={ SearchPageContainer }>
             <Route
-              path={ constants.SEARCH_PATH + ':query' }
-              component={ SearchPageContainer }
-              useParentBreadcrumb={ true } />
+              breadcrumbKey={ constants.ABOUT_PATH }
+              path={ constants.ABOUT_PATH }
+              component={ AboutPageContainer } />
+
+            <Route
+              breadcrumb='Search'
+              path={ constants.SEARCH_PATH }
+              component={ SearchPageContainer }>
+              <Route
+                path={ constants.SEARCH_PATH + ':query' }
+                component={ SearchPageContainer }
+                useParentBreadcrumb={ true } />
+            </Route>
+
+            <Route
+              breadcrumbKey={ `${constants.OFFICER_PATH}:id` }
+              path={ `${constants.OFFICER_PATH}:id(/:firstParam)(/:secondParam)` }
+              breadcrumb={ BreadcrumbItemContainer }
+              component={ OfficerPageContainer }> >
+            </Route>
+
+            <Route
+              path={ `${constants.COMPLAINT_PATH}:complaintId/` }
+              breadcrumb={ BreadcrumbItemContainer }
+              component={ ComplaintPageContainer }
+            />
+
+            <Route
+              path={ `${constants.TRR_PATH}:trrId/` }
+              breadcrumb={ BreadcrumbItemContainer }
+              component={ TRRPageContainer }
+            />
+
+            <Route
+              path={ `${constants.PINBOARD_PATH}:pinboardId/(:pinboardTitle/)` }
+              breadcrumb={ BreadcrumbItemContainer }
+              component={ PinboardPageContainer }
+            />
+
           </Route>
-
           <Route
-            breadcrumbKey={ `${constants.OFFICER_PATH}:id` }
-            path={ `${constants.OFFICER_PATH}:id(/:firstParam)(/:secondParam)` }
-            breadcrumb={ BreadcrumbItemContainer }
-            component={ OfficerPageContainer }> >
-          </Route>
-
+            path={ constants.EMBED_TOP_OFFICER_PATH }
+            component={ TopOfficersByAllegationContainer }
+          />
           <Route
-            path={ `${constants.COMPLAINT_PATH}:complaintId/` }
-            breadcrumb={ BreadcrumbItemContainer }
-            component={ ComplaintPageContainer }
+            path={ constants.EMBED_OFFICERS_PATH }
+            component={ OfficersContainer }
           />
 
-          <Route
-            path={ `${constants.TRR_PATH}:trrId/` }
-            breadcrumb={ BreadcrumbItemContainer }
-            component={ TRRPageContainer }
-          />
+          <Redirect from='*' to='/'/>
+        </Router>
 
-          <Route
-            path={ `${constants.PINBOARD_PATH}:pinboardId/(:pinboardTitle/)` }
-            breadcrumb={ BreadcrumbItemContainer }
-            component={ PinboardPageContainer }
-          />
-
-        </Route>
-        <Route
-          path={ constants.EMBED_TOP_OFFICER_PATH }
-          component={ TopOfficersByAllegationContainer }
+        <ToastContainer
+          pauseOnFocusLoss={ false }
+          closeButton={ false }
+          hideProgressBar={ true }
+          autoClose={ 3000 }
         />
-        <Route
-          path={ constants.EMBED_OFFICERS_PATH }
-          component={ OfficersContainer }
-        />
-
-        <Redirect from='*' to='/'/>
-      </Router>
+      </div>
     );
   }
 });

@@ -4,7 +4,6 @@ import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
 import ReactHeight from 'react-height';
 
-import * as NavigationUtil from 'utils/navigation-util';
 import * as IntercomUtils from 'utils/intercom';
 import SearchPage from 'components/search-page';
 import SearchCategory from 'components/search-page/search-category';
@@ -399,5 +398,21 @@ describe('<SearchPage />', function () {
         IntercomTracking.trackSearchPage.called.should.be.true();
       });
     });
+  });
+
+  it('should show toast on toast prop change', function () {
+    const showToastStub = spy(SearchPage.prototype, 'showToast');
+
+    const wrapper = shallow(
+      <SearchPage />
+    );
+    wrapper.setProps({
+      toast: {
+        type: 'OFFICER',
+        actionType: 'added',
+      }
+    });
+
+    showToastStub.should.be.called();
   });
 });
