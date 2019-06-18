@@ -28,6 +28,7 @@ export default class PinboardPage extends Component {
       params,
       initialRequested,
       isEmptyPinboard,
+      examplePinboards,
     } = this.props;
 
     if (!initialRequested) {
@@ -35,7 +36,7 @@ export default class PinboardPage extends Component {
     }
 
     if (isEmptyPinboard) {
-      return EmptyPinboard;
+      return <EmptyPinboard examplePinboards={ examplePinboards } />;
     }
 
     return (
@@ -83,6 +84,7 @@ PinboardPage.propTypes = {
   hasMapMarker: PropTypes.bool,
   initialRequested: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,
+  examplePinboards: PropTypes.array,
 };
 
 PinboardPage.defaultProps = {
