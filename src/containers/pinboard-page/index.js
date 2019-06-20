@@ -6,6 +6,7 @@ import { getPinboard, isEmptyPinboardSelector } from 'selectors/pinboard-page/pi
 import PinboardPage from 'components/pinboard-page';
 import { hasMapMarkersSelector, getCurrentTab } from 'selectors/pinboard-page/geographic-data';
 import { changePinboardTab } from 'actions/pinboard';
+import { getInitialRequested } from 'selectors/pinboard-page/pinboard';
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -13,6 +14,7 @@ const mapStateToProps = (state, ownProps) => ({
   pinboard: getPinboard(state),
   currentTab: getCurrentTab(state),
   hasMapMarker: hasMapMarkersSelector(state),
+  initialRequested: getInitialRequested(state),
   isEmptyPinboard: isEmptyPinboardSelector(state),
 });
 

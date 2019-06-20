@@ -1,41 +1,57 @@
-import { pinnedOfficersSelector, pinnedCRsSelector, pinnedTRRsSelector } from 'selectors/pinboard-page/items';
+import {
+  pinnedOfficersSelector,
+  pinnedCRsSelector,
+  pinnedTRRsSelector,
+  getPinnedCRsRequesting,
+  getPinnedOfficersRequesting,
+  getPinnedTRRsRequesting,
+} from 'selectors/pinboard-page/items';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 
 
 describe('PinboardPage Items selectors', function () {
   const state = {
     pinboardPage: PinboardFactory.build({
-      crItems: [{
-        crid: '1000001',
-        'incident_date': '2010-01-01',
-        point: { 'lon': 1.0, 'lat': 1.0 },
-        'most_common_category': 'Use Of Force',
-      }],
-      officerItems: [{
-        id: 1,
-        'full_name': 'Daryl Mack',
-        'complaint_count': 0,
-        'sustained_count': 0,
-        'birth_year': 1975,
-        'complaint_percentile': 99.3450,
-        race: 'White',
-        gender: 'Male',
-        rank: 'Police Officer',
-        percentile: {
-          'percentile_trr': '12.0000',
-          'percentile_allegation': '99.3450',
-          'percentile_allegation_civilian': '98.4344',
-          'percentile_allegation_internal': '99.7840',
-          year: 2016,
+      crItems: {
+        requesting: false,
+        items: [{
+          crid: '1000001',
+          'incident_date': '2010-01-01',
+          point: { 'lon': 1.0, 'lat': 1.0 },
+          'most_common_category': 'Use Of Force',
+        }],
+      },
+      officerItems: {
+        requesting: false,
+        items: [{
           id: 1,
-        }
-      }],
-      trrItems: [{
-        id: 1,
-        'trr_datetime': '2012-01-01',
-        category: 'Impact Weapon',
-        point: { 'lon': 1.0, 'lat': 1.0 },
-      }],
+          'full_name': 'Daryl Mack',
+          'complaint_count': 0,
+          'sustained_count': 0,
+          'birth_year': 1975,
+          'complaint_percentile': 99.3450,
+          race: 'White',
+          gender: 'Male',
+          rank: 'Police Officer',
+          percentile: {
+            'percentile_trr': '12.0000',
+            'percentile_allegation': '99.3450',
+            'percentile_allegation_civilian': '98.4344',
+            'percentile_allegation_internal': '99.7840',
+            year: 2016,
+            id: 1,
+          }
+        }],
+      },
+      trrItems: {
+        requesting: false,
+        items: [{
+          id: 1,
+          'trr_datetime': '2012-01-01',
+          category: 'Impact Weapon',
+          point: { 'lon': 1.0, 'lat': 1.0 },
+        }],
+      },
     })
   };
 
@@ -95,6 +111,72 @@ describe('PinboardPage Items selectors', function () {
         trrDate: '2012-01-01',
         point: { lon: 1, lat: 1 },
       }]);
+    });
+  });
+
+  describe('getPinnedCRsRequesting', function () {
+    it('should return requesting status', function () {
+      getPinnedCRsRequesting({
+        pinboardPage: {
+          crItems: {
+            requesting: true,
+            items: [],
+          },
+        }
+      }).should.be.true();
+
+      getPinnedCRsRequesting({
+        pinboardPage: {
+          crItems: {
+            requesting: false,
+            items: [],
+          },
+        }
+      }).should.be.false();
+    });
+  });
+
+  describe('getPinnedOfficersRequesting', function () {
+    it('should return requesting status', function () {
+      getPinnedOfficersRequesting({
+        pinboardPage: {
+          officerItems: {
+            requesting: true,
+            items: [],
+          },
+        }
+      }).should.be.true();
+
+      getPinnedOfficersRequesting({
+        pinboardPage: {
+          officerItems: {
+            requesting: false,
+            items: [],
+          },
+        }
+      }).should.be.false();
+    });
+  });
+
+  describe('getPinnedTRRsRequesting', function () {
+    it('should return requesting status', function () {
+      getPinnedTRRsRequesting({
+        pinboardPage: {
+          trrItems: {
+            requesting: true,
+            items: [],
+          },
+        }
+      }).should.be.true();
+
+      getPinnedTRRsRequesting({
+        pinboardPage: {
+          trrItems: {
+            requesting: false,
+            items: [],
+          },
+        }
+      }).should.be.false();
     });
   });
 });
