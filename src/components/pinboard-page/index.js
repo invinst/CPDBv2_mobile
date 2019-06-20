@@ -27,15 +27,20 @@ export default class PinboardPage extends Component {
       currentTab,
       hasMapMarker,
       params,
+      initialRequested,
       isEmptyPinboard,
     } = this.props;
+
+    if (!initialRequested) {
+      return null;
+    }
 
     if (isEmptyPinboard) {
       return EmptyPinboard;
     }
 
     return (
-      <div>
+      <div className='pinboard-content'>
         <PinboardInfoContainer />
         <div className='data-visualizations'>
           <TrackVisibility partialVisibility={ true }>
@@ -79,10 +84,12 @@ PinboardPage.propTypes = {
   changePinboardTab: PropTypes.func,
   currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
+  initialRequested: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,
 };
 
 PinboardPage.defaultProps = {
   itemsByTypes: {},
   pushBreadcrumbs: () => {},
+  initialRequested: true,
 };

@@ -8,6 +8,7 @@ import cx from 'classnames';
 import SocialGraph from './social-graph';
 import styles from './animated-social-graph.sass';
 import sliderStyles from 'components/common/slider.sass';
+import withLoadingSpinner from 'components/common/with-loading-spinner';
 
 const AMINATE_SPEED = 150;
 
@@ -132,15 +133,17 @@ export default class AnimatedSocialGraph extends Component {
     return (
       <div className={ styles.animatedSocialGraph }>
         {
-          !isEmpty(officers) && <SocialGraph
-            officers={ officers }
-            coaccusedData={ coaccusedData }
-            listEvent={ listEvent }
-            timelineIdx={ timelineIdx }
-            startTimelineFromBeginning={ this.startTimelineFromBeginning }
-            collideNodes={ !refreshIntervalId }
-            stopTimeline={ this.stopTimeline }
-          />
+          isEmpty(officers) || (
+            <SocialGraph
+              officers={ officers }
+              coaccusedData={ coaccusedData }
+              listEvent={ listEvent }
+              timelineIdx={ timelineIdx }
+              startTimelineFromBeginning={ this.startTimelineFromBeginning }
+              collideNodes={ !refreshIntervalId }
+              stopTimeline={ this.stopTimeline }
+            />
+          )
         }
         { this.graphControlPanel() }
       </div>
@@ -158,3 +161,5 @@ AnimatedSocialGraph.propTypes = {
 AnimatedSocialGraph.defaultProps = {
   isVisible: true,
 };
+
+export const AnimatedSocialGraphWithSpinner = withLoadingSpinner(AnimatedSocialGraph, styles.socialGraphLoading);

@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 
-import { graphDataSelector } from 'selectors/pinboard-page/social-graph';
-import AnimatedSocialGraph from 'components/common/animated-social-graph';
+import { graphDataSelector, getRequesting } from 'selectors/pinboard-page/social-graph';
+import { AnimatedSocialGraphWithSpinner } from 'components/common/animated-social-graph';
 
 function mapStateToProps(state, ownProps) {
   return {
+    requesting: getRequesting(state),
     officers: graphDataSelector(state).officers,
     coaccusedData: graphDataSelector(state).coaccusedData,
     listEvent: graphDataSelector(state).listEvent,
@@ -12,4 +13,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(AnimatedSocialGraph);
+export default connect(mapStateToProps)(AnimatedSocialGraphWithSpinner);

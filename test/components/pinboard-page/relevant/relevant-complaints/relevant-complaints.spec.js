@@ -76,6 +76,7 @@ describe('<RelevantComplaints />', function () {
 
     const wrapper = shallow(
       <RelevantComplaints
+        requesting={ false }
         addItemInPinboardPage={ addItemInPinboardPageStub }
         fetchPinboardRelevantComplaints={ fetchPinboardRelevantComplaintsStub }
         complaints={ complaints }
@@ -88,6 +89,7 @@ describe('<RelevantComplaints />', function () {
     const relevantInfiniteCarousel = wrapper.find(RelevantInfiniteCarousel);
     relevantInfiniteCarousel.prop('title').should.eql('COMPLAINTS');
     relevantInfiniteCarousel.prop('hasMore').should.be.true();
+    relevantInfiniteCarousel.prop('requesting').should.be.false();
 
     const RelevantComplaintCards = relevantInfiniteCarousel.find(RelevantComplaintCard);
     RelevantComplaintCards.should.have.length(2);
