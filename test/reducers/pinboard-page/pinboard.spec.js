@@ -112,6 +112,15 @@ describe('Pinboard reducer', function () {
           'officer_ids': [1],
           crids: ['abc'],
           'trr_ids': [1],
+          'example_pinboards': [{
+            id: '66ef1561',
+            title: 'Pinboard 1',
+            description: 'Description 1'
+          }, {
+            id: '66ef1562',
+            title: 'Pinboard 2',
+            description: 'Description 2'
+          }],
         }
       }
     ).should.deepEqual({
@@ -123,6 +132,15 @@ describe('Pinboard reducer', function () {
       'description': '',
       'saving': false,
       'isPinboardRestored': false,
+      'example_pinboards': [{
+        id: '66ef1561',
+        title: 'Pinboard 1',
+        description: 'Description 1'
+      }, {
+        id: '66ef1562',
+        title: 'Pinboard 2',
+        description: 'Description 2'
+      }],
     });
   });
 
