@@ -133,9 +133,7 @@ describe('Empty Pinboard Page', function () {
       'Or use an example pinboard as a baseline to get started.'
     );
     this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Watts Crew');
-    this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain(
-      'Officers with at least 10 complaints against them generate 64% of all complaints.'
-    );
+    this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Officers with at');
 
     this.emptyPinboardPage.click('@firstExamplePinboardRow');
 
@@ -155,9 +153,7 @@ describe('Empty Pinboard Page', function () {
       'Or use an example pinboard as a baseline to get started.'
     );
     this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('Skullcap Crew');
-    this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain(
-      'It is a nickname given to a group of five Chicago Police officers in a...'
-    );
+    this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('It is a nickname');
 
     this.emptyPinboardPage.click('@secondExamplePinboardRow');
 
