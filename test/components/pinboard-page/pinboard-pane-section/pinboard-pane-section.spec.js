@@ -79,7 +79,7 @@ describe('PinboardPaneSection component', function () {
   it('should render network tab', function () {
     wrapper = mount(
       <Provider store={ store }>
-        <PinboardPaneSection currentTab={ constants.PINBOARD_PAGE_TAB_NAMES.NETWORK }/>
+        <PinboardPaneSection currentTab={ constants.PINBOARD_PAGE.TAB_NAMES.NETWORK }/>
       </Provider>
     );
 
@@ -89,7 +89,7 @@ describe('PinboardPaneSection component', function () {
   it('should render geographic tab', function () {
     wrapper = mount(
       <Provider store={ store }>
-        <PinboardPaneSection currentTab={ constants.PINBOARD_PAGE_TAB_NAMES.GEOGRAPHIC }/>
+        <PinboardPaneSection currentTab={ constants.PINBOARD_PAGE.TAB_NAMES.GEOGRAPHIC }/>
       </Provider>
     );
 
