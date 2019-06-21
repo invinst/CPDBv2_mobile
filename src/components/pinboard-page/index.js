@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
+import TrackVisibility from 'react-on-screen';
 
 import styles from './pinboard-page.sass';
 import SearchBar from './search-bar';
@@ -26,22 +27,29 @@ export default class PinboardPage extends Component {
       currentTab,
       hasMapMarker,
       params,
+      initialRequested,
       isEmptyPinboard,
     } = this.props;
+
+    if (!initialRequested) {
+      return null;
+    }
 
     if (isEmptyPinboard) {
       return EmptyPinboard;
     }
 
     return (
-      <div>
+      <div className='pinboard-content'>
         <PinboardInfoContainer />
         <div className='data-visualizations'>
-          <PinboardPaneSection
-            changePinboardTab={ changePinboardTab }
-            currentTab={ currentTab }
-            hasMapMarker={ hasMapMarker }
-          />
+          <TrackVisibility partialVisibility={ true }>
+            <PinboardPaneSection
+              changePinboardTab={ changePinboardTab }
+              currentTab={ currentTab }
+              hasMapMarker={ hasMapMarker }
+            />
+          </TrackVisibility>
         </div>
         <div className='pinned-section'>
           <PinnedOfficersContainer/>
@@ -76,10 +84,12 @@ PinboardPage.propTypes = {
   changePinboardTab: PropTypes.func,
   currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
+  initialRequested: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,
 };
 
 PinboardPage.defaultProps = {
   itemsByTypes: {},
   pushBreadcrumbs: () => {},
+  initialRequested: true,
 };

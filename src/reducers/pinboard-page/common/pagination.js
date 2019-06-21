@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 
+import createRequestingReducer from 'reducers/common/requesting';
+
 
 const paginateReducer = (state, action) => {
   if (action.payload.previous) {
@@ -28,12 +30,14 @@ const createPaginationReducer = (successType, failureType) => handleActions({
 }, { next: null, previous: null });
 
 
-export default (successType, failureType, customItemsHandler={}) => {
+export default (startType, successType, failureType, customItemsHandler={}) => {
   const items = createItemsReducer(successType, customItemsHandler);
   const count = createCountReducer(successType);
   const pagination = createPaginationReducer(successType, failureType);
+  const requesting = createRequestingReducer(startType, successType, failureType);
 
   return combineReducers({
+    requesting,
     items,
     count,
     pagination,

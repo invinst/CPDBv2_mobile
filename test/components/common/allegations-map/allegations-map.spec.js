@@ -2,7 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { mapboxgl } from 'utils/mapbox';
 
-import AllegationsMap from 'components/common/allegations-map';
+import AllegationsMap, { AllegationsMapWithSpinner } from 'components/common/allegations-map';
+import Legend from 'components/common/allegations-map/legend';
+import LoadingSpinner from 'components/common/loading-spinner';
+import mapStyles from 'components/common/allegations-map/allegations-map.sass';
 
 
 describe('Map component', function () {
@@ -53,6 +56,8 @@ describe('Map component', function () {
 
   it('should render officer map and legend', function () {
     const wrapper = mount(<AllegationsMap legend={ legend } markers={ markers } />);
+
+    wrapper.find(LoadingSpinner).exists().should.be.false();
     wrapper.find('.test--map').should.have.length(1);
     wrapper.find('.test--legend').should.have.length(1);
   });
@@ -67,5 +72,18 @@ describe('Map component', function () {
     wrapper.find('.test--legend').should.have.length(1);
     const marker = new mapboxgl.Marker();
     marker.remove.callCount.should.equal(3);
+  });
+
+  context('WithSpinner', function () {
+    it('should render only loading spinner if requesting is true ', function () {
+      const wrapper = mount(<AllegationsMapWithSpinner legend={ legend } requesting={ true } />);
+
+      const loadingSpinner = wrapper.find(LoadingSpinner);
+      loadingSpinner.prop('className').should.equal(mapStyles.allegationMapLoading);
+
+      wrapper.find(AllegationsMap).should.have.length(0);
+      wrapper.find(Legend).should.have.length(0);
+      wrapper.find('map-tab').should.have.length(0);
+    });
   });
 });

@@ -14,7 +14,7 @@ describe('<PlusButton />', function () {
         onClick={ onClickStub }
       />
     );
-    wrapper.prop('className').should.eql('custom-class-name');
+    wrapper.prop('className').should.containEql('custom-class-name');
 
     wrapper.find('.inner-plus').exists().should.be.true();
     wrapper.simulate('click', { preventDefault: () => {} });

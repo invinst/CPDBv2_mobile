@@ -18,7 +18,8 @@ describe('<PinboardPage />', function () {
   const defaultPaginationState = {
     items: [],
     count: 0,
-    pagination: { next: null, previous: null }
+    pagination: { next: null, previous: null },
+    requesting: false,
   };
 
   const store = MockStore()({
@@ -30,11 +31,28 @@ describe('<PinboardPage />', function () {
         'crids': ['123456', '654321'],
         'trr_ids': ['123', '456'],
       },
-      graphData: {},
+      graphData: { requesting: false, data: {} },
+      geographicData: { requesting: false, data: [] },
       relevantDocuments: defaultPaginationState,
       relevantCoaccusals: defaultPaginationState,
       relevantComplaints: defaultPaginationState,
+      crItems: { requesting: false, items: [] },
+      officerItems: { requesting: false, items: [] },
+      trrItems: { requesting: false, items: [] },
+      initialRequested: true,
     }
+  });
+
+  it('should not render the pinboard if initialRequested is false', function () {
+    const wrapper = mount(
+      <PinboardPage
+        params={ { pinboardId: '5cd06f2b' } }
+        pinboard={ { id: '5cd06f2b' } }
+        initialRequested={ false }
+      />
+    );
+
+    wrapper.find('pinboard-content').exists().should.be.false();
   });
 
   it('should render PinnedSection component', function () {

@@ -8,6 +8,7 @@ import cx from 'classnames';
 import SocialGraph from './social-graph';
 import styles from './animated-social-graph.sass';
 import sliderStyles from 'components/common/slider.sass';
+import withLoadingSpinner from 'components/common/with-loading-spinner';
 
 const AMINATE_SPEED = 150;
 
@@ -17,7 +18,7 @@ export default class AnimatedSocialGraph extends Component {
     super(props);
     this.state = {
       timelineIdx: 0,
-      refreshIntervalId: null
+      refreshIntervalId: null,
     };
 
     this.startTimelineFromBeginning = this.startTimelineFromBeginning.bind(this);
@@ -62,11 +63,14 @@ export default class AnimatedSocialGraph extends Component {
   }
 
   intervalTickTimeline() {
+    const { isVisible } = this.props;
     const { timelineIdx } = this.state;
-    if (timelineIdx < this.props.listEvent.length - 1) {
-      this.setState({ timelineIdx: timelineIdx + 1 });
-    } else {
-      this.stopTimeline();
+    if (isVisible) {
+      if (timelineIdx < this.props.listEvent.length - 1) {
+        this.setState({ timelineIdx: timelineIdx + 1 });
+      } else {
+        this.stopTimeline();
+      }
     }
   }
 
@@ -82,7 +86,7 @@ export default class AnimatedSocialGraph extends Component {
   }
 
   graphControlPanel() {
-    const { listEvent } = this.props;
+    const { listEvent, isVisible } = this.props;
     const { timelineIdx, refreshIntervalId } = this.state;
     if (listEvent) {
       const numOfEvents = listEvent.length;
@@ -110,7 +114,7 @@ export default class AnimatedSocialGraph extends Component {
             />
             <div className='graph-actions'>
               <button
-                className={ cx('toggle-timeline-btn', refreshIntervalId ? 'pause-icon' : 'play-icon') }
+                className={ cx('toggle-timeline-btn', (refreshIntervalId && isVisible) ? 'pause-icon' : 'play-icon') }
                 onClick={ this.toggleTimeline }
               />
               <span className='current-date-label'>{ currentDateString }</span>
@@ -129,15 +133,17 @@ export default class AnimatedSocialGraph extends Component {
     return (
       <div className={ styles.animatedSocialGraph }>
         {
-          !isEmpty(officers) && <SocialGraph
-            officers={ officers }
-            coaccusedData={ coaccusedData }
-            listEvent={ listEvent }
-            timelineIdx={ timelineIdx }
-            startTimelineFromBeginning={ this.startTimelineFromBeginning }
-            collideNodes={ !refreshIntervalId }
-            stopTimeline={ this.stopTimeline }
-          />
+          isEmpty(officers) || (
+            <SocialGraph
+              officers={ officers }
+              coaccusedData={ coaccusedData }
+              listEvent={ listEvent }
+              timelineIdx={ timelineIdx }
+              startTimelineFromBeginning={ this.startTimelineFromBeginning }
+              collideNodes={ !refreshIntervalId }
+              stopTimeline={ this.stopTimeline }
+            />
+          )
         }
         { this.graphControlPanel() }
       </div>
@@ -149,4 +155,11 @@ AnimatedSocialGraph.propTypes = {
   officers: PropTypes.array,
   coaccusedData: PropTypes.array,
   listEvent: PropTypes.array,
+  isVisible: PropTypes.bool,
 };
+
+AnimatedSocialGraph.defaultProps = {
+  isVisible: true,
+};
+
+export const AnimatedSocialGraphWithSpinner = withLoadingSpinner(AnimatedSocialGraph, styles.socialGraphLoading);

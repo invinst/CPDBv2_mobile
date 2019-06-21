@@ -4,9 +4,10 @@ import { spy, useFakeTimers } from 'sinon';
 import Slider from 'rc-slider';
 import should from 'should';
 
-import AnimatedSocialGraph from 'components/common/animated-social-graph';
+import AnimatedSocialGraph, { AnimatedSocialGraphWithSpinner } from 'components/common/animated-social-graph';
 import SocialGraph from 'components/common/animated-social-graph/social-graph';
-
+import LoadingSpinner from 'components/common/loading-spinner';
+import graphStyles from 'components/common/animated-social-graph/animated-social-graph.sass';
 
 
 describe('AnimatedSocialGraph component', function () {
@@ -180,5 +181,24 @@ describe('AnimatedSocialGraph component', function () {
     const stopTimelineSpy = spy(instance, 'stopTimeline');
     wrapper.unmount();
     stopTimelineSpy.called.should.be.true();
+  });
+
+  context('withLoadingSpinner', function () {
+    it('should render LoadingSpinner only if requesting is true', function () {
+      const wrapper = mount(
+        <AnimatedSocialGraphWithSpinner
+          officers={ officers }
+          coaccusedData={ coaccusedData }
+          listEvent={ listEvent }
+          requesting={ true }
+        />
+      );
+
+      wrapper.find(SocialGraph).should.have.length(0);
+      wrapper.find('graph-control-panel').should.have.length(0);
+
+      const loadingSpinner = wrapper.find(LoadingSpinner);
+      loadingSpinner.prop('className').should.equal(graphStyles.socialGraphLoading);
+    });
   });
 });

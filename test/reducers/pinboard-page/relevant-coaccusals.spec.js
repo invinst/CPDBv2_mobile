@@ -1,16 +1,31 @@
 import relevantCoaccusals from 'reducers/pinboard-page/relevant-coaccusals';
 import {
+  PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_START,
   PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_FAILURE,
   PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_SUCCESS,
   ADD_ITEM_TO_PINBOARD_STATE,
 } from 'actions/pinboard';
 
 
-const defaultState = { items: [], count: 0, pagination: { next: null, previous: null } };
+const defaultState = { requesting: false, items: [], count: 0, pagination: { next: null, previous: null } };
 
 describe('relevantCoaccusals reducer', function () {
   it('should have initial state', function () {
     relevantCoaccusals(undefined, {}).should.eql(defaultState);
+  });
+
+  it('should handle PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_START', function () {
+    relevantCoaccusals(defaultState, {
+      type: PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_START,
+    }).should.eql({
+      requesting: true,
+      items: [],
+      count: 0,
+      pagination: {
+        next: null,
+        previous: null
+      },
+    });
   });
 
   it('should handle PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_SUCCESS', function () {
@@ -50,6 +65,7 @@ describe('relevantCoaccusals reducer', function () {
         results: coaccusals,
       }
     }).should.eql({
+      requesting: false,
       items: coaccusals,
       count: 444,
       pagination: {
@@ -129,6 +145,7 @@ describe('relevantCoaccusals reducer', function () {
         results: newCoaccusals,
       }
     }).should.eql({
+      requesting: false,
       items: existingCoaccusals.concat(newCoaccusals),
       count: 444,
       pagination: {
@@ -179,6 +196,7 @@ describe('relevantCoaccusals reducer', function () {
       type: PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_FAILURE,
       payload: {}
     }).should.eql({
+      requesting: false,
       items: existingCoaccusals,
       count: 444,
       pagination: { next: null, previous: null },
@@ -221,7 +239,8 @@ describe('relevantCoaccusals reducer', function () {
       pagination: {
         next: '/pinboards/66ef1560/relevant-coaccusals/?limit=20&offset=40',
         previous: '/pinboards/66ef1560/relevant-coaccusals/?',
-      }
+      },
+      requesting: false,
     };
 
     relevantCoaccusals(currentState, {
@@ -251,6 +270,7 @@ describe('relevantCoaccusals reducer', function () {
         next: '/pinboards/66ef1560/relevant-coaccusals/?limit=20&offset=40',
         previous: '/pinboards/66ef1560/relevant-coaccusals/?',
       },
+      requesting: false,
     });
   });
 
@@ -290,7 +310,8 @@ describe('relevantCoaccusals reducer', function () {
       pagination: {
         next: '/pinboards/66ef1560/relevant-coaccusals/?limit=20&offset=40',
         previous: '/pinboards/66ef1560/relevant-coaccusals/?',
-      }
+      },
+      requesting: false,
     };
 
     relevantCoaccusals(currentState, {
@@ -306,6 +327,7 @@ describe('relevantCoaccusals reducer', function () {
         next: '/pinboards/66ef1560/relevant-coaccusals/?limit=20&offset=40',
         previous: '/pinboards/66ef1560/relevant-coaccusals/?',
       },
+      requesting: false,
     });
   });
 });

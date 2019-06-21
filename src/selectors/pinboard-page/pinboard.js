@@ -1,6 +1,7 @@
 import { get, map, kebabCase, isEmpty, every } from 'lodash';
 import { createSelector } from 'reselect';
 
+export const getInitialRequested = state => get(state, 'pinboardPage.initialRequested', false);
 
 export const generatePinboardUrl = pinboard => {
   if (pinboard === null || pinboard['id'] === null) {
@@ -32,9 +33,9 @@ export const getPinboard = createSelector(
     url: generatePinboardUrl(pinboard),
     itemsCount: countPinnedItems(pinboard),
     ownedByCurrentUser: get(pinboard, 'ownedByCurrentUser', false),
-    crItems: get(pinboard, 'crItems', []),
-    officerItems: get(pinboard, 'officerItems', []),
-    trrItems: get(pinboard, 'trrItems', []),
+    crItems: get(pinboard, 'crItems.items', []),
+    officerItems: get(pinboard, 'officerItems.items', []),
+    trrItems: get(pinboard, 'trrItems.items', []),
     isPinboardRestored: get(pinboard, 'isPinboardRestored', false),
   })
 );
