@@ -23,6 +23,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import 'styles/fonts.sass';
 import 'styles/style.sass';
 import 'styles/helper.sass';
+import 'styles/custom-mapbox-gl.sass';
 
 Modal.setAppElement('body');
 
