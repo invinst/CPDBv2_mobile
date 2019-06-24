@@ -111,9 +111,9 @@ describe('<SearchPage />', function () {
     });
   });
 
-  it('should call pushBreadcrumb when mounted and updating', function () {
+  it('should call pushBreadcrumb when mounted', function () {
     const pushBreadcrumbsSpy = spy();
-    const wrapper = mount(
+    mount(
       <SearchPage
         pushBreadcrumbs={ pushBreadcrumbsSpy }
         queryChanged={ () => {} }
@@ -124,14 +124,6 @@ describe('<SearchPage />', function () {
     );
     pushBreadcrumbsSpy.calledWith({
       location: 'location',
-      routes: 'routes',
-      params: 'params'
-    }).should.be.true();
-
-    pushBreadcrumbsSpy.resetHistory();
-    wrapper.setProps({ location: 'changed' });
-    pushBreadcrumbsSpy.calledWith({
-      location: 'changed',
       routes: 'routes',
       params: 'params'
     }).should.be.true();

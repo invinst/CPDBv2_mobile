@@ -18,3 +18,4 @@ export const TRRCardWithUndo = withUndoCard(
   () => 'TRR removed.',
   'removeItemInPinboardPage'
 );
+

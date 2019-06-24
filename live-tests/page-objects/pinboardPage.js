@@ -34,6 +34,8 @@ module.exports = {
   },
 
   elements: {
+    header: '.header-parent',
+    highlightedMenuItem: '.menu-item.highlight',
     searchBar: {
       locateStrategy: 'xpath',
       selector: '(//a[starts-with(@class, "search-bar")])',
@@ -42,6 +44,7 @@ module.exports = {
     coaccusalsThresholdText: '.coaccusals-threshold-text',
     startDate: '.start-date-label',
     endDate: '.end-date-label',
+    playButton: '.play-icon',
     pinboardTitle: '.pinboard-title',
     pinboardDescription: '.pinboard-description',
     pinboardPaneMenu: {

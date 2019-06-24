@@ -77,6 +77,7 @@ describe('<RelevantComplaints />', function () {
 
     const wrapper = mount(
       <RelevantComplaints
+        requesting={ false }
         addItemInPinboardPage={ addItemInPinboardPageStub }
         fetchPinboardRelevantComplaints={ fetchPinboardRelevantComplaintsStub }
         complaints={ complaints }
@@ -89,6 +90,7 @@ describe('<RelevantComplaints />', function () {
     const relevantInfiniteCarousel = wrapper.find(RelevantInfiniteCarousel);
     relevantInfiniteCarousel.prop('title').should.eql('COMPLAINTS');
     relevantInfiniteCarousel.prop('hasMore').should.be.true();
+    relevantInfiniteCarousel.prop('requesting').should.be.false();
 
     const RelevantComplaintCards = relevantInfiniteCarousel.find(RelevantComplaintCard);
     const RelevantComplaintCardsWithUndo = relevantInfiniteCarousel.find(RelevantComplaintCardWithUndo);

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
 import cx from 'classnames';
+import TrackVisibility from 'react-on-screen';
 
 import styles from './pinboard-page.sass';
 import SearchBar from './search-bar';
@@ -11,78 +11,45 @@ import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
 import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
 import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import Footer from 'components/footer';
+import EmptyPinboard from './empty-pinboard';
+import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
 
 
 export default class PinboardPage extends Component {
-  constructor(props) {
-    super(props);
-    this.fetchPinboardData = this.fetchPinboardData.bind(this);
-  }
-
   componentDidMount() {
-    const { pinboard, fetchPinboard, params } = this.props;
-    const idOnPath = params.pinboardId;
-    const idInStore = pinboard.id;
-
-    fetchPinboard(idOnPath);
-    if (idOnPath === idInStore) {
-      this.fetchPinboardData(idOnPath);
-    }
+    const { params, pushBreadcrumbs, location, routes } = this.props;
+    pushBreadcrumbs({ location, routes, params });
   }
 
-  componentDidUpdate(prevProps) {
-    const prevID = prevProps.pinboard.id;
-    const currID = this.props.pinboard.id;
-
-    if (prevID !== currID) {
-      browserHistory.replace(`/pinboard/${currID}/`);
-      this.fetchPinboardData(currID);
-    }
-  }
-
-  fetchPinboardData(id) {
+  renderContent() {
     const {
-      fetchPinboardComplaints,
-      fetchPinboardOfficers,
-      fetchPinboardTRRs,
-      fetchPinboardSocialGraph,
-      fetchPinboardGeographicData,
-      fetchPinboardRelevantDocuments,
-      fetchPinboardRelevantCoaccusals,
-      fetchPinboardRelevantComplaints,
-    } = this.props;
-    fetchPinboardComplaints(id);
-    fetchPinboardOfficers(id);
-    fetchPinboardTRRs(id);
-    fetchPinboardSocialGraph(id);
-    fetchPinboardGeographicData(id);
-    fetchPinboardRelevantDocuments(id);
-    fetchPinboardRelevantCoaccusals(id);
-    fetchPinboardRelevantComplaints(id);
-  }
-
-  render() {
-    const {
-      pinboard,
       changePinboardTab,
       currentTab,
       hasMapMarker,
       params,
+      initialRequested,
+      isEmptyPinboard,
     } = this.props;
+
+    if (!initialRequested) {
+      return null;
+    }
+
+    if (isEmptyPinboard) {
+      return EmptyPinboard;
+    }
+
     return (
-      <div className={ cx(styles.pinboardPage, 'pinboard-page') }>
-        <Header />
-        <SearchBar />
-        <div className='pinboard-info'>
-          <div className='pinboard-title'>{ pinboard.title }</div>
-          <div className='pinboard-description'>{ pinboard.description }</div>
-        </div>
+      <div className='pinboard-content'>
+        <PinboardInfoContainer />
         <div className='data-visualizations'>
-          <PinboardPaneSection
-            changePinboardTab={ changePinboardTab }
-            currentTab={ currentTab }
-            hasMapMarker={ hasMapMarker }
-          />
+          <TrackVisibility partialVisibility={ true }>
+            <PinboardPaneSection
+              changePinboardTab={ changePinboardTab }
+              currentTab={ currentTab }
+              hasMapMarker={ hasMapMarker }
+            />
+          </TrackVisibility>
         </div>
         <div className='pinned-section'>
           <PinnedOfficersContainer/>
@@ -90,6 +57,18 @@ export default class PinboardPage extends Component {
           <PinnedTRRsContainer/>
         </div>
         <RelevantSectionContainer pinboardId={ params.pinboardId }/>
+      </div>
+    );
+  }
+
+  render() {
+    const { isEmptyPinboard } = this.props;
+
+    return (
+      <div className={ cx(styles.pinboardPage, 'pinboard-page', { 'empty': isEmptyPinboard }) }>
+        <Header />
+        <SearchBar />
+        { this.renderContent() }
         <Footer />
       </div>
     );
@@ -98,30 +77,19 @@ export default class PinboardPage extends Component {
 
 PinboardPage.propTypes = {
   params: PropTypes.object,
+  routes: PropTypes.array,
+  pushBreadcrumbs: PropTypes.func,
+  location: PropTypes.object,
   pinboard: PropTypes.object,
-  fetchPinboard: PropTypes.func,
-  fetchPinboardComplaints: PropTypes.func,
-  fetchPinboardOfficers: PropTypes.func,
-  fetchPinboardTRRs: PropTypes.func,
-  fetchPinboardSocialGraph: PropTypes.func,
-  fetchPinboardGeographicData: PropTypes.func,
-  fetchPinboardRelevantDocuments: PropTypes.func,
-  fetchPinboardRelevantCoaccusals: PropTypes.func,
-  fetchPinboardRelevantComplaints: PropTypes.func,
   changePinboardTab: PropTypes.func,
   currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
+  initialRequested: PropTypes.bool,
+  isEmptyPinboard: PropTypes.bool,
 };
 
 PinboardPage.defaultProps = {
   itemsByTypes: {},
-  fetchPinboard: () => {},
-  fetchPinboardComplaints: () => {},
-  fetchPinboardOfficers: () => {},
-  fetchPinboardTRRs: () => {},
-  fetchPinboardSocialGraph: () => {},
-  fetchPinboardGeographicData: () => {},
-  fetchPinboardRelevantDocuments: () => {},
-  fetchPinboardRelevantCoaccusals: () => {},
-  fetchPinboardRelevantComplaints: () => {},
+  pushBreadcrumbs: () => {},
+  initialRequested: true,
 };

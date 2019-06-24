@@ -69,7 +69,7 @@ describe('OfficerCardWithUndo component', function () {
     };
     const wrapper = mount(
       <Router history={ createMemoryHistory() }>
-        <Route path='/' component={ () =>  } />
+        <Route path='/' component={ () => <OfficerCardWithUndo item={ item } /> } />
       </Router>
     );
     const officerCard = wrapper.find(OfficerCard);

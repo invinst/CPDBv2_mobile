@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import should from 'should';
 
 import CRCard, { CRCardWithUndo } from 'components/pinboard-page/cards/cr-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';

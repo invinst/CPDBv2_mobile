@@ -11,13 +11,14 @@ export default class RelevantComplaints extends Component {
   }
 
   render() {
-    const { complaints, hasMore, addItemInPinboardPage } = this.props;
+    const { complaints, hasMore, addItemInPinboardPage, requesting } = this.props;
     return (
       <RelevantInfiniteCarousel
         title='COMPLAINTS'
         hasMore={ hasMore }
         loadMore={ this.loadMore.bind(this) }
         className='relevant-complaints'
+        requesting={ requesting }
       >
         {
           complaints.map(complaint => (
@@ -40,6 +41,7 @@ RelevantComplaints.propTypes = {
   hasMore: PropTypes.bool,
   pinboardId: PropTypes.string,
   addItemInPinboardPage: PropTypes.func,
+  requesting: PropTypes.bool,
 };
 
 RelevantComplaints.defaultProps = {

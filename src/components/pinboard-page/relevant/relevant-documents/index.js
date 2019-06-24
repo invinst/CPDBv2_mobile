@@ -11,13 +11,14 @@ export default class RelevantDocuments extends Component {
   }
 
   render() {
-    const { documents, hasMore, addItemInPinboardPage } = this.props;
+    const { documents, hasMore, addItemInPinboardPage, requesting } = this.props;
     return (
       <RelevantInfiniteCarousel
         title='DOCUMENTS'
         hasMore={ hasMore }
         loadMore={ this.loadMore.bind(this) }
         className='relevant-documents'
+        requesting={ requesting }
       >
         {
           documents.map(document => (
@@ -40,6 +41,7 @@ RelevantDocuments.propTypes = {
   hasMore: PropTypes.bool,
   pinboardId: PropTypes.string,
   addItemInPinboardPage: PropTypes.func,
+  requesting: PropTypes.bool,
 };
 
 RelevantDocuments.defaultProps = {

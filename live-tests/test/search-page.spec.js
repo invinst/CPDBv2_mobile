@@ -1,5 +1,6 @@
 'use strict';
 var api = require(__dirname + '/../mock-api');
+var assert = require('assert');
 const { TIMEOUT } = require(__dirname + '/../constants');
 
 const mockSuggestionResponse = {
@@ -125,22 +126,22 @@ const mockInvestigatorCRSearchResponse = {
   ],
 };
 
-const updatePinboardResponse = {
-  'id': 1,
+const emptyPinboard = {
+  'id': '5cd06f2b',
   'title': '',
   'officer_ids': [],
   'crids': [],
   'trr_ids': [],
-  'description': 'Description',
+  'description': '',
 };
 
 const createPinboardResponse = {
-  'id': 1,
+  'id': '5cd06f2b',
   'title': '',
   'officer_ids': [],
   'crids': ['123456'],
   'trr_ids': [],
-  'description': 'Description',
+  'description': '',
 };
 
 
@@ -149,6 +150,7 @@ describe('SearchPageTest', function () {
     api.mock('GET', '/api/v2/search-mobile/', 200, mockSuggestionResponse);
     this.searchPage = client.page.search();
     this.officerPage = client.page.officerPage();
+    this.pinboardPage = client.page.pinboardPage();
     this.searchPage.navigate();
     client.waitForElementVisible('body', TIMEOUT);
     done();
@@ -159,7 +161,7 @@ describe('SearchPageTest', function () {
     done();
   });
 
-  it('should show search page with suggested items', function (client) {
+  it('should show search page with suggested items', function () {
     const searchPage = this.searchPage;
 
     searchPage.expect.element('@queryInput').to.be.visible;
@@ -221,7 +223,7 @@ describe('SearchPageTest', function () {
       done();
     });
 
-    it('should show results that match search query', function (client) {
+    it('should show results that match search query', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
 
       this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR > CR');
@@ -318,9 +320,9 @@ describe('SearchPageTest', function () {
         createPinboardResponse
       );
       api.mockPut(
-        '/api/v2/pinboards/1/', 200,
-        { 'officer_ids': [], crids: [], 'trr_ids': [], title: '' },
-        updatePinboardResponse
+        '/api/v2/pinboards/5cd06f2b/', 200,
+        { 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' },
+        emptyPinboard
       );
       done();
     });
@@ -348,7 +350,9 @@ describe('SearchPageTest', function () {
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@pinboardBar', TIMEOUT);
       this.searchPage.click('@pinboardBar');
-      client.assert.urlContains('/pinboard/1/untitled-pinboard/');
+      client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
+
+      this.pinboardPage.waitForElementVisible('@pinboardTitle', TIMEOUT);
     });
   });
 });

@@ -28,6 +28,7 @@ describe('<RelevantCoaccusals />', function () {
 
     const wrapper = mount(
       <RelevantCoaccusals
+        requesting={ false }
         addItemInPinboardPage={ addItemInPinboardPageStub }
         fetchPinboardRelevantCoaccusals={ fetchPinboardRelevantCoaccusalsStub }
         coaccusals={ coaccusals }
@@ -40,6 +41,7 @@ describe('<RelevantCoaccusals />', function () {
     const relevantInfiniteCarousel = wrapper.find(RelevantInfiniteCarousel);
     relevantInfiniteCarousel.prop('title').should.eql('COACCUSALS');
     relevantInfiniteCarousel.prop('hasMore').should.be.true();
+    relevantInfiniteCarousel.prop('requesting').should.be.false();
 
     const relevantCoaccusalCards = relevantInfiniteCarousel.find(RelevantCoaccusalCard);
     const relevantCoaccusalCardsWithUndo = relevantInfiniteCarousel.find(RelevantCoaccusalCardWithUndo);

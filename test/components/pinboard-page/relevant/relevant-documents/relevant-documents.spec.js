@@ -89,6 +89,7 @@ describe('<RelevantDocuments />', function () {
 
     const wrapper = mount(
       <RelevantDocuments
+        requesting={ false }
         addItemInPinboardPage={ addItemInPinboardPageStub }
         fetchPinboardRelevantDocuments={ fetchPinboardRelevantDocumentsStub }
         documents={ documents }
@@ -101,6 +102,7 @@ describe('<RelevantDocuments />', function () {
     const relevantInfiniteCarousel = wrapper.find(RelevantInfiniteCarousel);
     relevantInfiniteCarousel.prop('title').should.eql('DOCUMENTS');
     relevantInfiniteCarousel.prop('hasMore').should.be.true();
+    relevantInfiniteCarousel.prop('requesting').should.be.false();
 
     const relevantDocumentCards = relevantInfiniteCarousel.find(RelevantDocumentCard);
     const relevantDocumentCardsWithUndo = relevantInfiniteCarousel.find(RelevantDocumentCardWithUndo);

@@ -23,11 +23,6 @@ export default class SearchPage extends Component {
     this.updateResults();
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { location, params, routes, pushBreadcrumbs } = nextProps;
-    pushBreadcrumbs({ location, params, routes });
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.query !== prevProps.query) {
       this.updateResults();

@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 import cx from 'classnames';
+import { isEmpty } from 'lodash';
+import { isIOS } from 'react-device-detect';
+import MultiTouch from 'mapbox-gl-multitouch';
 
 import constants from 'constants';
 import { mapboxgl } from 'utils/mapbox';
@@ -10,11 +13,19 @@ import MarkerTooltip from './marker-tooltip';
 import SimpleMarkerTooltip from './simple-marker-tooltip';
 import Marker from './marker';
 import styles from './allegations-map.sass';
-import { isIOS } from 'react-device-detect';
-import MultiTouch from 'mapbox-gl-multitouch';
+import withLoadingSpinner from 'components/common/with-loading-spinner';
 
 export default class AllegationsMap extends Component {
+  constructor(props) {
+    super(props);
+    this.currentMarkers = [];
+  }
+
   componentWillReceiveProps(nextProps, nextState) {
+    if (!isEmpty(this.currentMarkers)) {
+      this.currentMarkers.map(currentMarker => currentMarker.remove());
+    }
+    this.currentMarkers = [];
     nextProps.markers.map(marker => {
       this.addMarker(marker);
     });
@@ -78,6 +89,7 @@ export default class AllegationsMap extends Component {
     this.marker.setLngLat([marker.point.lon, marker.point.lat]);
     this.marker.setPopup(popup);
     this.marker.addTo(this.map);
+    this.currentMarkers.push(this.marker);
 
     ReactDOM.render(
       <Marker
@@ -145,3 +157,5 @@ AllegationsMap.defaultProps = {
   legend: {},
   markers: []
 };
+
+export const AllegationsMapWithSpinner = withLoadingSpinner(AllegationsMap, styles.allegationMapLoading);
