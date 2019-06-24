@@ -1,11 +1,20 @@
-import { getActionTypes } from 'redux-axios-middleware';
+import MockStore from 'redux-mock-store';
+import { CancelToken } from 'axios';
 
-import { onSuccess, onError, getErrorMessage } from 'middleware/configured-axios-middleware';
+import configuredAxiosMiddleware, { onSuccess, onError } from 'middleware/configured-axios-middleware';
+import { get } from 'actions/common/async-action';
+import { REQUEST_CANCEL_MESSAGE } from 'utils/axios-client';
+
 
 describe('configured-axios-middleware', function () {
   const next = (action) => (action);
   const action = {
-    type: 'REQUEST',
+    types: [
+      'REQUEST_START',
+      'REQUEST_SUCCESS',
+      'REQUEST_FAILURE',
+      'REQUEST_CANCELLED',
+    ],
     payload: {
       request: {
         url: '/request-url'
@@ -20,8 +29,16 @@ describe('configured-axios-middleware', function () {
 
     it('should fire action with response as payload', () => {
       onSuccess({ action, next, response }).should.eql({
-        type: getActionTypes(action)[1],
+        type: 'REQUEST_SUCCESS',
         payload: response.data,
+        meta: undefined
+      });
+    });
+
+    it('should fire cancelled action if response.cancelled is true', () => {
+      const cancelledResponse = { cancelled: true };
+      onSuccess({ action, next, response: cancelledResponse }).should.eql({
+        type: 'REQUEST_CANCELLED',
         meta: undefined
       });
     });
@@ -37,7 +54,7 @@ describe('configured-axios-middleware', function () {
         next,
         response
       }).should.eql({
-        type: getActionTypes(action)[1],
+        type: 'REQUEST_SUCCESS',
         payload: response.data,
         meta: 'foobar'
       });
@@ -53,7 +70,7 @@ describe('configured-axios-middleware', function () {
       };
 
       onError({ action, next, error }).should.eql({
-        type: getActionTypes(action)[2],
+        type: 'REQUEST_FAILURE',
         payload: {
           message: 'Request to /request-url failed with status code 400.'
         },
@@ -66,7 +83,7 @@ describe('configured-axios-middleware', function () {
       const error = new Error(message);
 
       onError({ action, next, error }).should.eql({
-        type: getActionTypes(action)[2],
+        type: 'REQUEST_FAILURE',
         payload: {
           message
         },
@@ -83,12 +100,58 @@ describe('configured-axios-middleware', function () {
       };
 
       onError({ action, next, error }).should.eql({
-        type: getActionTypes(action)[2],
+        type: 'REQUEST_FAILURE',
         payload: {
           message
         },
         statusCode: 400
       });
     });
+  });
+
+  it('should dispatch cancelled action when cancelling a request', function (done) {
+    const mockStore = MockStore([configuredAxiosMiddleware]);
+    const store = mockStore();
+
+    const cancelSource = CancelToken.source();
+    const fetchUsers = get(
+      '/users',
+      [
+        'FETCH_USERS_START',
+        'FETCH_USERS_SUCCESS',
+        'FETCH_USERS_FAILURE',
+        'FETCH_USERS_CANCELLED',
+      ],
+      cancelSource.token
+    );
+
+    store.dispatch(fetchUsers()).then(() => {
+      store.getActions().map(action => action.type).should.eql(['FETCH_USERS_START', 'FETCH_USERS_CANCELLED']);
+      done();
+    });
+    cancelSource.cancel(REQUEST_CANCEL_MESSAGE);
+  });
+
+  it('should not dispatch cancelled action when error', function (done) {
+    const mockStore = MockStore([configuredAxiosMiddleware]);
+    const store = mockStore();
+
+    const cancelSource = CancelToken.source();
+    const fetchUsers = get(
+      '/users',
+      [
+        'FETCH_USERS_START',
+        'FETCH_USERS_SUCCESS',
+        'FETCH_USERS_FAILURE',
+        'FETCH_USERS_CANCELLED',
+      ],
+      cancelSource.token
+    );
+
+    store.dispatch(fetchUsers()).catch(() => {
+      store.getActions().map(action => action.type).should.eql(['FETCH_USERS_START', 'FETCH_USERS_FAILURE']);
+      done();
+    });
+    cancelSource.cancel('ERROR');
   });
 });
