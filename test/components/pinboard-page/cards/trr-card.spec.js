@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import should from 'should';
 import { Router, createMemoryHistory, Route } from 'react-router';
 
-import TRRCard from 'components/pinboard-page/cards/trr-card';
+import TRRCard, { TRRCardWithUndo } from 'components/pinboard-page/cards/trr-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 
 
@@ -47,22 +47,25 @@ describe('Pinboard <TRRCard />', function () {
     trrCardDOM.className.should.containEql('hide');
     trrCardDOM.className.should.containEql('fade-in');
   });
+});
 
-  it('should fade out when removed', function () {
+describe('Pinboard <TRRCardWithUndo />', function () {
+  it('should render remove text correctly', function () {
     const item = {
-      trrDate: '10-10-2010',
+      incidentDate: '10-10-2010',
       category: 'Use Of Force',
     };
+
     const wrapper = mount(
       <Router history={ createMemoryHistory() }>
-        <Route path='/' component={ () => <TRRCard item={ item }/> } />
+        <Route path='/' component={ () => <TRRCardWithUndo item={ item }/> } />
       </Router>
     );
-    const trrCard = wrapper.find(TRRCard);
-    const unpinButton = trrCard.find(ItemUnpinButton);
+    const crCard = wrapper.find(TRRCard);
+    const unpinButton = crCard.find(ItemUnpinButton);
 
     unpinButton.simulate('click');
 
-    trrCard.getDOMNode().className.should.containEql('fade-out');
+    wrapper.find('.text').text().should.equal('TRR removed.');
   });
 });

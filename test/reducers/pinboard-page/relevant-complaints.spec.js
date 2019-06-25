@@ -1,15 +1,30 @@
 import relevantComplaints from 'reducers/pinboard-page/relevant-complaints';
 import {
+  PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_START,
   PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_FAILURE,
   PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_SUCCESS,
 } from 'actions/pinboard';
 
 
-const defaultState = { items: [], count: 0, pagination: { next: null, previous: null } };
+const defaultState = { requesting: false, items: [], count: 0, pagination: { next: null, previous: null } };
 
 describe('relevantComplaints reducer', function () {
   it('should have initial state', function () {
     relevantComplaints(undefined, {}).should.eql(defaultState);
+  });
+
+  it('should handle PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_START', function () {
+    relevantComplaints(defaultState, {
+      type: PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_START,
+    }).should.eql({
+      requesting: true,
+      items: [],
+      count: 0,
+      pagination: {
+        next: null,
+        previous: null
+      },
+    });
   });
 
   it('should handle PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_SUCCESS', function () {
@@ -72,6 +87,7 @@ describe('relevantComplaints reducer', function () {
         results: complaints,
       }
     }).should.eql({
+      requesting: false,
       items: complaints,
       count: 444,
       pagination: {
@@ -175,6 +191,7 @@ describe('relevantComplaints reducer', function () {
         results: newComplaints,
       }
     }).should.eql({
+      requesting: false,
       items: existingComplaints.concat(newComplaints),
       count: 444,
       pagination: {
@@ -248,6 +265,7 @@ describe('relevantComplaints reducer', function () {
       type: PINBOARD_RELEVANT_COMPLAINTS_FETCH_REQUEST_FAILURE,
       payload: {}
     }).should.eql({
+      requesting: false,
       items: existingComplaints,
       count: 444,
       pagination: { next: null, previous: null },

@@ -24,7 +24,7 @@ describe('<MiniVisualToken />', function () {
         percentile={ percentile }
       />
     );
-    wrapper.prop('className').should.eql('custom-class-name');
+    wrapper.prop('className').should.containEql('custom-class-name');
 
     const radarChart = wrapper.find(StaticRadarChart);
     radarChart.prop('hideAxisText').should.be.true();

@@ -1,6 +1,6 @@
 import should from 'should';
 
-import trrItemsReducer from 'reducers/pinboard-page/trr-items';
+import trrItemsReducer from 'reducers/pinboard-page/trr-items/items';
 import {
   PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
   REMOVE_ITEM_IN_PINBOARD_PAGE,

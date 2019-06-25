@@ -351,6 +351,8 @@ describe('SearchPageTest', function () {
       this.searchPage.waitForElementVisible('@pinboardBar', TIMEOUT);
       this.searchPage.click('@pinboardBar');
       client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
+
+      this.pinboardPage.waitForElementVisible('@pinboardTitle', TIMEOUT);
     });
   });
 });
