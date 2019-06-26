@@ -144,11 +144,21 @@ const createPinboardResponse = {
   'description': '',
 };
 
+const createEmptyPinboardResponse = {
+  'id': 1,
+  'title': '',
+  'officer_ids': [],
+  'crids': [],
+  'trr_ids': [],
+  'description': 'Description',
+};
+
 
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
     api.mock('GET', '/api/v2/search-mobile/', 200, mockSuggestionResponse);
     this.searchPage = client.page.search();
+    this.pinboardPage = client.page.pinboardPage();
     this.officerPage = client.page.officerPage();
     this.pinboardPage = client.page.pinboardPage();
     this.searchPage.navigate();
@@ -319,6 +329,11 @@ describe('SearchPageTest', function () {
         { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
         createPinboardResponse
       );
+      api.mockPost(
+        '/api/v2/pinboards/', 201,
+        { 'officer_ids': [], crids: [], 'trr_ids': [] },
+        createEmptyPinboardResponse
+      );
       api.mockPut(
         '/api/v2/pinboards/5cd06f2b/', 200,
         { 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' },
@@ -344,15 +359,19 @@ describe('SearchPageTest', function () {
     it('should display pinboard button that links to pinboard page when pinboard is not empty', function (client) {
       this.searchPage.setValue('@queryInput', 'Kelvin');
 
-      this.searchPage.click('@pinboardBar');
-      client.assert.urlContains('/search/');
-
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@pinboardBar', TIMEOUT);
       this.searchPage.click('@pinboardBar');
       client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
 
       this.pinboardPage.waitForElementVisible('@pinboardTitle', TIMEOUT);
+    });
+
+    it('should create empty pinboard and redirect to pinboard page when \
+      click on pinboard button if pinboard is empty', function (client) {
+      this.searchPage.click('@pinboardBar');
+      this.searchPage.waitForElementNotPresent('@pinboardBar', TIMEOUT);
+      client.assert.urlContains('/pinboard/1/untitled-pinboard/');
     });
   });
 });

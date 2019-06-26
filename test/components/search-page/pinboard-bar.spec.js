@@ -1,36 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router';
-import { mount, shallow } from 'enzyme';
+import { browserHistory } from 'react-router';
+import { shallow } from 'enzyme';
 import should from 'should';
+import { spy, stub } from 'sinon';
 
 import PinboardBar from 'components/search-page/pinboard-bar';
 
 
-describe('<PinboardButton />', function () {
-  it('should not display a Link component when there is no pinned item', function () {
-    const wrapper = mount(<PinboardBar pinboard={ {
-      itemsCount: 0,
-      isPinboardRestored: true,
-    } } />);
-
-    wrapper.find(Link).should.have.length(0);
-    wrapper.text().should.equal('Your pinboard is empty');
-  });
-
-  it('should display a Link component when there are pinned items', function () {
-    const wrapper = mount(
-      <PinboardBar pinboard={ {
-        itemsCount: 2,
-        url: '/pinboard/1/title/',
-        isPinboardRestored: true,
-      } } />
-    );
-
-    wrapper.exists(Link).should.be.true();
-    wrapper.find(Link).props().children[0].should.equal('Pinboard (2)');
-    wrapper.find(Link).props().to.should.equal('/pinboard/1/title/');
-  });
-
+describe('<PinboardBar />', function () {
   it('should render nothing if isPinboardRestored is false', function () {
     const wrapper = shallow(
       <PinboardBar pinboard={ {
@@ -39,5 +16,56 @@ describe('<PinboardButton />', function () {
     );
 
     should(wrapper.getNode()).be.null();
+  });
+
+  it('should render "Your pinboard is empty" if pinboard is empty', function () {
+    const wrapper = shallow(
+      <PinboardBar />
+    );
+
+    wrapper.text().should.equal('Your pinboard is empty');
+  });
+
+  it('should render Pinboard ($count) if pinboard is not empty', function () {
+    const wrapper = shallow(
+      <PinboardBar pinboard={ {
+        itemsCount: 2,
+        url: '/pinboard/1/title/',
+        isPinboardRestored: true,
+      } } />
+    );
+
+    wrapper.text().should.equal('Pinboard (2)');
+  });
+
+  it('should call onEmptyPinboardButtonClick if we click on the button when pinboard id is null', function () {
+    const onEmptyPinboardButtonClick = spy();
+
+    const wrapper = shallow(
+      <PinboardBar
+        onEmptyPinboardButtonClick={ onEmptyPinboardButtonClick }
+      />
+    );
+
+    wrapper.simulate('click');
+    onEmptyPinboardButtonClick.called.should.be.true();
+  });
+
+  it('should redirect if we click on the button when pinboard is exist', function () {
+    const browserHistoryPush = stub(browserHistory, 'push');
+
+    const wrapper = shallow(
+      <PinboardBar pinboard={ {
+        id: '5cd06f2b',
+        itemsCount: 2,
+        url: '/pinboard/1/title/',
+        isPinboardRestored: true,
+      } }/>
+    );
+
+    wrapper.simulate('click');
+    browserHistoryPush.called.should.be.true();
+
+    browserHistoryPush.restore();
   });
 });
