@@ -541,9 +541,9 @@ const updatedPinboardDescription = {
   'description': 'Updated Description',
 };
 
-const baseRelevantDocumentsUrl = '/api/v2/pinboards/5cd06f2b/relevant-documents/?';
-const baseRelevantCoaccusalsUrl = '/api/v2/pinboards/5cd06f2b/relevant-coaccusals/?';
-const baseRelevantComplaintsUrl = '/api/v2/pinboards/5cd06f2b/relevant-complaints/?';
+const baseRelevantDocumentsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-documents/?';
+const baseRelevantCoaccusalsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-coaccusals/?';
+const baseRelevantComplaintsUrl = '/api/v2/mobile/pinboards/5cd06f2b/relevant-complaints/?';
 
 const firstRelevantDocumentOfficer = {
   'id': 123,

@@ -9,7 +9,7 @@ var mockData = require(__dirname + '/../../mock-data/pinboard-page');
 
 
 function waitForGraphAnimationEnd(client, pinboardPage) {
-  pinboardPage.expect.section('@currentDate').to.be.visible;
+  client.waitForElementVisible(pinboardPage.section.currentDate.selector, TIMEOUT);
   client.waitForText(
     pinboardPage.section.currentDate.selector,
     (text) => {return text === '2008-01-11';},
@@ -42,10 +42,10 @@ describe('Pinboard Social Graph', function () {
 
   context('animatedSocialgraph section', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, mockData.pinboardData);
-      api.mock('GET', '/api/v2/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
-      api.mock('GET', '/api/v2/pinboards/5cd06f2b/officers/', 200, mockData.pinboardOfficersData);
-      api.mock('GET', '/api/v2/pinboards/5cd06f2b/trrs/', 200, mockData.pinboardTRRsData);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, mockData.pinboardData);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, mockData.pinboardOfficersData);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, mockData.pinboardTRRsData);
       api.mock('GET', '/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b', 200, mockData.socialGraphData);
       api.mock('GET', '/api/v2/mobile/social-graph/geographic/?pinboard_id=5cd06f2b', 200, mockData.geographicData);
 
@@ -206,15 +206,18 @@ describe('Pinboard Social Graph', function () {
 
   context('animatedSocialgraph off screen feature', function () {
     it('should pause the timeline when invisible and continue to play when visible', function (client) {
-      api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, mockData.pinboardData);
-      api.mock('GET', '/api/v2/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
-      api.mock('GET', '/api/v2/pinboards/5cd06f2b/officers/', 200, mockData.pinboardOfficersData);
-      api.mock('GET', '/api/v2/pinboards/5cd06f2b/trrs/', 200, mockData.pinboardTRRsData);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, mockData.pinboardData);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, mockData.pinboardOfficersData);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, mockData.pinboardTRRsData);
       api.mock('GET', '/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b', 200, mockData.socialGraphBigData);
 
-      api.mock('GET', '/api/v2/pinboards/5cd06f2b/relevant-documents/', 200, mockData.firstRelevantDocumentsResponse);
-      api.mock('GET', '/api/v2/pinboards/5cd06f2b/relevant-coaccusals/', 200, mockData.firstRelevantCoaccusalsResponse);
-      api.mock('GET', '/api/v2/pinboards/5cd06f2b/relevant-complaints/', 200, mockData.firstRelevantComplaintsResponse);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/relevant-documents/', 200,
+        mockData.firstRelevantDocumentsResponse);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/relevant-coaccusals/', 200,
+        mockData.firstRelevantCoaccusalsResponse);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/relevant-complaints/', 200,
+        mockData.firstRelevantComplaintsResponse);
 
       this.pinboardPage = client.page.pinboardPage();
       this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));

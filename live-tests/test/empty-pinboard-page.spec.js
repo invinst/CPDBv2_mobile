@@ -34,14 +34,14 @@ const generateRelevantComplaint = crid => ({
 });
 
 function mockPinboard(pinboardId, mockPinboard) {
-  api.mock('GET', `/api/v2/pinboards/${pinboardId}/`, 200, mockPinboard);
-  api.mock('GET', `/api/v2/pinboards/${pinboardId}/complaints/`, 200, []);
-  api.mock('GET', `/api/v2/pinboards/${pinboardId}/officers/`, 200, []);
-  api.mock('GET', `/api/v2/pinboards/${pinboardId}/trrs/`, 200, []);
+  api.mock('GET', `/api/v2/mobile/pinboards/${pinboardId}/`, 200, mockPinboard);
+  api.mock('GET', `/api/v2/mobile/pinboards/${pinboardId}/complaints/`, 200, []);
+  api.mock('GET', `/api/v2/mobile/pinboards/${pinboardId}/officers/`, 200, []);
+  api.mock('GET', `/api/v2/mobile/pinboards/${pinboardId}/trrs/`, 200, []);
   api.mock('GET', `/api/v2/mobile/social-graph/network/?pinboard_id=${pinboardId}`, 200, {});
   api.mock('GET', `/api/v2/mobile/social-graph/geographic/?pinboard_$id=${pinboardId}`, 200, []);
 
-  const baseRelevantDocumentsUrl = `/api/v2/pinboards/${pinboardId}/relevant-documents/?`;
+  const baseRelevantDocumentsUrl = `/api/v2/mobile/pinboards/${pinboardId}/relevant-documents/?`;
   const relevantDocumentsResponse = getPaginationResponse(
     baseRelevantDocumentsUrl,
     (number) => _.range(0, number).map(generateRelevantDocument),
@@ -49,15 +49,15 @@ function mockPinboard(pinboardId, mockPinboard) {
   );
   api.mock('GET', baseRelevantDocumentsUrl, 200, relevantDocumentsResponse);
 
-  const baseRelevantCoaccusalsUrl = `/api/v2/pinboards/${pinboardId}/relevant-coaccusals/?`;
+  const baseRelevantCoaccusalsUrl = `/api/v2/mobile/pinboards/${pinboardId}/relevant-coaccusals/?`;
   const relevantCoaccusalsResponse = getPaginationResponse(
-    `/api/v2/pinboards/${pinboardId}/relevant-documents/?`,
+    `/api/v2/mobile/pinboards/${pinboardId}/relevant-documents/?`,
     (number) => _.range(0, number).map(generateRelevantCoaccusal),
     4, 0, 4
   );
   api.mock('GET', baseRelevantCoaccusalsUrl, 200, relevantCoaccusalsResponse);
 
-  const baseRelevantComplaintsUrl = `/api/v2/pinboards/${pinboardId}/relevant-complaints/?`;
+  const baseRelevantComplaintsUrl = `/api/v2/mobile/pinboards/${pinboardId}/relevant-complaints/?`;
   const relevantComplaintsResponse = getPaginationResponse(
     baseRelevantComplaintsUrl,
     (number) => _.range(0, number).map(generateRelevantComplaint),

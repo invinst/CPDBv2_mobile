@@ -10,10 +10,10 @@ var mockData = require(__dirname + '/../mock-data/pinboard-page');
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
     api.mock('GET', '/api/v2/mobile/officers/123/', 200, mockData.officer123);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, mockData.pinboardData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/officers/', 200, mockData.pinboardOfficersData);
-    api.mock('GET', '/api/v2/pinboards/5cd06f2b/trrs/', 200, mockData.pinboardTRRsData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, mockData.pinboardData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, mockData.pinboardOfficersData);
+    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, mockData.pinboardTRRsData);
     api.mock('GET', '/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b', 200, mockData.socialGraphData);
     api.mock('GET', '/api/v2/mobile/social-graph/geographic/?pinboard_id=5cd06f2b', 200, mockData.geographicData);
 
@@ -42,12 +42,12 @@ describe('Pinboard Page', function () {
     );
 
     api.mockPut(
-      '/api/v2/pinboards/5cd06f2b/', 200,
+      '/api/v2/mobile/pinboards/5cd06f2b/', 200,
       mockData.updatePinboardTitleParams,
       mockData.updatedPinboardTitle
     );
     api.mockPut(
-      '/api/v2/pinboards/5cd06f2b/', 200,
+      '/api/v2/mobile/pinboards/5cd06f2b/', 200,
       mockData.updatePinboardDescriptionParams,
       mockData.updatedPinboardDescription
     );

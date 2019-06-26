@@ -323,19 +323,19 @@ describe('SearchPageTest', function () {
   context('pinboard functionalities', function () {
     beforeEach(function (client, done) {
       api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
-      api.mock('GET', '/api/v2/pinboards/latest-retrieved-pinboard/', 200, {});
+      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/', 200, {});
       api.mockPost(
-        '/api/v2/pinboards/', 201,
+        '/api/v2/mobile/pinboards/', 201,
         { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
         createPinboardResponse
       );
       api.mockPost(
-        '/api/v2/pinboards/', 201,
+        '/api/v2/mobile/pinboards/', 201,
         { 'officer_ids': [], crids: [], 'trr_ids': [] },
         createEmptyPinboardResponse
       );
       api.mockPut(
-        '/api/v2/pinboards/5cd06f2b/', 200,
+        '/api/v2/mobile/pinboards/5cd06f2b/', 200,
         { 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' },
         emptyPinboard
       );
