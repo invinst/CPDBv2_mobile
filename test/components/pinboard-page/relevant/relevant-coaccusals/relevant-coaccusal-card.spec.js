@@ -137,7 +137,7 @@ describe('<RelevantCoaccusalCard />', function () {
 
       plusButton.simulate('click');
 
-      wrapper.find('.text').text().should.equal('Jerome Finnigan added.');
+      wrapper.find('.undo-card-text').text().should.equal('Jerome Finnigan added.');
     });
 
     it('should not be reversed after the undo card disappears', function () {

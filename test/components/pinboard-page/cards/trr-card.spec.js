@@ -37,6 +37,6 @@ describe('Pinboard <TRRCardWithUndo />', function () {
 
     unpinButton.simulate('click');
 
-    wrapper.find('.text').text().should.equal('TRR removed.');
+    wrapper.find('.undo-card-text').text().should.equal('TRR removed.');
   });
 });

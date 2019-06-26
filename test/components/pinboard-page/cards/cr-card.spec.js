@@ -35,6 +35,6 @@ describe('Pinboard <CRCardWithUndo />', function () {
 
     unpinButton.simulate('click');
 
-    wrapper.find('.text').text().should.equal('CR removed.');
+    wrapper.find('.undo-card-text').text().should.equal('CR removed.');
   });
 });

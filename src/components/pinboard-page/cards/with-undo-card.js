@@ -79,7 +79,7 @@ export default function withUndoCard(
 
         return (
           <div className={ wrapperStyle }>
-            <span className='text'>{ getText(this.props) }</span>
+            <span className='undo-card-text'>{ getText(this.props) }</span>
             <button className='undo-button' onClick={ this.undo }>Undo</button>
           </div>
         );

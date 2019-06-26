@@ -141,7 +141,7 @@ describe('<RelevantComplaintCard />', function () {
 
       plusButton.simulate('click');
 
-      wrapper.find('.text').text().should.equal('Complaint added.');
+      wrapper.find('.undo-card-text').text().should.equal('Complaint added.');
     });
 
     it('should not be reversed after the undo card disappears', function () {

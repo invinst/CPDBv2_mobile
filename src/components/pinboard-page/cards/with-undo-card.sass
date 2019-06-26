@@ -11,7 +11,7 @@
   position: relative
   width: 148px
 
-%undo-card-text
+%base-undo-card-text
   display: block
   margin: 40px 8px 32px 8px
   padding: 0 20px
@@ -36,8 +36,8 @@
   background-color: $wild-sand
   border-color: $alto-solid
 
-  .text
-    @extend %undo-card-text
+  .undo-card-text
+    @extend %base-undo-card-text
     color: $mine-shaft-color
 
   .undo-button
@@ -56,8 +56,8 @@
   background-color: $thunder
   border-color: $mine-shaft-color
 
-  .text
-    @extend %undo-card-text
+  .undo-card-text
+    @extend %base-undo-card-text
     color: $alto-solid
 
   .undo-button

@@ -120,7 +120,7 @@ describe('<RelevantDocumentCard />', function () {
 
       plusButton.simulate('click');
 
-      wrapper.find('.text').text().should.equal('Document added.');
+      wrapper.find('.undo-card-text').text().should.equal('Document added.');
     });
 
     it('should be reversed after the undo card disappears', function () {

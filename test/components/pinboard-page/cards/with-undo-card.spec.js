@@ -28,7 +28,7 @@ describe('withUndoCard higher-order component', function () {
     instance = mount(<OfficerCardWithUndo item={ item } />);
 
     instance.exists(OfficerCard).should.be.true();
-    instance.find('.text').exists().should.be.false();
+    instance.find('.undo-card-text').exists().should.be.false();
     instance.find('.undo-button').exists().should.be.false();
   });
 
@@ -42,7 +42,7 @@ describe('withUndoCard higher-order component', function () {
     const unpinButton = instance.find(ItemUnpinButton);
     unpinButton.simulate('click');
 
-    instance.find('.text').exists().should.be.true();
+    instance.find('.undo-card-text').exists().should.be.true();
     instance.find('.undo-button').exists().should.be.true();
     instance.find(OfficerCard).exists().should.be.false();
   });
@@ -73,7 +73,7 @@ describe('withUndoCard higher-order component', function () {
 
       clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME);
 
-      instance.find('.text').exists().should.be.false();
+      instance.find('.undo-card-text').exists().should.be.false();
       instance.find('.undo-button').exists().should.be.false();
       instance.find(OfficerCard).exists().should.be.false();
     });

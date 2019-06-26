@@ -20,7 +20,7 @@ const baseRelevantComplaints = (type) => ({
         leftHalf: '.left-half',
         topOfficers: '.top-officers',
         remainingOfficers: '.remaining-officers',
-        undoText: '.text',
+        undoText: '.undo-card-text',
         undoButton: '.undo-button',
       }
     }
@@ -211,7 +211,7 @@ module.exports = {
             officerName: '.officer-card-name',
             coaccusalCount: '.coaccusal-count',
             nameWrapper: '.officer-card-name-wrapper',
-            undoText: '.text',
+            undoText: '.undo-card-text',
             undoButton: '.undo-button',
           }
         }
