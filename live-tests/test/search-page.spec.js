@@ -330,7 +330,7 @@ describe('SearchPageTest', function () {
         createPinboardResponse
       );
       api.mockPost(
-        '/api/v2/pinboards/', 201,
+        '/api/v2/mobile/pinboards/', 201,
         { 'officer_ids': [], crids: [], 'trr_ids': [] },
         createEmptyPinboardResponse
       );
