@@ -1,11 +1,29 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import cx from 'classnames';
+import { isEmpty, noop } from 'lodash';
+
 
 import style from './pinboard-bar.sass';
 
 
 export default class PinboardBar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    const { pinboard, onEmptyPinboardButtonClick } = this.props;
+
+    if (isEmpty(pinboard.id)) {
+      onEmptyPinboardButtonClick();
+    } else {
+      browserHistory.push(pinboard.url);
+    }
+  }
+
   render() {
     const { pinboard } = this.props;
 
@@ -13,29 +31,27 @@ export default class PinboardBar extends Component {
       return null;
     }
 
-    if (pinboard.itemsCount === 0) {
-      return (
-        <span className={ cx('test--pinboard-bar', style.pinboardBar) }>
-          Your pinboard is empty
-          <span className='pinboard-bar-indicator' />
-        </span>
-      );
-    }
+    const text = pinboard.itemsCount === 0 ? 'Your pinboard is empty' : `Pinboard (${pinboard.itemsCount})`;
+
     return (
-      <Link
-        className={ cx('test--pinboard-bar', style.pinboardBar) }
-        to={ pinboard.url }>
-        { `Pinboard (${pinboard.itemsCount})` }
+      <span className={ cx('test--pinboard-bar', style.pinboardBar) } onClick={ this.handleClick }>
+        { text }
         <span className='pinboard-bar-indicator' />
-      </Link>
+      </span>
     );
   }
 }
 
 PinboardBar.propTypes = {
   pinboard: PropTypes.object,
+  onEmptyPinboardButtonClick: PropTypes.func,
 };
 
 PinboardBar.defaultProps = {
-  pinboard: {},
+  pinboard: {
+    itemsCount: 0,
+    url: 0,
+    isPinboardRestored: true,
+  },
+  onEmptyPinboardButtonClick: noop,
 };
