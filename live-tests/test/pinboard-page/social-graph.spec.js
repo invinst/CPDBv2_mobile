@@ -21,7 +21,7 @@ function waitForGraphAnimationEnd(client, pinboardPage) {
 function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
   let groupsColors = [];
   client.elements(graphNodes.locateStrategy, graphNodes.selector, function (graphNodes) {
-    assert.equal(graphNodes.value.length, 20);
+    client.assert.equal(graphNodes.value.length, 20);
 
     graphNodes.value.forEach((graphNode) => {
       client.elementIdCssProperty(graphNode.ELEMENT, 'fill', (fillColor) => {
@@ -30,7 +30,7 @@ function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
     });
   }).perform(function () {
     const groupsCount = _.values(_.countBy(groupsColors));
-    assert.equal(groupsCount.sort((a, b) => a - b), expectedGroupColors);
+    client.assert.deepEqual(groupsCount.sort((a, b) => a - b), expectedGroupColors);
   });
 }
 
@@ -90,7 +90,28 @@ describe('Pinboard Social Graph', function () {
       checkGraphGroupColors(client, graphNodes, [3, 5, 6, 6]);
       const graphLinks = pinboardPage.section.graphLinks;
       client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
-        assert.equal(graphLinks.value.length, 37);
+        client.assert.equal(graphLinks.value.length, 37);
+      });
+
+      const expectedlinkGroupColors = {
+        'link-group-color-1': 6,
+        'link-group-color-2': 6,
+        'link-group-color-3': 6,
+        'link-group-color-4': 6,
+        'link-group-color-5': 6,
+        'link-group-color-6': 7,
+      };
+
+      let linkGroupColorsMap = [];
+      client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
+        graphLinks.value.forEach((graphLink) => {
+          client.elementIdAttribute(graphLink.ELEMENT, 'class', (result) => {
+            linkGroupColorsMap.push(result.value.match(/link-group-color-[\d]/));
+          });
+        });
+      }).perform(function () {
+        const linkGroupColors = _.countBy(linkGroupColorsMap);
+        client.assert.deepEqual(linkGroupColors, expectedlinkGroupColors);
       });
     });
 
