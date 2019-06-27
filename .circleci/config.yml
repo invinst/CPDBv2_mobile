@@ -51,6 +51,9 @@ jobs:
             if [ $CIRCLE_BRANCH == "staging" ]
             then
               export WEBPACK_ENV=staging
+            elif [ $CIRCLE_BRANCH == "beta" ]
+            then
+              export WEBPACK_ENV=beta
             fi && \
             yarn dist
       - persist_to_workspace:
@@ -99,6 +102,9 @@ jobs:
             if [ $CIRCLE_BRANCH == "master" ]
             then
               export DESKTOP_SERVER_NAME=cpdp.co
+            elif [ $CIRCLE_BRANCH == "beta" ]
+            then
+              export DESKTOP_SERVER_NAME=beta.cpdp.co
             else
               export DESKTOP_SERVER_NAME=staging.cpdp.co
             fi
@@ -134,6 +140,9 @@ jobs:
             if [ $CIRCLE_BRANCH == "master" ]
             then
               export NAMESPACE=production
+            elif [ $CIRCLE_BRANCH == "beta" ]
+            then
+              export NAMESPACE=beta
             else
               export NAMESPACE=staging
             fi
@@ -177,6 +186,7 @@ workflows:
             branches:
               only:
                 - staging
+                - beta
                 - master
       - deploy:
           requires:
@@ -186,6 +196,7 @@ workflows:
             branches:
               only:
                 - staging
+                - beta
                 - master
       - notify_slack:
           requires:
