@@ -79,7 +79,7 @@ describe('Pinboard Social Graph', function () {
       done();
     });
 
-    it.only('should render correctly', function (client) {
+    it('should render correctly', function (client) {
       const pinboardPage = this.pinboardPage;
       pinboardPage.expect.element('@startDate').to.be.visible;
       pinboardPage.expect.element('@startDate').text.to.equal('1990-01-09');
