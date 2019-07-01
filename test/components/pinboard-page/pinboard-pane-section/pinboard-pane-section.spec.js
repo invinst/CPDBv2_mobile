@@ -6,16 +6,16 @@ import { stub } from 'sinon';
 
 import constants from 'constants';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
-import AnimatedSocialGraph from 'components/common/animated-social-graph';
-import AllegationsMap from 'components/common/allegations-map';
+import { AnimatedSocialGraphWithSpinner } from 'components/common/animated-social-graph';
+import { AllegationsMapWithSpinner } from 'components/common/allegations-map';
 
 
 describe('PinboardPaneSection component', function () {
   const mockStore = MockStore();
   const store = mockStore({
     pinboardPage: {
-      graphData: [],
-      geographicData: [],
+      graphData: { requesting: false, data: {} },
+      geographicData: { requesting: false, data: [] },
     },
   });
   let wrapper;
@@ -79,21 +79,21 @@ describe('PinboardPaneSection component', function () {
   it('should render network tab', function () {
     wrapper = mount(
       <Provider store={ store }>
-        <PinboardPaneSection currentTab={ constants.PINBOARD_PAGE_TAB_NAMES.NETWORK }/>
+        <PinboardPaneSection currentTab={ constants.PINBOARD_PAGE.TAB_NAMES.NETWORK }/>
       </Provider>
     );
 
-    wrapper.find(AnimatedSocialGraph).should.have.length(1);
+    wrapper.find(AnimatedSocialGraphWithSpinner).should.have.length(1);
   });
 
   it('should render geographic tab', function () {
     wrapper = mount(
       <Provider store={ store }>
-        <PinboardPaneSection currentTab={ constants.PINBOARD_PAGE_TAB_NAMES.GEOGRAPHIC }/>
+        <PinboardPaneSection currentTab={ constants.PINBOARD_PAGE.TAB_NAMES.GEOGRAPHIC }/>
       </Provider>
     );
 
-    wrapper.find(AllegationsMap).should.have.length(1);
+    wrapper.find(AllegationsMapWithSpinner).should.have.length(1);
   });
 
   it('should call changePinboardTab when clicking tab name', function () {

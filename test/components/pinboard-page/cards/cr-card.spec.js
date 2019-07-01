@@ -1,9 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import should from 'should';
-import { Router, createMemoryHistory, Route } from 'react-router';
 
-import CRCard from 'components/pinboard-page/cards/cr-card';
+import CRCard, { CRCardWithUndo } from 'components/pinboard-page/cards/cr-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 
 
@@ -47,22 +46,23 @@ describe('Pinboard <CRCard />', function () {
     crCardDOM.className.should.containEql('hide');
     crCardDOM.className.should.containEql('fade-in');
   });
+});
 
-  it('should fade out when removed', function () {
+describe('Pinboard <CRCardWithUndo />', function () {
+  it('should render remove text correctly', function () {
     const item = {
       incidentDate: '10-10-2010',
       category: 'Use Of Force',
     };
+
     const wrapper = mount(
-      <Router history={ createMemoryHistory() }>
-        <Route path='/' component={ () => <CRCard item={ item }/> } />
-      </Router>
+      <CRCardWithUndo item={ item }/>
     );
     const crCard = wrapper.find(CRCard);
     const unpinButton = crCard.find(ItemUnpinButton);
 
     unpinButton.simulate('click');
 
-    crCard.getDOMNode().className.should.containEql('fade-out');
+    wrapper.find('.text').text().should.equal('CR removed.');
   });
 });

@@ -1,15 +1,30 @@
 import relevantDocuments from 'reducers/pinboard-page/relevant-documents';
 import {
+  PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_START,
   PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_FAILURE,
   PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_SUCCESS,
 } from 'actions/pinboard';
 
 
-const defaultState = { items: [], count: 0, pagination: { next: null, previous: null } };
+const defaultState = { requesting: false, items: [], count: 0, pagination: { next: null, previous: null } };
 
 describe('relevantDocuments reducer', function () {
   it('should have initial state', function () {
     relevantDocuments(undefined, {}).should.eql(defaultState);
+  });
+
+  it('should handle PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_START', function () {
+    relevantDocuments(defaultState, {
+      type: PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_START,
+    }).should.eql({
+      requesting: true,
+      items: [],
+      count: 0,
+      pagination: {
+        next: null,
+        previous: null
+      },
+    });
   });
 
   it('should handle PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_SUCCESS', function () {
@@ -45,6 +60,7 @@ describe('relevantDocuments reducer', function () {
         results: documents,
       }
     }).should.eql({
+      requesting: false,
       items: documents,
       count: 444,
       pagination: {
@@ -116,6 +132,7 @@ describe('relevantDocuments reducer', function () {
         results: newDocuments,
       }
     }).should.eql({
+      requesting: false,
       items: existingDocuments.concat(newDocuments),
       count: 444,
       pagination: {
@@ -161,6 +178,7 @@ describe('relevantDocuments reducer', function () {
       type: PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_FAILURE,
       payload: {}
     }).should.eql({
+      requesting: false,
       items: existingDocuments,
       count: 444,
       pagination: { next: null, previous: null },

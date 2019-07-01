@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import ReactHeight from 'react-height';
 import { toast, cssTransition } from 'react-toastify';
-import { noop } from 'lodash';
+import { browserHistory } from 'react-router';
+import { isEmpty, noop } from 'lodash';
 
 import constants from 'constants';
 import { goUp } from 'utils/navigation-util';
@@ -10,10 +11,17 @@ import ClearableInput from './clearable-input';
 import { showIntercomLauncher } from 'utils/intercom';
 import style from './search-page.sass';
 import * as IntercomTracking from 'utils/intercom-tracking';
+import { generatePinboardUrl } from 'utils/pinboard';
 import PinboardBar from './pinboard-bar';
 
 
 export default class SearchPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleEmptyPinboardButtonClick = this.handleEmptyPinboardButtonClick.bind(this);
+  }
+
   componentDidMount() {
     const {
       pushBreadcrumbs, location, routes, params
@@ -153,6 +161,19 @@ export default class SearchPage extends Component {
     };
   }
 
+  handleEmptyPinboardButtonClick() {
+    const { createPinboard } = this.props;
+
+    createPinboard({ 'officerIds': [], crids: [], 'trrIds': [] }).then(response => {
+      const pinboard = response.payload;
+      const url = generatePinboardUrl(pinboard);
+
+      if (!isEmpty(url)) {
+        browserHistory.push(url);
+      }
+    });
+  }
+
   render() {
     const { query, chosenCategory, router, pinboard } = this.props;
     let categories;
@@ -203,8 +224,9 @@ export default class SearchPage extends Component {
             </button>
           </div>
 
-          <PinboardBar pinboard={ pinboard }/>
-
+          <PinboardBar
+            pinboard={ pinboard }
+            onEmptyPinboardButtonClick={ this.handleEmptyPinboardButtonClick } />
         </div>
 
         <div className='category-details-container'>
@@ -238,13 +260,20 @@ SearchPage.propTypes = {
   routes: PropTypes.array,
   pinboard: PropTypes.object,
   addOrRemoveItemInPinboard: PropTypes.func,
+  createPinboard: PropTypes.func,
   toast: PropTypes.object,
 };
 
 SearchPage.defaultProps = {
+  query: '',
   inputChanged: noop,
   updateChosenCategory: noop,
   chosenCategory: '',
   pushBreadcrumbs: noop,
+  createPinboard: noop,
+  suggestTerm: noop,
+  queryChanged: noop,
+  saveToRecent: noop,
+  suggestAllFromCategory: noop,
   toast: {},
 };

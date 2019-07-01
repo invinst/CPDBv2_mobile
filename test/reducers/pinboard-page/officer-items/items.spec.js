@@ -1,6 +1,6 @@
 import should from 'should';
 
-import officerItemsReducer from 'reducers/pinboard-page/officer-items';
+import officerItemsReducer from 'reducers/pinboard-page/officer-items/items';
 import {
   PINBOARD_OFFICERS_FETCH_REQUEST_SUCCESS,
   ADD_ITEM_IN_PINBOARD_PAGE,
