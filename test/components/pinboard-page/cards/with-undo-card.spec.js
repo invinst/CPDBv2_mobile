@@ -42,8 +42,8 @@ describe('withUndoCard higher-order component', function () {
     const unpinButton = instance.find(ItemUnpinButton);
     unpinButton.simulate('click');
 
-    instance.find('.undo-card-text').exists().should.be.true();
-    instance.find('.undo-button').exists().should.be.true();
+    instance.find('.undo-card-text').text().should.equal('James David removed.');
+    instance.find('.undo-button').text().should.equal('Undo');
     instance.find(OfficerCard).exists().should.be.false();
   });
 
