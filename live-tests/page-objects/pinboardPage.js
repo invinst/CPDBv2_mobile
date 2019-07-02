@@ -6,10 +6,10 @@ const baseRelevantComplaints = (type) => ({
   },
   sections: {
     [`${type}Card`]: {
-      selector: '.swiper-slide > div:first-child',
+      selector: `.relevant-${type}s .swiper-slide > div:first-child`,
       elements: {
         plusButton: {
-          selector: `//div[contains(@class, "relevant-${type}s")]//div[contains(@class, "plus-button")]`,
+          selector: `//div[contains(@class, "relevant-${type}s")]//span[contains(@class, "swiper-slide")][1]//div[contains(@class, "plus-button")]`,
           locateStrategy: 'xpath',
         },
         incidentDate: '.incident-date',
@@ -20,6 +20,8 @@ const baseRelevantComplaints = (type) => ({
         leftHalf: '.left-half',
         topOfficers: '.top-officers',
         remainingOfficers: '.remaining-officers',
+        undoText: '.undo-card-text',
+        undoButton: '.undo-button',
       }
     }
   }
@@ -77,6 +79,9 @@ module.exports = {
             title: '.type-title',
           },
           sections: {
+            card: {
+              selector: '.test--OFFICER-section .type-cards > .pinned-grid-item',
+            },
             firstCard: {
               selector: '.type-cards > .pinned-grid-item:first-child',
               elements: {
@@ -84,9 +89,16 @@ module.exports = {
                 firstCardRank: '.officer-rank',
                 firstCardName: '.officer-name',
                 firstCardCRsCount: '.test--officer-cr-count',
-                undoCard: '.test--undo-card',
+                undoButton: '.undo-button',
+                undoCard: {
+                  selector: '//div[starts-with(@class, "with-undo-card")]',
+                  locateStrategy: 'xpath',
+                }
               },
-            }
+            },
+            lastCardOfficerName: {
+              selector: '.type-cards > .pinned-grid-item:last-child .officer-name',
+            },
           },
         },
         crs: {
@@ -95,14 +107,25 @@ module.exports = {
             title: '.type-title',
           },
           sections: {
+            card: {
+              selector: '.test--CR-section .type-cards > .pinned-grid-item',
+            },
             firstCard: {
               selector: '.type-cards > .pinned-grid-item:first-child',
               elements: {
                 firstCardUnpinBtn: '.test--item-unpin-button',
-                firstCardDate: '.cr-incident-date',
-                firstCardCategory: '.cr-category',
+                firstCardDate: '.location-card-date',
+                firstCardCategory: '.location-card-category',
+                undoButton: '.undo-button',
+                undoCard: {
+                  selector: '//div[starts-with(@class, "with-undo-card")]',
+                  locateStrategy: 'xpath',
+                }
               }
-            }
+            },
+            lastCardCategory: {
+              selector: '.test--CR-section .type-cards > .pinned-grid-item:last-child .location-card-category',
+            },
           },
         },
         trrs: {
@@ -111,12 +134,20 @@ module.exports = {
             title: '.type-title',
           },
           sections: {
+            card: {
+              selector: '.test--TRR-section .type-cards > .pinned-grid-item',
+            },
             firstCard: {
               selector: '.type-cards > .pinned-grid-item:first-child',
               elements: {
                 firstCardUnpinBtn: '.test--item-unpin-button',
-                firstCardDate: '.trr-date',
-                firstCardCategory: '.trr-category',
+                firstCardDate: '.location-card-date',
+                firstCardCategory: '.location-card-category',
+                undoButton: '.undo-button',
+                undoCard: {
+                  selector: '//div[starts-with(@class, "with-undo-card")]',
+                  locateStrategy: 'xpath',
+                }
               }
             }
           }
@@ -169,7 +200,7 @@ module.exports = {
       },
       sections: {
         coaccusalCard: {
-          selector: '.swiper-slide > a:first-child',
+          selector: '.relevant-coaccusals .swiper-slide > *:first-child',
           elements: {
             plusButton: {
               selector: '//div[contains(@class, "relevant-coaccusals")]//div[contains(@class, "plus-button")]',
@@ -180,6 +211,8 @@ module.exports = {
             officerName: '.officer-card-name',
             coaccusalCount: '.coaccusal-count',
             nameWrapper: '.officer-card-name-wrapper',
+            undoText: '.undo-card-text',
+            undoButton: '.undo-button',
           }
         }
       }

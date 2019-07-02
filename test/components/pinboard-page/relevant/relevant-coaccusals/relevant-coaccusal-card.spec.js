@@ -2,11 +2,13 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import should from 'should';
 import { Link } from 'react-router';
-import { stub } from 'sinon';
+import { stub, useFakeTimers } from 'sinon';
 
-import RelevantCoaccusalCard from 'components/pinboard-page/relevant/relevant-coaccusals/relevant-coaccusal-card';
+import RelevantCoaccusalCard, { RelevantCoaccusalCardWithUndo }
+  from 'components/pinboard-page/relevant/relevant-coaccusals/relevant-coaccusal-card';
 import StaticRadarChart from 'components/common/radar-chart';
 import PlusButton from 'components/pinboard-page/relevant/common/plus-button';
+import constants from 'constants';
 
 
 describe('<RelevantCoaccusalCard />', function () {
@@ -108,40 +110,55 @@ describe('<RelevantCoaccusalCard />', function () {
     wrapper.find('.coaccusal-count').text().should.eql('1 coaccusal');
   });
 
-  it('should fade out when clicked on PlusButton', function () {
-    const addItemInPinboardPageStub = stub();
-    const preventDefaultStub = stub();
+  describe('RelevantCoaccusalCardWithUndo component', function () {
+    let clock;
 
-    const wrapper = mount(
-      <RelevantCoaccusalCard
-        addItemInPinboardPage={ addItemInPinboardPageStub }
-        id={ 123 }
-        fullName='Jerome Finnigan'
-        rank='Officer'
-        coaccusalCount={ 1 }
-        percentile={ {} }
-      />
-    );
+    beforeEach(function () {
+      clock = useFakeTimers();
+    });
 
-    const instance = wrapper.instance();
-    const link = wrapper.find(Link);
+    afterEach(function () {
+      clock.restore();
+    });
 
-    instance.state.fade.should.be.false();
-    link.getDOMNode().className.should.not.containEql('fade-out');
+    it('should render remove text correctly', function () {
+      const addItemInPinboardPageStub = stub();
+      const wrapper = mount(
+        <RelevantCoaccusalCardWithUndo
+          addItemInPinboardPage={ addItemInPinboardPageStub }
+          id={ 123 }
+          fullName='Jerome Finnigan'
+          rank='Officer'
+          coaccusalCount={ 1 }
+          percentile={ {} }
+        />
+      );
+      const plusButton = wrapper.find(PlusButton);
 
-    instance.handleClick({ preventDefault: preventDefaultStub });
+      plusButton.simulate('click');
 
-    preventDefaultStub.should.be.calledOnce();
-    instance.state.fade.should.be.true();
-    addItemInPinboardPageStub.should.be.calledOnce();
-    link.getDOMNode().className.should.containEql('fade-out');
+      wrapper.find('.undo-card-text').text().should.equal('Jerome Finnigan added.');
+    });
 
-    preventDefaultStub.resetHistory();
-    addItemInPinboardPageStub.resetHistory();
-    instance.handleClick({ preventDefault: preventDefaultStub });
+    it('should not be reversed after the undo card disappears', function () {
+      const addItemInPinboardPageStub = stub();
+      const wrapper = mount(
+        <RelevantCoaccusalCardWithUndo
+          addItemInPinboardPage={ addItemInPinboardPageStub }
+          id={ 123 }
+          fullName='Jerome Finnigan'
+          rank='Officer'
+          coaccusalCount={ 1 }
+          percentile={ {} }
+        />
+      );
+      const plusButton = wrapper.find(PlusButton);
 
-    preventDefaultStub.should.be.calledOnce();
-    instance.state.fade.should.be.true();
-    addItemInPinboardPageStub.should.not.be.called();
+      plusButton.simulate('click');
+
+      clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME + 50);
+
+      wrapper.isEmptyRender().should.be.true();
+    });
   });
 });

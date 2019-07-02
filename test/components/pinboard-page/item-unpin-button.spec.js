@@ -6,21 +6,12 @@ import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 
 
 describe('<ItemUnpinButton />', function () {
-  it('should call removeItemInPinboardPage action and onClick when cliked on', function () {
-    const removeItemInPinboardPage = stub();
+  it('should onClick when cliked on', function () {
     const onClick = stub();
     const wrapper = mount(
-      <ItemUnpinButton
-        removeItemInPinboardPage={ removeItemInPinboardPage }
-        item={ { isPinned: true, type: 'CR', id: '1' } }
-        onClick={ onClick }
-      />
+      <ItemUnpinButton onClick={ onClick } />
     );
     wrapper.find('span').simulate('click');
-    removeItemInPinboardPage.calledWith({
-      type: 'CR',
-      id: '1',
-    }).should.be.true();
     onClick.should.be.calledOnce();
   });
 });

@@ -102,6 +102,8 @@ const copyOfWattsPinboard = {
 
 describe('Empty Pinboard Page', function () {
   beforeEach(function (client, done) {
+    api.cleanMock();
+
     mockPinboard(emptyPinboardId, emptyPinboard);
     mockPinboard(skullcapPinboardId, copyOfSkullcapPinboard);
     mockPinboard(wattsPinboardId, copyOfWattsPinboard);
@@ -109,11 +111,6 @@ describe('Empty Pinboard Page', function () {
     this.emptyPinboardPage = client.page.emptyPinboardPage();
     this.emptyPinboardPage.navigate(this.emptyPinboardPage.url(emptyPinboardId));
     client.waitForElementVisible('body', TIMEOUT);
-    done();
-  });
-
-  afterEach(function (client, done) {
-    api.cleanMock();
     done();
   });
 
