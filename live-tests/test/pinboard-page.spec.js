@@ -136,7 +136,7 @@ describe('Pinboard Page', function () {
       context('pinned officers', function () {
         beforeEach(function (client, done) {
           api.mockPut(
-            '/api/v2/pinboards/5cd06f2b/', 200,
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
             {
               'officer_ids': [],
               crids: ['1234567'],
@@ -191,7 +191,7 @@ describe('Pinboard Page', function () {
       context('pinned complaints', function () {
         beforeEach(function (client, done) {
           api.mockPut(
-            '/api/v2/pinboards/5cd06f2b/', 200,
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
             {
               'officer_ids': [1234],
               crids: [],
@@ -246,7 +246,7 @@ describe('Pinboard Page', function () {
       context('pinned trrs', function () {
         beforeEach(function (client, done) {
           api.mockPut(
-            '/api/v2/pinboards/5cd06f2b/', 200,
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
             {
               'officer_ids': [1234],
               crids: ['1234567'],
@@ -435,7 +435,7 @@ describe('Pinboard Page', function () {
 
         beforeEach(function (client, done) {
           api.mockPut(
-            '/api/v2/pinboards/5cd06f2b/', 200,
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
             {
               'officer_ids': ['1234', '123'],
               crids: ['1234567'],
@@ -540,7 +540,7 @@ describe('Pinboard Page', function () {
 
         beforeEach(function (client, done) {
           api.mockPut(
-            '/api/v2/pinboards/5cd06f2b/', 200,
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
             {
               'officer_ids': ['1234'],
               crids: ['1234567', '1071234'],
@@ -640,7 +640,7 @@ describe('Pinboard Page', function () {
 
         beforeEach(function (client, done) {
           api.mockPut(
-            '/api/v2/pinboards/5cd06f2b/', 200,
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
             {
               'officer_ids': ['1234'],
               crids: ['1234567', '1071234'],
