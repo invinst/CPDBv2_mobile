@@ -16,7 +16,7 @@ describe('Pinboard <TRRCard />', function () {
     };
     const trrCard = mount(<TRRCard item={ item }/>);
 
-    trrCard.exists(LocationCard).should.be.true();
+    trrCard.find(LocationCard).should.have.length(1);
   });
 });
 

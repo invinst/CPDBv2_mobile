@@ -14,7 +14,7 @@ describe('LocationCard component', function () {
     };
     const wrapper = mount(<LocationCard item={ item } dateKey='dateKey'/>);
 
-    wrapper.exists(ItemUnpinButton).should.be.true();
+    wrapper.find(ItemUnpinButton).should.have.length(1);
     wrapper.find('.location-card-date').text().should.equal('10-10-2010');
     wrapper.find('.location-card-category').text().should.equal('Use Of Force');
   });
@@ -23,7 +23,7 @@ describe('LocationCard component', function () {
     const item = { point: { 'lat': 1.0, 'lon': 1.0 } };
     const wrapper = mount(<LocationCard item={ item }/>);
 
-    wrapper.exists('.location-card-map').should.be.true();
+    wrapper.find('.location-card-map').should.have.length(1);
     wrapper.find('.empty-map').should.have.length(0);
   });
 
@@ -31,8 +31,8 @@ describe('LocationCard component', function () {
     const item = { point: null };
     const wrapper = mount(<LocationCard item={ item }/>);
 
-    wrapper.exists('.location-card-map').should.be.true();
-    wrapper.exists('.empty-map').should.be.true();
+    wrapper.find('.location-card-map').should.have.length(1);
+    wrapper.find('.empty-map').should.have.length(1);
   });
 
   it('should removeItemInPinboardPage when clicking on ItemUnpinButton', function () {

@@ -10,6 +10,8 @@ const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationRe
 
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
+    api.cleanMock();
+
     api.mock('GET', '/api/v2/mobile/officers/123/', 200, mockData.officer123);
     api.mock('GET', '/api/v2/pinboards/5cd06f2b/', 200, mockData.pinboardData);
     api.mock('GET', '/api/v2/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
@@ -56,11 +58,6 @@ describe('Pinboard Page', function () {
     this.pinboardPage = client.page.pinboardPage();
     this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
     client.waitForElementVisible('body', TIMEOUT);
-    done();
-  });
-
-  afterEach(function (client, done) {
-    api.cleanMock();
     done();
   });
 

@@ -16,7 +16,7 @@ describe('Pinboard <CRCard />', function () {
 
     const wrapper = mount(<CRCard item={ item }/>);
 
-    wrapper.exists(LocationCard).should.be.ok();
+    wrapper.find(LocationCard).should.have.length(1);
   });
 });
 

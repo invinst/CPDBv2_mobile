@@ -156,6 +156,7 @@ const createEmptyPinboardResponse = {
 
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
+    api.cleanMock();
     api.mock('GET', '/api/v2/search-mobile/', 200, mockSuggestionResponse);
     this.searchPage = client.page.search();
     this.pinboardPage = client.page.pinboardPage();
@@ -163,11 +164,6 @@ describe('SearchPageTest', function () {
     this.pinboardPage = client.page.pinboardPage();
     this.searchPage.navigate();
     client.waitForElementVisible('body', TIMEOUT);
-    done();
-  });
-
-  afterEach(function (client, done) {
-    api.cleanMock();
     done();
   });
 

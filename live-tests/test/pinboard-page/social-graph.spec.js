@@ -35,7 +35,7 @@ function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
 }
 
 describe('Pinboard Social Graph', function () {
-  afterEach(function (client, done) {
+  beforeEach(function (client, done) {
     api.cleanMock();
     done();
   });
