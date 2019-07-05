@@ -214,7 +214,7 @@ export default {
   RECENT_ACTIVITIES_ENDPOINT: '/activity-grid/',
   NEW_DOCUMENT_ALLEGATIONS_ENDPOINT: '/cr/list-by-new-document/',
   COMPLAINT_SUMMARIES_ENDPOINT: '/cr/complaint-summaries/',
-  PINBOARDS_API_ENDPOINT: '/pinboards/',
+  PINBOARDS_API_ENDPOINT: '/mobile/pinboards/',
   SOCIAL_GRAPH_API_ENDPOINT: '/mobile/social-graph/',
 
   //Time format
@@ -321,10 +321,17 @@ export default {
     'DOCUMENT': 'DOCUMENT'
   },
 
-  // Pinboard constants
-  PINBOARD_PAGE_TAB_NAMES: {
-    NETWORK: 'NETWORK',
-    GEOGRAPHIC: 'GEOGRAPHIC',
+  // Pinboard page constants
+  PINBOARD_PAGE: {
+    UNDO_CARD_VISIBLE_TIME: 1000,
+    UNDO_CARD_THEMES: {
+      LIGHT: 'light',
+      DARK: 'dark',
+    },
+    TAB_NAMES: {
+      NETWORK: 'NETWORK',
+      GEOGRAPHIC: 'GEOGRAPHIC',
+    }
   },
 
   // Map constants

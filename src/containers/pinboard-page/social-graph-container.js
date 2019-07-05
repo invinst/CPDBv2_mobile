@@ -9,6 +9,7 @@ function mapStateToProps(state, ownProps) {
     officers: graphDataSelector(state).officers,
     coaccusedData: graphDataSelector(state).coaccusedData,
     listEvent: graphDataSelector(state).listEvent,
+    isVisible: ownProps.isVisible
   };
 }
 

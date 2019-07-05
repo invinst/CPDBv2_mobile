@@ -1,10 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { stub } from 'sinon';
 
 import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/relevant-infinite-carousel';
 import RelevantCoaccusals from 'components/pinboard-page/relevant/relevant-coaccusals';
-import RelevantCoaccusalCard from 'components/pinboard-page/relevant/relevant-coaccusals/relevant-coaccusal-card';
+import RelevantCoaccusalCard, { RelevantCoaccusalCardWithUndo }
+  from 'components/pinboard-page/relevant/relevant-coaccusals/relevant-coaccusal-card';
 
 
 describe('<RelevantCoaccusals />', function () {
@@ -25,7 +26,7 @@ describe('<RelevantCoaccusals />', function () {
     const addItemInPinboardPageStub = stub();
     const fetchPinboardRelevantCoaccusalsStub = stub();
 
-    const wrapper = shallow(
+    const wrapper = mount(
       <RelevantCoaccusals
         requesting={ false }
         addItemInPinboardPage={ addItemInPinboardPageStub }
@@ -43,14 +44,18 @@ describe('<RelevantCoaccusals />', function () {
     relevantInfiniteCarousel.prop('requesting').should.be.false();
 
     const relevantCoaccusalCards = relevantInfiniteCarousel.find(RelevantCoaccusalCard);
+    const relevantCoaccusalCardsWithUndo = relevantInfiniteCarousel.find(RelevantCoaccusalCardWithUndo);
     relevantCoaccusalCards.should.have.length(2);
-    relevantCoaccusalCards.at(0).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
+    relevantCoaccusalCardsWithUndo.should.have.length(2);
+
+    relevantCoaccusalCardsWithUndo.at(0).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
     relevantCoaccusalCards.at(0).prop('id').should.eql(123);
     relevantCoaccusalCards.at(0).prop('fullName').should.eql('Jerome Finnigan');
     relevantCoaccusalCards.at(0).prop('percentile').should.eql({});
     relevantCoaccusalCards.at(0).prop('rank').should.eql('Officer');
     relevantCoaccusalCards.at(0).prop('coaccusalCount').should.eql(11);
-    relevantCoaccusalCards.at(1).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
+
+    relevantCoaccusalCardsWithUndo.at(1).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
     relevantCoaccusalCards.at(1).prop('id').should.eql(456);
     relevantCoaccusalCards.at(1).prop('fullName').should.eql('Jerome Turbyville');
     relevantCoaccusalCards.at(1).prop('percentile').should.eql({});

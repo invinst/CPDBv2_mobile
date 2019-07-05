@@ -342,7 +342,8 @@ const mockOfficerPageCms = {
 };
 
 describe('OfficerPage test', function () {
-  afterEach(function (client, done) {
+  beforeEach(function (client, done) {
+    api.cleanMock();
     done();
   });
 

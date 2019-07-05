@@ -1,8 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Router, createMemoryHistory, Route } from 'react-router';
+import { spy } from 'sinon';
 
-import OfficerCard from 'components/pinboard-page/cards/officer-card';
+import OfficerCard, { OfficerCardWithUndo } from 'components/pinboard-page/cards/officer-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 import RadarChart from 'components/common/radar-chart';
 
@@ -24,28 +25,51 @@ describe('Pinboard <OfficerCard />', function () {
     officerCard.find('.test--officer-cr-count').text().should.equal('10 complaints');
   });
 
-  it('should fade in when added', function () {
-    const item = {
-      rank: 'Officer as Detective',
-      fullName: 'James David',
-      complaintCount: '10',
-    };
-    const officerCard = mount(<OfficerCard item={ item } isAdded={ true }/>);
-    const officerCardDOM = officerCard.getDOMNode();
+  it('should invoke removeItemInPinboardPage when clicking on ItemUnpinButton', function () {
+    const removeItemInPinboardPage = spy();
 
-    officerCardDOM.className.should.containEql('hide');
-    officerCardDOM.className.should.containEql('fade-in');
-  });
-
-  it('should fade out when removed', function () {
     const item = {
+      type: 'OFFICER',
+      isPinned: false,
+      id: 123,
       rank: 'Officer as Detective',
       fullName: 'James David',
       complaintCount: '10',
     };
     const wrapper = mount(
       <Router history={ createMemoryHistory() }>
-        <Route path='/' component={ () => <OfficerCard item={ item }/> } />
+        <Route path='/' component={ () =>
+          <OfficerCard
+            item={ item }
+            removeItemInPinboardPage={ removeItemInPinboardPage }
+          /> } />
+      </Router>
+    );
+    const unpinButton = wrapper.find(ItemUnpinButton);
+
+    unpinButton.simulate('click');
+
+    removeItemInPinboardPage.should.be.calledOnce();
+    removeItemInPinboardPage.should.be.calledWith({
+      type: 'OFFICER',
+      id: 123
+    });
+  });
+});
+
+describe('OfficerCardWithUndo component', function () {
+  it('should render remove text correctly', function () {
+    const item = {
+      type: 'OFFICER',
+      isPinned: false,
+      id: 123,
+      rank: 'Officer as Detective',
+      fullName: 'James David',
+      complaintCount: '10',
+    };
+    const wrapper = mount(
+      <Router history={ createMemoryHistory() }>
+        <Route path='/' component={ () => <OfficerCardWithUndo item={ item } /> } />
       </Router>
     );
     const officerCard = wrapper.find(OfficerCard);
@@ -53,6 +77,6 @@ describe('Pinboard <OfficerCard />', function () {
 
     unpinButton.simulate('click');
 
-    officerCard.getDOMNode().className.should.containEql('fade-out');
+    wrapper.find('.undo-card-text').text().should.equal('James David removed.');
   });
 });

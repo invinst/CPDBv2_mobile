@@ -9,6 +9,7 @@ import SocialGraph from 'components/common/animated-social-graph/social-graph';
 import LoadingSpinner from 'components/common/loading-spinner';
 import graphStyles from 'components/common/animated-social-graph/animated-social-graph.sass';
 
+
 describe('AnimatedSocialGraph component', function () {
   let wrapper;
   const officers = [
