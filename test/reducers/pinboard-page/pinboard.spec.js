@@ -52,6 +52,15 @@ describe('Pinboard reducer', function () {
           'officer_ids': [1],
           crids: ['abc'],
           'trr_ids': [1],
+          'example_pinboards': [{
+            'description': 'Officers with at least 10 complaints against them generate 64% of all complaints.',
+            'id': 'b20c2c36',
+            'title': 'Watts Crew',
+          }, {
+            'description': 'It is a nickname given to a group of five Chicago Police officers in a...',
+            'id': '22e66085',
+            'title': 'Skullcap Crew',
+          }]
         }
       }
     ).should.deepEqual({
@@ -62,6 +71,15 @@ describe('Pinboard reducer', function () {
       crids: [],
       'trr_ids': [],
       saving: false,
+      'example_pinboards': [{
+        'description': 'Officers with at least 10 complaints against them generate 64% of all complaints.',
+        'id': 'b20c2c36',
+        'title': 'Watts Crew',
+      }, {
+        'description': 'It is a nickname given to a group of five Chicago Police officers in a...',
+        'id': '22e66085',
+        'title': 'Skullcap Crew',
+      }]
     });
   });
 

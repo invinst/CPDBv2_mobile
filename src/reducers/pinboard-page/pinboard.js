@@ -60,6 +60,7 @@ export default handleActions({
       ...state,
       id: action.payload.id,
       saving: false,
+      'example_pinboards': action.payload['example_pinboards'],
     };
   },
   [PINBOARD_CREATE_REQUEST_FAILURE]: (state, action) => {
