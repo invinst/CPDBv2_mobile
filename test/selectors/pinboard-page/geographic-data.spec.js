@@ -20,24 +20,7 @@ describe('GeographicData selectors', function () {
           lon: -87.62355
         },
         crid: '1002787',
-        'coaccused_count': 1,
-        victims: [
-          {
-            gender: 'Male',
-            age: null,
-            race: 'Hispanic'
-          },
-          {
-            gender: 'Female',
-            age: null,
-            race: 'White'
-          },
-          {
-            gender: 'Male',
-            age: 46,
-            race: 'Hispanic'
-          }
-        ]
+        date: '2007-01-18',
       };
       crMapMarkersTransform(crItem).should.eql({
         point: {
@@ -47,24 +30,7 @@ describe('GeographicData selectors', function () {
         kind: 'CR',
         id: '1002787',
         category: 'Conduct Unbecoming (Off-Duty)',
-        victims: [
-          {
-            gender: 'Male',
-            age: null,
-            race: 'Hispanic'
-          },
-          {
-            gender: 'Female',
-            age: null,
-            race: 'White'
-          },
-          {
-            gender: 'Male',
-            age: 46,
-            race: 'Hispanic'
-          },
-        ],
-        coaccused: 1,
+        date: '2007-01-18',
       });
     });
   });
@@ -79,7 +45,8 @@ describe('GeographicData selectors', function () {
         point: {
           lat: 50,
           lon: -87
-        }
+        },
+        date: '2007-01-18',
       };
       trrMapMarkerTransform(trrItem).should.eql({
         point: {
@@ -89,6 +56,7 @@ describe('GeographicData selectors', function () {
         kind: 'FORCE',
         id: '56789',
         category: 'Taser',
+        date: '2007-01-18',
       });
     });
   });
@@ -154,12 +122,7 @@ describe('GeographicData selectors', function () {
           lon: -87.73173299999999
         },
         crid: '1045343',
-        'coaccused_count': 6,
-        victims: [{
-          gender: 'Male',
-          race: 'White',
-          age: 35
-        }]
+        date: '2007-01-18',
       };
       const secondCr = {
         category: 'Illegal Search',
@@ -169,7 +132,7 @@ describe('GeographicData selectors', function () {
           lon: -87.67122688239999
         },
         crid: '294619',
-        'coaccused_count': 9,
+        date: '2008-01-18',
       };
       const trr = {
         'trr_id': '123456',
@@ -180,6 +143,7 @@ describe('GeographicData selectors', function () {
           lat: 35.3,
           lon: 50.5
         },
+        date: '2009-01-18',
       };
       const state = {
         pinboardPage: {
@@ -194,12 +158,7 @@ describe('GeographicData selectors', function () {
         kind: 'CR',
         id: '1045343',
         category: 'Illegal Search',
-        victims: [{
-          gender: 'Male',
-          race: 'White',
-          age: 35
-        }],
-        coaccused: 6,
+        date: '2007-01-18',
       }, {
         category: 'Illegal Search',
         kind: 'CR',
@@ -208,8 +167,7 @@ describe('GeographicData selectors', function () {
           lon: -87.67122688239999
         },
         id: '294619',
-        coaccused: 9,
-        victims: undefined,
+        date: '2008-01-18',
       }, {
         point: {
           lat: 35.3,
@@ -218,6 +176,7 @@ describe('GeographicData selectors', function () {
         kind: 'FORCE',
         id: '123456',
         category: 'Firearm',
+        date: '2009-01-18',
       }]);
     });
   });
