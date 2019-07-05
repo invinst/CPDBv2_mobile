@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+export const REQUEST_CANCEL_MESSAGE = 'Cancelled by user';
 
 export const clientConfig = {
   responseType: 'json',
