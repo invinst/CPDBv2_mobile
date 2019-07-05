@@ -21,6 +21,11 @@ export default class PinboardPage extends Component {
     pushBreadcrumbs({ location, routes, params });
   }
 
+  componentDidUpdate() {
+    const { params, pushBreadcrumbs, location, routes } = this.props;
+    pushBreadcrumbs({ location, routes, params });
+  }
+
   renderContent() {
     const {
       changePinboardTab,

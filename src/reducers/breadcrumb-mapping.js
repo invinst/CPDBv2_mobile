@@ -4,7 +4,11 @@ import { kebabCase } from 'lodash';
 import { OFFICER_REQUEST_SUCCESS } from 'actions/officer-page';
 import { COMPLAINT_REQUEST_SUCCESS } from 'actions/complaint-page';
 import { TRR_REQUEST_SUCCESS } from 'actions/trr-page';
-import { PINBOARD_UPDATE_REQUEST_SUCCESS, PINBOARD_FETCH_REQUEST_SUCCESS, } from 'actions/pinboard';
+import {
+  PINBOARD_UPDATE_REQUEST_SUCCESS,
+  PINBOARD_FETCH_REQUEST_SUCCESS,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
+} from 'actions/pinboard';
 
 
 const buildPinboardBreadcrumbs = (state, action) => {
@@ -30,6 +34,7 @@ const breadcrumbMapping = handleActions({
   }),
   [PINBOARD_FETCH_REQUEST_SUCCESS]: buildPinboardBreadcrumbs,
   [PINBOARD_UPDATE_REQUEST_SUCCESS]: buildPinboardBreadcrumbs,
+  [PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS]: buildPinboardBreadcrumbs,
 }, {});
 
 export default breadcrumbMapping;

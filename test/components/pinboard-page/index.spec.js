@@ -176,7 +176,7 @@ describe('<PinboardPage />', function () {
     wrapper.find(Footer).exists().should.be.true();
   });
 
-  it('should pushBreadcrumbs on componentDidMount', function () {
+  it('should pushBreadcrumbs on componentDidMount and componentDidUpdate', function () {
     const itemsByTypes = {
       'OFFICER': [],
       'CR': [],
@@ -189,7 +189,7 @@ describe('<PinboardPage />', function () {
     const params = { pinboardId: '5cd06f2b' };
     const pinboard = { id: '5cd06f2b', 'crids': ['123'] };
 
-    mount(
+    const wrapper = mount(
       <Provider store={ store }>
         <PinboardPage
           itemsByTypes={ itemsByTypes }
@@ -205,5 +205,23 @@ describe('<PinboardPage />', function () {
 
     pushBreadcrumbs.should.be.calledOnce();
     pushBreadcrumbs.should.be.calledWith({ location, routes, params });
+
+    const newParams = { pinboardId: '5c23adf1' };
+    const newLocation = { pathname: '/pinboard/5c23adf1/' };
+    const newPinboard = { id: '5c23adf1', 'crids': ['123'] };
+    wrapper.setProps( { children: (
+      <PinboardPage
+        itemsByTypes={ itemsByTypes }
+        removeItemInPinboardPage={ removeItemInPinboardPage }
+        params={ newParams }
+        pinboard={ newPinboard }
+        pushBreadcrumbs={ pushBreadcrumbs }
+        routes={ routes }
+        location={ newLocation }
+      />
+    ) });
+
+    pushBreadcrumbs.should.be.calledTwice();
+    pushBreadcrumbs.should.be.calledWith({ location: newLocation, routes, params: newParams });
   });
 });
