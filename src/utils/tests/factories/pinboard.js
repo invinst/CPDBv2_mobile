@@ -14,4 +14,5 @@ export const PinboardFactory = Factory.define('pinboard')
   .attr('trrItems', () => [])
   .attr('saving', () => false)
   .attr('isPinboardRestored', () => false)
-  .attr('needRefreshData', () => false);
+  .attr('needRefreshData', () => false)
+  .attr('example_pinboards', () => undefined);

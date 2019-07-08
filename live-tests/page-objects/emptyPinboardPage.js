@@ -1,6 +1,7 @@
-const emptyPinboardId = '11613bb2';
-
-const nthExamplePinboardRow = n => `.helper-row:nth-child(${n + 2})`;
+const nthExamplePinboardRow = n => ({
+  selector: `//a[contains(@class, "example-pinboard-link__example-pinboard-link")][${n}]`,
+  locateStrategy: 'xpath',
+});
 
 module.exports = {
   url: function (pinboardId) {
