@@ -1,20 +1,22 @@
 @import 'variables'
 
 \:local(.trr-search-result)
-  .search-item
+  .item-info
+    box-sizing: border-box
+    margin-left: 8px
+    padding-top: 1px
     display: flex
-    padding: 11px 0
-    border-bottom: 1px solid $alto-solid
-    text-decoration: none
 
-    .item-type
-      font-size: 14px
-      font-weight: 400
-      color: $thunder
-      margin-right: 8px
-      width: 26px
+  .item-type
+    font-size: 14px
+    font-weight: 300
+    color: $thunder
+    margin-right: 8px
+    width: 26px
+    align-self: center
 
-    .item-id
-      font-size: 14px
-      font-weight: 400
-      color: $greyish
+  .item-id
+    font-size: 14px
+    font-weight: 300
+    color: $greyish
+    align-self: center

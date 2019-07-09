@@ -5,11 +5,12 @@ import config from 'config';
 
 const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoiaW52aXNpYmxlaW5zdGl0dXRlIiwiYSI6ImNpZ256bXRqMDAwMDBzeGtud3VoZGplNHMifQ.ky2VSGEYU5KritRMArHY-w';
-
+const MAPBOX_API_URL = 'https://api.mapbox.com/styles/v1/mapbox';
+const MARKER_URL = 'https://cpdbv21777.blob.core.windows.net/assets/map-marker.png';
 
 _mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 
-if (config.appEnv === 'test') {
+if (config.appEnv === 'test' || config.appEnv === 'live-test') {
   const addSourceSpy = spy();
   const getSourceSpy = stub().returns(undefined);
   const addLayerSpy = spy();
@@ -24,6 +25,9 @@ if (config.appEnv === 'test') {
   const setLngLatSpy = spy();
   const setPopupSpy = spy();
   const addToSpy = spy();
+  const getContainerStub = stub();
+  const getBoundingClientRectSpy = spy();
+  getContainerStub.returns(getBoundingClientRectSpy);
 
   class MockMap {
     constructor() {
@@ -36,6 +40,7 @@ if (config.appEnv === 'test') {
       this.setFilter = setFilterSpy;
       this.addControl = addControlSpy;
       this.remove = removeSpy;
+      this.getContainer = getContainerStub;
     }
     on() {
       arguments[arguments.length - 1]();
@@ -63,5 +68,18 @@ if (config.appEnv === 'test') {
   _mapboxgl._removeSpy = removeSpy;
   _mapboxgl.NavigationControl = navigationControlSpy;
 }
+
+const getMapUrl = (lat, lon, width, height, mapStyle, zoom) => [
+  MAPBOX_API_URL,
+  mapStyle,
+  'static',
+  `url-${encodeURIComponent(MARKER_URL)}(${lon},${lat})`,
+  `${lon},${lat},${zoom},0,0`,
+  `${width}x${height}@2x?access_token=${MAPBOX_ACCESS_TOKEN}`,
+].join('/');
+
+export const getComplaintMapUrl = (lat, lon, width, height) => {
+  return getMapUrl(lat, lon, width, height, 'streets-v10', 12);
+};
 
 export const mapboxgl = _mapboxgl;

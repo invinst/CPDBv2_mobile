@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
-import { shallow } from 'enzyme';
+import { Link, Router, Route } from 'react-router';
+import { mount } from 'enzyme';
 import { spy } from 'sinon';
+import { createMemoryHistory } from 'history';
 
 import CRSearchResult from 'components/search-page/cr-search-result';
 
@@ -14,17 +15,21 @@ describe('<CRSearchResult />', () => {
         crid: '1027271',
         url: '/complaint/1027271/',
         category: 'Use Of Force',
-        incidentDate: '06/13/2009'
+        incidentDate: '06/13/2009',
+        isPinned: false,
+        type: 'CR',
       },
       {
         crid: '1049273',
         url: '/complaint/1049273/',
         category: 'Domestic',
-        incidentDate: '10/13/2011'
+        incidentDate: '10/13/2011',
+        isPinned: false,
+        type: 'CR',
       }
     ];
 
-    const wrapper = shallow(
+    const wrapper = mount(
       <CRSearchResult
         items={ crs }
         saveToRecent={ () => {} }
@@ -55,12 +60,16 @@ describe('<CRSearchResult />', () => {
         url: 'url'
       }
     ];
-    const wrapper = shallow(
-      <CRSearchResult
-        items={ crs }
-        saveToRecent={ saveToRecentSpy }
-        categoryFilter='CR'
-      />
+
+    const wrapper = mount(
+      <Router history={ createMemoryHistory() }>
+        <Route path='/' component={
+          () => <CRSearchResult
+            items={ crs }
+            saveToRecent={ saveToRecentSpy }
+            categoryFilter='CR'/>
+        } />
+      </Router>
     );
 
     wrapper.find(Link).simulate('click');

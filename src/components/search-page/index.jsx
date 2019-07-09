@@ -1,17 +1,26 @@
 import React, { Component, PropTypes } from 'react';
 import ReactHeight from 'react-height';
+import { browserHistory } from 'react-router';
+import { isEmpty, noop } from 'lodash';
 
 import constants from 'constants';
-import { scrollToElement, goUp } from 'utils/navigation-util';
+import { goUp } from 'utils/navigation-util';
 import SearchCategory from './search-category';
-import SearchNavbar from './search-navbar';
 import ClearableInput from './clearable-input';
 import { showIntercomLauncher } from 'utils/intercom';
 import style from './search-page.sass';
 import * as IntercomTracking from 'utils/intercom-tracking';
+import { generatePinboardUrl } from 'utils/pinboard';
+import PinboardBar from './pinboard-bar';
 
 
 export default class SearchPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleEmptyPinboardButtonClick = this.handleEmptyPinboardButtonClick.bind(this);
+  }
+
   componentDidMount() {
     const {
       pushBreadcrumbs, location, routes, params
@@ -21,11 +30,6 @@ export default class SearchPage extends Component {
     IntercomTracking.trackSearchPage();
     showIntercomLauncher(false);
     this.updateResults();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { location, params, routes, pushBreadcrumbs } = nextProps;
-    pushBreadcrumbs({ location, params, routes });
   }
 
   componentDidUpdate(prevProps) {
@@ -56,11 +60,6 @@ export default class SearchPage extends Component {
 
   isLongEnoughQuery(query) {
     return typeof query === 'string' && query.length >= 2;
-  }
-
-  scrollToCategory(categoryId) {
-    const target = '#search-category-' + categoryId;
-    scrollToElement(target, '#search-page-header');
   }
 
   getCategoriesWithSuggestions() {
@@ -101,6 +100,7 @@ export default class SearchPage extends Component {
           saveToRecent={ this.props.saveToRecent }
           updateActiveCategory={ this.props.updateActiveCategory }
           activeCategory={ this.props.activeCategory }
+          addOrRemoveItemInPinboard={ this.props.addOrRemoveItemInPinboard }
           />
       );
 
@@ -133,8 +133,21 @@ export default class SearchPage extends Component {
     };
   }
 
+  handleEmptyPinboardButtonClick() {
+    const { createPinboard } = this.props;
+
+    createPinboard({ 'officerIds': [], crids: [], 'trrIds': [] }).then(response => {
+      const pinboard = response.payload;
+      const url = generatePinboardUrl(pinboard);
+
+      if (!isEmpty(url)) {
+        browserHistory.push(url);
+      }
+    });
+  }
+
   render() {
-    const { query, activeCategory, chosenCategory, router } = this.props;
+    const { query, chosenCategory, router, pinboard } = this.props;
     let categories;
 
     if (!this.isLongEnoughQuery(query)) {
@@ -183,15 +196,9 @@ export default class SearchPage extends Component {
             </button>
           </div>
 
-          <SearchNavbar
-            categories={ categories }
-            activeCategory={ activeCategory }
-            scrollToCategory={ this.scrollToCategory }
-            updateActiveCategory={ this.props.updateActiveCategory }
-            chosenCategory={ this.props.chosenCategory }
-            clearChosenCategory={ this.props.updateChosenCategory.bind(this, '') }
-          />
-
+          <PinboardBar
+            pinboard={ pinboard }
+            onEmptyPinboardButtonClick={ this.handleEmptyPinboardButtonClick } />
         </div>
 
         <div className='category-details-container'>
@@ -223,11 +230,20 @@ SearchPage.propTypes = {
   location: PropTypes.object,
   params: PropTypes.object,
   routes: PropTypes.array,
+  pinboard: PropTypes.object,
+  addOrRemoveItemInPinboard: PropTypes.func,
+  createPinboard: PropTypes.func,
 };
 
 SearchPage.defaultProps = {
-  inputChanged: function () {},
-  updateChosenCategory: function () {},
+  query: '',
+  inputChanged: noop,
+  updateChosenCategory: noop,
   chosenCategory: '',
-  pushBreadcrumbs: () => {}
+  pushBreadcrumbs: noop,
+  createPinboard: noop,
+  suggestTerm: noop,
+  queryChanged: noop,
+  saveToRecent: noop,
+  suggestAllFromCategory: noop,
 };

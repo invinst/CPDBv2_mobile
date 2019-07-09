@@ -1,0 +1,55 @@
+@import 'variables'
+
+\:local(.wrapper)
+  height: 48px
+  background-color: $mine-shaft
+  color: $boulder
+  font-size: 14px
+  padding-top: 8px
+  display: block
+
+  .header-parent
+    background-color: $wild-sand
+    height: 40px
+    margin: 0 8px
+    width: calc(100% - 16px)
+    min-width: 120px
+
+  .header-title
+    display: inline-block
+    width: 33px
+    margin-left: 8px
+    height: 100%
+    text-decoration: none
+    cursor: pointer
+
+    &:visited, &:link
+      color: inherit
+
+  .right-menu
+    display: inline-block
+    width: calc(100% - 53px)
+    height: 100%
+    text-align: right
+    line-height: 40px
+    margin-right: 12px
+
+  .menu-item
+    display: inline-block
+    height: 100%
+    line-height: 40px
+
+  .highlight
+    color: $thunder
+    position: relative
+
+    &:after
+      content: ""
+      position: absolute
+      width: 8px
+      height: 8px
+      border-radius: 50%
+      background-color: $mine-shaft
+      display: inline-block
+      bottom: -5px
+      left: calc(50% - 4px)

@@ -1,6 +1,7 @@
 'use strict';
 
 let path = require('path');
+const webpack = require('webpack');
 let srcPath = path.join(__dirname, '/../src/');
 
 let baseConfig = require('./base');
@@ -27,7 +28,7 @@ module.exports = {
     ],
     loaders: [
       {
-        test: /\.(svg|png|jpg|gif|woff|woff2|css|sass|scss|less|styl|json)$/,
+        test: /\.(svg|png|jpg|gif|woff|woff2|less|styl|json)$/,
         loader: 'null-loader'
       },
       {
@@ -40,7 +41,20 @@ module.exports = {
             path.join(__dirname, '/../test')
           ]
         )
-      }
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader!postcss-loader'
+      },
+      {
+        test: /\.sass/,
+        loader: 'style-loader!css-loader?camelCase&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' +
+        '!sass-loader?outputStyle=expanded&indentedSyntax'
+      },
+      {
+        test: /\.scss/,
+        loader: 'style-loader!css-loader!postcss-loader!sass-loader?outputStyle=expanded'
+      },
     ]
   },
   resolve: {
@@ -66,7 +80,10 @@ module.exports = {
   plugins: [
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
-    })
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"test"'
+    }),
   ],
   externals: {
     'cheerio': 'window',

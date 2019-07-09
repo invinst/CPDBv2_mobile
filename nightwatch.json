@@ -2,7 +2,11 @@
   "src_folders" : ["live-tests/live-test-setup.js"],
   "output_folder" : "",
   "page_objects_path" : "./live-tests/page-objects",
-  "custom_commands_path": "./live-tests/utils",
+  "custom_commands_path": [
+    "./live-tests/utils",
+    "node_modules/nightwatch-custom-commands-assertions/js/commands"
+  ],
+	"custom_assertions_path" : "node_modules/nightwatch-custom-commands-assertions/js/assertions",
 
   "selenium" : {
     "start_process" : true,
@@ -19,7 +23,8 @@
   "test_settings" : {
     "default" : {
       "globals": {
-        "clientUrl": "http://localhost:9001"
+        "clientUrl": "http://localhost:9001",
+        "waitForConditionPollInterval": 50
       },
       "test_runner" : {
         "type" : "mocha",

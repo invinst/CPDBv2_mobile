@@ -1,0 +1,37 @@
+@import 'variables'
+
+\:local(.row)
+  cursor: pointer
+  height: 32px
+  line-height: 32px
+
+  .legend-row-text
+    color: $gandalf-gray
+
+    &:hover
+      color: $accent-blue
+
+  .legend-row-number
+    color: $thunder
+    float: right
+
+  .legend-row-oval
+    width: 11px
+    height: 11px
+    border-radius: 50%
+    display: inline-block
+    margin-right: 18px
+    vertical-align: middle
+    margin-bottom: 2px
+
+    &.unsustained-complaint, &.complaint
+      background-color: white
+      border: solid 1px $bright-orange
+
+    &.sustained-complaint
+      background-color: $champagne
+      border: solid 1px $bright-orange
+
+    &.use-of-force-report
+      background-color: $greyish
+      border: solid 1px $gandalf-gray

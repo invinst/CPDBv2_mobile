@@ -214,6 +214,8 @@ export default {
   RECENT_ACTIVITIES_ENDPOINT: '/activity-grid/',
   NEW_DOCUMENT_ALLEGATIONS_ENDPOINT: '/cr/list-by-new-document/',
   COMPLAINT_SUMMARIES_ENDPOINT: '/cr/complaint-summaries/',
+  PINBOARDS_API_ENDPOINT: '/mobile/pinboards/',
+  SOCIAL_GRAPH_API_ENDPOINT: '/mobile/social-graph/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
@@ -242,6 +244,7 @@ export default {
   TRR_PATH: '/trr/',
   EMBED_TOP_OFFICER_PATH: '/embed/top-officers-page',
   EMBED_OFFICERS_PATH: '/embed/officers/',
+  PINBOARD_PATH: '/pinboard/',
 
   // Routes that don't have their corresponding component.
   // NavigationUtil.goUp() skips all of these.
@@ -316,5 +319,31 @@ export default {
     'ACTIVITY': 'ACTIVITY',
     'ALLEGATION': 'ALLEGATION',
     'DOCUMENT': 'DOCUMENT'
-  }
+  },
+
+  // Pinboard page constants
+  PINBOARD_PAGE: {
+    UNDO_CARD_VISIBLE_TIME: 1000,
+    UNDO_CARD_THEMES: {
+      LIGHT: 'light',
+      DARK: 'dark',
+    },
+    TAB_NAMES: {
+      NETWORK: 'NETWORK',
+      GEOGRAPHIC: 'GEOGRAPHIC',
+    }
+  },
+
+  // Map constants
+  MAP_ITEMS: {
+    CR: 'CR',
+    FORCE: 'FORCE',
+  },
+  MAP_INFO: {
+    CENTER_LAT: 41.85677,
+    CENTER_LNG: -87.6024055,
+    ZOOM1: 9,
+    ZOOM2: 13,
+  },
+  MAPBOX_STYLE: 'mapbox://styles/invisibleinstitute/cj8ugtswqe8dx2ss2kwhfnvte'
 };

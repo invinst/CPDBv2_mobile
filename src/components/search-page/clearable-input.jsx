@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import clearIcon from 'img/ic-clear.svg';
 
 export default class ClearableInput extends Component {
   clearQuery() {
@@ -15,7 +14,7 @@ export default class ClearableInput extends Component {
     return (
       <img
         className='clear-icon'
-        src={ clearIcon }
+        src='/img/ic-clear.svg'
         onClick={ this.clearQuery.bind(this) }
         />
     );

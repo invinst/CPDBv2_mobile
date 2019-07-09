@@ -23,6 +23,8 @@ import {
   dateOfficersSelector,
   investigatorCRsSelector
 } from 'selectors/search-page';
+import { getPinboard } from 'selectors/pinboard-page/pinboard';
+import { addOrRemoveItemInPinboard, createPinboard } from 'actions/pinboard';
 
 
 function mapStateToProps(state, ownProps) {
@@ -38,7 +40,8 @@ function mapStateToProps(state, ownProps) {
     recent: recentSelector(state),
     suggested: suggestedSelector(state),
     activeCategory: state.suggestionApp.activeCategory,
-    chosenCategory: state.suggestionApp.chosenCategory
+    chosenCategory: state.suggestionApp.chosenCategory,
+    pinboard: getPinboard(state),
   };
 }
 
@@ -50,7 +53,9 @@ const mapDispatchToProps = {
   saveToRecent,
   updateActiveCategory,
   updateChosenCategory,
-  pushBreadcrumbs
+  pushBreadcrumbs,
+  addOrRemoveItemInPinboard,
+  createPinboard,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchPage));

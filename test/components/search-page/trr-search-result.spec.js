@@ -1,7 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { Link, Router, Route } from 'react-router';
+import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import { Link } from 'react-router';
+import { createMemoryHistory } from 'history';
 
 import TRRSearchResult from 'components/search-page/trr-search-result';
 
@@ -15,7 +16,7 @@ describe('<TRRSearchResult />', () => {
       { id: '3' },
     ];
 
-    const wrapper = shallow(
+    const wrapper = mount(
       <TRRSearchResult
         items={ trrs }
         saveToRecent={ () => {} }
@@ -35,12 +36,16 @@ describe('<TRRSearchResult />', () => {
         url: 'url'
       }
     ];
-    const wrapper = shallow(
-      <TRRSearchResult
-        items={ trrs }
-        saveToRecent={ saveToRecentSpy }
-        categoryFilter='TRR'
-      />
+    const wrapper = mount(
+      <Router history={ createMemoryHistory() }>
+        <Route path='/' component={
+          () => <TRRSearchResult
+            items={ trrs }
+            saveToRecent={ saveToRecentSpy }
+            categoryFilter='TRR'
+          />
+        } />
+      </Router>
     );
 
     wrapper.find(Link).simulate('click');

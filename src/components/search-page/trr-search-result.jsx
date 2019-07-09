@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
 
+import SearchItem from './search-item';
 import style from './trr-search-result.sass';
 
 
-const TRRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
+const TRRSearchResult = ({ items, saveToRecent, categoryFilter, addOrRemoveItemInPinboard }) => {
   const handleClick = (name, url) => saveToRecent({
     type: categoryFilter,
     title: name,
@@ -16,14 +16,20 @@ const TRRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
       {
         items.map((item) => {
           return (
-            <Link
+            <SearchItem
               key={ item.id }
-              to={ item.url }
-              className='search-item'
-              onClick={ () => handleClick(item.id, item.url) }>
-              <div className='item-type'>TRR</div>
-              <div className='item-id'>{ item.id }</div>
-            </Link>
+              url={ item.url }
+              onClick={ () => handleClick(item.id, item.url) }
+              hasPinButton={ true }
+              addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+              id={ item.id }
+              isPinned={ item.isPinned }
+              type={ item.type }>
+              <div className='item-info'>
+                <div className='item-type'>TRR</div>
+                <div className='item-id'>{ item.id }</div>
+              </div>
+            </SearchItem>
           );
         })
       }
@@ -34,7 +40,8 @@ const TRRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
 TRRSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
   items: PropTypes.array,
-  categoryFilter: PropTypes.string
+  categoryFilter: PropTypes.string,
+  addOrRemoveItemInPinboard: PropTypes.func,
 };
 
 TRRSearchResult.defaultProps = {

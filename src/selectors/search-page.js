@@ -3,10 +3,16 @@ import moment from 'moment';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
+import { pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
 
 
-export const officerFormatter = (officers) => {
+const isItemPinned = (type, id, pinboardItems) => {
+  return (pinboardItems.hasOwnProperty(type)) &&
+         (pinboardItems[type].indexOf(id) !== -1);
+};
+
+export const officerFormatter = (officers, pinboardItems) => {
   if (!officers) {
     return { data: [] };
   }
@@ -18,13 +24,16 @@ export const officerFormatter = (officers) => {
       name: officer.name,
       badge: officer.badge ? `Badge #${officer.badge}` : '',
       percentile: extractPercentile(officer.percentile),
-      url: officerUrl(officer.id, officer.name)
+      url: officerUrl(officer.id, officer.name),
+      isPinned: isItemPinned('OFFICER', officer.id, pinboardItems),
+      type: 'OFFICER',
     }))
   };
 };
 
 export const officersSelector = createSelector(
   (state) => state.suggestionApp.suggestions.OFFICER,
+  pinboardItemsSelector,
   officerFormatter
 );
 
@@ -48,7 +57,7 @@ export const unitsSelector = createSelector(
   }
 );
 
-const crFormatter = (crs) => {
+const crFormatter = (crs, pinboardItems) => {
   if (!crs) {
     return { data: [] };
   }
@@ -60,21 +69,25 @@ const crFormatter = (crs) => {
       url: `${constants.COMPLAINT_PATH}${cr.crid}/`,
       incidentDate: moment(cr.incident_date).format(constants.SEARCH_INCIDENT_DATE_FORMAT),
       category: cr.category,
+      isPinned: isItemPinned('CR', cr.crid, pinboardItems),
+      type: 'CR',
     }))
   };
 };
 
 export const crsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.CR,
+  pinboardItemsSelector,
   crFormatter
 );
 
 export const dateCRsSelector = createSelector(
   (state) => state.suggestionApp.suggestions['DATE > CR'],
-  crFormatter
+  pinboardItemsSelector,
+  crFormatter,
 );
 
-const trrFormatter = (trrs) => {
+const trrFormatter = (trrs, pinboardItems) => {
   if (!trrs) {
     return { data: [] };
   }
@@ -83,18 +96,22 @@ const trrFormatter = (trrs) => {
     isShowingAll: trrs.isShowingAll,
     data: trrs.data.map((trr) => ({
       id: trr.id,
-      url: `${constants.TRR_PATH}${trr.id}/`
+      url: `${constants.TRR_PATH}${trr.id}/`,
+      isPinned: isItemPinned('TRR', trr.id, pinboardItems),
+      type: 'TRR',
     }))
   };
 };
 
 export const trrsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.TRR,
+  pinboardItemsSelector,
   trrFormatter
 );
 
 export const dateTRRsSelector = createSelector(
   (state) => state.suggestionApp.suggestions['DATE > TRR'],
+  pinboardItemsSelector,
   trrFormatter
 );
 
@@ -112,10 +129,12 @@ export const recentSelector = createSelector(
 
 export const dateOfficersSelector = createSelector(
   (state) => state.suggestionApp.suggestions['DATE > OFFICERS'],
+  pinboardItemsSelector,
   officerFormatter
 );
 
 export const investigatorCRsSelector = createSelector(
   (state) => state.suggestionApp.suggestions['INVESTIGATOR > CR'],
-  crFormatter
+  pinboardItemsSelector,
+  crFormatter,
 );

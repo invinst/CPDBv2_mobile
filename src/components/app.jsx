@@ -15,6 +15,7 @@ import LandingPageContainer from 'containers/landing-page-container';
 import BreadcrumbItemContainer from 'containers/breadcrumb-container';
 import TopOfficersByAllegationContainer from 'containers/landing-page/top-officers-by-allegation';
 import OfficersContainer from 'containers/embed/officers';
+import PinboardPageContainer from 'containers/pinboard-page';
 
 import 'swiper/dist/css/swiper.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -22,6 +23,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import 'styles/fonts.sass';
 import 'styles/style.sass';
 import 'styles/helper.sass';
+import 'styles/custom-mapbox-gl.sass';
 
 Modal.setAppElement('body');
 
@@ -45,8 +47,7 @@ const App = React.createClass({
             component={ AboutPageContainer } />
 
           <Route
-            breadcrumbKey='/'
-            breadcrumb='cpdp'
+            breadcrumb='Search'
             path={ constants.SEARCH_PATH }
             component={ SearchPageContainer }>
             <Route
@@ -72,6 +73,12 @@ const App = React.createClass({
             path={ `${constants.TRR_PATH}:trrId/` }
             breadcrumb={ BreadcrumbItemContainer }
             component={ TRRPageContainer }
+          />
+
+          <Route
+            path={ `${constants.PINBOARD_PATH}:pinboardId/(:pinboardTitle/)` }
+            breadcrumb={ BreadcrumbItemContainer }
+            component={ PinboardPageContainer }
           />
 
         </Route>

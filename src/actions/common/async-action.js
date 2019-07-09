@@ -1,4 +1,4 @@
-export const get = (url, types) => ((params, adapter=undefined, urlSuffix='', meta) => {
+export const get = (url, types, cancelToken) => ((params, adapter=undefined, urlSuffix='', meta) => {
   const action = {
     types,
     payload: {
@@ -12,6 +12,10 @@ export const get = (url, types) => ((params, adapter=undefined, urlSuffix='', me
 
   if (typeof meta !== 'undefined') {
     action.meta = meta;
+  }
+
+  if (typeof cancelToken !== 'undefined') {
+    action.payload.request.cancelToken = cancelToken;
   }
 
   return action;
@@ -34,6 +38,18 @@ export const post = (url, types) => ((data, adapter) => ({
   payload: {
     request: {
       method: 'POST',
+      url,
+      data,
+      adapter
+    }
+  }
+}));
+
+export const put = (url, types) => ((data, adapter) => ({
+  types,
+  payload: {
+    request: {
+      method: 'PUT',
       url,
       data,
       adapter

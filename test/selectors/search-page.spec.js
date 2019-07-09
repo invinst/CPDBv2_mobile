@@ -20,7 +20,10 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       officersSelector(state).should.be.eql({ data: [] });
@@ -34,7 +37,7 @@ describe('search-page selectors', () => {
               isShowingAll: true,
               data: [
                 {
-                  'id': 1,
+                  'id': '1',
                   'name': 'Name',
                   'badge': null,
                   'percentile': null
@@ -42,17 +45,22 @@ describe('search-page selectors', () => {
               ]
             }
           }
-        }
+        },
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       officersSelector(state).should.be.eql({
         isShowingAll: true,
         data: [{
-          id: 1,
+          id: '1',
           name: 'Name',
           badge: '',
           percentile: null,
           url: `${constants.OFFICER_PATH}1/name/`,
+          isPinned: false,
+          type: 'OFFICER',
         }]
       });
     });
@@ -60,18 +68,20 @@ describe('search-page selectors', () => {
     it('should return officer data when there are officers', () => {
       const isShowingAll = true;
       const officer = {
-        'id': 1,
+        'id': '1',
         'name': 'Name',
         'badge': '12314',
         'percentile': null
       };
 
       const expectedOfficer = {
-        id: 1,
+        id: '1',
         name: 'Name',
         badge: 'Badge #12314',
         url: `${constants.OFFICER_PATH}1/name/`,
-        percentile: null
+        percentile: null,
+        isPinned: true,
+        type: 'OFFICER',
       };
 
       const state = {
@@ -81,6 +91,14 @@ describe('search-page selectors', () => {
               isShowingAll: isShowingAll,
               data: [officer]
             }
+          }
+        },
+        pinboardPage: {
+          pinboard: {
+            id: 99,
+            'officer_ids': [1],
+            crids: [],
+            'trr_ids': [],
           }
         }
       };
@@ -189,7 +207,10 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       dateCRsSelector(state).should.be.eql({ data: [] });
@@ -213,7 +234,9 @@ describe('search-page selectors', () => {
           crid: '1027271',
           url: '/complaint/1027271/',
           incidentDate: '06/13/2009',
-          category: 'Use Of Force'
+          category: 'Use Of Force',
+          type: 'CR',
+          isPinned: false,
         },
       ];
 
@@ -224,6 +247,14 @@ describe('search-page selectors', () => {
               isShowingAll: isShowingAll,
               data: dateCRs
             }
+          }
+        },
+        pinboardPage: {
+          pinboard: {
+            id: 99,
+            'officer_ids': [],
+            crids: ['1027272'],
+            'trr_ids': [],
           }
         }
       };
@@ -241,7 +272,10 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       dateTRRsSelector(state).should.be.eql({ data: [] });
@@ -257,7 +291,9 @@ describe('search-page selectors', () => {
       const expectedDateTRRs = [
         {
           'id': '1',
-          'url': '/trr/1/'
+          'url': '/trr/1/',
+          'isPinned': false,
+          'type': 'TRR',
         },
       ];
 
@@ -268,6 +304,13 @@ describe('search-page selectors', () => {
               isShowingAll: isShowingAll,
               data: dateTRRs
             }
+          }
+        },
+        pinboardPage: {
+          pinboard: {
+            'officer_ids': [],
+            crids: [],
+            'trr_ids': ['2'],
           }
         }
       };
@@ -285,7 +328,10 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       crsSelector(state).should.be.eql({ data: [] });
@@ -319,12 +365,16 @@ describe('search-page selectors', () => {
           url: '/complaint/1027271/',
           category: 'Use Of Force',
           incidentDate: '06/13/2009',
+          type: 'CR',
+          isPinned: false,
         },
         {
           crid: '1049273',
           url: '/complaint/1049273/',
           category: 'Domestic',
           incidentDate: '10/13/2011',
+          type: 'CR',
+          isPinned: true,
         },
       ];
 
@@ -335,6 +385,14 @@ describe('search-page selectors', () => {
               isShowingAll: isShowingAll,
               data: crs
             }
+          }
+        },
+        pinboardPage: {
+          pinboard: {
+            id: 99,
+            'officer_ids': [1],
+            crids: ['1049273'],
+            'trr_ids': [1],
           }
         }
       };
@@ -352,7 +410,10 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       investigatorCRsSelector(state).should.be.eql({ data: [] });
@@ -377,6 +438,8 @@ describe('search-page selectors', () => {
           url: '/complaint/1027271/',
           incidentDate: '06/13/2009',
           category: 'Use Of Force',
+          type: 'CR',
+          isPinned: false,
         },
       ];
 
@@ -388,7 +451,10 @@ describe('search-page selectors', () => {
               data: investigatorCR
             }
           }
-        }
+        },
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       investigatorCRsSelector(state).should.be.eql({
@@ -404,7 +470,10 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       trrsSelector(state).should.be.eql({ data: [] });
@@ -420,7 +489,9 @@ describe('search-page selectors', () => {
       const expectedTrrs = [
         {
           'id': '1',
-          'url': '/trr/1/'
+          'url': '/trr/1/',
+          'isPinned': true,
+          'type': 'TRR',
         },
       ];
 
@@ -431,6 +502,13 @@ describe('search-page selectors', () => {
               isShowingAll: isShowingAll,
               data: trrs
             }
+          }
+        },
+        pinboardPage: {
+          pinboard: {
+            'officer_ids': [],
+            crids: [],
+            'trr_ids': ['1'],
           }
         }
       };
@@ -448,7 +526,10 @@ describe('search-page selectors', () => {
         suggestionApp: {
           suggestions: {
           }
-        }
+        },
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       dateOfficersSelector(state).should.be.eql({ data: [] });
@@ -470,7 +551,10 @@ describe('search-page selectors', () => {
               ]
             }
           }
-        }
+        },
+        pinboardPage: {
+          pinboard: null
+        },
       };
 
       dateOfficersSelector(state).should.be.eql({
@@ -481,6 +565,8 @@ describe('search-page selectors', () => {
           badge: 'Badge #56789',
           percentile: null,
           url: `${constants.OFFICER_PATH}123/jerome-finnigan/`,
+          type: 'OFFICER',
+          isPinned: false,
         }]
       });
     });

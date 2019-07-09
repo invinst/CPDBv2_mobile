@@ -16,13 +16,19 @@ export class BaseOfficerCard extends Component {
       percentile,
       openCardInNewPage,
       bottomContent,
-      customStyle
+      topContent,
+      customStyle,
+      hasHrefLink,
+      setRef,
     } = this.props;
     return (
       <Link
-        to={ officerUrl(officerId, fullName) }
+        to={ hasHrefLink ? officerUrl(officerId, fullName) : null }
         target={ openCardInNewPage ? '_blank' : null }
-        className={ cx(style.baseOfficerCard, customStyle, 'test--officer-card') }>
+        className={ cx(style.baseOfficerCard, customStyle, 'test--officer-card') }
+        ref={ setRef }
+      >
+        { topContent }
         <div className='radar-chart'>
           <RadarChart
             radius={ 170 }
@@ -47,7 +53,16 @@ BaseOfficerCard.propTypes = {
   percentile: PropTypes.object,
   openCardInNewPage: PropTypes.bool,
   bottomContent: PropTypes.node,
-  customStyle: PropTypes.object,
+  topContent: PropTypes.node,
+  customStyle: PropTypes.string,
+  hasHrefLink: PropTypes.bool,
+  setRef: PropTypes.func,
+};
+
+BaseOfficerCard.defaultProps = {
+  topContent: null,
+  hasHrefLink: true,
+  openCardInNewPage: false,
 };
 
 export default BaseOfficerCard;

@@ -1,0 +1,29 @@
+@import 'variables'
+
+%pinboard-bar-common
+  display: block
+  width: 100%
+  height: 40px
+  box-sizing: border-box
+  padding-top: 10px
+  text-align: center
+  font-weight: 300
+  font-size: 14px
+
+\:local(.pinboard-bar)
+  @extend %pinboard-bar-common
+  color: $cash-green-color
+  background-color: $pudding-matcha
+  text-decoration: none
+
+  .pinboard-bar-indicator
+    display: block
+    position: relative
+    width: 7px
+    height: 12px
+    background-image: url('/img/disclosure-indicator-green.svg')
+    background-position: center
+    background-repeat: no-repeat
+    background-size: 7px 12px
+    left: calc(100% - 15px)
+    bottom: calc(100% - 16px)

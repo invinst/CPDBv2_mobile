@@ -3,6 +3,7 @@ var app = express();
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var http = require('http');
+var nightwatchConfig = require('../nightwatch.json');
 var port = process.env.MOCK_SERVER_PORT || 9002;
 
 // FIXME: Refactor the path here
@@ -15,7 +16,10 @@ var server = http.createServer(app);
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-app.use(cors());
+app.use(cors({
+  origin: nightwatchConfig['test_settings']['default']['globals']['clientUrl'],
+  credentials: true
+}));
 
 // We haven't handle our api-server for specific params yet
 // TODO: Handle parameters here
