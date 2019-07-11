@@ -126,9 +126,9 @@ describe('Empty Pinboard Page', function () {
   it('should go to Watts Crew Pinboard when clicking on Repeaters row ', function (client) {
     this.emptyPinboardPage.expect.element('@title').text.to.equal('Get started');
     this.emptyPinboardPage.expect.element('@description').text.to.equal(
-      'Use search to find officers and individual complaint records.\n\n' +
-      'Press the plus button to add cards to your pinboard.\n\n' +
-      'Come back to give the pinboard a title and then see a network map and discover relevant documents.'
+      'Use search to find officers and individual complaint records ' +
+      'and press the plus button to add cards to your pinboard.\n\n' +
+      'Come back to the pinboard to give it a title and see a network map or discover relevant documents.'
     );
     this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Watts Crew');
     this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Officers with at');
@@ -147,9 +147,9 @@ describe('Empty Pinboard Page', function () {
   it('should go to Skullcap Crew Pinboard when clicking on Skullcap crew row ', function (client) {
     this.emptyPinboardPage.expect.element('@title').text.to.equal('Get started');
     this.emptyPinboardPage.expect.element('@description').text.to.equal(
-      'Use search to find officers and individual complaint records.\n\n' +
-      'Press the plus button to add cards to your pinboard.\n\n' +
-      'Come back to give the pinboard a title and then see a network map and discover relevant documents.'
+      'Use search to find officers and individual complaint records ' +
+      'and press the plus button to add cards to your pinboard.\n\n' +
+      'Come back to the pinboard to give it a title and see a network map or discover relevant documents.'
     );
     this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('Skullcap Crew');
     this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('It is a nickname');
