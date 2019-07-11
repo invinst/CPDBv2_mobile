@@ -124,10 +124,11 @@ describe('Empty Pinboard Page', function () {
   });
 
   it('should go to Watts Crew Pinboard when clicking on Repeaters row ', function (client) {
-    this.emptyPinboardPage.expect.element('@title').text.to.equal('Add');
+    this.emptyPinboardPage.expect.element('@title').text.to.equal('Get started');
     this.emptyPinboardPage.expect.element('@description').text.to.equal(
-      'Add officers, or complaint records through search.\n\n' +
-      'Or use an example pinboard as a baseline to get started.'
+      'Use search to find officers and individual complaint records.\n\n' +
+      'Press the plus button to add cards to your pinboard.\n\n' +
+      'Come back to give the pinboard a title and then see a network map and discover relevant documents.'
     );
     this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Watts Crew');
     this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Officers with at');
@@ -139,15 +140,16 @@ describe('Empty Pinboard Page', function () {
     client.back();
 
     this.emptyPinboardPage.waitForElementVisible('@title', TIMEOUT);
-    this.emptyPinboardPage.expect.element('@title').text.to.equal('Add');
+    this.emptyPinboardPage.expect.element('@title').text.to.equal('Get started');
     client.assert.urlContains(`/pinboard/${emptyPinboardId}/empty-pinboard/`);
   });
 
   it('should go to Skullcap Crew Pinboard when clicking on Skullcap crew row ', function (client) {
-    this.emptyPinboardPage.expect.element('@title').text.to.equal('Add');
+    this.emptyPinboardPage.expect.element('@title').text.to.equal('Get started');
     this.emptyPinboardPage.expect.element('@description').text.to.equal(
-      'Add officers, or complaint records through search.\n\n' +
-      'Or use an example pinboard as a baseline to get started.'
+      'Use search to find officers and individual complaint records.\n\n' +
+      'Press the plus button to add cards to your pinboard.\n\n' +
+      'Come back to give the pinboard a title and then see a network map and discover relevant documents.'
     );
     this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('Skullcap Crew');
     this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('It is a nickname');
@@ -159,7 +161,7 @@ describe('Empty Pinboard Page', function () {
     client.back();
 
     this.emptyPinboardPage.waitForElementVisible('@title', TIMEOUT);
-    this.emptyPinboardPage.expect.element('@title').text.to.equal('Add');
+    this.emptyPinboardPage.expect.element('@title').text.to.equal('Get started');
     client.assert.urlContains(`/pinboard/${emptyPinboardId}/empty-pinboard/`);
   });
 });
