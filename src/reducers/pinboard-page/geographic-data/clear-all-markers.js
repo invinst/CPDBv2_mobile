@@ -1,0 +1,14 @@
+import { handleActions } from 'redux-actions';
+
+import {
+  PINBOARD_GEOGRAPHIC_FETCH_REQUEST_START,
+  FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_SUCCESS,
+  FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_SUCCESS,
+} from 'actions/pinboard';
+
+
+export default handleActions({
+  [PINBOARD_GEOGRAPHIC_FETCH_REQUEST_START]: (state, action) => true,
+  [FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_SUCCESS]: (state, action) => false,
+  [FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_SUCCESS]: (state, action) => false,
+}, false);

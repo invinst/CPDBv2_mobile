@@ -9,11 +9,16 @@ import {
   fetchPinboardOfficers,
   fetchPinboardTRRs,
   fetchPinboardSocialGraph,
-  fetchPinboardGeographicData,
+  fetchPinboardGeographic,
+  fetchFirstPagePinboardGeographicCrs,
+  fetchOtherPagesPinboardGeographicCrs,
+  fetchFirstPagePinboardGeographicTrrs,
+  fetchOtherPagesPinboardGeographicTrrs,
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints
 } from 'actions/pinboard';
+import loadPaginatedData from 'utils/load-paginated-data';
 
 const pinboardPageUrlPattern = /.*\/pinboard\/([a-fA-F0-9]+)\/.*/;
 
@@ -29,7 +34,19 @@ function getPinboardData(store, pinboardId) {
   store.dispatch(fetchPinboardOfficers(pinboardId));
   store.dispatch(fetchPinboardTRRs(pinboardId));
   store.dispatch(fetchPinboardSocialGraph(pinboardId));
-  store.dispatch(fetchPinboardGeographicData(pinboardId));
+  store.dispatch(fetchPinboardGeographic());
+  loadPaginatedData(
+    { 'pinboard_id': pinboardId },
+    fetchFirstPagePinboardGeographicCrs,
+    fetchOtherPagesPinboardGeographicCrs,
+    store,
+  );
+  loadPaginatedData(
+    { 'pinboard_id': pinboardId },
+    fetchFirstPagePinboardGeographicTrrs,
+    fetchOtherPagesPinboardGeographicTrrs,
+    store,
+  );
   store.dispatch(fetchPinboardRelevantDocuments(pinboardId));
   store.dispatch(fetchPinboardRelevantCoaccusals(pinboardId));
   store.dispatch(fetchPinboardRelevantComplaints(pinboardId));

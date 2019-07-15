@@ -14,7 +14,10 @@ import {
   fetchPinboardOfficers,
   fetchPinboardTRRs,
   fetchPinboardSocialGraph,
-  fetchPinboardGeographicData,
+  fetchFirstPagePinboardGeographicCrs,
+  fetchFirstPagePinboardGeographicTrrs,
+  fetchOtherPagesPinboardGeographicCrs,
+  fetchOtherPagesPinboardGeographicTrrs,
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
@@ -51,10 +54,6 @@ import {
   PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_SUCCESS,
   PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_FAILURE,
   PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_CANCELLED,
-  PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_START,
-  PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_SUCCESS,
-  PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_FAILURE,
-  PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_CANCELLED,
   PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_START,
   PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_SUCCESS,
   PINBOARD_RELEVANT_DOCUMENTS_FETCH_REQUEST_FAILURE,
@@ -72,6 +71,22 @@ import {
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE,
+  FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_START,
+  FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_SUCCESS,
+  FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_FAILURE,
+  FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_CANCELLED,
+  FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_START,
+  FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_SUCCESS,
+  FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_FAILURE,
+  FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_CANCELLED,
+  PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_START,
+  PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_SUCCESS,
+  PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_FAILURE,
+  PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_CANCELLED,
+  PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_START,
+  PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_SUCCESS,
+  PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_FAILURE,
+  PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_CANCELLED,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -389,19 +404,82 @@ describe('pinboard actions', function () {
     });
   });
 
-  describe('fetchPinboardGeographicData', function () {
+  describe('fetchFirstPagePinboardGeographicCrs', function () {
     it('should return correct action', function () {
-      fetchPinboardGeographicData('268a5e58').should.deepEqual({
+      fetchFirstPagePinboardGeographicCrs({ 'pinboard_id': '268a5e58' }).should.deepEqual({
         types: [
-          PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_START,
-          PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_SUCCESS,
-          PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_FAILURE,
-          PINBOARD_GEOGRAPHIC_DATA_FETCH_REQUEST_CANCELLED,
+          FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_START,
+          FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_SUCCESS,
+          FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_FAILURE,
+          FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_CANCELLED,
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.SOCIAL_GRAPH_API_ENDPOINT)}geographic/?pinboard_id=268a5e58`,
-            params: undefined,
+            url: v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT),
+            params: { 'pinboard_id': '268a5e58' },
+            adapter: undefined,
+            cancelToken: 'token',
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchOtherPagesPinboardGeographicCrs', function () {
+    it('should return correct action', function () {
+      fetchOtherPagesPinboardGeographicCrs({ 'pinboard_id': '268a5e58' }).should.deepEqual({
+        types: [
+          PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_START,
+          PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_SUCCESS,
+          PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_FAILURE,
+          PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_CANCELLED,
+        ],
+        payload: {
+          request: {
+            url: v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT),
+            params: { 'pinboard_id': '268a5e58' },
+            adapter: undefined,
+            cancelToken: 'token',
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchFirstPagePinboardGeographicTrrs', function () {
+    it('should return correct action', function () {
+      fetchFirstPagePinboardGeographicTrrs({ 'pinboard_id': '268a5e58' }).should.deepEqual({
+        types: [
+          FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_START,
+          FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_SUCCESS,
+          FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_FAILURE,
+          FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_CANCELLED,
+        ],
+        payload: {
+          request: {
+            url: v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT),
+            params: { 'pinboard_id': '268a5e58' },
+            adapter: undefined,
+            cancelToken: 'token',
+          }
+        }
+      });
+    });
+  });
+
+  describe('fetchOtherPagesPinboardGeographicTrrs', function () {
+    it('should return correct action', function () {
+      fetchOtherPagesPinboardGeographicTrrs({ 'pinboard_id': '268a5e58' }).should.deepEqual({
+        types: [
+          PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_START,
+          PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_SUCCESS,
+          PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_FAILURE,
+          PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_CANCELLED,
+        ],
+        payload: {
+          request: {
+            url: v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT),
+            params: { 'pinboard_id': '268a5e58' },
             adapter: undefined,
             cancelToken: 'token',
           }

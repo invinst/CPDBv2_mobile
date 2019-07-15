@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import ReactDOMServer from 'react-dom/server';
 import cx from 'classnames';
-import { isEmpty } from 'lodash';
+import { isEmpty, slice, isEqual, values } from 'lodash';
 import { isIOS } from 'react-device-detect';
 import MultiTouch from 'mapbox-gl-multitouch';
 
@@ -14,20 +14,43 @@ import Marker from './marker';
 import styles from './allegations-map.sass';
 import withLoadingSpinner from 'components/common/with-loading-spinner';
 
+const MARKERS_PER_PAGE = 200;
+
 export default class AllegationsMap extends Component {
   constructor(props) {
     super(props);
-    this.currentMarkers = [];
+    this.currentMarkers = {};
+  }
+
+  componentDidMount() {
+    this.loadMarkersPerPages();
   }
 
   componentWillReceiveProps(nextProps, nextState) {
-    if (!isEmpty(this.currentMarkers)) {
-      this.currentMarkers.map(currentMarker => currentMarker.remove());
+    if (nextProps.clearAllMarkers) {
+      values(this.currentMarkers).forEach(currentMarker => currentMarker.remove());
+      this.currentMarkers = {};
+      this.addMarkers(nextProps.markers);
+    } else {
+      if (!isEqual(nextProps.markers, this.props.markers)) {
+        this.addMarkers(nextProps.markers);
+      }
     }
-    this.currentMarkers = [];
-    nextProps.markers.map(marker => {
+  }
+
+  loadMarkersPerPages(startIndex=0) {
+    const { markers } = this.props;
+
+    slice(markers, startIndex, startIndex + MARKERS_PER_PAGE).forEach(marker => {
       this.addMarker(marker);
     });
+
+    const nextStartIndex = startIndex + MARKERS_PER_PAGE;
+    if (nextStartIndex < markers.length) {
+      setTimeout(() => {
+        this.loadMarkersPerPages(nextStartIndex);
+      }, 1);
+    }
   }
 
   gotRef(el) {
@@ -45,10 +68,6 @@ export default class AllegationsMap extends Component {
         /* istanbul ignore next */
         this.map.addControl(new MultiTouch());
       }
-
-      this.props.markers.map(marker => {
-        this.addMarker(marker);
-      });
     }
   }
 
@@ -64,15 +83,23 @@ export default class AllegationsMap extends Component {
     return popup;
   }
 
+  markerUid(marker) {
+    return `${ marker.kind }-${ marker.id }`;
+  }
+
   addMarker(marker) {
+    if (!isEmpty(this.currentMarkers[this.markerUid(marker)])) {
+      return;
+    }
     const popup = this.createPopup(marker);
 
     const markerEl = document.createElement('div');
+    markerEl.className = `map-marker ${marker.kind.toLowerCase()}-marker`;
     this.marker = new mapboxgl.Marker(markerEl);
     this.marker.setLngLat([marker.point.lon, marker.point.lat]);
     this.marker.setPopup(popup);
     this.marker.addTo(this.map);
-    this.currentMarkers.push(this.marker);
+    this.currentMarkers[this.markerUid(marker)] = this.marker;
 
     ReactDOM.render(
       <Marker
@@ -81,6 +108,10 @@ export default class AllegationsMap extends Component {
       />,
       markerEl
     );
+  }
+
+  addMarkers(markers) {
+    markers.forEach(marker => this.addMarker(marker));
   }
 
   render() {
@@ -133,12 +164,14 @@ AllegationsMap.propTypes = {
         category: PropTypes.string,
       })
     ),
-  ])
+  ]),
+  clearAllMarkers: PropTypes.bool,
 };
 
 AllegationsMap.defaultProps = {
   legend: {},
-  markers: []
+  markers: [],
+  clearAllMarkers: true,
 };
 
 export const AllegationsMapWithSpinner = withLoadingSpinner(AllegationsMap, styles.allegationMapLoading);
