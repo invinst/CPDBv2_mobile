@@ -3,8 +3,7 @@ import { mount } from 'enzyme';
 import { mapboxgl } from 'utils/mapbox';
 import { values, times, concat } from 'lodash';
 
-import AllegationsMap, { AllegationsMapWithSpinner } from 'components/common/allegations-map';
-import Legend from 'components/common/allegations-map/legend';
+import AllegationsMap from 'components/common/allegations-map';
 import LoadingSpinner from 'components/common/loading-spinner';
 import mapStyles from 'components/common/allegations-map/allegations-map.sass';
 import legendStyles from 'components/common/allegations-map/legend/legend.sass';
@@ -62,19 +61,6 @@ describe('Map component', function () {
     wrapper.find(LoadingSpinner).exists().should.be.false();
     wrapper.find('.test--map').should.have.length(1);
     wrapper.find('.test--legend').should.have.length(1);
-  });
-
-  context('WithSpinner', function () {
-    it('should render only loading spinner if requesting is true ', function () {
-      const wrapper = mount(<AllegationsMapWithSpinner legend={ legend } requesting={ true } />);
-
-      const loadingSpinner = wrapper.find(LoadingSpinner);
-      loadingSpinner.prop('className').should.equal(mapStyles.allegationMapLoading);
-
-      wrapper.find(AllegationsMap).should.have.length(0);
-      wrapper.find(Legend).should.have.length(0);
-      wrapper.find('map-tab').should.have.length(0);
-    });
   });
 
   it('should rerender with clearAllMarkers is true', function () {

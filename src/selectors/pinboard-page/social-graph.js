@@ -3,9 +3,9 @@ import { createSelector } from 'reselect';
 import { officersTransform, coaccusedDataTransform } from 'selectors/common/social-graph';
 
 const getOfficers = state => state.pinboardPage.graphData.data['officers'] || [];
-const getCoaccusedData = state => state.pinboardPage.graphData.data['coaccused_data'] || [];
+export const getCoaccusedData = state => state.pinboardPage.graphData.data['coaccused_data'] || [];
 const getListEvent = state => state.pinboardPage.graphData.data['list_event'] || [];
-export const getRequesting = state => state.pinboardPage.graphData.requesting;
+export const getSocialGraphRequesting = state => state.pinboardPage.graphData.requesting;
 
 const officersSelector = createSelector(
   [getOfficers],

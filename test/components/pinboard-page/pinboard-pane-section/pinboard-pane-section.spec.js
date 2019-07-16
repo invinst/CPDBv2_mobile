@@ -5,9 +5,11 @@ import { Provider } from 'react-redux';
 import { stub } from 'sinon';
 
 import constants from 'constants';
-import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
-import { AnimatedSocialGraphWithSpinner } from 'components/common/animated-social-graph';
-import { AllegationsMapWithSpinner } from 'components/common/allegations-map';
+import PinboardPaneSection, { PinboardPaneSectionWithSpinner } from 'components/pinboard-page/pinboard-pane-section';
+import AnimatedSocialGraph from 'components/common/animated-social-graph';
+import AllegationsMap from 'components/common/allegations-map';
+import LoadingSpinner from 'components/common/loading-spinner';
+import styles from 'components/pinboard-page/pinboard-pane-section/pinboard-pane-section.sass';
 
 
 describe('PinboardPaneSection component', function () {
@@ -16,9 +18,30 @@ describe('PinboardPaneSection component', function () {
     pinboardPage: {
       graphData: { requesting: false, data: {} },
       geographicData: {
-        requesting: false,
-        mapCrsData: [],
-        mapTrrsData: [],
+        crsRequesting: false,
+        trrsRequesting: false,
+        mapCrsData: [
+          {
+            'date': '2006-09-26',
+            'crid': '1000018',
+            'category': 'Operation/Personnel Violations',
+            'coaccused_count': 1,
+            'kind': 'CR'
+          }
+        ],
+        mapTrrsData: [
+          {
+            'trr_id': '123456',
+            kind: 'FORCE',
+            taser: false,
+            'firearm_used': true,
+            point: {
+              lat: 35.3,
+              lon: 50.5
+            },
+            date: 'MAY 12, 2015',
+          }
+        ],
       },
     },
   });
@@ -87,7 +110,7 @@ describe('PinboardPaneSection component', function () {
       </Provider>
     );
 
-    wrapper.find(AnimatedSocialGraphWithSpinner).should.have.length(1);
+    wrapper.find(AnimatedSocialGraph).should.have.length(1);
   });
 
   it('should render geographic tab', function () {
@@ -97,7 +120,7 @@ describe('PinboardPaneSection component', function () {
       </Provider>
     );
 
-    wrapper.find(AllegationsMapWithSpinner).should.have.length(1);
+    wrapper.find(AllegationsMap).should.have.length(1);
   });
 
   it('should call changePinboardTab when clicking tab name', function () {
@@ -115,5 +138,27 @@ describe('PinboardPaneSection component', function () {
     geographicTab.simulate('click');
 
     stubChangePinboardTab.should.be.calledWith('GEOGRAPHIC');
+  });
+
+  context('withLoadingSpinner', function () {
+    it('should render LoadingSpinner only if requesting is true', function () {
+      wrapper = mount(
+        <PinboardPaneSectionWithSpinner requesting={ true } />
+      );
+
+      wrapper.find(PinboardPaneSection).should.have.length(0);
+
+      const loadingSpinner = wrapper.find(LoadingSpinner);
+      loadingSpinner.prop('className').should.equal(styles.pinboardPaneSectionLoading);
+    });
+
+    it('should not render LoadingSpinner if requesting is false', function () {
+      wrapper = mount(
+        <PinboardPaneSectionWithSpinner requesting={ false }/>
+      );
+
+      wrapper.find(PinboardPaneSection).should.have.length(1);
+      wrapper.find(LoadingSpinner).should.have.length(0);
+    });
   });
 });

@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 import TrackVisibility from 'react-on-screen';
+import { isNull } from 'lodash';
 
 import styles from './pinboard-page.sass';
 import SearchBar from './search-bar';
 import Header from './header';
-import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
+import { PinboardPaneSectionWithSpinner } from 'components/pinboard-page/pinboard-pane-section';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
 import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
 import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
@@ -50,10 +51,11 @@ export default class PinboardPage extends Component {
         <PinboardInfoContainer />
         <div className='data-visualizations'>
           <TrackVisibility partialVisibility={ true }>
-            <PinboardPaneSection
+            <PinboardPaneSectionWithSpinner
               changePinboardTab={ changePinboardTab }
               currentTab={ currentTab }
               hasMapMarker={ hasMapMarker }
+              requesting={ isNull(currentTab) }
             />
           </TrackVisibility>
         </div>

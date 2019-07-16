@@ -12,7 +12,6 @@ import Legend from './legend/index';
 import MarkerTooltip from './marker-tooltip';
 import Marker from './marker';
 import styles from './allegations-map.sass';
-import withLoadingSpinner from 'components/common/with-loading-spinner';
 
 const MARKERS_PER_PAGE = 200;
 
@@ -173,5 +172,3 @@ AllegationsMap.defaultProps = {
   markers: [],
   clearAllMarkers: true,
 };
-
-export const AllegationsMapWithSpinner = withLoadingSpinner(AllegationsMap, styles.allegationMapLoading);
