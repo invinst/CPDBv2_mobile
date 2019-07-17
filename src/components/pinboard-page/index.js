@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 import TrackVisibility from 'react-on-screen';
-import { isNull } from 'lodash';
 
 import styles from './pinboard-page.sass';
 import SearchBar from './search-bar';
@@ -36,6 +35,7 @@ export default class PinboardPage extends Component {
       initialRequested,
       isEmptyPinboard,
       examplePinboards,
+      requesting,
     } = this.props;
 
     if (!initialRequested) {
@@ -55,7 +55,7 @@ export default class PinboardPage extends Component {
               changePinboardTab={ changePinboardTab }
               currentTab={ currentTab }
               hasMapMarker={ hasMapMarker }
-              requesting={ isNull(currentTab) }
+              requesting={ requesting }
             />
           </TrackVisibility>
         </div>
@@ -95,6 +95,7 @@ PinboardPage.propTypes = {
   initialRequested: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,
   examplePinboards: PropTypes.array,
+  requesting: PropTypes.bool,
 };
 
 PinboardPage.defaultProps = {
