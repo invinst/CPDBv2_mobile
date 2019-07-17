@@ -74,6 +74,15 @@ const emptyPinboard = {
   'officer_ids': [],
   'crids': [],
   'trr_ids': [],
+  'example_pinboards': [{
+    'description': 'Officers with at least 10 complaints against them generate 64% of all complaints.',
+    'id': 'b20c2c36',
+    'title': 'Watts Crew',
+  }, {
+    'description': 'It is a nickname given to a group of five Chicago Police officers in a...',
+    'id': '22e66085',
+    'title': 'Skullcap Crew',
+  }]
 };
 
 const skullcapPinboardId = '22e66085';
@@ -102,6 +111,8 @@ const copyOfWattsPinboard = {
 
 describe('Empty Pinboard Page', function () {
   beforeEach(function (client, done) {
+    api.cleanMock();
+
     mockPinboard(emptyPinboardId, emptyPinboard);
     mockPinboard(skullcapPinboardId, copyOfSkullcapPinboard);
     mockPinboard(wattsPinboardId, copyOfWattsPinboard);
@@ -112,18 +123,14 @@ describe('Empty Pinboard Page', function () {
     done();
   });
 
-  afterEach(function (client, done) {
-    api.cleanMock();
-    done();
-  });
-
   it('should go to Watts Crew Pinboard when clicking on Repeaters row ', function (client) {
     this.emptyPinboardPage.expect.element('@title').text.to.equal('Add');
     this.emptyPinboardPage.expect.element('@description').text.to.equal(
       'Add officers, or complaint records through search.\n\n' +
       'Or use an example pinboard as a baseline to get started.'
     );
-    this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Repeaters');
+    this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Watts Crew');
+    this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Officers with at');
 
     this.emptyPinboardPage.click('@firstExamplePinboardRow');
 
@@ -142,7 +149,8 @@ describe('Empty Pinboard Page', function () {
       'Add officers, or complaint records through search.\n\n' +
       'Or use an example pinboard as a baseline to get started.'
     );
-    this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('Skullcap crew');
+    this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('Skullcap Crew');
+    this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('It is a nickname');
 
     this.emptyPinboardPage.click('@secondExamplePinboardRow');
 

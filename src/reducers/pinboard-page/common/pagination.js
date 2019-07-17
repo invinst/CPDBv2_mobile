@@ -12,8 +12,11 @@ const paginateReducer = (state, action) => {
   }
 };
 
-const createItemsReducer = (successType) => handleActions(
-  { [successType]: paginateReducer },
+const createItemsReducer = (successType, customItemsHandler) => handleActions(
+  {
+    [successType]: paginateReducer,
+    ...customItemsHandler,
+  },
   []
 );
 
@@ -27,8 +30,8 @@ const createPaginationReducer = (successType, failureType) => handleActions({
 }, { next: null, previous: null });
 
 
-export default (startType, successType, failureType) => {
-  const items = createItemsReducer(successType);
+export default (startType, successType, failureType, customItemsHandler={}) => {
+  const items = createItemsReducer(successType, customItemsHandler);
   const count = createCountReducer(successType);
   const pagination = createPaginationReducer(successType, failureType);
   const requesting = createRequestingReducer(startType, successType, failureType);

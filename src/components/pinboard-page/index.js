@@ -21,6 +21,11 @@ export default class PinboardPage extends Component {
     pushBreadcrumbs({ location, routes, params });
   }
 
+  componentDidUpdate() {
+    const { params, pushBreadcrumbs, location, routes } = this.props;
+    pushBreadcrumbs({ location, routes, params });
+  }
+
   renderContent() {
     const {
       changePinboardTab,
@@ -29,6 +34,7 @@ export default class PinboardPage extends Component {
       params,
       initialRequested,
       isEmptyPinboard,
+      examplePinboards,
     } = this.props;
 
     if (!initialRequested) {
@@ -36,7 +42,7 @@ export default class PinboardPage extends Component {
     }
 
     if (isEmptyPinboard) {
-      return EmptyPinboard;
+      return <EmptyPinboard examplePinboards={ examplePinboards } />;
     }
 
     return (
@@ -86,6 +92,7 @@ PinboardPage.propTypes = {
   hasMapMarker: PropTypes.bool,
   initialRequested: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,
+  examplePinboards: PropTypes.array,
 };
 
 PinboardPage.defaultProps = {

@@ -26,6 +26,7 @@ import 'styles/fonts.sass';
 import 'styles/style.sass';
 import 'styles/helper.sass';
 import 'styles/toast.sass';
+import 'styles/custom-mapbox-gl.sass';
 
 Modal.setAppElement('body');
 toast.configure();
