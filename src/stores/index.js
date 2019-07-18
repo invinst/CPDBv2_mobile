@@ -5,7 +5,7 @@ import configureDev from './configure-store.dev';
 let configureStore;
 
   /* istanbul ignore next */
-if (['staging', 'production'].includes(config.appEnv)) {
+if (['staging', 'beta', 'production'].includes(config.appEnv)) {
   configureStore = configureProd;
 } else {
   configureStore = configureDev;
