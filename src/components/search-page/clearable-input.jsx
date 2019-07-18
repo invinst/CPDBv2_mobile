@@ -14,7 +14,7 @@ export default class ClearableInput extends Component {
     return (
       <img
         className='clear-icon'
-        src='/img/ic-clear.svg'
+        src='/img/ic-clear-2.svg'
         onClick={ this.clearQuery.bind(this) }
         />
     );
