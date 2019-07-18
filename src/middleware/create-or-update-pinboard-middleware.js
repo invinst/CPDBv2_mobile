@@ -60,7 +60,7 @@ export default store => next => action => {
       store.dispatch(showToast(action.payload));
     }
 
-    store.dispatch(addOrRemove(action.payload)).then(() => {
+    Promise.all([store.dispatch(addOrRemove(action.payload))]).finally(() => {
       store.dispatch(savePinboard());
     });
   }
