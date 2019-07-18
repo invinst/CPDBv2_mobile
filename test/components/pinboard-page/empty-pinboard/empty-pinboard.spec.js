@@ -21,10 +21,13 @@ describe('EmptyPinboard component', function () {
       <EmptyPinboard examplePinboards={ examplePinboards }/>
     );
 
-    wrapper.find('.empty-pinboard-title').text().should.equal('Add');
+    wrapper.find('.empty-pinboard-title').text().should.equal('Get started');
     wrapper.find('.empty-pinboard-description').text().should.containEql(
-      'Add officers, or complaint records through search.'
-    ).and.containEql('Or use an example pinboard as a baseline to get started.');
+      'Use search to find officers and individual complaint records ' +
+      'and press the plus button to add cards to your pinboard.'
+    ).and.containEql(
+      'Come back to the pinboard to give it a title and see a network map or discover relevant documents.'
+    );
 
     const examplePinboardLinks = wrapper.find(Link);
     examplePinboardLinks.should.have.length(2);
