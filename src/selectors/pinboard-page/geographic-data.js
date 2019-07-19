@@ -1,27 +1,31 @@
-import { get, isEmpty, filter } from 'lodash';
+import { get, isEmpty, concat } from 'lodash';
 import { createSelector } from 'reselect';
 
 import constants from 'constants';
 
 
-const getGeographicData = state => get(state, 'pinboardPage.geographicData.data', []);
+const getGeographicCrs = state => state.pinboardPage.geographicData.mapCrsData;
+const getGeographicTrrs = state => state.pinboardPage.geographicData.mapTrrsData;
 export const getGeographicDataRequesting = state => get(state, 'pinboardPage.geographicData.requesting', false);
+export const getClearAllMarkers = state => state.pinboardPage.geographicData.clearAllMarkers;
 
 export const mapLegendSelector = createSelector(
-  getGeographicData,
-  geographicData => ({
-    allegationCount: filter(
-      geographicData, geographicDatum => geographicDatum.kind === constants.MAP_ITEMS.CR
-    ).length,
-    useOfForceCount: filter(
-      geographicData, geographicDatum => geographicDatum.kind === constants.MAP_ITEMS.FORCE
-    ).length,
+  getGeographicCrs,
+  getGeographicTrrs,
+  (state) => state.pinboardPage.geographicData.mapCrsDataTotalCount,
+  (state) => state.pinboardPage.geographicData.mapTrrsDataTotalCount,
+  (geographicCrs, geographicTrrs, crsTotalCount, trrsTotalCount) => ({
+    allegationCount: geographicCrs.length,
+    useOfForceCount: geographicTrrs.length,
+    allegationLoading: geographicCrs.length !== crsTotalCount,
+    useOfForceLoading: geographicTrrs.length !== trrsTotalCount,
   })
 );
 
 export const hasMapMarkersSelector = createSelector(
-  getGeographicData,
-  geographicData => !isEmpty(geographicData)
+  getGeographicCrs,
+  getGeographicTrrs,
+  (geographicCrs, geographicTrrs) => !isEmpty(geographicCrs) || !isEmpty(geographicTrrs)
 );
 
 export const crMapMarkersTransform = geographicDatum => ({
@@ -45,14 +49,12 @@ export const trrMapMarkerTransform = geographicDatum => ({
 });
 
 export const mapMarkersSelector = createSelector(
-  getGeographicData,
-  markers => markers.map(marker => {
-    if (marker.kind === constants.MAP_ITEMS.CR) {
-      return crMapMarkersTransform(marker);
-    } else if (marker.kind === constants.MAP_ITEMS.FORCE) {
-      return trrMapMarkerTransform(marker);
-    }
-  })
+  getGeographicCrs,
+  getGeographicTrrs,
+  (geographicCrs, geographicTrrs) => concat(
+    geographicCrs.map(marker => crMapMarkersTransform(marker)),
+    geographicTrrs.map(marker => trrMapMarkerTransform(marker)),
+  )
 );
 
 export const getCurrentTab = state => {

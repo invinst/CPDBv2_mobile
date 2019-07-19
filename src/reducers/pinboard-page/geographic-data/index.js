@@ -1,10 +1,18 @@
 import { combineReducers } from 'redux';
 
-import data from './data';
+import mapCrsData from './map-crs-data';
+import mapTrrsData from './map-trrs-data';
+import mapCrsDataTotalCount from './map-crs-data-total-count';
+import mapTrrsDataTotalCount from './map-trrs-data-total-count';
 import requesting from './requesting';
+import clearAllMarkers from './clear-all-markers';
 
 
 export default combineReducers({
-  data,
+  mapCrsData,
+  mapTrrsData,
+  mapCrsDataTotalCount,
+  mapTrrsDataTotalCount,
   requesting,
+  clearAllMarkers,
 });

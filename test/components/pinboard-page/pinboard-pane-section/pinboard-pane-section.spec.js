@@ -15,7 +15,11 @@ describe('PinboardPaneSection component', function () {
   const store = mockStore({
     pinboardPage: {
       graphData: { requesting: false, data: {} },
-      geographicData: { requesting: false, data: [] },
+      geographicData: {
+        requesting: false,
+        mapCrsData: [],
+        mapTrrsData: [],
+      },
     },
   });
   let wrapper;

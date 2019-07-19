@@ -26,6 +26,7 @@ export default class PinboardPaneSection extends Component {
         show: hasMapMarker,
       },
     };
+
     const CurrentComponent = get(pinboardPaneMap, `${currentTab}.component`, null);
     return (
       <div className={ cx(styles.pinboardPaneSection, 'pinboard-pane-section') }>

@@ -15,7 +15,8 @@ export default class Legend extends Component {
         key: 'ALLEGATION_COUNT',
         className: 'complaint',
         text: 'Complaint',
-        number: legend.allegationCount
+        number: legend.allegationCount,
+        loading: legend.allegationLoading,
       },
       {
         key: 'UNSUSTAINED_COUNT',
@@ -33,7 +34,8 @@ export default class Legend extends Component {
         key: 'USE_OF_FORCE_COUNT',
         className: 'use-of-force-report',
         text: 'Use of Force Report',
-        number: legend.useOfForceCount
+        number: legend.useOfForceCount,
+        loading: legend.useOfForceLoading,
       },
     ];
     return (
@@ -49,10 +51,17 @@ Legend.propTypes = {
     allegationCount: PropTypes.number,
     unsustainedCount: PropTypes.number,
     sustainedCount: PropTypes.number,
-    useOfForceCount: PropTypes.number
+    useOfForceCount: PropTypes.number,
+    allegationLoading: PropTypes.bool,
+    useOfForceLoading: PropTypes.bool,
   }),
 };
 
 Legend.defaultProps = {
-  legend: {},
+  legend: {
+    allegationCount: 0,
+    unsustainedCount: 0,
+    sustainedCount: 0,
+    useOfForceCount: 0
+  },
 };
