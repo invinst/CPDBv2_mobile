@@ -19,6 +19,7 @@ const MAX_RADIUS = 12;
 const COLLIDE_ALPHA = 0.5;
 const MIN_MEMBERS_IN_COMMUNITY = 3;
 const NUMBER_OF_LINK_GROUP_COLORS = 6;
+const DEFAULT_NODE_COLOR = '#ADADAD';
 
 
 export default class SocialGraph extends Component {
@@ -39,10 +40,10 @@ export default class SocialGraph extends Component {
     this.svg = d3.select(ReactDOM.findDOMNode(this.refs.chart)).append('svg:svg');
     this.node = this.svg.selectAll('.node');
     this.link = this.svg.selectAll('.link');
-    this.fill = d3.scale.category20();
     this.tip = d3Tip()
       .attr('class', cx(styles.socialGraphTip, 'test--graph-tooltip'))
-      .offset([-5, 0])
+      .direction('e')
+      .offset([0, 2])
       .html(this.graphTooltip);
     this.svg.call(this.tip);
     this.drawGraph();
@@ -130,6 +131,7 @@ export default class SocialGraph extends Component {
           id: index,
           uid: officer.id,
           fname: officer.fullName,
+          color: officer.visualTokenBackground,
           degree: 0
         };
         nodes.push(officerData);
@@ -246,11 +248,8 @@ export default class SocialGraph extends Component {
       .on('mouseout', this.tip.hide)
       .on('dblclick', this.connectedNodes);
 
-    this.node.attr('r', (d) => {
-      return (d.degree / 2 + 2);
-    }).style('fill', (d) => {
-      return this.fill(d.group);
-    });
+    this.node.attr('r', (d) => d.degree / 2 + 2)
+      .style('fill', (d) => d.color || DEFAULT_NODE_COLOR);
 
     this.node.exit().remove();
   }

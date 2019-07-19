@@ -18,7 +18,7 @@ function waitForGraphAnimationEnd(client, pinboardPage) {
   );
 }
 
-function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
+function checkGraphGroupColors(client, graphNodes, expectedNodeGroupColors) {
   let groupsColors = [];
   client.elements(graphNodes.locateStrategy, graphNodes.selector, function (graphNodes) {
     client.assert.equal(graphNodes.value.length, 20);
@@ -29,8 +29,8 @@ function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
       });
     });
   }).perform(function () {
-    const groupsCount = _.values(_.countBy(groupsColors));
-    client.assert.deepEqual(groupsCount.sort((a, b) => a - b), expectedGroupColors);
+    const nodeGroupColors = _.countBy(groupsColors);
+    client.assert.deepEqual(nodeGroupColors, expectedNodeGroupColors);
   });
 }
 
@@ -87,7 +87,14 @@ describe('Pinboard Social Graph', function () {
       waitForGraphAnimationEnd(client, pinboardPage);
       const graphNodes = pinboardPage.section.graphNodes;
 
-      checkGraphGroupColors(client, graphNodes, [3, 5, 6, 6]);
+      checkGraphGroupColors(client, graphNodes, {
+        'rgb(253, 94, 76)': 6,
+        'rgb(244, 162, 152)': 6,
+        'rgb(249, 211, 195)': 5,
+        'rgb(243, 42, 41)': 1,
+        'rgb(255, 80, 80)': 1,
+        'rgb(243, 173, 173)': 1,
+      });
       const graphLinks = pinboardPage.section.graphLinks;
       client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
         client.assert.equal(graphLinks.value.length, 37);
@@ -213,7 +220,14 @@ describe('Pinboard Social Graph', function () {
       client.moveToElement(pinboardPage.section.timelineSlider.selector);
       client.mouseButtonClick(0);
 
-      checkGraphGroupColors(client, graphNodes, [3, 3, 3, 11]);
+      checkGraphGroupColors(client, graphNodes, {
+        'rgb(253, 94, 76)': 6,
+        'rgb(244, 162, 152)': 6,
+        'rgb(249, 211, 195)': 5,
+        'rgb(243, 42, 41)': 1,
+        'rgb(255, 80, 80)': 1,
+        'rgb(243, 173, 173)': 1,
+      });
 
       client.elements(graphNodes.locateStrategy, graphNodes.selector, function (graphNodes) {
         assert.equal(graphNodes.value.length, 20);
