@@ -6,9 +6,12 @@ var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 
 var mockData = require(__dirname + '/../mock-data/pinboard-page');
+const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationResponse');
 
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
+    api.cleanMock();
+
     api.mock('GET', '/api/v2/mobile/officers/123/', 200, mockData.officer123);
     api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, mockData.pinboardData);
     api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
@@ -55,11 +58,6 @@ describe('Pinboard Page', function () {
     this.pinboardPage = client.page.pinboardPage();
     this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
     client.waitForElementVisible('body', TIMEOUT);
-    done();
-  });
-
-  afterEach(function (client, done) {
-    api.cleanMock();
     done();
   });
 
@@ -134,16 +132,171 @@ describe('Pinboard Page', function () {
       firstCard.expect.element('@firstCardCategory').text.to.equal('Impact Weapon');
     });
 
-    it('should show undo card when click on unpin button', function () {
-      const pinboardPage = this.pinboardPage;
-      const pinnedSection = pinboardPage.section.pinnedSection;
+    context('undo card', function () {
+      context('pinned officers', function () {
+        beforeEach(function (client, done) {
+          api.mockPut(
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+            {
+              'officer_ids': [],
+              crids: ['1234567'],
+              'trr_ids': ['1234'],
+              title: 'Pinboard Title',
+            },
+            {
+              id: '5cd06f2b',
+              'officer_ids': [],
+              crids: ['1234567'],
+              'trr_ids': ['1234'],
+              title: 'Pinboard Title',
+              description: 'Pinboard Description',
+            }
+          );
+          done();
+        });
 
-      const officers = pinnedSection.section.officers;
-      let firstCard = officers.section.firstCard;
+        it('should show undo card for 1 second when click on unpin button', function (client) {
+          const pinboardPage = this.pinboardPage;
+          const pinnedSection = pinboardPage.section.pinnedSection;
 
-      firstCard.click('@firstCardUnpinBtn');
+          const officers = pinnedSection.section.officers;
 
-      firstCard.expect.element('@undoCard').to.be.visible;
+          let firstCard = officers.section.firstCard;
+          firstCard.click('@firstCardUnpinBtn');
+          firstCard.expect.element('@undoCard').to.be.visible;
+
+          client.pause(1050);
+          client.assertCount(officers.section.card.selector, 0);
+        });
+
+        it('should keep the current pinboard state when click undo', function (client) {
+          const pinboardPage = this.pinboardPage;
+          const pinnedSection = pinboardPage.section.pinnedSection;
+
+          const officers = pinnedSection.section.officers;
+          let firstCard = officers.section.firstCard;
+          firstCard.click('@firstCardUnpinBtn');
+          firstCard.expect.element('@undoCard').to.be.visible;
+          firstCard.expect.element('@undoButton').to.be.visible;
+          firstCard.click('@undoButton');
+
+          client.assertCount(officers.section.card.selector, 1);
+          officers.expect.element('@title').text.to.equal('OFFICERS');
+          firstCard.expect.element('@firstCardRank').text.to.equal('Police Officer');
+          firstCard.expect.element('@firstCardName').text.to.equal('Daryl Mack');
+          firstCard.expect.element('@firstCardCRsCount').text.to.equal('10 complaints');
+        });
+      });
+
+      context('pinned complaints', function () {
+        beforeEach(function (client, done) {
+          api.mockPut(
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+            {
+              'officer_ids': [1234],
+              crids: [],
+              'trr_ids': ['1234'],
+              title: 'Pinboard Title',
+            },
+            {
+              id: '5cd06f2b',
+              'officer_ids': [1234],
+              crids: [],
+              'trr_ids': ['1234'],
+              title: 'Pinboard Title',
+              description: 'Pinboard Description',
+            }
+          );
+          done();
+        });
+
+        it('should show undo card for 1 second when click on unpin button', function (client) {
+          const pinboardPage = this.pinboardPage;
+          const pinnedSection = pinboardPage.section.pinnedSection;
+
+          const crs = pinnedSection.section.crs;
+
+          let firstCard = crs.section.firstCard;
+          firstCard.click('@firstCardUnpinBtn');
+          firstCard.expect.element('@undoCard').to.be.visible;
+
+          client.pause(1050);
+          client.assertCount(crs.section.card.selector, 0);
+        });
+
+        it('should keep the current pinboard state when click undo', function (client) {
+          const pinboardPage = this.pinboardPage;
+          const pinnedSection = pinboardPage.section.pinnedSection;
+
+          const crs = pinnedSection.section.crs;
+
+          let firstCard = crs.section.firstCard;
+          firstCard.click('@firstCardUnpinBtn');
+          firstCard.expect.element('@undoCard').to.be.visible;
+          firstCard.expect.element('@undoButton').to.be.visible;
+          firstCard.click('@undoButton');
+
+          client.assertCount(crs.section.card.selector, 1);
+          crs.expect.element('@title').text.to.equal('COMPLAINTS');
+          firstCard.expect.element('@firstCardDate').text.to.equal('2010-01-01');
+          firstCard.expect.element('@firstCardCategory').text.to.equal('Use Of Force');
+        });
+      });
+
+      context('pinned trrs', function () {
+        beforeEach(function (client, done) {
+          api.mockPut(
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+            {
+              'officer_ids': [1234],
+              crids: ['1234567'],
+              'trr_ids': [],
+              title: 'Pinboard Title',
+            },
+            {
+              id: '5cd06f2b',
+              'officer_ids': [1234],
+              crids: ['1234567'],
+              'trr_ids': [],
+              title: 'Pinboard Title',
+              description: 'Pinboard Description',
+            }
+          );
+          done();
+        });
+
+        it('should show undo card for 1 second when click on unpin button', function (client) {
+          const pinboardPage = this.pinboardPage;
+          const pinnedSection = pinboardPage.section.pinnedSection;
+
+          const trrs = pinnedSection.section.trrs;
+
+          let firstCard = trrs.section.firstCard;
+          firstCard.click('@firstCardUnpinBtn');
+          firstCard.expect.element('@undoCard').to.be.visible;
+
+          client.pause(1050);
+          client.assertCount(trrs.section.card.selector, 0);
+        });
+
+        it('should keep the current pinboard state when click undo', function (client) {
+          const pinboardPage = this.pinboardPage;
+          const pinnedSection = pinboardPage.section.pinnedSection;
+
+          const trrs = pinnedSection.section.trrs;
+
+          let firstCard = trrs.section.firstCard;
+          firstCard.click('@firstCardUnpinBtn');
+          firstCard.expect.element('@undoCard').to.be.visible;
+          firstCard.expect.element('@undoButton').to.be.visible;
+          firstCard.click('@undoButton');
+
+          client.assertCount(trrs.section.card.selector, 1);
+          trrs.expect.element('@title').text.to.equal('TACTICAL RESPONSE REPORTS');
+          firstCard.expect.element('@firstCardDate').text.to.equal('2012-01-01');
+          firstCard.expect.element('@firstCardCategory').text.to.equal('Impact Weapon');
+        });
+      });
     });
   });
 
@@ -201,7 +354,7 @@ describe('Pinboard Page', function () {
       relevantDocumentsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
 
       const documentCard = relevantDocumentsSection.section.documentCard;
-      client.assertCount(`${relevantDocumentsSection.selector} ${documentCard.selector}`, 4);
+      client.assertCount(documentCard.selector, 4);
 
       const firstDocumentCard = relevantDocumentsSection.section.documentCard;
       firstDocumentCard.expect.element('@plusButton').to.be.present;
@@ -215,17 +368,16 @@ describe('Pinboard Page', function () {
     it('should request more when sliding to the end', function (client) {
       const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
       const documentCard = relevantDocumentsSection.section.documentCard;
-      const cardSelector = `${relevantDocumentsSection.selector} ${documentCard.selector}`;
-      client.assertCount(cardSelector, 4);
+      client.assertCount(documentCard.selector, 4);
 
       const nthCardSelector = n => relevantDocumentsSection.selector +
         ` .swiper-slide:nth-child(${n}) > div:first-child`;
 
       _.times(3, idx => client.dragAndDrop(nthCardSelector(idx + 2), -200, 0));
-      client.assertCount(cardSelector, 8);
+      client.assertCount(documentCard.selector, 8);
 
       _.times(4, idx => client.dragAndDrop(nthCardSelector(idx + 5), -200, 0));
-      client.assertCount(cardSelector, 10);
+      client.assertCount(documentCard.selector, 10);
     });
 
     it('should go to complaint page when clicking on category', function (client) {
@@ -260,6 +412,325 @@ describe('Pinboard Page', function () {
         'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf'
       );
     });
+
+    context('undo card', function () {
+      context('adding relevant coaccusal to pinboard', function () {
+        const updatedRelevantDocumentsResponse = getPaginationResponse(
+          mockData.baseRelevantDocumentsUrl,
+          (number) => _.times(number).map(mockData.generateRelevantDocument),
+          6, 0, 6
+        );
+
+        const updatedRelevantCoaccusalsResponse = getPaginationResponse(
+          mockData.baseRelevantCoaccusalsUrl,
+          (number) => _.times(number, index => mockData.generateRelevantCoaccusal(index + 40)),
+          3, 0, 3
+        );
+
+        const updatedRelevantComplaintsResponse = getPaginationResponse(
+          mockData.baseRelevantComplaintsUrl,
+          (number) => _.times(number, index => mockData.generateRelevantComplaint(`${index}`)),
+          8, 0, 8
+        );
+
+        beforeEach(function (client, done) {
+          api.mockPut(
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+            {
+              'officer_ids': ['1234', '123'],
+              crids: ['1234567'],
+              'trr_ids': ['1234'],
+              title: 'Pinboard Title',
+              description: 'Pinboard Description',
+            },
+            {
+              id: '5cd06f2b',
+              'officer_ids': ['1234', '123'],
+              crids: ['1234567'],
+              'trr_ids': ['1234'],
+              title: 'Pinboard Title',
+              description: 'Pinboard Description',
+            }
+          );
+
+          api.mock('GET', mockData.baseRelevantDocumentsUrl, 200, updatedRelevantDocumentsResponse);
+
+          api.mock('GET', mockData.baseRelevantCoaccusalsUrl, 200, updatedRelevantCoaccusalsResponse);
+
+          api.mock('GET', mockData.baseRelevantComplaintsUrl, 200, updatedRelevantComplaintsResponse);
+
+          done();
+        });
+
+        it('should show undo card for 1 second for adding relevant coaccusals', function (client) {
+          const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
+          const firstCoaccusalCard = relevantCoaccusalsSection.section.coaccusalCard;
+
+          firstCoaccusalCard.waitForElementVisible('@plusButton', TIMEOUT);
+          firstCoaccusalCard.click('@plusButton');
+
+          firstCoaccusalCard.expect.element('@undoText').to.be.present;
+          firstCoaccusalCard.expect.element('@undoButton').to.be.present;
+
+          firstCoaccusalCard.expect.element('@undoText').text.to.equal('Richard Sullivan added.');
+          firstCoaccusalCard.expect.element('@undoButton').text.to.equal('Undo');
+
+          client.waitForText(
+            this.pinboardPage.section.pinnedSection.section.officers.section.lastCardOfficerName.selector,
+            (text) => text === 'Richard Sullivan',
+            2000
+          );
+
+          client.pause(200);
+
+          client.assertCount(this.pinboardPage.section.pinnedSection.section.officers.section.card.selector, 2);
+
+          client.assertCount(relevantCoaccusalsSection.section.coaccusalCard.selector, 3);
+          client.assertCount(this.pinboardPage.section.relevantDocuments.section.documentCard.selector, 6);
+          client.assertCount(this.pinboardPage.section.relevantComplaints.section.complaintCard.selector, 8);
+        });
+
+        it('should keep the current pinboard state when click undo', function (client) {
+          const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
+          const firstCoaccusalCard = relevantCoaccusalsSection.section.coaccusalCard;
+
+          firstCoaccusalCard.waitForElementVisible('@plusButton', TIMEOUT);
+          firstCoaccusalCard.click('@plusButton');
+
+          firstCoaccusalCard.expect.element('@undoButton').to.be.present;
+          firstCoaccusalCard.click('@undoButton');
+
+          // The card should not disappear
+          firstCoaccusalCard.expect.element('@plusButton').to.be.present;
+          firstCoaccusalCard.expect.element('@radarChart').to.be.present;
+          firstCoaccusalCard.expect.element('@officerRank').text.to.equal('Detective');
+          firstCoaccusalCard.expect.element('@officerName').text.to.equal('Richard Sullivan');
+          firstCoaccusalCard.expect.element('@coaccusalCount').text.to.equal('53 coaccusals');
+
+          // Other sections should not change
+          const pinnedSection = this.pinboardPage.section.pinnedSection;
+          client.assertCount(pinnedSection.section.officers.section.card.selector, 1);
+          client.assertCount(pinnedSection.section.crs.section.card.selector, 1);
+          client.assertCount(pinnedSection.section.trrs.section.card.selector, 1);
+
+          client.assertCount(this.pinboardPage.section.relevantDocuments.section.documentCard.selector, 4);
+          client.assertCount(this.pinboardPage.section.relevantCoaccusals.section.coaccusalCard.selector, 4);
+          client.assertCount(this.pinboardPage.section.relevantComplaints.section.complaintCard.selector, 4);
+        });
+      });
+
+      context('adding relevant complaint to pinboard', function () {
+        const updatedRelevantDocumentsResponse = getPaginationResponse(
+          mockData.baseRelevantDocumentsUrl,
+          (number) => _.times(number).map(mockData.generateRelevantDocument),
+          6, 0, 6
+        );
+
+        const updatedRelevantCoaccusalsResponse = getPaginationResponse(
+          mockData.baseRelevantCoaccusalsUrl,
+          (number) => _.times(number, index => mockData.generateRelevantCoaccusal(index + 40)),
+          8, 0, 8
+        );
+
+        const updatedRelevantComplaintsResponse = getPaginationResponse(
+          mockData.baseRelevantComplaintsUrl,
+          (number) => _.times(number, index => mockData.generateRelevantComplaint(`${index}`)),
+          3, 0, 3
+        );
+
+        beforeEach(function (client, done) {
+          api.mockPut(
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+            {
+              'officer_ids': ['1234'],
+              crids: ['1234567', '1071234'],
+              'trr_ids': ['1234'],
+              title: 'Pinboard Title',
+              description: 'Pinboard Description',
+            },
+            {
+              id: '5cd06f2b',
+              'officer_ids': ['1234'],
+              crids: ['1234567', '1071234'],
+              'trr_ids': ['1234'],
+              title: 'Pinboard Title',
+              description: 'Pinboard Description',
+            }
+          );
+
+          api.mock('GET', mockData.baseRelevantDocumentsUrl, 200, updatedRelevantDocumentsResponse);
+
+          api.mock('GET', mockData.baseRelevantCoaccusalsUrl, 200, updatedRelevantCoaccusalsResponse);
+
+          api.mock('GET', mockData.baseRelevantComplaintsUrl, 200, updatedRelevantComplaintsResponse);
+
+          done();
+        });
+
+        it('should show undo card for 1 second for adding relevant complaint', function (client) {
+          const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+          const firstComplaintCard = relevantComplaintsSection.section.complaintCard;
+
+          firstComplaintCard.waitForElementVisible('@plusButton', TIMEOUT);
+          firstComplaintCard.click('@plusButton');
+
+          firstComplaintCard.expect.element('@undoText').to.be.present;
+          firstComplaintCard.expect.element('@undoButton').to.be.present;
+
+          firstComplaintCard.expect.element('@undoText').text.to.equal('Complaint added.');
+          firstComplaintCard.expect.element('@undoButton').text.to.equal('Undo');
+
+          client.waitForText(
+            this.pinboardPage.section.pinnedSection.section.crs.section.lastCardCategory.selector,
+            (text) => text === 'Lockup Procedures',
+            2000
+          );
+
+          client.pause(200);
+
+          client.assertCount(this.pinboardPage.section.pinnedSection.section.crs.section.card.selector, 2);
+
+          client.assertCount(relevantComplaintsSection.section.complaintCard.selector, 3);
+          client.assertCount(this.pinboardPage.section.relevantDocuments.section.documentCard.selector, 6);
+          client.assertCount(this.pinboardPage.section.relevantCoaccusals.section.coaccusalCard.selector, 8);
+        });
+
+        it('should keep the current pinboard state when click undo', function (client) {
+          const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
+          const firstComplaintCard = relevantComplaintsSection.section.complaintCard;
+
+          firstComplaintCard.waitForElementVisible('@plusButton', TIMEOUT);
+          firstComplaintCard.click('@plusButton');
+
+          firstComplaintCard.expect.element('@undoButton').to.be.present;
+          firstComplaintCard.click('@undoButton');
+
+          // The card should not disappear
+          firstComplaintCard.expect.element('@plusButton').to.be.present;
+          firstComplaintCard.expect.element('@incidentDate').text.to.equal('Apr 23, 2004');
+          firstComplaintCard.expect.element('@category').text.to.equal('Lockup Procedures');
+          firstComplaintCard.expect.element('@firstTopOfficerName').text.to.equal('C. Suchocki');
+          firstComplaintCard.expect.element('@secondTopOfficerName').text.to.equal('Q. Jones');
+          firstComplaintCard.expect.element('@notShowingOfficerCount').text.to.equal('2+');
+
+          // Other sections should not change
+          const pinnedSection = this.pinboardPage.section.pinnedSection;
+          client.assertCount(pinnedSection.section.officers.section.card.selector, 1);
+          client.assertCount(pinnedSection.section.crs.section.card.selector, 1);
+          client.assertCount(pinnedSection.section.trrs.section.card.selector, 1);
+
+          client.assertCount(this.pinboardPage.section.relevantDocuments.section.documentCard.selector, 4);
+          client.assertCount(this.pinboardPage.section.relevantCoaccusals.section.coaccusalCard.selector, 4);
+          client.assertCount(this.pinboardPage.section.relevantComplaints.section.complaintCard.selector, 4);
+        });
+      });
+
+      context('adding relevant document to pinboard', function () {
+        const updatedRelevantCoaccusalsResponse = getPaginationResponse(
+          mockData.baseRelevantCoaccusalsUrl,
+          (number) => _.times(number, index => mockData.generateRelevantCoaccusal(index + 40)),
+          8, 0, 8
+        );
+
+        const updatedRelevantComplaintsResponse = getPaginationResponse(
+          mockData.baseRelevantComplaintsUrl,
+          (number) => _.times(number, index => mockData.generateRelevantComplaint(`${index}`)),
+          6, 0, 6
+        );
+
+        beforeEach(function (client, done) {
+          api.mockPut(
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+            {
+              'officer_ids': ['1234'],
+              crids: ['1234567', '1071234'],
+              'trr_ids': ['1234'],
+              title: 'Pinboard Title',
+              description: 'Pinboard Description',
+            },
+            {
+              id: '5cd06f2b',
+              'officer_ids': ['1234'],
+              crids: ['1234567', '1071234'],
+              'trr_ids': ['1234'],
+              title: 'Pinboard Title',
+              description: 'Pinboard Description',
+            }
+          );
+
+          api.mock('GET', mockData.baseRelevantCoaccusalsUrl, 200, updatedRelevantCoaccusalsResponse);
+
+          api.mock('GET', mockData.baseRelevantComplaintsUrl, 200, updatedRelevantComplaintsResponse);
+
+          done();
+        });
+
+        it('should show undo card for 1 second for adding relevant document', function (client) {
+          const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+          const firstDocumentCard = relevantDocumentsSection.section.documentCard;
+
+          firstDocumentCard.waitForElementVisible('@plusButton', TIMEOUT);
+          firstDocumentCard.click('@plusButton');
+
+          firstDocumentCard.expect.element('@undoText').to.be.present;
+          firstDocumentCard.expect.element('@undoButton').to.be.present;
+
+          firstDocumentCard.expect.element('@undoText').text.to.equal('Document added.');
+          firstDocumentCard.expect.element('@undoButton').text.to.equal('Undo');
+
+          client.waitForText(
+            this.pinboardPage.section.pinnedSection.section.crs.section.lastCardCategory.selector,
+            (text) => text === 'Lockup Procedures',
+            2000
+          );
+
+          client.pause(200);
+
+          client.assertCount(this.pinboardPage.section.pinnedSection.section.crs.section.card.selector, 2);
+
+          client.assertCount(relevantDocumentsSection.section.documentCard.selector, 4);
+          client.assertCount(this.pinboardPage.section.relevantComplaints.section.complaintCard.selector, 6);
+          client.assertCount(this.pinboardPage.section.relevantCoaccusals.section.coaccusalCard.selector, 8);
+
+          // Should reserve the original card after 1 second
+          firstDocumentCard.expect.element('@incidentDate').text.to.equal('Apr 23, 2004');
+          firstDocumentCard.expect.element('@category').text.to.equal('Lockup Procedures');
+          firstDocumentCard.expect.element('@firstTopOfficerName').text.to.equal('R. Sullivan');
+          firstDocumentCard.expect.element('@secondTopOfficerName').text.to.equal('B. Lopez');
+          firstDocumentCard.expect.element('@notShowingOfficerCount').text.to.equal('3+');
+          firstDocumentCard.expect.element('@plusButton').to.be.not.present;
+        });
+
+        it('should keep the current pinboard state when click undo', function (client) {
+          const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
+          const firstDocumentCard = relevantDocumentsSection.section.documentCard;
+
+          firstDocumentCard.waitForElementVisible('@plusButton', TIMEOUT);
+          firstDocumentCard.click('@plusButton');
+
+          firstDocumentCard.expect.element('@undoButton').to.be.present;
+          firstDocumentCard.click('@undoButton');
+
+          // The card should not disappear
+          firstDocumentCard.expect.element('@plusButton').to.be.present;
+          firstDocumentCard.expect.element('@incidentDate').text.to.equal('Apr 23, 2004');
+          firstDocumentCard.expect.element('@category').text.to.equal('Lockup Procedures');
+          firstDocumentCard.expect.element('@firstTopOfficerName').text.to.equal('R. Sullivan');
+          firstDocumentCard.expect.element('@secondTopOfficerName').text.to.equal('B. Lopez');
+          firstDocumentCard.expect.element('@notShowingOfficerCount').text.to.equal('3+');
+
+          // Other sections should not change
+          const pinnedSection = this.pinboardPage.section.pinnedSection;
+          client.assertCount(pinnedSection.section.officers.section.card.selector, 1);
+          client.assertCount(pinnedSection.section.crs.section.card.selector, 1);
+          client.assertCount(pinnedSection.section.trrs.section.card.selector, 1);
+
+          client.assertCount(this.pinboardPage.section.relevantDocuments.section.documentCard.selector, 4);
+          client.assertCount(this.pinboardPage.section.relevantCoaccusals.section.coaccusalCard.selector, 4);
+          client.assertCount(this.pinboardPage.section.relevantComplaints.section.complaintCard.selector, 4);
+        });
+      });
+    });
   });
 
   context('relevant complaints section', function () {
@@ -269,7 +740,7 @@ describe('Pinboard Page', function () {
       relevantComplaintsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
 
       const complaintCard = relevantComplaintsSection.section.complaintCard;
-      client.assertCount(`${relevantComplaintsSection.selector} ${complaintCard.selector}`, 4);
+      client.assertCount(complaintCard.selector, 4);
 
       const firstComplaintCard = relevantComplaintsSection.section.complaintCard;
       firstComplaintCard.expect.element('@plusButton').to.be.present;
@@ -283,7 +754,7 @@ describe('Pinboard Page', function () {
     it('should request more when sliding to the end', function (client) {
       const relevantComplaintsSection = this.pinboardPage.section.relevantComplaints;
       const complaintCard = relevantComplaintsSection.section.complaintCard;
-      const cardSelector = `${relevantComplaintsSection.selector} ${complaintCard.selector}`;
+      const cardSelector = complaintCard.selector;
       client.pause(200);
       client.assertCount(cardSelector, 4);
 
@@ -335,7 +806,7 @@ describe('Pinboard Page', function () {
       relevantCoaccusalsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
 
       const coaccusalCard = relevantCoaccusalsSection.section.coaccusalCard;
-      const cardSelector = `${relevantCoaccusalsSection.selector} ${coaccusalCard.selector}`;
+      const cardSelector = coaccusalCard.selector;
       client.assertCount(cardSelector, 4);
 
       const firstCoaccusalCard = coaccusalCard;
@@ -349,11 +820,11 @@ describe('Pinboard Page', function () {
     it('should request more when sliding to the end', function (client) {
       const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
       const coaccusalCard = relevantCoaccusalsSection.section.coaccusalCard;
-      const cardSelector = `${relevantCoaccusalsSection.selector} ${coaccusalCard.selector}`;
+      const cardSelector = coaccusalCard.selector;
       client.assertCount(cardSelector, 4);
 
       const nthCardSelector = n => relevantCoaccusalsSection.selector +
-        ` .swiper-slide:nth-child(${n}) > a:first-child`;
+        ` .swiper-slide:nth-child(${n}) > *:first-child`;
 
       _.times(1, idx => client.dragAndDrop(nthCardSelector(idx + 2), -148, 0));
       client.assertCount(cardSelector, 8);

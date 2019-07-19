@@ -1,8 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 
 
-const MIN_TEXTAREA_ROWS = 2;
-
 export default class AutosaveTextareaInput extends Component {
   constructor(props) {
     super(props);
@@ -16,11 +14,12 @@ export default class AutosaveTextareaInput extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
+    this.adjustTextareaHeight(this.textarea);
   }
 
   adjustTextareaHeight(textarea) {
     const { textareaLineHeight } = this.props;
-    textarea.rows = MIN_TEXTAREA_ROWS;
+    textarea.rows = 1;
     textarea.rows = Math.floor(textarea.scrollHeight / textareaLineHeight);
   }
 
@@ -65,5 +64,5 @@ AutosaveTextareaInput.propTypes = {
   placeholder: PropTypes.string,
   save: PropTypes.func,
   fieldType: PropTypes.string.isRequired,
-  textareaLineHeight: PropTypes.number.isRequired
+  textareaLineHeight: PropTypes.number.isRequired,
 };

@@ -156,6 +156,7 @@ const createEmptyPinboardResponse = {
 
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
+    api.cleanMock();
     api.mock('GET', '/api/v2/search-mobile/', 200, mockSuggestionResponse);
     this.searchPage = client.page.search();
     this.pinboardPage = client.page.pinboardPage();
@@ -163,11 +164,6 @@ describe('SearchPageTest', function () {
     this.pinboardPage = client.page.pinboardPage();
     this.searchPage.navigate();
     client.waitForElementVisible('body', TIMEOUT);
-    done();
-  });
-
-  afterEach(function (client, done) {
-    api.cleanMock();
     done();
   });
 
@@ -372,6 +368,20 @@ describe('SearchPageTest', function () {
       this.searchPage.click('@pinboardBar');
       this.searchPage.waitForElementNotPresent('@pinboardBar', TIMEOUT);
       client.assert.urlContains('/pinboard/1/untitled-pinboard/');
+    });
+
+    it('should display toast in few seconds when items are added/removed', function (client) {
+      this.searchPage.setValue('@queryInput', 'Kelvin');
+
+      const investigatorCRs = this.searchPage.section.investigatorCRs;
+      investigatorCRs.section.firstRow.click('@pinButton');
+      this.searchPage.waitForElementVisible('@toast', TIMEOUT);
+      this.searchPage.expect.element('@toast').text.to.equal('CR added');
+
+      this.searchPage.waitForElementNotVisible('@toast', TIMEOUT);
+      investigatorCRs.section.firstRow.click('@pinButton');
+      this.searchPage.waitForElementVisible('@toast', TIMEOUT);
+      this.searchPage.expect.element('@toast').text.to.equal('CR removed');
     });
   });
 });

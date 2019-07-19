@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import { stub, spy } from 'sinon';
 
 import PinboardInfo from 'components/pinboard-page/pinboard-info';
-import AutosaveTextInput from 'components/common/autosave-inputs/autosave-text-input';
 import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-textarea-input';
 
 
@@ -21,13 +20,15 @@ describe('<PinboardInfo />', function () {
         updatePinboardInfo={ updatePinboardInfoStub }
       />
     );
+    const autosaveTextareaInput = wrapper.find(AutosaveTextareaInput);
+    autosaveTextareaInput.should.have.length(2);
+    autosaveTextareaInput.at(0).prop('save').should.eql(updatePinboardInfoStub);
+    autosaveTextareaInput.at(1).prop('save').should.eql(updatePinboardInfoStub);
 
-    const titleTextInput = wrapper.find(AutosaveTextInput);
-    const descriptionTextareaInput = wrapper.find(AutosaveTextareaInput);
-    titleTextInput.prop('save').should.eql(updatePinboardInfoStub);
-    descriptionTextareaInput.prop('save').should.eql(updatePinboardInfoStub);
-    titleTextInput.prop('value').should.eql('This is pinboard title');
-    descriptionTextareaInput.prop('value').should.eql('This is pinboard description');
+    const title = wrapper.find('.pinboard-title');
+    const description = wrapper.find('.pinboard-description');
+    title.text().should.eql('This is pinboard title');
+    description.text().should.eql('This is pinboard description');
   });
 
   it('should replace location history when title is updated', function () {

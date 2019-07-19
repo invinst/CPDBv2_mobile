@@ -12,6 +12,7 @@ import SearchBar from 'components/pinboard-page/search-bar';
 import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section/index';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
 import Footer from 'components/footer';
+import EmptyPinboardPage from 'components/pinboard-page/empty-pinboard';
 
 
 describe('<PinboardPage />', function () {
@@ -114,11 +115,8 @@ describe('<PinboardPage />', function () {
 
   it('should render EmptyPinboard instead of pinboard contents if pinboard is empty', function () {
     const store = MockStore()({
-      pinboard: {
-        title: 'This is pinboard title',
-        description: 'This is pinboard description',
-      },
       pinboardPage: {
+        pinboard: {},
         graphData: {},
         relevantDocuments: defaultPaginationState,
         relevantCoaccusals: defaultPaginationState,
@@ -126,9 +124,19 @@ describe('<PinboardPage />', function () {
       }
     });
 
+    const examplePinboards = [{
+      id: '66ef1561',
+      title: 'Pinboard 1',
+      description: 'Description 1'
+    }, {
+      id: '66ef1562',
+      title: 'Pinboard 2',
+      description: 'Description 2'
+    }];
     const pinboard = {
       title: 'This is pinboard title',
       description: 'This is pinboard description',
+      examplePinboards,
     };
 
     const wrapper = mount(
@@ -137,6 +145,7 @@ describe('<PinboardPage />', function () {
           params={ { pinboardId: '5cd06f2b' } }
           pinboard={ pinboard }
           isEmptyPinboard={ true }
+          examplePinboards={ examplePinboards }
         />
       </Provider>
     );
@@ -148,35 +157,20 @@ describe('<PinboardPage />', function () {
     wrapper.find('.pinboard-description').should.have.length(0);
     wrapper.find(RelevantSectionContainer).should.have.length(0);
 
-    wrapper.find('.empty-pinboard-title').text().should.equal('Add');
-    wrapper.find('.empty-pinboard-description').text().should.containEql(
-      'Add officers, or complaint records through search.'
-    ).and.containEql('Or use an example pinboard as a baseline to get started.');
-
-    wrapper.find('.helper-row').should.have.length(2);
-    const helperHeaders = wrapper.find('.helper-header');
-    const helperTexts = wrapper.find('.helper-text');
-    const helperArrows = wrapper.find('.helper-arrow');
-
-    helperHeaders.should.have.length(2);
-    helperTexts.should.have.length(2);
-    helperArrows.should.have.length(2);
-
-    helperHeaders.at(0).text().should.equal('Repeaters');
-    helperHeaders.at(1).text().should.equal('Skullcap crew');
-    helperTexts.at(0).text().should.equal(
-      'Officers with at least 10 complaints against them generate 64% of all complaints.'
-    );
-    helperTexts.at(1).text().should.equal(
-      'Dogged by allegations of abuse, members of the group have been named in more than 20 federal lawsuits – yet h…'
-    );
-
-    wrapper.find('.arrow-head').exists().should.be.true();
-    wrapper.find('.arrow-shaft').exists().should.be.true();
+    const emptyPinboard = wrapper.find(EmptyPinboardPage);
+    emptyPinboard.prop('examplePinboards').should.eql([{
+      id: '66ef1561',
+      title: 'Pinboard 1',
+      description: 'Description 1'
+    }, {
+      id: '66ef1562',
+      title: 'Pinboard 2',
+      description: 'Description 2'
+    }]);
     wrapper.find(Footer).exists().should.be.true();
   });
 
-  it('should pushBreadcrumbs on componentDidMount', function () {
+  it('should pushBreadcrumbs on componentDidMount and componentDidUpdate', function () {
     const itemsByTypes = {
       'OFFICER': [],
       'CR': [],
@@ -189,7 +183,7 @@ describe('<PinboardPage />', function () {
     const params = { pinboardId: '5cd06f2b' };
     const pinboard = { id: '5cd06f2b', 'crids': ['123'] };
 
-    mount(
+    const wrapper = mount(
       <Provider store={ store }>
         <PinboardPage
           itemsByTypes={ itemsByTypes }
@@ -205,5 +199,23 @@ describe('<PinboardPage />', function () {
 
     pushBreadcrumbs.should.be.calledOnce();
     pushBreadcrumbs.should.be.calledWith({ location, routes, params });
+
+    const newParams = { pinboardId: '5c23adf1' };
+    const newLocation = { pathname: '/pinboard/5c23adf1/' };
+    const newPinboard = { id: '5c23adf1', 'crids': ['123'] };
+    wrapper.setProps( { children: (
+      <PinboardPage
+        itemsByTypes={ itemsByTypes }
+        removeItemInPinboardPage={ removeItemInPinboardPage }
+        params={ newParams }
+        pinboard={ newPinboard }
+        pushBreadcrumbs={ pushBreadcrumbs }
+        routes={ routes }
+        location={ newLocation }
+      />
+    ) });
+
+    pushBreadcrumbs.should.be.calledTwice();
+    pushBreadcrumbs.should.be.calledWith({ location: newLocation, routes, params: newParams });
   });
 });

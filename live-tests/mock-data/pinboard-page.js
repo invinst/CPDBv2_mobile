@@ -695,4 +695,7 @@ module.exports = {
   updatePinboardDescriptionParams,
   updatedPinboardDescription,
   officer123,
+  generateRelevantDocument,
+  generateRelevantCoaccusal,
+  generateRelevantComplaint,
 };

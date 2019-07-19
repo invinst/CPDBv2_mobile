@@ -2,9 +2,11 @@ import React, { PropTypes, Component } from 'react';
 
 import styles from './relevant-document-card.sass';
 import BaseComplaintCard from 'components/pinboard-page/relevant/common/base-complaint-card';
+import withUndoCard from 'components/pinboard-page/cards/with-undo-card';
+import constants from 'constants';
 
 
-export class RelevantDocumentCard extends Component {
+export default class RelevantDocumentCard extends Component {
   render() {
     const {
       allegation,
@@ -44,4 +46,14 @@ RelevantDocumentCard.propTypes = {
   pinned: PropTypes.bool,
 };
 
-export default RelevantDocumentCard;
+export const RelevantDocumentCardWithUndo = withUndoCard(
+  RelevantDocumentCard,
+  () => 'Document added.',
+  'addItemInPinboardPage',
+  {
+    theme: constants.PINBOARD_PAGE.UNDO_CARD_THEMES.DARK,
+    keepVisible: true,
+    hasWrapper: true,
+  },
+);
+

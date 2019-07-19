@@ -39,6 +39,7 @@ module.exports = {
     trrsHeader: '#search-category-trrs',
     officersHeader: '#search-category-officers',
     pinboardBar: '.test--pinboard-bar',
+    toast: '.Toastify__toast-body',
   },
 
   sections: {

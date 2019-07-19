@@ -3,14 +3,31 @@ var hashBody = (body) => JSON.stringify(body, Object.keys(body).sort());
 var buildApi = function () {
   var handleMap = {};
 
+  var getCurrentResponse = function (responseObj) {
+    if (responseObj === undefined) {
+      return null;
+    }
+    let counter = responseObj.responses.length === 1 ? 0 : responseObj.counter;
+    let response = responseObj.responses[counter];
+    responseObj.counter++;
+    return response;
+  };
+
   var mock = function (method, uri, status, data) {
     if (!(method in handleMap)) {
       handleMap[method] = {};
     }
 
-    handleMap[method][uri] = function (response) {
+    if (!(uri in handleMap[method])) {
+      handleMap[method][uri] = {
+        counter: 0,
+        responses: [],
+      };
+    }
+
+    handleMap[method][uri].responses.push(function (response) {
       response.status(status).send(data);
-    };
+    });
   };
 
   var mockPost = function (uri, status, body, data) {
@@ -51,7 +68,7 @@ var buildApi = function () {
     if (req.method === 'POST' || req.method === 'PUT') {
       return ((handleMap[req.method] || {})[uri] || {})[hashBody(req.body)] || return404;
     } else {
-      return (handleMap[req.method] || {})[uri] || return404;
+      return getCurrentResponse((handleMap[req.method] || {})[uri]) || return404;
     }
   };
 
@@ -60,7 +77,8 @@ var buildApi = function () {
     mockPost: mockPost,
     mockPut: mockPut,
     cleanMock: cleanMock,
-    call: call
+    call: call,
+    handleMap: handleMap,
   };
 };
 

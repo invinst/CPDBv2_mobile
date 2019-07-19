@@ -1,13 +1,14 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { stub } from 'sinon';
 
 import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/relevant-infinite-carousel';
 import RelevantDocuments from 'components/pinboard-page/relevant/relevant-documents';
-import RelevantDocumentCard from 'components/pinboard-page/relevant/relevant-documents/relevant-document-card';
+import RelevantDocumentCard, { RelevantDocumentCardWithUndo }
+  from 'components/pinboard-page/relevant/relevant-documents/relevant-document-card';
 
 
-describe('<RelevantComplaints />', function () {
+describe('<RelevantDocuments />', function () {
   it('should render enough content correctly', function () {
     const firstOfficers = [{
       fullName: 'Scott Mc Kenna',
@@ -86,7 +87,7 @@ describe('<RelevantComplaints />', function () {
     const addItemInPinboardPageStub = stub();
     const fetchPinboardRelevantDocumentsStub = stub();
 
-    const wrapper = shallow(
+    const wrapper = mount(
       <RelevantDocuments
         requesting={ false }
         addItemInPinboardPage={ addItemInPinboardPageStub }
@@ -104,7 +105,9 @@ describe('<RelevantComplaints />', function () {
     relevantInfiniteCarousel.prop('requesting').should.be.false();
 
     const relevantDocumentCards = relevantInfiniteCarousel.find(RelevantDocumentCard);
+    const relevantDocumentCardsWithUndo = relevantInfiniteCarousel.find(RelevantDocumentCardWithUndo);
     relevantDocumentCards.should.have.length(2);
+    relevantDocumentCardsWithUndo.should.have.length(2);
 
     relevantDocumentCards.at(0).prop('url').should.eql(
       'https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
@@ -114,7 +117,7 @@ describe('<RelevantComplaints />', function () {
     );
     relevantDocumentCards.at(0).prop('allegation').should.eql(firstAllegation);
     relevantDocumentCards.at(0).prop('pinned').should.be.true();
-    relevantDocumentCards.at(0).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
+    relevantDocumentCardsWithUndo.at(0).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
 
     relevantDocumentCards.at(1).prop('url').should.eql(
       'https://www.documentcloud.org/documents/3518950-CRID-294088-CR.html'
@@ -124,7 +127,7 @@ describe('<RelevantComplaints />', function () {
     );
     relevantDocumentCards.at(1).prop('allegation').should.eql(secondAllegation);
     relevantDocumentCards.at(1).prop('pinned').should.be.false();
-    relevantDocumentCards.at(1).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
+    relevantDocumentCardsWithUndo.at(1).prop('addItemInPinboardPage').should.eql(addItemInPinboardPageStub);
 
     relevantInfiniteCarousel.prop('loadMore')();
     fetchPinboardRelevantDocumentsStub.should.be.calledOnce();

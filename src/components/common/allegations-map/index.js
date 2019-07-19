@@ -10,7 +10,6 @@ import constants from 'constants';
 import { mapboxgl } from 'utils/mapbox';
 import Legend from './legend/index';
 import MarkerTooltip from './marker-tooltip';
-import SimpleMarkerTooltip from './simple-marker-tooltip';
 import Marker from './marker';
 import styles from './allegations-map.sass';
 import withLoadingSpinner from 'components/common/with-loading-spinner';
@@ -55,28 +54,12 @@ export default class AllegationsMap extends Component {
 
   createPopup(marker) {
     const popup = new mapboxgl.Popup({ offset: 0, closeButton: false });
-    let tooltip;
-    if (marker.kind === constants.MAP_ITEMS.CR) {
-      tooltip = (
-        <MarkerTooltip
-          id={ marker.id }
-          url={ `/complaint/${marker.id}/` }
-          kind={ marker.kind }
-          category={ marker.category }
-          coaccused={ marker.coaccused }
-          victims={ marker.victims }
-        />
-      );
-    } else if (marker.kind === constants.MAP_ITEMS.FORCE) {
-      tooltip = (
-        <SimpleMarkerTooltip
-          kind='TRR'
-          id={ marker.id }
-          url={ `/trr/${marker.id}/` }
-          category={ marker.category }
-        />
-      );
-    }
+    const tooltip = (
+      <MarkerTooltip
+        date={ marker.date }
+        category={ marker.category }
+      />
+    );
     popup.setHTML(ReactDOMServer.renderToString(tooltip));
     return popup;
   }

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactHeight from 'react-height';
+import { toast, cssTransition } from 'react-toastify';
 import { browserHistory } from 'react-router';
 import { isEmpty, noop } from 'lodash';
 
@@ -32,6 +33,10 @@ export default class SearchPage extends Component {
     this.updateResults();
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.handleToastChange(nextProps);
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.query !== prevProps.query) {
       this.updateResults();
@@ -40,6 +45,29 @@ export default class SearchPage extends Component {
 
   componentWillUnmount() {
     showIntercomLauncher(true);
+  }
+
+  handleToastChange(nextProps) {
+    if (this.props.toast !== nextProps.toast) {
+      const { type, actionType } = nextProps.toast;
+
+      this.showToast(`${type} ${actionType}`);
+    }
+  }
+
+  showToast(message) {
+    const TopRightTransition = cssTransition({
+      enter: 'toast-enter',
+      exit: 'toast-exit',
+      duration: 500,
+      appendPosition: true,
+    });
+
+    toast(message, {
+      className: 'toast-wrapper',
+      bodyClassName: 'toast-body',
+      transition: TopRightTransition,
+    });
   }
 
   updateResults() {
@@ -233,6 +261,7 @@ SearchPage.propTypes = {
   pinboard: PropTypes.object,
   addOrRemoveItemInPinboard: PropTypes.func,
   createPinboard: PropTypes.func,
+  toast: PropTypes.object,
 };
 
 SearchPage.defaultProps = {
@@ -246,4 +275,5 @@ SearchPage.defaultProps = {
   queryChanged: noop,
   saveToRecent: noop,
   suggestAllFromCategory: noop,
+  toast: {},
 };
