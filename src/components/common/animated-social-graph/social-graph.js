@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { isEmpty, countBy, indexOf } from 'lodash';
+import { isEmpty, countBy, indexOf, orderBy } from 'lodash';
 import moment from 'moment';
 import * as d3 from 'd3';
 import * as jLouvain from 'jlouvain';
@@ -18,6 +18,8 @@ const DEFAULT_CLUSTER_PADDING = 6;
 const MAX_RADIUS = 12;
 const COLLIDE_ALPHA = 0.5;
 const MIN_MEMBERS_IN_COMMUNITY = 3;
+const NUMBER_OF_LINK_GROUP_COLORS = 6;
+const DEFAULT_NODE_COLOR = '#ADADAD';
 
 
 export default class SocialGraph extends Component {
@@ -38,10 +40,10 @@ export default class SocialGraph extends Component {
     this.svg = d3.select(ReactDOM.findDOMNode(this.refs.chart)).append('svg:svg');
     this.node = this.svg.selectAll('.node');
     this.link = this.svg.selectAll('.link');
-    this.fill = d3.scale.category20();
     this.tip = d3Tip()
       .attr('class', cx(styles.socialGraphTip, 'test--graph-tooltip'))
-      .offset([-5, 0])
+      .direction('e')
+      .offset([0, 2])
       .html(this.graphTooltip);
     this.svg.call(this.tip);
     this.drawGraph();
@@ -129,6 +131,7 @@ export default class SocialGraph extends Component {
           id: index,
           uid: officer.id,
           fname: officer.fullName,
+          color: officer.visualTokenBackground,
           degree: 0
         };
         nodes.push(officerData);
@@ -171,13 +174,19 @@ export default class SocialGraph extends Component {
 
   _recalculateNodeDegreesAndMaxWeight() {
     this.data.maxWeight = 0;
-    this.data.links.forEach((link) => {
+
+    const orderedLinks = orderBy(this.data.links, ['weight', 'source', 'target']);
+    const linksCount = this.data.links.length;
+
+    orderedLinks.forEach((link, index) => {
       this.data.nodes[link.source].degree += 1;
       this.data.nodes[link.target].degree += 1;
 
       if (this.data.maxWeight < link.weight) {
         this.data.maxWeight = link.weight;
       }
+
+      link.colorGroup = Math.ceil((index + 1) * NUMBER_OF_LINK_GROUP_COLORS / linksCount);
     });
   }
 
@@ -239,11 +248,8 @@ export default class SocialGraph extends Component {
       .on('mouseout', this.tip.hide)
       .on('dblclick', this.connectedNodes);
 
-    this.node.attr('r', (d) => {
-      return (d.degree / 2 + 2);
-    }).style('fill', (d) => {
-      return this.fill(d.group);
-    });
+    this.node.attr('r', (d) => d.degree / 2 + 2)
+      .style('fill', (d) => d.color || DEFAULT_NODE_COLOR);
 
     this.node.exit().remove();
   }
@@ -257,11 +263,7 @@ export default class SocialGraph extends Component {
 
     this.link.enter().insert('line', '.node').attr('class', 'link');
 
-    this.link.attr('stroke-width', (d) => {
-      return Math.ceil(Math.sqrt(d.weight));
-    }).attr('class', (d) => {
-      return `link ${d.className}`;
-    });
+    this.link.attr('class', (d) => `link link-group-color-${d.colorGroup} ${d.className}`);
 
     this.link.exit().remove();
   }
