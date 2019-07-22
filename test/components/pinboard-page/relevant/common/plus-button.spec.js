@@ -16,8 +16,19 @@ describe('<PlusButton />', function () {
     );
     wrapper.prop('className').should.containEql('custom-class-name');
 
-    wrapper.find('.inner-plus').exists().should.be.true();
     wrapper.simulate('click', { preventDefault: () => {} });
     onClickStub.should.be.calledOnce();
+  });
+
+  it('should have dark mode', function () {
+    const onClickStub = spy();
+    const wrapper = shallow(
+      <PlusButton
+        className='custom-class-name'
+        onClick={ onClickStub }
+        darkMode={ true }
+      />
+    );
+    wrapper.prop('className').should.containEql('dark-mode');
   });
 });
