@@ -104,4 +104,5 @@ PinboardPage.defaultProps = {
   itemsByTypes: {},
   pushBreadcrumbs: () => {},
   initialRequested: true,
+  requestCMS: () => {},
 };
