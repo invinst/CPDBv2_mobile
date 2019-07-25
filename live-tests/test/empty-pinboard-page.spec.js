@@ -109,6 +109,65 @@ const copyOfWattsPinboard = {
   'trr_ids': [],
 };
 
+function mockCMS() {
+  const mockCMSPinboardPage = {
+    fields: [{
+      name: 'empty_pinboard_title',
+      type: 'rich_text',
+      value: {
+        blocks: [
+          {
+            key: '73964',
+            data: {},
+            text: 'Get started',
+            type: 'unstyled',
+            depth: 0,
+            entityRanges: [],
+            inlineStyleRanges: []
+          }
+        ],
+        entityMap: {}
+      }
+    }, {
+      name: 'empty_pinboard_description',
+      type: 'rich_text',
+      value: {
+        blocks: [
+          {
+            key: '62c51',
+            data: {},
+            text: 'Use search to find officers and individual complaint records and press the plus button ' +
+                  'to add cards to your pinboard.',
+            type: 'unstyled',
+            depth: 0,
+            entityRanges: [],
+            inlineStyleRanges: []
+          }, {
+            key: '6qsci',
+            data: {},
+            text: '',
+            type: 'unstyled',
+            depth: 0,
+            entityRanges: [],
+            inlineStyleRanges: []
+          }, {
+            key: '41tdu',
+            data: {},
+            text: 'Come back to the pinboard to give it a title and see a network map or discover relevant documents.',
+            type: 'unstyled',
+            depth: 0,
+            entityRanges: [],
+            inlineStyleRanges: []
+          },
+        ],
+        entityMap: {}
+      }
+    }]
+  };
+
+  api.mock('GET', '/api/v2/cms-pages/pinboard-page/', 200, mockCMSPinboardPage);
+}
+
 describe('Empty Pinboard Page', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
@@ -116,6 +175,7 @@ describe('Empty Pinboard Page', function () {
     mockPinboard(emptyPinboardId, emptyPinboard);
     mockPinboard(skullcapPinboardId, copyOfSkullcapPinboard);
     mockPinboard(wattsPinboardId, copyOfWattsPinboard);
+    mockCMS();
 
     this.emptyPinboardPage = client.page.emptyPinboardPage();
     this.emptyPinboardPage.navigate(this.emptyPinboardPage.url(emptyPinboardId));
