@@ -218,4 +218,36 @@ describe('<PinboardPage />', function () {
     pushBreadcrumbs.should.be.calledTwice();
     pushBreadcrumbs.should.be.calledWith({ location: newLocation, routes, params: newParams });
   });
+
+  it('should requestCMS if does not hasCMS', function () {
+    const requestCMSSpy = spy();
+
+    mount(
+      <PinboardPage
+        params={ { pinboardId: '5cd06f2b' } }
+        pinboard={ { id: '5cd06f2b' } }
+        initialRequested={ false }
+        hasCMS={ false }
+        requestCMS={ requestCMSSpy }
+      />
+    );
+
+    requestCMSSpy.should.be.calledOnce();
+  });
+
+  it('should not requestCMS if hasCMS', function () {
+    const requestCMSSpy = spy();
+
+    mount(
+      <PinboardPage
+        params={ { pinboardId: '5cd06f2b' } }
+        pinboard={ { id: '5cd06f2b' } }
+        initialRequested={ false }
+        hasCMS={ true }
+        requestCMS={ requestCMSSpy }
+      />
+    );
+
+    requestCMSSpy.should.not.be.calledOnce();
+  });
 });
