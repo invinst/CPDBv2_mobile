@@ -108,26 +108,186 @@ const pinboardTRRsData = [
 
 const socialGraphData = {
   'officers': [
-    { 'full_name': 'Glenn Evans', id: 8138 },
-    { 'full_name': 'Isaac Lee', id: 15956 },
-    { 'full_name': 'Thomas Kampenga', id: 14045 },
-    { 'full_name': 'Melvin Ector', id: 31945 },
-    { 'full_name': 'Sean Brandon', id: 2671 },
-    { 'full_name': 'Estella Perez-Stanford', id: 22297 },
-    { 'full_name': 'Johnny Cavers', id: 4269 },
-    { 'full_name': 'Gilbert Cobb', id: 4881 },
-    { 'full_name': 'John Hart', id: 11580 },
-    { 'full_name': 'William Roberison', id: 24157 },
-    { 'full_name': 'Francis Higgins', id: 12176 },
-    { 'full_name': 'David Portis', id: 22861 },
-    { 'full_name': 'Eugene Offett', id: 21194 },
-    { 'full_name': 'Joseph Blaye', id: 2171 },
-    { 'full_name': 'Charles Toussas', id: 28805 },
-    { 'full_name': 'Bennie Watson', id: 30209 },
-    { 'full_name': 'Tracy Hughes', id: 12737 },
-    { 'full_name': 'Donnell Calhoun', id: 3663 },
-    { 'full_name': 'Hardy White', id: 30466 },
-    { 'full_name': 'Matthew Brandon', id: 2675 }
+    {
+      'full_name': 'Glenn Evans',
+      id: 8138,
+      'percentile': {
+        'percentile_allegation_civilian': '4.4000',
+        'percentile_allegation_internal': '5.5000',
+        'percentile_trr': '6.6000'
+      }
+    },
+    {
+      'full_name': 'Isaac Lee',
+      id: 15956,
+      'percentile': {
+        'percentile_allegation_civilian': '7.7000',
+        'percentile_allegation_internal': '8.8000',
+        'percentile_trr': '9.9000'
+      }
+    },
+    {
+      'full_name': 'Thomas Kampenga',
+      id: 14045,
+      'percentile': {
+        'percentile_allegation_civilian': '10.10000',
+        'percentile_allegation_internal': '11.1100',
+        'percentile_trr': '12.1200'
+      }
+    },
+    {
+      'full_name': 'Melvin Ector',
+      id: 31945,
+      'percentile': {
+        'percentile_allegation_civilian': '13.1300',
+        'percentile_allegation_internal': '14.1400',
+        'percentile_trr': '15.1500'
+      }
+    },
+    {
+      'full_name': 'Sean Brandon',
+      id: 2671,
+      'percentile': {
+        'percentile_allegation_civilian': '16.1600',
+        'percentile_allegation_internal': '17.1700',
+        'percentile_trr': '18.1800'
+      }
+    },
+    {
+      'full_name': 'Estella Perez-Stanford',
+      id: 22297,
+      'percentile': {
+        'percentile_allegation_civilian': '19.1900',
+        'percentile_allegation_internal': '20.2000',
+        'percentile_trr': '21.2100'
+      }
+    },
+    {
+      'full_name': 'Johnny Cavers',
+      id: 4269,
+      'percentile': {
+        'percentile_allegation_civilian': '22.2200',
+        'percentile_allegation_internal': '23.2300',
+        'percentile_trr': '24.2400'
+      }
+    },
+    {
+      'full_name': 'Gilbert Cobb',
+      id: 4881,
+      'percentile': {
+        'percentile_allegation_civilian': '25.2500',
+        'percentile_allegation_internal': '26.2600',
+        'percentile_trr': '27.2700'
+      }
+    },
+    {
+      'full_name': 'John Hart',
+      id: 11580,
+      'percentile': {
+        'percentile_allegation_civilian': '28.2800',
+        'percentile_allegation_internal': '29.2900',
+        'percentile_trr': '30.3000'
+      }
+    },
+    {
+      'full_name': 'William Roberison',
+      id: 24157,
+      'percentile': {
+        'percentile_allegation_civilian': '31.3100',
+        'percentile_allegation_internal': '32.3200',
+        'percentile_trr': '33.3300'
+      }
+    },
+    {
+      'full_name': 'Francis Higgins',
+      id: 12176,
+      'percentile': {
+        'percentile_allegation_civilian': '34.3400',
+        'percentile_allegation_internal': '35.3500',
+        'percentile_trr': '36.3600'
+      }
+    },
+    {
+      'full_name': 'David Portis',
+      id: 22861,
+      'percentile': {
+        'percentile_allegation_civilian': '37.3700',
+        'percentile_allegation_internal': '38.3800',
+        'percentile_trr': '39.3900'
+      }
+    },
+    {
+      'full_name': 'Eugene Offett',
+      id: 21194,
+      'percentile': {
+        'percentile_allegation_civilian': '40.4000',
+        'percentile_allegation_internal': '41.4100',
+        'percentile_trr': '42.4200'
+      }
+    },
+    {
+      'full_name': 'Joseph Blaye',
+      id: 2171,
+      'percentile': {
+        'percentile_allegation_civilian': '43.4300',
+        'percentile_allegation_internal': '44.4400',
+        'percentile_trr': '45.4500'
+      }
+    },
+    {
+      'full_name': 'Charles Toussas',
+      id: 28805,
+      'percentile': {
+        'percentile_allegation_civilian': '46.4600',
+        'percentile_allegation_internal': '47.4700',
+        'percentile_trr': '48.4800'
+      }
+    },
+    {
+      'full_name': 'Bennie Watson',
+      id: 30209,
+      'percentile': {
+        'percentile_allegation_civilian': '49.4900',
+        'percentile_allegation_internal': '50.5000',
+        'percentile_trr': '51.5100'
+      }
+    },
+    {
+      'full_name': 'Tracy Hughes',
+      id: 12737,
+      'percentile': {
+        'percentile_allegation_civilian': '52.5200',
+        'percentile_allegation_internal': '53.5300',
+        'percentile_trr': '54.5400'
+      }
+    },
+    {
+      'full_name': 'Donnell Calhoun',
+      id: 3663,
+      'percentile': {
+        'percentile_allegation_civilian': '55.5500',
+        'percentile_allegation_internal': '56.5600',
+        'percentile_trr': '57.5700'
+      }
+    },
+    {
+      'full_name': 'Hardy White',
+      id: 30466,
+      'percentile': {
+        'percentile_allegation_civilian': '58.5800',
+        'percentile_allegation_internal': '59.5900',
+        'percentile_trr': '60.6000'
+      }
+    },
+    {
+      'full_name': 'Matthew Brandon',
+      id: 2675,
+      'percentile': {
+        'percentile_allegation_civilian': '61.6100',
+        'percentile_allegation_internal': '62.6200',
+        'percentile_trr': '63.6300'
+      }
+    },
   ],
   'coaccused_data': [
     { 'officer_id_1': 2675, 'officer_id_2': 24157, 'incident_date': '1990-01-09T00:00:00Z', 'accussed_count': 2 },
@@ -417,95 +577,106 @@ const socialGraphBigData = {
   ],
 };
 
-const geographicData = [
-  {
-    'date': '2008-05-27',
-    'crid': '1016899',
-    'category': 'Illegal Search',
-    'coaccused_count': 13,
-    'kind': 'CR',
-    'victims': [
-      {
-        'gender': 'Female',
-        'race': 'Black'
+const geographicCrsData = {
+  count: 5,
+  limit: 200,
+  results: [
+    {
+      'date': '2008-05-27',
+      'crid': '1016899',
+      'category': 'Illegal Search',
+      'coaccused_count': 13,
+      'kind': 'CR',
+      'victims': [
+        {
+          'gender': 'Female',
+          'race': 'Black'
+        },
+        {
+          'gender': 'Female',
+          'race': 'Black'
+        }
+      ]
+    },
+    {
+      'date': '1981-05-31',
+      'crid': 'C147074',
+      'category': 'Use Of Force',
+      'coaccused_count': 3,
+      'kind': 'CR',
+      'point': {
+        'lon': -87.6183565,
+        'lat': 41.8095411
       },
-      {
-        'gender': 'Female',
-        'race': 'Black'
+      'victims': []
+    },
+    {
+      'date': '1981-05-31',
+      'crid': 'C147074',
+      'category': 'Use Of Force',
+      'coaccused_count': 3,
+      'kind': 'CR',
+      'point': {
+        'lon': -87.6183565,
+        'lat': 41.8095411
+      },
+      'victims': []
+    },
+    {
+      'date': '1986-02-15',
+      'crid': 'C150021',
+      'category': 'Drug / Alcohol Abuse',
+      'coaccused_count': 1,
+      'kind': 'CR',
+      'point': {
+        'lon': -87.6276846,
+        'lat': 41.8683196
+      },
+      'victims': []
+    },
+    {
+      'date': '1987-05-21',
+      'crid': 'C156113',
+      'category': 'False Arrest',
+      'coaccused_count': 4,
+      'kind': 'CR',
+      'point': {
+        'lon': -87.705456,
+        'lat': 41.873988
+      },
+      'victims': []
+    },
+  ]
+};
+
+const geographicTrrsData = {
+  count: 2,
+  limit: 200,
+  results: [
+    {
+      'trr_id': 2188,
+      'date': '2004-07-03',
+      'kind': 'FORCE',
+      'taser': false,
+      'firearm_used': false,
+      'point': {
+        'lon': -87.613242,
+        'lat': 41.6445969
       }
-    ]
-  },
-  {
-    'date': '1981-05-31',
-    'crid': 'C147074',
-    'category': 'Use Of Force',
-    'coaccused_count': 3,
-    'kind': 'CR',
-    'point': {
-      'lon': -87.6183565,
-      'lat': 41.8095411
     },
-    'victims': []
-  },
-  {
-    'date': '1981-05-31',
-    'crid': 'C147074',
-    'category': 'Use Of Force',
-    'coaccused_count': 3,
-    'kind': 'CR',
-    'point': {
-      'lon': -87.6183565,
-      'lat': 41.8095411
+    {
+      'trr_id': 6238,
+      'date': '2005-01-21',
+      'kind': 'FORCE',
+      'taser': false,
+      'firearm_used': false,
+      'point': {
+        'lon': -87.6013364,
+        'lat': 41.6936152
+      }
     },
-    'victims': []
-  },
-  {
-    'date': '1986-02-15',
-    'crid': 'C150021',
-    'category': 'Drug / Alcohol Abuse',
-    'coaccused_count': 1,
-    'kind': 'CR',
-    'point': {
-      'lon': -87.6276846,
-      'lat': 41.8683196
-    },
-    'victims': []
-  },
-  {
-    'date': '1987-05-21',
-    'crid': 'C156113',
-    'category': 'False Arrest',
-    'coaccused_count': 4,
-    'kind': 'CR',
-    'point': {
-      'lon': -87.705456,
-      'lat': 41.873988
-    },
-    'victims': []
-  },
-  {
-    'trr_id': 2188,
-    'date': '2004-07-03',
-    'kind': 'FORCE',
-    'taser': false,
-    'firearm_used': false,
-    'point': {
-      'lon': -87.613242,
-      'lat': 41.6445969
-    }
-  },
-  {
-    'trr_id': 6238,
-    'date': '2005-01-21',
-    'kind': 'FORCE',
-    'taser': false,
-    'firearm_used': false,
-    'point': {
-      'lon': -87.6013364,
-      'lat': 41.6936152
-    }
-  },
-];
+  ]
+};
 
 const updatePinboardTitleParams = {
   'title': 'Updated Title',
@@ -673,7 +844,8 @@ module.exports = {
   pinboardTRRsData,
   socialGraphData,
   socialGraphBigData,
-  geographicData,
+  geographicCrsData,
+  geographicTrrsData,
   baseRelevantDocumentsUrl,
   baseRelevantCoaccusalsUrl,
   baseRelevantComplaintsUrl,

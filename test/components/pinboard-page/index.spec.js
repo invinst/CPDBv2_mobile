@@ -9,7 +9,7 @@ import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
 import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
 import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import SearchBar from 'components/pinboard-page/search-bar';
-import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section/index';
+import { PinboardPaneSectionWithSpinner } from 'components/pinboard-page/pinboard-pane-section';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
 import Footer from 'components/footer';
 import EmptyPinboardPage from 'components/pinboard-page/empty-pinboard';
@@ -110,7 +110,7 @@ describe('<PinboardPage />', function () {
       </Provider>
     );
 
-    wrapper.find(PinboardPaneSection).should.have.length(1);
+    wrapper.find(PinboardPaneSectionWithSpinner).should.have.length(1);
   });
 
   it('should render EmptyPinboard instead of pinboard contents if pinboard is empty', function () {
@@ -152,7 +152,7 @@ describe('<PinboardPage />', function () {
 
     wrapper.getDOMNode().className.should.containEql('empty');
 
-    wrapper.find(PinboardPaneSection).should.have.length(0);
+    wrapper.find(PinboardPaneSectionWithSpinner).should.have.length(0);
     wrapper.find('.pinboard-title').should.have.length(0);
     wrapper.find('.pinboard-description').should.have.length(0);
     wrapper.find(RelevantSectionContainer).should.have.length(0);
