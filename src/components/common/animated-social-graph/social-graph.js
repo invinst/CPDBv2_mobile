@@ -278,10 +278,9 @@ export default class SocialGraph extends Component {
     // bounded graph
     this.node.attr('cx', (d) => {
       return d.x = Math.max(RADIUS, Math.min(this.width - RADIUS, d.x || 0));
-    })
-      .attr('cy', (d) => {
-        return d.y = Math.max(RADIUS, Math.min(this.height - RADIUS, d.y || 0));
-      });
+    }).attr('cy', (d) => {
+      return d.y = Math.max(RADIUS, Math.min(this.height - RADIUS, d.y || 0));
+    });
 
     if (this.props.collideNodes) {
       this.node.each(this.cluster(60 * e.alpha * e.alpha))

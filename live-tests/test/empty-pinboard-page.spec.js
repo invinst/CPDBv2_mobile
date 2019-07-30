@@ -125,7 +125,7 @@ describe('Empty Pinboard Page', function () {
 
     this.emptyPinboardPage = client.page.emptyPinboardPage();
     this.emptyPinboardPage.navigate(this.emptyPinboardPage.url(emptyPinboardId));
-    client.waitForElementVisible('body', TIMEOUT);
+    this.emptyPinboardPage.expect.element('@body').to.be.present;
     done();
   });
 

@@ -1,6 +1,6 @@
 import { browserHistory } from 'react-router';
 
-import { getPinboard, generatePinboardUrl } from 'selectors/pinboard-page/pinboard';
+import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import {
   PINBOARD_FETCH_REQUEST_SUCCESS,
   fetchPinboard,
@@ -19,6 +19,7 @@ import {
   fetchPinboardRelevantComplaints
 } from 'actions/pinboard';
 import loadPaginatedData from 'utils/load-paginated-data';
+import { generatePinboardUrl } from 'utils/pinboard';
 
 const pinboardPageUrlPattern = /.*\/pinboard\/([a-fA-F0-9]+)\/.*/;
 

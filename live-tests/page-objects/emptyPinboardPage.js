@@ -9,6 +9,7 @@ module.exports = {
   },
 
   elements: {
+    body: 'body',
     title: '.empty-pinboard-title',
     description: '.empty-pinboard-description',
     firstExamplePinboardRow: nthExamplePinboardRow(1),
