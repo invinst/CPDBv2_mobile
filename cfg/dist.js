@@ -39,7 +39,10 @@ let config = Object.assign({}, baseConfig, {
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html.template',
-      filename: '../index.html'
+      filename: '../index.html',
+      templateParameters: {
+        'DISABLE_SEARCH_INDEX': process.env.WEBPACK_ENV === 'staging',
+      },
     }),
   ],
   module: defaultSettings.getDefaultModules()
