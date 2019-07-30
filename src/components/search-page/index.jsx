@@ -164,7 +164,7 @@ export default class SearchPage extends Component {
         <div
           className={ style.sticky }
           id='search-page-header'
-          >
+        >
 
           <div className='input-container'>
             <ClearableInput
