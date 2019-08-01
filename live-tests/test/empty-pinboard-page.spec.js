@@ -4,6 +4,7 @@ var _ = require('lodash');
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationResponse');
+var pinboardMockData = require(__dirname + '/../mock-data/pinboard-page');
 
 
 const generateRelevantDocument = (id) => ({
@@ -109,6 +110,10 @@ const copyOfWattsPinboard = {
   'trr_ids': [],
 };
 
+function mockCMS() {
+  api.mock('GET', '/api/v2/cms-pages/pinboard-page/', 200, pinboardMockData.mockCMSPinboardPage);
+}
+
 describe('Empty Pinboard Page', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
@@ -116,6 +121,7 @@ describe('Empty Pinboard Page', function () {
     mockPinboard(emptyPinboardId, emptyPinboard);
     mockPinboard(skullcapPinboardId, copyOfSkullcapPinboard);
     mockPinboard(wattsPinboardId, copyOfWattsPinboard);
+    mockCMS();
 
     this.emptyPinboardPage = client.page.emptyPinboardPage();
     this.emptyPinboardPage.navigate(this.emptyPinboardPage.url(emptyPinboardId));

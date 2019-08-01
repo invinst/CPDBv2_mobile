@@ -2,19 +2,16 @@ import React, { PropTypes, Component } from 'react';
 
 import styles from './empty-pinboard.sass';
 import ExamplePinboardLink from 'components/pinboard-page/empty-pinboard/example-pinboard-link';
+import CMSContent from 'components/common/cms-content';
 
 
-export default class EmptyPinboardPage extends Component {
+export default class EmptyPinboard extends Component {
   render() {
-    const { examplePinboards } = this.props;
+    const { examplePinboards, emptyPinboardTitle, emptyPinboardDescription } = this.props;
     return (
       <div className={ styles.emptyPinboard }>
-        <div className='empty-pinboard-title'>Get started</div>
-        <div className='empty-pinboard-description'>
-          Use search to find officers and individual complaint records and
-          press the plus button to add cards to your pinboard.<br/><br/>
-          Come back to the pinboard to give it a title and see a network map or discover relevant documents.
-        </div>
+        <CMSContent className='empty-pinboard-title' content={ emptyPinboardTitle }/>
+        <CMSContent className='empty-pinboard-description' content={ emptyPinboardDescription }/>
         { examplePinboards.map(pinboard => (
           <ExamplePinboardLink
             key={ pinboard.id }
@@ -30,6 +27,8 @@ export default class EmptyPinboardPage extends Component {
   }
 }
 
-EmptyPinboardPage.propTypes = {
+EmptyPinboard.propTypes = {
   examplePinboards: PropTypes.array,
+  emptyPinboardTitle: PropTypes.object,
+  emptyPinboardDescription: PropTypes.object,
 };
