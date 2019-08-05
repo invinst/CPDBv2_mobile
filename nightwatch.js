@@ -12,11 +12,11 @@ var spawn = require('cross-spawn');
 
 const server = new WebpackDevServer(webpack(config), config.devServer);
 
-server.listen(config.port, 'localhost', (err) => {
+server.listen(config.devServer.port, 'localhost', (err) => {
   if (err) {
     console.log(err);
   }
-  console.log('Listening at localhost:' + config.port);
+  console.log('Listening at localhost:' + config.devServer.port);
   console.log('Opening your system browser...');
 });
 

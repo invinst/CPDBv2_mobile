@@ -6,7 +6,6 @@ let baseConfig = require('./base');
 let defaultSettings = require('./defaults');
 
 // Add needed plugins here
-let BowerWebpackPlugin = require('bower-webpack-plugin');
 
 let envarPlugin = new webpack.DefinePlugin({
   'ENV_VARS': {
@@ -32,23 +31,17 @@ let config = Object.assign({}, baseConfig, {
   devtool: 'eval-source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new BowerWebpackPlugin({
-      searchResolveModulesDirectories: false
-    }),
+    new webpack.NoEmitOnErrorsPlugin(),
     envarPlugin
   ],
   module: defaultSettings.getDefaultModules()
 });
 
-// Add needed loaders to the defaults here
-config.module.loaders.push({
+// Add needed rules to the defaults here
+config.module.rules.push({
   test: /\.(js|jsx)$/,
-  loader: 'react-hot!babel-loader',
-  include: [].concat(
-    config.additionalPaths,
-    [path.join(__dirname, '/../src')]
-  )
+  use: ['react-hot-loader', 'babel-loader'],
+  include: [path.join(__dirname, '/../src')]
 });
 
 module.exports = config;
