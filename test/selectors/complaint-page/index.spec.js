@@ -89,7 +89,7 @@ describe('complaint-page selectors', () => {
               'crid': '307389',
               'coaccused': [
                 {
-                  'category': 'Operation\/Personnel Violations',
+                  'category': 'Operation/Personnel Violations',
                   'final_outcome': 'Penalty Not Served',
                   'full_name': 'Jerome Finnigan',
                   'allegation_count': 1,
@@ -154,7 +154,7 @@ describe('complaint-page selectors', () => {
         'crid': '307389',
         'coaccused': [
           {
-            'category': 'Operation\/Personnel Violations',
+            'category': 'Operation/Personnel Violations',
             'finalFinding': 'Sustained',
             'finalOutcome': 'Penalty Not Served',
             'fullName': 'Jerome Finnigan',

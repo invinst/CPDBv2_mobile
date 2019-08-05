@@ -101,7 +101,7 @@ export default class SearchPage extends Component {
           saveToRecent={ this.props.saveToRecent }
           updateActiveCategory={ this.props.updateActiveCategory }
           activeCategory={ this.props.activeCategory }
-          />
+        />
       );
 
       if (index === lastIndex) {

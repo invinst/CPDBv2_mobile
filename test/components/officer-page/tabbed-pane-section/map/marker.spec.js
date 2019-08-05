@@ -9,6 +9,6 @@ describe('Marker component', function () {
 
   it('should render marker component', function () {
     wrapper = mount(<Marker id={ '123' } kind={ 'CR' } finding={ 'Sustained' }/>);
-    wrapper.find('.test--marker').should.have.length(1)
+    wrapper.find('.test--marker').should.have.length(1);
   });
 });

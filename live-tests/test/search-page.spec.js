@@ -1,5 +1,5 @@
 'use strict';
-var api = require(__dirname + '/../mock-api');
+const api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 
 const mockSuggestionResponse = {

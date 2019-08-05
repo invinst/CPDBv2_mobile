@@ -1,10 +1,9 @@
 import { getActionTypes } from 'redux-axios-middleware';
 
-import { onSuccess, onError, getErrorMessage } from 'middleware/configured-axios-middleware';
+import { onSuccess, onError } from 'middleware/configured-axios-middleware';
 
 describe('configured-axios-middleware', function () {
   const next = (action) => (action);
-  const requestUrl = '/request-url';
   const action = {
     type: 'REQUEST',
     payload: {

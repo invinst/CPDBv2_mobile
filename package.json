@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "dist": "WEBPACK_ENV=${WEBPACK_ENV:-production} SASS_PATH=./src/styles webpack --env=dist --bail",
-    "lint": "eslint ./src --ext .jsx --ext .js",
+    "lint": "eslint ./src ./test ./live-tests --ext .jsx --ext .js",
     "posttest": "npm run lint",
     "release:major": "npm version major && npm publish && git push --follow-tags",
     "release:minor": "npm version minor && npm publish && git push --follow-tags",

@@ -44,7 +44,7 @@ describe('<SearchPage />', function () {
         any={ { isShowingAll: false } }
         inputChanged={ () => {} }
         activeCategory='any'
-       />
+      />
     );
 
     const navbar = wrapper.find('SearchNavbar');
@@ -64,7 +64,7 @@ describe('<SearchPage />', function () {
           officers={ { data: [1] } }
           undefined={ { data: [1] } }
           inputChanged={ () => {} }
-         />
+        />
       );
       const instance = wrapper.instance();
 

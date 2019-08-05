@@ -1,8 +1,7 @@
 'use strict';
 
-var assert = require('assert');
-var api = require(__dirname + '/../mock-api');
-const { TIMEOUT } = require(__dirname + '/../constants');
+const assert = require('assert');
+const api = require(__dirname + '/../mock-api');
 
 const mockLandingPageCms = {
   fields: [
