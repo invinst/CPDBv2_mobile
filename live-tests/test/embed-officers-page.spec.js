@@ -50,7 +50,7 @@ describe('EmbedOfficerPage', function () {
     this.embedOfficersPage.navigate(
       this.embedOfficersPage.url('?ids=13788,8658&title=Some%20title&description=Some%20description')
     );
-    client.waitForElementVisible('body', TIMEOUT);
+    this.embedOfficersPage.expect.element('@body').to.be.present;
     done();
   });
 

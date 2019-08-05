@@ -104,6 +104,7 @@ module.exports = {
   },
 
   elements: {
+    body: 'body',
     officerName: '.officer-name',
     mapTabButton: {
       selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[2]',

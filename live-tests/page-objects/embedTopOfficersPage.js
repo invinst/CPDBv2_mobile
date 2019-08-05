@@ -12,6 +12,7 @@ module.exports = {
     return `${this.api.globals.clientUrl}/embed/top-officers-page`;
   },
   elements: {
+    body: 'body',
     firstCard: nthOfficerCard(1),
   },
   sections: {

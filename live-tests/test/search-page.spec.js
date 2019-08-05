@@ -132,7 +132,7 @@ describe('SearchPageTest', function () {
     this.searchPage = client.page.search();
     this.officerPage = client.page.officerPage();
     this.searchPage.navigate();
-    client.waitForElementVisible('body', TIMEOUT);
+    this.searchPage.expect.element('@body').to.be.present;
     done();
   });
 
@@ -159,11 +159,11 @@ describe('SearchPageTest', function () {
   });
 
   it('should show recent items', function () {
-    this.searchPage.section.suggested.section.officer.click();
+    this.searchPage.section.suggested.section.officer.click('@value');
     // this officer item should now be added into "recent" list
     this.searchPage.navigate();
     this.searchPage.expect.element('@recentHeader').to.be.present;
-    this.searchPage.expect.section('@recent').text.to.contain('How accurate is the data?');
+    this.searchPage.expect.section('@recent').text.to.contain('John Tobler');
   });
 
   context('search for wh', function () {
@@ -192,8 +192,8 @@ describe('SearchPageTest', function () {
 
     it('should navigate to officer summary page when tapped', function (client) {
       this.searchPage.setValue('@queryInput', 'wh');
-      this.searchPage.section.officers.section.firstRow.click();
-      client.assert.urlEquals(this.officerPage.url(9876));
+      this.searchPage.section.officers.section.firstRow.click('@officerName');
+      client.assert.urlContains(this.officerPage.url(9876));
     });
   });
 

@@ -96,8 +96,8 @@ describe('ComplaintPageTest', function () {
       { 'message': 'Sorry, we can not subscribe your email' }
     );
     this.complaintPage = client.page.complaintPage();
-    client.url(`${client.globals.clientUrl}/complaint/1053667/`);
-    client.waitForElementVisible('body');
+    this.complaintPage.navigate(this.complaintPage.url('1053667'));
+    this.complaintPage.expect.element('@body').to.be.present;
     done();
   });
 
@@ -128,7 +128,7 @@ describe('ComplaintPageTest', function () {
     firstCoaccusal.expect.element('@findingOutcome').text.to.contain('Sustained');
   });
 
-  it('should show proper cr info', function () {
+  it('should show proper cr info', function (client) {
     this.complaintPage.expect.element('@victims').text.to.contain('Black, Male, Age 45');
     this.complaintPage.expect.element('@complainants').text.to.contain('White, Male, Age 57');
     this.complaintPage.expect.element('@summary').text.to.contain('summary');

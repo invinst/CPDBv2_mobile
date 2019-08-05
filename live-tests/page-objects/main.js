@@ -3,6 +3,7 @@ module.exports = {
     return this.api.globals.clientUrl;
   },
   elements: {
+    body: 'body',
     title: '.site-title',
     searchLink: 'a[href="/search/"]',
   },

@@ -90,7 +90,7 @@ describe('EmbedTopOfficerPage', function () {
     api.mock('GET', '/api/v2/officers/top-by-allegation/', 200, mockTopByAllegation);
     this.embedTopOfficersPage = client.page.embedTopOfficersPage();
     this.embedTopOfficersPage.navigate();
-    client.waitForElementVisible('body', TIMEOUT);
+    this.embedTopOfficersPage.expect.element('@body').to.be.present;
     done();
   });
 

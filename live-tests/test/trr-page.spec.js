@@ -50,7 +50,7 @@ describe('TRRPageTest', function () {
     );
     this.trrPage = client.page.trrPage();
     this.trrPage.navigate(this.trrPage.url(781));
-    client.waitForElementVisible('body', TIMEOUT);
+    this.trrPage.expect.element('@body').to.be.present;
     done();
   });
 

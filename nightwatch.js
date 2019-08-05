@@ -23,7 +23,7 @@ server.listen(config.port, 'localhost', (err) => {
 var opts = process.argv.slice(2);
 
 if (opts.indexOf('--config') === -1) {
-  opts = opts.concat(['--config', 'nightwatch.conf.js']);
+  opts = opts.concat(['--config', 'nightwatch.json']);
 }
 
 var runner = spawn('./node_modules/.bin/nightwatch', opts, { stdio: 'inherit' });
