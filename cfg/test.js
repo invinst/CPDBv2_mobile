@@ -3,8 +3,6 @@
 let path = require('path');
 let srcPath = path.join(__dirname, '/../src/');
 
-let baseConfig = require('./base');
-
 module.exports = {
   mode: 'development',
   devtool: 'eval',
@@ -12,11 +10,14 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        enforce: 'pre',
-        use: ['isparta-instrumenter-loader'],
         include: [
           path.join(__dirname, '/../src')
-        ]
+        ],
+        use: {
+          loader: 'istanbul-instrumenter-loader',
+          options: { esModules: true }
+        },
+        enforce: 'pre',
       },
       {
         test: /\.(js|jsx)$/,
