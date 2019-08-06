@@ -6,6 +6,7 @@ let srcPath = path.join(__dirname, '/../src/');
 let baseConfig = require('./base');
 
 module.exports = {
+  mode: 'development',
   devtool: 'eval',
   module: {
     rules: [

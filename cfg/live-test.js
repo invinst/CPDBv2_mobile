@@ -10,6 +10,7 @@ let defaultSettings = require('./defaults');
 const port = 9001;
 
 let config = Object.assign({}, baseConfig, {
+  mode: 'development',
   entry: [
     'babel-polyfill',
     'webpack-dev-server/client?http://127.0.0.1:' + port,

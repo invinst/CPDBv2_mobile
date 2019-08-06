@@ -21,9 +21,6 @@ let config = Object.assign({}, baseConfig, {
   cache: false,
   plugins: [
     new CleanWebpackPlugin(['dist'], { root: path.join(__dirname, '../') }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
-    }),
     new CopyWebpackPlugin([
       { from: 'src/img', to: 'img' },
       { from: 'src/static', to: 'static' }
@@ -34,9 +31,7 @@ let config = Object.assign({}, baseConfig, {
         context: path.join(__dirname, '/../')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({ sourceMap: true, compress: { warnings: true } }),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html.template',
       filename: '../index.html',

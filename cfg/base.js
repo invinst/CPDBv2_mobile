@@ -10,6 +10,7 @@ let defaultSettings = require('./defaults');
 let additionalPaths = [];
 
 module.exports = {
+  mode: 'production',
   devtool: 'eval',
   output: {
     path: path.join(__dirname, '/../dist/assets'),

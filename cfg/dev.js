@@ -14,6 +14,7 @@ let envarPlugin = new webpack.DefinePlugin({
 });
 
 let config = Object.assign({}, baseConfig, {
+  mode: 'development',
   entry: [
     'webpack-dev-server/client?http://127.0.0.1:' + defaultSettings.port,
     'webpack/hot/only-dev-server',
