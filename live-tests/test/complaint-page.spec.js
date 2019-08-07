@@ -128,7 +128,7 @@ describe('ComplaintPageTest', function () {
     firstCoaccusal.expect.element('@findingOutcome').text.to.contain('Sustained');
   });
 
-  it('should show proper cr info', function (client) {
+  it('should show proper cr info', function () {
     this.complaintPage.expect.element('@victims').text.to.contain('Black, Male, Age 45');
     this.complaintPage.expect.element('@complainants').text.to.contain('White, Male, Age 57');
     this.complaintPage.expect.element('@summary').text.to.contain('summary');

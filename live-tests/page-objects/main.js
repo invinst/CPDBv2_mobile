@@ -1,6 +1,6 @@
 module.exports = {
   url: function () {
-    return this.api.globals.clientUrl;
+    return `${this.api.globals.clientUrl}/`;
   },
   elements: {
     body: 'body',
