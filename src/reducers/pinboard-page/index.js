@@ -11,6 +11,7 @@ import crItems from './cr-items';
 import trrItems from './trr-items';
 import pinboard from './pinboard';
 import initialRequested from './initial-requested';
+import cms from './cms';
 
 
 export default combineReducers({
@@ -25,4 +26,5 @@ export default combineReducers({
   crItems,
   trrItems,
   initialRequested,
+  cms,
 });

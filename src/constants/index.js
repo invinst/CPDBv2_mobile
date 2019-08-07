@@ -207,6 +207,7 @@ export default {
   OFFICER_PAGE_CMS_API_ENDPOINT: '/cms-pages/officer-page/',
   COMPLAINT_PAGE_CMS_API_ENDPOINT: '/cms-pages/cr-page/',
   TRR_PAGE_CMS_API_ENDPOINT: '/cms-pages/trr-page/',
+  PINBOARD_PAGE_CMS_API_ENDPOINT: '/cms-pages/pinboard-page/',
   COMPLAINT_API_ENDPOINT: '/mobile/cr/',
   TRR_API_ENDPOINT: '/mobile/trr/',
   TOP_OFFICERS_BY_ALLEGATION_ENDPOINT: '/officers/top-by-allegation/',

@@ -3,6 +3,7 @@ import ReactHeight from 'react-height';
 import { toast, cssTransition } from 'react-toastify';
 import { browserHistory } from 'react-router';
 import { isEmpty, noop } from 'lodash';
+import cx from 'classnames';
 
 import constants from 'constants';
 import { goUp } from 'utils/navigation-util';
@@ -147,20 +148,6 @@ export default class SearchPage extends Component {
     });
   }
 
-  calculateDynamicBottomPaddingStyle() {
-    const lastCategoryHeight = this.lastCategoryHeight || 0;
-    const dynamicBottomPaddingOffset = (
-      constants.QUERY_INPUT_HEIGHT +
-      constants.SEARCH_CATEGORY_LINKS_HEIGHT +
-      2 * constants.NEW_DIVIDER_WEIGHT +
-      lastCategoryHeight
-    );
-    const height = Math.max(constants.BOTTOM_PADDING, window.innerHeight - dynamicBottomPaddingOffset);
-    return {
-      height: `${height}px`
-    };
-  }
-
   handleEmptyPinboardButtonClick() {
     const { createPinboard } = this.props;
 
@@ -175,7 +162,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query, chosenCategory, router, pinboard } = this.props;
+    const { query, chosenCategory, router, pinboard, inputChanged } = this.props;
     let categories;
 
     if (!this.isLongEnoughQuery(query)) {
@@ -211,14 +198,14 @@ export default class SearchPage extends Component {
             <ClearableInput
               ref={ (instance) => { this.searchInput = instance; } }
               className='query-input'
-              value={ this.props.query }
+              value={ query }
               placeholder='Search'
               onChange={ (e) => { this.onInputChange(e); } }
-              onClear={ () => { this.props.inputChanged(''); } }
+              onClear={ () => { inputChanged(''); } }
             />
 
             <button
-              className='bt-cancel'
+              className={ cx('bt-cancel', { 'active': query !== '' } ) }
               onClick={ goUp.bind(this, router, window.location.pathname) }>
               Cancel
             </button>
@@ -233,7 +220,7 @@ export default class SearchPage extends Component {
           { this.renderCategories(categories) }
         </div>
 
-        <div style={ this.calculateDynamicBottomPaddingStyle() } className='bottom-padding'/>
+        <a className='back-to-front-page-link' href='/'>Back to Front Page</a>
       </div>
     );
   }

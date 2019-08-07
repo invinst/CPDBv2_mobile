@@ -1,12 +1,17 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { Link } from 'react-router';
+import { shallow } from 'enzyme';
+import { stub } from 'sinon';
 
 import EmptyPinboard from 'components/pinboard-page/empty-pinboard';
+import ExamplePinboardLink from 'components/pinboard-page/empty-pinboard/example-pinboard-link';
+import CMSContent from 'components/common/cms-content';
 
 
 describe('EmptyPinboard component', function () {
   it('should have enough contents', function () {
+    const emptyPinboardTitleStub = stub();
+    const emptyPinboardDescriptionStub = stub();
+
     const examplePinboards = [{
       id: '66ef1561',
       title: 'Pinboard 1',
@@ -17,30 +22,31 @@ describe('EmptyPinboard component', function () {
       description: 'Description 2'
     }];
 
-    const wrapper = mount(
-      <EmptyPinboard examplePinboards={ examplePinboards }/>
+    const wrapper = shallow(
+      <EmptyPinboard
+        examplePinboards={ examplePinboards }
+        emptyPinboardTitle={ emptyPinboardTitleStub }
+        emptyPinboardDescription={ emptyPinboardDescriptionStub }
+      />
     );
 
-    wrapper.find('.empty-pinboard-title').text().should.equal('Get started');
-    wrapper.find('.empty-pinboard-description').text().should.containEql(
-      'Use search to find officers and individual complaint records ' +
-      'and press the plus button to add cards to your pinboard.'
-    ).and.containEql(
-      'Come back to the pinboard to give it a title and see a network map or discover relevant documents.'
-    );
+    const cmsContents = wrapper.find(CMSContent);
+    cmsContents.at(0).prop('content').should.eql(emptyPinboardTitleStub);
+    cmsContents.at(0).prop('className').should.eql('empty-pinboard-title');
+    cmsContents.at(1).prop('content').should.eql(emptyPinboardDescriptionStub);
+    cmsContents.at(1).prop('className').should.eql('empty-pinboard-description');
 
-    const examplePinboardLinks = wrapper.find(Link);
+    const examplePinboardLinks = wrapper.find(ExamplePinboardLink);
     examplePinboardLinks.should.have.length(2);
 
-    examplePinboardLinks.at(0).prop('to').should.equal('/pinboard/66ef1561/');
-    examplePinboardLinks.at(0).find('.title').text().should.equal('Pinboard 1');
-    examplePinboardLinks.at(0).find('.description').text().should.equal('Description 1…');
+    const firstExamplePinboardLinks = examplePinboardLinks.at(0);
+    firstExamplePinboardLinks.prop('id').should.equal('66ef1561');
+    firstExamplePinboardLinks.prop('title').should.equal('Pinboard 1');
+    firstExamplePinboardLinks.prop('description').should.equal('Description 1');
 
-    examplePinboardLinks.at(1).prop('to').should.equal('/pinboard/66ef1562/');
-    examplePinboardLinks.at(1).find('.title').text().should.equal('Pinboard 2');
-    examplePinboardLinks.at(1).find('.description').text().should.equal('Description 2…');
-
-    wrapper.find('.arrow-head').exists().should.be.true();
-    wrapper.find('.arrow-shaft').exists().should.be.true();
+    const secondExamplePinboardLinks = examplePinboardLinks.at(1);
+    secondExamplePinboardLinks.prop('id').should.equal('66ef1562');
+    secondExamplePinboardLinks.prop('title').should.equal('Pinboard 2');
+    secondExamplePinboardLinks.prop('description').should.equal('Description 2');
   });
 });
