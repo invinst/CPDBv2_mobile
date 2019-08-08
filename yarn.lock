@@ -5465,11 +5465,6 @@ jade@0.26.3:
     commander "0.6.1"
     mkdirp "0.3.0"
 
-jlouvain@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/jlouvain/-/jlouvain-2.0.0.tgz#2718f0e58911cb337ae981b9e65253c3c0606019"
-  integrity sha1-Jxjw5YkRyzN66YG55lJTw8BgYBk=
-
 js-base64@^2.1.8:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.5.1.tgz#1efa39ef2c5f7980bb1784ade4a8af2de3291121"
