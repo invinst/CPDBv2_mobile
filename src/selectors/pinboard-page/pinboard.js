@@ -1,16 +1,9 @@
-import { get, map, kebabCase, isEmpty, every } from 'lodash';
+import { get, map, isEmpty, every } from 'lodash';
 import { createSelector } from 'reselect';
 
+import { generatePinboardUrl } from 'utils/pinboard';
+
 export const getInitialRequested = state => get(state, 'pinboardPage.initialRequested', false);
-
-export const generatePinboardUrl = pinboard => {
-  if (pinboard === null || pinboard['id'] === null) {
-    return '';
-  }
-
-  const title = (pinboard['title'] !== '') ? pinboard['title'] : 'Untitled Pinboard';
-  return `/pinboard/${pinboard.id}/${kebabCase(title)}/`;
-};
 
 const countPinnedItems = pinboard => {
   if (pinboard === null) {

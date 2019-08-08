@@ -13,7 +13,7 @@ if (process.env.WEBPACK_ENV == 'live-test') {
   env = 'live-test';
 }
 
-if (!['production', 'staging'].includes(process.env.WEBPACK_ENV)) {
+if (!['production', 'beta', 'staging'].includes(process.env.WEBPACK_ENV)) {
   process.env.WEBPACK_ENV = env;
 }
 

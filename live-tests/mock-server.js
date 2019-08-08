@@ -1,18 +1,18 @@
-var express = require('express');
-var app = express();
-var cors = require('cors');
-var bodyParser = require('body-parser');
-var http = require('http');
-var nightwatchConfig = require('../nightwatch.json');
-var port = process.env.MOCK_SERVER_PORT || 9002;
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const http = require('http');
+const nightwatchConfig = require('../nightwatch.json');
+const port = process.env.MOCK_SERVER_PORT || 9002;
 
 // FIXME: Refactor the path here
-var api = require(__dirname + '/mock-api');
+const api = require(__dirname + '/mock-api');
 api.port = port;
 
 console.log(`API Server has been started at port ${port}`);
 
-var server = http.createServer(app);
+const server = http.createServer(app);
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies

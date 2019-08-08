@@ -12,6 +12,7 @@ module.exports = {
     return `${this.api.globals.clientUrl}/embed/officers/${params}`;
   },
   elements: {
+    body: 'body',
     title: '.carousel-title',
     description: '.carousel-description',
     firstCard: nthOfficerCard(1),

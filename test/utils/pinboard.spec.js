@@ -12,6 +12,11 @@ describe('pinboard utils', function () {
         id: '5cd06f2b',
         title: 'Title'
       }).should.be.equal('/pinboard/5cd06f2b/title/');
+
+      generatePinboardUrl({
+        id: '5cd06f2b',
+        title: ''
+      }).should.be.equal('/pinboard/5cd06f2b/untitled-pinboard/');
     });
   });
 });

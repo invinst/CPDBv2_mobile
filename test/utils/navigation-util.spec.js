@@ -1,6 +1,4 @@
 import React from 'react';
-import should from 'should'; // eslint-disable-line no-unused-vars
-import { mount } from 'enzyme';
 import { spy, stub, useFakeTimers } from 'sinon';
 
 import * as NavigationUtil from 'utils/navigation-util';

@@ -4,61 +4,98 @@ let path = require('path');
 const webpack = require('webpack');
 let srcPath = path.join(__dirname, '/../src/');
 
-let baseConfig = require('./base');
-
-// Add needed plugins here
-let BowerWebpackPlugin = require('bower-webpack-plugin');
-
 module.exports = {
+  mode: 'development',
   devtool: 'eval',
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'isparta-instrumenter-loader',
         include: [
           path.join(__dirname, '/../src')
+        ],
+        use: {
+          loader: 'istanbul-instrumenter-loader',
+          options: { esModules: true }
+        },
+        enforce: 'pre',
+      },
+      {
+        test: /\.(js|jsx)$/,
+        enforce: 'pre',
+        include: srcPath,
+        use: ['eslint-loader']
+      },
+      {
+        test: /\.(svg|png|jpg|gif|woff|woff2|less|styl|json)$/,
+        use: ['null-loader']
+      },
+      {
+        test: /\.(js|jsx)$/,
+        use: ['babel-loader'],
+        include: [
+          path.join(__dirname, '/../src'),
+          path.join(__dirname, '/../test')
         ]
       },
       {
-        test: /\.(js|jsx)$/,
-        include: srcPath,
-        loader: 'eslint-loader'
-      }
-    ],
-    loaders: [
-      {
-        test: /\.(svg|png|jpg|gif|woff|woff2|less|styl|json)$/,
-        loader: 'null-loader'
-      },
-      {
-        test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        include: [].concat(
-          baseConfig.additionalPaths,
-          [
-            path.join(__dirname, '/../src'),
-            path.join(__dirname, '/../test')
-          ]
-        )
-      },
-      {
         test: /\.css$/,
-        loader: 'style-loader!css-loader!postcss-loader'
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
+        ]
       },
       {
         test: /\.sass/,
-        loader: 'style-loader!css-loader?camelCase&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' +
-        '!sass-loader?outputStyle=expanded&indentedSyntax'
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: false,
+              camelCase: true,
+              localIdentName: '[name]__[local]--[hash:base64:5]',
+            }
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+              indentedSyntax: true
+            }
+          },
+        ]
       },
       {
         test: /\.scss/,
-        loader: 'style-loader!css-loader!postcss-loader!sass-loader?outputStyle=expanded'
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+            }
+          }
+        ]
       },
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     alias: {
       actions: srcPath + 'actions/',
       helpers: path.join(__dirname, '/../test/helpers'),
@@ -78,9 +115,6 @@ module.exports = {
     }
   },
   plugins: [
-    new BowerWebpackPlugin({
-      searchResolveModulesDirectories: false
-    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"test"'
     }),

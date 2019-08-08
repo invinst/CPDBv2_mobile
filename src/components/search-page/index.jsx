@@ -130,7 +130,7 @@ export default class SearchPage extends Component {
           updateActiveCategory={ this.props.updateActiveCategory }
           activeCategory={ this.props.activeCategory }
           addOrRemoveItemInPinboard={ this.props.addOrRemoveItemInPinboard }
-          />
+        />
       );
 
       if (index === lastIndex) {
@@ -192,7 +192,7 @@ export default class SearchPage extends Component {
         <div
           className={ style.sticky }
           id='search-page-header'
-          >
+        >
 
           <div className='input-container'>
             <ClearableInput

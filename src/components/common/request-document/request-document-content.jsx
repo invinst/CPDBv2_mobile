@@ -17,7 +17,7 @@ export default class RequestDocumentContent extends Component {
     const { requestDocument, id, closeModal } = this.props;
     return requestDocument({ id, email: this.refs.email.value }).then((action) => {
       this.setState({ warning: false });
-      setTimeout(closeModal, 1500);  // auto close modal if success
+      setTimeout(closeModal, 1500); // auto close modal if success
     }).catch(e => {
       this.setState({ warning: true });
     });

@@ -10,7 +10,6 @@ const baseConfig = require('./base');
 const defaultSettings = require('./defaults');
 
 // Add needed plugins here
-const BowerWebpackPlugin = require('bower-webpack-plugin');
 
 let config = Object.assign({}, baseConfig, {
   entry: './src/index',
@@ -21,39 +20,35 @@ let config = Object.assign({}, baseConfig, {
   },
   cache: false,
   plugins: [
-    new CleanWebpackPlugin('dist', { root: path.join(__dirname, '..') }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
-    }),
+    new CleanWebpackPlugin(['dist'], { root: path.join(__dirname, '../') }),
     new CopyWebpackPlugin([
       { from: 'src/img', to: 'img' },
       { from: 'src/fonts', to: 'fonts' },
       { from: 'src/static', to: 'static' }
     ]),
-    new BowerWebpackPlugin({
-      searchResolveModulesDirectories: false
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      options: {
+        context: path.join(__dirname, '/../')
+      }
     }),
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html.template',
-      filename: 'index.html'
+      filename: 'index.html',
+      templateParameters: {
+        'DISABLE_SEARCH_INDEX': process.env.WEBPACK_ENV === 'staging',
+      },
     }),
   ],
   module: defaultSettings.getDefaultModules()
 });
 
-// Add needed loaders to the defaults here
-config.module.loaders.push({
+// Add needed rules to the defaults here
+config.module.rules.push({
   test: /\.(js|jsx)$/,
-  loader: 'babel',
-  include: [].concat(
-    config.additionalPaths,
-    [path.join(__dirname, '/../src')]
-  )
+  use: ['babel-loader'],
+  include: [path.join(__dirname, '/../src')]
 });
 
 module.exports = config;
