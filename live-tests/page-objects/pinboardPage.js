@@ -97,10 +97,10 @@ module.exports = {
           },
           sections: {
             card: {
-              selector: '.test--OFFICER-section .type-cards > .pinned-grid-item',
+              selector: '.test--OFFICER-section .pinned-grid-item',
             },
             firstCard: {
-              selector: '.type-cards > .pinned-grid-item:first-child',
+              selector: '.pinned-grid-item:first-child',
               elements: {
                 mainElement: {
                   selector: '.',
@@ -118,7 +118,7 @@ module.exports = {
               },
             },
             secondCard: {
-              selector: '.type-cards > .pinned-grid-item:nth-child(2)',
+              selector: '.pinned-grid-item:nth-child(2)',
               elements: {
                 officerName: '.officer-name',
               },
@@ -132,10 +132,10 @@ module.exports = {
           },
           sections: {
             card: {
-              selector: '.test--CR-section .type-cards > .pinned-grid-item',
+              selector: '.test--CR-section .pinned-grid-item',
             },
             firstCard: {
-              selector: '.type-cards > .pinned-grid-item:first-child',
+              selector: '.pinned-grid-item:first-child',
               elements: {
                 mainElement: {
                   selector: '.',
@@ -152,10 +152,13 @@ module.exports = {
               },
             },
             secondCard: {
-              selector: '.type-cards > .pinned-grid-item:nth-child(2)',
+              selector: '.pinned-grid-item:nth-child(2)',
               elements: {
                 category: '.location-card-category',
               },
+            },
+            lastCardCategory: {
+              selector: '.test--CR-section .pinned-grid-item:last-child .location-card-category',
             },
           },
         },
@@ -166,10 +169,10 @@ module.exports = {
           },
           sections: {
             card: {
-              selector: '.test--TRR-section .type-cards > .pinned-grid-item',
+              selector: '.test--TRR-section .pinned-grid-item',
             },
             firstCard: {
-              selector: '.type-cards > .pinned-grid-item:first-child',
+              selector: '.pinned-grid-item:first-child',
               elements: {
                 mainElement: {
                   selector: '.',
