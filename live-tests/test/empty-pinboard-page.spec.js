@@ -171,3 +171,46 @@ describe('Empty Pinboard Page', function () {
     client.assert.urlContains(`/pinboard/${emptyPinboardId}/empty-pinboard/`);
   });
 });
+
+
+describe('No Id Pinboard Page', function () {
+  beforeEach(function (client, done) {
+    api.cleanMock();
+    mockCMS();
+
+    mockPinboard(emptyPinboardId, emptyPinboard);
+    mockPinboard(skullcapPinboardId, copyOfSkullcapPinboard);
+    mockPinboard(wattsPinboardId, copyOfWattsPinboard);
+
+    done();
+  });
+
+  it('should open empty pinboard page if no recent pinboard', function (client) {
+    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, emptyPinboard);
+    this.noIdPinboardPage = client.page.emptyPinboardPage();
+    this.noIdPinboardPage.navigate(this.noIdPinboardPage.url());
+    client.waitForElementVisible('body', TIMEOUT);
+
+    this.noIdPinboardPage.expect.element('@title').text.to.equal('Get started');
+    this.noIdPinboardPage.expect.element('@description').text.to.equal(
+      'Use search to find officers and individual complaint records ' +
+      'and press the plus button to add cards to your pinboard.\n\n' +
+      'Come back to the pinboard to give it a title and see a network map or discover relevant documents.'
+    );
+    this.noIdPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Watts Crew');
+    this.noIdPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Officers with at');
+    this.noIdPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('Skullcap Crew');
+    this.noIdPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('It is a nickname');
+  });
+
+  it('should open a pinboard page if it is lasted pinboard', function (client) {
+    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, copyOfSkullcapPinboard);
+    this.noIdPinboardPage = client.page.pinboardPage();
+    this.noIdPinboardPage.navigate(this.noIdPinboardPage.url());
+    client.waitForElementVisible('body', TIMEOUT);
+
+    this.noIdPinboardPage.expect.element('@searchBar').to.be.visible;
+    this.noIdPinboardPage.expect.element('@header').to.be.visible;
+    this.noIdPinboardPage.expect.element('@pinboardTitle').text.to.equal('Skullcap Crew');
+  });
+});

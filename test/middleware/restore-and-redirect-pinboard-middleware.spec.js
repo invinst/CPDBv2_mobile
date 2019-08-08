@@ -16,7 +16,8 @@ import {
   fetchFirstPagePinboardGeographicTrrs,
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
-  fetchPinboardRelevantComplaints
+  fetchPinboardRelevantComplaints,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
 } from 'actions/pinboard';
 
 
@@ -54,7 +55,28 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         dispatched.should.eql(action);
 
         store.dispatch.should.be.calledOnce();
-        store.dispatch.should.be.calledWith(fetchLatestRetrievedPinboard());
+        store.dispatch.should.be.calledWith(fetchLatestRetrievedPinboard({ create: false }));
+      }
+    );
+
+    it(
+      'should dispatch fetchLatestRetrievedPinboard with create is true ' +
+      'when LOCATION_CHANGE to pinboard page without id',
+      function () {
+        const action = {
+          type: '@@router/LOCATION_CHANGE',
+          payload: {
+            pathname: '/pinboard/'
+          }
+        };
+        const store = createStore({});
+
+        let dispatched;
+        restoreAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
+        dispatched.should.eql(action);
+
+        store.dispatch.should.be.calledOnce();
+        store.dispatch.should.be.calledWith(fetchLatestRetrievedPinboard({ create: true }));
       }
     );
 
@@ -246,6 +268,82 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
 
       const action = {
         type: PINBOARD_FETCH_REQUEST_SUCCESS,
+        payload: {
+          id: '5cd06f2b',
+          title: 'Old title'
+        }
+      };
+
+      let dispatched;
+      restoreAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      browserHistory.replace.should.not.be.called();
+      this.store.dispatch.should.not.be.called();
+    });
+  });
+
+  describe('handling PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS', function () {
+    beforeEach(function () {
+      stub(browserHistory, 'replace');
+      stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/' });
+      this.store = createStore();
+    });
+
+    afterEach(function () {
+      browserHistory.replace.restore();
+      browserHistory.getCurrentLocation.restore();
+      this.store.dispatch.resetHistory();
+    });
+
+    it('should fetch pinboard data with new id and replace location when new pinboard was returned', function () {
+      const action = {
+        type: PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
+        payload: {
+          id: '5cd06f2b',
+          title: '',
+        }
+      };
+
+      let dispatched;
+      restoreAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      browserHistory.replace.should.be.calledOnce();
+      browserHistory.replace.should.be.calledWith('/pinboard/5cd06f2b/untitled-pinboard/');
+
+      this.store.dispatch.callCount.should.equal(10);
+      this.store.dispatch.should.be.calledWith(fetchPinboardComplaints('5cd06f2b'));
+      this.store.dispatch.should.be.calledWith(fetchPinboardOfficers('5cd06f2b'));
+      this.store.dispatch.should.be.calledWith(fetchPinboardTRRs('5cd06f2b'));
+      this.store.dispatch.should.be.calledWith(fetchPinboardSocialGraph('5cd06f2b'));
+      this.store.dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicCrs({ 'pinboard_id': '5cd06f2b' }));
+      this.store.dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicTrrs({ 'pinboard_id': '5cd06f2b' }));
+      this.store.dispatch.should.be.calledWith(fetchPinboardRelevantDocuments('5cd06f2b'));
+      this.store.dispatch.should.be.calledWith(fetchPinboardRelevantCoaccusals('5cd06f2b'));
+      this.store.dispatch.should.be.calledWith(fetchPinboardRelevantComplaints('5cd06f2b'));
+    });
+
+    it('should do nothing no pinboard is returned', function () {
+      const action = {
+        type: PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
+        payload: {}
+      };
+
+      let dispatched;
+      restoreAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      browserHistory.replace.should.not.be.called();
+      this.store.dispatch.should.not.be.called();
+    });
+
+    it('should do nothing if not being on a pinboard page', function () {
+      browserHistory.getCurrentLocation.restore();
+      stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/search/' });
+
+      const action = {
+        type: PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
         payload: {
           id: '5cd06f2b',
           title: 'Old title'

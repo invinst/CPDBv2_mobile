@@ -31,6 +31,8 @@ const baseRelevantComplaints = (type) => ({
 
 module.exports = {
   url: function (pinboardId) {
+    if (!pinboardId)
+      return `${this.api.globals.clientUrl}/pinboard/`;
     return `${this.api.globals.clientUrl}/pinboard/${pinboardId}/pinboard-title/`;
   },
 

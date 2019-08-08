@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import {
   PINBOARD_FETCH_REQUEST_SUCCESS,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
   fetchPinboard,
   fetchLatestRetrievedPinboard,
   fetchPinboardComplaints,
@@ -57,12 +58,12 @@ export default store => next => action => {
   const result = next(action);
 
   if (action.type === '@@router/LOCATION_CHANGE') {
-    const idOnPath = getPinboardID(action.payload.pathname);
-    const onPinboardPage = !!idOnPath;
+    const pathname = action.payload.pathname;
+    const idOnPath = getPinboardID(pathname);
     const state = store.getState();
     const pinboard = getPinboard(state);
 
-    if (onPinboardPage) {
+    if (idOnPath) {
       if (action.payload.action !== 'REPLACE') {
         const idOnStore = pinboard.id;
         if (idOnPath !== idOnStore) {
@@ -72,23 +73,28 @@ export default store => next => action => {
         }
       }
     } else if (!pinboard.isPinboardRestored) {
-      store.dispatch(fetchLatestRetrievedPinboard());
+      store.dispatch(fetchLatestRetrievedPinboard({ create: pathname === '/pinboard/' }));
     }
   }
 
-  if (action.type === PINBOARD_FETCH_REQUEST_SUCCESS) {
+  if (
+    action.type === PINBOARD_FETCH_REQUEST_SUCCESS ||
+    action.type === PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS
+  ) {
     const pathname = browserHistory.getCurrentLocation().pathname;
-    const onPinboardPage = pathname.match(pinboardPageUrlPattern);
+    const onPinboardPage = pathname.match(pinboardPageUrlPattern) || pathname === '/pinboard/';
 
     if (onPinboardPage) {
       const rawPinboard = action.payload;
       const newPinboardId = rawPinboard.id;
-      const newPinboardPathName = generatePinboardUrl(rawPinboard);
+      if (newPinboardId) {
+        const newPinboardPathName = generatePinboardUrl(rawPinboard);
 
-      if (pathname !== newPinboardPathName) {
-        browserHistory.replace(newPinboardPathName);
+        if (pathname !== newPinboardPathName) {
+          browserHistory.replace(newPinboardPathName);
+        }
+        getPinboardData(store, newPinboardId);
       }
-      getPinboardData(store, newPinboardId);
     }
   }
 
