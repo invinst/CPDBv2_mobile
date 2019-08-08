@@ -22,7 +22,7 @@ const OfficerItem = ({ name, badge, url, percentile, saveToRecent, categoryFilte
           radius={ 150 }
           backgroundColor={ percentile && percentile.visualTokenBackground }
           data={ percentile && percentile.items }
-       />
+        />
       </div>
       <div className='officer-info'>
         <div className='officer-name'>{ name }</div>

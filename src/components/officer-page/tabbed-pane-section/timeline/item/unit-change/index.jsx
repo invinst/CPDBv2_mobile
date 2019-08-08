@@ -13,7 +13,7 @@ export default class UnitChange extends Component {
           {
             oldUnitName === 'Unassigned' ?
               <span className='unassigned-old-unit'>Unassigned → </span>
-            :
+              :
               <span className='assigned-old-unit'>{ oldUnitName } → </span>
           }
           <span className='new-unit'>{ unitName } - { unitDescription }</span>

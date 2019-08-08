@@ -15,7 +15,7 @@ describe('Legend component', function () {
       useOfForceCount: 1,
     };
     wrapper = mount(<Legend legend={ legend } />);
-    const legendRows = wrapper.find('Row');
+    const legendRows = wrapper.find(Row);
     legendRows.should.have.length(3);
     legendRows.at(0).prop('number').should.eql(20);
     legendRows.at(1).prop('number').should.eql(3);

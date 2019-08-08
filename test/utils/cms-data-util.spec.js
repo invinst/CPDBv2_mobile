@@ -67,7 +67,7 @@ const report = {
           '0': {
             'type': 'LINK',
             'data': {
-              'url': 'http:\/\/google.com'
+              'url': 'http://google.com'
             },
             'mutability': 'MUTABLE'
           }

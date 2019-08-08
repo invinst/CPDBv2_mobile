@@ -11,42 +11,94 @@ const staticFileBase = () => {
 function getDefaultModules() {
   return {
     noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
-    loaders: [
+    rules: [
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader!postcss-loader'
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
+        ]
       },
       {
         test: /\.sass/,
-        loader: 'style-loader!css-loader?camelCase&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' +
-        '!sass-loader?outputStyle=expanded&indentedSyntax'
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: false,
+              camelCase: true,
+              localIdentName: '[name]__[local]--[hash:base64:5]',
+            }
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+              indentedSyntax: true
+            }
+          },
+        ]
       },
       {
         test: /\.scss/,
-        loader: 'style-loader!css-loader!postcss-loader!sass-loader?outputStyle=expanded'
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+            }
+          }
+        ]
       },
       {
         test: /\.less/,
-        loader: 'style-loader!css-loader!postcss-loader!less-loader'
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'less-loader'
+        ]
       },
       {
         test: /\.(png|jpg|gif|eot|ttf|woff|woff2)$/,
-        loader: 'url-loader?limit=8192',
-        options: {
-          fallback: 'file-loader',
-          publicPath: staticFileBase() // file-loader options
-        }
-      },
-      {
-        test: /\.(json)$/,
-        loader: 'json-loader'
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192
+            }
+          },
+          {
+            loader: 'file-loader',
+          }
+        ],
       },
       {
         test: /\.(mp4|ogg|svg)$/,
-        loader: 'file-loader',
-        options: {
-          publicPath: staticFileBase()
-        }
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              publicPath: staticFileBase()
+            }
+          },
+        ]
       }
     ]
   };

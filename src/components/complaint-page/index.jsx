@@ -59,7 +59,7 @@ export default class ComplaintPage extends Component {
               startDate={ complaint.startDate }
               endDate={ complaint.endDate }
               incidentDate={ complaint.incidentDate }
-              />
+            />
             <Location
               point={ complaint.point }
               address={ complaint.address }

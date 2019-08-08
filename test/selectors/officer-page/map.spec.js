@@ -176,33 +176,33 @@ describe('Officer map selectors', function () {
           officers: {
             data: {
               8562: {
-                  'trr_count': 1,
-                  'civilian_compliment_count': 0,
-                  rank: 'Police Officer',
-                  'full_name': 'Jerome Finnigan',
-                  'sustained_count': 4,
-                  id: 8562,
-                  unit: {
-                    'unit_name': '153',
-                    id: 112,
-                    description: 'Mobile Strike Force'
-                  },
-                  'complaint_percentile': 99.98,
-                  'major_award_count': 0,
-                  'date_of_appt': '1988-12-05',
-                  'unsustained_count': 36,
-                  to: '/officer/8562/jerome-finnigan/',
-                  'discipline_count': 0,
-                  badge: '5167',
-                  'birth_year': 1963,
-                  'allegation_count': 90,
-                  'date_of_resignation': '2008-08-05',
-                  'current_salary': 73116,
-                  active: 'Inactive',
-                  'honorable_mention_count': 1,
-                  url: 'https://beta.cpdb.co/officer/jerome-finnigan/8562',
-                  gender: 'Male',
-                  race: 'White'
+                'trr_count': 1,
+                'civilian_compliment_count': 0,
+                rank: 'Police Officer',
+                'full_name': 'Jerome Finnigan',
+                'sustained_count': 4,
+                id: 8562,
+                unit: {
+                  'unit_name': '153',
+                  id: 112,
+                  description: 'Mobile Strike Force'
+                },
+                'complaint_percentile': 99.98,
+                'major_award_count': 0,
+                'date_of_appt': '1988-12-05',
+                'unsustained_count': 36,
+                to: '/officer/8562/jerome-finnigan/',
+                'discipline_count': 0,
+                badge: '5167',
+                'birth_year': 1963,
+                'allegation_count': 90,
+                'date_of_resignation': '2008-08-05',
+                'current_salary': 73116,
+                active: 'Inactive',
+                'honorable_mention_count': 1,
+                url: 'https://beta.cpdb.co/officer/jerome-finnigan/8562',
+                gender: 'Male',
+                race: 'White'
               }
             }
           }
