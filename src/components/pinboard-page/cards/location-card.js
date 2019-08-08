@@ -36,16 +36,16 @@ export default class LocationCard extends Component {
       <div className={ styles.locationCard }>
         <ItemUnpinButton onClick={ this.removeItem }/>
         {
-        (point === null) ?
-          <div className='location-card-map empty-map' />
-          :
-          <div
-            className='location-card-map'
-            style={ mapStyle(
-              cardMapConfig['lat'],
-              cardMapConfig['lon'],
-              cardMapConfig['width'],
-              cardMapConfig['height']) } />
+          (point === null) ?
+            <div className='location-card-map empty-map' />
+            :
+            <div
+              className='location-card-map'
+              style={ mapStyle(
+                cardMapConfig['lat'],
+                cardMapConfig['lon'],
+                cardMapConfig['width'],
+                cardMapConfig['height']) } />
         }
         <div className='location-card-body'>
           <span className='location-card-date'>{ item[dateKey] }</span>

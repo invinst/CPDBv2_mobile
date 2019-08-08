@@ -96,8 +96,8 @@ describe('ComplaintPageTest', function () {
       { 'message': 'Sorry, we can not subscribe your email' }
     );
     this.complaintPage = client.page.complaintPage();
-    client.url(`${client.globals.clientUrl}/complaint/1053667/`);
-    client.waitForElementVisible('body');
+    this.complaintPage.navigate(this.complaintPage.url('1053667'));
+    this.complaintPage.expect.element('@body').to.be.present;
     done();
   });
 

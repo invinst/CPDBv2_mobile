@@ -12,12 +12,12 @@ const Victim = ({ victims=[] }) => {
       <div className='label'>Victim</div>
       <div className='victim-list'>
         {
-        victims.map((victim, ind) => (
-          <div key={ ind } className='victim-item'>
-            <span className='text'>{ victim }</span>
-          </div>
-        ))
-      }
+          victims.map((victim, ind) => (
+            <div key={ ind } className='victim-item'>
+              <span className='text'>{ victim }</span>
+            </div>
+          ))
+        }
       </div>
     </div>
   );

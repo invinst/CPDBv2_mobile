@@ -5,7 +5,7 @@ import { spy } from 'sinon';
 import TriangleExplainer from 'components/officer-page/radar-chart/explainer/triangle-explainer';
 import ExplainerLayout from 'components/officer-page/radar-chart/explainer/explainer-layout';
 import DescriptionContent from 'components/officer-page/radar-chart/explainer/description-content';
-import { EditorState } from "draft-js";
+import { EditorState } from 'draft-js';
 
 
 describe('TriangleExplainer component', function () {

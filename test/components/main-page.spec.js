@@ -56,11 +56,11 @@ describe('MainPage component', function () {
       <MainPage
         location={ currentLocation }
         routeChanged={ spyRouteChanged }
-        />
+      />
     );
 
     wrapper.instance().componentDidUpdate(prevProps);
-    spyRouteChanged.calledWith({ from: 'prev-url/', to: 'current-url/'}).should.be.true();
+    spyRouteChanged.calledWith({ from: 'prev-url/', to: 'current-url/' }).should.be.true();
   });
 
   it('should not dispatch routeChaged action if location has not changed', function () {
@@ -79,7 +79,7 @@ describe('MainPage component', function () {
       <MainPage
         location={ currentLocation }
         routeChanged={ spyRouteChanged }
-        />
+      />
     );
 
     wrapper.instance().componentDidUpdate(prevProps);

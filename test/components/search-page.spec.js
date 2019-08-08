@@ -35,7 +35,7 @@ describe('<SearchPage />', function () {
           query={ 'ab' }
           officers={ { data: [1] } }
           undefined={ { data: [1] } }
-         />
+        />
       );
       const instance = wrapper.instance();
 
@@ -166,7 +166,7 @@ describe('<SearchPage />', function () {
     });
 
     it('should set this.searchInput ref to its own instance', function () {
-      const wrapper = mount(<SearchPage  />);
+      const wrapper = mount(<SearchPage />);
 
       const refInstance = wrapper.instance().searchInput;
       (typeof refInstance).should.not.eql('undefined');

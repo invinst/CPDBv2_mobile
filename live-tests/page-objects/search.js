@@ -27,6 +27,7 @@ module.exports = {
   },
 
   elements: {
+    body: 'body',
     queryInput: '.query-input',
     clearIcon: '.clear-icon',
     suggestedHeader: '#search-category-suggested',

@@ -6,12 +6,11 @@ let baseConfig = require('./base');
 let defaultSettings = require('./defaults');
 
 // Add needed plugins here
-let BowerWebpackPlugin = require('bower-webpack-plugin');
 
 const port = 9001;
 
 let config = Object.assign({}, baseConfig, {
-  port: port,
+  mode: 'development',
   entry: [
     'babel-polyfill',
     'webpack-dev-server/client?http://127.0.0.1:' + port,
@@ -28,22 +27,16 @@ let config = Object.assign({}, baseConfig, {
   cache: true,
   devtool: 'eval-source-map',
   plugins: [
-    new webpack.NoErrorsPlugin(),
-    new BowerWebpackPlugin({
-      searchResolveModulesDirectories: false
-    })
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   module: defaultSettings.getDefaultModules()
 });
 
-// Add needed loaders to the defaults here
-config.module.loaders.push({
+// Add needed rules to the defaults here
+config.module.rules.push({
   test: /\.(js|jsx)$/,
-  loader: 'babel-loader',
-  include: [].concat(
-    config.additionalPaths,
-    [path.join(__dirname, '/../src')]
-  )
+  use: ['babel-loader'],
+  include: [path.join(__dirname, '/../src')]
 });
 
 module.exports = config;

@@ -9,7 +9,8 @@ const baseRelevantComplaints = (type) => ({
       selector: `.relevant-${type}s .swiper-slide > div:first-child`,
       elements: {
         plusButton: {
-          selector: `//div[contains(@class, "relevant-${type}s")]//span[contains(@class, "swiper-slide")][1]//div[contains(@class, "plus-button")]`,
+          selector: `//div[contains(@class, "relevant-${type}s")]` +
+            '//span[contains(@class, "swiper-slide")][1]//div[contains(@class, "plus-button")]',
           locateStrategy: 'xpath',
         },
         incidentDate: '.incident-date',

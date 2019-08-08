@@ -16,12 +16,12 @@ describe('Pinboard trrItemsReducer', function () {
   it('should handle PINBOARD_TRRS_FETCH_REQUEST_SUCCESS', function () {
     trrItemsReducer([
       { 'id': 1 }],
-      {
-        type: PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
-        payload: [
-          { 'id': '2' }, { 'id': '3' },
-        ]
-      }
+    {
+      type: PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
+      payload: [
+        { 'id': '2' }, { 'id': '3' },
+      ]
+    }
     ).should.deepEqual([{ 'id': '2' }, { 'id': '3' }]);
   });
 
