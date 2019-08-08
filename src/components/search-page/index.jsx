@@ -171,6 +171,7 @@ export default class SearchPage extends Component {
               ref={ (instance) => { this.searchInput = instance; } }
               className='query-input'
               value={ this.props.query }
+              spellCheck={ false }
               placeholder='Search'
               onChange={ (e) => { this.onInputChange(e); } }
               onClear={ () => { this.props.inputChanged(''); } }
