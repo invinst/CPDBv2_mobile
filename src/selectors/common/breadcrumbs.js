@@ -7,7 +7,7 @@ export const breadcrumbSelector = state => state.breadcrumb;
 const getBreadcrumbItemKey = (state, props) => {
   const urlSegments = compact(props.url.split('/'));
   if (urlSegments[0] === 'officer') {
-    return urlSegments.slice(0, 3).join('/') + '/';
+    return `/${urlSegments.slice(0, 3).join('/')}/`;
   }
   return props.url;
 };

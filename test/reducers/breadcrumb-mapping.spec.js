@@ -14,7 +14,7 @@ describe('breadcrumbMapping reducer', function () {
       type: TRR_REQUEST_SUCCESS,
       payload: { id: 123 }
     }).should.deepEqual({
-      'trr/123/': 'TRR 123'
+      '/trr/123/': 'TRR 123'
     });
   });
 
@@ -23,7 +23,7 @@ describe('breadcrumbMapping reducer', function () {
       type: OFFICER_REQUEST_SUCCESS,
       payload: { 'officer_id': 123, 'full_name': 'Kevin Osborn' }
     }).should.deepEqual({
-      'officer/123/kevin-osborn/': 'Kevin Osborn'
+      '/officer/123/kevin-osborn/': 'Kevin Osborn'
     });
   });
 
@@ -32,7 +32,7 @@ describe('breadcrumbMapping reducer', function () {
       type: COMPLAINT_REQUEST_SUCCESS,
       payload: { crid: 123 }
     }).should.deepEqual({
-      'complaint/123/': 'CR 123'
+      '/complaint/123/': 'CR 123'
     });
   });
 });
