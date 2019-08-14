@@ -10,9 +10,7 @@ let defaultSettings = require('./defaults');
 let additionalPaths = [];
 
 module.exports = {
-  additionalPaths: additionalPaths,
-  port: defaultSettings.port,
-  debug: true,
+  mode: 'production',
   devtool: 'eval',
   output: {
     path: path.join(__dirname, '/../dist/assets'),
@@ -28,7 +26,7 @@ module.exports = {
     noInfo: true
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     alias: {
       actions: `${defaultSettings.srcPath}/actions/`,
       components: `${defaultSettings.srcPath}/components/`,

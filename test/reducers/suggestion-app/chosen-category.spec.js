@@ -11,6 +11,6 @@ describe('chosenCategory reducer', function () {
     chosenCategory({}, {
       type: UPDATE_CHOSEN_CATEGORY,
       payload: 'unit'
-    }).should.eql('unit')
+    }).should.eql('unit');
   });
 });

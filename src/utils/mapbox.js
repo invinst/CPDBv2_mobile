@@ -24,6 +24,15 @@ if (config.appEnv === 'test') {
   const setLngLatSpy = spy();
   const setPopupSpy = spy();
   const addToSpy = spy();
+  const getBoundingClientRectStub = stub().returns({
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  });
+  const getContainerStub = stub().returns({
+    getBoundingClientRect: getBoundingClientRectStub,
+  });
 
   class MockMap {
     constructor() {
@@ -36,6 +45,7 @@ if (config.appEnv === 'test') {
       this.setFilter = setFilterSpy;
       this.addControl = addControlSpy;
       this.remove = removeSpy;
+      this.getContainer = getContainerStub;
     }
     on() {
       arguments[arguments.length - 1]();

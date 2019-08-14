@@ -1,4 +1,4 @@
-import should from 'should'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { spy, stub, useFakeTimers } from 'sinon';
 
 import * as NavigationUtil from 'utils/navigation-util';

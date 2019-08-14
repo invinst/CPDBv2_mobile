@@ -1,7 +1,6 @@
 'use strict';
 
 var api = require(__dirname + '/../mock-api');
-const { TIMEOUT } = require(__dirname + '/../constants');
 
 const mockLandingPageCms = {
   fields: [
@@ -29,7 +28,7 @@ describe('MainPageTest', function () {
     api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
     this.mainPage = client.page.main();
     this.mainPage.navigate();
-    client.waitForElementVisible('body', TIMEOUT);
+    this.mainPage.expect.element('@body').to.be.present;
     done();
   });
 
@@ -77,14 +76,12 @@ describe('MainPageTest', function () {
   });
 
   it('should go to the landing page when the url does not match any route', function (client) {
-    const mainPage = this.mainPage;
-    // As urlEquals always add a slash at the end of the root url, we have to do this stupid thing
-    const mainPageUrl = `${mainPage.url()}/`;
+    const mainPageUrl = this.mainPage.url();
 
-    client.url('/url-mediator/session-builder/');
+    this.mainPage.navigate(`${mainPageUrl}url-mediator/session-builder/`);
     client.assert.urlEquals(mainPageUrl);
 
-    client.url('/something/really/wrong/');
+    this.mainPage.navigate(`${mainPageUrl}/something/really/wrong/`);
     client.assert.urlEquals(mainPageUrl);
   });
 });

@@ -101,7 +101,7 @@ export default class SearchPage extends Component {
           saveToRecent={ this.props.saveToRecent }
           updateActiveCategory={ this.props.updateActiveCategory }
           activeCategory={ this.props.activeCategory }
-          />
+        />
       );
 
       if (index === lastIndex) {
@@ -164,7 +164,7 @@ export default class SearchPage extends Component {
         <div
           className={ style.sticky }
           id='search-page-header'
-          >
+        >
 
           <div className='input-container'>
             <ClearableInput

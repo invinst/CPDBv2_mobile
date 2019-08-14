@@ -3,48 +3,44 @@
 let path = require('path');
 let srcPath = path.join(__dirname, '/../src/');
 
-let baseConfig = require('./base');
-
-// Add needed plugins here
-let BowerWebpackPlugin = require('bower-webpack-plugin');
-
 module.exports = {
+  mode: 'development',
   devtool: 'eval',
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'isparta-instrumenter-loader',
         include: [
           path.join(__dirname, '/../src')
-        ]
+        ],
+        use: {
+          loader: 'istanbul-instrumenter-loader',
+          options: { esModules: true }
+        },
+        enforce: 'pre',
       },
       {
         test: /\.(js|jsx)$/,
+        enforce: 'pre',
         include: srcPath,
-        loader: 'eslint-loader'
-      }
-    ],
-    loaders: [
+        use: ['eslint-loader']
+      },
       {
         test: /\.(svg|png|jpg|gif|woff|woff2|css|sass|scss|less|styl|json)$/,
-        loader: 'null-loader'
+        use: ['null-loader']
       },
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        include: [].concat(
-          baseConfig.additionalPaths,
-          [
-            path.join(__dirname, '/../src'),
-            path.join(__dirname, '/../test')
-          ]
-        )
+        use: ['babel-loader'],
+        include: [
+          path.join(__dirname, '/../src'),
+          path.join(__dirname, '/../test')
+        ]
       }
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     alias: {
       actions: srcPath + 'actions/',
       helpers: path.join(__dirname, '/../test/helpers'),
@@ -63,11 +59,7 @@ module.exports = {
       config: srcPath + `config/${process.env.WEBPACK_ENV}`
     }
   },
-  plugins: [
-    new BowerWebpackPlugin({
-      searchResolveModulesDirectories: false
-    })
-  ],
+  plugins: [],
   externals: {
     'cheerio': 'window',
     'react/addons': true,

@@ -4,6 +4,7 @@ module.exports = {
   },
 
   elements: {
+    body: 'body',
     trrHeader: '.trr-header',
   },
 

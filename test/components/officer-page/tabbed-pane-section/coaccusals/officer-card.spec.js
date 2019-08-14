@@ -43,7 +43,7 @@ describe('CoaccusalCard', () => {
       rank: 'Detective'
     };
     const wrapper = mount(<OfficerCard { ...noPercentileOfficer } />);
-    const baseCard = wrapper.find(BaseOfficerCard)
+    const baseCard = wrapper.find(BaseOfficerCard);
     const link = baseCard.find(Link);
 
     link.find('.coaccusal-count').text().should.equal('1 Coaccusal');

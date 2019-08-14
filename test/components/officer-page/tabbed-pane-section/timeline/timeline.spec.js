@@ -1,6 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import { stub } from 'sinon';
+import { shallow } from 'enzyme';
 
 import Timeline from 'components/officer-page/tabbed-pane-section/timeline';
 import Item from 'components/officer-page/tabbed-pane-section/timeline/item';

@@ -1,7 +1,5 @@
 import Factory from 'utils/tests/factory';
 
-import should from 'should';
-
 
 describe('Factory', () => {
   it('should have no schemas first initial', () => {

@@ -6,12 +6,12 @@ var http = require('http');
 var port = process.env.MOCK_SERVER_PORT || 9002;
 
 // FIXME: Refactor the path here
-var api = require(__dirname + '/mock-api');
+const api = require(__dirname + '/mock-api');
 api.port = port;
 
 console.log(`API Server has been started at port ${port}`);
 
-var server = http.createServer(app);
+const server = http.createServer(app);
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies

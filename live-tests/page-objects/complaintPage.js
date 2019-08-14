@@ -1,9 +1,10 @@
 module.exports = {
-  url: function () {
-    return this.api.globals.clientUrl;
+  url: function (crid) {
+    return `${this.api.globals.clientUrl}/complaint/${crid}/`;
   },
 
   elements: {
+    body: 'body',
     victims: '.victim-list',
     complainants: '.complainant-list',
     summary: {
@@ -15,11 +16,11 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     firstInvestigator: {
-      selector: '(//div[contains(@class, "investigator-row")])[1]',
+      selector: '(//*[contains(@class, "investigator-row")])[1]',
       locateStrategy: 'xpath'
     },
     secondInvestigator: {
-      selector: '(//div[contains(@class, "investigator-row")])[2]',
+      selector: '(//*[contains(@class, "investigator-row")])[2]',
       locateStrategy: 'xpath'
     },
     requestDocumentButton: '.request-button',

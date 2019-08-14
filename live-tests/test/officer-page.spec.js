@@ -353,7 +353,7 @@ describe('OfficerPage test', function () {
 
       this.officerPage = client.page.officerPage();
       this.officerPage.navigate(this.officerPage.url(2234));
-      client.waitForElementVisible('body', TIMEOUT);
+      this.officerPage.expect.element('@body').to.be.present;
       done();
     });
 
@@ -377,6 +377,7 @@ describe('OfficerPage test', function () {
 
       this.officerPage = client.page.officerPage();
       this.officerPage.navigate(this.officerPage.url(2235));
+      this.officerPage.expect.element('@body').to.be.present;
       done();
     });
 
@@ -385,8 +386,8 @@ describe('OfficerPage test', function () {
     });
 
     it('should redirect to correct path name when the officer name is incorrect', function (client) {
-      client.url('/officer/2235/somethingwrong/');
-      client.waitForElementVisible('body', TIMEOUT);
+      this.officerPage.navigate(this.officerPage.url(2235, 'somethingwrong'));
+      this.officerPage.expect.element('@body').to.be.present;
       client.assert.urlContains('/officer/2235/kevin-osborn/');
     });
 
@@ -447,10 +448,10 @@ describe('OfficerPage test', function () {
       trrItem.expect.element('@name').text.to.equal('Use of Force Report');
       trrItem.expect.element('@description').text.to.equal('More than 0% of other officers');
 
-      complimentItem.expect.element('@value').text.to.equal(4);
+      complimentItem.expect.element('@value').text.to.equal('4');
       complimentItem.expect.element('@name').text.to.equal('Civilian\nCompliments');
 
-      awardItem.expect.element('@value').text.to.equal(1);
+      awardItem.expect.element('@value').text.to.equal('1');
       awardItem.expect.element('@name').text.to.equal('Major Award');
 
       honorableMentionItem.expect.element('@value').text.to.equal('55');
