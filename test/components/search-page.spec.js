@@ -212,9 +212,12 @@ describe('<SearchPage />', function () {
       );
 
       const clearableInput = wrapper.find('ClearableInput');
-      clearableInput.prop('value').should.be.eql('meh');
-      clearableInput.prop('placeholder').should.be.eql('Search');
-      clearableInput.prop('spellCheck').should.be.eql(false);
+      clearableInput.prop('value').should.eql('meh');
+      clearableInput.prop('placeholder').should.eql('Search');
+      clearableInput.prop('spellCheck').should.eql(false);
+      clearableInput.prop('autoComplete').should.eql('off');
+      clearableInput.prop('autoCorrect').should.eql('off');
+      clearableInput.prop('autoCapitalize').should.eql('off');
 
       clearableInput.prop('onChange')();
       this.stubOnInputChange.calledOnce.should.be.true();

@@ -172,6 +172,9 @@ export default class SearchPage extends Component {
               className='query-input'
               value={ this.props.query }
               spellCheck={ false }
+              autoComplete='off'
+              autoCorrect='off'
+              autoCapitalize='off'
               placeholder='Search'
               onChange={ (e) => { this.onInputChange(e); } }
               onClear={ () => { this.props.inputChanged(''); } }
