@@ -5,10 +5,13 @@ const nthExamplePinboardRow = n => ({
 
 module.exports = {
   url: function (pinboardId) {
+    if (!pinboardId)
+      return `${this.api.globals.clientUrl}/pinboard/`;
     return `${this.api.globals.clientUrl}/pinboard/${pinboardId}/`;
   },
 
   elements: {
+    body: 'body',
     title: '.empty-pinboard-title',
     description: '.empty-pinboard-description',
     firstExamplePinboardRow: nthExamplePinboardRow(1),

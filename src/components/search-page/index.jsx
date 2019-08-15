@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import ReactHeight from 'react-height';
+import { toast, cssTransition } from 'react-toastify';
 import { browserHistory } from 'react-router';
 import { isEmpty, noop } from 'lodash';
+import cx from 'classnames';
 
 import constants from 'constants';
 import { goUp } from 'utils/navigation-util';
@@ -32,6 +34,10 @@ export default class SearchPage extends Component {
     this.updateResults();
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.handleToastChange(nextProps);
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.query !== prevProps.query) {
       this.updateResults();
@@ -40,6 +46,29 @@ export default class SearchPage extends Component {
 
   componentWillUnmount() {
     showIntercomLauncher(true);
+  }
+
+  handleToastChange(nextProps) {
+    if (this.props.toast !== nextProps.toast) {
+      const { type, actionType } = nextProps.toast;
+
+      this.showToast(`${type} ${actionType}`);
+    }
+  }
+
+  showToast(message) {
+    const TopRightTransition = cssTransition({
+      enter: 'toast-enter',
+      exit: 'toast-exit',
+      duration: 500,
+      appendPosition: true,
+    });
+
+    toast(message, {
+      className: 'toast-wrapper',
+      bodyClassName: 'toast-body',
+      transition: TopRightTransition,
+    });
   }
 
   updateResults() {
@@ -101,7 +130,7 @@ export default class SearchPage extends Component {
           updateActiveCategory={ this.props.updateActiveCategory }
           activeCategory={ this.props.activeCategory }
           addOrRemoveItemInPinboard={ this.props.addOrRemoveItemInPinboard }
-          />
+        />
       );
 
       if (index === lastIndex) {
@@ -119,20 +148,6 @@ export default class SearchPage extends Component {
     });
   }
 
-  calculateDynamicBottomPaddingStyle() {
-    const lastCategoryHeight = this.lastCategoryHeight || 0;
-    const dynamicBottomPaddingOffset = (
-      constants.QUERY_INPUT_HEIGHT +
-      constants.SEARCH_CATEGORY_LINKS_HEIGHT +
-      2 * constants.NEW_DIVIDER_WEIGHT +
-      lastCategoryHeight
-    );
-    const height = Math.max(constants.BOTTOM_PADDING, window.innerHeight - dynamicBottomPaddingOffset);
-    return {
-      height: `${height}px`
-    };
-  }
-
   handleEmptyPinboardButtonClick() {
     const { createPinboard } = this.props;
 
@@ -147,7 +162,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query, chosenCategory, router, pinboard } = this.props;
+    const { query, chosenCategory, router, pinboard, inputChanged } = this.props;
     let categories;
 
     if (!this.isLongEnoughQuery(query)) {
@@ -177,20 +192,20 @@ export default class SearchPage extends Component {
         <div
           className={ style.sticky }
           id='search-page-header'
-          >
+        >
 
           <div className='input-container'>
             <ClearableInput
               ref={ (instance) => { this.searchInput = instance; } }
               className='query-input'
-              value={ this.props.query }
+              value={ query }
               placeholder='Search'
               onChange={ (e) => { this.onInputChange(e); } }
-              onClear={ () => { this.props.inputChanged(''); } }
+              onClear={ () => { inputChanged(''); } }
             />
 
             <button
-              className='bt-cancel'
+              className={ cx('bt-cancel', { 'active': query !== '' } ) }
               onClick={ goUp.bind(this, router, window.location.pathname) }>
               Cancel
             </button>
@@ -205,7 +220,7 @@ export default class SearchPage extends Component {
           { this.renderCategories(categories) }
         </div>
 
-        <div style={ this.calculateDynamicBottomPaddingStyle() } className='bottom-padding'/>
+        <a className='back-to-front-page-link' href='/'>Back to Front Page</a>
       </div>
     );
   }
@@ -233,6 +248,7 @@ SearchPage.propTypes = {
   pinboard: PropTypes.object,
   addOrRemoveItemInPinboard: PropTypes.func,
   createPinboard: PropTypes.func,
+  toast: PropTypes.object,
 };
 
 SearchPage.defaultProps = {
@@ -246,4 +262,5 @@ SearchPage.defaultProps = {
   queryChanged: noop,
   saveToRecent: noop,
   suggestAllFromCategory: noop,
+  toast: {},
 };

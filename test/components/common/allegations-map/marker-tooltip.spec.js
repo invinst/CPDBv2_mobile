@@ -19,4 +19,9 @@ describe('MarkerTooltip component', function () {
     tooltipDate.text().should.eql('Sep, 23, 2006');
     tooltipCategory.text().should.eql('test category');
   });
+
+  it('should go to CR detail page when clicking on', function () {
+    wrapper = mount(<MarkerTooltip url='/complaint/123456/' />);
+    wrapper.find('a').at(0).node.href.should.containEql('/complaint/123456/');
+  });
 });

@@ -207,6 +207,7 @@ export default {
   OFFICER_PAGE_CMS_API_ENDPOINT: '/cms-pages/officer-page/',
   COMPLAINT_PAGE_CMS_API_ENDPOINT: '/cms-pages/cr-page/',
   TRR_PAGE_CMS_API_ENDPOINT: '/cms-pages/trr-page/',
+  PINBOARD_PAGE_CMS_API_ENDPOINT: '/cms-pages/pinboard-page/',
   COMPLAINT_API_ENDPOINT: '/mobile/cr/',
   TRR_API_ENDPOINT: '/mobile/trr/',
   TOP_OFFICERS_BY_ALLEGATION_ENDPOINT: '/officers/top-by-allegation/',
@@ -216,6 +217,8 @@ export default {
   COMPLAINT_SUMMARIES_ENDPOINT: '/cr/complaint-summaries/',
   PINBOARDS_API_ENDPOINT: '/mobile/pinboards/',
   SOCIAL_GRAPH_API_ENDPOINT: '/mobile/social-graph/',
+  SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT: '/mobile/social-graph/geographic-crs/',
+  SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT: '/mobile/social-graph/geographic-trrs/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',

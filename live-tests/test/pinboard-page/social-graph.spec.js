@@ -1,27 +1,21 @@
 'use strict';
 
-var _ = require('lodash');
-var assert = require('assert');
-var api = require(__dirname + '/../../mock-api');
+const _ = require('lodash');
+const api = require(__dirname + '/../../mock-api');
 const { TIMEOUT } = require(__dirname + '/../../constants');
 
-var mockData = require(__dirname + '/../../mock-data/pinboard-page');
+const mockData = require(__dirname + '/../../mock-data/pinboard-page');
 
 
-function waitForGraphAnimationEnd(client, pinboardPage) {
-  client.waitForElementVisible(pinboardPage.section.currentDate.selector, TIMEOUT);
-  client.waitForText(
-    pinboardPage.section.currentDate.selector,
-    (text) => {return text === '2008-01-11';},
-    3000,
-    'expected timeline reaches end date after 1.65s'
-  );
+function waitForGraphAnimationEnd(pinboardPage) {
+  pinboardPage.waitForElementVisible('@currentDate', TIMEOUT);
+  pinboardPage.expect.element('@currentDate').text.to.equal('2008-01-11').after(3000);
 }
 
-function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
+function checkGraphGroupColors(client, graphNodes, expectedNodeGroupColors) {
   let groupsColors = [];
   client.elements(graphNodes.locateStrategy, graphNodes.selector, function (graphNodes) {
-    assert.equal(graphNodes.value.length, 20);
+    client.assert.equal(graphNodes.value.length, 20);
 
     graphNodes.value.forEach((graphNode) => {
       client.elementIdCssProperty(graphNode.ELEMENT, 'fill', (fillColor) => {
@@ -29,8 +23,8 @@ function checkGraphGroupColors(client, graphNodes, expectedGroupColors) {
       });
     });
   }).perform(function () {
-    const groupsCount = _.values(_.countBy(groupsColors));
-    assert.equal(groupsCount.sort((a, b) => a - b), expectedGroupColors);
+    const nodeGroupColors = _.countBy(groupsColors);
+    client.assert.deepEqual(nodeGroupColors, expectedNodeGroupColors);
   });
 }
 
@@ -47,7 +41,12 @@ describe('Pinboard Social Graph', function () {
       api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, mockData.pinboardOfficersData);
       api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, mockData.pinboardTRRsData);
       api.mock('GET', '/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b', 200, mockData.socialGraphData);
-      api.mock('GET', '/api/v2/mobile/social-graph/geographic/?pinboard_id=5cd06f2b', 200, mockData.geographicData);
+      api.mock(
+        'GET', '/api/v2/mobile/social-graph/geographic-crs/?pinboard_id=5cd06f2b', 200, mockData.geographicCrsData
+      );
+      api.mock(
+        'GET', '/api/v2/mobile/social-graph/geographic-trrs/?pinboard_id=5cd06f2b', 200, mockData.geographicTrrsData
+      );
 
       api.mock('GET', mockData.baseRelevantDocumentsUrl, 200, mockData.firstRelevantDocumentsResponse);
       api.mock(
@@ -75,7 +74,7 @@ describe('Pinboard Social Graph', function () {
 
       this.pinboardPage = client.page.pinboardPage();
       this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
-      client.waitForElementVisible('body', TIMEOUT);
+      this.pinboardPage.expect.element('@body').to.be.present;
       done();
     });
 
@@ -84,69 +83,90 @@ describe('Pinboard Social Graph', function () {
       pinboardPage.expect.element('@startDate').to.be.visible;
       pinboardPage.expect.element('@startDate').text.to.equal('1990-01-09');
       pinboardPage.expect.element('@endDate').text.to.equal('2008-01-11');
-      waitForGraphAnimationEnd(client, pinboardPage);
+      waitForGraphAnimationEnd(pinboardPage);
       const graphNodes = pinboardPage.section.graphNodes;
 
-      checkGraphGroupColors(client, graphNodes, [3, 5, 6, 6]);
+      checkGraphGroupColors(client, graphNodes, {
+        'rgb(253, 94, 76)': 6,
+        'rgb(244, 162, 152)': 6,
+        'rgb(249, 211, 195)': 5,
+        'rgb(243, 42, 41)': 1,
+        'rgb(255, 80, 80)': 1,
+        'rgb(243, 173, 173)': 1,
+      });
       const graphLinks = pinboardPage.section.graphLinks;
       client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
-        assert.equal(graphLinks.value.length, 37);
+        client.assert.equal(graphLinks.value.length, 37);
+      });
+
+      const expectedlinkGroupColors = {
+        'link-group-color-1': 6,
+        'link-group-color-2': 6,
+        'link-group-color-3': 6,
+        'link-group-color-4': 6,
+        'link-group-color-5': 6,
+        'link-group-color-6': 7,
+      };
+
+      let linkGroupColorsMap = [];
+      client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
+        graphLinks.value.forEach((graphLink) => {
+          client.elementIdAttribute(graphLink.ELEMENT, 'class', (result) => {
+            linkGroupColorsMap.push(result.value.match(/link-group-color-[\d]/));
+          });
+        });
+      }).perform(function () {
+        const linkGroupColors = _.countBy(linkGroupColorsMap);
+        client.assert.deepEqual(linkGroupColors, expectedlinkGroupColors);
       });
     });
 
     it('should show connected nodes when double click on a node', function (client) {
       const pinboardPage = this.pinboardPage;
-      waitForGraphAnimationEnd(client, pinboardPage);
+      waitForGraphAnimationEnd(pinboardPage);
 
-      const graphNodes = pinboardPage.section.graphNodes;
-      const graphLinks = pinboardPage.section.graphLinks;
-
-      const biggestNode = pinboardPage.section.biggestGraphNode;
-      client.moveToElement(biggestNode.selector);
+      pinboardPage.expect.element('@biggestGraphNode').to.be.visible;
+      pinboardPage.moveToElement('@biggestGraphNode', undefined, undefined);
       client.doubleClick();
 
-      client.elements(graphNodes.locateStrategy, graphNodes.selector, function (graphNodes) {
-        let hideGraphNodes = _.filter(graphNodes, graphNode => client.cssProperty(graphNode.selector, 'opacity', 0.1));
-        let visibleGraphNodes = _.filter(graphNodes, graphNode => client.cssProperty(graphNode.selector, 'opacity', 1));
-        assert.equal(hideGraphNodes.value.length, 9);
-        assert.equal(visibleGraphNodes.value.length, 11);
-      });
+      const shownGraphNodes = pinboardPage.section.shownGraphNodes;
+      const hiddenGraphNodes = pinboardPage.section.hiddenGraphNodes;
+      const shownGraphLinks = pinboardPage.section.shownGraphLinks;
+      const hiddenGraphLinks = pinboardPage.section.hiddenGraphLinks;
 
-      client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
-        let hideGraphLinks = _.filter(graphLinks, graphLink => client.cssProperty(graphLink.selector, 'opacity', 0.1));
-        let visibleGraphLinks = _.filter(graphLinks, graphLink => client.cssProperty(graphLink.selector, 'opacity', 1));
-        assert.equal(hideGraphLinks.value.length, 27);
-        assert.equal(visibleGraphLinks.value.length, 10);
-      });
+      client.assertCount(hiddenGraphNodes.selector, 9, hiddenGraphNodes.locateStrategy);
+      client.assertCount(shownGraphNodes.selector, 11, shownGraphNodes.locateStrategy);
 
-      client.moveToElement(biggestNode.selector);
+      client.assertCount(hiddenGraphLinks.selector, 27, hiddenGraphNodes.locateStrategy);
+      client.assertCount(shownGraphLinks.selector, 10, shownGraphLinks.locateStrategy);
+
+      client.pause(200);
+      pinboardPage.moveToElement('@biggestGraphNode', undefined, undefined);
       client.doubleClick();
 
-      client.elements(graphNodes.locateStrategy, graphNodes.selector, function (graphNodes) {
-        let hideGraphNodes = _.filter(graphNodes, graphNode => client.cssProperty(graphNode.selector, 'opacity', 0.1));
-        let visibleGraphNodes = _.filter(graphNodes, graphNode => client.cssProperty(graphNode.selector, 'opacity', 1));
-        assert.equal(hideGraphNodes.value.length, 0);
-        assert.equal(visibleGraphNodes.value.length, 20);
-      });
+      client.assertCount(hiddenGraphNodes.selector, 0, hiddenGraphNodes.locateStrategy);
+      client.assertCount(shownGraphNodes.selector, 20, shownGraphNodes.locateStrategy);
 
-      client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
-        let hideGraphLinks = _.filter(graphLinks, graphLink => client.cssProperty(graphLink.selector, 'opacity', 0.1));
-        let visibleGraphLinks = _.filter(graphLinks, graphLink => client.cssProperty(graphLink.selector, 'opacity', 1));
-        assert.equal(hideGraphLinks.value.length, 0);
-        assert.equal(visibleGraphLinks.value.length, 37);
-      });
+      client.assertCount(hiddenGraphLinks.selector, 0, hiddenGraphNodes.locateStrategy);
+      client.assertCount(shownGraphLinks.selector, 37, shownGraphLinks.locateStrategy);
     });
 
     it('should pause timeline when click on toggle timeline button', function (client) {
       const pinboardPage = this.pinboardPage;
       const timeline = pinboardPage.section.timeline;
-      waitForGraphAnimationEnd(client, pinboardPage);
+      waitForGraphAnimationEnd(pinboardPage);
 
-      client.waitForAttribute('.toggle-timeline-btn', 'class', function (className) {
-        return className === 'toggle-timeline-btn play-icon';
-      });
+      timeline.expect.element('@toggleTimelineButton').to.have.attribute('class', 'toggle-timeline-btn play-icon');
+
+      client.pause(100);
+      timeline.click('@toggleTimelineButton');
+      timeline.expect.element('@toggleTimelineButton').to.have.attribute('class', 'toggle-timeline-btn pause-icon');
+      pinboardPage.expect.element('@currentDate').text.to.not.equal('2008-01-11').after(200);
+      pinboardPage.expect.element('@currentDate').text.to.not.equal('1990-01-09').after(200);
 
       timeline.click('@toggleTimelineButton');
+
+      let currentDateText = '';
       const middleDays = [
         '1992-03-08',
         '1994-01-10',
@@ -158,49 +178,45 @@ describe('Pinboard Social Graph', function () {
         '1999-07-22',
         '2006-03-15'
       ];
+      pinboardPage.getText('@currentDate', result => {
+        currentDateText = result.value;
 
-      client.waitForAttribute('.toggle-timeline-btn', 'class', function (className) {
-        return className === 'toggle-timeline-btn pause-icon';
+        client.assert.notEqual(middleDays.indexOf(currentDateText), -1, 'Current Date should be on the list');
+      }).perform(function () {
+        client.pause(1000);
+
+        pinboardPage.expect.element('@currentDate').text.to.equal(currentDateText);
+        timeline.expect.element('@toggleTimelineButton').to.have.attribute('class', 'toggle-timeline-btn play-icon');
+
+        timeline.click('@toggleTimelineButton');
+        waitForGraphAnimationEnd(pinboardPage);
       });
-
-      client.waitForText(pinboardPage.section.currentDate.selector, (text) => {
-        return middleDays.indexOf(text) !== -1;
-      });
-
-      timeline.click('@toggleTimelineButton');
-      client.waitForAttribute('.toggle-timeline-btn', 'class', function (className) {
-        return className === 'toggle-timeline-btn play-icon';
-      });
-
-      timeline.click('@toggleTimelineButton');
-      waitForGraphAnimationEnd(client, pinboardPage);
     });
 
     it('should change the graph when click on specific part of the timeline', function (client) {
       const pinboardPage = this.pinboardPage;
-      waitForGraphAnimationEnd(client, pinboardPage);
+      waitForGraphAnimationEnd(pinboardPage);
 
       const graphNodes = pinboardPage.section.graphNodes;
-      client.elements(graphNodes.locateStrategy, graphNodes.selector, function (graphNodes) {
-        assert.equal(graphNodes.value.length, 20);
-      });
       const graphLinks = pinboardPage.section.graphLinks;
-      client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
-        assert.equal(graphLinks.value.length, 37);
-      });
+      client.assertCount(graphNodes.selector, 20, graphNodes.locateStrategy);
+      client.assertCount(graphLinks.selector, 37, graphLinks.locateStrategy);
 
-      client.moveToElement(pinboardPage.section.timelineSlider.selector);
+      client.pause(100);
+      pinboardPage.moveToElement('@timelineSlider', undefined, undefined);
       client.mouseButtonClick(0);
 
-      checkGraphGroupColors(client, graphNodes, [3, 3, 3, 11]);
-
-      client.elements(graphNodes.locateStrategy, graphNodes.selector, function (graphNodes) {
-        assert.equal(graphNodes.value.length, 20);
+      checkGraphGroupColors(client, graphNodes, {
+        'rgb(253, 94, 76)': 6,
+        'rgb(244, 162, 152)': 6,
+        'rgb(249, 211, 195)': 5,
+        'rgb(243, 42, 41)': 1,
+        'rgb(255, 80, 80)': 1,
+        'rgb(243, 173, 173)': 1,
       });
 
-      client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {
-        assert.equal(graphLinks.value.length, 14);
-      });
+      client.assertCount(graphNodes.selector, 20, graphNodes.locateStrategy);
+      client.assertCount(graphLinks.selector, 14, graphLinks.locateStrategy);
     });
   });
 
@@ -221,21 +237,16 @@ describe('Pinboard Social Graph', function () {
 
       this.pinboardPage = client.page.pinboardPage();
       this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
-      client.waitForElementVisible('body', TIMEOUT);
+      this.pinboardPage.expect.element('@body').to.be.present;
 
-      client.waitForAttribute('.toggle-timeline-btn', 'class', function (className) {
-        return className === 'toggle-timeline-btn pause-icon';
-      });
+      const timeline = this.pinboardPage.section.timeline;
+      timeline.expect.element('@toggleTimelineButton').to.have.attribute('class', 'toggle-timeline-btn pause-icon');
 
       client.execute('scrollTo(0, 3000)');
-      client.waitForAttribute('.toggle-timeline-btn', 'class', function (className) {
-        return className === 'toggle-timeline-btn play-icon';
-      });
+      timeline.expect.element('@toggleTimelineButton').to.have.attribute('class', 'toggle-timeline-btn play-icon');
 
       client.execute('scrollTo(0, -3000)');
-      client.waitForAttribute('.toggle-timeline-btn', 'class', function (className) {
-        return className === 'toggle-timeline-btn pause-icon';
-      });
+      timeline.expect.element('@toggleTimelineButton').to.have.attribute('class', 'toggle-timeline-btn pause-icon');
     });
   });
 });

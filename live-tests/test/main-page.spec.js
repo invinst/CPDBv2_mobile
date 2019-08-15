@@ -1,7 +1,6 @@
 'use strict';
 
 var api = require(__dirname + '/../mock-api');
-const { TIMEOUT } = require(__dirname + '/../constants');
 
 const mockLandingPageCms = {
   fields: [
@@ -29,7 +28,7 @@ describe('MainPageTest', function () {
     api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
     this.mainPage = client.page.main();
     this.mainPage.navigate();
-    client.waitForElementVisible('body', TIMEOUT);
+    this.mainPage.expect.element('@body').to.be.present;
     done();
   });
 
@@ -77,10 +76,12 @@ describe('MainPageTest', function () {
   });
 
   it('should go to the landing page when the url does not match any route', function (client) {
-    client.url('/url-mediator/session-builder/');
-    client.assert.urlEquals(this.mainPage.url());
+    const mainPageUrl = this.mainPage.url();
 
-    client.url('/something/really/wrong/');
-    client.assert.urlEquals(this.mainPage.url());
+    this.mainPage.navigate(`${mainPageUrl}url-mediator/session-builder/`);
+    client.assert.urlEquals(mainPageUrl);
+
+    this.mainPage.navigate(`${mainPageUrl}/something/really/wrong/`);
+    client.assert.urlEquals(mainPageUrl);
   });
 });

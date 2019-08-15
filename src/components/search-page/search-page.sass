@@ -1,7 +1,7 @@
 @import 'variables'
+@import 'fonts'
 @import 'mixins'
 
-$query-input-width: 77%
 
 \:local(.search-page)
   margin: 0 $side-margin
@@ -16,20 +16,18 @@ $query-input-width: 77%
     padding-top: $query-input-height + $pinboard-bar-height
 
   .input-container
-    border-radius: 0
     background-color: white
     font-size: 14px
+    padding: $side-margin
+    border-bottom: 2px solid $alto-solid
 
     .query-input-container
       position: relative
-      width: calc(100% - #{$button-done-width} - 2*#{$side-margin})
+      width: calc(100% - #{$button-done-width})
       display: inline-block
-      vertical-align: middle
-      margin-right: 8px
 
       .query-input
         outline: none
-        margin: $side-margin
         padding-left: $side-margin
         width: 100%
         border: 0
@@ -45,19 +43,22 @@ $query-input-width: 77%
           color: $dusty-gray
           font: inherit
 
+        &:not([value=''])
+          border: 1px solid $alto-solid
+
       .clear-icon
         position: absolute
         top: 0
         bottom: 0
-        right: 0
-        height: 22px
-        width: 22px
+        right: 8px
+        height: 16px
+        width: 16px
         margin: auto
         cursor: pointer
 
     .bt-cancel
       background-color: inherit
-      color: $dusty-gray
+      color: $accent-blue
       border: none
       padding: 0 !important
       font: inherit
@@ -65,11 +66,35 @@ $query-input-width: 77%
       display: inline-block
       width: $button-done-width
       text-align: right
-      padding-right: $side-margin
-      vertical-align: middle
-      margin-top: 0
       font-weight: 300
+
+      &.active
+        color: $boulder
 
   .bottom-padding
     min-height: 0
     background-color: white
+
+  .back-to-front-page-link
+    display: block
+    color: $accent-blue
+    line-height: 16px
+    margin: 128px 0
+    padding: 12px 0
+    font-size: 14px
+    font-weight: 300
+
+.toast-wrapper
+  background-color: $sprout-color
+  border-radius: 2px
+  color: $japanese-laurel
+  line-height: 40px
+  min-height: 40px
+  padding: 0
+  text-align: center
+  width: auto
+
+.toast-body
+  font-family: $san-francisco
+  font-weight: 300
+  font-size: 14px

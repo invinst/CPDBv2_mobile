@@ -76,7 +76,7 @@ const App = React.createClass({
           />
 
           <Route
-            path={ `${constants.PINBOARD_PATH}:pinboardId/(:pinboardTitle/)` }
+            path={ `${constants.PINBOARD_PATH}(:pinboardId/)(:pinboardTitle/)` }
             breadcrumb={ BreadcrumbItemContainer }
             component={ PinboardPageContainer }
           />

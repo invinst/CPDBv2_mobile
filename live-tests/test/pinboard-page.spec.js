@@ -18,7 +18,12 @@ describe('Pinboard Page', function () {
     api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, mockData.pinboardOfficersData);
     api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, mockData.pinboardTRRsData);
     api.mock('GET', '/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b', 200, mockData.socialGraphData);
-    api.mock('GET', '/api/v2/mobile/social-graph/geographic/?pinboard_id=5cd06f2b', 200, mockData.geographicData);
+    api.mock(
+      'GET', '/api/v2/mobile/social-graph/geographic-crs/?pinboard_id=5cd06f2b', 200, mockData.geographicCrsData
+    );
+    api.mock(
+      'GET', '/api/v2/mobile/social-graph/geographic-trrs/?pinboard_id=5cd06f2b', 200, mockData.geographicTrrsData
+    );
 
     api.mock('GET', mockData.baseRelevantDocumentsUrl, 200, mockData.firstRelevantDocumentsResponse);
     api.mock(
@@ -57,7 +62,7 @@ describe('Pinboard Page', function () {
 
     this.pinboardPage = client.page.pinboardPage();
     this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
-    client.waitForElementVisible('body', TIMEOUT);
+    this.pinboardPage.expect.element('@body').to.be.present;
     done();
   });
 
@@ -98,9 +103,9 @@ describe('Pinboard Page', function () {
     breadcrumbs.expect.element('@secondBreadcrumb').text.to.equal('Pinboard - Pinboard Title');
     breadcrumbs.expect.element('@thirdBreadcrumb').text.to.equal('Richard Sullivan');
 
-    client.waitForAttribute('.breadcrumb-item-wrapper:nth-child(3)', 'class', function (className) {
-      return className === 'breadcrumb-item-wrapper auto-width';
-    });
+    breadcrumbs.expect.element('@thirdBreadcrumb').to.have.attribute(
+      'class', 'breadcrumb-item-wrapper auto-width'
+    );
 
     breadcrumbs.click('@secondBreadcrumb');
 
@@ -475,16 +480,12 @@ describe('Pinboard Page', function () {
           firstCoaccusalCard.expect.element('@undoText').text.to.equal('Richard Sullivan added.');
           firstCoaccusalCard.expect.element('@undoButton').text.to.equal('Undo');
 
-          client.waitForText(
-            this.pinboardPage.section.pinnedSection.section.officers.section.lastCardOfficerName.selector,
-            (text) => text === 'Richard Sullivan',
-            2000
-          );
+          const pinnedSection = this.pinboardPage.section.pinnedSection;
+          pinnedSection.section.officers.expect.section('@secondCard').to.be.present.after(2000);
+          const secondCard = pinnedSection.section.officers.section.secondCard;
+          secondCard.expect.element('@officerName').text.to.equal('Richard Sullivan');
 
-          client.pause(200);
-
-          client.assertCount(this.pinboardPage.section.pinnedSection.section.officers.section.card.selector, 2);
-
+          client.assertCount(pinnedSection.section.officers.section.card.selector, 2);
           client.assertCount(relevantCoaccusalsSection.section.coaccusalCard.selector, 3);
           client.assertCount(this.pinboardPage.section.relevantDocuments.section.documentCard.selector, 6);
           client.assertCount(this.pinboardPage.section.relevantComplaints.section.complaintCard.selector, 8);
@@ -580,16 +581,13 @@ describe('Pinboard Page', function () {
           firstComplaintCard.expect.element('@undoText').text.to.equal('Complaint added.');
           firstComplaintCard.expect.element('@undoButton').text.to.equal('Undo');
 
-          client.waitForText(
-            this.pinboardPage.section.pinnedSection.section.crs.section.lastCardCategory.selector,
-            (text) => text === 'Lockup Procedures',
-            2000
-          );
+          const pinnedSection = this.pinboardPage.section.pinnedSection;
+          const secondCard = pinnedSection.section.crs.section.secondCard;
 
-          client.pause(200);
+          pinnedSection.section.crs.expect.section('@secondCard').to.be.visible.after(2000);
+          secondCard.expect.element('@category').text.to.equal('Lockup Procedures');
 
-          client.assertCount(this.pinboardPage.section.pinnedSection.section.crs.section.card.selector, 2);
-
+          client.assertCount(pinnedSection.section.crs.section.card.selector, 2);
           client.assertCount(relevantComplaintsSection.section.complaintCard.selector, 3);
           client.assertCount(this.pinboardPage.section.relevantDocuments.section.documentCard.selector, 6);
           client.assertCount(this.pinboardPage.section.relevantCoaccusals.section.coaccusalCard.selector, 8);
@@ -678,16 +676,12 @@ describe('Pinboard Page', function () {
           firstDocumentCard.expect.element('@undoText').text.to.equal('Document added.');
           firstDocumentCard.expect.element('@undoButton').text.to.equal('Undo');
 
-          client.waitForText(
-            this.pinboardPage.section.pinnedSection.section.crs.section.lastCardCategory.selector,
-            (text) => text === 'Lockup Procedures',
-            2000
-          );
+          const crs = this.pinboardPage.section.pinnedSection.section.crs;
 
-          client.pause(200);
+          crs.expect.section('@secondCard').to.be.visible.after(1100);
+          crs.section.secondCard.expect.element('@category').text.to.equal('Lockup Procedures');
 
-          client.assertCount(this.pinboardPage.section.pinnedSection.section.crs.section.card.selector, 2);
-
+          client.assertCount(crs.section.card.selector, 2);
           client.assertCount(relevantDocumentsSection.section.documentCard.selector, 4);
           client.assertCount(this.pinboardPage.section.relevantComplaints.section.complaintCard.selector, 6);
           client.assertCount(this.pinboardPage.section.relevantCoaccusals.section.coaccusalCard.selector, 8);

@@ -8,7 +8,7 @@ import { officerUrl } from 'utils/url-util';
 
 
 const isItemPinned = (type, id, pinboardItems) => {
-  return (pinboardItems.hasOwnProperty(type)) &&
+  return (Object.prototype.hasOwnProperty.call(pinboardItems, type)) &&
          (pinboardItems[type].indexOf(id) !== -1);
 };
 

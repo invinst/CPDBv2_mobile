@@ -5,20 +5,22 @@ import TrackVisibility from 'react-on-screen';
 import styles from './pinboard-page.sass';
 import SearchBar from './search-bar';
 import Header from './header';
-import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
+import { PinboardPaneSectionWithSpinner } from 'components/pinboard-page/pinboard-pane-section';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
 import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
 import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
 import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import Footer from 'components/footer';
-import EmptyPinboard from './empty-pinboard';
+import EmptyPinboardContainer from 'containers/pinboard-page/empty-pinboard-container';
 import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
 
 
 export default class PinboardPage extends Component {
   componentDidMount() {
-    const { params, pushBreadcrumbs, location, routes } = this.props;
+    const { params, pushBreadcrumbs, location, routes, requestCMS, hasCMS } = this.props;
     pushBreadcrumbs({ location, routes, params });
+
+    hasCMS || requestCMS();
   }
 
   componentDidUpdate() {
@@ -34,7 +36,7 @@ export default class PinboardPage extends Component {
       params,
       initialRequested,
       isEmptyPinboard,
-      examplePinboards,
+      requesting,
     } = this.props;
 
     if (!initialRequested) {
@@ -42,7 +44,7 @@ export default class PinboardPage extends Component {
     }
 
     if (isEmptyPinboard) {
-      return <EmptyPinboard examplePinboards={ examplePinboards } />;
+      return <EmptyPinboardContainer />;
     }
 
     return (
@@ -50,10 +52,11 @@ export default class PinboardPage extends Component {
         <PinboardInfoContainer />
         <div className='data-visualizations'>
           <TrackVisibility partialVisibility={ true }>
-            <PinboardPaneSection
+            <PinboardPaneSectionWithSpinner
               changePinboardTab={ changePinboardTab }
               currentTab={ currentTab }
               hasMapMarker={ hasMapMarker }
+              requesting={ requesting }
             />
           </TrackVisibility>
         </div>
@@ -92,11 +95,14 @@ PinboardPage.propTypes = {
   hasMapMarker: PropTypes.bool,
   initialRequested: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,
-  examplePinboards: PropTypes.array,
+  requesting: PropTypes.bool,
+  hasCMS: PropTypes.bool,
+  requestCMS: PropTypes.bool,
 };
 
 PinboardPage.defaultProps = {
   itemsByTypes: {},
   pushBreadcrumbs: () => {},
   initialRequested: true,
+  requestCMS: () => {},
 };

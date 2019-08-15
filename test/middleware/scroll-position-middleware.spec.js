@@ -30,7 +30,7 @@ describe('scrollPositionMiddleware', function () {
   it('should scroll to top if route changed', function () {
     const store = {};
     const next = stub();
-    const action = { type: 'ROUTE_CHANGED', payload: { from: '/', to: 'search/'} };
+    const action = { type: 'ROUTE_CHANGED', payload: { from: '/', to: 'search/' } };
 
     scrollPositionMiddleware(store)(next)(action);
 

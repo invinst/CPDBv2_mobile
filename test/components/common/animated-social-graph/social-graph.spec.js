@@ -1,7 +1,7 @@
 import React from 'react';
 import { stub } from 'sinon';
 import { mount } from 'enzyme';
-import { forOwn, find, forIn, filter, round } from 'lodash';
+import { forOwn, find, filter, round } from 'lodash';
 import should from 'should';
 
 import SocialGraph from 'components/common/animated-social-graph/social-graph';
@@ -226,26 +226,26 @@ describe('SocialGraph', function () {
     const instance = wrapper.instance();
 
     const expectedNodes = [
-      { id: 0, fname: 'Glenn Evans', uid: 8138, degree: 3, group: 1 },
-      { id: 1, fname: 'Isaac Lee', uid: 15956, degree: 2, group: 0 },
-      { id: 2, fname: 'Thomas Kampenga', uid: 14045, degree: 6, group: 3 },
-      { id: 3, fname: 'Melvin Ector', uid: 31945, degree: 7, group: 1 },
-      { id: 4, fname: 'Sean Brandon', uid: 2671, degree: 2, group: 0 },
-      { id: 5, fname: 'Estella Perez-Stanford', uid: 22297, degree: 0, group: 0 },
-      { id: 6, fname: 'Johnny Cavers', uid: 4269, degree: 7, group: 1 },
-      { id: 7, fname: 'Gilbert Cobb', uid: 4881, degree: 5, group: 5 },
-      { id: 8, fname: 'John Hart', uid: 11580, degree: 2, group: 6 },
-      { id: 9, fname: 'William Roberison', uid: 24157, degree: 1, group: 0 },
-      { id: 10, fname: 'Francis Higgins', uid: 12176, degree: 4, group: 3 },
-      { id: 11, fname: 'David Portis', uid: 22861, degree: 3, group: 6 },
-      { id: 12, fname: 'Eugene Offett', uid: 21194, degree: 7, group: 5 },
-      { id: 13, fname: 'Joseph Blaye', uid: 2171, degree: 0, group: 0 },
-      { id: 14, fname: 'Charles Toussas', uid: 28805, degree: 4, group: 3 },
-      { id: 15, fname: 'Bennie Watson', uid: 30209, degree: 4, group: 1 },
-      { id: 16, fname: 'Tracy Hughes', uid: 12737, degree: 0, group: 0 },
-      { id: 17, fname: 'Donnell Calhoun', uid: 3663, degree: 10, group: 5 },
-      { id: 18, fname: 'Hardy White', uid: 30466, degree: 6, group: 6 },
-      { id: 19, fname: 'Matthew Brandon', uid: 2675, degree: 1, group: 0 }
+      { id: 0, fname: 'Glenn Evans', uid: 8138, degree: 3 },
+      { id: 1, fname: 'Isaac Lee', uid: 15956, degree: 2 },
+      { id: 2, fname: 'Thomas Kampenga', uid: 14045, degree: 6 },
+      { id: 3, fname: 'Melvin Ector', uid: 31945, degree: 7 },
+      { id: 4, fname: 'Sean Brandon', uid: 2671, degree: 2 },
+      { id: 5, fname: 'Estella Perez-Stanford', uid: 22297, degree: 0 },
+      { id: 6, fname: 'Johnny Cavers', uid: 4269, degree: 7 },
+      { id: 7, fname: 'Gilbert Cobb', uid: 4881, degree: 5 },
+      { id: 8, fname: 'John Hart', uid: 11580, degree: 2 },
+      { id: 9, fname: 'William Roberison', uid: 24157, degree: 1 },
+      { id: 10, fname: 'Francis Higgins', uid: 12176, degree: 4 },
+      { id: 11, fname: 'David Portis', uid: 22861, degree: 3 },
+      { id: 12, fname: 'Eugene Offett', uid: 21194, degree: 7 },
+      { id: 13, fname: 'Joseph Blaye', uid: 2171, degree: 0 },
+      { id: 14, fname: 'Charles Toussas', uid: 28805, degree: 4 },
+      { id: 15, fname: 'Bennie Watson', uid: 30209, degree: 4 },
+      { id: 16, fname: 'Tracy Hughes', uid: 12737, degree: 0 },
+      { id: 17, fname: 'Donnell Calhoun', uid: 3663, degree: 10 },
+      { id: 18, fname: 'Hardy White', uid: 30466, degree: 6 },
+      { id: 19, fname: 'Matthew Brandon', uid: 2675, degree: 1 }
     ];
 
     const expectedLinks = [
@@ -298,14 +298,6 @@ describe('SocialGraph', function () {
       '7,12': 1, '7,2': 1, '7,3': 1, '7,7': 1, '8,11': 1, '8,18': 1, '8,8': 1, '9,9': 1,
     };
 
-    const expectedMaxNodeInCommunities = {
-      '0': { uid: 15956 },
-      '1': { uid: 31945 },
-      '3': { uid: 14045 },
-      '5': { uid: 3663 },
-      '6': { uid: 30466 },
-    };
-
     const graphNodes = instance.data.nodes;
 
     graphNodes.length.should.eql(expectedNodes.length);
@@ -329,16 +321,6 @@ describe('SocialGraph', function () {
     });
     instance.data.linkedByIndex.should.eql(expectedLinkedByIndex);
 
-    const maxNodeInCommunities = instance.data.maxNodeInCommunities;
-
-    Object.keys(maxNodeInCommunities).should.eql(Object.keys(expectedMaxNodeInCommunities));
-
-    forIn(maxNodeInCommunities, (maxNode, group) => {
-      maxNode.uid.should.eql(expectedMaxNodeInCommunities[group].uid);
-    });
-
-    instance.data.maxWeight.should.eql(18);
-
     wrapper.getDOMNode().getElementsByClassName('node').length.should.eql(expectedNodes.length);
     wrapper.getDOMNode().getElementsByClassName('link').length.should.eql(expectedLinks.length);
 
@@ -359,26 +341,26 @@ describe('SocialGraph', function () {
     wrapper.setProps({ timelineIdx: 14 });
 
     const expectedNodes = [
-      { id: 0, fname: 'Glenn Evans', uid: 8138, degree: 0, group: 0 },
-      { id: 1, fname: 'Isaac Lee', uid: 15956, degree: 0, group: 0 },
-      { id: 2, fname: 'Thomas Kampenga', uid: 14045, degree: 2, group: 3 },
-      { id: 3, fname: 'Melvin Ector', uid: 31945, degree: 0, group: 0 },
-      { id: 4, fname: 'Sean Brandon', uid: 2671, degree: 0, group: 0 },
-      { id: 5, fname: 'Estella Perez-Stanford', uid: 22297, degree: 0, group: 0 },
-      { id: 6, fname: 'Johnny Cavers', uid: 4269, degree: 0, group: 0 },
-      { id: 7, fname: 'Gilbert Cobb', uid: 4881, degree: 0, group: 0 },
-      { id: 8, fname: 'John Hart', uid: 11580, degree: 2, group: 9 },
-      { id: 9, fname: 'William Roberison', uid: 24157, degree: 1, group: 0 },
-      { id: 10, fname: 'Francis Higgins', uid: 12176, degree: 1, group: 3 },
-      { id: 11, fname: 'David Portis', uid: 22861, degree: 3, group: 9 },
-      { id: 12, fname: 'Eugene Offett', uid: 21194, degree: 1, group: 0 },
-      { id: 13, fname: 'Joseph Blaye', uid: 2171, degree: 0, group: 0 },
-      { id: 14, fname: 'Charles Toussas', uid: 28805, degree: 2, group: 3 },
-      { id: 15, fname: 'Bennie Watson', uid: 30209, degree: 0, group: 0 },
-      { id: 16, fname: 'Tracy Hughes', uid: 12737, degree: 0, group: 0 },
-      { id: 17, fname: 'Donnell Calhoun', uid: 3663, degree: 1, group: 0 },
-      { id: 18, fname: 'Hardy White', uid: 30466, degree: 2, group: 9 },
-      { id: 19, fname: 'Matthew Brandon', uid: 2675, degree: 1, group: 0 }
+      { id: 0, fname: 'Glenn Evans', uid: 8138, degree: 0 },
+      { id: 1, fname: 'Isaac Lee', uid: 15956, degree: 0 },
+      { id: 2, fname: 'Thomas Kampenga', uid: 14045, degree: 2 },
+      { id: 3, fname: 'Melvin Ector', uid: 31945, degree: 0 },
+      { id: 4, fname: 'Sean Brandon', uid: 2671, degree: 0 },
+      { id: 5, fname: 'Estella Perez-Stanford', uid: 22297, degree: 0 },
+      { id: 6, fname: 'Johnny Cavers', uid: 4269, degree: 0 },
+      { id: 7, fname: 'Gilbert Cobb', uid: 4881, degree: 0 },
+      { id: 8, fname: 'John Hart', uid: 11580, degree: 2 },
+      { id: 9, fname: 'William Roberison', uid: 24157, degree: 1 },
+      { id: 10, fname: 'Francis Higgins', uid: 12176, degree: 1 },
+      { id: 11, fname: 'David Portis', uid: 22861, degree: 3 },
+      { id: 12, fname: 'Eugene Offett', uid: 21194, degree: 1 },
+      { id: 13, fname: 'Joseph Blaye', uid: 2171, degree: 0 },
+      { id: 14, fname: 'Charles Toussas', uid: 28805, degree: 2 },
+      { id: 15, fname: 'Bennie Watson', uid: 30209, degree: 0 },
+      { id: 16, fname: 'Tracy Hughes', uid: 12737, degree: 0 },
+      { id: 17, fname: 'Donnell Calhoun', uid: 3663, degree: 1 },
+      { id: 18, fname: 'Hardy White', uid: 30466, degree: 2 },
+      { id: 19, fname: 'Matthew Brandon', uid: 2675, degree: 1 }
     ];
 
     const expectedLinks = [
@@ -391,12 +373,6 @@ describe('SocialGraph', function () {
       { sourceUid: 12176, targetUid: 28805, weight: 4, className: '' },
       { sourceUid: 11580, targetUid: 30466, weight: 5, className: 'current-link' },
     ];
-
-    const expectedMaxNodeInCommunities = {
-      '0': { uid: 24157 },
-      '3': { uid: 14045 },
-      '9': { uid: 22861 },
-    };
 
     const expectedLinkedByIndex = {
       '0,0': 1, '0,18': 1, '0,3': 1, '1,1': 1, '10,10': 1, '10,12': 1, '10,14': 1, '10,2': 1,
@@ -430,16 +406,6 @@ describe('SocialGraph', function () {
       graphLink.className.should.eql(expectedLink.className);
     });
     instance.data.linkedByIndex.should.eql(expectedLinkedByIndex);
-
-    const maxNodeInCommunities = instance.data.maxNodeInCommunities;
-
-    Object.keys(maxNodeInCommunities).should.eql(Object.keys(expectedMaxNodeInCommunities));
-
-    forIn(maxNodeInCommunities, (maxNode, group) => {
-      maxNode.uid.should.eql(expectedMaxNodeInCommunities[group].uid);
-    });
-
-    instance.data.maxWeight.should.eql(5);
 
     wrapper.getDOMNode().getElementsByClassName('node').length.should.eql(expectedNodes.length);
     wrapper.getDOMNode().getElementsByClassName('link').length.should.eql(expectedLinks.length);
@@ -485,30 +451,6 @@ describe('SocialGraph', function () {
     visibleGraphNodes.should.have.length(20);
   });
 
-  it('should move d to be adjacent to the cluster node when call cluster', function () {
-    wrapper = mount(
-      <SocialGraph
-        officers={ officers }
-        coaccusedData={ coaccusedData }
-        listEvent={ listEvent }
-      />
-    );
-
-    const instance = wrapper.instance();
-
-    const graphNode = { id: 11, fname: 'David Portis', uid: 22861, degree: 3, group: 6, x: 40, y: 60 };
-    const cluster = instance.data.maxNodeInCommunities[graphNode.group];
-    cluster.x = 10;
-    cluster.y = 20;
-
-    instance.cluster(0.5)(graphNode);
-
-    round(graphNode.x, 2).should.eql(27.55);
-    round(graphNode.y, 2).should.eql(43.4);
-    round(cluster.x, 2).should.eql(22.45);
-    round(cluster.y, 2).should.eql(36.6);
-  });
-
   it('should resolves collisions between d and all other circles when call collide', function () {
     wrapper = mount(
       <SocialGraph
@@ -520,8 +462,8 @@ describe('SocialGraph', function () {
 
     const instance = wrapper.instance();
 
-    const graphNode1 = { id: 7, fname: 'Gilbert Cobb', uid: 4881, degree: 5, group: 5, x: 390, y: 405 };
-    const graphNode2 = { id: 12, fname: 'Eugene Offett', uid: 21194, degree: 7, group: 5, x: 387, y: 418 };
+    const graphNode1 = { id: 7, fname: 'Gilbert Cobb', uid: 4881, degree: 5, x: 390, y: 405 };
+    const graphNode2 = { id: 12, fname: 'Eugene Offett', uid: 21194, degree: 7, x: 387, y: 418 };
 
     const graphNodes = [graphNode1, graphNode2];
     instance.data.nodes = graphNodes;

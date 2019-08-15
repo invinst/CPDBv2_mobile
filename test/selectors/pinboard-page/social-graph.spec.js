@@ -1,4 +1,8 @@
-import { graphDataSelector, getRequesting } from 'selectors/pinboard-page/social-graph';
+import {
+  graphDataSelector,
+  getSocialGraphRequesting,
+  getCoaccusedData
+} from 'selectors/pinboard-page/social-graph';
 
 
 describe('PinboardPage selectors', function () {
@@ -13,10 +17,20 @@ describe('PinboardPage selectors', function () {
                 {
                   'full_name': 'Jerome Finnigan',
                   'id': 1,
+                  'percentile': {
+                    'percentile_trr': '78.2707',
+                    'percentile_allegation_civilian': '97.8772',
+                    'percentile_allegation_internal': '61.1521'
+                  },
                 },
                 {
                   'full_name': 'Edward May',
-                  'id': 2
+                  'id': 2,
+                  'percentile': {
+                    'percentile_trr': '80',
+                    'percentile_allegation_civilian': '85',
+                    'percentile_allegation_internal': '90'
+                  },
                 }
               ],
               'coaccused_data': [
@@ -55,10 +69,12 @@ describe('PinboardPage selectors', function () {
           {
             fullName: 'Jerome Finnigan',
             id: 1,
+            visualTokenBackground: '#f0201e',
           },
           {
             fullName: 'Edward May',
-            id: 2
+            id: 2,
+            visualTokenBackground: '#f0201e',
           }
         ],
         coaccusedData: [
@@ -93,17 +109,62 @@ describe('PinboardPage selectors', function () {
 
   describe('getRequesting', function () {
     it('should return requesting status', function () {
-      getRequesting({
+      getSocialGraphRequesting({
         pinboardPage: {
           graphData: { requesting: false, data: {} }
         }
       }).should.be.false();
 
-      getRequesting({
+      getSocialGraphRequesting({
         pinboardPage: {
           graphData: { requesting: true, data: {}, }
         }
       }).should.be.true();
+    });
+  });
+
+  describe('getCoaccusedData', function () {
+    it('should return coaccused data data correctly', function () {
+      const coaccusedData = [
+        {
+          'officer_id_1': 1,
+          'officer_id_2': 2,
+          'incident_date': '1988-10-03',
+          'accussed_count': 1,
+        },
+        {
+          'officer_id_1': 3,
+          'officer_id_2': 4,
+          'incident_date': '1990-10-03',
+          'accussed_count': 5,
+        }
+      ];
+      const state = {
+        pinboardPage: {
+          graphData: {
+            requesting: false,
+            data: {
+              officers: [
+                {
+                  'full_name': 'Jerome Finnigan',
+                  'id': 1,
+                  'percentile': {
+                    'percentile_trr': '78.2707',
+                    'percentile_allegation_civilian': '97.8772',
+                    'percentile_allegation_internal': '61.1521'
+                  },
+                },
+              ],
+              'coaccused_data': coaccusedData,
+              'list_event': [
+                '1988-10-03',
+              ]
+            }
+          }
+        }
+      };
+
+      getCoaccusedData(state).should.eql(coaccusedData);
     });
   });
 });

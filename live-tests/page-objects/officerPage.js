@@ -106,6 +106,7 @@ module.exports = {
   },
 
   elements: {
+    body: 'body',
     officerName: '.officer-name',
     mapTabButton: {
       selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[2]',
@@ -126,6 +127,7 @@ module.exports = {
       selector: '.breadcrumbs',
       breadcrumbSelector: '.breadcrumbs > .breadcrumb-item-wrapper',
       elements: {
+        wrapper: '.breadcrumb-item-wrapper',
         firstBreadcrumb: nthBreadcrumb(1),
         secondBreadcrumb: nthBreadcrumb(2),
         thirdBreadcrumb: nthBreadcrumb(3),

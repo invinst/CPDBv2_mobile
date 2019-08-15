@@ -9,7 +9,8 @@ const baseRelevantComplaints = (type) => ({
       selector: `.relevant-${type}s .swiper-slide > div:first-child`,
       elements: {
         plusButton: {
-          selector: `//div[contains(@class, "relevant-${type}s")]//span[contains(@class, "swiper-slide")][1]//div[contains(@class, "plus-button")]`,
+          selector: `//div[contains(@class, "relevant-${type}s")]` +
+            '//span[contains(@class, "swiper-slide")][1]//div[contains(@class, "plus-button")]',
           locateStrategy: 'xpath',
         },
         incidentDate: '.incident-date',
@@ -30,10 +31,13 @@ const baseRelevantComplaints = (type) => ({
 
 module.exports = {
   url: function (pinboardId) {
+    if (!pinboardId)
+      return `${this.api.globals.clientUrl}/pinboard/`;
     return `${this.api.globals.clientUrl}/pinboard/${pinboardId}/pinboard-title/`;
   },
 
   elements: {
+    body: 'body',
     header: '.header-parent',
     highlightedMenuItem: '.menu-item.highlight',
     searchBar: {
@@ -67,6 +71,12 @@ module.exports = {
       selector: '//div[contains(@class, "legend__legend")]//div[2]//span[contains(@class, "legend-row-number")]',
       locateStrategy: 'xpath'
     },
+    currentDate: '.current-date-label',
+    biggestGraphNode: {
+      selector: '(//*[@r="7"])',
+      locateStrategy: 'xpath'
+    },
+    timelineSlider: '.test--timeline-slider',
   },
 
   sections: {
@@ -96,8 +106,11 @@ module.exports = {
                 }
               },
             },
-            lastCardOfficerName: {
-              selector: '.type-cards > .pinned-grid-item:last-child .officer-name',
+            secondCard: {
+              selector: '.type-cards > .pinned-grid-item:nth-child(2)',
+              elements: {
+                officerName: '.officer-name',
+              }
             },
           },
         },
@@ -123,8 +136,11 @@ module.exports = {
                 }
               }
             },
-            lastCardCategory: {
-              selector: '.test--CR-section .type-cards > .pinned-grid-item:last-child .location-card-category',
+            secondCard: {
+              selector: '.type-cards > .pinned-grid-item:nth-child(2)',
+              elements: {
+                category: '.location-card-category',
+              }
             },
           },
         },
@@ -157,24 +173,30 @@ module.exports = {
     graphNodes: {
       selector: '.node',
     },
+    shownGraphNodes: {
+      selector: '//*[name()="circle" and contains(@class, "node") and contains(@style, "opacity: 1")]',
+      locateStrategy: 'xpath',
+    },
+    hiddenGraphNodes: {
+      selector: '//*[name()="circle" and contains(@class, "node") and contains(@style, "opacity: 0.1")]',
+      locateStrategy: 'xpath',
+    },
     graphLinks: {
       selector: '.link',
+    },
+    shownGraphLinks: {
+      selector: '//*[name()="line" and contains(@class, "link") and contains(@style, "opacity: 1")]',
+      locateStrategy: 'xpath',
+    },
+    hiddenGraphLinks: {
+      selector: '//*[name()="line" and contains(@class, "link") and contains(@style, "opacity: 0.1")]',
+      locateStrategy: 'xpath',
     },
     timeline: {
       selector: '.graph-control-panel',
       elements: {
         toggleTimelineButton: '.toggle-timeline-btn',
       }
-    },
-    timelineSlider: {
-      selector: '.test--timeline-slider',
-    },
-    biggestGraphNode: {
-      selector: '(//*[@r="7"])',
-      locateStrategy: 'xpath'
-    },
-    currentDate: {
-      selector: '.current-date-label',
     },
     pinboardPaneMenu: {
       selector: '(//div[contains(@class, "pinboard-pane-section-menu")])',

@@ -16,13 +16,15 @@ import {
   addItemToPinboardState,
   removeItemFromPinboardState,
   fetchPinboardSocialGraph,
-  fetchPinboardGeographicData,
+  fetchFirstPagePinboardGeographicCrs,
+  fetchFirstPagePinboardGeographicTrrs,
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
   updatePinboardInfoState,
   performFetchPinboardRelatedData
 } from 'actions/pinboard';
+import { showToast } from 'actions/toast';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 
 
@@ -391,7 +393,8 @@ describe('createOrUpdatePinboard middleware', function () {
       dispatched.should.eql(action);
 
       store.dispatch.should.be.calledWith(fetchPinboardSocialGraph('66ef1560'));
-      store.dispatch.should.be.calledWith(fetchPinboardGeographicData('66ef1560'));
+      store.dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicCrs({ 'pinboard_id': '66ef1560' }));
+      store.dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicTrrs({ 'pinboard_id': '66ef1560' }));
       store.dispatch.should.be.calledWith(fetchPinboardRelevantDocuments('66ef1560'));
       store.dispatch.should.be.calledWith(fetchPinboardRelevantCoaccusals('66ef1560'));
       store.dispatch.should.be.calledWith(fetchPinboardRelevantComplaints('66ef1560'));
@@ -592,5 +595,43 @@ describe('createOrUpdatePinboard middleware', function () {
     dispatched.should.eql(action);
 
     store.dispatch.should.not.be.called();
+  });
+
+  describe('toast', function () {
+    it('should show toast on ADD_OR_REMOVE_ITEM_IN_PINBOARD', function (done) {
+      const action = {
+        type: ADD_OR_REMOVE_ITEM_IN_PINBOARD,
+        payload: {
+          id: '123',
+          type: 'CR',
+          isPinned: false,
+        }
+      };
+      const store = createStore(PinboardFactory.build());
+
+      let dispatched;
+      createOrUpdatePinboard(store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      store.dispatch.should.be.calledWith(addItemToPinboardState({
+        id: '123',
+        type: 'CR',
+        isPinned: false,
+      }));
+
+      store.dispatch.should.be.calledWith(showToast({
+        id: '123',
+        type: 'CR',
+        isPinned: false,
+      }));
+
+      setTimeout(
+        () => {
+          store.dispatch.should.be.calledWith(savePinboard());
+          done();
+        },
+        50
+      );
+    });
   });
 });

@@ -9,7 +9,6 @@ import { browserHistory } from 'react-router';
 import * as IntercomUtils from 'utils/intercom';
 import SearchPage from 'components/search-page';
 import SearchCategory from 'components/search-page/search-category';
-import constants from 'constants';
 import * as IntercomTracking from 'utils/intercom-tracking';
 
 
@@ -36,7 +35,7 @@ describe('<SearchPage />', function () {
           query={ 'ab' }
           officers={ { data: [1] } }
           undefined={ { data: [1] } }
-         />
+        />
       );
       const instance = wrapper.instance();
 
@@ -167,7 +166,7 @@ describe('<SearchPage />', function () {
     });
 
     it('should set this.searchInput ref to its own instance', function () {
-      const wrapper = mount(<SearchPage  />);
+      const wrapper = mount(<SearchPage />);
 
       const refInstance = wrapper.instance().searchInput;
       (typeof refInstance).should.not.eql('undefined');
@@ -188,63 +187,6 @@ describe('<SearchPage />', function () {
       spyForceUpdate.called.should.be.true();
 
       spyForceUpdate.restore();
-    });
-  });
-
-  describe('calculateDynamicBottomPaddingStyle', () => {
-    it('should return correct height when there is no last category', () => {
-      const wrapper = shallow(
-        <SearchPage />
-      );
-      const instance = wrapper.instance();
-      instance.lastCategoryHeight = null;
-
-      const result = instance.calculateDynamicBottomPaddingStyle();
-      const dynamicBottomPaddingOffset = (
-        constants.QUERY_INPUT_HEIGHT +
-        constants.SEARCH_CATEGORY_LINKS_HEIGHT +
-        2 * constants.NEW_DIVIDER_WEIGHT
-      );
-      const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
-
-      result.should.eql({
-        height
-      });
-    });
-
-    it('should return correct height when there is category', () => {
-      const wrapper = shallow(
-        <SearchPage />
-      );
-      const instance = wrapper.instance();
-      instance.lastCategoryHeight = 1;
-
-      const result = instance.calculateDynamicBottomPaddingStyle();
-      const dynamicBottomPaddingOffset = (
-        constants.QUERY_INPUT_HEIGHT +
-        constants.SEARCH_CATEGORY_LINKS_HEIGHT +
-        2 * constants.NEW_DIVIDER_WEIGHT +
-        1
-      );
-      const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
-
-      result.should.eql({
-        height
-      });
-    });
-
-    it('should return minimum height when lastCategoryHeight is sufficiently large', () => {
-      const wrapper = shallow(
-        <SearchPage />
-      );
-      const instance = wrapper.instance();
-      instance.lastCategoryHeight = 9999;
-
-      const result = instance.calculateDynamicBottomPaddingStyle();
-
-      result.should.eql({
-        height: '133px'
-      });
     });
   });
 
@@ -411,5 +353,21 @@ describe('<SearchPage />', function () {
       browserHistoryPush.restore();
       done();
     }, 50);
+  });
+
+  it('should show toast on toast prop change', function () {
+    const showToastStub = spy(SearchPage.prototype, 'showToast');
+
+    const wrapper = shallow(
+      <SearchPage />
+    );
+    wrapper.setProps({
+      toast: {
+        type: 'OFFICER',
+        actionType: 'added',
+      }
+    });
+
+    showToastStub.should.be.called();
   });
 });

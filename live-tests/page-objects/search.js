@@ -27,6 +27,7 @@ module.exports = {
   },
 
   elements: {
+    body: 'body',
     queryInput: '.query-input',
     clearIcon: '.clear-icon',
     suggestedHeader: '#search-category-suggested',
@@ -39,6 +40,7 @@ module.exports = {
     trrsHeader: '#search-category-trrs',
     officersHeader: '#search-category-officers',
     pinboardBar: '.test--pinboard-bar',
+    toast: '.Toastify__toast-body',
   },
 
   sections: {

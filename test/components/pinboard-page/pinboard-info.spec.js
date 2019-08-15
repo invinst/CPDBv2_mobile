@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import { stub, spy } from 'sinon';
 
 import PinboardInfo from 'components/pinboard-page/pinboard-info';
-import AutosaveTextInput from 'components/common/autosave-inputs/autosave-text-input';
 import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-textarea-input';
 
 
@@ -21,13 +20,31 @@ describe('<PinboardInfo />', function () {
         updatePinboardInfo={ updatePinboardInfoStub }
       />
     );
+    const autosaveTextareaInputs = wrapper.find(AutosaveTextareaInput);
+    autosaveTextareaInputs.should.have.length(2);
 
-    const titleTextInput = wrapper.find(AutosaveTextInput);
-    const descriptionTextareaInput = wrapper.find(AutosaveTextareaInput);
-    titleTextInput.prop('save').should.eql(updatePinboardInfoStub);
-    descriptionTextareaInput.prop('save').should.eql(updatePinboardInfoStub);
-    titleTextInput.prop('value').should.eql('This is pinboard title');
-    descriptionTextareaInput.prop('value').should.eql('This is pinboard description');
+    const pinboardTitle = autosaveTextareaInputs.at(0);
+    pinboardTitle.prop('className').should.eql('pinboard-title');
+    pinboardTitle.prop('value').should.eql('This is pinboard title');
+    pinboardTitle.prop('placeholder').should.eql('Title your pinboard');
+    pinboardTitle.prop('fieldType').should.eql('title');
+    pinboardTitle.prop('save').should.eql(updatePinboardInfoStub);
+    pinboardTitle.prop('textareaLineHeight').should.eql(31);
+
+    const pinboardDescription = autosaveTextareaInputs.at(1);
+    pinboardDescription.prop('className').should.eql('pinboard-description');
+    pinboardDescription.prop('value').should.eql('This is pinboard description');
+    pinboardDescription.prop('placeholder').should.eql(
+      'Now, click here to write a brief description of your pinboard.'
+    );
+    pinboardDescription.prop('fieldType').should.eql('description');
+    pinboardDescription.prop('save').should.eql(updatePinboardInfoStub);
+    pinboardDescription.prop('textareaLineHeight').should.eql(16);
+
+    const title = wrapper.find('.pinboard-title');
+    const description = wrapper.find('.pinboard-description');
+    title.text().should.eql('This is pinboard title');
+    description.text().should.eql('This is pinboard description');
   });
 
   it('should replace location history when title is updated', function () {

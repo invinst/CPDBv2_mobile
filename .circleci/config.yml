@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/node:8.11.3-browsers
+      - image: circleci/node:8-browsers
 
     steps:
       - checkout
@@ -199,12 +199,6 @@ workflows:
                 - beta
                 - master
       - notify_slack:
-          requires:
-            - deploy
-          filters:
-            branches:
-              only: master
-      - reset_staging_branch:
           requires:
             - deploy
           filters:

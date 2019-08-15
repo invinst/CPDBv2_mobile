@@ -4,8 +4,7 @@ import {
   crMapMarkersTransform,
   trrMapMarkerTransform,
   hasMapMarkersSelector,
-  getCurrentTab,
-  getGeographicDataRequesting,
+  geographicDataRequestingSelector,
 } from 'selectors/pinboard-page/geographic-data';
 
 
@@ -66,8 +65,9 @@ describe('GeographicData selectors', function () {
       const state = {
         pinboardPage: {
           geographicData: {
-            requesting: false,
-            data: [
+            mapCrsDataTotalCount: 5,
+            mapTrrsDataTotalCount: 2,
+            mapCrsData: [
               {
                 category: 'Illegal Search',
                 kind: 'CR',
@@ -89,6 +89,8 @@ describe('GeographicData selectors', function () {
                 crid: '294621',
                 'coaccused_count': 11,
               },
+            ],
+            mapTrrsData: [
               {
                 'trr_id': '123456',
                 kind: 'FORCE',
@@ -101,13 +103,15 @@ describe('GeographicData selectors', function () {
                 taser: true,
                 'firearm_used': false,
               }
-            ]
+            ],
           }
         }
       };
       mapLegendSelector(state).should.eql({
         allegationCount: 3,
         useOfForceCount: 2,
+        allegationLoading: true,
+        useOfForceLoading: false,
       });
     });
   });
@@ -122,7 +126,7 @@ describe('GeographicData selectors', function () {
           lon: -87.73173299999999
         },
         crid: '1045343',
-        date: '2007-01-18',
+        date: 'MAR 17, 2012',
       };
       const secondCr = {
         category: 'Illegal Search',
@@ -132,7 +136,7 @@ describe('GeographicData selectors', function () {
           lon: -87.67122688239999
         },
         crid: '294619',
-        date: '2008-01-18',
+        date: 'MAR 20, 2013',
       };
       const trr = {
         'trr_id': '123456',
@@ -143,11 +147,15 @@ describe('GeographicData selectors', function () {
           lat: 35.3,
           lon: 50.5
         },
-        date: '2009-01-18',
+        date: 'MAY 12, 2015',
       };
       const state = {
         pinboardPage: {
-          geographicData: { requesting: false, data: [firstCr, secondCr, trr] }
+          geographicData: {
+            requesting: false,
+            mapCrsData: [firstCr, secondCr],
+            mapTrrsData: [trr],
+          }
         }
       };
       mapMarkersSelector(state).should.eql([{
@@ -158,7 +166,7 @@ describe('GeographicData selectors', function () {
         kind: 'CR',
         id: '1045343',
         category: 'Illegal Search',
-        date: '2007-01-18',
+        date: 'MAR 17, 2012',
       }, {
         category: 'Illegal Search',
         kind: 'CR',
@@ -167,7 +175,7 @@ describe('GeographicData selectors', function () {
           lon: -87.67122688239999
         },
         id: '294619',
-        date: '2008-01-18',
+        date: 'MAR 20, 2013',
       }, {
         point: {
           lat: 35.3,
@@ -176,7 +184,7 @@ describe('GeographicData selectors', function () {
         kind: 'FORCE',
         id: '123456',
         category: 'Firearm',
-        date: '2009-01-18',
+        date: 'MAY 12, 2015',
       }]);
     });
   });
@@ -185,7 +193,7 @@ describe('GeographicData selectors', function () {
     it('should return false if there is no marker', function () {
       const state = {
         pinboardPage: {
-          geographicData: { requesting: false, data: [] }
+          geographicData: [],
         }
       };
       hasMapMarkersSelector(state).should.be.false();
@@ -196,7 +204,7 @@ describe('GeographicData selectors', function () {
         pinboardPage: {
           geographicData: {
             requesting: false,
-            data: [{
+            mapCrsData: [{
               category: 'Illegal Search',
               kind: 'CR',
               crid: '1045343',
@@ -209,94 +217,27 @@ describe('GeographicData selectors', function () {
     });
   });
 
-  describe('getGeographicDataRequesting', function () {
-    it('should return requesting status', function () {
-      getGeographicDataRequesting({
+  describe('geographicDataRequestingSelector', function () {
+    it('should return false if data is requested', function () {
+      geographicDataRequestingSelector({
         pinboardPage: {
-          geographicData: { requesting: false, data: [] },
+          geographicData: { crsRequesting: false, trrsRequesting: false },
         }
       }).should.be.false();
-      getGeographicDataRequesting({
+    });
+
+    it('should return true if data is requesting', function () {
+      geographicDataRequestingSelector({
         pinboardPage: {
-          geographicData: { requesting: true, data: [] },
+          geographicData: { crsRequesting: true, trrsRequesting: false },
         }
       }).should.be.true();
-    });
-  });
 
-  describe('getCurrentTab', function () {
-    it('should return current tab', function () {
-      const state = {
+      geographicDataRequestingSelector({
         pinboardPage: {
-          graphData: {
-            requesting: false,
-            data: {
-              'coaccused_data': [{
-                'officer_id_1': 1,
-                'officer_id_2': 2,
-                'incident_date': '1988-10-03T00:00:00Z',
-                'accussed_count': 1
-              }]
-            },
-          },
-          geographicData: {
-            requesting: false,
-            data: [{
-              'date': '2006-09-26',
-              'crid': '1000018',
-              'category': 'Operation/Personnel Violations',
-              'coaccused_count': 1,
-              'kind': 'CR'
-            }],
-          },
-          currentTab: 'GEOGRAPHIC'
+          geographicData: { crsRequesting: false, trrsRequesting: true },
         }
-      };
-      getCurrentTab(state).should.eql('GEOGRAPHIC');
-    });
-
-    it('should return NETWORK if both coaccused_data and geographic data are empty', function () {
-      const state = {
-        pinboardPage: {
-          graphData: {
-            requesting: false,
-            data: {
-              'coaccused_data': []
-            },
-          },
-          geographicData: {
-            requesting: false,
-            data: [],
-          },
-          currentTab: undefined
-        }
-      };
-      getCurrentTab(state).should.eql('NETWORK');
-    });
-
-    it('should return GEOGRAPHIC if both coaccused_data are empty', function () {
-      const state = {
-        pinboardPage: {
-          graphData: {
-            requesting: false,
-            data: {
-              'coaccused_data': []
-            },
-          },
-          geographicData: {
-            requesting: false,
-            data: [{
-              'date': '2006-09-26',
-              'crid': '1000018',
-              'category': 'Operation/Personnel Violations',
-              'coaccused_count': 1,
-              'kind': 'CR'
-            }],
-          },
-          currentTab: undefined
-        }
-      };
-      getCurrentTab(state).should.eql('GEOGRAPHIC');
+      }).should.be.true();
     });
   });
 });

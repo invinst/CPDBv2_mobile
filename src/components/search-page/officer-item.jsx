@@ -5,7 +5,7 @@ import style from './officer-item.sass';
 
 
 const OfficerItem = ({
-  item, name, badge, url, percentile, saveToRecent, categoryFilter, addOrRemoveItemInPinboard
+  item, name, badge, url, saveToRecent, categoryFilter, addOrRemoveItemInPinboard
 }) => {
   const handleClick = (categoryFilter, name, url) => saveToRecent({
     type: categoryFilter,
@@ -34,7 +34,6 @@ OfficerItem.propTypes = {
   name: PropTypes.string,
   badge: PropTypes.string,
   url: PropTypes.string,
-  percentile: PropTypes.object,
   saveToRecent: PropTypes.func,
   categoryFilter: PropTypes.string,
   addOrRemoveItemInPinboard: PropTypes.func,
@@ -42,7 +41,6 @@ OfficerItem.propTypes = {
 };
 
 OfficerItem.defaultProps = {
-  percentile: {},
   saveToRecent: () => {},
   item: {},
 };

@@ -11,7 +11,11 @@ import {
   createPinboard,
   updatePinboard,
   fetchPinboardSocialGraph,
-  fetchPinboardGeographicData,
+  fetchPinboardGeographic,
+  fetchFirstPagePinboardGeographicCrs,
+  fetchOtherPagesPinboardGeographicCrs,
+  fetchFirstPagePinboardGeographicTrrs,
+  fetchOtherPagesPinboardGeographicTrrs,
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
@@ -20,9 +24,11 @@ import {
   orderPinboardState,
   savePinboard,
   updatePinboardInfoState,
-  performFetchPinboardRelatedData
+  performFetchPinboardRelatedData,
 } from 'actions/pinboard';
+import { showToast } from 'actions/toast';
 import { getPathname } from 'selectors/common/routing';
+import loadPaginatedData from 'utils/load-paginated-data';
 
 
 const getRequestPinboard = pinboard => ({
@@ -54,6 +60,10 @@ function dispatchUpdateOrCreatePinboard(store, currentPinboard) {
 export default store => next => action => {
   if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD || action.type === ADD_ITEM_IN_PINBOARD_PAGE) {
     const addOrRemove = action.payload.isPinned ? removeItemFromPinboardState : addItemToPinboardState;
+
+    if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD) {
+      store.dispatch(showToast(action.payload));
+    }
 
     Promise.all([store.dispatch(addOrRemove(action.payload))]).finally(() => {
       store.dispatch(savePinboard());
@@ -93,7 +103,19 @@ export default store => next => action => {
         if (_.startsWith(getPathname(state), '/pinboard/') && pinboardId && pinboard.needRefreshData) {
           store.dispatch(performFetchPinboardRelatedData());
           store.dispatch(fetchPinboardSocialGraph(pinboardId));
-          store.dispatch(fetchPinboardGeographicData(pinboardId));
+          store.dispatch(fetchPinboardGeographic());
+          loadPaginatedData(
+            { 'pinboard_id': pinboardId },
+            fetchFirstPagePinboardGeographicCrs,
+            fetchOtherPagesPinboardGeographicCrs,
+            store,
+          );
+          loadPaginatedData(
+            { 'pinboard_id': pinboardId },
+            fetchFirstPagePinboardGeographicTrrs,
+            fetchOtherPagesPinboardGeographicTrrs,
+            store,
+          );
           store.dispatch(fetchPinboardRelevantDocuments(pinboardId));
           store.dispatch(fetchPinboardRelevantCoaccusals(pinboardId));
           store.dispatch(fetchPinboardRelevantComplaints(pinboardId));

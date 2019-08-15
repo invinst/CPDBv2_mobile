@@ -9,7 +9,7 @@ import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
 import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
 import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import SearchBar from 'components/pinboard-page/search-bar';
-import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section/index';
+import { PinboardPaneSectionWithSpinner } from 'components/pinboard-page/pinboard-pane-section';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
 import Footer from 'components/footer';
 import EmptyPinboardPage from 'components/pinboard-page/empty-pinboard';
@@ -110,13 +110,23 @@ describe('<PinboardPage />', function () {
       </Provider>
     );
 
-    wrapper.find(PinboardPaneSection).should.have.length(1);
+    wrapper.find(PinboardPaneSectionWithSpinner).should.have.length(1);
   });
 
   it('should render EmptyPinboard instead of pinboard contents if pinboard is empty', function () {
     const store = MockStore()({
       pinboardPage: {
-        pinboard: {},
+        pinboard: {
+          'example_pinboards': [{
+            id: '66ef1561',
+            title: 'Pinboard 1',
+            description: 'Description 1'
+          }, {
+            id: '66ef1562',
+            title: 'Pinboard 2',
+            description: 'Description 2'
+          }],
+        },
         graphData: {},
         relevantDocuments: defaultPaginationState,
         relevantCoaccusals: defaultPaginationState,
@@ -124,19 +134,9 @@ describe('<PinboardPage />', function () {
       }
     });
 
-    const examplePinboards = [{
-      id: '66ef1561',
-      title: 'Pinboard 1',
-      description: 'Description 1'
-    }, {
-      id: '66ef1562',
-      title: 'Pinboard 2',
-      description: 'Description 2'
-    }];
     const pinboard = {
       title: 'This is pinboard title',
       description: 'This is pinboard description',
-      examplePinboards,
     };
 
     const wrapper = mount(
@@ -145,19 +145,19 @@ describe('<PinboardPage />', function () {
           params={ { pinboardId: '5cd06f2b' } }
           pinboard={ pinboard }
           isEmptyPinboard={ true }
-          examplePinboards={ examplePinboards }
         />
       </Provider>
     );
 
     wrapper.getDOMNode().className.should.containEql('empty');
 
-    wrapper.find(PinboardPaneSection).should.have.length(0);
+    wrapper.find(PinboardPaneSectionWithSpinner).should.have.length(0);
     wrapper.find('.pinboard-title').should.have.length(0);
     wrapper.find('.pinboard-description').should.have.length(0);
     wrapper.find(RelevantSectionContainer).should.have.length(0);
 
     const emptyPinboard = wrapper.find(EmptyPinboardPage);
+
     emptyPinboard.prop('examplePinboards').should.eql([{
       id: '66ef1561',
       title: 'Pinboard 1',
@@ -217,5 +217,37 @@ describe('<PinboardPage />', function () {
 
     pushBreadcrumbs.should.be.calledTwice();
     pushBreadcrumbs.should.be.calledWith({ location: newLocation, routes, params: newParams });
+  });
+
+  it('should requestCMS if does not hasCMS', function () {
+    const requestCMSSpy = spy();
+
+    mount(
+      <PinboardPage
+        params={ { pinboardId: '5cd06f2b' } }
+        pinboard={ { id: '5cd06f2b' } }
+        initialRequested={ false }
+        hasCMS={ false }
+        requestCMS={ requestCMSSpy }
+      />
+    );
+
+    requestCMSSpy.should.be.calledOnce();
+  });
+
+  it('should not requestCMS if hasCMS', function () {
+    const requestCMSSpy = spy();
+
+    mount(
+      <PinboardPage
+        params={ { pinboardId: '5cd06f2b' } }
+        pinboard={ { id: '5cd06f2b' } }
+        initialRequested={ false }
+        hasCMS={ true }
+        requestCMS={ requestCMSSpy }
+      />
+    );
+
+    requestCMSSpy.should.not.be.calledOnce();
   });
 });

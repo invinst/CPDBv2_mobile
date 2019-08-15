@@ -6,13 +6,17 @@
   .map-tab
     height: 353px
 
+  .map-marker
+    &:hover
+      z-index: 10
+
+    &.cr-marker
+      z-index: 0
+
+    &.force-marker
+      z-index: 1
+
 .pinboard-page
   \:local(.map)
     .map-tab
       height: 261px
-
-\:local(.allegation-map-loading)
-  margin: 0 auto
-  display: block
-  width: 176px
-  height: calc(100% - 72px)
