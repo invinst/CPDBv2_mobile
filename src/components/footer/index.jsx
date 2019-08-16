@@ -49,6 +49,7 @@ class Footer extends Component {
           target='_blank'>
           <img className='invist-logo' src={ invistLogoImage } alt='Invisible Institute' />
         </a>
+        <div className='ios-peek'/>
         <Modal
           isOpen={ this.state.legalModalIsOpen }
           onRequestClose={ this.closeModal }
