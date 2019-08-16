@@ -78,7 +78,7 @@ export default class PinboardPage extends Component {
         <Header />
         <SearchBar />
         { this.renderContent() }
-        <Footer />
+        <Footer backgroundColorTop='#231f20' />
       </div>
     );
   }
