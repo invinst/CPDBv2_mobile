@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 
-import Footer from 'components/footer';
 import style from './main-page.sass';
 
 
@@ -23,7 +22,6 @@ class MainPage extends Component {
     return (
       <div className={ cx('content', style.mainPage) }>
         { this.props.children }
-        <Footer />
       </div>
     );
   }

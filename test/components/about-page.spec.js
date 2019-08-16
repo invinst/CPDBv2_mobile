@@ -3,13 +3,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import AboutPage from 'components/about-page';
+import Footer from 'components/footer';
 
 describe('<AboutPage />', () => {
-  it('should be renderable', () => {
-    const wrapper = shallow(<AboutPage />);
-    wrapper.should.be.ok();
-  });
-
   it('should not render anything if data is not loaded', () => {
     const wrapper = shallow(
       <AboutPage content={ null } />
@@ -23,6 +19,7 @@ describe('<AboutPage />', () => {
     );
 
     wrapper.find('.sheet-body').text().should.eql('OneTwo');
+    wrapper.find(Footer).exists.should.be.ok();
   });
 
 });

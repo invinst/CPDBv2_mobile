@@ -16,6 +16,7 @@ import SectionRow from 'components/officer-page/section-row';
 import MetricWidget from 'components/officer-page/metric-widget';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import { OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
+import Footer from 'components/footer';
 
 
 const mockStore = configureStore();
@@ -46,9 +47,9 @@ describe('<OfficerPage />', function () {
     };
   });
 
-  it('should be renderable', function () {
+  it('should render footer', function () {
     const wrapper = shallow(<OfficerPage />);
-    wrapper.should.be.ok();
+    wrapper.find(Footer).exists.should.be.ok();
   });
 
   it('should render LoadingPage if loading', function () {
