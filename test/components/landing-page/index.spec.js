@@ -6,12 +6,13 @@ import configureStore from 'redux-mock-store';
 
 import constants from 'constants';
 import LandingPage from 'components/landing-page';
+import Footer from 'components/footer';
 
 
 describe('<LandingPage />', function () {
-  it('should render', function () {
+  it('should render footer', function () {
     const wrapper = shallow(<LandingPage />);
-    wrapper.should.be.ok();
+    wrapper.find(Footer).exists.should.be.ok();
   });
 
   it('should render fake search input box that links to search page', function () {

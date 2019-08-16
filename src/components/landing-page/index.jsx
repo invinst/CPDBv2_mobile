@@ -9,6 +9,7 @@ import RecentActivities from 'containers/landing-page/recent-activities';
 import NewDocumentAllegations from 'containers/landing-page/new-document-allegations';
 import ComplaintSummaries from 'containers/landing-page/complaint-summaries';
 import style from './landing-page.sass';
+import Footer from 'components/footer';
 
 
 export default class LandingPage extends Component {
@@ -45,6 +46,7 @@ export default class LandingPage extends Component {
         <NewDocumentAllegations />
         <ComplaintSummaries />
         <BottomPadding />
+        <Footer />
       </div>
     );
   }

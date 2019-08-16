@@ -3,6 +3,7 @@ import { Sticky } from 'react-sticky';
 
 import { scrollToTop } from 'utils/navigation-util';
 import style from './about-page.sass';
+import Footer from 'components/footer';
 
 
 export default class AboutPage extends Component {
@@ -24,6 +25,7 @@ export default class AboutPage extends Component {
         <div className='sheet-body'>
           { pTags }
         </div>
+        <Footer />
       </div>
     );
   }
