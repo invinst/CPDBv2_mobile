@@ -368,6 +368,6 @@ describe('<SearchPage />', function () {
       }
     });
 
-    showToastStub.should.be.called();
+    showToastStub.should.be.calledWith('OFFICER added', 'added');
   });
 });
