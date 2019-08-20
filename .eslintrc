@@ -20,6 +20,10 @@
       2,
       "always"
     ],
+    "babel/semi": [
+      2,
+      "always"
+    ],
     "no-unused-vars": [
       2,
       {
@@ -48,6 +52,13 @@
     "eol-last": [
       2
     ],
+    "no-multiple-empty-lines": [
+      2,
+      {
+        "max": 2,
+        "maxEOF": 1
+      }
+    ],
     "no-trailing-spaces": [
       2
     ],
@@ -62,6 +73,10 @@
     "space-before-blocks": 2,
     "vars-on-top": 2,
     "comma-spacing": 2,
+    "comma-dangle": [
+      2,
+      "always-multiline"
+    ],
     "key-spacing": [
       2,
       {
@@ -150,7 +165,8 @@
     }
   },
   "plugins": [
-    "react"
+    "react",
+    "babel"
   ],
   "extends": [
     "eslint:recommended"
