@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions';
 import {
   TRR_REQUEST_DOC_REQUEST_START,
   TRR_REQUEST_DOC_REQUEST_SUCCESS,
-  TRR_REQUEST_DOC_REQUEST_FAILURE
+  TRR_REQUEST_DOC_REQUEST_FAILURE,
 } from 'actions/trr-page';
 
 

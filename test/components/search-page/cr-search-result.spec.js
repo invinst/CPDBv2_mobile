@@ -14,14 +14,14 @@ describe('<CRSearchResult />', () => {
         crid: '1027271',
         url: '/complaint/1027271/',
         category: 'Use Of Force',
-        incidentDate: '06/13/2009'
+        incidentDate: '06/13/2009',
       },
       {
         crid: '1049273',
         url: '/complaint/1049273/',
         category: 'Domestic',
-        incidentDate: '10/13/2011'
-      }
+        incidentDate: '10/13/2011',
+      },
     ];
 
     const wrapper = shallow(
@@ -52,8 +52,8 @@ describe('<CRSearchResult />', () => {
     const crs = [
       {
         crid: '1',
-        url: 'url'
-      }
+        url: 'url',
+      },
     ];
     const wrapper = shallow(
       <CRSearchResult
@@ -67,7 +67,7 @@ describe('<CRSearchResult />', () => {
     saveToRecentSpy.calledWith({
       type: 'CR',
       title: '1',
-      url: 'url'
+      url: 'url',
     }).should.be.true();
   });
 });

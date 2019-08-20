@@ -10,7 +10,7 @@ describe('activeCategory reducer', function () {
   it('should handle UPDATE_ACTIVE_CATEGORY', function () {
     activeCategory({}, {
       type: UPDATE_ACTIVE_CATEGORY,
-      payload: 'officer'
+      payload: 'officer',
     }).should.eql('officer');
   });
 });

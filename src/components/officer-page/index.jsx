@@ -26,7 +26,7 @@ class OfficerPage extends Component {
     const { firstParam, secondParam } = props.params;
     const tabName = secondParam || firstParam;
     this.state = {
-      currentTab: TAB_MAP[tabName] || OFFICER_PAGE_TAB_NAMES.TIMELINE
+      currentTab: TAB_MAP[tabName] || OFFICER_PAGE_TAB_NAMES.TIMELINE,
     };
 
     this.changeTab = this.changeTab.bind(this);
@@ -67,7 +67,7 @@ class OfficerPage extends Component {
       getOfficerCoaccusals,
       getOfficerTimeline,
       isCoaccusalSuccess,
-      isTimelineSuccess
+      isTimelineSuccess,
     } = this.props;
 
     if (!requestOfficerId) {

@@ -48,5 +48,5 @@ ExplainerLayout.propTypes = {
   rightNavHandler: PropTypes.func,
   title: PropTypes.string,
   content: PropTypes.node,
-  closeExplainer: PropTypes.func
+  closeExplainer: PropTypes.func,
 };

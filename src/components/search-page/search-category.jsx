@@ -24,7 +24,7 @@ const resultComponentMappings = {
   investigatorCRs: CRSearchResult,
   trrs: TRRSearchResult,
   recent: SuggestedSearchResult,
-  suggested: SuggestedSearchResult
+  suggested: SuggestedSearchResult,
 };
 
 export default class SearchCategory extends Component {
@@ -117,5 +117,5 @@ SearchCategory.propTypes = {
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
   updateActiveCategory: PropTypes.func,
-  fixedHeaderHeight: PropTypes.number
+  fixedHeaderHeight: PropTypes.number,
 };

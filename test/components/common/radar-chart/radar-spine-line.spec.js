@@ -10,7 +10,7 @@ describe('RadarSpineLine component', function () {
     const data = [
       { x: 1, y: 4 },
       { x: 2, y: 5 },
-      { x: 3, y: 6 }
+      { x: 3, y: 6 },
     ];
     const wrapper = shallow(<RadarSpineLine rPoints={ data }/>);
     wrapper.find('line').should.have.length(3);
@@ -21,7 +21,7 @@ describe('RadarSpineLine component', function () {
     const data = [
       { x: 1, y: 4 },
       { x: 2, y: 5 },
-      { x: 3, y: 6 }
+      { x: 3, y: 6 },
     ];
     const wrapper = shallow(<RadarSpineLine rPoints={ data } showSpineLinePoint={ true }/>);
 

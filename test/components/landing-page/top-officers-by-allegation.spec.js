@@ -55,7 +55,7 @@ describe('<TopOfficersByAllegation />', () => {
         'full_name': 'Queen Jones',
         gender: 'Female',
         id: 13789,
-      }
+      },
     ];
 
     const wrapper = shallow(
@@ -114,8 +114,8 @@ describe('<TopOfficersByAllegation />', () => {
           year: 2005,
         },
         race: 'Black',
-        'sustained_count': 11
-      }
+        'sustained_count': 11,
+      },
     ];
     stub(IntercomUtils, 'showIntercomLauncher');
 

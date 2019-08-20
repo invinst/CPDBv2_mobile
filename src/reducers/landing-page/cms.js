@@ -5,5 +5,5 @@ import { LANDING_PAGE_CMS_REQUEST_SUCCESS, LANDING_PAGE_CMS_REQUEST_FAILURE } fr
 
 export default handleActions({
   [LANDING_PAGE_CMS_REQUEST_SUCCESS]: (state, action) => action.payload.fields,
-  [LANDING_PAGE_CMS_REQUEST_FAILURE]: state => state
+  [LANDING_PAGE_CMS_REQUEST_FAILURE]: state => state,
 }, []);

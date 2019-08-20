@@ -10,7 +10,7 @@ import {
   suggestAllFromCategory,
   saveToRecent,
   updateActiveCategory,
-  updateChosenCategory
+  updateChosenCategory,
 } from 'actions/suggestion';
 import {
   officersSelector,
@@ -21,7 +21,7 @@ import {
   suggestedSelector,
   recentSelector,
   dateOfficersSelector,
-  investigatorCRsSelector
+  investigatorCRsSelector,
 } from 'selectors/search-page';
 
 
@@ -38,7 +38,7 @@ function mapStateToProps(state, ownProps) {
     recent: recentSelector(state),
     suggested: suggestedSelector(state),
     activeCategory: state.suggestionApp.activeCategory,
-    chosenCategory: state.suggestionApp.chosenCategory
+    chosenCategory: state.suggestionApp.chosenCategory,
   };
 }
 
@@ -50,7 +50,7 @@ const mapDispatchToProps = {
   saveToRecent,
   updateActiveCategory,
   updateChosenCategory,
-  pushBreadcrumbs
+  pushBreadcrumbs,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchPage));

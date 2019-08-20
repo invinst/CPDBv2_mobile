@@ -70,10 +70,10 @@ SearchNavbar.propTypes = {
   scrollToCategory: PropTypes.func,
   updateActiveCategory: PropTypes.func,
   chosenCategory: PropTypes.string,
-  clearChosenCategory: PropTypes.func
+  clearChosenCategory: PropTypes.func,
 };
 
 SearchNavbar.defaultProps = {
   chosenCategory: '',
-  categories: []
+  categories: [],
 };

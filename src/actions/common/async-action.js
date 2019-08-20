@@ -5,9 +5,9 @@ export const get = (url, types) => ((params, adapter=undefined, urlSuffix='', me
       request: {
         url: url + urlSuffix,
         params,
-        adapter
-      }
-    }
+        adapter,
+      },
+    },
   };
 
   if (typeof meta !== 'undefined') {
@@ -22,10 +22,10 @@ export const getUrl = (url, types, meta) => (
     types,
     payload: {
       request: {
-        url
-      }
+        url,
+      },
     },
-    meta
+    meta,
   }
 );
 
@@ -36,7 +36,7 @@ export const post = (url, types) => ((data, adapter) => ({
       method: 'POST',
       url,
       data,
-      adapter
-    }
-  }
+      adapter,
+    },
+  },
 }));

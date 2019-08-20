@@ -2,7 +2,7 @@ import {
   getVisualTokenOIGBackground,
   scalePercentile,
   OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT,
-  hasEnoughRadarChartData
+  hasEnoughRadarChartData,
 } from 'utils/visual-token';
 
 

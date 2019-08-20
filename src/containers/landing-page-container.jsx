@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   requestCMS,
-  pushBreadcrumbs
+  pushBreadcrumbs,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

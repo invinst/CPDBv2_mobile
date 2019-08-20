@@ -32,8 +32,8 @@ describe('<SearchPage />', function () {
       {
         name: 'Any',
         id: 'any',
-        path: 'ANY'
-      }
+        path: 'ANY',
+      },
     ];
     stub(SearchPage.prototype, 'getCategoriesWithSuggestions').callsFake( () => dummyCategories);
 
@@ -73,8 +73,8 @@ describe('<SearchPage />', function () {
           id: 'officers',
           name: 'OFFICERS',
           path: 'OFFICER',
-          filter: 'Officers'
-        }
+          filter: 'Officers',
+        },
       ]);
     });
   });
@@ -164,7 +164,7 @@ describe('<SearchPage />', function () {
     pushBreadcrumbsSpy.calledWith({
       location: 'location',
       routes: 'routes',
-      params: 'params'
+      params: 'params',
     }).should.be.true();
 
     pushBreadcrumbsSpy.resetHistory();
@@ -172,7 +172,7 @@ describe('<SearchPage />', function () {
     pushBreadcrumbsSpy.calledWith({
       location: 'changed',
       routes: 'routes',
-      params: 'params'
+      params: 'params',
     }).should.be.true();
   });
 
@@ -184,8 +184,8 @@ describe('<SearchPage />', function () {
 
     instance.searchInput = {
       inputElement: {
-        focus: spyFocus
-      }
+        focus: spyFocus,
+      },
     };
     instance.componentDidMount();
 
@@ -264,7 +264,7 @@ describe('<SearchPage />', function () {
       const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
 
       result.should.eql({
-        height
+        height,
       });
     });
 
@@ -285,7 +285,7 @@ describe('<SearchPage />', function () {
       const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
 
       result.should.eql({
-        height
+        height,
       });
     });
 
@@ -299,7 +299,7 @@ describe('<SearchPage />', function () {
       const result = instance.calculateDynamicBottomPaddingStyle();
 
       result.should.eql({
-        height: '133px'
+        height: '133px',
       });
     });
   });
@@ -316,11 +316,11 @@ describe('<SearchPage />', function () {
 
     it('should render SearchCategory components', () => {
       const officersProp = {
-        data: ['data']
+        data: ['data'],
       };
 
       const unitsProp = {
-        data: ['data']
+        data: ['data'],
       };
 
       const wrapper = shallow(
@@ -348,10 +348,10 @@ describe('<SearchPage />', function () {
       stubBoundCallback.returns(SearchPage.prototype.chooseCategory);
 
       const officersProp = {
-        data: ['data']
+        data: ['data'],
       };
       const unitsProp = {
-        data: ['data']
+        data: ['data'],
       };
 
       const wrapper = shallow(
@@ -385,7 +385,7 @@ describe('<SearchPage />', function () {
 
       wrapper.instance().chooseCategory({
         path: 'mypath',
-        id: 'myid'
+        id: 'myid',
       });
 
       suggestAllFromCategory.calledWith('mypath', 'wa').should.be.true();
@@ -396,10 +396,10 @@ describe('<SearchPage />', function () {
   describe('"view single category" mode', function () {
     it('should only display search results of the chosen single category', function () {
       const crsProp = {
-        data: ['data']
+        data: ['data'],
       };
       const officersProp = {
-        data: ['data']
+        data: ['data'],
       };
 
       const wrapper = shallow(

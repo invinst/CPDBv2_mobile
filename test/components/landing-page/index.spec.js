@@ -29,7 +29,7 @@ describe('<LandingPage />', function () {
         newDocumentAllegations: [1],
         complaintSummaries: [1],
         cmsRequested: true,
-      }
+      },
     });
 
     const spyRequestCMS = spy();
@@ -50,7 +50,7 @@ describe('<LandingPage />', function () {
     pushBreadcrumbsSpy.calledWith({
       location: 'location',
       routes: 'routes',
-      params: 'params'
+      params: 'params',
     }).should.be.true();
   });
 
@@ -69,7 +69,7 @@ describe('<LandingPage />', function () {
     pushBreadcrumbsSpy.calledWith({
       location: 'changed',
       routes: 'routes',
-      params: 'params'
+      params: 'params',
     }).should.be.true();
   });
 });

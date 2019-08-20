@@ -19,14 +19,14 @@ describe('StaticRadarChart component', function () {
       {
         axis: 'C',
         value: 20,
-      }
+      },
     ];
     const props = {
       data: data,
       width: 456,
       height: 432,
       radius: 123,
-      someProps: 'someProps'
+      someProps: 'someProps',
     };
 
     const wrapper = shallow(<StaticRadarChart { ...props }/>);
@@ -48,14 +48,14 @@ describe('StaticRadarChart component', function () {
       {
         axis: 'C',
         value: 20,
-      }
+      },
     ];
     const props = {
       data: missingData,
       width: 456,
       height: 432,
       radius: 123,
-      someProps: 'someProps'
+      someProps: 'someProps',
     };
 
     const wrapper = shallow(<StaticRadarChart { ...props }/>);

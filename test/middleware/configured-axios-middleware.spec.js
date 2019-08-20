@@ -8,38 +8,38 @@ describe('configured-axios-middleware', function () {
     type: 'REQUEST',
     payload: {
       request: {
-        url: '/request-url'
-      }
-    }
+        url: '/request-url',
+      },
+    },
   };
 
   describe('onSuccess', () => {
     const response = {
-      data: [1, 2, 3]
+      data: [1, 2, 3],
     };
 
     it('should fire action with response as payload', () => {
       onSuccess({ action, next, response }).should.eql({
         type: getActionTypes(action)[1],
         payload: response.data,
-        meta: undefined
+        meta: undefined,
       });
     });
 
     it('should fire action with provided metadata', () => {
       const actionWithMeta = {
         ...action,
-        meta: 'foobar'
+        meta: 'foobar',
       };
 
       onSuccess({
         action: actionWithMeta,
         next,
-        response
+        response,
       }).should.eql({
         type: getActionTypes(action)[1],
         payload: response.data,
-        meta: 'foobar'
+        meta: 'foobar',
       });
     });
   });
@@ -48,16 +48,16 @@ describe('configured-axios-middleware', function () {
     it('should fire action with error with response without message', function () {
       const error = {
         response: {
-          status: 400
-        }
+          status: 400,
+        },
       };
 
       onError({ action, next, error }).should.eql({
         type: getActionTypes(action)[2],
         payload: {
-          message: 'Request to /request-url failed with status code 400.'
+          message: 'Request to /request-url failed with status code 400.',
         },
-        statusCode: 400
+        statusCode: 400,
       });
     });
 
@@ -68,9 +68,9 @@ describe('configured-axios-middleware', function () {
       onError({ action, next, error }).should.eql({
         type: getActionTypes(action)[2],
         payload: {
-          message
+          message,
         },
-        statusCode: null
+        statusCode: null,
       });
     });
 
@@ -79,15 +79,15 @@ describe('configured-axios-middleware', function () {
       const error = new Error();
       error.response = {
         status: 400,
-        data: { message }
+        data: { message },
       };
 
       onError({ action, next, error }).should.eql({
         type: getActionTypes(action)[2],
         payload: {
-          message
+          message,
         },
-        statusCode: 400
+        statusCode: 400,
       });
     });
   });

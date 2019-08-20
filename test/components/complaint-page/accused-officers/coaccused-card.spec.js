@@ -21,7 +21,7 @@ describe('CoaccusedCard component', () => {
       visualTokenBackground: '#f95125',
     },
     findingOutcome: 'Sustained',
-    category: 'CR'
+    category: 'CR',
   };
 
   it('should render footer correctly', () => {

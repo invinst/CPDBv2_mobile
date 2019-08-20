@@ -16,7 +16,7 @@ describe('<ComplaintDocumentCard />', () => {
       incidentDate: 'Jan 23, 2000',
       document: {
         previewImageUrl: 'https://assets.documentcloud.org/CRID-303350-CR-p1-normal.gif',
-      }
+      },
     };
 
     const wrapper = shallow(<ComplaintDocumentCard allegation={ allegation } />);
@@ -32,7 +32,7 @@ describe('<ComplaintDocumentCard />', () => {
   it('should track click event', function () {
     const stubTrackAttachmentClick = stub(GATracking, 'trackAttachmentClick');
     const allegation = {
-      'crid': '123456'
+      'crid': '123456',
     };
     const complaintDocumentCard = () => (
       <ComplaintDocumentCard allegation={ allegation } pathname='/'/>
@@ -55,8 +55,8 @@ describe('<ComplaintDocumentCard />', () => {
     const allegation ={
       'crid': '123456',
       'document': {
-        'id': '654321'
-      }
+        'id': '654321',
+      },
     };
     const complaintDocumentCard = () => (
       <ComplaintDocumentCard

@@ -2,7 +2,7 @@ import message from 'reducers/trr-page/attachment-request/message';
 import {
   TRR_REQUEST_DOC_REQUEST_START,
   TRR_REQUEST_DOC_REQUEST_SUCCESS,
-  TRR_REQUEST_DOC_REQUEST_FAILURE
+  TRR_REQUEST_DOC_REQUEST_FAILURE,
 } from 'actions/trr-page';
 
 
@@ -15,7 +15,7 @@ describe('AttachmentRequest reducer', function () {
     it('should handle TRR_REQUEST_DOC_REQUEST_START', function () {
       message('', {
         type: TRR_REQUEST_DOC_REQUEST_START,
-        email: 'valid@email.com'
+        email: 'valid@email.com',
       }).should.eql('');
     });
 
@@ -23,8 +23,8 @@ describe('AttachmentRequest reducer', function () {
       message('', {
         type: TRR_REQUEST_DOC_REQUEST_SUCCESS,
         payload: {
-          message: 'Thanks for subscribing'
-        }
+          message: 'Thanks for subscribing',
+        },
       }).should.eql('Thanks for subscribing');
     });
 
@@ -32,8 +32,8 @@ describe('AttachmentRequest reducer', function () {
       message('', {
         type: TRR_REQUEST_DOC_REQUEST_FAILURE,
         payload: {
-          message: 'Not subscribe'
-        }
+          message: 'Not subscribe',
+        },
       }).should.eql('Not subscribe');
     });
   });

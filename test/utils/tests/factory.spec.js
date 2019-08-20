@@ -18,11 +18,11 @@ describe('Factory', () => {
     factory.define('schema', {
       'property'() {
         return 1;
-      }
+      },
     });
 
     factory.create('schema').should.be.eql({
-      'property': 1
+      'property': 1,
     });
   });
 
@@ -35,11 +35,11 @@ describe('Factory', () => {
     factory.define('schema', {
       'property'() {
         return 1;
-      }
+      },
     });
 
     factory.create('schema', {
-      'property': 2
+      'property': 2,
     }).should.be.eql({ 'property': 2 });
   });
 
@@ -48,11 +48,11 @@ describe('Factory', () => {
     factory.define('schema', {
       'property'() {
         return 1;
-      }
+      },
     });
 
     factory.create('schema', {
-      'property': null
+      'property': null,
     }).should.be.eql({ 'property': null });
   });
 
@@ -61,7 +61,7 @@ describe('Factory', () => {
     factory.define('schema', {
       'property'() {
         return 1;
-      }
+      },
     });
 
     factory.createBatch(2, 'schema').should.be.eql([{ 'property': 1 }, { 'property': 1 }]);

@@ -16,7 +16,7 @@ describe('PercentileExplainer component', function () {
       { axis: 'Internal Complaints', value: 10 },
     ],
     textColor: 'black',
-    visualTokenBackground: 'black'
+    visualTokenBackground: 'black',
   }, {
     year: 2017,
     items: [
@@ -25,7 +25,7 @@ describe('PercentileExplainer component', function () {
       { axis: 'Internal Complaints', value: 60 },
     ],
     textColor: 'black',
-    visualTokenBackground: 'white'
+    visualTokenBackground: 'white',
   }];
 
 

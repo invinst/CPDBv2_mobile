@@ -5,5 +5,5 @@ import { OFFICER_PAGE_CMS_REQUEST_SUCCESS, OFFICER_PAGE_CMS_REQUEST_FAILURE } fr
 
 export default handleActions({
   [OFFICER_PAGE_CMS_REQUEST_SUCCESS]: (state, action) => action.payload.fields,
-  [OFFICER_PAGE_CMS_REQUEST_FAILURE]: state => state
+  [OFFICER_PAGE_CMS_REQUEST_FAILURE]: state => state,
 }, []);

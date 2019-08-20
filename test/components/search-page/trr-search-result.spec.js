@@ -32,8 +32,8 @@ describe('<TRRSearchResult />', () => {
     const trrs = [
       {
         id: '1',
-        url: 'url'
-      }
+        url: 'url',
+      },
     ];
     const wrapper = shallow(
       <TRRSearchResult
@@ -47,7 +47,7 @@ describe('<TRRSearchResult />', () => {
     saveToRecentSpy.calledWith({
       type: 'TRR',
       title: '1',
-      url: 'url'
+      url: 'url',
     }).should.be.true();
   });
 });

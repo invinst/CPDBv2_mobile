@@ -21,7 +21,7 @@ describe('RadarChart component', function () {
     {
       axis: 'C',
       value: 20,
-    }
+    },
   ];
 
   it('should be renderable', () => {

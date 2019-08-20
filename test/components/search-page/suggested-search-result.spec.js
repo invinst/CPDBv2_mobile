@@ -9,7 +9,7 @@ describe('<SuggestedSearchResult />', () => {
     const items = [{
       url: 'localhost',
       type: 'recent',
-      title: 'Whatever'
+      title: 'Whatever',
     }];
 
     const wrapper = mount(
@@ -31,7 +31,7 @@ describe('<SuggestedSearchResult />', () => {
     const items = [{
       url: 'localhost',
       type: 'recent',
-      title: 'Whatever'
+      title: 'Whatever',
     }];
 
     const wrapper = shallow(
@@ -46,7 +46,7 @@ describe('<SuggestedSearchResult />', () => {
     spySaveToRecent.calledWith({
       url: 'localhost',
       type: 'recent',
-      title: 'Whatever'
+      title: 'Whatever',
     }).should.be.true();
   });
 

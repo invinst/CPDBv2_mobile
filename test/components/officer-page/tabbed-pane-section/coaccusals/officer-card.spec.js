@@ -22,7 +22,7 @@ describe('CoaccusalCard', () => {
       year: undefined,
     },
     coaccusalCount: 11,
-    rank: 'Police Officer'
+    rank: 'Police Officer',
   };
 
   it('should render footer correctly', () => {
@@ -40,7 +40,7 @@ describe('CoaccusalCard', () => {
       officerId: 123456,
       percentile: undefined,
       coaccusalCount: 1,
-      rank: 'Detective'
+      rank: 'Detective',
     };
     const wrapper = mount(<OfficerCard { ...noPercentileOfficer } />);
     const baseCard = wrapper.find(BaseOfficerCard);

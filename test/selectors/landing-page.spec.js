@@ -4,32 +4,32 @@ import {
   newDocumentAllegationsSelector,
   complaintSummariesSelector,
   getCMSRequested,
-  getEmbed
+  getEmbed,
 } from 'selectors/landing-page';
 
 
 describe('landing page selectors', function () {
   it('topOfficersByAllegationSelector', () => {
     topOfficersByAllegationSelector({
-      landingPage: {}
+      landingPage: {},
     }).should.eql([]);
 
     topOfficersByAllegationSelector({
       landingPage: {
         topOfficersByAllegation: [{
           id: 123,
-          percentile: null
-        }]
-      }
+          percentile: null,
+        }],
+      },
     }).should.deepEqual([{
       id: 123,
-      percentile: null
+      percentile: null,
     }]);
   });
 
   it('recentActivitiesSelector', () => {
     recentActivitiesSelector({
-      landingPage: {}
+      landingPage: {},
     }).should.eql([]);
 
     recentActivitiesSelector({
@@ -38,25 +38,25 @@ describe('landing page selectors', function () {
           {
             id: 123,
             percentile: null,
-            kind: 'coaccused_pair'
+            kind: 'coaccused_pair',
           },
           {
             id: 124,
             percentile: null,
-            kind: 'single_officer'
+            kind: 'single_officer',
           },
-        ]
-      }
+        ],
+      },
     }).should.deepEqual([{
       id: 124,
       percentile: null,
-      kind: 'single_officer'
+      kind: 'single_officer',
     }]);
   });
 
   it('newDocumentAllegationsSelector', () => {
     newDocumentAllegationsSelector({
-      landingPage: {}
+      landingPage: {},
     }).should.eql([]);
 
     newDocumentAllegationsSelector({
@@ -69,15 +69,15 @@ describe('landing page selectors', function () {
             'latest_document': {
               'preview_image_url': 'preview_link',
               'id': '123456',
-            }
-          }
-        ]
-      }
+            },
+          },
+        ],
+      },
     }).should.eql([{
       crid: '123214',
       document: {
         previewImageUrl: 'preview_link',
-        id: '123456'
+        id: '123456',
       },
       category: 'Operation/Personnel Violations',
       incidentDate: 'Apr 23, 2004',
@@ -86,7 +86,7 @@ describe('landing page selectors', function () {
 
   it('complaintSummariesSelector', () => {
     complaintSummariesSelector({
-      landingPage: {}
+      landingPage: {},
     }).should.eql([]);
 
     complaintSummariesSelector({
@@ -101,9 +101,9 @@ describe('landing page selectors', function () {
             'crid': '12346',
             'summary': 'summary',
             'incident_date': null,
-          }
-        ]
-      }
+          },
+        ],
+      },
     }).should.eql([
       {
         crid: '12345',
@@ -114,7 +114,7 @@ describe('landing page selectors', function () {
         crid: '12346',
         summary: 'summary',
         incidentDate: null,
-      }
+      },
     ]);
   });
 

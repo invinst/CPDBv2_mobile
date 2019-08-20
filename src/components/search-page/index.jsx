@@ -14,7 +14,7 @@ import * as IntercomTracking from 'utils/intercom-tracking';
 export default class SearchPage extends Component {
   componentDidMount() {
     const {
-      pushBreadcrumbs, location, routes, params
+      pushBreadcrumbs, location, routes, params,
     } = this.props;
     pushBreadcrumbs({ location, routes, params });
     this.searchInput.inputElement.focus();
@@ -129,7 +129,7 @@ export default class SearchPage extends Component {
     );
     const height = Math.max(constants.BOTTOM_PADDING, window.innerHeight - dynamicBottomPaddingOffset);
     return {
-      height: `${height}px`
+      height: `${height}px`,
     };
   }
 
@@ -141,12 +141,12 @@ export default class SearchPage extends Component {
       categories = [
         {
           name: 'RECENT',
-          id: 'recent'
+          id: 'recent',
         },
         {
           name: 'SUGGESTED',
-          id: 'suggested'
-        }
+          id: 'suggested',
+        },
       ].filter((cat) => {
         const suggestions = this.props[cat.id];
         return !!suggestions && suggestions.data.length > 0;
@@ -229,5 +229,5 @@ SearchPage.defaultProps = {
   inputChanged: function () {},
   updateChosenCategory: function () {},
   chosenCategory: '',
-  pushBreadcrumbs: () => {}
+  pushBreadcrumbs: () => {},
 };

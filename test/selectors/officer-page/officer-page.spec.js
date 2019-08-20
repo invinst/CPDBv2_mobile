@@ -12,8 +12,8 @@ describe('officer-page selectors', () => {
     it('should return percentile data and mapped color', function () {
       const props = {
         params: {
-          id: 11
-        }
+          id: 11,
+        },
       };
       const state = {
         officerPage: {
@@ -43,25 +43,25 @@ describe('officer-page selectors', () => {
                     'percentile_allegation_civilian': '75.065',
                     'percentile_allegation_internal': '0.022',
                     'percentile_trr': '0.046',
-                    'percentile_allegation': '31.201'
-                  }
-                ]
-              }
-            }
-          }
-        }
+                    'percentile_allegation': '31.201',
+                  },
+                ],
+              },
+            },
+          },
+        },
       };
 
       officerYearlyPercentileSelector(state, props).should.eql([{
         'items': [{
           'axis': 'Use of Force Reports',
-          'value': 0.049
+          'value': 0.049,
         }, {
           'axis': 'Internal Allegations',
-          'value': 0.023
+          'value': 0.023,
         }, {
           'axis': 'Civilian Allegations',
-          'value': 66.251
+          'value': 66.251,
         }],
         'officerId': 1,
         textColor: '#231F20',
@@ -70,13 +70,13 @@ describe('officer-page selectors', () => {
       }, {
         'items': [{
           'axis': 'Use of Force Reports',
-          'value': 0.046
+          'value': 0.046,
         }, {
           'axis': 'Internal Allegations',
-          'value': 0.022
+          'value': 0.022,
         }, {
           'axis': 'Civilian Allegations',
-          'value': 75.065
+          'value': 75.065,
         }],
         'officerId': 1,
         textColor: '#231F20',
@@ -89,8 +89,8 @@ describe('officer-page selectors', () => {
   describe('officerSummarySelector', function () {
     const props = {
       params: {
-        id: 11
-      }
+        id: 11,
+      },
     };
     const state = {
       officerPage: {
@@ -101,7 +101,7 @@ describe('officer-page selectors', () => {
               'full_name': 'Officer 11',
               unit: {
                 'unit_name': '001',
-                'description': 'description'
+                'description': 'description',
               },
               rank: 'rank',
               'date_of_appt': '2015-09-23',
@@ -110,10 +110,10 @@ describe('officer-page selectors', () => {
               badge: 'badge',
               'historic_badges': ['1', '2'],
               'birth_year': 1991,
-            }
-          }
-        }
-      }
+            },
+          },
+        },
+      },
     };
 
     it('should return summary', function () {
@@ -139,17 +139,17 @@ describe('officer-page selectors', () => {
                 'full_name': 'Officer 11',
                 rank: null,
                 unit: {
-                  'description': 'description'
+                  'description': 'description',
                 },
                 'date_of_appt': '2015-09-23',
                 race: 'white',
                 gender: 'Male',
                 badge: 'badge',
                 'historic_badges': ['1', '2'],
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       };
       officerSummarySelector(nullRankState, props).should.eql({
         id: 11,
@@ -178,10 +178,10 @@ describe('officer-page selectors', () => {
                 'date_of_appt': '2015-09-23',
                 badge: 'badge',
                 'historic_badges': ['1', '2'],
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       };
       officerSummarySelector(emptyDemographicState, props).should.eql({
         id: 11,
@@ -210,10 +210,10 @@ describe('officer-page selectors', () => {
                 'date_of_appt': '2015-09-23',
                 badge: 'badge',
                 'historic_badges': ['1', '2'],
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       };
       officerSummarySelector(emptyUnitState, props).should.eql({
         id: 11,
@@ -237,16 +237,16 @@ describe('officer-page selectors', () => {
                 'full_name': 'Officer 11',
                 unit: {
                   'unit_name': '001',
-                  'description': 'description'
+                  'description': 'description',
                 },
                 'date_of_appt': '2015-09-23',
                 badge: 'badge',
                 'historic_badges': ['1', '2'],
                 'birth_year': 1991,
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       };
       officerSummarySelector(missingRankState, props).should.eql({
         id: 11,
@@ -263,8 +263,8 @@ describe('officer-page selectors', () => {
     it('should return null if officer with matching ID does not exist', function () {
       const notFoundProps = {
         params: {
-          id: 12
-        }
+          id: 12,
+        },
       };
 
       should(officerSummarySelector(state, notFoundProps)).be.null();
@@ -274,8 +274,8 @@ describe('officer-page selectors', () => {
   describe('officerMetricsSelector', function () {
     const props = {
       params: {
-        id: 11
-      }
+        id: 11,
+      },
     };
     const state = {
       officerPage: {
@@ -294,11 +294,11 @@ describe('officer-page selectors', () => {
               'percentiles': [
                 { 'year': 2015, 'percentile_trr': 8.0 },
                 { 'year': 2016, 'percentile_trr': 9.0 },
-              ]
-            }
-          }
-        }
-      }
+              ],
+            },
+          },
+        },
+      },
     };
 
     it('should return metrics', function () {
@@ -319,8 +319,8 @@ describe('officer-page selectors', () => {
     it('should return null if officer with matching ID does not exist', function () {
       const notFoundProps = {
         params: {
-          id: 12
-        }
+          id: 12,
+        },
       };
 
       should(officerMetricsSelector(state, notFoundProps)).be.null();

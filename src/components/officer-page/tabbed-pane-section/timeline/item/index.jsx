@@ -22,31 +22,31 @@ export default class Item extends Component {
     const componentMap = {
       [TIMELINE_ITEMS.CR]: {
         className: 'test--timeline-cr-item',
-        item: <Cr { ...this.props } />
+        item: <Cr { ...this.props } />,
       },
       [TIMELINE_ITEMS.FORCE]: {
         className: 'test--timeline-trr-item',
-        item: <Trr { ...this.props }/>
+        item: <Trr { ...this.props }/>,
       },
       [TIMELINE_ITEMS.AWARD]: {
         className: 'test--timeline-award-item',
-        item: <Award { ...this.props } />
+        item: <Award { ...this.props } />,
       },
       [TIMELINE_ITEMS.UNIT_CHANGE]: {
         className: 'test--timeline-unit-change-item',
-        item: <UnitChange { ...this.props } />
+        item: <UnitChange { ...this.props } />,
       },
       [TIMELINE_ITEMS.RANK_CHANGE]: {
         className: 'test--timeline-rank-change-item',
-        item: <RankChange { ...this.props } />
+        item: <RankChange { ...this.props } />,
       },
       [TIMELINE_ITEMS.JOINED]: {
         className: 'test--timeline-joined-item',
-        item: <Joined { ...this.props } />
+        item: <Joined { ...this.props } />,
       },
       [TIMELINE_ITEMS.YEAR]: {
         className: 'test--timeline-year-item',
-        item: <Year { ...this.props } />
+        item: <Year { ...this.props } />,
       },
     };
 

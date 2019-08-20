@@ -2,7 +2,7 @@ import should from 'should'; // eslint-disable-line no-unused-vars
 import {
   getRichTextValueAsArray,
   getStringValue,
-  getDateValueAsString
+  getDateValueAsString,
 } from 'utils/cms-data-util';
 
 const report = {
@@ -21,10 +21,10 @@ const report = {
             'type': 'unstyled',
             'inlineStyleRanges': [],
             'data': {
-            }
-          }
-        ]
-      }
+            },
+          },
+        ],
+      },
     },
     {
       'type': 'rich_text',
@@ -39,25 +39,25 @@ const report = {
             'key': '13c7l',
             'type': 'unstyled',
             'inlineStyleRanges': [],
-            'data': {}
-          }
-        ]
-      }
+            'data': {},
+          },
+        ],
+      },
     },
     {
       'type': 'string',
       'name': 'publication',
-      'value': 'test'
+      'value': 'test',
     },
     {
       'type': 'date',
       'name': 'publish_date',
-      'value': '2016-11-30'
+      'value': '2016-11-30',
     },
     {
       'type': 'string',
       'name': 'author',
-      'value': 'test'
+      'value': 'test',
     },
     {
       'type': 'rich_text',
@@ -67,10 +67,10 @@ const report = {
           '0': {
             'type': 'LINK',
             'data': {
-              'url': 'http://google.com'
+              'url': 'http://google.com',
             },
-            'mutability': 'MUTABLE'
-          }
+            'mutability': 'MUTABLE',
+          },
         },
         'blocks': [
           {
@@ -79,21 +79,21 @@ const report = {
               {
                 'length': 6,
                 'key': 0,
-                'offset': 7
-              }
+                'offset': 7,
+              },
             ],
             'depth': 0,
             'key': '5p7gk',
             'type': 'unstyled',
             'inlineStyleRanges': [],
-            'data': {}
-          }
-        ]
-      }
-    }
+            'data': {},
+          },
+        ],
+      },
+    },
   ],
   'meta': {},
-  'id': 215
+  'id': 215,
 };
 
 

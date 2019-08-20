@@ -87,7 +87,7 @@ const App = React.createClass({
         <Redirect from='*' to='/'/>
       </Router>
     );
-  }
+  },
 });
 
 export default App;

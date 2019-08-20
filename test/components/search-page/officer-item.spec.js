@@ -24,7 +24,7 @@ describe('<OfficerItem />', () => {
     saveToRecentSpy.calledWith({
       type: 'Officer',
       title: 'Peter',
-      url: '/officer/1/peter/'
+      url: '/officer/1/peter/',
     }).should.be.true();
   });
 });

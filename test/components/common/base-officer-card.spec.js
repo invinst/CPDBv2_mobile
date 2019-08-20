@@ -20,7 +20,7 @@ describe('<BaseOfficerCard />', () => {
       textColor: '#231F20',
       visualTokenBackground: '#f95125',
     },
-    rank: 'Police Officer'
+    rank: 'Police Officer',
   };
 
   it('should render correctly', () => {

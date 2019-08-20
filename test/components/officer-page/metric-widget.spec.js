@@ -11,7 +11,7 @@ describe('MetricWidget component', () => {
       {
         name: 'name1',
         value: 23,
-        description: 'description1'
+        description: 'description1',
       },
       {
         name: 'name2',
@@ -31,17 +31,17 @@ describe('MetricWidget component', () => {
       {
         name: 'name1',
         value: 23,
-        description: 'description1'
+        description: 'description1',
       },
       {
         name: 'name2',
         value: 12,
-        description: 'description2'
+        description: 'description2',
       },
       {
         name: 'name3',
         value: 34,
-        description: 'description3'
+        description: 'description3',
       },
     ];
     const wrapper = shallow(

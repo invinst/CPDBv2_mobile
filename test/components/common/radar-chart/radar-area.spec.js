@@ -50,7 +50,7 @@ describe('RadarArea component', function () {
       <RadarArea rPoints={ [
         { angle: 0, r: NaN },
         { angle: 0, r: 12 },
-        { angle: 12, r: 12.2 }
+        { angle: 12, r: 12.2 },
       ] }
       />
     );

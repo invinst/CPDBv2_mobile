@@ -26,7 +26,7 @@ class HorizontalScrolling extends React.Component {
       on: {
         slideNextTransitionStart: this.handleSlideNext,
         slidePrevTransitionStart: this.handleSlidePrev,
-      }
+      },
     };
     this.swiper = new Swiper(this.el, { ...defaultOptions, ...slideOptions });
   }

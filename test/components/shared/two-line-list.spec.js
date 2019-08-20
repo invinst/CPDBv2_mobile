@@ -10,12 +10,12 @@ describe('<TwoLineList />', function () {
     const rows = [
       {
         label: 'John',
-        sublabel: 'Badge #1'
+        sublabel: 'Badge #1',
       },
       {
         label: 'Snow',
-        sublabel: 'Badge #2'
-      }
+        sublabel: 'Badge #2',
+      },
     ];
     const wrapper = shallow(<TwoLineList rows={ rows } />);
 
@@ -39,14 +39,14 @@ describe('<TwoLineList />', function () {
         label: 'John',
         sublabel: 'Badge #1',
         url: '/officer/1/john/',
-        onClick: onClick1
+        onClick: onClick1,
       },
       {
         label: 'Snow',
         sublabel: 'Badge #2',
         url: '/officer/2/snow/',
-        onClick: onClick2
-      }
+        onClick: onClick2,
+      },
     ];
     const wrapper = mount(<TwoLineList rows={ rows } />);
 
@@ -70,13 +70,13 @@ describe('<TwoLineList />', function () {
       {
         label: 'John',
         sublabel: 'Badge #1',
-        onClick: onClick1
+        onClick: onClick1,
       },
       {
         label: 'Snow',
         sublabel: 'Badge #2',
-        onClick: onClick2
-      }
+        onClick: onClick2,
+      },
     ];
     const wrapper = shallow(<TwoLineList rows={ rows } />);
 
@@ -93,13 +93,13 @@ describe('<TwoLineList />', function () {
       {
         label: 'John',
         sublabel: 'Badge #1',
-        color: 'red'
+        color: 'red',
       },
       {
         label: 'Snow',
         sublabel: 'Badge #2',
-        color: 'blue'
-      }
+        color: 'blue',
+      },
     ];
     const wrapper = shallow(<TwoLineList rows={ rows } />);
 

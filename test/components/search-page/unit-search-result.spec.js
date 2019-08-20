@@ -10,13 +10,13 @@ describe('<UnitSearchResult />', () => {
       {
         text: '001',
         memberCount: 2,
-        activeMemberCount: 1
+        activeMemberCount: 1,
       },
       {
         text: '002',
         memberCount: 4,
-        activeMemberCount: 3
-      }
+        activeMemberCount: 3,
+      },
     ];
 
     const rows = [

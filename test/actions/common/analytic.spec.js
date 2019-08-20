@@ -14,7 +14,7 @@ describe('analytic actions', function () {
         types: [
           TRACKING_CLICK_ATTACHMENT_START,
           TRACKING_CLICK_ATTACHMENT_SUCCESS,
-          TRACKING_CLICK_ATTACHMENT_FAILURE
+          TRACKING_CLICK_ATTACHMENT_FAILURE,
         ],
         payload: {
           request: {
@@ -22,12 +22,12 @@ describe('analytic actions', function () {
             data: {
               'accessed_from_page': 'CR Page',
               'app': 'Mobile',
-              'attachment_id': '123456'
+              'attachment_id': '123456',
             },
             method: 'POST',
-            adapter: undefined
-          }
-        }
+            adapter: undefined,
+          },
+        },
       });
     });
   });

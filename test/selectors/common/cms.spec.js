@@ -11,14 +11,14 @@ describe('cms selectors', function () {
         cms: [
           {
             name: 'title_field',
-            value: 'title'
+            value: 'title',
           },
           {
             name: 'desc_field',
-            value: 'desc'
-          }
-        ]
-      }
+            value: 'desc',
+          },
+        ],
+      },
     };
 
     cmsSelector(state, 'landingPage', 'title_field').should.eql('title');
@@ -32,14 +32,14 @@ describe('cms selectors', function () {
         cms: [
           {
             name: 'title_field',
-            value: 'title'
+            value: 'title',
           },
           {
             name: 'desc_field',
-            value: 'desc'
-          }
-        ]
-      }
+            value: 'desc',
+          },
+        ],
+      },
     };
 
     hasCMS(state, 'landingPage').should.be.true();

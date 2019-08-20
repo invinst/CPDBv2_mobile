@@ -35,17 +35,17 @@ MainPage.propTypes = {
   urlQuery: PropTypes.string,
   children: PropTypes.object,
   location: PropTypes.object,
-  routeChanged: PropTypes.func
+  routeChanged: PropTypes.func,
 };
 
 MainPage.defaultProps = {
   query: '',
   urlQuery: '',
   location: {
-    pathname: ''
+    pathname: '',
   },
   routeChanged: () => {},
-  fetchSuggestedSearchItems: () => {}
+  fetchSuggestedSearchItems: () => {},
 };
 
 export default MainPage;
