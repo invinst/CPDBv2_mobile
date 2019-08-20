@@ -6,7 +6,7 @@ import RadarSpineLine from 'components/common/radar-chart/radar-spine-line';
 
 describe('RadarSpineLine component', function () {
 
-  it('should draw 3 lines if have 3 axis titles', () => {
+  it('should draw 3 lines if have 3 axis titles', function () {
     const data = [
       { x: 1, y: 4 },
       { x: 2, y: 5 },

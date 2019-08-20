@@ -6,7 +6,7 @@ import StaticRadarChart from 'components/common/radar-chart';
 import RadarChart from 'components/common/radar-chart/radar-chart';
 
 describe('StaticRadarChart component', function () {
-  it('should be renderable', () => {
+  it('should be renderable', function () {
     const data = [
       {
         axis: 'A',
@@ -35,7 +35,7 @@ describe('StaticRadarChart component', function () {
     radarChart.prop('data').should.equal(props.data);
   });
 
-  it('should be able to render no data radar chart', () => {
+  it('should be able to render no data radar chart', function () {
     const missingData = [
       {
         axis: 'A',

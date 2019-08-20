@@ -6,7 +6,7 @@ import OfficerCard from 'components/officer-page/tabbed-pane-section/coaccusals/
 import BaseOfficerCard from 'components/common/base-officer-card';
 
 
-describe('CoaccusalCard', () => {
+describe('CoaccusalCard', function () {
   const officer = {
     officerId: 8562,
     fullName: 'Jerome Finnigan',
@@ -25,7 +25,7 @@ describe('CoaccusalCard', () => {
     rank: 'Police Officer',
   };
 
-  it('should render footer correctly', () => {
+  it('should render footer correctly', function () {
     const wrapper = mount(<OfficerCard { ...officer } />);
 
     const baseCard = wrapper.find(BaseOfficerCard);

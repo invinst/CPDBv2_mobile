@@ -8,8 +8,8 @@ import * as GATracking from 'utils/google_analytics_tracking';
 import ComplaintDocumentCard from 'components/landing-page/new-document-allegations/complaint-document-card';
 
 
-describe('<ComplaintDocumentCard />', () => {
-  it('should render enough contents', () => {
+describe('<ComplaintDocumentCard />', function () {
+  it('should render enough contents', function () {
     const allegation = {
       crid: '123',
       category: 'Operation/Personnel Violations',

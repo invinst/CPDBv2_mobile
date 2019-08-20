@@ -4,7 +4,7 @@ import * as draftjsUtils from 'utils/draftjs';
 import { cmsSelector, hasCMS } from 'selectors/common/cms';
 
 describe('cms selectors', function () {
-  it('cmsSelector', () => {
+  it('cmsSelector', function () {
     stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
     const state = {
       landingPage: {
@@ -26,7 +26,7 @@ describe('cms selectors', function () {
     draftjsUtils.convertContentStateToEditorState.restore();
   });
 
-  it('cmsSelector', () => {
+  it('hasCMS', function () {
     const state = {
       landingPage: {
         cms: [

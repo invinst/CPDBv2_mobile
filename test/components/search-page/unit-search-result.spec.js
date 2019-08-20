@@ -3,9 +3,9 @@ import { mount } from 'enzyme';
 
 import UnitSearchResult from 'components/search-page/unit-search-result';
 
-describe('<UnitSearchResult />', () => {
+describe('<UnitSearchResult />', function () {
 
-  it('should render units correctly', () => {
+  it('should render units correctly', function () {
     const units = [
       {
         text: '001',

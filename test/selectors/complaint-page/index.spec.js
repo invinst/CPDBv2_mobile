@@ -10,9 +10,9 @@ import {
 } from 'selectors/complaint-page';
 
 
-describe('complaint-page selectors', () => {
-  describe('complaintSelector', () => {
-    it('should do nothing & return null if complaint is not found', () => {
+describe('complaint-page selectors', function () {
+  describe('complaintSelector', function () {
+    it('should do nothing & return null if complaint is not found', function () {
       const state = {
         breadcrumb: {
           breadcrumbs: [],
@@ -56,7 +56,7 @@ describe('complaint-page selectors', () => {
       result.subcategory.should.eql('Unknown');
     });
 
-    it('should correctly get and transform complaint data', () => {
+    it('should correctly get and transform complaint data', function () {
       const state = {
         breadcrumb: {
           breadcrumbs: [],
@@ -293,7 +293,7 @@ describe('complaint-page selectors', () => {
     complaintSelector(state, props).coaccused.map(obj => obj.id).should.eql([2, 1]);
   });
 
-  it('getCMSRequested', () => {
+  it('getCMSRequested', function () {
     getCMSRequested({ complaintPage: { cmsRequested: true } }).should.be.true();
     getCMSRequested({ complaintPage: { cmsRequested: false } }).should.be.false();
   });

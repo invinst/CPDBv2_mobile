@@ -7,7 +7,7 @@ import {
 } from 'selectors/officer-page';
 
 
-describe('officer-page selectors', () => {
+describe('officer-page selectors', function () {
   describe('officerYearlyPercentileSelector', function () {
     it('should return percentile data and mapped color', function () {
       const props = {

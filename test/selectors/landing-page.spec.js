@@ -9,7 +9,7 @@ import {
 
 
 describe('landing page selectors', function () {
-  it('topOfficersByAllegationSelector', () => {
+  it('topOfficersByAllegationSelector', function () {
     topOfficersByAllegationSelector({
       landingPage: {},
     }).should.eql([]);
@@ -27,7 +27,7 @@ describe('landing page selectors', function () {
     }]);
   });
 
-  it('recentActivitiesSelector', () => {
+  it('recentActivitiesSelector', function () {
     recentActivitiesSelector({
       landingPage: {},
     }).should.eql([]);
@@ -54,7 +54,7 @@ describe('landing page selectors', function () {
     }]);
   });
 
-  it('newDocumentAllegationsSelector', () => {
+  it('newDocumentAllegationsSelector', function () {
     newDocumentAllegationsSelector({
       landingPage: {},
     }).should.eql([]);
@@ -84,7 +84,7 @@ describe('landing page selectors', function () {
     }]);
   });
 
-  it('complaintSummariesSelector', () => {
+  it('complaintSummariesSelector', function () {
     complaintSummariesSelector({
       landingPage: {},
     }).should.eql([]);
@@ -118,12 +118,12 @@ describe('landing page selectors', function () {
     ]);
   });
 
-  it('getCMSRequested', () => {
+  it('getCMSRequested', function () {
     getCMSRequested({ landingPage: { cmsRequested: true } }).should.be.true();
     getCMSRequested({ landingPage: { cmsRequested: false } }).should.be.false();
   });
 
-  it('getEmbed', () => {
+  it('getEmbed', function () {
     getEmbed({ location: { pathname: 'embed/top-officers-page' } }).should.be.true();
     getEmbed({ location: { pathname: 'top-officers-page' } }).should.be.false();
     getEmbed({ }).should.be.false();

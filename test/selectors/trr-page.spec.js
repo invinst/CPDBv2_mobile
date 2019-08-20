@@ -5,9 +5,9 @@ import { trrSelector, getCMSRequested, buttonText, requestDocumentButtonMessage 
 import * as draftjsUtils from 'utils/draftjs';
 
 
-describe('trr-page selectors', () => {
-  describe('trrSelector', () => {
-    it('should do nothing & return null if trr is not found', () => {
+describe('trr-page selectors', function () {
+  describe('trrSelector', function () {
+    it('should do nothing & return null if trr is not found', function () {
       const state = {
         trrPage: {
           trrs: {},
@@ -21,7 +21,7 @@ describe('trr-page selectors', () => {
       should(trrSelector(state, props)).be.null();
     });
 
-    it('should correctly get and transform trr data', () => {
+    it('should correctly get and transform trr data', function () {
       const state = {
         trrPage: {
           trrs: {
@@ -110,7 +110,7 @@ describe('trr-page selectors', () => {
       });
     });
 
-    it('should correctly handle some missing data cases', () => {
+    it('should correctly handle some missing data cases', function () {
       const state = {
         trrPage: {
           trrs: {

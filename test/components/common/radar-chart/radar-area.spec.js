@@ -19,7 +19,7 @@ describe('RadarArea component', function () {
     value: 99.99,
   }];
 
-  it('should be renderable', () => {
+  it('should be renderable', function () {
     shallow(<RadarArea />).should.be.ok();
   });
 
@@ -45,7 +45,7 @@ describe('RadarArea component', function () {
     wrapper.find('.test--radar-stroke').prop('style').strokeWidth.should.equal(3);
   });
 
-  it('should not display radar area and stroke when rPoints is not valid', () => {
+  it('should not display radar area and stroke when rPoints is not valid', function () {
     const wrapper = shallow(
       <RadarArea rPoints={ [
         { angle: 0, r: NaN },

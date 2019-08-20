@@ -6,9 +6,9 @@ import { spy } from 'sinon';
 import CRSearchResult from 'components/search-page/cr-search-result';
 
 
-describe('<CRSearchResult />', () => {
+describe('<CRSearchResult />', function () {
 
-  it('should render crs correctly', () => {
+  it('should render crs correctly', function () {
     const crs = [
       {
         crid: '1027271',

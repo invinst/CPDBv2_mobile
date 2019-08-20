@@ -7,8 +7,8 @@ import ComplaintSummaries from 'components/landing-page/complaint-summaries';
 import CarouselWrapper from 'components/landing-page/carousel-wrapper';
 import ComplaintSummaryCard from 'components/landing-page/complaint-summaries/complaint-summary-card';
 
-describe('<ComplaintSummaries />', () => {
-  it('should render enough contents', () => {
+describe('<ComplaintSummaries />', function () {
+  it('should render enough contents', function () {
     const complaintSummaries = [{ crid: '123' }, { crid: '456' }];
     const titleCMSContent = EditorState.createEmpty();
     const descriptionCMSContent = EditorState.createEmpty();
@@ -32,7 +32,7 @@ describe('<ComplaintSummaries />', () => {
     complaintSummaryCards.at(1).prop('allegation').should.eql({ crid: '456' });
   });
 
-  it('should call requestComplaintSummaries', () => {
+  it('should call requestComplaintSummaries', function () {
     const requestComplaintSummariesSpy = spy();
     mount(
       <ComplaintSummaries

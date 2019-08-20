@@ -13,12 +13,12 @@ describe('configured-axios-middleware', function () {
     },
   };
 
-  describe('onSuccess', () => {
+  describe('onSuccess', function () {
     const response = {
       data: [1, 2, 3],
     };
 
-    it('should fire action with response as payload', () => {
+    it('should fire action with response as payload', function () {
       onSuccess({ action, next, response }).should.eql({
         type: getActionTypes(action)[1],
         payload: response.data,
@@ -26,7 +26,7 @@ describe('configured-axios-middleware', function () {
       });
     });
 
-    it('should fire action with provided metadata', () => {
+    it('should fire action with provided metadata', function () {
       const actionWithMeta = {
         ...action,
         meta: 'foobar',
@@ -44,7 +44,7 @@ describe('configured-axios-middleware', function () {
     });
   });
 
-  describe('onError', () => {
+  describe('onError', function () {
     it('should fire action with error with response without message', function () {
       const error = {
         response: {

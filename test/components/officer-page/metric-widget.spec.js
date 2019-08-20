@@ -5,8 +5,8 @@ import MetricWidget from 'components/officer-page/metric-widget';
 import MetricWidgetItem from 'components/officer-page/metric-widget-item';
 
 
-describe('MetricWidget component', () => {
-  it('should contain correct number of MetricWidgetItem components', () => {
+describe('MetricWidget component', function () {
+  it('should contain correct number of MetricWidgetItem components', function () {
     const metrics = [
       {
         name: 'name1',
@@ -26,7 +26,7 @@ describe('MetricWidget component', () => {
     wrapper.find(MetricWidgetItem).should.have.length(2);
   });
 
-  it('should split into groups with the length of 2', () => {
+  it('should split into groups with the length of 2', function () {
     const metrics = [
       {
         name: 'name1',

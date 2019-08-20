@@ -2,8 +2,8 @@ import { breadcrumbTextSelector, breadcrumbSelector } from 'selectors/common/bre
 
 
 describe('breadcrumbs selectors', function () {
-  describe('breadcrumbTextSelector', () => {
-    it('should return breadcrumb text', () => {
+  describe('breadcrumbTextSelector', function () {
+    it('should return breadcrumb text', function () {
       const state = {
         breadcrumbMapping: {
           '/trr/123/': 'TRR 123',
@@ -13,7 +13,7 @@ describe('breadcrumbs selectors', function () {
       breadcrumbTextSelector(state, { url: '/trr/123/' }).should.eql('TRR 123');
     });
 
-    it('should return breadcrumb text for officer with tab name', () => {
+    it('should return breadcrumb text for officer with tab name', function () {
       const state = {
         breadcrumbMapping: {
           '/officer/123/jerome-finnigan/': 'Jerome Finnigan',

@@ -20,14 +20,14 @@ describe('<SearchPage />', function () {
     IntercomUtils.showIntercomLauncher.restore();
   });
 
-  it('should be renderable', () => {
+  it('should be renderable', function () {
     const wrapper = shallow(
       <SearchPage query={ '' }/>
     );
     wrapper.should.be.ok();
   });
 
-  it('should render categories returned by getCategoriesWithSuggestions when it has query', () => {
+  it('should render categories returned by getCategoriesWithSuggestions when it has query', function () {
     const dummyCategories = [
       {
         name: 'Any',
@@ -55,8 +55,8 @@ describe('<SearchPage />', function () {
     SearchPage.prototype.getCategoriesWithSuggestions.restore();
   });
 
-  describe('getCategoriesWithSuggestions', () => {
-    it('should return defined categories with data from props', () => {
+  describe('getCategoriesWithSuggestions', function () {
+    it('should return defined categories with data from props', function () {
       const wrapper = shallow(
         <SearchPage
           query={ 'ab' }
@@ -79,8 +79,8 @@ describe('<SearchPage />', function () {
     });
   });
 
-  describe('scrollToCategory', () => {
-    it('should call scrollToElement with a correct selector', () => {
+  describe('scrollToCategory', function () {
+    it('should call scrollToElement with a correct selector', function () {
       const stubScrollToElement = stub(NavigationUtil, 'scrollToElement');
       const wrapper = shallow(<SearchPage query={ '' } />);
       wrapper.instance().scrollToCategory('an-id');
@@ -90,8 +90,8 @@ describe('<SearchPage />', function () {
     });
   });
 
-  describe('onInputChange', () => {
-    it('should dispatch inputChanged action', () => {
+  describe('onInputChange', function () {
+    it('should dispatch inputChanged action', function () {
       const dummyEvent = { currentTarget: { value: 'foo' } };
       const spyInputChanged = spy();
       const wrapper = shallow(
@@ -108,7 +108,7 @@ describe('<SearchPage />', function () {
       spyInputChanged.calledWith('foo').should.be.true();
     });
 
-    it('should call suggestTerm if query is of sufficient length', () => {
+    it('should call suggestTerm if query is of sufficient length', function () {
       const dummyEvent = { currentTarget: { value: 'foo' } };
       const spySuggestTerm = spy();
       const wrapper = mount(
@@ -128,7 +128,7 @@ describe('<SearchPage />', function () {
       spySuggestTerm.calledWith({ term: 'foo' }, undefined, '').should.be.true();
     });
 
-    it('should NOT call suggestTerm if query is empty or too short', () => {
+    it('should NOT call suggestTerm if query is empty or too short', function () {
       const spySuggestTerm = spy();
       const wrapper = mount(
         <SearchPage
@@ -176,7 +176,7 @@ describe('<SearchPage />', function () {
     }).should.be.true();
   });
 
-  it('should focus the input element when mounted', () => {
+  it('should focus the input element when mounted', function () {
     const wrapper = shallow(<SearchPage queryChanged={ () => {} } />);
     const instance = wrapper.instance();
     const spyFocus = spy();
@@ -230,8 +230,8 @@ describe('<SearchPage />', function () {
     });
   });
 
-  describe('updateLastCategoryHeight', () => {
-    it('should run correctly', () => {
+  describe('updateLastCategoryHeight', function () {
+    it('should run correctly', function () {
       const wrapper = shallow(
         <SearchPage />
       );
@@ -247,8 +247,8 @@ describe('<SearchPage />', function () {
     });
   });
 
-  describe('calculateDynamicBottomPaddingStyle', () => {
-    it('should return correct height when there is no last category', () => {
+  describe('calculateDynamicBottomPaddingStyle', function () {
+    it('should return correct height when there is no last category', function () {
       const wrapper = shallow(
         <SearchPage />
       );
@@ -268,7 +268,7 @@ describe('<SearchPage />', function () {
       });
     });
 
-    it('should return correct height when there is category', () => {
+    it('should return correct height when there is category', function () {
       const wrapper = shallow(
         <SearchPage />
       );
@@ -289,7 +289,7 @@ describe('<SearchPage />', function () {
       });
     });
 
-    it('should return minimum height when lastCategoryHeight is sufficiently large', () => {
+    it('should return minimum height when lastCategoryHeight is sufficiently large', function () {
       const wrapper = shallow(
         <SearchPage />
       );
@@ -304,7 +304,7 @@ describe('<SearchPage />', function () {
     });
   });
 
-  describe('renderCategories()', () => {
+  describe('renderCategories()', function () {
     beforeEach(function () {
       stub(SearchPage.prototype.updateLastCategoryHeight, 'bind');
       SearchPage.prototype.updateLastCategoryHeight.bind.returns(SearchPage.prototype.updateLastCategoryHeight);
@@ -314,7 +314,7 @@ describe('<SearchPage />', function () {
       SearchPage.prototype.updateLastCategoryHeight.bind.restore();
     });
 
-    it('should render SearchCategory components', () => {
+    it('should render SearchCategory components', function () {
       const officersProp = {
         data: ['data'],
       };
@@ -343,7 +343,7 @@ describe('<SearchPage />', function () {
       lastCategory.prop('onHeightReady').should.be.eql(SearchPage.prototype.updateLastCategoryHeight);
     });
 
-    it('should pass correct allButtonClickHandler prop to SearchCategory', () => {
+    it('should pass correct allButtonClickHandler prop to SearchCategory', function () {
       const stubBoundCallback = stub(SearchPage.prototype.chooseCategory, 'bind');
       stubBoundCallback.returns(SearchPage.prototype.chooseCategory);
 

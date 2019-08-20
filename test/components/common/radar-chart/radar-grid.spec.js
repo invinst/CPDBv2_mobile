@@ -6,7 +6,7 @@ import RadarGrid from 'components/common/radar-chart/radar-grid';
 
 describe('RadarGrid component', function () {
 
-  it('should be renderable', () => {
+  it('should be renderable', function () {
     shallow(<RadarGrid />).should.be.ok();
   });
 

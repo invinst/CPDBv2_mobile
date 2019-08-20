@@ -12,12 +12,12 @@ import * as IntercomUtils from 'utils/intercom';
 
 
 describe('<Officers />', function () {
-  it('should be renderable', () => {
+  it('should be renderable', function () {
     const wrapper = shallow(<Officers />);
     wrapper.should.be.ok();
   });
 
-  it('should call request Officers if not requested', () => {
+  it('should call request Officers if not requested', function () {
     const requestOfficersSpy = spy();
     mount(
       <Officers

@@ -6,9 +6,9 @@ import { Link } from 'react-router';
 import TRRSearchResult from 'components/search-page/trr-search-result';
 
 
-describe('<TRRSearchResult />', () => {
+describe('<TRRSearchResult />', function () {
 
-  it('should render trrs correctly', () => {
+  it('should render trrs correctly', function () {
     const trrs = [
       { id: '1' },
       { id: '2' },

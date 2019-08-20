@@ -115,7 +115,7 @@ describe('suggestions actions', function () {
     });
   });
 
-  describe('reset', function () {
+  describe('saveToRecent', function () {
     it('should return right action', function () {
       saveToRecent().should.eql({
         type: SEARCH_SAVE_TO_RECENT,

@@ -2,7 +2,7 @@ import { officersSelector } from 'selectors/embed';
 
 
 describe('embed', function () {
-  it('officersSelector', () => {
+  it('officersSelector', function () {
     officersSelector({
       embed: {},
     }).should.eql([]);

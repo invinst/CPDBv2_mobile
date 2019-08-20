@@ -97,53 +97,53 @@ const report = {
 };
 
 
-describe('CmsDataUtil', () => {
-  describe('getRichTextValueAsArray', () => {
-    it('should return correct data', () => {
+describe('CmsDataUtil', function () {
+  describe('getRichTextValueAsArray', function () {
+    it('should return correct data', function () {
       const data = getRichTextValueAsArray(report, 'excerpt');
       data.should.be.eql(['Excerpt goes here']);
     });
 
-    it('should return empty array if field exists but is not rich_text', () => {
+    it('should return empty array if field exists but is not rich_text', function () {
       const data = getRichTextValueAsArray(report, 'data');
       data.should.be.eql([]);
     });
 
-    it('should return empty array if field does not exist', () => {
+    it('should return empty array if field does not exist', function () {
       const data = getRichTextValueAsArray(report, 'foobar');
       data.should.be.eql([]);
     });
   });
 
-  describe('getStringValue', () => {
-    it('should return correct data', () => {
+  describe('getStringValue', function () {
+    it('should return correct data', function () {
       const data = getStringValue(report, 'publication');
       data.should.be.eql('test');
     });
 
-    it('should return empty string if field exists but is not string', () => {
+    it('should return empty string if field exists but is not string', function () {
       const data = getStringValue(report, 'article_link');
       data.should.be.eql('');
     });
 
-    it('should return empty string if field does not exist', () => {
+    it('should return empty string if field does not exist', function () {
       const data = getStringValue(report, 'foo');
       data.should.be.eql('');
     });
   });
 
-  describe('getDateValueAsString', () => {
-    it('should return correct data', () => {
+  describe('getDateValueAsString', function () {
+    it('should return correct data', function () {
       const data = getDateValueAsString(report, 'publish_date');
       data.should.be.eql('Nov 30, 2016');
     });
 
-    it('should return empty string if field exists but is not a date', () => {
+    it('should return empty string if field exists but is not a date', function () {
       const data = getDateValueAsString(report, 'publication');
       data.should.be.eql('');
     });
 
-    it('should return empty string if field does not exist', () => {
+    it('should return empty string if field does not exist', function () {
       const data = getDateValueAsString(report, 'bar');
       data.should.be.eql('');
     });

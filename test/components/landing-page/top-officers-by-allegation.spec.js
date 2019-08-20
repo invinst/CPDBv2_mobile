@@ -10,13 +10,13 @@ import CarouselWrapper from 'components/landing-page/carousel-wrapper';
 import * as IntercomUtils from 'utils/intercom';
 
 
-describe('<TopOfficersByAllegation />', () => {
-  it('should be renderable', () => {
+describe('<TopOfficersByAllegation />', function () {
+  it('should be renderable', function () {
     const wrapper = shallow(<TopOfficersByAllegation />);
     wrapper.should.be.ok();
   });
 
-  it('should call request TopOfficersByAllegation and CMS if they are not requested', () => {
+  it('should call request TopOfficersByAllegation and CMS if they are not requested', function () {
     const requestTopOfficersByAllegationSpy = spy();
     const requestCMSSpy = spy();
     mount(

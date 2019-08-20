@@ -13,9 +13,9 @@ import {
   investigatorCRsSelector,
 } from 'selectors/search-page';
 
-describe('search-page selectors', () => {
-  describe('officersSelector', () => {
-    it('should return empty when there is no officer', () => {
+describe('search-page selectors', function () {
+  describe('officersSelector', function () {
+    it('should return empty when there is no officer', function () {
       const state = {
         suggestionApp: {
           suggestions: {
@@ -57,7 +57,7 @@ describe('search-page selectors', () => {
       });
     });
 
-    it('should return officer data when there are officers', () => {
+    it('should return officer data when there are officers', function () {
       const isShowingAll = true;
       const officer = {
         'id': 1,
@@ -92,8 +92,8 @@ describe('search-page selectors', () => {
     });
   });
 
-  describe('suggestedSelector', () => {
-    it('should return correct value', () => {
+  describe('suggestedSelector', function () {
+    it('should return correct value', function () {
       const state = {
         suggestionApp: {
           initialSuggestions: {
@@ -105,8 +105,8 @@ describe('search-page selectors', () => {
     });
   });
 
-  describe('recentSelector', () => {
-    it('should return correct value', () => {
+  describe('recentSelector', function () {
+    it('should return correct value', function () {
       const state = {
         suggestionApp: {
           initialSuggestions: {
@@ -118,8 +118,8 @@ describe('search-page selectors', () => {
     });
   });
 
-  describe('unitsSelector', () => {
-    it('should return empty when there are no units', () => {
+  describe('unitsSelector', function () {
+    it('should return empty when there are no units', function () {
       const state = {
         suggestionApp: {
           suggestions: {
@@ -130,7 +130,7 @@ describe('search-page selectors', () => {
       unitsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return unit data when there are units', () => {
+    it('should return unit data when there are units', function () {
       const isShowingAll = true;
       const units = [
         {
@@ -183,8 +183,8 @@ describe('search-page selectors', () => {
     });
   });
 
-  describe('dateCRsSelector', () => {
-    it('should return empty when there are no date > crs', () => {
+  describe('dateCRsSelector', function () {
+    it('should return empty when there are no date > crs', function () {
       const state = {
         suggestionApp: {
           suggestions: {
@@ -195,7 +195,7 @@ describe('search-page selectors', () => {
       dateCRsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return cr data when there are date > crs', () => {
+    it('should return cr data when there are date > crs', function () {
       const isShowingAll = true;
       const dateCRs = [
         {
@@ -235,8 +235,8 @@ describe('search-page selectors', () => {
     });
   });
 
-  describe('dateTRRsSelector', () => {
-    it('should return empty when there are no trss', () => {
+  describe('dateTRRsSelector', function () {
+    it('should return empty when there are no trss', function () {
       const state = {
         suggestionApp: {
           suggestions: {
@@ -247,7 +247,7 @@ describe('search-page selectors', () => {
       dateTRRsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return trr data when there are trrs', () => {
+    it('should return trr data when there are trrs', function () {
       const isShowingAll = true;
       const dateTRRs = [
         {
@@ -279,8 +279,8 @@ describe('search-page selectors', () => {
     });
   });
 
-  describe('crsSelector', () => {
-    it('should return empty when there are no crs', () => {
+  describe('crsSelector', function () {
+    it('should return empty when there are no crs', function () {
       const state = {
         suggestionApp: {
           suggestions: {
@@ -291,7 +291,7 @@ describe('search-page selectors', () => {
       crsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return cr data when there are crs', () => {
+    it('should return cr data when there are crs', function () {
       const isShowingAll = true;
       const crs = [
         {
@@ -346,8 +346,8 @@ describe('search-page selectors', () => {
     });
   });
 
-  describe('investigatorCRsSelector', () => {
-    it('should return empty when there are no INVESTIGATOR > CR data', () => {
+  describe('investigatorCRsSelector', function () {
+    it('should return empty when there are no INVESTIGATOR > CR data', function () {
       const state = {
         suggestionApp: {
           suggestions: {
@@ -358,7 +358,7 @@ describe('search-page selectors', () => {
       investigatorCRsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return INVESTIGATOR > CR data correctly', () => {
+    it('should return INVESTIGATOR > CR data correctly', function () {
       const isShowingAll = true;
       const investigatorCR = [
         {
@@ -398,8 +398,8 @@ describe('search-page selectors', () => {
     });
   });
 
-  describe('trrsSelector', () => {
-    it('should return empty when there are no trss', () => {
+  describe('trrsSelector', function () {
+    it('should return empty when there are no trss', function () {
       const state = {
         suggestionApp: {
           suggestions: {
@@ -410,7 +410,7 @@ describe('search-page selectors', () => {
       trrsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return trr data when there are trrs', () => {
+    it('should return trr data when there are trrs', function () {
       const isShowingAll = true;
       const trrs = [
         {
@@ -442,8 +442,8 @@ describe('search-page selectors', () => {
     });
   });
 
-  describe('dateOfficersSelector', () => {
-    it('should return empty when there is no DATE > OFFICERS', () => {
+  describe('dateOfficersSelector', function () {
+    it('should return empty when there is no DATE > OFFICERS', function () {
       const state = {
         suggestionApp: {
           suggestions: {
