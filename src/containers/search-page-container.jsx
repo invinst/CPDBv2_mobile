@@ -11,6 +11,8 @@ import {
   saveToRecent,
   updateActiveCategory,
   updateChosenCategory,
+  fetchRecentSearchItems,
+  fetchedEmptyRecentSearchItems,
 } from 'actions/suggestion';
 import {
   officersSelector,
@@ -19,9 +21,11 @@ import {
   crsSelector,
   trrsSelector,
   suggestedSelector,
-  recentSelector,
+  recentSuggestionsSelector,
   dateOfficersSelector,
   investigatorCRsSelector,
+  recentSuggestionIdsSelector,
+  getRecentSuggestionsRequested,
 } from 'selectors/search-page';
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import { addOrRemoveItemInPinboard, createPinboard } from 'actions/pinboard';
@@ -38,8 +42,10 @@ function mapStateToProps(state, ownProps) {
     dateOfficers: dateOfficersSelector(state),
     crs: crsSelector(state),
     trrs: trrsSelector(state),
-    recent: recentSelector(state),
     suggested: suggestedSelector(state),
+    recent: recentSuggestionsSelector(state),
+    recentSuggestionIds: recentSuggestionIdsSelector(state),
+    recentSuggestionsRequested: getRecentSuggestionsRequested(state),
     activeCategory: state.suggestionApp.activeCategory,
     chosenCategory: state.suggestionApp.chosenCategory,
     pinboard: getPinboard(state),
@@ -52,6 +58,8 @@ const mapDispatchToProps = {
   queryChanged,
   suggestTerm,
   suggestAllFromCategory,
+  fetchRecentSearchItems,
+  fetchedEmptyRecentSearchItems,
   saveToRecent,
   updateActiveCategory,
   updateChosenCategory,

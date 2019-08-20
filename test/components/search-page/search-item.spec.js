@@ -1,9 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Link } from 'react-router';
+import { Link, Router, Route } from 'react-router';
 
 import SearchItem from 'components/search-page/search-item';
 import ItemPinButton from 'components/search-page/item-pin-button';
+import { mount } from 'enzyme';
+import { spy } from 'sinon';
+import { createMemoryHistory } from 'history';
 
 
 describe('<SearchItem />', function () {
@@ -24,5 +27,36 @@ describe('<SearchItem />', function () {
       </SearchItem>
     );
     wrapper.find(Link).props().className.should.containEql('custom');
+  });
+
+  it('should call saveToRecent when click on item', function () {
+    const saveToRecentSpy = spy();
+    const officer = {
+      id: '8562',
+      type: 'OFFICER',
+      name: 'Jerome Finnigan',
+      badge: 'Badge #456789',
+      url: '/officer/123456/jerome-finnigan/',
+    };
+
+    const wrapper = mount(
+      <Router history={ createMemoryHistory() }>
+        <Route path='/' component={
+          () => <SearchItem
+            type='OFFICER'
+            id='8562'
+            saveToRecent={ saveToRecentSpy }
+            recentItemData={ officer }
+          />
+        } />
+      </Router>
+    );
+
+    wrapper.find(Link).simulate('click');
+    saveToRecentSpy.calledWith({
+      type: 'OFFICER',
+      id: '8562',
+      data: officer,
+    }).should.be.true();
   });
 });
