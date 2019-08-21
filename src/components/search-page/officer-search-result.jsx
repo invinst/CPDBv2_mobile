@@ -27,11 +27,11 @@ class OfficerSearchResult extends Component {
 OfficerSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
   items: PropTypes.array,
-  categoryFilter: PropTypes.string
+  categoryFilter: PropTypes.string,
 };
 
 OfficerSearchResult.defaultProps = {
-  saveToRecent: () => {}
+  saveToRecent: () => {},
 };
 
 export default OfficerSearchResult;

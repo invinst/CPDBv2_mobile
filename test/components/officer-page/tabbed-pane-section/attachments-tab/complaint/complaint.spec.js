@@ -11,13 +11,13 @@ describe('Complaint component', function () {
     title: 'CRID 1071970 OCIR 2 of 3',
     url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-2-of-3.html',
     previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
-    fileType: 'document'
+    fileType: 'document',
   };
   const attachment1 = {
     title: 'Video Clip',
     url: 'https://player.vimeo.com/video/165206078',
     previewImageUrl: '/src/img/ic-video.svg',
-    fileType: 'video'
+    fileType: 'video',
   };
   const complaint = {
     crid: '307775',
@@ -27,7 +27,7 @@ describe('Complaint component', function () {
     outcome: 'No Action Taken',
     date: 'MAR 1',
     coaccused: 4,
-    attachments: [attachment0, attachment1]
+    attachments: [attachment0, attachment1],
   };
 
   it('should render Heading and AttachmentsTab', function () {

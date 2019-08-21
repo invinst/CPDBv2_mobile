@@ -106,6 +106,8 @@
     "core-js": "^2.0.0",
     "d3": "^5.4.0",
     "draft-js": "^0.10.5",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-mocha": "^6.0.0",
     "flux": "^2.1.1",
     "growl": "^1.10.5",
     "handlebars": "^4.1.2",

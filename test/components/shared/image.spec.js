@@ -24,7 +24,7 @@ describe('Image component', function () {
 
     instance.setState({
       loaded: true,
-      error: false
+      error: false,
     });
 
     instance.find('img').prop('src').should.eql(sampleImage);
@@ -37,7 +37,7 @@ describe('Image component', function () {
 
     instance.setState({
       loaded: true,
-      error: true
+      error: true,
     });
 
     instance.find('img').prop('src').should.eql('fallback');

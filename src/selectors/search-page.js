@@ -18,8 +18,8 @@ export const officerFormatter = (officers) => {
       name: officer.name,
       badge: officer.badge ? `Badge #${officer.badge}` : '',
       percentile: extractPercentile(officer.percentile),
-      url: officerUrl(officer.id, officer.name)
-    }))
+      url: officerUrl(officer.id, officer.name),
+    })),
   };
 };
 
@@ -43,7 +43,7 @@ export const unitsSelector = createSelector(
         url: unit.url,
         memberCount: unit.member_count,
         activeMemberCount: unit.active_member_count,
-      }))
+      })),
     };
   }
 );
@@ -60,7 +60,7 @@ const crFormatter = (crs) => {
       url: `${constants.COMPLAINT_PATH}${cr.crid}/`,
       incidentDate: moment(cr.incident_date).format(constants.SEARCH_INCIDENT_DATE_FORMAT),
       category: cr.category,
-    }))
+    })),
   };
 };
 
@@ -83,8 +83,8 @@ const trrFormatter = (trrs) => {
     isShowingAll: trrs.isShowingAll,
     data: trrs.data.map((trr) => ({
       id: trr.id,
-      url: `${constants.TRR_PATH}${trr.id}/`
-    }))
+      url: `${constants.TRR_PATH}${trr.id}/`,
+    })),
   };
 };
 

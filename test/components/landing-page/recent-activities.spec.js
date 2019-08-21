@@ -7,8 +7,8 @@ import { EditorState } from 'draft-js';
 import CarouselWrapper from 'components/landing-page/carousel-wrapper';
 import OfficerCard from 'components/common/officer-card';
 
-describe('<RecentActivities />', () => {
-  it('should render enough contents', () => {
+describe('<RecentActivities />', function () {
+  it('should render enough contents', function () {
     const recentActivities = [{ id: '123' }, { id: '456' }];
     const titleCMSContent = EditorState.createEmpty();
     const descriptionCMSContent = EditorState.createEmpty();
@@ -32,7 +32,7 @@ describe('<RecentActivities />', () => {
     officerCards.at(1).prop('officer').should.eql({ id: '456' });
   });
 
-  it('should call requestRecentActivities', () => {
+  it('should call requestRecentActivities', function () {
     const requestRecentActivitiesSpy = spy();
     mount(
       <RecentActivities

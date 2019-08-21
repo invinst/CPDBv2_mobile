@@ -17,7 +17,7 @@ describe('ScaleExplainer component', function () {
       { axis: 'Internal Complaints', value: 60 },
     ],
     textColor: 'black',
-    visualTokenBackground: 'white'
+    visualTokenBackground: 'white',
   };
 
 
@@ -57,7 +57,7 @@ describe('ScaleExplainer component', function () {
       axisTitleFontSize: 25,
       radius: 141,
       yAxisCenter: 155,
-      areaColor: '#767676'
+      areaColor: '#767676',
     });
     layout.prop('leftNavigationText').should.equal('What is this triangle?');
     layout.prop('rightNavigationText').should.equal('Percentiles by year');

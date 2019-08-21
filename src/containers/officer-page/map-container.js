@@ -7,7 +7,7 @@ import { mapLegendSelector, mapMarkersSelector } from 'selectors/officer-page/ma
 function mapStateToProps(state, ownProps) {
   return {
     legend: mapLegendSelector(state, ownProps.officerId),
-    markers: mapMarkersSelector(state, ownProps.officerId)
+    markers: mapMarkersSelector(state, ownProps.officerId),
   };
 }
 

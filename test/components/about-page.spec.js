@@ -4,20 +4,20 @@ import { shallow } from 'enzyme';
 
 import AboutPage from 'components/about-page';
 
-describe('<AboutPage />', () => {
-  it('should be renderable', () => {
+describe('<AboutPage />', function () {
+  it('should be renderable', function () {
     const wrapper = shallow(<AboutPage />);
     wrapper.should.be.ok();
   });
 
-  it('should not render anything if data is not loaded', () => {
+  it('should not render anything if data is not loaded', function () {
     const wrapper = shallow(
       <AboutPage content={ null } />
     );
     should(wrapper.type()).equal(null);
   });
 
-  it('should render content correctly', () => {
+  it('should render content correctly', function () {
     const wrapper = shallow(
       <AboutPage content={ ['One', 'Two'] } />
     );

@@ -6,7 +6,7 @@ import OfficerCard from 'components/common/officer-card';
 import BaseOfficerCard from 'components/common/base-officer-card';
 
 
-describe('<OfficerCard />', () => {
+describe('<OfficerCard />', function () {
   const officer = {
     'complaint_count': 104,
     'full_name': 'Broderick Jones',
@@ -23,7 +23,7 @@ describe('<OfficerCard />', () => {
     },
   };
 
-  it('should render footer correctly', () => {
+  it('should render footer correctly', function () {
     const wrapper = mount(<OfficerCard officer={ officer } />);
 
     const baseCard = wrapper.find(BaseOfficerCard);

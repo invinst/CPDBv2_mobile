@@ -31,7 +31,7 @@ export default class PercentileExplainer extends Component {
     const radarConfig = {
       hideAxisText: true,
       showGrid: false,
-      showSpineLine: false
+      showSpineLine: false,
     };
 
     const tableData = data ? [].concat(data).reverse() : [];

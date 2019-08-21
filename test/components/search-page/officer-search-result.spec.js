@@ -5,8 +5,8 @@ import OfficerSearchResult from 'components/search-page/officer-search-result';
 import OfficerItem from 'components/search-page/officer-item';
 
 
-describe('<OfficerSearchResult />', () => {
-  it('should be renderable', () => {
+describe('<OfficerSearchResult />', function () {
+  it('should be renderable', function () {
     shallow(
       <OfficerSearchResult
         items={ [{ id: 1 }] }
@@ -14,7 +14,7 @@ describe('<OfficerSearchResult />', () => {
     ).should.be.ok();
   });
 
-  it('should render list of officer item', () => {
+  it('should render list of officer item', function () {
     const wrapper = shallow(
       <OfficerSearchResult
         items={ [{ id: 1 }, { id: 2 }] }

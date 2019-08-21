@@ -2,14 +2,14 @@ import React, { PropTypes } from 'react';
 
 const COLOR_CODES = {
   gray: '#C7C7CC',
-  blue: '#005EF4'
+  blue: '#005EF4',
 };
 
 const ROTATIONS = {
   down: '0deg',
   left: '90deg',
   up: '180deg',
-  right: '-90deg'
+  right: '-90deg',
 };
 
 const Arrow = ({ direction, color }) => {
@@ -19,7 +19,7 @@ const Arrow = ({ direction, color }) => {
     WebkitTransform: rotate,
     MozTransform: rotate,
     OTransform: rotate,
-    msTransform: rotate
+    msTransform: rotate,
   };
 
   return (
@@ -37,12 +37,12 @@ const Arrow = ({ direction, color }) => {
 
 Arrow.propTypes = {
   direction: PropTypes.string,
-  color: PropTypes.string
+  color: PropTypes.string,
 };
 
 Arrow.defaultProps = {
   direction: 'down',
-  color: 'gray'
+  color: 'gray',
 };
 
 export default Arrow;

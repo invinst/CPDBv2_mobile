@@ -20,11 +20,11 @@ class UnitSearchResult extends Component {
 
 UnitSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
-  items: PropTypes.array
+  items: PropTypes.array,
 };
 
 UnitSearchResult.defaultProps = {
-  items: []
+  items: [],
 };
 
 export default UnitSearchResult;

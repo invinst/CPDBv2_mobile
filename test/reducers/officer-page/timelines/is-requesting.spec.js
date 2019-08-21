@@ -1,5 +1,5 @@
 import {
-  OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE
+  OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE,
 } from 'actions/officer-page/timeline';
 import isRequesting from 'reducers/officer-page/timeline/is-requesting';
 import {
@@ -15,19 +15,19 @@ describe('isRequesting reducer', function () {
 
   it('should handle OFFICER_TIMELINE_REQUEST_START', function () {
     isRequesting(false, {
-      type: OFFICER_TIMELINE_ITEMS_REQUEST_START
+      type: OFFICER_TIMELINE_ITEMS_REQUEST_START,
     }).should.be.true();
   });
 
   it('should handle OFFICER_TIMELINE_REQUEST_SUCCESS', function () {
     isRequesting(true, {
-      type: OFFICER_TIMELINE_ITEMS_REQUEST_SUCCESS
+      type: OFFICER_TIMELINE_ITEMS_REQUEST_SUCCESS,
     }).should.be.false();
   });
 
   it('should handle OFFICER_TIMELINE_REQUEST_FAILURE', function () {
     isRequesting(true, {
-      type: OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE
+      type: OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE,
     }).should.be.false();
   });
 });

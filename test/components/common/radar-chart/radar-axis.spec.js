@@ -5,7 +5,7 @@ import RadarAxis from 'components/common/radar-chart/radar-axis';
 
 
 describe('RadarAxis component', function () {
-  it('should draw 3 lines if have 3 axis titles', () => {
+  it('should draw 3 lines if have 3 axis titles', function () {
     const data = [
       {
         axis: 'a',
@@ -18,7 +18,7 @@ describe('RadarAxis component', function () {
       {
         axis: 'c',
         value: 20,
-      }
+      },
     ];
     const wrapper = shallow(
       <RadarAxis radius={ 100 } data={ data } showAxisTitle={ true }/>
@@ -44,7 +44,7 @@ describe('RadarAxis component', function () {
       {
         axis: 'c',
         value: 20,
-      }
+      },
     ];
     const wrapper = shallow(
       <RadarAxis radius={ 100 } data={ data } showAxisTitle={ true }/>
@@ -73,7 +73,7 @@ describe('RadarAxis component', function () {
       {
         axis: 'c',
         value: 20,
-      }
+      },
     ];
     const wrapper = shallow(
       <RadarAxis radius={ 100 } data={ data } showAxisValue={ true }/>

@@ -5,7 +5,7 @@ import AboutPage from 'components/about-page';
 
 function mapStateToProps(state, ownProps) {
   return {
-    content: state.landingPage.aboutSection.aboutContent
+    content: state.landingPage.aboutSection.aboutContent,
   };
 }
 

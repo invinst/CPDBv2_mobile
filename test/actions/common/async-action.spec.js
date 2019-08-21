@@ -13,9 +13,9 @@ describe('async-action', function () {
           request: {
             url,
             params: undefined,
-            adapter: undefined
-          }
-        }
+            adapter: undefined,
+          },
+        },
       });
     });
   });
@@ -30,10 +30,10 @@ describe('async-action', function () {
         types,
         payload: {
           request: {
-            url
-          }
+            url,
+          },
         },
-        meta
+        meta,
       });
     });
   });
@@ -51,9 +51,9 @@ describe('async-action', function () {
             url,
             method: 'POST',
             data,
-            adapter: undefined
-          }
-        }
+            adapter: undefined,
+          },
+        },
       });
     });
   });

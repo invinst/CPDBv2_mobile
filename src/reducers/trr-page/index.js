@@ -10,5 +10,5 @@ export default combineReducers({
   trrs,
   attachmentRequest,
   cms,
-  cmsRequested
+  cmsRequested,
 });

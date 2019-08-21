@@ -4,9 +4,9 @@ import { shallow } from 'enzyme';
 import MetricWidgetItem from 'components/officer-page/metric-widget-item';
 
 
-describe('MetricWidgetItem component', () => {
+describe('MetricWidgetItem component', function () {
 
-  it('should show correct info', () => {
+  it('should show correct info', function () {
     const wrapper = shallow(
       <MetricWidgetItem value={ 23 } name='Allegations' description='something' hightlight={ false }/>
     );

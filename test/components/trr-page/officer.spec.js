@@ -24,7 +24,7 @@ describe('<Officer />', function () {
         items: [
           { axis: 'Use of Force Reports', value: 99.9 },
           { axis: 'Internal Allegations', value: 11.1 },
-          { axis: 'Civilian Allegations', value: 22.2 }
+          { axis: 'Civilian Allegations', value: 22.2 },
         ],
         visualTokenBackground: '#ed6154',
       },
@@ -38,7 +38,7 @@ describe('<Officer />', function () {
     radarChart.prop('data').should.deepEqual([
       { axis: 'Use of Force Reports', value: 99.9 },
       { axis: 'Internal Allegations', value: 11.1 },
-      { axis: 'Civilian Allegations', value: 22.2 }
+      { axis: 'Civilian Allegations', value: 22.2 },
     ]);
     radarChart.prop('backgroundColor').should.deepEqual('#ed6154');
 

@@ -10,13 +10,13 @@ function mapStateToProps(state, ownProps) {
   return {
     urlQuery: ownProps.params.query,
     query: state.suggestionApp.query,
-    isSearchFocused: state.suggestionApp.isSearchFocused
+    isSearchFocused: state.suggestionApp.isSearchFocused,
   };
 }
 
 const mapDispatchToProps = {
   fetchSuggestedSearchItems,
-  routeChanged
+  routeChanged,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainPage));

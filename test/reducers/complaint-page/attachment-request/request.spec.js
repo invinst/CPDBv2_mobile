@@ -2,7 +2,7 @@ import message from 'reducers/complaint-page/attachment-request/message';
 import {
   COMPLAINT_REQUEST_DOC_REQUEST_START,
   COMPLAINT_REQUEST_DOC_REQUEST_SUCCESS,
-  COMPLAINT_REQUEST_DOC_REQUEST_FAILURE
+  COMPLAINT_REQUEST_DOC_REQUEST_FAILURE,
 } from 'actions/complaint-page';
 
 
@@ -15,7 +15,7 @@ describe('AttachmentRequest reducer', function () {
     it('should handle COMPLAINT_REQUEST_DOC_REQUEST_START', function () {
       message('', {
         type: COMPLAINT_REQUEST_DOC_REQUEST_START,
-        email: 'valid@email.com'
+        email: 'valid@email.com',
       }).should.eql('');
     });
 
@@ -23,8 +23,8 @@ describe('AttachmentRequest reducer', function () {
       message('', {
         type: COMPLAINT_REQUEST_DOC_REQUEST_SUCCESS,
         payload: {
-          message: 'Thanks for subscribing'
-        }
+          message: 'Thanks for subscribing',
+        },
       }).should.eql('Thanks for subscribing');
     });
 
@@ -32,8 +32,8 @@ describe('AttachmentRequest reducer', function () {
       message('', {
         type: COMPLAINT_REQUEST_DOC_REQUEST_FAILURE,
         payload: {
-          message: 'Not subscribe'
-        }
+          message: 'Not subscribe',
+        },
       }).should.eql('Not subscribe');
     });
   });

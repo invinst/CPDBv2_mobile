@@ -6,14 +6,14 @@ export const trackSwipeLanddingPageCarousel = (direction, type) => {
     hitType: 'event',
     eventCategory: 'landing_page_carousel',
     eventAction: `swipe_${direction}`,
-    eventLabel: type
+    eventLabel: type,
   });
 };
 
 export const trackPageView = (pathname) => {
   window.ga('send', {
     hitType: 'pageview',
-    page: pathname
+    page: pathname,
   });
 };
 
@@ -22,7 +22,7 @@ export const trackSearchResultsCount = (count) => {
     hitType: 'event',
     eventCategory: 'search',
     eventAction: 'num_results',
-    eventValue: count
+    eventValue: count,
   });
 };
 
@@ -32,7 +32,7 @@ export function trackSearchQuery(query) {
     hitType: 'event',
     eventCategory: 'search',
     eventAction: 'change_query',
-    eventLabel: query
+    eventLabel: query,
   });
 }
 
@@ -41,7 +41,7 @@ export const trackOpenExplainer = (officerId) => {
     hitType: 'event',
     eventCategory: 'visual_token_explainer',
     eventAction: 'open',
-    eventValue: officerId
+    eventValue: officerId,
   });
 };
 

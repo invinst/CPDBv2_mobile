@@ -11,7 +11,7 @@ export default class RadarAxis extends React.Component {
       fontSize: `${fontSize}px`,
       fontWeight: fontWeight,
       fill: textColor,
-      stroke: 'none'
+      stroke: 'none',
     };
 
     const words = title.split(' ');

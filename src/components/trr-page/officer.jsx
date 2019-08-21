@@ -12,7 +12,7 @@ class Officer extends Component {
     const {
       officerId, fullName, demographic, careerDuration,
       unitName, unitDescription,
-      assignedBeat, onDuty, inUniform, percentile
+      assignedBeat, onDuty, inUniform, percentile,
     } = this.props;
 
     const visualTokenConfig = percentile ? {

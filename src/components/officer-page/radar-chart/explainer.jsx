@@ -19,13 +19,13 @@ export default class RadarExplainer extends Component {
 
   navigateLeft() {
     this.setState({
-      currentIndex: (this.state.currentIndex - 1 + numType) % numType
+      currentIndex: (this.state.currentIndex - 1 + numType) % numType,
     });
   }
 
   navigateRight() {
     this.setState({
-      currentIndex: (this.state.currentIndex + 1) % numType
+      currentIndex: (this.state.currentIndex + 1) % numType,
     });
   }
 
@@ -67,5 +67,5 @@ export default class RadarExplainer extends Component {
 
 RadarExplainer.propTypes = {
   percentileData: PropTypes.array,
-  closeExplainer: PropTypes.func
+  closeExplainer: PropTypes.func,
 };

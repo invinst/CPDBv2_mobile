@@ -8,7 +8,7 @@ export default class TriangleExplainer extends Component {
   render() {
     const {
       leftNavHandler, rightNavHandler, closeExplainer, radarChartData,
-      descriptionCMSContent, subDescriptionCMSContent
+      descriptionCMSContent, subDescriptionCMSContent,
     } = this.props;
     const { items } = radarChartData;
 
@@ -21,7 +21,7 @@ export default class TriangleExplainer extends Component {
       showSpineLine: false,
       radius: 141,
       yAxisCenter: 155,
-      areaColor: '#767676'
+      areaColor: '#767676',
     };
     const content = (
       <DescriptionContent

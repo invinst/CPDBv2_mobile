@@ -4,7 +4,7 @@ const nthOfficerCard = (n) => ({
   elements: {
     officerName: '.officer-name',
     complaintCount: '.complaint-count',
-  }
+  },
 });
 
 module.exports = {

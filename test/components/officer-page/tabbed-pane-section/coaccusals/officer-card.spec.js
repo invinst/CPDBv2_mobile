@@ -6,7 +6,7 @@ import OfficerCard from 'components/officer-page/tabbed-pane-section/coaccusals/
 import BaseOfficerCard from 'components/common/base-officer-card';
 
 
-describe('CoaccusalCard', () => {
+describe('CoaccusalCard', function () {
   const officer = {
     officerId: 8562,
     fullName: 'Jerome Finnigan',
@@ -22,10 +22,10 @@ describe('CoaccusalCard', () => {
       year: undefined,
     },
     coaccusalCount: 11,
-    rank: 'Police Officer'
+    rank: 'Police Officer',
   };
 
-  it('should render footer correctly', () => {
+  it('should render footer correctly', function () {
     const wrapper = mount(<OfficerCard { ...officer } />);
 
     const baseCard = wrapper.find(BaseOfficerCard);
@@ -40,7 +40,7 @@ describe('CoaccusalCard', () => {
       officerId: 123456,
       percentile: undefined,
       coaccusalCount: 1,
-      rank: 'Detective'
+      rank: 'Detective',
     };
     const wrapper = mount(<OfficerCard { ...noPercentileOfficer } />);
     const baseCard = wrapper.find(BaseOfficerCard);
