@@ -9,7 +9,7 @@ let config = {
   appEnv: 'dev', // feel free to remove the appEnv property here
   baseUrlV1: 'https://m.cpdb.co',
   baseUrlV2: `${apiHost}/api/v1`,
-  baseUrlV2V2: `${apiHost}/api/v2`
+  baseUrlV2V2: `${apiHost}/api/v2`,
 };
 
 export default Object.freeze(Object.assign({}, baseConfig, config));

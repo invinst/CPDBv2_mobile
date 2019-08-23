@@ -27,9 +27,9 @@ describe('trr-page actions', function () {
           request: {
             url: `${v2Url(constants.TRR_API_ENDPOINT)}11/`,
             adapter: undefined,
-            params: undefined
-          }
-        }
+            params: undefined,
+          },
+        },
       });
     });
   });
@@ -39,18 +39,18 @@ describe('trr-page actions', function () {
         types: [
           TRR_REQUEST_DOC_REQUEST_START,
           TRR_REQUEST_DOC_REQUEST_SUCCESS,
-          TRR_REQUEST_DOC_REQUEST_FAILURE
+          TRR_REQUEST_DOC_REQUEST_FAILURE,
         ],
         payload: {
           request: {
             url: `${v2Url(constants.TRR_API_ENDPOINT)}123/request-document/`,
             data: {
-              email: 'valid@email.com'
+              email: 'valid@email.com',
             },
             method: 'POST',
-            adapter: undefined
-          }
-        }
+            adapter: undefined,
+          },
+        },
       });
     });
   });
@@ -61,15 +61,15 @@ describe('trr-page actions', function () {
         types: [
           TRR_PAGE_CMS_REQUEST_START,
           TRR_PAGE_CMS_REQUEST_SUCCESS,
-          TRR_PAGE_CMS_REQUEST_FAILURE
+          TRR_PAGE_CMS_REQUEST_FAILURE,
         ],
         payload: {
           request: {
             url: `${v2Url(constants.TRR_PAGE_CMS_API_ENDPOINT)}`,
             adapter: undefined,
-            params: undefined
-          }
-        }
+            params: undefined,
+          },
+        },
       });
     });
   });

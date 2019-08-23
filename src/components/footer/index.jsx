@@ -12,7 +12,7 @@ class Footer extends Component {
     super(props);
 
     this.state = {
-      legalModalIsOpen: false
+      legalModalIsOpen: false,
     };
 
     this.closeModal = this.closeModal.bind(this);

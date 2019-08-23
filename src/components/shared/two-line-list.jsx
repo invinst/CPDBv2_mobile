@@ -14,7 +14,7 @@ class TwoLineList extends Component {
       <div className='labels' key='label'>
         <div className='label'>{ label }</div>
         <div className='sublabel'>{ sublabel }</div>
-      </div>
+      </div>,
     ];
 
     if (url) {
@@ -57,9 +57,9 @@ TwoLineList.propTypes = {
       label: PropTypes.string,
       sublabel: PropTypes.string,
       url: PropTypes.string,
-      onClick: PropTypes.func
+      onClick: PropTypes.func,
     })
-  )
+  ),
 };
 
 export default TwoLineList;

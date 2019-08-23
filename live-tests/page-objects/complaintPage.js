@@ -9,22 +9,22 @@ module.exports = {
     complainants: '.complainant-list',
     summary: {
       selector: '//div[contains(@class, "summary")]//div[contains(@class, "content")]',
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     investigatorTimeline: {
       selector: '//div[contains(@class, "investigation-timeline")]//*[contains(@class, "svg")]',
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     firstInvestigator: {
       selector: '(//*[contains(@class, "investigator-row")])[1]',
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     secondInvestigator: {
       selector: '(//*[contains(@class, "investigator-row")])[2]',
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     requestDocumentButton: '.request-button',
-    incidentDate: '.incident-date-value'
+    incidentDate: '.incident-date-value',
   },
 
   sections: {
@@ -33,8 +33,8 @@ module.exports = {
       locateStrategy: 'xpath',
       elements: {
         category: '.category',
-        subcategory: '.subcategory'
-      }
+        subcategory: '.subcategory',
+      },
     },
     coaccusals: {
       selector: '//div[contains(@class, "accused-officers")]',
@@ -42,8 +42,8 @@ module.exports = {
       elements: {
         header: '.header',
         showAll: '.show-all',
-        paddingBottom: '.padding-bottom'
-      }
+        paddingBottom: '.padding-bottom',
+      },
     },
     firstCoaccusal: {
       selector: '(//a[contains(@class, "coaccused-card")])[1]',
@@ -52,15 +52,15 @@ module.exports = {
         rank: '.officer-rank',
         name: '.officer-name',
         category: '.category',
-        findingOutcome: '.finding-outcome'
-      }
+        findingOutcome: '.finding-outcome',
+      },
     },
     firstAttachments: {
       selector: '//a[contains(@class, "attachment")])[1]',
       locateStrategy: 'xpath',
       elements: {
-        title: '.attachment-title'
-      }
+        title: '.attachment-title',
+      },
     },
     location: {
       selector: '//div[contains(@class, "location__location")]',
@@ -68,8 +68,8 @@ module.exports = {
       elements: {
         address: '.address .info',
         type: '.type .info',
-        beat: '.beat .info'
-      }
+        beat: '.beat .info',
+      },
     },
     requestDocumentForm: {
       selector: '//form[contains(@class, "request-document-content")]',
@@ -78,8 +78,8 @@ module.exports = {
         emailInput: '.email-input',
         requestButton: '.request-button',
         cancelButton: '.cancel-button',
-        messageBox: '.message-box'
-      }
-    }
-  }
+        messageBox: '.message-box',
+      },
+    },
+  },
 };

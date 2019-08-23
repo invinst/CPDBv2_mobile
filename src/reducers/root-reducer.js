@@ -20,5 +20,5 @@ export default combineReducers({
   landingPage,
   complaintPage,
   trrPage,
-  embed
+  embed,
 });

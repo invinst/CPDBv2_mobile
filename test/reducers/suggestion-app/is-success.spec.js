@@ -9,13 +9,13 @@ describe('isSuccess reducer', function () {
 
   it('should handle SUGGESTION_REQUEST_SUCCESS', function () {
     isSuccess(false, {
-      type: SUGGESTION_REQUEST_SUCCESS
+      type: SUGGESTION_REQUEST_SUCCESS,
     }).should.be.true();
   });
 
   it('should handle SUGGESTION_REQUEST_FAILURE', function () {
     isSuccess(true, {
-      type: SUGGESTION_REQUEST_FAILURE
+      type: SUGGESTION_REQUEST_FAILURE,
     }).should.be.false();
   });
 });

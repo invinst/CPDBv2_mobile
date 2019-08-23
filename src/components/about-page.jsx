@@ -30,5 +30,5 @@ export default class AboutPage extends Component {
 }
 
 AboutPage.propTypes = {
-  content: PropTypes.array
+  content: PropTypes.array,
 };

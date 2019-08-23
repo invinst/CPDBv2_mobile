@@ -10,15 +10,15 @@ describe('landing-page actions', function () {
         types: [
           actions.LANDING_PAGE_CMS_REQUEST_START,
           actions.LANDING_PAGE_CMS_REQUEST_SUCCESS,
-          actions.LANDING_PAGE_CMS_REQUEST_FAILURE
+          actions.LANDING_PAGE_CMS_REQUEST_FAILURE,
         ],
         payload: {
           request: {
             url: `${v2Url(constants.LANDING_PAGE_CMS_API_ENDPOINT)}`,
             adapter: undefined,
-            params: undefined
-          }
-        }
+            params: undefined,
+          },
+        },
       });
     });
   });
@@ -29,15 +29,15 @@ describe('landing-page actions', function () {
         types: [
           actions.TOP_OFFICERS_BY_ALLEGATION_REQUEST_START,
           actions.TOP_OFFICERS_BY_ALLEGATION_REQUEST_SUCCESS,
-          actions.TOP_OFFICERS_BY_ALLEGATION_REQUEST_FAILURE
+          actions.TOP_OFFICERS_BY_ALLEGATION_REQUEST_FAILURE,
         ],
         payload: {
           request: {
             url: `${v2Url(constants.TOP_OFFICERS_BY_ALLEGATION_ENDPOINT)}`,
             adapter: undefined,
-            params: undefined
-          }
-        }
+            params: undefined,
+          },
+        },
       });
     });
   });
@@ -48,15 +48,15 @@ describe('landing-page actions', function () {
         types: [
           actions.RECENT_ACTIVITIES_REQUEST_START,
           actions.RECENT_ACTIVITIES_REQUEST_SUCCESS,
-          actions.RECENT_ACTIVITIES_REQUEST_FAILURE
+          actions.RECENT_ACTIVITIES_REQUEST_FAILURE,
         ],
         payload: {
           request: {
             url: `${v2Url(constants.RECENT_ACTIVITIES_ENDPOINT)}`,
             adapter: undefined,
-            params: undefined
-          }
-        }
+            params: undefined,
+          },
+        },
       });
     });
   });
@@ -67,15 +67,15 @@ describe('landing-page actions', function () {
         types: [
           actions.NEW_DOCUMENT_ALLEGATIONS_REQUEST_START,
           actions.NEW_DOCUMENT_ALLEGATIONS_REQUEST_SUCCESS,
-          actions.NEW_DOCUMENT_ALLEGATIONS_REQUEST_FAILURE
+          actions.NEW_DOCUMENT_ALLEGATIONS_REQUEST_FAILURE,
         ],
         payload: {
           request: {
             url: `${v2Url(constants.NEW_DOCUMENT_ALLEGATIONS_ENDPOINT)}`,
             adapter: undefined,
-            params: undefined
-          }
-        }
+            params: undefined,
+          },
+        },
       });
     });
   });
@@ -86,15 +86,15 @@ describe('landing-page actions', function () {
         types: [
           actions.COMPLAINT_SUMMARIES_REQUEST_START,
           actions.COMPLAINT_SUMMARIES_REQUEST_SUCCESS,
-          actions.COMPLAINT_SUMMARIES_REQUEST_FAILURE
+          actions.COMPLAINT_SUMMARIES_REQUEST_FAILURE,
         ],
         payload: {
           request: {
             url: `${v2Url(constants.COMPLAINT_SUMMARIES_ENDPOINT)}`,
             adapter: undefined,
-            params: undefined
-          }
-        }
+            params: undefined,
+          },
+        },
       });
     });
   });

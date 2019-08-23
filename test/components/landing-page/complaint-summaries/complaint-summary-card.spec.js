@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 
 import ComplaintSummaryCard from 'components/landing-page/complaint-summaries/complaint-summary-card';
 
-describe('<ComplaintSummaryCard />', () => {
-  it('should render enough contents', () => {
+describe('<ComplaintSummaryCard />', function () {
+  it('should render enough contents', function () {
     const allegation = {
       crid: '123456',
       incidentDate: 'Jan 23, 2000',

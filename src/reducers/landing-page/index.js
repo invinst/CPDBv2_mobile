@@ -14,5 +14,5 @@ export default combineReducers({
   topOfficersByAllegation,
   recentActivities,
   newDocumentAllegations,
-  complaintSummaries
+  complaintSummaries,
 });

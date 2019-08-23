@@ -5,7 +5,7 @@ import {
   SUGGESTION_REQUEST_SUCCESS,
   SUGGESTION_REQUEST_FAILURE,
   SUGGEST_ALL_REQUEST_SUCCESS,
-  SUGGEST_ALL_REQUEST_FAILURE
+  SUGGEST_ALL_REQUEST_FAILURE,
 } from 'actions/suggestion';
 
 const categories = constants.SEARCH_CATEGORIES.map((cat) => cat.path);
@@ -15,7 +15,7 @@ const defaultState = {};
 categories.forEach((category) => {
   defaultState[category] = {
     isShowingAll: false,
-    data: []
+    data: [],
   };
 });
 
@@ -25,7 +25,7 @@ export default handleActions({
     categories.forEach((category) => {
       suggestions[category] = {
         isShowingAll: false,
-        data: action.payload[category] || []
+        data: action.payload[category] || [],
       };
     });
     return suggestions;
@@ -40,11 +40,11 @@ export default handleActions({
       ...state,
       [category]: {
         isShowingAll: true,
-        data: action.payload[category]
-      }
+        data: action.payload[category],
+      },
     };
   },
   [SUGGEST_ALL_REQUEST_FAILURE]: (state, action) => {
     return {};
-  }
+  },
 }, defaultState);

@@ -5,12 +5,12 @@ import { spy } from 'sinon';
 import LegalModalContent from 'components/footer/legal-modal-content';
 
 
-describe('<LegalModalContent />', () => {
-  it('should be renderable', () => {
+describe('<LegalModalContent />', function () {
+  it('should be renderable', function () {
     shallow(<LegalModalContent />).should.be.ok();
   });
 
-  it('should close modal when click on close and confirm button', () => {
+  it('should close modal when click on close and confirm button', function () {
     const closeModalSpy = spy();
     const wrapper = shallow(
       <LegalModalContent
@@ -23,7 +23,7 @@ describe('<LegalModalContent />', () => {
     closeModalSpy.called.should.be.true();
   });
 
-  it('should close modal when click on confirm button', () => {
+  it('should close modal when click on confirm button', function () {
     const openContactSpy = spy();
     const wrapper = shallow(
       <LegalModalContent

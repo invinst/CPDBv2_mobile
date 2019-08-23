@@ -9,25 +9,25 @@ describe('isSearchFocused reducer', function () {
 
   it('should handle SEARCH_FOCUS', function () {
     isSearchFocused(0, {
-      type: SEARCH_FOCUS
+      type: SEARCH_FOCUS,
     }).should.eql(1);
   });
 
   it('should handle SEARCH_BLUR', function () {
     isSearchFocused(1, {
-      type: SEARCH_BLUR
+      type: SEARCH_BLUR,
     }).should.eql(0);
   });
 
   it('should handle SEARCH_CLEAR', function () {
     isSearchFocused(1, {
-      type: SEARCH_CLEAR
+      type: SEARCH_CLEAR,
     }).should.eql(0);
   });
 
   it('should handle SEARCH_RESET', function () {
     isSearchFocused(1, {
-      type: SEARCH_RESET
+      type: SEARCH_RESET,
     }).should.eql(0);
   });
 });

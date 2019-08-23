@@ -24,8 +24,8 @@ export default class RequestDocumentButton extends Component {
         bottom: 'none',
         borderRadius: 0,
         padding: 0,
-        border: 0
-      }
+        border: 0,
+      },
     };
 
     this.closeRequestForm = this.closeRequestForm.bind(this);

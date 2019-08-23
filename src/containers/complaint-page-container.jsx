@@ -19,7 +19,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = {
   requestComplaint,
   onTrackingAttachment: trackingClickAttachment,
-  requestCMS
+  requestCMS,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ComplaintPage));

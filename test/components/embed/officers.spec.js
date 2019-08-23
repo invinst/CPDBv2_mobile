@@ -12,12 +12,12 @@ import * as IntercomUtils from 'utils/intercom';
 
 
 describe('<Officers />', function () {
-  it('should be renderable', () => {
+  it('should be renderable', function () {
     const wrapper = shallow(<Officers />);
     wrapper.should.be.ok();
   });
 
-  it('should call request Officers if not requested', () => {
+  it('should call request Officers if not requested', function () {
     const requestOfficersSpy = spy();
     mount(
       <Officers
@@ -49,7 +49,7 @@ describe('<Officers />', function () {
         'full_name': 'Queen Jones',
         'complaint_count': 0,
         id: 13789,
-      }
+      },
     ];
 
     const wrapper = shallow(
@@ -102,7 +102,7 @@ describe('<Officers />', function () {
           visualTokenBackground: '#f95125',
           year: 2005,
         },
-      }
+      },
     ];
     stub(IntercomUtils, 'showIntercomLauncher');
 
@@ -133,15 +133,15 @@ describe('<Officers />', function () {
                 'percentile_trr': '0',
                 'percentile_allegation_internal': '87.828',
                 'percentile_allegation_civilian': '99.9817',
-              }
+              },
             },
             {
               id: 13789,
               'full_name': 'Queen Jones',
               'complaint_count': 0,
-            }
+            },
           ],
-        }
+        },
       });
 
       const wrapper = mount(
@@ -164,18 +164,18 @@ describe('<Officers />', function () {
             items: [
               { axis: 'Use of Force Reports', value: 0 },
               { axis: 'Internal Allegations', value: 87.828 },
-              { axis: 'Civilian Allegations', value: 99.9817 }
+              { axis: 'Civilian Allegations', value: 99.9817 },
             ],
             visualTokenBackground: '#f95125',
             textColor: '#231F20',
-          }
+          },
         },
         {
           id: 13789,
           'full_name': 'Queen Jones',
           'complaint_count': 0,
-          percentile: null
-        }
+          percentile: null,
+        },
       ]);
       officers.prop('description').should.equal('description');
       officers.prop('title').should.equal('title');

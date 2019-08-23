@@ -3,17 +3,17 @@ import { handleActions } from 'redux-actions';
 import {
   FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS,
   FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
-  SEARCH_SAVE_TO_RECENT
+  SEARCH_SAVE_TO_RECENT,
 } from 'actions/suggestion';
 import { officerUrl } from 'utils/url-util';
 
 const defaultState = {
   recent: {
-    data: []
+    data: [],
   },
   suggested: {
-    data: []
-  }
+    data: [],
+  },
 };
 
 export default handleActions({
@@ -50,11 +50,11 @@ export default handleActions({
           acc.push({
             type: type,
             url: url,
-            title: title
+            title: title,
           });
           return acc;
-        }, [])
-      }
+        }, []),
+      },
     };
   },
   [FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE]: (state, action) => {
@@ -69,9 +69,9 @@ export default handleActions({
     return {
       ...state,
       recent: {
-        data: newData
-      }
+        data: newData,
+      },
     };
-  }
+  },
 
 }, defaultState);

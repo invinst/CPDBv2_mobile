@@ -11,7 +11,7 @@ describe('trrs reducer', function () {
     trrs({}, {
       type: TRR_REQUEST_SUCCESS,
       meta: { id: 1 },
-      payload: { category: 'Firearm' }
+      payload: { category: 'Firearm' },
     }).should.deepEqual({ 1: { category: 'Firearm' } });
   });
 
@@ -19,7 +19,7 @@ describe('trrs reducer', function () {
     trrs({ 1: { category: 'Firearm' } }, {
       type: TRR_REQUEST_SUCCESS,
       meta: { id: 2 },
-      payload: { category: 'Other' }
+      payload: { category: 'Other' },
     }).should.deepEqual({ 1: { category: 'Firearm' }, 2: { category: 'Other' } });
   });
 
@@ -27,14 +27,14 @@ describe('trrs reducer', function () {
     trrs({ 1: { category: 'Firearm' } }, {
       type: TRR_REQUEST_SUCCESS,
       meta: { id: 1 },
-      payload: { category: 'Other' }
+      payload: { category: 'Other' },
     }).should.deepEqual({ 1: { category: 'Other' } });
   });
 
   it('should handle TRR_REQUEST_FAILURE', function () {
     trrs({ 1: { category: 'Firearm' } }, {
       type: TRR_REQUEST_FAILURE,
-      payload: new Error('Load failed')
+      payload: new Error('Load failed'),
     }).should.deepEqual({ 1: { category: 'Firearm' } });
   });
 });

@@ -25,7 +25,7 @@ const OfficerCard = ({ officer, openCardInNewPage }) => {
 
 OfficerCard.propTypes = {
   officer: PropTypes.object,
-  openCardInNewPage: PropTypes.bool
+  openCardInNewPage: PropTypes.bool,
 };
 
 export default OfficerCard;

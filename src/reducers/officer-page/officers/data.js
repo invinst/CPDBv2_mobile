@@ -9,7 +9,7 @@ const officers = handleActions({
     [action.payload['officer_id']]: action.payload,
     [action.meta.id]: action.payload,
   }),
-  [OFFICER_REQUEST_FAILURE]: (state, action) => state
+  [OFFICER_REQUEST_FAILURE]: (state, action) => state,
 }, {});
 
 export default officers;

@@ -4,7 +4,7 @@ const resultsSection = (name) => ({
     firstRow: nthRow(1),
     secondRow: nthRow(2),
     thirdRow: nthRow(3),
-  }
+  },
 });
 
 const nthRow = (n) => ({
@@ -13,8 +13,8 @@ const nthRow = (n) => ({
     itemType: '.item-type',
     itemID: '.item-id',
     officerName: '.officer-name',
-    officerBadge: '.officer-badge'
-  }
+    officerBadge: '.officer-badge',
+  },
 });
 
 module.exports = {
@@ -49,14 +49,14 @@ module.exports = {
           selector: '.row.officer',
           elements: {
             label: '.suggested-type',
-            value: '.suggested-title'
-          }
-        }
-      }
+            value: '.suggested-title',
+          },
+        },
+      },
     },
 
     recent: {
-      selector: '.results.recent'
+      selector: '.results.recent',
     },
 
     dateCRs: resultsSection('dateCRs'),
@@ -69,13 +69,13 @@ module.exports = {
           selector: 'a:nth-child(1)',
           elements: {
             officerName: '.officer-name',
-            officerBadge: '.officer-badge'
-          }
-        }
-      }
+            officerBadge: '.officer-badge',
+          },
+        },
+      },
     },
     crs: resultsSection('crs'),
     investigatorCRs: resultsSection('investigatorCRs'),
     trrs: resultsSection('trrs'),
-  }
+  },
 };

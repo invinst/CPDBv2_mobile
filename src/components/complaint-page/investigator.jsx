@@ -48,7 +48,7 @@ const Investigator = ({ investigators=[] }) => {
 };
 
 Investigator.propTypes = {
-  investigators: PropTypes.array
+  investigators: PropTypes.array,
 };
 
 export default Investigator;
