@@ -16,6 +16,7 @@ import Investigator from './investigator';
 import PoliceWitness from './police-witness';
 import Location from './location';
 import style from './complaint-page.sass';
+import Footer from 'components/footer';
 
 
 export default class ComplaintPage extends Component {
@@ -71,6 +72,7 @@ export default class ComplaintPage extends Component {
           <div />
         </div>
         <BottomPadding />
+        <Footer />
       </StickyContainer>
     );
   }
