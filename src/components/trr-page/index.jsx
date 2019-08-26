@@ -7,6 +7,7 @@ import BottomPadding from 'components/shared/bottom-padding';
 import Header from 'components/shared/header';
 import Officer from 'components/trr-page/officer';
 import Info from 'components/trr-page/info';
+import Footer from 'components/footer';
 
 
 export default class TRRPage extends Component {
@@ -35,6 +36,7 @@ export default class TRRPage extends Component {
           <Info { ...trr.info } trrId={ trrId }/>
         </div>
         <BottomPadding />
+        <Footer />
       </StickyContainer>
     );
   }
@@ -49,5 +51,5 @@ TRRPage.propTypes = {
 };
 
 TRRPage.defaultProps = {
-  requestCMS: noop
+  requestCMS: noop,
 };

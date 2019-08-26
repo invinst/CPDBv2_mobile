@@ -7,7 +7,7 @@ class Img extends Component {
 
     this.state = {
       loaded: false,
-      error: false
+      error: false,
     };
   }
 
@@ -18,14 +18,14 @@ class Img extends Component {
     image.onload = () => {
       this.setState({
         loaded: true,
-        error: false
+        error: false,
       });
     };
     /* istanbul ignore next */
     image.onerror = () => {
       this.setState({
         loaded: true,
-        error: true
+        error: true,
       });
     };
   }
@@ -44,12 +44,12 @@ class Img extends Component {
 
 Img.defaultProps = {
   src: '',
-  fallback: ''
+  fallback: '',
 };
 
 Img.propTypes = {
   src: PropTypes.string,
-  fallback: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+  fallback: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default Img;

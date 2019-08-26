@@ -25,7 +25,7 @@ export default class RelevantCoaccusalCard extends Component {
       fullName,
       percentile,
       complaintCount,
-      rank
+      rank,
     } = this.props;
     addItemInPinboardPage({
       type: 'OFFICER',

@@ -52,7 +52,7 @@ describe('Pinboard <OfficerCard />', function () {
     removeItemInPinboardPage.should.be.calledOnce();
     removeItemInPinboardPage.should.be.calledWith({
       type: 'OFFICER',
-      id: 123
+      id: 123,
     });
   });
 });

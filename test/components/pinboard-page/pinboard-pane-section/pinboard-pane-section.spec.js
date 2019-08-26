@@ -26,8 +26,8 @@ describe('PinboardPaneSection component', function () {
             'crid': '1000018',
             'category': 'Operation/Personnel Violations',
             'coaccused_count': 1,
-            'kind': 'CR'
-          }
+            'kind': 'CR',
+          },
         ],
         mapTrrsData: [
           {
@@ -37,10 +37,10 @@ describe('PinboardPaneSection component', function () {
             'firearm_used': true,
             point: {
               lat: 35.3,
-              lon: 50.5
+              lon: 50.5,
             },
             date: 'MAY 12, 2015',
-          }
+          },
         ],
       },
     },

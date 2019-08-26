@@ -12,10 +12,10 @@ function getPaginationResponse(apiUrl, generator, limit, offset, count) {
     count: count,
     next: hasNext ? apiUrl + 'limit=' + limit + '&offset=' + (offset + limit) : null,
     previous: previous,
-    results: generator(hasNext ? limit : Math.max(count - offset, 0))
+    results: generator(hasNext ? limit : Math.max(count - offset, 0)),
   };
 }
 
 module.exports = {
-  getPaginationResponse: getPaginationResponse
+  getPaginationResponse: getPaginationResponse,
 };

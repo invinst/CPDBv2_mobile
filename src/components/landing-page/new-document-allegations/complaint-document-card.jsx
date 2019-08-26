@@ -46,7 +46,7 @@ class ComplaintDocumentCard extends React.Component {
 ComplaintDocumentCard.propTypes = {
   allegation: PropTypes.object,
   pathname: PropTypes.string,
-  onTrackingAttachment: PropTypes.func
+  onTrackingAttachment: PropTypes.func,
 };
 
 ComplaintDocumentCard.defaultProps = {

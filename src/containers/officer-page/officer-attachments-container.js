@@ -9,7 +9,7 @@ import { trackingClickAttachment } from 'actions/common/analytic';
 function mapStateToProps(state, ownProps) {
   return {
     complaints: complaintsWithAttachmentsSelector(state, ownProps.officerId),
-    officerId: ownProps.officerId
+    officerId: ownProps.officerId,
   };
 }
 

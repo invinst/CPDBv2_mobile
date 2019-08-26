@@ -41,7 +41,7 @@ describe('<PinboardPage />', function () {
       officerItems: { requesting: false, items: [] },
       trrItems: { requesting: false, items: [] },
       initialRequested: true,
-    }
+    },
   });
 
   it('should not render the pinboard if initialRequested is false', function () {
@@ -120,18 +120,18 @@ describe('<PinboardPage />', function () {
           'example_pinboards': [{
             id: '66ef1561',
             title: 'Pinboard 1',
-            description: 'Description 1'
+            description: 'Description 1',
           }, {
             id: '66ef1562',
             title: 'Pinboard 2',
-            description: 'Description 2'
+            description: 'Description 2',
           }],
         },
         graphData: {},
         relevantDocuments: defaultPaginationState,
         relevantCoaccusals: defaultPaginationState,
         relevantComplaints: defaultPaginationState,
-      }
+      },
     });
 
     const pinboard = {
@@ -161,11 +161,11 @@ describe('<PinboardPage />', function () {
     emptyPinboard.prop('examplePinboards').should.eql([{
       id: '66ef1561',
       title: 'Pinboard 1',
-      description: 'Description 1'
+      description: 'Description 1',
     }, {
       id: '66ef1562',
       title: 'Pinboard 2',
-      description: 'Description 2'
+      description: 'Description 2',
     }]);
     wrapper.find(Footer).exists().should.be.true();
   });

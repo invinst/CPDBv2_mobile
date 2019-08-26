@@ -13,19 +13,19 @@ describe('isSuccess reducer', function () {
 
   it('should handle OFFICER_COACCUSALS_REQUEST_START', function () {
     isSuccess(false, {
-      type: OFFICER_COACCUSALS_REQUEST_START
+      type: OFFICER_COACCUSALS_REQUEST_START,
     }).should.be.true();
   });
 
   it('should handle OFFICER_COACCUSALS_REQUEST_SUCCESS', function () {
     isSuccess(false, {
-      type: OFFICER_COACCUSALS_REQUEST_SUCCESS
+      type: OFFICER_COACCUSALS_REQUEST_SUCCESS,
     }).should.be.true();
   });
 
   it('should handle OFFICER_COACCUSALS_REQUEST_FAILURE', function () {
     isSuccess(true, {
-      type: OFFICER_COACCUSALS_REQUEST_FAILURE
+      type: OFFICER_COACCUSALS_REQUEST_FAILURE,
     }).should.be.false();
   });
 });

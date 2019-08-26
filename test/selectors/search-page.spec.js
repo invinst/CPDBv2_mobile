@@ -10,19 +10,18 @@ import {
   dateCRsSelector,
   dateTRRsSelector,
   dateOfficersSelector,
-  investigatorCRsSelector
+  investigatorCRsSelector,
 } from 'selectors/search-page';
 
-describe('search-page selectors', () => {
-  describe('officersSelector', () => {
-    it('should return empty when there is no officer', () => {
+describe('search-page selectors', function () {
+  describe('officersSelector', function () {
+    it('should return empty when there is no officer', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          }
+          suggestions: {},
         },
         pinboardPage: {
-          pinboard: null
+          pinboard: null,
         },
       };
 
@@ -40,14 +39,14 @@ describe('search-page selectors', () => {
                   'id': '1',
                   'name': 'Name',
                   'badge': null,
-                  'percentile': null
-                }
-              ]
-            }
-          }
+                  'percentile': null,
+                },
+              ],
+            },
+          },
         },
         pinboardPage: {
-          pinboard: null
+          pinboard: null,
         },
       };
 
@@ -61,17 +60,17 @@ describe('search-page selectors', () => {
           url: `${constants.OFFICER_PATH}1/name/`,
           isPinned: false,
           type: 'OFFICER',
-        }]
+        }],
       });
     });
 
-    it('should return officer data when there are officers', () => {
+    it('should return officer data when there are officers', function () {
       const isShowingAll = true;
       const officer = {
         'id': '1',
         'name': 'Name',
         'badge': '12314',
-        'percentile': null
+        'percentile': null,
       };
 
       const expectedOfficer = {
@@ -89,9 +88,9 @@ describe('search-page selectors', () => {
           suggestions: {
             OFFICER: {
               isShowingAll: isShowingAll,
-              data: [officer]
-            }
-          }
+              data: [officer],
+            },
+          },
         },
         pinboardPage: {
           pinboard: {
@@ -99,56 +98,56 @@ describe('search-page selectors', () => {
             'officer_ids': [1],
             crids: [],
             'trr_ids': [],
-          }
-        }
+          },
+        },
       };
 
       officersSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
-        data: [expectedOfficer]
+        data: [expectedOfficer],
       });
     });
   });
 
-  describe('suggestedSelector', () => {
-    it('should return correct value', () => {
+  describe('suggestedSelector', function () {
+    it('should return correct value', function () {
       const state = {
         suggestionApp: {
           initialSuggestions: {
-            suggested: 'foobar'
-          }
-        }
+            suggested: 'foobar',
+          },
+        },
       };
       suggestedSelector(state).should.be.eql('foobar');
     });
   });
 
-  describe('recentSelector', () => {
-    it('should return correct value', () => {
+  describe('recentSelector', function () {
+    it('should return correct value', function () {
       const state = {
         suggestionApp: {
           initialSuggestions: {
-            recent: 'foobar'
-          }
-        }
+            recent: 'foobar',
+          },
+        },
       };
       recentSelector(state).should.be.eql('foobar');
     });
   });
 
-  describe('unitsSelector', () => {
-    it('should return empty when there are no units', () => {
+  describe('unitsSelector', function () {
+    it('should return empty when there are no units', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-          }
-        }
+          },
+        },
       };
 
       unitsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return unit data when there are units', () => {
+    it('should return unit data when there are units', function () {
       const isShowingAll = true;
       const units = [
         {
@@ -156,15 +155,15 @@ describe('search-page selectors', () => {
           'text': '001',
           'member_count': 2,
           'active_member_count': 1,
-          'url': 'http://example.unit/1'
+          'url': 'http://example.unit/1',
         },
         {
           'id': '2',
           'text': '002',
           'member_count': 4,
           'active_member_count': 3,
-          'url': 'http://example.unit/2'
-        }
+          'url': 'http://example.unit/2',
+        },
       ];
       const expectedUnits = [
         {
@@ -172,15 +171,15 @@ describe('search-page selectors', () => {
           'text': '001',
           'memberCount': 2,
           'activeMemberCount': 1,
-          'url': 'http://example.unit/1'
+          'url': 'http://example.unit/1',
         },
         {
           'id': '2',
           'text': '002',
           'memberCount': 4,
           'activeMemberCount': 3,
-          'url': 'http://example.unit/2'
-        }
+          'url': 'http://example.unit/2',
+        },
       ];
 
       const state = {
@@ -188,35 +187,35 @@ describe('search-page selectors', () => {
           suggestions: {
             UNIT: {
               isShowingAll: isShowingAll,
-              data: units
-            }
-          }
-        }
+              data: units,
+            },
+          },
+        },
       };
 
       unitsSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
-        data: expectedUnits
+        data: expectedUnits,
       });
     });
   });
 
-  describe('dateCRsSelector', () => {
-    it('should return empty when there are no date > crs', () => {
+  describe('dateCRsSelector', function () {
+    it('should return empty when there are no date > crs', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-          }
+          },
         },
         pinboardPage: {
-          pinboard: null
+          pinboard: null,
         },
       };
 
       dateCRsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return cr data when there are date > crs', () => {
+    it('should return cr data when there are date > crs', function () {
       const isShowingAll = true;
       const dateCRs = [
         {
@@ -226,7 +225,7 @@ describe('search-page selectors', () => {
             summary: ['On July', 'an off-duty'],
           },
           id: '1027271',
-          'incident_date': '2009-06-13'
+          'incident_date': '2009-06-13',
         },
       ];
       const expectedDateCrs = [
@@ -245,9 +244,9 @@ describe('search-page selectors', () => {
           suggestions: {
             'DATE > CR': {
               isShowingAll: isShowingAll,
-              data: dateCRs
-            }
-          }
+              data: dateCRs,
+            },
+          },
         },
         pinboardPage: {
           pinboard: {
@@ -255,37 +254,37 @@ describe('search-page selectors', () => {
             'officer_ids': [],
             crids: ['1027272'],
             'trr_ids': [],
-          }
-        }
+          },
+        },
       };
 
       dateCRsSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
-        data: expectedDateCrs
+        data: expectedDateCrs,
       });
     });
   });
 
-  describe('dateTRRsSelector', () => {
-    it('should return empty when there are no trss', () => {
+  describe('dateTRRsSelector', function () {
+    it('should return empty when there are no trss', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-          }
+          },
         },
         pinboardPage: {
-          pinboard: null
+          pinboard: null,
         },
       };
 
       dateTRRsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return trr data when there are trrs', () => {
+    it('should return trr data when there are trrs', function () {
       const isShowingAll = true;
       const dateTRRs = [
         {
-          'id': '1'
+          'id': '1',
         },
       ];
       const expectedDateTRRs = [
@@ -302,42 +301,42 @@ describe('search-page selectors', () => {
           suggestions: {
             'DATE > TRR': {
               isShowingAll: isShowingAll,
-              data: dateTRRs
-            }
-          }
+              data: dateTRRs,
+            },
+          },
         },
         pinboardPage: {
           pinboard: {
             'officer_ids': [],
             crids: [],
             'trr_ids': ['2'],
-          }
-        }
+          },
+        },
       };
 
       dateTRRsSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
-        data: expectedDateTRRs
+        data: expectedDateTRRs,
       });
     });
   });
 
-  describe('crsSelector', () => {
-    it('should return empty when there are no crs', () => {
+  describe('crsSelector', function () {
+    it('should return empty when there are no crs', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-          }
+          },
         },
         pinboardPage: {
-          pinboard: null
+          pinboard: null,
         },
       };
 
       crsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return cr data when there are crs', () => {
+    it('should return cr data when there are crs', function () {
       const isShowingAll = true;
       const crs = [
         {
@@ -357,7 +356,7 @@ describe('search-page selectors', () => {
           },
           id: '1049273',
           'incident_date': '2011-10-13',
-        }
+        },
       ];
       const expectedCrs = [
         {
@@ -383,9 +382,9 @@ describe('search-page selectors', () => {
           suggestions: {
             CR: {
               isShowingAll: isShowingAll,
-              data: crs
-            }
-          }
+              data: crs,
+            },
+          },
         },
         pinboardPage: {
           pinboard: {
@@ -393,33 +392,33 @@ describe('search-page selectors', () => {
             'officer_ids': [1],
             crids: ['1049273'],
             'trr_ids': [1],
-          }
-        }
+          },
+        },
       };
 
       crsSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
-        data: expectedCrs
+        data: expectedCrs,
       });
     });
   });
 
-  describe('investigatorCRsSelector', () => {
-    it('should return empty when there are no INVESTIGATOR > CR data', () => {
+  describe('investigatorCRsSelector', function () {
+    it('should return empty when there are no INVESTIGATOR > CR data', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-          }
+          },
         },
         pinboardPage: {
-          pinboard: null
+          pinboard: null,
         },
       };
 
       investigatorCRsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return INVESTIGATOR > CR data correctly', () => {
+    it('should return INVESTIGATOR > CR data correctly', function () {
       const isShowingAll = true;
       const investigatorCR = [
         {
@@ -448,42 +447,42 @@ describe('search-page selectors', () => {
           suggestions: {
             'INVESTIGATOR > CR': {
               isShowingAll: isShowingAll,
-              data: investigatorCR
-            }
-          }
+              data: investigatorCR,
+            },
+          },
         },
         pinboardPage: {
-          pinboard: null
+          pinboard: null,
         },
       };
 
       investigatorCRsSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
-        data: expectedInvestigatorCR
+        data: expectedInvestigatorCR,
       });
     });
   });
 
-  describe('trrsSelector', () => {
-    it('should return empty when there are no trss', () => {
+  describe('trrsSelector', function () {
+    it('should return empty when there are no trss', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-          }
+          },
         },
         pinboardPage: {
-          pinboard: null
+          pinboard: null,
         },
       };
 
       trrsSelector(state).should.be.eql({ data: [] });
     });
 
-    it('should return trr data when there are trrs', () => {
+    it('should return trr data when there are trrs', function () {
       const isShowingAll = true;
       const trrs = [
         {
-          'id': '1'
+          'id': '1',
         },
       ];
       const expectedTrrs = [
@@ -500,35 +499,35 @@ describe('search-page selectors', () => {
           suggestions: {
             TRR: {
               isShowingAll: isShowingAll,
-              data: trrs
-            }
-          }
+              data: trrs,
+            },
+          },
         },
         pinboardPage: {
           pinboard: {
             'officer_ids': [],
             crids: [],
             'trr_ids': ['1'],
-          }
-        }
+          },
+        },
       };
 
       trrsSelector(state).should.be.eql({
         isShowingAll: isShowingAll,
-        data: expectedTrrs
+        data: expectedTrrs,
       });
     });
   });
 
-  describe('dateOfficersSelector', () => {
-    it('should return empty when there is no DATE > OFFICERS', () => {
+  describe('dateOfficersSelector', function () {
+    it('should return empty when there is no DATE > OFFICERS', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-          }
+          },
         },
         pinboardPage: {
-          pinboard: null
+          pinboard: null,
         },
       };
 
@@ -546,14 +545,14 @@ describe('search-page selectors', () => {
                   'id': 123,
                   'name': 'Jerome Finnigan',
                   'badge': '56789',
-                  'percentile': null
-                }
-              ]
-            }
-          }
+                  'percentile': null,
+                },
+              ],
+            },
+          },
         },
         pinboardPage: {
-          pinboard: null
+          pinboard: null,
         },
       };
 
@@ -567,7 +566,7 @@ describe('search-page selectors', () => {
           url: `${constants.OFFICER_PATH}123/jerome-finnigan/`,
           type: 'OFFICER',
           isPinned: false,
-        }]
+        }],
       });
     });
   });

@@ -21,7 +21,7 @@ describe('<RelevantDocuments />', function () {
         items: [
           { axis: 'Use of Force Reports', value: 63.0035 },
           { axis: 'Internal Allegations', value: 88.3297 },
-          { axis: 'Civilian Allegations', value: 98.7841 }
+          { axis: 'Civilian Allegations', value: 98.7841 },
         ],
       },
     }, {
@@ -35,7 +35,7 @@ describe('<RelevantDocuments />', function () {
         items: [
           { axis: 'Use of Force Reports', value: 78.2707 },
           { axis: 'Internal Allegations', value: 0 },
-          { axis: 'Civilian Allegations', value: 98.5549 }
+          { axis: 'Civilian Allegations', value: 98.5549 },
         ],
       },
     }, {
@@ -77,12 +77,12 @@ describe('<RelevantDocuments />', function () {
       allegation: firstAllegation,
       url: 'https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf',
       previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif',
-      pinned: true
+      pinned: true,
     }, {
       allegation: secondAllegation,
       url: 'https://www.documentcloud.org/documents/3518950-CRID-294088-CR.html',
       previewImageUrl: 'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif',
-      pinned: false
+      pinned: false,
     }];
     const addItemInPinboardPageStub = stub();
     const fetchPinboardRelevantDocumentsStub = stub();

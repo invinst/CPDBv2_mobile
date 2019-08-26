@@ -2,7 +2,7 @@ import {
   getVisualTokenOIGBackground,
   scalePercentile,
   OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT,
-  hasEnoughRadarChartData
+  hasEnoughRadarChartData,
 } from 'utils/visual-token';
 
 
@@ -20,8 +20,8 @@ describe('VisualToken utils', function () {
     });
   });
 
-  describe('getVisualTokenOIGBackground', () => {
-    it('should return correct background colors when first percentile is 0', () => {
+  describe('getVisualTokenOIGBackground', function () {
+    it('should return correct background colors when first percentile is 0', function () {
       getVisualTokenOIGBackground(0, 0, 0).should.eql({
         backgroundColor: '#f5f4f4',
         textColor: OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT.DARK_COLOR,
@@ -53,7 +53,7 @@ describe('VisualToken utils', function () {
       });
     });
 
-    it('should return correct background colors when first percentile is 1', () => {
+    it('should return correct background colors when first percentile is 1', function () {
       getVisualTokenOIGBackground(15, 0, 0).should.eql({
         backgroundColor: '#f9dec7',
         textColor: OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT.DARK_COLOR,
@@ -85,7 +85,7 @@ describe('VisualToken utils', function () {
       });
     });
 
-    it('should return correct background colors when first percentile is 2', () => {
+    it('should return correct background colors when first percentile is 2', function () {
       getVisualTokenOIGBackground(35, 0, 0).should.eql({
         backgroundColor: '#f5c5a2',
         textColor: OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT.DARK_COLOR,
@@ -117,7 +117,7 @@ describe('VisualToken utils', function () {
       });
     });
 
-    it('should return correct background colors when first percentile is 3', () => {
+    it('should return correct background colors when first percentile is 3', function () {
       getVisualTokenOIGBackground(55, 0, 0).should.eql({
         backgroundColor: '#f9946b',
         textColor: OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT.DARK_COLOR,
@@ -149,7 +149,7 @@ describe('VisualToken utils', function () {
       });
     });
 
-    it('should return correct background colors when first percentile is 4', () => {
+    it('should return correct background colors when first percentile is 4', function () {
       getVisualTokenOIGBackground(75, 0, 0).should.eql({
         backgroundColor: '#fb7045',
         textColor: OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT.DARK_COLOR,
@@ -181,7 +181,7 @@ describe('VisualToken utils', function () {
       });
     });
 
-    it('should return correct background colors when first percentile is 5', () => {
+    it('should return correct background colors when first percentile is 5', function () {
       getVisualTokenOIGBackground(95, 0, 0).should.eql({
         backgroundColor: '#f95125',
         textColor: OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT.DARK_COLOR,
@@ -213,7 +213,7 @@ describe('VisualToken utils', function () {
       });
     });
 
-    it('should return extra blue background colors when first percentile is 0', () => {
+    it('should return extra blue background colors when first percentile is 0', function () {
       getVisualTokenOIGBackground(0, 0, 0).should.eql({
         backgroundColor: '#f5f4f4',
         textColor: OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT.DARK_COLOR,
@@ -246,13 +246,13 @@ describe('VisualToken utils', function () {
     });
   });
 
-  describe('hasEnoughRadarChartData', () => {
-    it('should return false if items is empty', () => {
+  describe('hasEnoughRadarChartData', function () {
+    it('should return false if items is empty', function () {
       hasEnoughRadarChartData([]).should.be.false();
       hasEnoughRadarChartData(undefined).should.be.false();
     });
 
-    it('should return false if some item value is missing', () => {
+    it('should return false if some item value is missing', function () {
       hasEnoughRadarChartData([
         { axis: 'Use of Force Reports', value: 80 },
         { axis: 'Civilian Complaints', value: 70 },
@@ -260,7 +260,7 @@ describe('VisualToken utils', function () {
       ]).should.be.false();
     });
 
-    it('should return true if all item values is OK', () => {
+    it('should return true if all item values is OK', function () {
       hasEnoughRadarChartData([
         { axis: 'Use of Force Reports', value: 80 },
         { axis: 'Civilian Complaints', value: 70 },

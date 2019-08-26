@@ -3,7 +3,7 @@ import React from 'react';
 
 const NotMatchedOfficerPage = React.createClass({
   propTypes: {
-    id: React.PropTypes.number
+    id: React.PropTypes.number,
   },
 
   render() {
@@ -19,7 +19,7 @@ const NotMatchedOfficerPage = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default NotMatchedOfficerPage;

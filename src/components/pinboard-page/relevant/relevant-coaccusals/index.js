@@ -43,5 +43,5 @@ RelevantCoaccusals.propTypes = {
 };
 
 RelevantCoaccusals.defaultProps = {
-  coaccusals: []
+  coaccusals: [],
 };

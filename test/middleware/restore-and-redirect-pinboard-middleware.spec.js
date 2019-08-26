@@ -26,11 +26,11 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
     getState: () => {
       return {
         pinboardPage: {
-          pinboard
+          pinboard,
         },
       };
     },
-    dispatch: stub().usingPromise(Promise).resolves('abc')
+    dispatch: stub().usingPromise(Promise).resolves('abc'),
   });
 
   describe('handling @@router/LOCATION_CHANGE', function () {
@@ -41,8 +41,8 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         const action = {
           type: '@@router/LOCATION_CHANGE',
           payload: {
-            pathname: '/search/'
-          }
+            pathname: '/search/',
+          },
         };
         const store = createStore(PinboardFactory.build({
           'id': '2bd40cf2',
@@ -66,8 +66,8 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         const action = {
           type: '@@router/LOCATION_CHANGE',
           payload: {
-            pathname: '/pinboard/'
-          }
+            pathname: '/pinboard/',
+          },
         };
         const store = createStore({});
 
@@ -86,7 +86,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         payload: {
           pathname: '/pinboard/5cd06f2b/',
           action: 'PUSH',
-        }
+        },
       };
       const store = createStore(PinboardFactory.build({
         'id': '2bd40cf2',
@@ -108,7 +108,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         payload: {
           pathname: '/pinboard/2bd40cf2/',
           action: 'PUSH',
-        }
+        },
       };
       const store = createStore(PinboardFactory.build({
         'id': '2bd40cf2',
@@ -138,7 +138,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         payload: {
           pathname: '/pinboard/5cd06f2b/',
           action: 'REPLACE',
-        }
+        },
       };
       const store = createStore(PinboardFactory.build({
         'id': '2bd40cf2',
@@ -159,7 +159,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         payload: {
           pathname: '/pinboard/2bd40cf2/pinboard-title/',
           action: 'REPLACE',
-        }
+        },
       };
       const store = createStore(PinboardFactory.build({
         'id': '2bd40cf2',
@@ -195,7 +195,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         payload: {
           id: '2bd40cf2',
           title: 'Old title',
-        }
+        },
       };
 
       let dispatched;
@@ -222,7 +222,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         payload: {
           id: '5cd06f2b',
           title: 'New pinboard title',
-        }
+        },
       };
 
       let dispatched;
@@ -250,7 +250,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         payload: {
           id: '5cd06f2b',
           title: 'New title',
-        }
+        },
       };
 
       let dispatched;
@@ -270,8 +270,8 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         type: PINBOARD_FETCH_REQUEST_SUCCESS,
         payload: {
           id: '5cd06f2b',
-          title: 'Old title'
-        }
+          title: 'Old title',
+        },
       };
 
       let dispatched;
@@ -302,7 +302,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         payload: {
           id: '5cd06f2b',
           title: '',
-        }
+        },
       };
 
       let dispatched;
@@ -327,7 +327,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
     it('should do nothing no pinboard is returned', function () {
       const action = {
         type: PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
-        payload: {}
+        payload: {},
       };
 
       let dispatched;
@@ -346,8 +346,8 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
         type: PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
         payload: {
           id: '5cd06f2b',
-          title: 'Old title'
-        }
+          title: 'Old title',
+        },
       };
 
       let dispatched;

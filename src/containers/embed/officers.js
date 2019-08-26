@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-  requestOfficers
+  requestOfficers,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Officers);

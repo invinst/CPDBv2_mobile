@@ -15,8 +15,8 @@ const generateRelevantDocument = (id) => ({
     'crid': '1079876',
     'category': 'Operations/Personnel Violation',
     'incident_date': '2014-05-02',
-    'officers': []
-  }
+    'officers': [],
+  },
 });
 
 const generateRelevantCoaccusal = (id) => ({
@@ -31,7 +31,7 @@ const generateRelevantComplaint = crid => ({
   'category': 'Operations/Personnel Violation',
   'incident_date': '2014-05-02',
   'point': { lat: 45, lon: -87 },
-  'officers': []
+  'officers': [],
 });
 
 function mockPinboard(pinboardId, mockPinboard) {
@@ -83,7 +83,7 @@ const emptyPinboard = {
     'description': 'It is a nickname given to a group of five Chicago Police officers in a...',
     'id': '22e66085',
     'title': 'Skullcap Crew',
-  }]
+  }],
 };
 
 const skullcapPinboardId = '22e66085';
@@ -104,7 +104,7 @@ const copyOfWattsPinboard = {
   'officer_ids': [
     30215, 19331, 2334, 13777, 20481, 10330,
     16181, 15883, 31456, 23933, 27871, 7771,
-    3584, 24403, 3564, 26902, 27101
+    3584, 24403, 3564, 26902, 27101,
   ],
   'crids': [],
   'trr_ids': [],

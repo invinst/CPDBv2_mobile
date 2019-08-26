@@ -5,23 +5,23 @@ import { trrSelector, getCMSRequested, buttonText, requestDocumentButtonMessage 
 import * as draftjsUtils from 'utils/draftjs';
 
 
-describe('trr-page selectors', () => {
-  describe('trrSelector', () => {
-    it('should do nothing & return null if trr is not found', () => {
+describe('trr-page selectors', function () {
+  describe('trrSelector', function () {
+    it('should do nothing & return null if trr is not found', function () {
       const state = {
         trrPage: {
-          trrs: {}
-        }
+          trrs: {},
+        },
       };
       const props = {
         params: {
-          trrId: '1'
-        }
+          trrId: '1',
+        },
       };
       should(trrSelector(state, props)).be.null();
     });
 
-    it('should correctly get and transform trr data', () => {
+    it('should correctly get and transform trr data', function () {
       const state = {
         trrPage: {
           trrs: {
@@ -38,7 +38,7 @@ describe('trr-page selectors', () => {
                 'date_of_resignation': '2015-12-23',
                 unit: {
                   'unit_name': '253',
-                  'description': 'Targeted Response Unit'
+                  'description': 'Targeted Response Unit',
                 },
                 'percentile_allegation_internal': 11.1,
                 'percentile_allegation_civilian': 22.2,
@@ -59,16 +59,16 @@ describe('trr-page selectors', () => {
                 lat: 2.2,
               },
               address: '11XX 79Th St',
-              beat: 612
-            }
-          }
-        }
+              beat: 612,
+            },
+          },
+        },
       };
 
       const props = {
         params: {
-          trrId: 781
-        }
+          trrId: 781,
+        },
       };
 
       trrSelector(state, props).should.eql({
@@ -88,7 +88,7 @@ describe('trr-page selectors', () => {
             items: [
               { axis: 'Use of Force Reports', value: 99.9 },
               { axis: 'Internal Allegations', value: 11.1 },
-              { axis: 'Civilian Allegations', value: 22.2 }
+              { axis: 'Civilian Allegations', value: 22.2 },
             ],
             visualTokenBackground: '#e85050',
             textColor: '#231F20',
@@ -109,7 +109,7 @@ describe('trr-page selectors', () => {
       });
     });
 
-    it('should correctly handle some missing data cases', () => {
+    it('should correctly handle some missing data cases', function () {
       const state = {
         trrPage: {
           trrs: {
@@ -126,16 +126,16 @@ describe('trr-page selectors', () => {
               'date_of_incident': '2004-04-23',
               'location_type': 'Street',
               address: '11XX 79Th St',
-              beat: 612
-            }
-          }
-        }
+              beat: 612,
+            },
+          },
+        },
       };
 
       const props = {
         params: {
-          trrId: 781
-        }
+          trrId: 781,
+        },
       };
 
       trrSelector(state, props).should.eql({
@@ -175,14 +175,14 @@ describe('trr-page selectors', () => {
           cms: [
             {
               name: 'document_request_instruction',
-              value: 'This is document request instruction message'
+              value: 'This is document request instruction message',
             },
             {
               name: 'some_fake_document',
-              value: 'This is some fake message'
-            }
+              value: 'This is some fake message',
+            },
           ],
-        }
+        },
       };
 
       requestDocumentButtonMessage(state).should.eql('This is document request instruction message');

@@ -11,16 +11,16 @@ describe('complaint reducer', function () {
     complaint({ 'complaint': 'success' }, {
       type: COMPLAINT_REQUEST_SUCCESS,
       meta: {
-        id: 1
+        id: 1,
       },
-      payload: [1, 2, 3]
+      payload: [1, 2, 3],
     }).should.eql({ 'complaint': 'success', 1: [1, 2, 3] });
   });
 
   it('should handle COMPLAINT_REQUEST_FAILURE', function () {
     complaint({ 'complaint': 'failure' }, {
       type: COMPLAINT_REQUEST_FAILURE,
-      payload: [1, 2, 3]
+      payload: [1, 2, 3],
 
     }).should.eql({ 'complaint': 'failure' });
   });

@@ -16,7 +16,7 @@ describe('GeographicData selectors', function () {
         kind: 'CR',
         point: {
           lat: 41.887673,
-          lon: -87.62355
+          lon: -87.62355,
         },
         crid: '1002787',
         date: '2007-01-18',
@@ -24,7 +24,7 @@ describe('GeographicData selectors', function () {
       crMapMarkersTransform(crItem).should.eql({
         point: {
           lat: 41.887673,
-          lon: -87.62355
+          lon: -87.62355,
         },
         kind: 'CR',
         id: '1002787',
@@ -43,14 +43,14 @@ describe('GeographicData selectors', function () {
         'firearm_used': false,
         point: {
           lat: 50,
-          lon: -87
+          lon: -87,
         },
         date: '2007-01-18',
       };
       trrMapMarkerTransform(trrItem).should.eql({
         point: {
           lat: 50,
-          lon: -87
+          lon: -87,
         },
         kind: 'FORCE',
         id: '56789',
@@ -102,10 +102,10 @@ describe('GeographicData selectors', function () {
                 kind: 'FORCE',
                 taser: true,
                 'firearm_used': false,
-              }
+              },
             ],
-          }
-        }
+          },
+        },
       };
       mapLegendSelector(state).should.eql({
         allegationCount: 3,
@@ -123,7 +123,7 @@ describe('GeographicData selectors', function () {
         kind: 'CR',
         point: {
           lat: 41.918008,
-          lon: -87.73173299999999
+          lon: -87.73173299999999,
         },
         crid: '1045343',
         date: 'MAR 17, 2012',
@@ -133,7 +133,7 @@ describe('GeographicData selectors', function () {
         kind: 'CR',
         point: {
           lat: 41.7630623832,
-          lon: -87.67122688239999
+          lon: -87.67122688239999,
         },
         crid: '294619',
         date: 'MAR 20, 2013',
@@ -145,7 +145,7 @@ describe('GeographicData selectors', function () {
         'firearm_used': true,
         point: {
           lat: 35.3,
-          lon: 50.5
+          lon: 50.5,
         },
         date: 'MAY 12, 2015',
       };
@@ -155,13 +155,13 @@ describe('GeographicData selectors', function () {
             requesting: false,
             mapCrsData: [firstCr, secondCr],
             mapTrrsData: [trr],
-          }
-        }
+          },
+        },
       };
       mapMarkersSelector(state).should.eql([{
         point: {
           lat: 41.918008,
-          lon: -87.73173299999999
+          lon: -87.73173299999999,
         },
         kind: 'CR',
         id: '1045343',
@@ -172,14 +172,14 @@ describe('GeographicData selectors', function () {
         kind: 'CR',
         point: {
           lat: 41.7630623832,
-          lon: -87.67122688239999
+          lon: -87.67122688239999,
         },
         id: '294619',
         date: 'MAR 20, 2013',
       }, {
         point: {
           lat: 35.3,
-          lon: 50.5
+          lon: 50.5,
         },
         kind: 'FORCE',
         id: '123456',
@@ -194,7 +194,7 @@ describe('GeographicData selectors', function () {
       const state = {
         pinboardPage: {
           geographicData: [],
-        }
+        },
       };
       hasMapMarkersSelector(state).should.be.false();
     });
@@ -209,9 +209,9 @@ describe('GeographicData selectors', function () {
               kind: 'CR',
               crid: '1045343',
               'coaccused_count': 6,
-            }]
-          }
-        }
+            }],
+          },
+        },
       };
       hasMapMarkersSelector(state).should.be.true();
     });
@@ -222,7 +222,7 @@ describe('GeographicData selectors', function () {
       geographicDataRequestingSelector({
         pinboardPage: {
           geographicData: { crsRequesting: false, trrsRequesting: false },
-        }
+        },
       }).should.be.false();
     });
 
@@ -230,13 +230,13 @@ describe('GeographicData selectors', function () {
       geographicDataRequestingSelector({
         pinboardPage: {
           geographicData: { crsRequesting: true, trrsRequesting: false },
-        }
+        },
       }).should.be.true();
 
       geographicDataRequestingSelector({
         pinboardPage: {
           geographicData: { crsRequesting: false, trrsRequesting: true },
-        }
+        },
       }).should.be.true();
     });
   });

@@ -3,7 +3,6 @@ import cx from 'classnames';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Footer from 'components/footer';
 import style from './main-page.sass';
 import 'styles/toast.sass';
 
@@ -27,7 +26,6 @@ class MainPage extends Component {
     return (
       <div className={ cx('content', style.mainPage) }>
         { this.props.children }
-        <Footer />
         <ToastContainer
           pauseOnFocusLoss={ false }
           closeButton={ false }
@@ -45,17 +43,17 @@ MainPage.propTypes = {
   urlQuery: PropTypes.string,
   children: PropTypes.object,
   location: PropTypes.object,
-  routeChanged: PropTypes.func
+  routeChanged: PropTypes.func,
 };
 
 MainPage.defaultProps = {
   query: '',
   urlQuery: '',
   location: {
-    pathname: ''
+    pathname: '',
   },
   routeChanged: () => {},
-  fetchSuggestedSearchItems: () => {}
+  fetchSuggestedSearchItems: () => {},
 };
 
 export default MainPage;

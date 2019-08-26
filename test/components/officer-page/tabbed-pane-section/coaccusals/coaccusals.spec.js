@@ -25,7 +25,7 @@ describe('Coaccusals component', function () {
             rank: 'Detective',
             coaccusalCount: 2,
           },
-        ]
+        ],
       },
       {
         name: 'COACCUSED 1 TIME',
@@ -35,8 +35,8 @@ describe('Coaccusals component', function () {
             officerId: 3,
             rank: 'Police Officer',
             coaccusalCount: 1,
-          }
-        ]
+          },
+        ],
       },
     ];
 

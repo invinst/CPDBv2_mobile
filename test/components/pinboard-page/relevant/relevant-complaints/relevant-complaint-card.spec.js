@@ -23,7 +23,7 @@ describe('<RelevantComplaintCard />', function () {
       items: [
         { axis: 'Use of Force Reports', value: 63.0035 },
         { axis: 'Internal Allegations', value: 88.3297 },
-        { axis: 'Civilian Allegations', value: 98.7841 }
+        { axis: 'Civilian Allegations', value: 98.7841 },
       ],
     },
   }, {
@@ -37,7 +37,7 @@ describe('<RelevantComplaintCard />', function () {
       items: [
         { axis: 'Use of Force Reports', value: 78.2707 },
         { axis: 'Internal Allegations', value: 0 },
-        { axis: 'Civilian Allegations', value: 98.5549 }
+        { axis: 'Civilian Allegations', value: 98.5549 },
       ],
     },
   }, {
@@ -83,7 +83,7 @@ describe('<RelevantComplaintCard />', function () {
         'url-https%3A%2F%2Fcpdbv21777.blob.core.windows.net%2Fassets%2Fmap-marker.png' +
         '(-87.668458,41.7924183)/-87.668458,41.7924183,12,0,0/130x176@2x?access_token' +
         '=pk.eyJ1IjoiaW52aXNpYmxlaW5zdGl0dXRlIiwiYSI6ImNpZ256bXRqMDAwMDBzeGtud3VoZGpl' +
-        'NHMifQ.ky2VSGEYU5KritRMArHY-w") no-repeat center/cover'
+        'NHMifQ.ky2VSGEYU5KritRMArHY-w") no-repeat center/cover',
     });
     baseComplaintCard.prop('leftChild').type.should.be.eql(Link);
   });

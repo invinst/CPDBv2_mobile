@@ -10,7 +10,7 @@ describe('cms reducer', function () {
   it('should handle LANDING_PAGE_CMS_REQUEST_SUCCESS', function () {
     cms({}, {
       type: LANDING_PAGE_CMS_REQUEST_SUCCESS,
-      payload: { fields: [1, 2] }
+      payload: { fields: [1, 2] },
     }).should.deepEqual([1, 2]);
   });
 });

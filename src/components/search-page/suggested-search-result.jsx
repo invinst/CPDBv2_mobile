@@ -33,7 +33,7 @@ class SuggestedSearchResult extends Component {
 SuggestedSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
   items: PropTypes.array,
-  index: PropTypes.number
+  index: PropTypes.number,
 };
 
 export default SuggestedSearchResult;

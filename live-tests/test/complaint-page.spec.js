@@ -6,7 +6,7 @@ const { TIMEOUT } = require(__dirname + '/../constants');
 const mockComplaint = {
   'most_common_category': {
     'category': 'Operation/Personnel Violations',
-    'allegation_name': 'Inventory Procedures'
+    'allegation_name': 'Inventory Procedures',
   },
   'summary': 'summary',
   'incident_date': '2012-04-30',
@@ -24,27 +24,27 @@ const mockComplaint = {
     {
       'involved_type': 'police_witness',
       'full_name': 'Patrick Boyle',
-      'officer_id': 123
-    }
+      'officer_id': 123,
+    },
   ],
   'complainants': [
     {
       'gender': 'Male',
       'age': 57,
-      'race': 'White'
-    }
+      'race': 'White',
+    },
   ],
   'victims': [
     {
       'gender': 'Male',
       'age': 45,
-      'race': 'Black'
-    }
+      'race': 'Black',
+    },
   ],
   'crid': '1053667',
   'point': {
     'lat': 41.846749,
-    'lon': -87.685141
+    'lon': -87.685141,
   },
   'beat': '1034',
   'coaccused': [
@@ -55,7 +55,7 @@ const mockComplaint = {
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
       'full_name': 'Donovan Markiewicz',
-      'allegation_count': 10
+      'allegation_count': 10,
     },
     {
       'category': 'Excessive Force',
@@ -64,7 +64,7 @@ const mockComplaint = {
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
       'full_name': 'John Foertsch',
-      'allegation_count': 8
+      'allegation_count': 8,
     },
     {
       'category': 'Excessive Force',
@@ -73,11 +73,11 @@ const mockComplaint = {
       'final_finding': 'Sustained',
       'rank': 'Police Officer',
       'full_name': 'Kenneth Wojtan',
-      'allegation_count': 5
-    }
+      'allegation_count': 5,
+    },
   ],
   'location': 'Building',
-  'address': '2459 WESTERN AVE, CHICAGO IL 60608'
+  'address': '2459 WESTERN AVE, CHICAGO IL 60608',
 };
 
 describe('ComplaintPageTest', function () {

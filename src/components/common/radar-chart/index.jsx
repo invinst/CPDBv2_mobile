@@ -35,7 +35,7 @@ StaticRadarChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       axis: PropTypes.string.isRequired,
-      value: PropTypes.number.isRequired
+      value: PropTypes.number.isRequired,
     })
   ),
   backgroundColor: PropTypes.string,

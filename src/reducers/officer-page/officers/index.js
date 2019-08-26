@@ -8,5 +8,5 @@ import data from './data';
 export default combineReducers({
   isRequesting,
   isSuccess,
-  data
+  data,
 });

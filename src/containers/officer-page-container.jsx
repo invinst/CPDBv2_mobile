@@ -27,8 +27,8 @@ function mapStateToProps(state, ownProps) {
     ...ownProps,
     params: {
       ...ownProps.params,
-      id: pk
-    }
+      id: pk,
+    },
   };
   return {
     location: ownProps.location,
@@ -53,7 +53,7 @@ const mapDispatchToProps = {
   requestCMS,
   fetchOfficer,
   getOfficerTimeline,
-  getOfficerCoaccusals
+  getOfficerCoaccusals,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OfficerPage));

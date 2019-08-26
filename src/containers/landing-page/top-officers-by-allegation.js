@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {
   requestCMS,
-  requestTopOfficersByAllegation
+  requestTopOfficersByAllegation,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopOfficersByAllegation);

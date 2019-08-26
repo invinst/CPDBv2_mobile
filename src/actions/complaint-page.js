@@ -20,7 +20,7 @@ export const requestComplaint = (id) => get(
   [
     COMPLAINT_REQUEST_START,
     COMPLAINT_REQUEST_SUCCESS,
-    COMPLAINT_REQUEST_FAILURE
+    COMPLAINT_REQUEST_FAILURE,
   ]
 )(undefined, undefined, `${id}/`, { id });
 
@@ -30,6 +30,6 @@ export const requestDocument = ({ id, email }) => post(
 )({ email: email });
 
 export const requestCMS = get(v2Url(constants.COMPLAINT_PAGE_CMS_API_ENDPOINT), [
-  COMPLAINT_PAGE_CMS_REQUEST_START, COMPLAINT_PAGE_CMS_REQUEST_SUCCESS, COMPLAINT_PAGE_CMS_REQUEST_FAILURE
+  COMPLAINT_PAGE_CMS_REQUEST_START, COMPLAINT_PAGE_CMS_REQUEST_SUCCESS, COMPLAINT_PAGE_CMS_REQUEST_FAILURE,
 ]);
 

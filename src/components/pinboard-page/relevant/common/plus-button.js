@@ -30,7 +30,7 @@ PlusButton.propTypes = {
 };
 
 PlusButton.defaultProps = {
-  darkMode: false
+  darkMode: false,
 };
 
 export default PlusButton;

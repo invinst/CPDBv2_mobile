@@ -13,12 +13,12 @@ describe('AnimatedSocialGraph component', function () {
   const officers = [
     {
       fullName: 'Jerome Finnigan',
-      id: 1
+      id: 1,
     },
     {
       fullName: 'Edward May',
-      id: 2
-    }
+      id: 2,
+    },
   ];
   const coaccusedData = [
     {
@@ -26,7 +26,7 @@ describe('AnimatedSocialGraph component', function () {
       officerId2: 2,
       incidentDate: '1988-10-03T00:00:00Z',
       accussedCount: 1,
-    }
+    },
   ];
   const listEvent = [
     '1988-10-03 00:00:00+00:00',
@@ -38,7 +38,7 @@ describe('AnimatedSocialGraph component', function () {
     '1991-01-15 00:00:00+00:00',
     '1991-02-18 00:00:00+00:00',
     '1991-02-20 00:00:00+00:00',
-    '1991-03-06 00:00:00+00:00'
+    '1991-03-06 00:00:00+00:00',
   ];
 
   it('should render all sections correctly', function () {

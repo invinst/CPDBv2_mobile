@@ -12,19 +12,19 @@ describe('query reducer', function () {
 
     query('', {
       type: SEARCH_INPUT_CHANGED,
-      payload: queryString
+      payload: queryString,
     }).should.eql(queryString);
   });
 
   it('should handle SEARCH_CLEAR', function () {
     query('query', {
-      type: SEARCH_CLEAR
+      type: SEARCH_CLEAR,
     }).should.eql('');
   });
 
   it('should handle SEARCH_RESET', function () {
     query('query', {
-      type: SEARCH_RESET
+      type: SEARCH_RESET,
     }).should.eql('');
   });
 });

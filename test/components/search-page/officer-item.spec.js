@@ -4,8 +4,8 @@ import { spy } from 'sinon';
 
 import OfficerItem from 'components/search-page/officer-item';
 
-describe('<OfficerItem />', () => {
-  it('should be renderable', () => {
+describe('<OfficerItem />', function () {
+  it('should be renderable', function () {
     shallow(<OfficerItem />).should.be.ok();
   });
 
@@ -24,7 +24,7 @@ describe('<OfficerItem />', () => {
     saveToRecentSpy.calledWith({
       type: 'Officer',
       title: 'Peter',
-      url: '/officer/1/peter/'
+      url: '/officer/1/peter/',
     }).should.be.true();
   });
 });

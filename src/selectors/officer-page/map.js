@@ -33,7 +33,7 @@ export const hasMapMarkersSelector = createSelector(
 
 export const crMapMarkersTransform = item => ({
   point: get(item, 'point', {
-    lon: 0, lat: 0
+    lon: 0, lat: 0,
   }),
   date: item.date,
   kind: item.kind,
@@ -44,7 +44,7 @@ export const crMapMarkersTransform = item => ({
 
 export const trrMapMarkerTransform = item => ({
   point: get(item, 'point', {
-    lon: 0, lat: 0
+    lon: 0, lat: 0,
   }),
   date: item.date,
   kind: item.kind,

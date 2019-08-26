@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 
 import TRRPage from 'components/trr-page';
+import Footer from 'components/footer';
 
 
 describe('<TRRPage />', function () {
@@ -22,6 +23,7 @@ describe('<TRRPage />', function () {
     wrapper.find('Info').prop('victimDemographic').should.equal('Black, Male, 27 years old');
     wrapper.find('Info').prop('trrId').should.equal(1);
     wrapper.find('.trr-header').text().should.equal('Other');
+    wrapper.find(Footer).exists.should.be.ok();
   });
 
   it('render nothing if trr is not available yet', function () {
