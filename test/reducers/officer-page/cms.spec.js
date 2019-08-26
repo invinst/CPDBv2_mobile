@@ -10,14 +10,14 @@ describe('cms reducer', function () {
   it('should handle OFFICER_PAGE_CMS_REQUEST_SUCCESS', function () {
     cms({}, {
       type: OFFICER_PAGE_CMS_REQUEST_SUCCESS,
-      payload: { fields: [1, 2] }
+      payload: { fields: [1, 2] },
     }).should.deepEqual([1, 2]);
   });
 
   it('should handle OFFICER_PAGE_CMS_REQUEST_FAILURE', function () {
     cms([2, 3], {
       type: OFFICER_PAGE_CMS_REQUEST_FAILURE,
-      payload: {}
+      payload: {},
     }).should.deepEqual([2, 3]);
   });
 });

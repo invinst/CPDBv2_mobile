@@ -14,7 +14,7 @@ const LoadingPage = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default LoadingPage;

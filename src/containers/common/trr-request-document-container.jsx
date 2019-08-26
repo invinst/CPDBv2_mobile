@@ -7,7 +7,7 @@ import { requestDocumentButtonMessage, buttonText } from 'selectors/trr-page';
 
 
 const mapDispatchToProps = {
-  requestDocument: requestDocument
+  requestDocument: requestDocument,
 };
 
 const mapStateToProps = (state, ownProps) => {

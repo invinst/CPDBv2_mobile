@@ -29,17 +29,17 @@ describe('ComplaintPage component', function () {
     const requestComplaintSpy = spy();
     const store = configureStore()({
       breadcrumb: {
-        breadcrumbs: []
+        breadcrumbs: [],
       },
       complaintPage: {
         attachmentRequest: {
           message: '',
-          subscribedCRIds: {}
+          subscribedCRIds: {},
         },
         complaints: {
-          '123': {}
-        }
-      }
+          '123': {},
+        },
+      },
     });
 
     mount(

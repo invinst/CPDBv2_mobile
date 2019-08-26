@@ -10,7 +10,7 @@ import {
   COMPLAINT_REQUEST_DOC_REQUEST_FAILURE,
   COMPLAINT_PAGE_CMS_REQUEST_START,
   COMPLAINT_PAGE_CMS_REQUEST_SUCCESS,
-  COMPLAINT_PAGE_CMS_REQUEST_FAILURE
+  COMPLAINT_PAGE_CMS_REQUEST_FAILURE,
 } from 'actions/complaint-page';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -26,9 +26,9 @@ describe('ComplaintPage actions', function () {
           request: {
             url: `${v2Url(constants.COMPLAINT_API_ENDPOINT)}123/`,
             params: undefined,
-            adapter: undefined
-          }
-        }
+            adapter: undefined,
+          },
+        },
       });
     });
   });
@@ -39,18 +39,18 @@ describe('ComplaintPage actions', function () {
         types: [
           COMPLAINT_REQUEST_DOC_REQUEST_START,
           COMPLAINT_REQUEST_DOC_REQUEST_SUCCESS,
-          COMPLAINT_REQUEST_DOC_REQUEST_FAILURE
+          COMPLAINT_REQUEST_DOC_REQUEST_FAILURE,
         ],
         payload: {
           request: {
             url: `${v2Url(constants.COMPLAINT_API_ENDPOINT)}123/request-document/`,
             data: {
-              email: 'valid@email.com'
+              email: 'valid@email.com',
             },
             method: 'POST',
-            adapter: undefined
-          }
-        }
+            adapter: undefined,
+          },
+        },
       });
     });
   });
@@ -61,15 +61,15 @@ describe('ComplaintPage actions', function () {
         types: [
           COMPLAINT_PAGE_CMS_REQUEST_START,
           COMPLAINT_PAGE_CMS_REQUEST_SUCCESS,
-          COMPLAINT_PAGE_CMS_REQUEST_FAILURE
+          COMPLAINT_PAGE_CMS_REQUEST_FAILURE,
         ],
         payload: {
           request: {
             url: `${v2Url(constants.COMPLAINT_PAGE_CMS_API_ENDPOINT)}`,
             adapter: undefined,
-            params: undefined
-          }
-        }
+            params: undefined,
+          },
+        },
       });
     });
   });

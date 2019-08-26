@@ -10,7 +10,7 @@ import trackingMiddleware from 'middleware/tracking-middleware';
 
 
 const logger = createLogger({
-  diff: true
+  diff: true,
 });
 
 export default function configureStore(initialState) {

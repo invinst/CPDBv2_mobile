@@ -19,11 +19,11 @@ describe('<SearchNavbar />', function () {
   it('should make first category active by default', function () {
     const categories = [
       {
-        id: 'officers'
+        id: 'officers',
       },
       {
-        id: 'crs'
-      }
+        id: 'crs',
+      },
     ];
     const wrapper = mount(
       <SearchNavbar
@@ -40,13 +40,13 @@ describe('<SearchNavbar />', function () {
       {
         id: 'officers',
         name: 'Officers',
-        filter: 'Officers'
+        filter: 'Officers',
       },
       {
         id: 'crs',
         name: 'CRs',
-        filter: 'CRs'
-      }
+        filter: 'CRs',
+      },
     ];
 
     const wrapper = mount(
@@ -63,12 +63,12 @@ describe('<SearchNavbar />', function () {
     const categories = [
       {
         id: 'officers',
-        name: 'Officers'
+        name: 'Officers',
       },
       {
         id: 'crs',
-        name: 'CRs'
-      }
+        name: 'CRs',
+      },
     ];
     const spyScrollToCategory = spy();
     const spyUpdateActiveCategory = spy();
@@ -105,11 +105,11 @@ describe('<SearchNavbar />', function () {
     it('should not render "clear" button if no single category is currently chosen', function () {
       const categories = [
         {
-          id: 'officers'
+          id: 'officers',
         },
         {
-          id: 'crs'
-        }
+          id: 'crs',
+        },
       ];
       const wrapper = mount(
         <SearchNavbar
@@ -141,8 +141,8 @@ describe('<SearchNavbar />', function () {
         {
           id: 'officers',
           name: 'Officers',
-          filter: 'Officers'
-        }
+          filter: 'Officers',
+        },
       ];
       const wrapper = mount(
         <SearchNavbar

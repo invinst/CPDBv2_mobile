@@ -5,7 +5,7 @@ const BreadcrumbItem = ({ label }) => (
 );
 
 BreadcrumbItem.propTypes = {
-  label: PropTypes.string
+  label: PropTypes.string,
 };
 
 export default BreadcrumbItem;

@@ -13,7 +13,7 @@ const ComplaintCategory = ({ category, subcategory }) => {
 
 ComplaintCategory.propTypes = {
   category: PropTypes.string,
-  subcategory: PropTypes.string
+  subcategory: PropTypes.string,
 };
 
 export default ComplaintCategory;

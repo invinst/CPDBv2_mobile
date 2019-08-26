@@ -4,12 +4,12 @@ import { spy } from 'sinon';
 
 import SuggestedSearchResult from 'components/search-page/suggested-search-result';
 
-describe('<SuggestedSearchResult />', () => {
-  it('should render item correctly', () => {
+describe('<SuggestedSearchResult />', function () {
+  it('should render item correctly', function () {
     const items = [{
       url: 'localhost',
       type: 'recent',
-      title: 'Whatever'
+      title: 'Whatever',
     }];
 
     const wrapper = mount(
@@ -26,12 +26,12 @@ describe('<SuggestedSearchResult />', () => {
     itemLink.text().should.eql('recentWhatever');
   });
 
-  it('should dispatch "saveToRecent" action when clicked', () => {
+  it('should dispatch "saveToRecent" action when clicked', function () {
     const spySaveToRecent = spy();
     const items = [{
       url: 'localhost',
       type: 'recent',
-      title: 'Whatever'
+      title: 'Whatever',
     }];
 
     const wrapper = shallow(
@@ -46,7 +46,7 @@ describe('<SuggestedSearchResult />', () => {
     spySaveToRecent.calledWith({
       url: 'localhost',
       type: 'recent',
-      title: 'Whatever'
+      title: 'Whatever',
     }).should.be.true();
   });
 

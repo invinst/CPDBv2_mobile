@@ -2,9 +2,9 @@ import { officersSelector } from 'selectors/embed';
 
 
 describe('embed', function () {
-  it('officersSelector', () => {
+  it('officersSelector', function () {
     officersSelector({
-      embed: {}
+      embed: {},
     }).should.eql([]);
 
     officersSelector({
@@ -20,15 +20,15 @@ describe('embed', function () {
               'percentile_trr': '0',
               'percentile_allegation_internal': '87.828',
               'percentile_allegation_civilian': '99.9817',
-            }
+            },
           },
           {
             id: 13789,
             'full_name': 'Queen Jones',
             'complaint_count': 0,
-          }
-        ]
-      }
+          },
+        ],
+      },
     }).should.deepEqual([
       {
         id: 13788,
@@ -40,18 +40,18 @@ describe('embed', function () {
           items: [
             { axis: 'Use of Force Reports', value: 0 },
             { axis: 'Internal Allegations', value: 87.828 },
-            { axis: 'Civilian Allegations', value: 99.9817 }
+            { axis: 'Civilian Allegations', value: 99.9817 },
           ],
           visualTokenBackground: '#f95125',
           textColor: '#231F20',
-        }
+        },
       },
       {
         id: 13789,
         'full_name': 'Queen Jones',
         'complaint_count': 0,
-        percentile: null
-      }
+        percentile: null,
+      },
     ]);
   });
 });

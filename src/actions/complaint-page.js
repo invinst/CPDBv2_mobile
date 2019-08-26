@@ -20,7 +20,7 @@ export const requestComplaint = (id) => get(
   [
     COMPLAINT_REQUEST_START,
     COMPLAINT_REQUEST_SUCCESS,
-    COMPLAINT_REQUEST_FAILURE
+    COMPLAINT_REQUEST_FAILURE,
   ]
 )(undefined, undefined, `${id}/`, { id });
 

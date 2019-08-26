@@ -51,5 +51,5 @@ TRRPage.propTypes = {
 };
 
 TRRPage.defaultProps = {
-  requestCMS: noop
+  requestCMS: noop,
 };

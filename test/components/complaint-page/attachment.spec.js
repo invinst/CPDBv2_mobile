@@ -33,12 +33,12 @@ describe('Attachments component', function () {
       complaintPage: {
         attachmentRequest: {
           message: '',
-          subscribedCRIds: {}
+          subscribedCRIds: {},
         },
         complaints: {
-          'CR123': {}
-        }
-      }
+          'CR123': {},
+        },
+      },
     });
     const wrapper = mount(
       <Provider store={ store }>
@@ -58,12 +58,12 @@ describe('Attachments component', function () {
       complaintPage: {
         attachmentRequest: {
           message: '',
-          subscribedCRIds: {}
+          subscribedCRIds: {},
         },
         complaints: {
-          'CR123': {}
-        }
-      }
+          'CR123': {},
+        },
+      },
     });
     const stubTrackAttachmentClick = stub(GATracking, 'trackAttachmentClick');
     const attachments = [{
@@ -88,12 +88,12 @@ describe('Attachments component', function () {
       complaintPage: {
         attachmentRequest: {
           message: '',
-          subscribedCRIds: {}
+          subscribedCRIds: {},
         },
         complaints: {
-          '123': {}
-        }
-      }
+          '123': {},
+        },
+      },
     });
     const stubOnTrackingAttachment = stub();
     const attachments = [{

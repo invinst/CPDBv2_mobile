@@ -7,7 +7,7 @@ import { formatDate } from 'utils/date';
 
 const officerCardTransform = officer => ({
   ...officer,
-  percentile: extractPercentile(officer.percentile)
+  percentile: extractPercentile(officer.percentile),
 });
 
 export const topOfficersByAllegationSelector = createSelector(
@@ -30,7 +30,7 @@ export const newDocumentAllegationsSelector = createSelector(
     document: {
       previewImageUrl: get(complaint, 'latest_document.preview_image_url', null),
       id: get(complaint, 'latest_document.id', null),
-    }
+    },
   }))
 );
 

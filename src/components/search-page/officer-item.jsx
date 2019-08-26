@@ -9,7 +9,7 @@ const OfficerItem = ({ name, badge, url, percentile, saveToRecent, categoryFilte
   const handleClick = (categoryFilter, name, url) => saveToRecent({
     type: categoryFilter,
     title: name,
-    url: url
+    url: url,
   });
 
   return (
@@ -38,12 +38,12 @@ OfficerItem.propTypes = {
   url: PropTypes.string,
   percentile: PropTypes.object,
   saveToRecent: PropTypes.func,
-  categoryFilter: PropTypes.string
+  categoryFilter: PropTypes.string,
 };
 
 OfficerItem.defaultProps = {
   percentile: {},
-  saveToRecent: () => {}
+  saveToRecent: () => {},
 };
 
 export default OfficerItem;

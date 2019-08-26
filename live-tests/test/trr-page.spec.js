@@ -16,7 +16,7 @@ const mockTRR = {
     'resignation_date': '',
     unit: {
       'unit_name': '253',
-      'description': 'Targeted Response Unit'
+      'description': 'Targeted Response Unit',
     },
   },
   'officer_in_uniform': false,
@@ -30,7 +30,7 @@ const mockTRR = {
   'date_of_incident': '2004-04-23',
   'location_type': 'Street',
   address: '11XX 79Th St',
-  beat: 612
+  beat: 612,
 };
 
 describe('TRRPageTest', function () {

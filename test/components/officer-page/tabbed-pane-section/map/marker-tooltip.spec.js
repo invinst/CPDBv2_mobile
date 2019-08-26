@@ -9,11 +9,11 @@ describe('MarkerTooltip component', function () {
   const victims = [{
     'gender': 'male',
     'race': 'White',
-    'age': 35
+    'age': 35,
   }, {
     'gender': 'female',
     'race': 'Black',
-    'age': 42
+    'age': 42,
   }];
 
   it('should render marker tooltip correctly', function () {
@@ -44,11 +44,11 @@ describe('MarkerTooltip component', function () {
         victims={ [{
           'gender': 'male',
           'race': 'Unknown',
-          'age': 35
+          'age': 35,
         }, {
           'gender': 'female',
           'race': 'Black',
-          'age': null
+          'age': null,
         }] }
       />
     );

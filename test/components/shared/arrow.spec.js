@@ -22,7 +22,7 @@ describe('<Arrow />', function () {
       ['up', '180deg'],
       ['down', '0deg'],
       ['left', '90deg'],
-      ['right', '-90deg']
+      ['right', '-90deg'],
     ];
 
     cases.forEach(function ([direction, rotation]) {

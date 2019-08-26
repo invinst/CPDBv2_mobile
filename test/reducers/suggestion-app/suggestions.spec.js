@@ -2,7 +2,7 @@ import {
   SUGGESTION_REQUEST_SUCCESS,
   SUGGESTION_REQUEST_FAILURE,
   SUGGEST_ALL_REQUEST_SUCCESS,
-  SUGGEST_ALL_REQUEST_FAILURE
+  SUGGEST_ALL_REQUEST_FAILURE,
 } from 'actions/suggestion';
 import suggestions from 'reducers/suggestion-app/suggestions';
 
@@ -35,7 +35,7 @@ describe('suggestions reducer', function () {
 
     suggestions({}, {
       type: SUGGESTION_REQUEST_SUCCESS,
-      payload: suggestionResults
+      payload: suggestionResults,
     }).should.eql({
       'DATE > CR': { data: [11, 12], isShowingAll: false },
       'DATE > TRR': { data: [13, 14], isShowingAll: false },
@@ -50,7 +50,7 @@ describe('suggestions reducer', function () {
 
   it('should handle SUGGESTION_REQUEST_FAILURE', function () {
     suggestions({}, {
-      type: SUGGESTION_REQUEST_FAILURE
+      type: SUGGESTION_REQUEST_FAILURE,
     }).should.eql({});
   });
 
@@ -58,17 +58,17 @@ describe('suggestions reducer', function () {
     suggestions({ any: 'any' }, {
       type: SUGGEST_ALL_REQUEST_SUCCESS,
       payload: {
-        CRS: [1, 2]
-      }
+        CRS: [1, 2],
+      },
     }).should.eql({
       any: 'any',
-      CRS: { data: [1, 2], isShowingAll: true }
+      CRS: { data: [1, 2], isShowingAll: true },
     });
   });
 
   it('should handle SUGGEST_ALL_REQUEST_FAILURE', function () {
     suggestions({}, {
-      type: SUGGEST_ALL_REQUEST_FAILURE
+      type: SUGGEST_ALL_REQUEST_FAILURE,
     }).should.eql({});
   });
 });

@@ -16,7 +16,7 @@ export const fetchOfficer = (id) => {
     [
       OFFICER_REQUEST_START,
       OFFICER_REQUEST_SUCCESS,
-      OFFICER_REQUEST_FAILURE
+      OFFICER_REQUEST_FAILURE,
     ]
   );
 

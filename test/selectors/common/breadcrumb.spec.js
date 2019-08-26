@@ -2,22 +2,22 @@ import { breadcrumbTextSelector, breadcrumbSelector } from 'selectors/common/bre
 
 
 describe('breadcrumbs selectors', function () {
-  describe('breadcrumbTextSelector', () => {
-    it('should return breadcrumb text', () => {
+  describe('breadcrumbTextSelector', function () {
+    it('should return breadcrumb text', function () {
       const state = {
         breadcrumbMapping: {
-          '/trr/123/': 'TRR 123'
-        }
+          '/trr/123/': 'TRR 123',
+        },
       };
 
       breadcrumbTextSelector(state, { url: '/trr/123/' }).should.eql('TRR 123');
     });
 
-    it('should return breadcrumb text for officer with tab name', () => {
+    it('should return breadcrumb text for officer with tab name', function () {
       const state = {
         breadcrumbMapping: {
-          '/officer/123/jerome-finnigan/': 'Jerome Finnigan'
-        }
+          '/officer/123/jerome-finnigan/': 'Jerome Finnigan',
+        },
       };
 
       breadcrumbTextSelector(state, { url: '/officer/123/jerome-finnigan/coaccusals/' }).should.eql('Jerome Finnigan');

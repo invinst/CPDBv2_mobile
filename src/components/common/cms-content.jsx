@@ -20,7 +20,7 @@ const CMSContent = ({ content, className }) => {
 
 CMSContent.propTypes = {
   content: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 export default CMSContent;
