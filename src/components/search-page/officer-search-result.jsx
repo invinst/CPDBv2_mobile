@@ -34,7 +34,7 @@ OfficerSearchResult.propTypes = {
 };
 
 OfficerSearchResult.defaultProps = {
-  saveToRecent: () => {}
+  saveToRecent: () => {},
 };
 
 export default OfficerSearchResult;

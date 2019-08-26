@@ -10,7 +10,7 @@ const CoaccusedCard = ({ officer }) => {
     {
       'disciplined': officer.finalFinding === 'Sustained' && officer.disciplined,
       'sustained': officer.finalFinding === 'Sustained' && !officer.disciplined,
-      'not-sustained': officer.finalFinding !== 'Sustained'
+      'not-sustained': officer.finalFinding !== 'Sustained',
     }
   );
 
@@ -34,13 +34,13 @@ const CoaccusedCard = ({ officer }) => {
 };
 
 CoaccusedCard.propTypes = {
-  officer: PropTypes.object
+  officer: PropTypes.object,
 };
 
 CoaccusedCard.defaultProps = {
   officer: {
-    percentile: {}
-  }
+    percentile: {},
+  },
 };
 
 export default CoaccusedCard;

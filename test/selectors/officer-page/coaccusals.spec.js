@@ -7,9 +7,9 @@ describe('Officer coaccusals selectors', function () {
       coaccusalGroupsSelector({
         officerPage: {
           coaccusals: {
-            data: []
-          }
-        }
+            data: [],
+          },
+        },
       }, 8562).should.be.empty();
     });
 
@@ -27,7 +27,7 @@ describe('Officer coaccusals selectors', function () {
                   'percentile': {
                     'percentile_allegation_civilian': '94.0',
                     'percentile_allegation_internal': '93.0',
-                    'percentile_trr': '95.0'
+                    'percentile_trr': '95.0',
                   },
                 },
                 {
@@ -38,7 +38,7 @@ describe('Officer coaccusals selectors', function () {
                   'percentile': {
                     'percentile_allegation_civilian': '83.0',
                     'percentile_allegation_internal': '84.0',
-                    'percentile_trr': '85.0'
+                    'percentile_trr': '85.0',
                   },
                 },
                 {
@@ -49,13 +49,13 @@ describe('Officer coaccusals selectors', function () {
                   'percentile': {
                     'percentile_allegation_civilian': '73.0',
                     'percentile_allegation_internal': '74.0',
-                    'percentile_trr': '75.0'
+                    'percentile_trr': '75.0',
                   },
-                }
-              ]
-            }
-          }
-        }
+                },
+              ],
+            },
+          },
+        },
       };
 
       coaccusalGroupsSelector(state, 8562).should.eql([
@@ -72,20 +72,20 @@ describe('Officer coaccusals selectors', function () {
                 items: [
                   {
                     'axis': 'Use of Force Reports',
-                    'value': 95
+                    'value': 95,
                   },
                   {
                     'axis': 'Internal Allegations',
-                    'value': 93
+                    'value': 93,
                   },
                   {
                     'axis': 'Civilian Allegations',
-                    'value': 94
-                  }
+                    'value': 94,
+                  },
                 ],
                 textColor: '#DFDFDF',
                 visualTokenBackground: '#f52524',
-                year: undefined
+                year: undefined,
               },
             },
             {
@@ -98,20 +98,20 @@ describe('Officer coaccusals selectors', function () {
                 items: [
                   {
                     'axis': 'Use of Force Reports',
-                    'value': 85
+                    'value': 85,
                   },
                   {
                     'axis': 'Internal Allegations',
-                    'value': 84
+                    'value': 84,
                   },
                   {
                     'axis': 'Civilian Allegations',
-                    'value': 83
-                  }
+                    'value': 83,
+                  },
                 ],
                 textColor: '#DFDFDF',
                 visualTokenBackground: '#f52524',
-                year: undefined
+                year: undefined,
               },
             },
           ],
@@ -129,23 +129,23 @@ describe('Officer coaccusals selectors', function () {
                 items: [
                   {
                     'axis': 'Use of Force Reports',
-                    'value': 75
+                    'value': 75,
                   },
                   {
                     'axis': 'Internal Allegations',
-                    'value': 74
+                    'value': 74,
                   },
                   {
                     'axis': 'Civilian Allegations',
-                    'value': 73
-                  }
+                    'value': 73,
+                  },
                 ],
                 textColor: '#DFDFDF',
                 visualTokenBackground: '#f32a29',
-                year: undefined
+                year: undefined,
               },
-            }
-          ]
+            },
+          ],
         },
       ]);
     });
@@ -156,9 +156,9 @@ describe('Officer coaccusals selectors', function () {
       const state = {
         officerPage: {
           coaccusals: {
-            data: {}
-          }
-        }
+            data: {},
+          },
+        },
       };
       hasCoaccusalSelector(state).should.be.false();
     });
@@ -177,11 +177,11 @@ describe('Officer coaccusals selectors', function () {
                   'percentile_trr': '95.0000',
                   'percentile_allegation_internal': '94.0000',
                   'percentile_allegation_civilian': '93.0000',
-                }
-              }]
-            }
-          }
-        }
+                },
+              }],
+            },
+          },
+        },
       };
       hasCoaccusalSelector(state, 8562).should.be.true();
     });
@@ -193,10 +193,10 @@ describe('Officer coaccusals selectors', function () {
         officerPage: {
           coaccusals: {
             isSuccess: {
-              123: true
-            }
-          }
-        }
+              123: true,
+            },
+          },
+        },
       };
       isCoaccusalSuccess(state, 8562).should.be.false();
     });
@@ -206,10 +206,10 @@ describe('Officer coaccusals selectors', function () {
         officerPage: {
           coaccusals: {
             isSuccess: {
-              8562: true
-            }
-          }
-        }
+              8562: true,
+            },
+          },
+        },
       };
       isCoaccusalSuccess(state, 8562).should.be.true();
     });

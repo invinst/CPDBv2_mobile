@@ -16,11 +16,11 @@ const mockLandingPageCms = {
           inlineStyleRanges: [],
           key: '2ff82',
           text: 'Citizens Police Data Project',
-          type: 'unstyled'
-        }]
-      }
-    }
-  ]
+          type: 'unstyled',
+        }],
+      },
+    },
+  ],
 };
 
 describe('MainPageTest', function () {

@@ -23,7 +23,7 @@ describe('relevantCoaccusals reducer', function () {
       count: 0,
       pagination: {
         next: null,
-        previous: null
+        previous: null,
       },
     });
   });
@@ -39,8 +39,8 @@ describe('relevantCoaccusals reducer', function () {
         'percentile_trr': '0.0000',
         'percentile_allegation': '88.9038',
         'percentile_allegation_civilian': '49.4652',
-        'percentile_allegation_internal': '85.8654'
-      }
+        'percentile_allegation_internal': '85.8654',
+      },
     },
     {
       'id': 2433,
@@ -52,8 +52,8 @@ describe('relevantCoaccusals reducer', function () {
         'percentile_trr': '38.9028',
         'percentile_allegation': '86.0456',
         'percentile_allegation_civilian': '81.8766',
-        'percentile_allegation_internal': '88.3297'
-      }
+        'percentile_allegation_internal': '88.3297',
+      },
     }];
 
     relevantCoaccusals(defaultState, {
@@ -63,14 +63,14 @@ describe('relevantCoaccusals reducer', function () {
         previous: null,
         count: 444,
         results: coaccusals,
-      }
+      },
     }).should.eql({
       requesting: false,
       items: coaccusals,
       count: 444,
       pagination: {
         next: '/pinboards/66ef1560/relevant-coaccusals/?limit=20&offset=20',
-        previous: null
+        previous: null,
       },
     });
   });
@@ -86,8 +86,8 @@ describe('relevantCoaccusals reducer', function () {
         'percentile_trr': '0.0000',
         'percentile_allegation': '88.9038',
         'percentile_allegation_civilian': '49.4652',
-        'percentile_allegation_internal': '85.8654'
-      }
+        'percentile_allegation_internal': '85.8654',
+      },
     }, {
       'id': 2433,
       'rank': 'Police Officer',
@@ -98,8 +98,8 @@ describe('relevantCoaccusals reducer', function () {
         'percentile_trr': '38.9028',
         'percentile_allegation': '86.0456',
         'percentile_allegation_civilian': '81.8766',
-        'percentile_allegation_internal': '88.3297'
-      }
+        'percentile_allegation_internal': '88.3297',
+      },
     }];
     const newCoaccusals = [{
       'id': 30815,
@@ -111,8 +111,8 @@ describe('relevantCoaccusals reducer', function () {
         'percentile_trr': '0.0000',
         'percentile_allegation': '96.5167',
         'percentile_allegation_civilian': '92.1189',
-        'percentile_allegation_internal': '87.4108'
-      }
+        'percentile_allegation_internal': '87.4108',
+      },
     }, {
       'id': 25962,
       'rank': 'Police Officer',
@@ -123,8 +123,8 @@ describe('relevantCoaccusals reducer', function () {
         'percentile_trr': '0.0000',
         'percentile_allegation': '98.3394',
         'percentile_allegation_civilian': '97.9005',
-        'percentile_allegation_internal': '96.4875'
-      }
+        'percentile_allegation_internal': '96.4875',
+      },
     }];
 
     const currentState = {
@@ -132,8 +132,8 @@ describe('relevantCoaccusals reducer', function () {
       count: 444,
       pagination: {
         next: '/pinboards/66ef1560/relevant-coaccusals/?limit=20&offset=20',
-        previous: null
-      }
+        previous: null,
+      },
     };
 
     relevantCoaccusals(currentState, {
@@ -143,7 +143,7 @@ describe('relevantCoaccusals reducer', function () {
         previous: '/pinboards/66ef1560/relevant-coaccusals/?',
         count: 444,
         results: newCoaccusals,
-      }
+      },
     }).should.eql({
       requesting: false,
       items: existingCoaccusals.concat(newCoaccusals),
@@ -166,8 +166,8 @@ describe('relevantCoaccusals reducer', function () {
         'percentile_trr': '0.0000',
         'percentile_allegation': '88.9038',
         'percentile_allegation_civilian': '49.4652',
-        'percentile_allegation_internal': '85.8654'
-      }
+        'percentile_allegation_internal': '85.8654',
+      },
     },
     {
       'id': 2433,
@@ -179,8 +179,8 @@ describe('relevantCoaccusals reducer', function () {
         'percentile_trr': '38.9028',
         'percentile_allegation': '86.0456',
         'percentile_allegation_civilian': '81.8766',
-        'percentile_allegation_internal': '88.3297'
-      }
+        'percentile_allegation_internal': '88.3297',
+      },
     }];
 
     const currentState = {
@@ -189,12 +189,12 @@ describe('relevantCoaccusals reducer', function () {
       pagination: {
         next: '/pinboards/66ef1560/relevant-coaccusals/?limit=20&offset=40',
         previous: '/pinboards/66ef1560/relevant-coaccusals/?',
-      }
+      },
     };
 
     relevantCoaccusals(currentState, {
       type: PINBOARD_RELEVANT_COACCUSALS_FETCH_REQUEST_FAILURE,
-      payload: {}
+      payload: {},
     }).should.eql({
       requesting: false,
       items: existingCoaccusals,
@@ -215,8 +215,8 @@ describe('relevantCoaccusals reducer', function () {
           'percentile_trr': '0.0000',
           'percentile_allegation': '88.9038',
           'percentile_allegation_civilian': '49.4652',
-          'percentile_allegation_internal': '85.8654'
-        }
+          'percentile_allegation_internal': '85.8654',
+        },
       },
       {
         'id': 2433,
@@ -228,9 +228,9 @@ describe('relevantCoaccusals reducer', function () {
           'percentile_trr': '38.9028',
           'percentile_allegation': '86.0456',
           'percentile_allegation_civilian': '81.8766',
-          'percentile_allegation_internal': '88.3297'
-        }
-      }
+          'percentile_allegation_internal': '88.3297',
+        },
+      },
     ];
 
     const currentState = {
@@ -248,7 +248,7 @@ describe('relevantCoaccusals reducer', function () {
       payload: {
         type: 'OFFICER',
         id: '21992',
-      }
+      },
     }).should.eql({
       items: [
         {
@@ -261,9 +261,9 @@ describe('relevantCoaccusals reducer', function () {
             'percentile_trr': '38.9028',
             'percentile_allegation': '86.0456',
             'percentile_allegation_civilian': '81.8766',
-            'percentile_allegation_internal': '88.3297'
-          }
-        }
+            'percentile_allegation_internal': '88.3297',
+          },
+        },
       ],
       count: 444,
       pagination: {
@@ -286,8 +286,8 @@ describe('relevantCoaccusals reducer', function () {
           'percentile_trr': '0.0000',
           'percentile_allegation': '88.9038',
           'percentile_allegation_civilian': '49.4652',
-          'percentile_allegation_internal': '85.8654'
-        }
+          'percentile_allegation_internal': '85.8654',
+        },
       },
       {
         'id': 2433,
@@ -299,9 +299,9 @@ describe('relevantCoaccusals reducer', function () {
           'percentile_trr': '38.9028',
           'percentile_allegation': '86.0456',
           'percentile_allegation_civilian': '81.8766',
-          'percentile_allegation_internal': '88.3297'
-        }
-      }
+          'percentile_allegation_internal': '88.3297',
+        },
+      },
     ];
 
     const currentState = {
@@ -319,7 +319,7 @@ describe('relevantCoaccusals reducer', function () {
       payload: {
         type: 'CR',
         id: '21992',
-      }
+      },
     }).should.eql({
       items: existingCoaccusals,
       count: 444,

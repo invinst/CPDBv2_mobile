@@ -8,11 +8,11 @@ import { cmsSelector } from 'selectors/common/cms';
 const mapStateToProps = state => ({
   recentActivities: recentActivitiesSelector(state),
   description: cmsSelector(state, 'landingPage', 'carousel_activity_desc'),
-  title: cmsSelector(state, 'landingPage', 'carousel_activity_title')
+  title: cmsSelector(state, 'landingPage', 'carousel_activity_title'),
 });
 
 const mapDispatchToProps = {
-  requestRecentActivities
+  requestRecentActivities,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecentActivities);

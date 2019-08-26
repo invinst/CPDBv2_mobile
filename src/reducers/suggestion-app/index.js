@@ -18,5 +18,5 @@ export default combineReducers({
   isSuccess,
   initialSuggestions,
   activeCategory,
-  chosenCategory
+  chosenCategory,
 });

@@ -28,8 +28,8 @@ describe('RelevantDocuments selectors', function () {
               'percentile_trr': '72.1094',
               'percentile_allegation': '99.4803',
               'percentile_allegation_civilian': '99.1379',
-              'percentile_allegation_internal': '88.3297'
-            }
+              'percentile_allegation_internal': '88.3297',
+            },
           }, {
             'id': 32020,
             'rank': 'Police Officer',
@@ -41,10 +41,10 @@ describe('RelevantDocuments selectors', function () {
               'percentile_trr': '78.2707',
               'percentile_allegation': '98.7238',
               'percentile_allegation_civilian': '97.8772',
-              'percentile_allegation_internal': '61.1521'
-            }
-          }]
-        }
+              'percentile_allegation_internal': '61.1521',
+            },
+          }],
+        },
       },
       {
         'id': 2289,
@@ -55,8 +55,8 @@ describe('RelevantDocuments selectors', function () {
           'crid': '1074535',
           'category': 'Unknown',
           'incident_date': '2015-04-04',
-          'officers': []
-        }
+          'officers': [],
+        },
       }];
       const state = {
         pinboardPage: {
@@ -70,10 +70,10 @@ describe('RelevantDocuments selectors', function () {
             count: 444,
             pagination: {
               next: '/pinboards/66ef1560/relevant-documents/?limit=20&offset=20',
-              previous: null
+              previous: null,
             },
-          }
-        }
+          },
+        },
       };
 
       relevantDocumentsSelector(state).should.eql([{
@@ -94,7 +94,7 @@ describe('RelevantDocuments selectors', function () {
               items: [
                 { axis: 'Use of Force Reports', value: 72.1094 },
                 { axis: 'Internal Allegations', value: 88.3297 },
-                { axis: 'Civilian Allegations', value: 99.1379 }
+                { axis: 'Civilian Allegations', value: 99.1379 },
               ],
               visualTokenBackground: '#f0201e',
               textColor: '#DFDFDF',
@@ -108,11 +108,11 @@ describe('RelevantDocuments selectors', function () {
               items: [
                 { axis: 'Use of Force Reports', value: 78.2707 },
                 { axis: 'Internal Allegations', value: 61.1521 },
-                { axis: 'Civilian Allegations', value: 97.8772 }
+                { axis: 'Civilian Allegations', value: 97.8772 },
               ],
               visualTokenBackground: '#f0201e',
               textColor: '#DFDFDF',
-            }
+            },
           }],
         },
         pinned: false,
@@ -144,8 +144,8 @@ describe('RelevantDocuments selectors', function () {
               next: '/pinboards/66ef1560/relevant-documents/?limit=10&offset=20',
               previous: '/pinboards/66ef1560/relevant-documents/?',
             },
-          }
-        }
+          },
+        },
       };
 
       relevantDocumentsNextParamsSelector(state).should.eql({ limit: '10', offset: '20' });
@@ -172,8 +172,8 @@ describe('RelevantDocuments selectors', function () {
               'percentile_trr': '72.1094',
               'percentile_allegation': '99.4803',
               'percentile_allegation_civilian': '99.1379',
-              'percentile_allegation_internal': '88.3297'
-            }
+              'percentile_allegation_internal': '88.3297',
+            },
           }, {
             'id': 32020,
             'rank': 'Police Officer',
@@ -184,10 +184,10 @@ describe('RelevantDocuments selectors', function () {
               'percentile_trr': '78.2707',
               'percentile_allegation': '98.7238',
               'percentile_allegation_civilian': '97.8772',
-              'percentile_allegation_internal': '61.1521'
-            }
-          }]
-        }
+              'percentile_allegation_internal': '61.1521',
+            },
+          }],
+        },
       },
       {
         'id': 2289,
@@ -197,8 +197,8 @@ describe('RelevantDocuments selectors', function () {
           'crid': '1074535',
           'category': 'Unknown',
           'incident_date': '2015-04-04',
-          'officers': []
-        }
+          'officers': [],
+        },
       }];
       const state = {
         pinboardPage: {
@@ -212,10 +212,10 @@ describe('RelevantDocuments selectors', function () {
             count: 444,
             pagination: {
               next: '/pinboards/66ef1560/relevant-documents/?limit=20&offset=20',
-              previous: null
+              previous: null,
             },
-          }
-        }
+          },
+        },
       };
 
       relevantDocumentsHasMoreSelector(state).should.be.true();
@@ -240,8 +240,8 @@ describe('RelevantDocuments selectors', function () {
               'percentile_trr': '72.1094',
               'percentile_allegation': '99.4803',
               'percentile_allegation_civilian': '99.1379',
-              'percentile_allegation_internal': '88.3297'
-            }
+              'percentile_allegation_internal': '88.3297',
+            },
           }, {
             'id': 32020,
             'rank': 'Police Officer',
@@ -252,10 +252,10 @@ describe('RelevantDocuments selectors', function () {
               'percentile_trr': '78.2707',
               'percentile_allegation': '98.7238',
               'percentile_allegation_civilian': '97.8772',
-              'percentile_allegation_internal': '61.1521'
-            }
-          }]
-        }
+              'percentile_allegation_internal': '61.1521',
+            },
+          }],
+        },
       },
       {
         'id': 2289,
@@ -265,8 +265,8 @@ describe('RelevantDocuments selectors', function () {
           'crid': '1074535',
           'category': 'Unknown',
           'incident_date': '2015-04-04',
-          'officers': []
-        }
+          'officers': [],
+        },
       }];
       const state = {
         pinboardPage: {
@@ -280,10 +280,10 @@ describe('RelevantDocuments selectors', function () {
             count: 2,
             pagination: {
               next: '/pinboards/66ef1560/relevant-documents/?limit=20&offset=20',
-              previous: null
+              previous: null,
             },
-          }
-        }
+          },
+        },
       };
 
       relevantDocumentsHasMoreSelector(state).should.be.false();

@@ -7,7 +7,7 @@ import BaseOfficerCard from 'components/common/base-officer-card';
 import RadarChart from 'components/common/radar-chart';
 
 
-describe('<BaseOfficerCard />', () => {
+describe('<BaseOfficerCard />', function () {
   const officer = {
     fullName: 'Broderick Jones',
     officerId: 13788,
@@ -20,10 +20,10 @@ describe('<BaseOfficerCard />', () => {
       textColor: '#231F20',
       visualTokenBackground: '#f95125',
     },
-    rank: 'Police Officer'
+    rank: 'Police Officer',
   };
 
-  it('should render correctly', () => {
+  it('should render correctly', function () {
     const wrapper = shallow(<BaseOfficerCard { ...officer } />);
 
     const link = wrapper.find(Link);

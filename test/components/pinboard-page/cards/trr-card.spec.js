@@ -7,7 +7,6 @@ import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 import LocationCard from 'components/pinboard-page/cards/location-card';
 
 
-
 describe('Pinboard <TRRCard />', function () {
   it('should render LocationCard correctly', function () {
     const item = {

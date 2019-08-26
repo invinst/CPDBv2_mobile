@@ -11,7 +11,7 @@ describe('Attachment component', function () {
     title: 'CRID 1071970 OCIR 2 of 3',
     url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-3-of-3.html',
     previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
-    fileType: 'document'
+    fileType: 'document',
   };
 
   it('should render content correctly', function () {
@@ -47,7 +47,7 @@ describe('Attachment component', function () {
       title: 'Video Clip',
       url: 'https://player.vimeo.com/video/165206078',
       previewImageUrl: '/src/img/ic-video.svg',
-      fileType: 'video'
+      fileType: 'video',
     };
 
     const wrapper = shallow(<Attachment attachment={ videoAttachment }/>);
@@ -60,7 +60,7 @@ describe('Attachment component', function () {
     const audioAttachment = {
       title: 'Audio',
       url: 'https://player.vimeo.com/video/165206078',
-      fileType: 'audio'
+      fileType: 'audio',
     };
 
     const wrapper = shallow(<Attachment attachment={ audioAttachment }/>);

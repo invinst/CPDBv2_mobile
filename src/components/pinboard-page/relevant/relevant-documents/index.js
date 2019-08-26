@@ -45,5 +45,5 @@ RelevantDocuments.propTypes = {
 };
 
 RelevantDocuments.defaultProps = {
-  documents: []
+  documents: [],
 };

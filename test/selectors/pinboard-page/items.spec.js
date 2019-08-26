@@ -40,7 +40,7 @@ describe('PinboardPage Items selectors', function () {
             'percentile_allegation_internal': '99.7840',
             year: 2016,
             id: 1,
-          }
+          },
         }],
       },
       trrItems: {
@@ -52,7 +52,7 @@ describe('PinboardPage Items selectors', function () {
           point: { 'lon': 1.0, 'lat': 1.0 },
         }],
       },
-    })
+    }),
   };
 
   describe('pinnedOfficersSelector selector', function () {
@@ -122,7 +122,7 @@ describe('PinboardPage Items selectors', function () {
             requesting: true,
             items: [],
           },
-        }
+        },
       }).should.be.true();
 
       getPinnedCRsRequesting({
@@ -131,7 +131,7 @@ describe('PinboardPage Items selectors', function () {
             requesting: false,
             items: [],
           },
-        }
+        },
       }).should.be.false();
     });
   });
@@ -144,7 +144,7 @@ describe('PinboardPage Items selectors', function () {
             requesting: true,
             items: [],
           },
-        }
+        },
       }).should.be.true();
 
       getPinnedOfficersRequesting({
@@ -153,7 +153,7 @@ describe('PinboardPage Items selectors', function () {
             requesting: false,
             items: [],
           },
-        }
+        },
       }).should.be.false();
     });
   });
@@ -166,7 +166,7 @@ describe('PinboardPage Items selectors', function () {
             requesting: true,
             items: [],
           },
-        }
+        },
       }).should.be.true();
 
       getPinnedTRRsRequesting({
@@ -175,7 +175,7 @@ describe('PinboardPage Items selectors', function () {
             requesting: false,
             items: [],
           },
-        }
+        },
       }).should.be.false();
     });
   });

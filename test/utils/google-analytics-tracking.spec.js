@@ -20,7 +20,7 @@ describe('GATracking utils', function () {
         hitType: 'event',
         eventCategory: 'landing_page_carousel',
         eventAction: 'swipe_left',
-        eventLabel: 'type'
+        eventLabel: 'type',
       }).should.be.true();
     });
   });
@@ -31,7 +31,7 @@ describe('GATracking utils', function () {
 
       window.ga.calledWith('send', {
         hitType: 'pageview',
-        page: 'pathname'
+        page: 'pathname',
       }).should.be.true();
     });
   });
@@ -44,7 +44,7 @@ describe('GATracking utils', function () {
         hitType: 'event',
         eventCategory: 'search',
         eventAction: 'num_results',
-        eventValue: 12
+        eventValue: 12,
       }).should.be.true();
     });
   });
@@ -62,7 +62,7 @@ describe('GATracking utils', function () {
         hitType: 'event',
         eventCategory: 'search',
         eventAction: 'change_query',
-        eventLabel: 'quer'
+        eventLabel: 'quer',
       }).should.be.true();
 
       clock.tick(1000);
@@ -83,7 +83,7 @@ describe('GATracking utils', function () {
         hitType: 'event',
         eventCategory: 'visual_token_explainer',
         eventAction: 'open',
-        eventValue: 123
+        eventValue: 123,
       }).should.be.true();
     });
   });

@@ -22,7 +22,7 @@ const EVENTS = {
   [SUGGESTION_REQUEST_SUCCESS]: (store, action) => {
     const count = reduce(values(action.payload), (sum, array) => sum + array.length, 0);
     GATracking.trackSearchResultsCount(count);
-  }
+  },
 };
 
 const trackingMiddleware = store => next => action => {

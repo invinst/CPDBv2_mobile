@@ -4,5 +4,5 @@ import { CHANGE_PINBOARD_TAB } from 'actions/pinboard';
 
 
 export default handleActions({
-  [CHANGE_PINBOARD_TAB]: (state, action) => action.payload
+  [CHANGE_PINBOARD_TAB]: (state, action) => action.payload,
 }, null);

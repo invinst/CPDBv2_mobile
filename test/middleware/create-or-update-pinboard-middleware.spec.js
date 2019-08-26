@@ -22,7 +22,7 @@ import {
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
   updatePinboardInfoState,
-  performFetchPinboardRelatedData
+  performFetchPinboardRelatedData,
 } from 'actions/pinboard';
 import { showToast } from 'actions/toast';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
@@ -33,17 +33,17 @@ describe('createOrUpdatePinboard middleware', function () {
     getState: () => {
       return {
         pinboardPage: {
-          pinboard
+          pinboard,
         },
-        routing: { locationBeforeTransitions: { pathname } }
+        routing: { locationBeforeTransitions: { pathname } },
       };
     },
-    dispatch: stub().usingPromise(Promise).resolves('abc')
+    dispatch: stub().usingPromise(Promise).resolves('abc'),
   });
 
   it('should not dispatch any action if action is not adding or removing items', function () {
     const action = {
-      type: 'other action'
+      type: 'other action',
     };
     const store = createStore();
     let dispatched;
@@ -60,7 +60,7 @@ describe('createOrUpdatePinboard middleware', function () {
         'title': 'Updated Title',
         'description': 'Updated Description',
         'unit_id': '123',
-      }
+      },
     };
     const store = createStore(PinboardFactory.build());
     let dispatched;
@@ -87,8 +87,8 @@ describe('createOrUpdatePinboard middleware', function () {
       type: ORDER_PINBOARD,
       payload: {
         type: 'OFFICER',
-        ids: ['123', '789', '456']
-      }
+        ids: ['123', '789', '456'],
+      },
     };
     const store = createStore(PinboardFactory.build());
 
@@ -98,7 +98,7 @@ describe('createOrUpdatePinboard middleware', function () {
 
     store.dispatch.should.be.calledWith(orderPinboardState({
       type: 'OFFICER',
-      ids: ['123', '789', '456']
+      ids: ['123', '789', '456'],
     }));
 
     setTimeout(
@@ -117,7 +117,7 @@ describe('createOrUpdatePinboard middleware', function () {
         id: '123',
         type: 'CR',
         isPinned: false,
-      }
+      },
     };
     const store = createStore(PinboardFactory.build());
 
@@ -147,7 +147,7 @@ describe('createOrUpdatePinboard middleware', function () {
         id: '123',
         type: 'CR',
         isPinned: true,
-      }
+      },
     };
     const store = createStore(PinboardFactory.build());
 
@@ -176,7 +176,7 @@ describe('createOrUpdatePinboard middleware', function () {
       payload: {
         id: '123',
         type: 'CR',
-      }
+      },
     };
     const store = createStore(PinboardFactory.build());
 
@@ -204,7 +204,7 @@ describe('createOrUpdatePinboard middleware', function () {
       payload: {
         id: '123',
         type: 'CR',
-      }
+      },
     };
     const store = createStore(PinboardFactory.build());
 
@@ -230,7 +230,7 @@ describe('createOrUpdatePinboard middleware', function () {
     it('should dispatch createPinboard', function (done) {
       const action = {
         type: SAVE_PINBOARD,
-        payload: null
+        payload: null,
       };
       const store = createStore(PinboardFactory.build({
         'id': null,
@@ -265,7 +265,7 @@ describe('createOrUpdatePinboard middleware', function () {
     it('should dispatch updatePinboard', function (done) {
       const action = {
         type: SAVE_PINBOARD,
-        payload: null
+        payload: null,
       };
       const store = createStore(PinboardFactory.build({
         'id': '66ef1560',
@@ -298,7 +298,7 @@ describe('createOrUpdatePinboard middleware', function () {
     it('should dispatch nothing when saving is true', function () {
       const action = {
         type: SAVE_PINBOARD,
-        payload: null
+        payload: null,
       };
       const store = createStore(PinboardFactory.build({
         'id': '66ef1560',
@@ -319,7 +319,7 @@ describe('createOrUpdatePinboard middleware', function () {
         payload: PinboardFactory.build({
           'id': '66ef1560',
           'officer_ids': [123],
-        })
+        }),
       };
       const store = createStore(PinboardFactory.build({
         'id': null,
@@ -355,7 +355,7 @@ describe('createOrUpdatePinboard middleware', function () {
         payload: PinboardFactory.build({
           'id': '66ef1560',
           'officer_ids': [123, 456],
-        })
+        }),
       };
       const store = createStore(PinboardFactory.build({
         'id': '66ef1560',
@@ -376,7 +376,7 @@ describe('createOrUpdatePinboard middleware', function () {
         payload: PinboardFactory.build({
           'id': '66ef1560',
           'officer_ids': [123, 456],
-        })
+        }),
       };
       const store = createStore(
         PinboardFactory.build({
@@ -404,7 +404,7 @@ describe('createOrUpdatePinboard middleware', function () {
     it('should retry saving on failure after 1 second', function (done) {
       const action = {
         type: SAVE_PINBOARD,
-        payload: PinboardFactory.build({ 'id': '66ef1560' })
+        payload: PinboardFactory.build({ 'id': '66ef1560' }),
       };
       const store = {
         getState: () => {
@@ -414,11 +414,11 @@ describe('createOrUpdatePinboard middleware', function () {
                 'id': '66ef1560',
                 'officer_ids': [123, 456],
                 'saving': false,
-              })
+              }),
             },
           };
         },
-        dispatch: stub().usingPromise(Promise).rejects(new Error('abc'))
+        dispatch: stub().usingPromise(Promise).rejects(new Error('abc')),
       };
 
       const realSetTimeout = setTimeout;
@@ -455,7 +455,7 @@ describe('createOrUpdatePinboard middleware', function () {
     it('should retry maximum 60 times', function (done) {
       const action = {
         type: SAVE_PINBOARD,
-        payload: null
+        payload: null,
       };
       const store = {
         getState: () => {
@@ -465,11 +465,11 @@ describe('createOrUpdatePinboard middleware', function () {
                 'id': '66ef1560',
                 'officer_ids': [123, 456],
                 'saving': false,
-              })
+              }),
             },
           };
         },
-        dispatch: stub().usingPromise(Promise).resolves('abc')
+        dispatch: stub().usingPromise(Promise).resolves('abc'),
       };
 
       createOrUpdatePinboard(store)(action => action)(action);
@@ -482,11 +482,11 @@ describe('createOrUpdatePinboard middleware', function () {
                 'id': '66ef1560',
                 'officer_ids': [123, 456],
                 'saving': false,
-              })
+              }),
             },
           };
         },
-        dispatch: stub().usingPromise(Promise).rejects(new Error('abc'))
+        dispatch: stub().usingPromise(Promise).rejects(new Error('abc')),
       };
 
       const realSetTimeout = setTimeout;
@@ -516,7 +516,7 @@ describe('createOrUpdatePinboard middleware', function () {
   it('should handle @@router/LOCATION_CHANGE and dispatch createPinboard', function (done) {
     const action = {
       type: '@@router/LOCATION_CHANGE',
-      payload: null
+      payload: null,
     };
     const store = createStore(PinboardFactory.build({
       'id': null,
@@ -549,7 +549,7 @@ describe('createOrUpdatePinboard middleware', function () {
   it('should handle @@router/LOCATION_CHANGE and dispatch updatePinboard', function (done) {
     const action = {
       type: '@@router/LOCATION_CHANGE',
-      payload: null
+      payload: null,
     };
     const store = createStore(PinboardFactory.build({
       'id': '66ef1560',
@@ -582,7 +582,7 @@ describe('createOrUpdatePinboard middleware', function () {
   it('should handle @@router/LOCATION_CHANGE and do nothing if not saving', function () {
     const action = {
       type: '@@router/LOCATION_CHANGE',
-      payload: null
+      payload: null,
     };
     const store = createStore(PinboardFactory.build({
       'id': '66ef1560',
@@ -605,7 +605,7 @@ describe('createOrUpdatePinboard middleware', function () {
           id: '123',
           type: 'CR',
           isPinned: false,
-        }
+        },
       };
       const store = createStore(PinboardFactory.build());
 

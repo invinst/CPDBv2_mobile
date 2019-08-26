@@ -6,12 +6,13 @@ import configureStore from 'redux-mock-store';
 
 import constants from 'constants';
 import LandingPage from 'components/landing-page';
+import Footer from 'components/footer';
 
 
 describe('<LandingPage />', function () {
-  it('should render', function () {
+  it('should render footer', function () {
     const wrapper = shallow(<LandingPage />);
-    wrapper.should.be.ok();
+    wrapper.find(Footer).exists.should.be.ok();
   });
 
   it('should render fake search input box that links to search page', function () {
@@ -29,7 +30,7 @@ describe('<LandingPage />', function () {
         newDocumentAllegations: [1],
         complaintSummaries: [1],
         cmsRequested: true,
-      }
+      },
     });
 
     const spyRequestCMS = spy();
@@ -50,7 +51,7 @@ describe('<LandingPage />', function () {
     pushBreadcrumbsSpy.calledWith({
       location: 'location',
       routes: 'routes',
-      params: 'params'
+      params: 'params',
     }).should.be.true();
   });
 
@@ -69,7 +70,7 @@ describe('<LandingPage />', function () {
     pushBreadcrumbsSpy.calledWith({
       location: 'changed',
       routes: 'routes',
-      params: 'params'
+      params: 'params',
     }).should.be.true();
   });
 });

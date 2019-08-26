@@ -4,8 +4,8 @@ const metricSection = (selector) => ({
   elements: {
     value: '.value',
     name: '.name',
-    description: '.description'
-  }
+    description: '.description',
+  },
 });
 
 const rowSection = (selector) => ({
@@ -13,8 +13,8 @@ const rowSection = (selector) => ({
   locateStrategy: 'xpath',
   elements: {
     label: '.label',
-    value: '.value'
-  }
+    value: '.value',
+  },
 });
 
 const explainer = (contentSections) => ({
@@ -22,7 +22,7 @@ const explainer = (contentSections) => ({
   locateStrategy: 'xpath',
   elements: {
     leftNav: '.left-nav',
-    rightNav: '.right-nav'
+    rightNav: '.right-nav',
   },
   sections: {
     radarChartContainer: {
@@ -32,17 +32,17 @@ const explainer = (contentSections) => ({
           selector: '//*[name()="svg" and contains(@class, "radar-chart")]',
           locateStrategy: 'xpath',
         },
-        closeButton: '.explainer-close-button'
-      }
+        closeButton: '.explainer-close-button',
+      },
     },
     explainerContent: {
       selector: '.explainer-content',
       elements: {
-        title: '.title'
+        title: '.title',
       },
-      sections: contentSections
-    }
-  }
+      sections: contentSections,
+    },
+  },
 });
 
 const descriptionExplainer = explainer({
@@ -52,8 +52,8 @@ const descriptionExplainer = explainer({
     elements: {
       content: '.content',
       subContent: '.sub-content',
-    }
-  }
+    },
+  },
 });
 
 const nthPercentileRow = (n) => ({
@@ -64,7 +64,7 @@ const nthPercentileRow = (n) => ({
     internalComplaint: '.cell:nth-child(3)',
     civilianComplaint: '.cell:nth-child(4)',
     useOfForce: '.cell:nth-child(5)',
-  }
+  },
 });
 
 const nthUnitChangeSection = (n) => ({
@@ -73,13 +73,13 @@ const nthUnitChangeSection = (n) => ({
   elements: {
     unitChange: {
       selector: `(//div[contains(@class, "test--timeline-unit-change-item")][${n}])//span[@class="unit-change"]`,
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     date: {
       selector: `(//div[contains(@class, "test--timeline-unit-change-item")][${n}])//span[@class="date"]`,
-      locateStrategy: 'xpath'
-    }
-  }
+      locateStrategy: 'xpath',
+    },
+  },
 });
 
 const nthRankChangeSection = (n) => ({
@@ -88,13 +88,13 @@ const nthRankChangeSection = (n) => ({
   elements: {
     rankChange: {
       selector: `(//div[contains(@class, "test--timeline-rank-change-item")][${n}])//span[@class="rank-change"]`,
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     date: {
       selector: `(//div[contains(@class, "test--timeline-rank-change-item")][${n}])//span[@class="date"]`,
-      locateStrategy: 'xpath'
-    }
-  }
+      locateStrategy: 'xpath',
+    },
+  },
 });
 
 const nthBreadcrumb = n => `.breadcrumb-item-wrapper:nth-child(${ 1 + 2 * (n - 1) })`;
@@ -131,7 +131,7 @@ module.exports = {
         firstBreadcrumb: nthBreadcrumb(1),
         secondBreadcrumb: nthBreadcrumb(2),
         thirdBreadcrumb: nthBreadcrumb(3),
-      }
+      },
     },
     animatedRadarChart: {
       selector: '//div[contains(@class, "animated-radar-chart")]',
@@ -147,16 +147,16 @@ module.exports = {
           elements: {
             radarAxis: {
               selector: '//*[name()="text" and contains(@class, "radar-axis")]',
-              locateStrategy: 'xpath'
+              locateStrategy: 'xpath',
             },
             radarArea: {
               selector: '//*[name()="path" and contains(@class, "radar-area")]',
-              locateStrategy: 'xpath'
+              locateStrategy: 'xpath',
             },
             radarGrid: '.test--radar-grid-wrapper',
           },
         },
-      }
+      },
     },
     triangleExplainer: descriptionExplainer,
     scaleExplainer: descriptionExplainer,
@@ -171,7 +171,7 @@ module.exports = {
               internalComplaintHeader: '.header-cell:nth-child(1)',
               civilianComplaintHeader: '.header-cell:nth-child(2)',
               useOfForceHeader: '.header-cell:nth-child(3)',
-            }
+            },
           },
           percentileTable: {
             selector: '.percentile-table',
@@ -179,10 +179,10 @@ module.exports = {
               firstRow: nthPercentileRow(1),
               secondRow: nthPercentileRow(2),
               thirdRow: nthPercentileRow(3),
-            }
-          }
-        }
-      }
+            },
+          },
+        },
+      },
     }),
     summary: {
       selector: '.officer-summary-body',
@@ -195,7 +195,7 @@ module.exports = {
         rank: rowSection('//div[contains(@class, "section-row")][2]'),
         unit: rowSection('//div[contains(@class, "section-row")][3]'),
         career: rowSection('//div[contains(@class, "section-row")][4]'),
-      }
+      },
     },
     metrics: {
       selector: '//div[contains(@class, "metric-widget")]',
@@ -207,7 +207,7 @@ module.exports = {
         complimentItem: metricSection('(//div[contains(@class, "metric-widget-item")][2])[2]'),
         awardItem: metricSection('(//div[contains(@class, "metric-widget-item")][1])[3]'),
         honorableMentionItem: metricSection('(//div[contains(@class, "metric-widget-item")][2])[3]'),
-      }
+      },
     },
     timeline: {
       selector: '.test--officer-timeline',
@@ -224,7 +224,7 @@ module.exports = {
         secondUnitChangeItem: nthUnitChangeSection(2),
         firstRankChangeItem: nthRankChangeSection(1),
         secondRankChangeItem: nthRankChangeSection(2),
-      }
+      },
     },
     coaccusals: {
       selector: '.test--officer-coaccusals',
@@ -250,10 +250,10 @@ module.exports = {
             heading: {
               selector: '//a[contains(@class, "heading__officer-attachments-tab-complaint-heading")]',
               locateStrategy: 'xpath',
-            }
-          }
+            },
+          },
         },
       },
     },
-  }
+  },
 };

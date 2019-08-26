@@ -25,7 +25,7 @@ const CRLocationMap = ({ lng, lat }) => {
 
 CRLocationMap.propTypes = {
   lat: PropTypes.number,
-  lng: PropTypes.number
+  lng: PropTypes.number,
 };
 
 export default CRLocationMap;

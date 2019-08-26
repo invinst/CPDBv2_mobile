@@ -18,7 +18,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {
   requestNewDocumentAllegations,
-  onTrackingAttachment: trackingClickAttachment
+  onTrackingAttachment: trackingClickAttachment,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewDocumentAllegations));

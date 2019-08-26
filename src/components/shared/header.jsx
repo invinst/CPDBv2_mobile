@@ -30,7 +30,7 @@ const Header = ({ location, routes, params }) => {
 Header.propTypes = {
   location: PropTypes.object,
   params: PropTypes.object,
-  routes: PropTypes.array
+  routes: PropTypes.array,
 };
 
 export default withRouter(Header);

@@ -13,7 +13,7 @@ export const requestOfficers = (officerIds) => {
     [
       OFFICERS_REQUEST_START,
       OFFICERS_REQUEST_SUCCESS,
-      OFFICERS_REQUEST_FAILURE
+      OFFICERS_REQUEST_FAILURE,
     ]
   );
   return getOfficers({ ids: officerIds });

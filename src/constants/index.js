@@ -42,7 +42,7 @@ export default {
     'su': 'Sustained',
     'nc': 'No Cooperation',
     'na': 'No Affidavit',
-    'ds': 'Discharged'
+    'ds': 'Discharged',
   },
 
   RANKS: {
@@ -56,7 +56,7 @@ export default {
     'CMDR': 'Commander',
     'Agent': 'Agent',
     'Chief': 'Chief',
-    '': 'N/A'
+    '': 'N/A',
   },
 
   UNITS: {
@@ -181,7 +181,7 @@ export default {
     '702': 'CTA Security Unit',
     '704': 'Transit Security Unit',
     '711': 'Violence Reduction Initiative - North',
-    '712': 'Violence Reduction Initiative - South'
+    '712': 'Violence Reduction Initiative - South',
   },
 
   OFFICER_SUMMARY_MAP: {
@@ -189,12 +189,12 @@ export default {
     'Unit': 'unit',
     'Joined': 'appt_date',
     'Sex': 'gender',
-    'Race': 'race'
+    'Race': 'race',
   },
 
   DOCUMENT_NAMES: {
     'CR': 'Investigation report',
-    'CPB': 'Police board hearing'
+    'CPB': 'Police board hearing',
   },
 
   OFFICER_COMPLAINT_COUNT_RANGE: [20, 9, 3, 2, 0],
@@ -255,7 +255,7 @@ export default {
     /^\/officer\/$/,
     /^\/officer\/\d+\/?$/,
     /^\/complaint\/$/,
-    /^\/complaint\/\d+\/?$/
+    /^\/complaint\/\d+\/?$/,
   ],
 
   SEARCH_CATEGORIES: [
@@ -263,49 +263,49 @@ export default {
       name: 'DATE > COMPLAINT RECORDS',
       filter: 'DATE > CR',
       id: 'dateCRs',
-      path: 'DATE > CR'
+      path: 'DATE > CR',
     },
     {
       name: 'DATE > TACTICAL RESPONSE REPORTS',
       filter: 'DATE > TRR',
       id: 'dateTRRs',
-      path: 'DATE > TRR'
+      path: 'DATE > TRR',
     },
     {
       name: 'DATE > OFFICERS',
       filter: 'DATE > OFFICERS',
       id: 'dateOfficers',
-      path: 'DATE > OFFICERS'
+      path: 'DATE > OFFICERS',
     },
     {
       name: 'OFFICERS',
       filter: 'Officers',
       id: 'officers',
-      path: 'OFFICER'
+      path: 'OFFICER',
     },
     {
       name: 'COMPLAINT RECORDS (CRs)',
       filter: 'CR',
       id: 'crs',
-      path: 'CR'
+      path: 'CR',
     },
     {
       name: 'TACTICAL RESPONSE REPORTS',
       filter: 'TRR',
       id: 'trrs',
-      path: 'TRR'
+      path: 'TRR',
     },
     {
       name: 'UNITS',
       filter: 'Units',
       id: 'units',
-      path: 'UNIT'
+      path: 'UNIT',
     },
     {
       name: 'INVESTIGATOR > CR',
       filter: 'INVESTIGATOR > CR',
       id: 'investigatorCRs',
-      path: 'INVESTIGATOR > CR'
+      path: 'INVESTIGATOR > CR',
     },
   ],
 
@@ -321,7 +321,7 @@ export default {
     'COMPLAINT': 'COMPLAINT',
     'ACTIVITY': 'ACTIVITY',
     'ALLEGATION': 'ALLEGATION',
-    'DOCUMENT': 'DOCUMENT'
+    'DOCUMENT': 'DOCUMENT',
   },
 
   // Pinboard page constants
@@ -334,7 +334,7 @@ export default {
     TAB_NAMES: {
       NETWORK: 'NETWORK',
       GEOGRAPHIC: 'GEOGRAPHIC',
-    }
+    },
   },
 
   // Map constants
@@ -348,5 +348,5 @@ export default {
     ZOOM1: 9,
     ZOOM2: 13,
   },
-  MAPBOX_STYLE: 'mapbox://styles/invisibleinstitute/cj8ugtswqe8dx2ss2kwhfnvte'
+  MAPBOX_STYLE: 'mapbox://styles/invisibleinstitute/cj8ugtswqe8dx2ss2kwhfnvte',
 };

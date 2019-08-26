@@ -15,11 +15,11 @@ describe('EmptyPinboard component', function () {
     const examplePinboards = [{
       id: '66ef1561',
       title: 'Pinboard 1',
-      description: 'Description 1'
+      description: 'Description 1',
     }, {
       id: '66ef1562',
       title: 'Pinboard 2',
-      description: 'Description 2'
+      description: 'Description 2',
     }];
 
     const wrapper = shallow(

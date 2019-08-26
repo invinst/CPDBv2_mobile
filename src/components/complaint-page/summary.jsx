@@ -15,7 +15,7 @@ const Summary = ({ summary }) => {
 };
 
 Summary.propTypes = {
-  summary: PropTypes.string
+  summary: PropTypes.string,
 };
 
 export default Summary;

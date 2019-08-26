@@ -41,9 +41,9 @@ export default class AccusedOfficers extends Component {
 }
 
 AccusedOfficers.propTypes = {
-  officers: PropTypes.array
+  officers: PropTypes.array,
 };
 
 AccusedOfficers.defaultProps = {
-  officers: []
+  officers: [],
 };
