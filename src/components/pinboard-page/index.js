@@ -78,7 +78,7 @@ export default class PinboardPage extends Component {
         <Header />
         <SearchBar />
         { this.renderContent() }
-        <Footer backgroundColorTop={ isEmptyPinboard ? 'transparent': '#231f20' } />
+        <Footer />
       </div>
     );
   }

@@ -111,7 +111,6 @@ describe('<PinboardPage />', function () {
     );
 
     wrapper.find(PinboardPaneSectionWithSpinner).should.have.length(1);
-    wrapper.find(Footer).prop('backgroundColorTop').should.eql('#231f20');
   });
 
   it('should render EmptyPinboard instead of pinboard contents if pinboard is empty', function () {
@@ -156,7 +155,6 @@ describe('<PinboardPage />', function () {
     wrapper.find('.pinboard-title').should.have.length(0);
     wrapper.find('.pinboard-description').should.have.length(0);
     wrapper.find(RelevantSectionContainer).should.have.length(0);
-    wrapper.find(Footer).prop('backgroundColorTop').should.eql('transparent');
 
     const emptyPinboard = wrapper.find(EmptyPinboardPage);
 
