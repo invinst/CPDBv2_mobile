@@ -21,9 +21,9 @@ describe('mapTrrsData reducer', function () {
           'kind': 'TRR',
           'point': {
             'lon': -87,
-            'lat': 35
+            'lat': 35,
           },
-        }
+        },
       ],
     }, {
       type: PINBOARD_GEOGRAPHIC_FETCH_REQUEST_START,
@@ -36,11 +36,11 @@ describe('mapTrrsData reducer', function () {
             'kind': 'TRR',
             'point': {
               'lon': -87,
-              'lat': 35
+              'lat': 35,
             },
-          }
+          },
         ],
-      }
+      },
     }).should.eql([]);
   });
 
@@ -56,11 +56,11 @@ describe('mapTrrsData reducer', function () {
             'kind': 'TRR',
             'point': {
               'lon': -87,
-              'lat': 35
+              'lat': 35,
             },
-          }
+          },
         ],
-      }
+      },
     }).should.eql([
       {
         'date': '2007-04-25',
@@ -69,9 +69,9 @@ describe('mapTrrsData reducer', function () {
         'kind': 'TRR',
         'point': {
           'lon': -87,
-          'lat': 35
+          'lat': 35,
         },
-      }
+      },
     ]);
   });
 
@@ -87,11 +87,11 @@ describe('mapTrrsData reducer', function () {
             'kind': 'TRR',
             'point': {
               'lon': -87,
-              'lat': 35
+              'lat': 35,
             },
-          }
-        ]
-      }
+          },
+        ],
+      },
     }).should.eql([
       {
         'date': '2007-04-25',
@@ -100,9 +100,9 @@ describe('mapTrrsData reducer', function () {
         'kind': 'TRR',
         'point': {
           'lon': -87,
-          'lat': 35
+          'lat': 35,
         },
-      }
+      },
     ]);
   });
 });

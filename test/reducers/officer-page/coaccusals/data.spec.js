@@ -16,9 +16,9 @@ describe('data reducer', function () {
     }, {
       type: OFFICER_COACCUSALS_REQUEST_SUCCESS,
       meta: {
-        id: 3
+        id: 3,
       },
-      payload: 'coaccusal3'
+      payload: 'coaccusal3',
     }).should.eql({
       1: 'coaccusal1',
       2: 'coaccusal2',
@@ -33,9 +33,9 @@ describe('data reducer', function () {
     }, {
       type: OFFICER_COACCUSALS_REQUEST_FAILURE,
       meta: {
-        id: 3
+        id: 3,
       },
-      payload: 'coaccusal3'
+      payload: 'coaccusal3',
     }).should.eql({
       1: 'coaccusal1',
       2: 'coaccusal2',

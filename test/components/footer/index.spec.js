@@ -8,20 +8,20 @@ import Footer from 'components/footer';
 import LegalModalContent from 'components/footer/legal-modal-content';
 
 
-describe('<Footer />', () => {
-  it('should be renderable', () => {
+describe('<Footer />', function () {
+  it('should be renderable', function () {
     const wrapper = shallow(<Footer />);
     wrapper.should.be.ok();
   });
 
-  it('should open legal modal when click on the Legal text', () => {
+  it('should open legal modal when click on the Legal text', function () {
     const wrapper = shallow(<Footer />);
     wrapper.find('.legal-item').simulate('click');
     wrapper.state('legalModalIsOpen').should.be.true();
     wrapper.find(Modal).prop('isOpen').should.be.true();
   });
 
-  it('should update state when close modal', () => {
+  it('should update state when close modal', function () {
     const wrapper = shallow(<Footer />);
     wrapper.find('.legal-item').simulate('click');
     wrapper.state('legalModalIsOpen').should.be.true();
@@ -29,7 +29,7 @@ describe('<Footer />', () => {
     wrapper.state('legalModalIsOpen').should.be.false();
   });
 
-  it('should show intercom messages when click on Contact item', () => {
+  it('should show intercom messages when click on Contact item', function () {
     stub(intercomUtils, 'showIntercomMessages');
     const wrapper = shallow(<Footer />);
     wrapper.find('.contact-item').simulate('click');

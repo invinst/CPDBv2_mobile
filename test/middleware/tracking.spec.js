@@ -14,8 +14,8 @@ describe('trackingMiddleware', function () {
     const dispatchAction = {
       type: ROUTE_CHANGED,
       payload: {
-        to: 'abc'
-      }
+        to: 'abc',
+      },
     };
 
     trackingMiddleware({})(action => dispatched = action)(dispatchAction);
@@ -32,7 +32,7 @@ describe('trackingMiddleware', function () {
     let dispatched;
     const dispatchAction = {
       type: SEARCH_QUERY_CHANGED,
-      payload: 'abc'
+      payload: 'abc',
     };
 
     trackingMiddleware({})(action => dispatched = action)(dispatchAction);
@@ -49,7 +49,7 @@ describe('trackingMiddleware', function () {
     let dispatched;
     const dispatchAction = {
       type: SUGGEST_ALL_REQUEST_SUCCESS,
-      payload: { 'CR': [{ id: 1 }] }
+      payload: { 'CR': [{ id: 1 }] },
     };
 
     trackingMiddleware({})(action => dispatched = action)(dispatchAction);
@@ -68,8 +68,8 @@ describe('trackingMiddleware', function () {
       type: SUGGESTION_REQUEST_SUCCESS,
       payload: {
         'COMMUNITY': [{ id: 1 }, { id: 2 }],
-        'CR': [{ crid: 3 }]
-      }
+        'CR': [{ crid: 3 }],
+      },
     };
 
     trackingMiddleware({})(action => dispatched = action)(dispatchAction);

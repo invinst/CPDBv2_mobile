@@ -17,64 +17,64 @@ describe('configured-axios-middleware', function () {
     ],
     payload: {
       request: {
-        url: '/request-url'
-      }
-    }
+        url: '/request-url',
+      },
+    },
   };
 
-  describe('onSuccess', () => {
+  describe('onSuccess', function () {
     const response = {
-      data: [1, 2, 3]
+      data: [1, 2, 3],
     };
 
-    it('should fire action with response as payload', () => {
+    it('should fire action with response as payload', function () {
       onSuccess({ action, next, response }).should.eql({
         type: 'REQUEST_SUCCESS',
         payload: response.data,
-        meta: undefined
+        meta: undefined,
       });
     });
 
-    it('should fire cancelled action if response.cancelled is true', () => {
+    it('should fire cancelled action if response.cancelled is true', function () {
       const cancelledResponse = { cancelled: true };
       onSuccess({ action, next, response: cancelledResponse }).should.eql({
         type: 'REQUEST_CANCELLED',
-        meta: undefined
+        meta: undefined,
       });
     });
 
-    it('should fire action with provided metadata', () => {
+    it('should fire action with provided metadata', function () {
       const actionWithMeta = {
         ...action,
-        meta: 'foobar'
+        meta: 'foobar',
       };
 
       onSuccess({
         action: actionWithMeta,
         next,
-        response
+        response,
       }).should.eql({
         type: 'REQUEST_SUCCESS',
         payload: response.data,
-        meta: 'foobar'
+        meta: 'foobar',
       });
     });
   });
 
-  describe('onError', () => {
+  describe('onError', function () {
     it('should fire action with error with response without message', function () {
       const error = {
         response: {
-          status: 400
-        }
+          status: 400,
+        },
       };
 
       onError({ action, next, error }).should.eql({
         type: 'REQUEST_FAILURE',
         payload: {
-          message: 'Request to /request-url failed with status code 400.'
+          message: 'Request to /request-url failed with status code 400.',
         },
-        statusCode: 400
+        statusCode: 400,
       });
     });
 
@@ -85,9 +85,9 @@ describe('configured-axios-middleware', function () {
       onError({ action, next, error }).should.eql({
         type: 'REQUEST_FAILURE',
         payload: {
-          message
+          message,
         },
-        statusCode: null
+        statusCode: null,
       });
     });
 
@@ -96,15 +96,15 @@ describe('configured-axios-middleware', function () {
       const error = new Error();
       error.response = {
         status: 400,
-        data: { message }
+        data: { message },
       };
 
       onError({ action, next, error }).should.eql({
         type: 'REQUEST_FAILURE',
         payload: {
-          message
+          message,
         },
-        statusCode: 400
+        statusCode: 400,
       });
     });
   });

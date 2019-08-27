@@ -138,14 +138,14 @@ AllegationsMap.propTypes = {
     allegationCount: PropTypes.number,
     unsustainedCount: PropTypes.number,
     sustainedCount: PropTypes.number,
-    useOfForceCount: PropTypes.number
+    useOfForceCount: PropTypes.number,
   }),
   markers: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
         point: PropTypes.shape({
           lat: PropTypes.number,
-          lon: PropTypes.number
+          lon: PropTypes.number,
         }),
         kind: PropTypes.string,
         finding: PropTypes.string,
@@ -158,14 +158,14 @@ AllegationsMap.propTypes = {
             race: PropTypes.string,
             age: PropTypes.number,
           })
-        )
+        ),
       })
     ),
     PropTypes.arrayOf(
       PropTypes.shape({
         point: PropTypes.shape({
           lat: PropTypes.number,
-          lon: PropTypes.number
+          lon: PropTypes.number,
         }),
         kind: PropTypes.string,
         id: PropTypes.string,

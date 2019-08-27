@@ -27,8 +27,8 @@ describe('Pinboard Page transform selectors', function () {
               'percentile_trr': '72.1094',
               'percentile_allegation': '99.4803',
               'percentile_allegation_civilian': '99.1379',
-              'percentile_allegation_internal': '88.3297'
-            }
+              'percentile_allegation_internal': '88.3297',
+            },
           }, {
             'id': 32020,
             'rank': 'Police Officer',
@@ -39,10 +39,10 @@ describe('Pinboard Page transform selectors', function () {
               'percentile_trr': '78.2707',
               'percentile_allegation': '98.7238',
               'percentile_allegation_civilian': '97.8772',
-              'percentile_allegation_internal': '61.1521'
-            }
-          }]
-        }
+              'percentile_allegation_internal': '61.1521',
+            },
+          }],
+        },
       };
 
       relevantDocumentTransform(document, []).should.eql({
@@ -63,7 +63,7 @@ describe('Pinboard Page transform selectors', function () {
               items: [
                 { axis: 'Use of Force Reports', value: 72.1094 },
                 { axis: 'Internal Allegations', value: 88.3297 },
-                { axis: 'Civilian Allegations', value: 99.1379 }
+                { axis: 'Civilian Allegations', value: 99.1379 },
               ],
               visualTokenBackground: '#f0201e',
               textColor: '#DFDFDF',
@@ -77,11 +77,11 @@ describe('Pinboard Page transform selectors', function () {
               items: [
                 { axis: 'Use of Force Reports', value: 78.2707 },
                 { axis: 'Internal Allegations', value: 61.1521 },
-                { axis: 'Civilian Allegations', value: 97.8772 }
+                { axis: 'Civilian Allegations', value: 97.8772 },
               ],
               visualTokenBackground: '#f0201e',
               textColor: '#DFDFDF',
-            }
+            },
           }],
         },
         pinned: false,
@@ -98,8 +98,8 @@ describe('Pinboard Page transform selectors', function () {
           'category': 'Unknown',
           'incident_date': '2015-04-04',
           'point': null,
-          'officers': []
-        }
+          'officers': [],
+        },
       };
 
       relevantDocumentTransform(document, ['1074534', '1074535']).should.eql({
@@ -132,27 +132,27 @@ describe('Pinboard Page transform selectors', function () {
             'rank': 'Sergeant of Police',
             'full_name': 'Short Name',
             'coaccusal_count': null,
-            'percentile': {}
+            'percentile': {},
           }, {
             'id': 32020,
             'rank': 'Police Officer',
             'full_name': 'Short Three Names',
             'coaccusal_count': null,
-            'percentile': {}
+            'percentile': {},
           }, {
             'id': 32022,
             'rank': 'Police Officer',
             'full_name': 'Long Three Nameeeeeeee',
             'coaccusal_count': null,
-            'percentile': {}
+            'percentile': {},
           }, {
             'id': 32024,
             'rank': 'Police Officer',
             'full_name': 'Long LastNameeeeeeeeeeeeeee',
             'coaccusal_count': null,
-            'percentile': {}
-          }]
-        }
+            'percentile': {},
+          }],
+        },
       };
 
       relevantDocumentTransform(document, []).should.eql({
@@ -204,8 +204,8 @@ describe('Pinboard Page transform selectors', function () {
           'percentile_trr': '0.0000',
           'percentile_allegation': '88.9038',
           'percentile_allegation_civilian': '49.4652',
-          'percentile_allegation_internal': '85.8654'
-        }
+          'percentile_allegation_internal': '85.8654',
+        },
       };
 
       relevantCoaccusalTransform(coaccusal).should.eql({
@@ -219,11 +219,11 @@ describe('Pinboard Page transform selectors', function () {
           items: [
             { axis: 'Use of Force Reports', value: 0 },
             { axis: 'Internal Allegations', value: 85.8654 },
-            { axis: 'Civilian Allegations', value: 49.4652 }
+            { axis: 'Civilian Allegations', value: 49.4652 },
           ],
           visualTokenBackground: '#f9946b',
           textColor: '#231F20',
-        }
+        },
       });
     });
   });
@@ -244,10 +244,10 @@ describe('Pinboard Page transform selectors', function () {
             'percentile_trr': '83.0024',
             'percentile_allegation': '99.2282',
             'percentile_allegation_civilian': '99.1579',
-            'percentile_allegation_internal': '70.0568'
-          }
+            'percentile_allegation_internal': '70.0568',
+          },
         }],
-        'point': { 'lon': -87.6427175, 'lat': 41.7756769 }
+        'point': { 'lon': -87.6427175, 'lat': 41.7756769 },
       };
 
       relevantComplaintTransform(complaint).should.eql({
@@ -264,7 +264,7 @@ describe('Pinboard Page transform selectors', function () {
             items: [
               { axis: 'Use of Force Reports', value: 83.0024 },
               { axis: 'Internal Allegations', value: 70.0568 },
-              { axis: 'Civilian Allegations', value: 99.1579 }
+              { axis: 'Civilian Allegations', value: 99.1579 },
             ],
             visualTokenBackground: '#f52524',
             textColor: '#DFDFDF',

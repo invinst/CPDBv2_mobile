@@ -5,12 +5,12 @@ import style from './officer-item.sass';
 
 
 const OfficerItem = ({
-  item, name, badge, url, saveToRecent, categoryFilter, addOrRemoveItemInPinboard
+  item, name, badge, url, saveToRecent, categoryFilter, addOrRemoveItemInPinboard,
 }) => {
   const handleClick = (categoryFilter, name, url) => saveToRecent({
     type: categoryFilter,
     title: name,
-    url: url
+    url: url,
   });
 
   return (

@@ -17,7 +17,7 @@ import {
   fetchOtherPagesPinboardGeographicTrrs,
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
-  fetchPinboardRelevantComplaints
+  fetchPinboardRelevantComplaints,
 } from 'actions/pinboard';
 import loadPaginatedData from 'utils/load-paginated-data';
 import { generatePinboardUrl } from 'utils/pinboard';

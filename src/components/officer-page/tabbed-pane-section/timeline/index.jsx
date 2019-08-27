@@ -51,7 +51,7 @@ export default class Timeline extends Component {
 Timeline.propTypes = {
   items: PropTypes.array,
   pathname: PropTypes.string,
-  onTrackingAttachment: PropTypes.func
+  onTrackingAttachment: PropTypes.func,
 
 };
 

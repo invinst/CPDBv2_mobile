@@ -19,7 +19,7 @@ describe('Explainer component', function () {
       { axis: 'Internal Complaints', value: 10 },
     ],
     textColor: 'black',
-    visualTokenBackground: 'white'
+    visualTokenBackground: 'white',
   }, {
     year: 2016,
     items: [
@@ -28,7 +28,7 @@ describe('Explainer component', function () {
       { axis: 'Internal Complaints', value: 60 },
     ],
     textColor: 'black',
-    visualTokenBackground: 'white'
+    visualTokenBackground: 'white',
   }, {
     year: 2017,
     items: [
@@ -37,14 +37,14 @@ describe('Explainer component', function () {
       { axis: 'Internal Complaints', value: 60 },
     ],
     textColor: 'black',
-    visualTokenBackground: 'white'
+    visualTokenBackground: 'white',
   }];
 
   const mockStore = configureStore();
   const store = mockStore({
     officerPage: {
-      cms: [{ type: 'rich_text', name: 'triangle_description' }]
-    }
+      cms: [{ type: 'rich_text', name: 'triangle_description' }],
+    },
   });
 
   it('should render TriangleExplainer by default', function () {
@@ -72,7 +72,7 @@ describe('Explainer component', function () {
         { axis: 'Internal Complaints', value: 60 },
       ],
       textColor: 'black',
-      visualTokenBackground: 'white'
+      visualTokenBackground: 'white',
     });
     triangleExplainer.prop('closeExplainer').should.equal(closeExplainerSpy);
     triangleExplainer.prop('leftNavHandler').should.equal(radarExplainer.navigateLeft);

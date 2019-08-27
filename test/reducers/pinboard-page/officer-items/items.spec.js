@@ -21,7 +21,7 @@ describe('Pinboard officerItemsReducer', function () {
         type: PINBOARD_OFFICERS_FETCH_REQUEST_SUCCESS,
         payload: [
           { 'id': 2 }, { 'id': 3 },
-        ]
+        ],
       }
     ).should.deepEqual([{ 'id': 2 }, { 'id': 3 }]);
   });
@@ -38,10 +38,10 @@ describe('Pinboard officerItemsReducer', function () {
           fullName: 'Jerome Finnigan',
           percentile: null,
           rank: 'Officer',
-        }
+        },
       }
     ).should.deepEqual([{
-      'id': 1
+      'id': 1,
     }, {
       'id': 2,
       'full_name': 'Jerome Finnigan',
@@ -66,16 +66,16 @@ describe('Pinboard officerItemsReducer', function () {
             items: [
               { axis: 'Use of Force Reports', value: 99.9 },
               { axis: 'Officer Allegations', value: 11.1 },
-              { axis: 'Civilian Allegations', value: 22.2 }
+              { axis: 'Civilian Allegations', value: 22.2 },
             ],
             visualTokenBackground: '#e85050',
             textColor: '#231F20',
           },
           rank: 'Officer',
-        }
+        },
       }
     ).should.deepEqual([{
-      'id': 1
+      'id': 1,
     }, {
       'id': 2,
       'full_name': 'Jerome Finnigan',
@@ -101,7 +101,7 @@ describe('Pinboard officerItemsReducer', function () {
           fullName: 'Jerome Finnigan',
           percentile: null,
           rank: 'Officer',
-        }
+        },
       }
     ).should.deepEqual([{ 'id': 1 }]);
   });
@@ -117,7 +117,7 @@ describe('Pinboard officerItemsReducer', function () {
           incidentDate: 'Apr 4, 2017',
           category: 'Use Of Force',
           point: { 'lon': 1.0, 'lat': 2.0 },
-        }
+        },
       }
     ).should.deepEqual([{ 'id': 1 }]);
   });
@@ -140,7 +140,7 @@ describe('Pinboard officerItemsReducer', function () {
         payload: {
           type: 'OFFICER',
           id: '2',
-        }
+        },
       }
     ).should.deepEqual([{ 'id': 1 }, { 'id': 3 }]);
   });
@@ -161,7 +161,7 @@ describe('Pinboard officerItemsReducer', function () {
         payload: {
           type: 'OFFICER',
           id: '3',
-        }
+        },
       }
     ).should.deepEqual([{
       'id': 1,
@@ -190,7 +190,7 @@ describe('Pinboard officerItemsReducer', function () {
         payload: {
           type: 'CR',
           id: '2',
-        }
+        },
       }
     ).should.deepEqual([{
       'id': 1,
@@ -219,7 +219,7 @@ describe('Pinboard officerItemsReducer', function () {
         payload: {
           type: 'OFFICER',
           ids: ['2', '1', '3'],
-        }
+        },
       }
     ).should.deepEqual([{
       'id': 2,
@@ -248,7 +248,7 @@ describe('Pinboard officerItemsReducer', function () {
         payload: {
           type: 'CR',
           ids: ['2', '1'],
-        }
+        },
       }
     ).should.deepEqual([{
       'id': 1,

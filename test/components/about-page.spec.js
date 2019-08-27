@@ -5,15 +5,15 @@ import { shallow } from 'enzyme';
 import AboutPage from 'components/about-page';
 import Footer from 'components/footer';
 
-describe('<AboutPage />', () => {
-  it('should not render anything if data is not loaded', () => {
+describe('<AboutPage />', function () {
+  it('should not render anything if data is not loaded', function () {
     const wrapper = shallow(
       <AboutPage content={ null } />
     );
     should(wrapper.type()).equal(null);
   });
 
-  it('should render content correctly', () => {
+  it('should render content correctly', function () {
     const wrapper = shallow(
       <AboutPage content={ ['One', 'Two'] } />
     );

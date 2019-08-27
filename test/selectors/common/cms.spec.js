@@ -4,21 +4,21 @@ import * as draftjsUtils from 'utils/draftjs';
 import { cmsSelector, hasCMS } from 'selectors/common/cms';
 
 describe('cms selectors', function () {
-  it('cmsSelector', () => {
+  it('cmsSelector', function () {
     stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
     const state = {
       landingPage: {
         cms: [
           {
             name: 'title_field',
-            value: 'title'
+            value: 'title',
           },
           {
             name: 'desc_field',
-            value: 'desc'
-          }
-        ]
-      }
+            value: 'desc',
+          },
+        ],
+      },
     };
 
     cmsSelector(state, 'landingPage', 'title_field').should.eql('title');
@@ -26,20 +26,20 @@ describe('cms selectors', function () {
     draftjsUtils.convertContentStateToEditorState.restore();
   });
 
-  it('cmsSelector', () => {
+  it('hasCMS', function () {
     const state = {
       landingPage: {
         cms: [
           {
             name: 'title_field',
-            value: 'title'
+            value: 'title',
           },
           {
             name: 'desc_field',
-            value: 'desc'
-          }
-        ]
-      }
+            value: 'desc',
+          },
+        ],
+      },
     };
 
     hasCMS(state, 'landingPage').should.be.true();

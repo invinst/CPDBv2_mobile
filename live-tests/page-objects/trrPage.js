@@ -13,15 +13,15 @@ module.exports = {
       selector: '//div[contains(@class, "trr-officer")]',
       locateStrategy: 'xpath',
       elements: {
-        officerRow: '.officer-row'
-      }
+        officerRow: '.officer-row',
+      },
     },
     info: {
       selector: '//div[contains(@class, "trr-info")]',
       locateStrategy: 'xpath',
       elements: {
-        requestDocumentButton: '.request-button'
-      }
+        requestDocumentButton: '.request-button',
+      },
     },
     requestDocumentForm: {
       selector: '//form[contains(@class, "request-document-content")]',
@@ -30,8 +30,8 @@ module.exports = {
         emailInput: '.email-input',
         requestButton: '.request-button',
         cancelButton: '.cancel-button',
-        messageBox: '.message-box'
-      }
-    }
-  }
+        messageBox: '.message-box',
+      },
+    },
+  },
 };

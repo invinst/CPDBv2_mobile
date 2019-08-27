@@ -18,7 +18,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cors({
   origin: nightwatchConfig['test_settings']['default']['globals']['clientUrl'],
-  credentials: true
+  credentials: true,
 }));
 
 // We haven't handle our api-server for specific params yet

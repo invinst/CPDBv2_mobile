@@ -11,8 +11,8 @@ describe('<Header />', function () {
     const mockStore = configureStore();
     const store = mockStore({
       breadcrumb: {
-        breadcrumbs: []
-      }
+        breadcrumbs: [],
+      },
     });
     mount(
       <Provider store={ store }>
@@ -35,10 +35,10 @@ describe('<Header />', function () {
               hash: '',
               action: 'POP',
               key: null,
-              query: {}
+              query: {},
             },
             params: {},
-            current: false
+            current: false,
           },
           {
             component: 'Search',
@@ -50,10 +50,10 @@ describe('<Header />', function () {
               hash: '',
               action: 'PUSH',
               key: 'tncl66',
-              query: {}
+              query: {},
             },
             params: {},
-            current: false
+            current: false,
           },
           {
             breadcrumbKey: '/pinboard/:pinboardId/(:pinboardTitle/)',
@@ -64,13 +64,13 @@ describe('<Header />', function () {
               hash: '',
               action: 'PUSH',
               key: '40v21h',
-              query: {}
+              query: {},
             },
             params: {
               pinboardId: '2bd40cf2',
-              pinboardTitle: 'untitled-pinboard'
+              pinboardTitle: 'untitled-pinboard',
             },
-            current: false
+            current: false,
           },
           {
             breadcrumbKey: '/officer/:id',
@@ -81,19 +81,19 @@ describe('<Header />', function () {
               hash: '',
               action: 'PUSH',
               key: 'aquodh',
-              query: {}
+              query: {},
             },
             params: {
               id: '31859',
-              firstParam: 'eric-cato'
+              firstParam: 'eric-cato',
             },
-            current: true
-          }
-        ]
+            current: true,
+          },
+        ],
       },
       breadcrumbMapping: {
         '/pinboard/2bd40cf2/': 'Pinboard',
-        '/officer/31859/eric-cato/': 'Eric Cato'
+        '/officer/31859/eric-cato/': 'Eric Cato',
       },
       routing: {
         locationBeforeTransitions: {
@@ -102,8 +102,8 @@ describe('<Header />', function () {
           hash: '',
           action: 'PUSH',
           key: '4zjc3v',
-          query: {}
-        }
+          query: {},
+        },
       },
     });
 

@@ -81,5 +81,5 @@ TabbedPaneSection.propTypes = {
   changeOfficerTab: PropTypes.func,
   hasCoaccusal: PropTypes.bool,
   hasAttachment: PropTypes.bool,
-  hasMapMarker: PropTypes.bool
+  hasMapMarker: PropTypes.bool,
 };

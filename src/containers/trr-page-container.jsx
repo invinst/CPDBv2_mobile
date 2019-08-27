@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {
   requestTRR,
-  requestCMS
+  requestCMS,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TRRPage));

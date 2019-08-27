@@ -7,9 +7,9 @@ import { createMemoryHistory } from 'history';
 import TRRSearchResult from 'components/search-page/trr-search-result';
 
 
-describe('<TRRSearchResult />', () => {
+describe('<TRRSearchResult />', function () {
 
-  it('should render trrs correctly', () => {
+  it('should render trrs correctly', function () {
     const trrs = [
       { id: '1' },
       { id: '2' },
@@ -33,8 +33,8 @@ describe('<TRRSearchResult />', () => {
     const trrs = [
       {
         id: '1',
-        url: 'url'
-      }
+        url: 'url',
+      },
     ];
     const wrapper = mount(
       <Router history={ createMemoryHistory() }>
@@ -52,7 +52,7 @@ describe('<TRRSearchResult />', () => {
     saveToRecentSpy.calledWith({
       type: 'TRR',
       title: '1',
-      url: 'url'
+      url: 'url',
     }).should.be.true();
   });
 });

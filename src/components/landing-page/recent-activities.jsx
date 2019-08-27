@@ -35,12 +35,12 @@ export default class RecentActivities extends Component {
 
 RecentActivities.defaultProps = {
   requestRecentActivities: () => {},
-  recentActivities: []
+  recentActivities: [],
 };
 
 RecentActivities.propTypes = {
   recentActivities: PropTypes.array,
   requestRecentActivities: PropTypes.func,
   description: PropTypes.object,
-  title: PropTypes.object
+  title: PropTypes.object,
 };

@@ -27,7 +27,7 @@ export const officerFormatter = (officers, pinboardItems) => {
       url: officerUrl(officer.id, officer.name),
       isPinned: isItemPinned('OFFICER', officer.id, pinboardItems),
       type: 'OFFICER',
-    }))
+    })),
   };
 };
 
@@ -52,7 +52,7 @@ export const unitsSelector = createSelector(
         url: unit.url,
         memberCount: unit.member_count,
         activeMemberCount: unit.active_member_count,
-      }))
+      })),
     };
   }
 );
@@ -71,7 +71,7 @@ const crFormatter = (crs, pinboardItems) => {
       category: cr.category,
       isPinned: isItemPinned('CR', cr.crid, pinboardItems),
       type: 'CR',
-    }))
+    })),
   };
 };
 
@@ -99,7 +99,7 @@ const trrFormatter = (trrs, pinboardItems) => {
       url: `${constants.TRR_PATH}${trr.id}/`,
       isPinned: isItemPinned('TRR', trr.id, pinboardItems),
       type: 'TRR',
-    }))
+    })),
   };
 };
 

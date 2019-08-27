@@ -42,13 +42,13 @@ describe('MainPage component', function () {
 
   it('should dispatch routeChanged action when location changed', function () {
     const currentLocation = {
-      pathname: 'current-url/'
+      pathname: 'current-url/',
     };
     const prevLocation = {
-      pathname: 'prev-url/'
+      pathname: 'prev-url/',
     };
     const prevProps = {
-      location: prevLocation
+      location: prevLocation,
     };
     const spyRouteChanged = spy();
 
@@ -65,13 +65,13 @@ describe('MainPage component', function () {
 
   it('should not dispatch routeChaged action if location has not changed', function () {
     const currentLocation = {
-      pathname: 'same-url/'
+      pathname: 'same-url/',
     };
     const prevLocation = {
-      pathname: 'same-url/'
+      pathname: 'same-url/',
     };
     const prevProps = {
-      location: prevLocation
+      location: prevLocation,
     };
     const spyRouteChanged = spy();
 

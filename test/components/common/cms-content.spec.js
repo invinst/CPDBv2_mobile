@@ -4,13 +4,13 @@ import { shallow } from 'enzyme';
 
 import CMSContent from 'components/common/cms-content';
 
-describe('<CMSContent />', () => {
-  it('should be renderable', () => {
+describe('<CMSContent />', function () {
+  it('should be renderable', function () {
     const wrapper = shallow(<CMSContent content={ {} } />);
     wrapper.should.be.ok();
   });
 
-  it('should not render anything if there is no data', () => {
+  it('should not render anything if there is no data', function () {
     const wrapper = shallow(
       <CMSContent content={ null } />
     );

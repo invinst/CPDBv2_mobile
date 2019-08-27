@@ -1,6 +1,6 @@
 import {
   COMPLAINT_SUMMARIES_REQUEST_SUCCESS,
-  COMPLAINT_SUMMARIES_REQUEST_FAILURE
+  COMPLAINT_SUMMARIES_REQUEST_FAILURE,
 } from 'actions/landing-page';
 import complaintSummaries from 'reducers/landing-page/complaint-summaries';
 
@@ -13,14 +13,14 @@ describe('complaintSummaries reducer', function () {
   it('should handle COMPLAINT_SUMMARIES_REQUEST_SUCCESS', function () {
     complaintSummaries({}, {
       type: COMPLAINT_SUMMARIES_REQUEST_SUCCESS,
-      payload: 'abc'
+      payload: 'abc',
     }).should.eql('abc');
   });
 
   it('should handle COMPLAINT_SUMMARIES_REQUEST_FAILURE', function () {
     complaintSummaries('abc', {
       type: COMPLAINT_SUMMARIES_REQUEST_FAILURE,
-      payload: {}
+      payload: {},
     }).should.eql('abc');
   });
 });

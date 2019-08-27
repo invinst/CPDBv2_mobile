@@ -44,8 +44,8 @@ describe('scrollPositionMiddleware', function () {
       type: 'ROUTE_CHANGED',
       payload: {
         from: 'officer/123/jerome-finnigan/',
-        to: 'officer/123/jerome-finnigan/coaccusals/'
-      }
+        to: 'officer/123/jerome-finnigan/coaccusals/',
+      },
     };
 
     scrollPositionMiddleware(store)(next)(action);

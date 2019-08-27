@@ -142,5 +142,5 @@ PinnedType.propTypes = {
 };
 
 PinnedType.defaultProps = {
-  items: []
+  items: [],
 };

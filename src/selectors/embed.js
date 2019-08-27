@@ -4,7 +4,7 @@ import { extractPercentile } from 'selectors/common/percentile';
 
 export const officerCardTransform = officer => ({
   ...officer,
-  percentile: extractPercentile(officer.percentile)
+  percentile: extractPercentile(officer.percentile),
 });
 
 export const officersSelector = createSelector(

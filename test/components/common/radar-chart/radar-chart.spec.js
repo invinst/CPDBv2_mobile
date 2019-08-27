@@ -21,14 +21,14 @@ describe('RadarChart component', function () {
     {
       axis: 'C',
       value: 20,
-    }
+    },
   ];
 
-  it('should be renderable', () => {
+  it('should be renderable', function () {
     shallow(<RadarChart />).should.be.ok();
   });
 
-  it('should render if default radar chart if data provided', () => {
+  it('should render if default radar chart if data provided', function () {
     const wrapper = shallow(<RadarChart data={ data }/>);
     wrapper.find(RadarArea).exists().should.be.true();
     wrapper.find(RadarSpineLine).exists().should.be.true();
@@ -59,7 +59,7 @@ describe('RadarChart component', function () {
     wrapper.find(RadarSpineLine).exists().should.be.false();
   });
 
-  it('should render with the given aspect ratio config props', () => {
+  it('should render with the given aspect ratio config props', function () {
     const config = {
       width: 232,
       height: 100,
@@ -69,7 +69,7 @@ describe('RadarChart component', function () {
     wrapper.prop('viewBox').should.eql('0 0 232 100');
   });
 
-  it('should change background color backgroundColor is true ', () => {
+  it('should change background color backgroundColor is true ', function () {
     const wrapper = shallow(<RadarChart data={ data } backgroundColor='red'/>);
 
     wrapper.prop('style').backgroundColor.should.equal('red');

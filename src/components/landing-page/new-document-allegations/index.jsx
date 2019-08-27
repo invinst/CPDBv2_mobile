@@ -42,7 +42,7 @@ export default class NewDocumentAllegations extends Component {
 
 NewDocumentAllegations.defaultProps = {
   requestNewDocumentAllegations: () => {},
-  newDocumentAllegations: []
+  newDocumentAllegations: [],
 };
 
 NewDocumentAllegations.propTypes = {

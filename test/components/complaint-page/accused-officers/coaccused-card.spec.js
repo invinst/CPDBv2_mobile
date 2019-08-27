@@ -6,7 +6,7 @@ import CoaccusedCard from 'components/complaint-page/accused-officers/coaccused-
 import BaseOfficerCard from 'components/common/base-officer-card';
 
 
-describe('CoaccusedCard component', () => {
+describe('CoaccusedCard component', function () {
   const officer = {
     fullName: 'Broderick Jones',
     id: 13788,
@@ -21,10 +21,10 @@ describe('CoaccusedCard component', () => {
       visualTokenBackground: '#f95125',
     },
     findingOutcome: 'Sustained',
-    category: 'CR'
+    category: 'CR',
   };
 
-  it('should render footer correctly', () => {
+  it('should render footer correctly', function () {
     const wrapper = mount(<CoaccusedCard officer={ officer } />);
 
     const baseCard = wrapper.find(BaseOfficerCard);

@@ -17,9 +17,9 @@ describe('data reducer', function () {
     }, {
       type: OFFICER_TIMELINE_ITEMS_REQUEST_SUCCESS,
       meta: {
-        id: 3
+        id: 3,
       },
-      payload: 'timeline3'
+      payload: 'timeline3',
     }).should.eql({
       1: 'timeline1',
       2: 'timeline2',
@@ -34,9 +34,9 @@ describe('data reducer', function () {
     }, {
       type: OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE,
       meta: {
-        id: 3
+        id: 3,
       },
-      payload: 'timeline3'
+      payload: 'timeline3',
     }).should.eql({
       1: 'timeline1',
       2: 'timeline2',

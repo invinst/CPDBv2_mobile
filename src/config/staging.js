@@ -8,7 +8,7 @@ let config = {
   baseUrlV2: 'https://stagingapi.cpdp.co/api/v1',
   baseUrlV2V2: 'https://stagingapi.cpdp.co/api/v2',
   gaTrackingId: 'UA-63671047-3',
-  intercomAppId: 'gbsby1ik'
+  intercomAppId: 'gbsby1ik',
 };
 
 export default Object.freeze(Object.assign({}, baseConfig, config));

@@ -20,9 +20,9 @@ describe('<Attachment />', function () {
       trrPage: {
         attachmentRequest: {
           message: '',
-          subscribedTRRIds: {}
-        }
-      }
+          subscribedTRRIds: {},
+        },
+      },
     });
     const wrapper = mount(
       <Provider store={ store }>

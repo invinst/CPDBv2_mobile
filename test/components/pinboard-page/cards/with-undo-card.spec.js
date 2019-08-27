@@ -95,7 +95,7 @@ describe('withUndoCard higher-order component', function () {
 
       removeItemInPinboardPage.should.be.calledWith({
         type: 'OFFICER',
-        id: 123
+        id: 123,
       });
     });
 

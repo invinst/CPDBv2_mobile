@@ -7,9 +7,9 @@ import { createMemoryHistory } from 'history';
 import CRSearchResult from 'components/search-page/cr-search-result';
 
 
-describe('<CRSearchResult />', () => {
+describe('<CRSearchResult />', function () {
 
-  it('should render crs correctly', () => {
+  it('should render crs correctly', function () {
     const crs = [
       {
         crid: '1027271',
@@ -26,7 +26,7 @@ describe('<CRSearchResult />', () => {
         incidentDate: '10/13/2011',
         isPinned: false,
         type: 'CR',
-      }
+      },
     ];
 
     const wrapper = mount(
@@ -57,8 +57,8 @@ describe('<CRSearchResult />', () => {
     const crs = [
       {
         crid: '1',
-        url: 'url'
-      }
+        url: 'url',
+      },
     ];
 
     const wrapper = mount(
@@ -76,7 +76,7 @@ describe('<CRSearchResult />', () => {
     saveToRecentSpy.calledWith({
       type: 'CR',
       title: '1',
-      url: 'url'
+      url: 'url',
     }).should.be.true();
   });
 });

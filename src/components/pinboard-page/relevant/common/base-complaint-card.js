@@ -87,7 +87,7 @@ BaseComplaintCard.propTypes = {
 };
 
 BaseComplaintCard.defaultProps = {
-  fadePlusButtonOnly: false
+  fadePlusButtonOnly: false,
 };
 
 export default BaseComplaintCard;

@@ -13,16 +13,16 @@ describe('AttachmentRequest reducer', function () {
         type: TRR_REQUEST_DOC_REQUEST_SUCCESS,
         payload: {
           'trr_id': 12,
-          message: 'Dummy message'
-        }
+          message: 'Dummy message',
+        },
       }).should.be.eql({ 12: true });
 
       subscribedTRRIds({ 13: true }, {
         type: TRR_REQUEST_DOC_REQUEST_SUCCESS,
         payload: {
           'trr_id': 12,
-          message: 'Dummy message'
-        }
+          message: 'Dummy message',
+        },
       }).should.be.eql({ 12: true, 13: true });
     });
   });
