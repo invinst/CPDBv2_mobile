@@ -6,6 +6,7 @@ import configureStore from 'redux-mock-store';
 
 import ComplaintPage from 'components/complaint-page';
 import Footer from 'components/footer';
+import WithHeader from 'components/shared/header';
 
 describe('ComplaintPage component', function () {
   it('should render correctly', function () {
@@ -13,8 +14,10 @@ describe('ComplaintPage component', function () {
       <ComplaintPage />
     );
     wrapper.should.be.ok();
-    wrapper.find('.complaint-page-body').should.have.length(0);
-    wrapper.find(Footer).exists.should.be.ok();
+
+    const withHeader = wrapper.find(WithHeader);
+    withHeader.find('.complaint-page-body').should.have.length(0);
+    withHeader.find(Footer).exists.should.be.ok();
   });
 
   it('should render complaint page if there is complaint data', function () {

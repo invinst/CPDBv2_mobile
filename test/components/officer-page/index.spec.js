@@ -6,12 +6,13 @@ import { cloneDeep } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
 
-import Header from 'components/shared/header';
+import WithHeader from 'components/shared/header';
 import OfficerPage from 'components/officer-page';
 import OfficerPageContainer from 'containers/officer-page-container';
 import OfficerRadarChart from 'components/officer-page/radar-chart';
 import LoadingPage from 'components/shared/loading-page';
 import NotMatchedOfficerPage from 'components/officer-page/not-matched-officer-page';
+import AnimatedRadarChart from 'components/officer-page/radar-chart';
 import SectionRow from 'components/officer-page/section-row';
 import MetricWidget from 'components/officer-page/metric-widget';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
@@ -327,7 +328,8 @@ describe('<OfficerPage />', function () {
       />
     );
 
-    wrapper.find(Header).exists().should.be.true();
+    const withHeader = wrapper.find(WithHeader);
+    withHeader.find(AnimatedRadarChart).exists().should.be.true();
   });
 
   it('should have BottomPadding', function () {
