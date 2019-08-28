@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store';
 import { Sticky, StickyContainer } from 'react-sticky';
 import Breadcrumbs from 'redux-breadcrumb-trail';
 
-import WithHeader from 'components/shared/header';
+import WithHeader from 'components/shared/with-header';
 import IOSPeek from 'components/common/ios-peek';
 
 

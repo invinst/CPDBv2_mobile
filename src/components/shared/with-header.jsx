@@ -5,7 +5,7 @@ import Breadcrumbs from 'redux-breadcrumb-trail';
 import cx from 'classnames';
 import { get, includes } from 'lodash';
 
-import styles from './header.sass';
+import styles from './with-header.sass';
 import IOSPeek from 'components/common/ios-peek';
 
 

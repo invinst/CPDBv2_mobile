@@ -5,7 +5,7 @@ import { spy } from 'sinon';
 
 import TRRPage from 'components/trr-page';
 import Footer from 'components/footer';
-import WithHeader from 'components/shared/header';
+import WithHeader from 'components/shared/with-header';
 
 
 describe('<TRRPage />', function () {

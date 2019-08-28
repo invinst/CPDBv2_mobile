@@ -6,7 +6,7 @@ import { cloneDeep } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
 
-import WithHeader from 'components/shared/header';
+import WithHeader from 'components/shared/with-header';
 import OfficerPage from 'components/officer-page';
 import OfficerPageContainer from 'containers/officer-page-container';
 import OfficerRadarChart from 'components/officer-page/radar-chart';

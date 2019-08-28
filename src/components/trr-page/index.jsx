@@ -3,7 +3,7 @@ import { noop } from 'lodash';
 
 import style from './trr-page.sass';
 import BottomPadding from 'components/shared/bottom-padding';
-import WithHeader from 'components/shared/header';
+import WithHeader from 'components/shared/with-header';
 import Officer from 'components/trr-page/officer';
 import Info from 'components/trr-page/info';
 import Footer from 'components/footer';
