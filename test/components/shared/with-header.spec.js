@@ -123,7 +123,7 @@ describe('<WithHeader />', function () {
 
     const wrapper = mount(
       <Provider store={ store }>
-        <Header />
+        <WithHeader />
       </Provider>
     );
 

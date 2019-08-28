@@ -7,7 +7,6 @@ import * as intercomUtils from 'utils/intercom';
 import Footer from 'components/footer';
 import LegalModalContent from 'components/footer/legal-modal-content';
 import IOSPeek from 'components/common/ios-peek';
-import invistLogoImage from 'img/invist-logo.svg';
 import constants from 'constants';
 
 
@@ -31,7 +30,7 @@ describe('<Footer />', function () {
     invistLink.prop('target').should.equal('_blank');
 
     const invistLogo = wrapper.find('.invist-logo');
-    invistLogo.prop('src').should.equal(invistLogoImage);
+    invistLogo.prop('src').should.equal('/img/invist-logo.svg');
     invistLogo.prop('alt').should.equal('Invisible Institute');
 
     wrapper.find(IOSPeek).prop('isBottom').should.be.true();
