@@ -15,7 +15,7 @@ import PoliceWitness from './police-witness';
 import Location from './location';
 import style from './complaint-page.sass';
 import Footer from 'components/footer';
-import WithHeader from 'components/shared/header';
+import WithHeader from 'components/shared/with-header';
 
 
 export default class ComplaintPage extends Component {

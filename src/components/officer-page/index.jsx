@@ -17,7 +17,7 @@ import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import { TAB_MAP, OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
 import AppHistory from 'utils/history';
 import Footer from 'components/footer';
-import WithHeader from 'components/shared/header';
+import WithHeader from 'components/shared/with-header';
 
 
 class OfficerPage extends Component {

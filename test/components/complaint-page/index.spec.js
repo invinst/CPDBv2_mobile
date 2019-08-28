@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store';
 
 import ComplaintPage from 'components/complaint-page';
 import Footer from 'components/footer';
-import WithHeader from 'components/shared/header';
+import WithHeader from 'components/shared/with-header';
 
 describe('ComplaintPage component', function () {
   it('should render correctly', function () {

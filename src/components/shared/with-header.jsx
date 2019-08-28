@@ -4,7 +4,7 @@ import { Sticky, StickyContainer } from 'react-sticky';
 import Breadcrumbs from 'redux-breadcrumb-trail';
 
 import separatorImg from 'img/disclosure-indicator.svg';
-import styles from './header.sass';
+import styles from './with-header.sass';
 import IOSPeek from 'components/common/ios-peek';
 
 
