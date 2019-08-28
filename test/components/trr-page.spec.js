@@ -5,6 +5,7 @@ import { spy } from 'sinon';
 
 import TRRPage from 'components/trr-page';
 import Footer from 'components/footer';
+import WithHeader from 'components/shared/header';
 
 
 describe('<TRRPage />', function () {
@@ -18,12 +19,13 @@ describe('<TRRPage />', function () {
     };
 
     const wrapper = shallow(<TRRPage trrId={ 1 } requestTRR={ spyRequestTRR } trr={ trr }/>);
+    const withHeader = wrapper.find(WithHeader);
 
-    wrapper.find('Officer').prop('officerId').should.equal(123);
-    wrapper.find('Info').prop('victimDemographic').should.equal('Black, Male, 27 years old');
-    wrapper.find('Info').prop('trrId').should.equal(1);
-    wrapper.find('.trr-header').text().should.equal('Other');
-    wrapper.find(Footer).exists.should.be.ok();
+    withHeader.find('Officer').prop('officerId').should.equal(123);
+    withHeader.find('Info').prop('victimDemographic').should.equal('Black, Male, 27 years old');
+    withHeader.find('Info').prop('trrId').should.equal(1);
+    withHeader.find('.trr-header').text().should.equal('Other');
+    withHeader.find(Footer).exists.should.be.ok();
   });
 
   it('render nothing if trr is not available yet', function () {
