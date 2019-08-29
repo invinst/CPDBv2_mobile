@@ -6,7 +6,7 @@ import {
   fillUnitChange,
   fillYears,
   gapYearItems,
-  getNewTimelineItems,
+  timelineItemsSelector,
   trrTransform,
   yearItem,
   fillRankChange,
@@ -559,7 +559,7 @@ describe('Officer new timeline selectors', function () {
           },
         },
       };
-      getNewTimelineItems(emptyState, 8562).should.be.empty();
+      timelineItemsSelector(emptyState, 8562).should.be.empty();
     });
 
     it('should ignore unsupported items', function () {
@@ -580,7 +580,7 @@ describe('Officer new timeline selectors', function () {
           },
         },
       };
-      getNewTimelineItems(emptyState, 8562).should.be.empty();
+      timelineItemsSelector(emptyState, 8562).should.be.empty();
     });
 
     it('should process raw items with enough processors', function () {
@@ -703,7 +703,7 @@ describe('Officer new timeline selectors', function () {
         },
       };
 
-      getNewTimelineItems(state, 8562).should.eql([
+      timelineItemsSelector(state, 8562).should.eql([
         {
           date: '2006',
           hasData: true,

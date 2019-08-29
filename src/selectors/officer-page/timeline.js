@@ -207,7 +207,7 @@ export const applyFilter = (selectedFilter, items) => {
   return results;
 };
 
-export const getNewTimelineItems = createSelector(
+export const timelineItemsSelector = createSelector(
   getItems,
   getSelectedFilter,
   (items, filter) => {
@@ -228,7 +228,7 @@ export const isTimelineSuccess = (state, officerId) => get(
   state.officerPage.timeline.isSuccess, String(officerId), false
 );
 
-export const filterCount = createSelector(
+export const filterCountSelector = createSelector(
   getItems,
   items => {
     let count = cloneDeep(TIMELINE_FILTERS);
