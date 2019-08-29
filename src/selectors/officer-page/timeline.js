@@ -1,8 +1,31 @@
-import { get, rangeRight, slice, isEmpty, compact, isNull } from 'lodash';
+import {
+  get,
+  rangeRight,
+  slice,
+  isEmpty,
+  compact,
+  isNull,
+  cloneDeep,
+  map,
+  includes,
+  difference,
+  values,
+  concat,
+  filter,
+  isUndefined,
+} from 'lodash';
 import moment from 'moment';
+import { createSelector } from 'reselect';
 
-import { TIMELINE_ITEMS, ATTACHMENT_TYPES } from 'constants/officer-page/tabbed-pane-section/timeline';
+import {
+  TIMELINE_ITEMS,
+  ATTACHMENT_TYPES,
+  TIMELINE_FILTERS,
+} from 'constants/officer-page/tabbed-pane-section/timeline';
 
+
+const getSelectedFilter = (state) => get(state, 'officerPage.timeline.filter', '');
+export const getItems = (state, props) => get(state.officerPage.timeline.data, String(props.officerId), []);
 
 export const baseTransform = (item, index) => {
   const unitName = item['unit_name'] ? `Unit ${item['unit_name']}` : 'Unassigned';
@@ -155,17 +178,80 @@ export const fillRankChange = (items) => {
   return items;
 };
 
-export const getNewTimelineItems = (state, officerId) => {
-  // Do not change the order of these processors
-  const processors = [fillYears, fillUnitChange, fillRankChange];
-  const items = get(state.officerPage.timeline.data, String(officerId), []);
-  const transformedItems = compact(items.map(transform));
-  if (isEmpty(transformedItems)) {
-    return [];
-  }
-  return processors.reduce((accItems, processor) => processor(accItems), transformedItems);
+const filterByKind = (selectedFilter, items) => {
+  const unremovableKinds = difference(values(TIMELINE_ITEMS), TIMELINE_FILTERS.ALL.kind);
+  const filteredKinds = selectedFilter.kind;
+  const displayKinds = concat(unremovableKinds, filteredKinds);
+
+  return filter(items, (item) => includes(displayKinds, item.kind));
 };
+
+export const applyFilter = (selectedFilter, items) => {
+  let results = [];
+  let cloneSelectedFilter = cloneDeep(selectedFilter);
+  delete cloneSelectedFilter.label;
+  delete cloneSelectedFilter.kind;
+
+  if (!isUndefined(selectedFilter.kind)) {
+    results = filterByKind(selectedFilter, items);
+  }
+
+  if (isEmpty(cloneSelectedFilter)) {
+    return results;
+  }
+
+  Object.keys(cloneSelectedFilter).map(key => {
+    results = filter(results, result => includes(selectedFilter[key], result[key]));
+  });
+
+  return results;
+};
+
+export const getNewTimelineItems = createSelector(
+  getItems,
+  getSelectedFilter,
+  (items, filter) => {
+    // Do not change the order of these processors
+    const processors = [fillYears, fillUnitChange, fillRankChange];
+    const transformedItems = compact(items.map(transform));
+
+    const filteredItems = applyFilter(filter, transformedItems);
+    if (isEmpty(filteredItems)) {
+      return [];
+    }
+
+    return processors.reduce((accItems, processor) => processor(accItems), filteredItems);
+  }
+);
 
 export const isTimelineSuccess = (state, officerId) => get(
   state.officerPage.timeline.isSuccess, String(officerId), false
+);
+
+export const filterCount = createSelector(
+  getItems,
+  items => {
+    let count = cloneDeep(TIMELINE_FILTERS);
+    let CLONE_TIMELINE_FILTERS = cloneDeep(TIMELINE_FILTERS);
+
+    map(CLONE_TIMELINE_FILTERS, filter => delete filter.label);
+
+    Object.keys(count).map(key => {
+      count[key] = 0;
+      items.map(item => {
+        let excluded = false;
+        map(CLONE_TIMELINE_FILTERS[key], (filter, subKey) => {
+          if (!includes(filter, item[subKey])) {
+            excluded = true;
+          }
+        });
+        if (!excluded) {
+          count[key]++;
+        }
+      });
+    });
+
+    console.warn('count', count);
+    return count;
+  }
 );
