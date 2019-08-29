@@ -47,7 +47,21 @@ describe('Timeline component', function () {
       unitName: '153',
       year: 1994,
     };
-    const instance = shallow(<Timeline items={ [cr, year, unitChange, year, joined] }/>);
+    const filterCount = {
+      ALL: 1,
+      CRS: 1,
+      SUSTAINED: 0,
+      FORCE: 0,
+      AWARDS: 0,
+      RANK_UNIT_CHANGES: 0,
+    };
+
+    const instance = shallow(
+      <Timeline
+        items={ [cr, year, unitChange, year, joined] }
+        filterCount={ filterCount }
+      />
+    );
     const items = instance.find(Item);
     items.at(0).prop('hasBorderBottom').should.equal(true);
     items.at(1).prop('hasBorderBottom').should.equal(false);

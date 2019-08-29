@@ -12,6 +12,7 @@ import {
   fillRankChange,
   isTimelineSuccess,
 } from 'selectors/officer-page/timeline';
+import { TIMELINE_ITEMS } from 'constants/officer-page/tabbed-pane-section/timeline';
 
 
 describe('Officer new timeline selectors', function () {
@@ -559,7 +560,7 @@ describe('Officer new timeline selectors', function () {
           },
         },
       };
-      timelineItemsSelector(emptyState, 8562).should.be.empty();
+      timelineItemsSelector(emptyState, { officerId: 8562 }).should.be.empty();
     });
 
     it('should ignore unsupported items', function () {
@@ -580,13 +581,17 @@ describe('Officer new timeline selectors', function () {
           },
         },
       };
-      timelineItemsSelector(emptyState, 8562).should.be.empty();
+      timelineItemsSelector(emptyState, { officerId: 8562 }).should.be.empty();
     });
 
     it('should process raw items with enough processors', function () {
       const state = {
         officerPage: {
           timeline: {
+            filter: {
+              label: 'ALL',
+              kind: [TIMELINE_ITEMS.CR, TIMELINE_ITEMS.FORCE, TIMELINE_ITEMS.AWARD],
+            },
             data: {
               8562: [
                 {
@@ -703,7 +708,7 @@ describe('Officer new timeline selectors', function () {
         },
       };
 
-      timelineItemsSelector(state, 8562).should.eql([
+      timelineItemsSelector(state, { officerId: 8562 }).should.eql([
         {
           date: '2006',
           hasData: true,

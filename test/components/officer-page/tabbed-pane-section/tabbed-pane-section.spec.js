@@ -37,14 +37,14 @@ describe('TabbedPaneSection component', function () {
     const tabNames = wrapper.find('.tabbed-pane-tab-name');
 
     tabNames.should.have.length(8);
-    tabNames.at(0).text().should.be.eql('TIMELINE');
-    tabNames.at(1).text().should.be.eql('MAP');
-    tabNames.at(2).text().should.be.eql('COACCUSALS');
-    tabNames.at(3).text().should.be.eql('DOCUMENTS');
-    tabNames.at(4).text().should.be.eql('TIMELINE');
-    tabNames.at(5).text().should.be.eql('MAP');
-    tabNames.at(6).text().should.be.eql('COACCUSALS');
-    tabNames.at(7).text().should.be.eql('DOCUMENTS');
+    tabNames.at(0).text().should.be.eql('Timeline');
+    tabNames.at(1).text().should.be.eql('Map');
+    tabNames.at(2).text().should.be.eql('Coaccusals');
+    tabNames.at(3).text().should.be.eql('Documents');
+    tabNames.at(4).text().should.be.eql('Timeline');
+    tabNames.at(5).text().should.be.eql('Map');
+    tabNames.at(6).text().should.be.eql('Coaccusals');
+    tabNames.at(7).text().should.be.eql('Documents');
   });
 
   it('should hide the tabs with no data', function () {
@@ -62,8 +62,8 @@ describe('TabbedPaneSection component', function () {
 
     const headerTabName = tabNames.at(0);
     const footerTabName = tabNames.at(1);
-    headerTabName.text().should.be.eql('TIMELINE');
-    footerTabName.text().should.be.eql('TIMELINE');
+    headerTabName.text().should.be.eql('Timeline');
+    footerTabName.text().should.be.eql('Timeline');
   });
 
   it('should render timeline tab', function () {
