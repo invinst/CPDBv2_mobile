@@ -205,6 +205,8 @@ module.exports = {
         awardItem: '.test--timeline-award-item',
         joinedItem: '.test--timeline-joined-item',
         yearItem: '.test--timeline-year-item',
+        unitChangeItem: '.test--timeline-unit-change-item',
+        rankChangeItem: '.test--timeline-rank-change-item',
         attachmentThumbnail: '.test--attachments .image',
       },
       sections: {
@@ -212,6 +214,18 @@ module.exports = {
         secondUnitChangeItem: nthUnitChangeSection(2),
         firstRankChangeItem: nthRankChangeSection(1),
         secondRankChangeItem: nthRankChangeSection(2),
+        filter: {
+          selector: '.timeline-filter',
+          elements: {
+            button: '.dropdown-button',
+            menu: '.dropdown-menu',
+            crs: '.dropdown-menu-item:nth-child(1)',
+            sustained: '.dropdown-menu-item:nth-child(2)',
+            force: '.dropdown-menu-item:nth-child(3)',
+            awards: '.dropdown-menu-item:nth-child(4)',
+            changes: '.dropdown-menu-item:nth-child(5)',
+          },
+        },
       },
     },
     coaccusals: {

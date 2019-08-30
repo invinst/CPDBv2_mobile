@@ -673,6 +673,86 @@ describe('OfficerPage test', function () {
         this.timeline.click('@trrItem');
         this.timeline.assert.urlContains('/trr/1/');
       });
+
+      describe('Timeline filter', function () {
+        beforeEach(function (client, done) {
+          this.timeline.section.filter.waitForElementVisible('@button');
+          this.timeline.section.filter.click('@button');
+          done();
+        });
+
+        it('should filter all events by by default', function () {
+          this.timeline.waitForElementVisible('@crItem');
+          this.timeline.waitForElementVisible('@trrItem');
+          this.timeline.waitForElementVisible('@awardItem');
+
+          this.timeline.waitForElementVisible('@rankChangeItem');
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should filter complaints', function () {
+          this.timeline.section.filter.click('@crs');
+
+          this.timeline.waitForElementVisible('@crItem');
+          this.timeline.waitForElementNotPresent('@trrItem');
+          this.timeline.waitForElementNotPresent('@awardItem');
+
+          this.timeline.waitForElementVisible('@rankChangeItem');
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should filter TRRs', function () {
+          this.timeline.section.filter.click('@force');
+
+          this.timeline.waitForElementNotPresent('@crItem');
+          this.timeline.waitForElementVisible('@trrItem');
+          this.timeline.waitForElementNotPresent('@awardItem');
+
+          this.timeline.waitForElementVisible('@rankChangeItem');
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should filter awards', function () {
+          this.timeline.section.filter.click('@awards');
+
+          this.timeline.waitForElementNotPresent('@crItem');
+          this.timeline.waitForElementNotPresent('@trrItem');
+          this.timeline.waitForElementVisible('@awardItem');
+
+          this.timeline.waitForElementVisible('@rankChangeItem');
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should filter rank/unit changes', function () {
+          this.timeline.section.filter.click('@changes');
+
+          this.timeline.waitForElementNotPresent('@crItem');
+          this.timeline.waitForElementNotPresent('@trrItem');
+          this.timeline.waitForElementNotPresent('@awardItem');
+
+          this.timeline.waitForElementVisible('@rankChangeItem');
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should close the menu when blurring', function (client) {
+          this.timeline.click('@unitChangeItem');
+          this.timeline.section.filter.waitForElementNotPresent('@menu');
+
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+      });
     });
 
     describe('Coaccusals', function () {
