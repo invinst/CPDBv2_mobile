@@ -1,8 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { stub } from 'sinon';
 
 import Timeline from 'components/officer-page/tabbed-pane-section/timeline';
 import Item from 'components/officer-page/tabbed-pane-section/timeline/item';
+import Dropdown from 'components/shared/dropdown';
 
 
 describe('Timeline component', function () {
@@ -68,5 +70,51 @@ describe('Timeline component', function () {
     items.at(2).prop('hasBorderBottom').should.equal(false);
     items.at(3).prop('hasBorderBottom').should.equal(false);
     items.at(4).prop('hasBorderBottom').should.equal(false);
+  });
+
+  it('should render filter dropdown', function () {
+    const filterCount = {
+      ALL: 10,
+      CRS: 4,
+      SUSTAINED: 3,
+      FORCE: 2,
+      AWARDS: 1,
+      RANK_UNIT_CHANGES: 0,
+    };
+
+    const wrapper = mount(<Timeline filterCount={ filterCount }/>);
+
+    wrapper.find('.timeline-filter-wrapper').exists().should.be.true();
+    const filterDropdown = wrapper.find(Dropdown);
+    filterDropdown.prop('defaultValue').should.eql('ALL');
+    filterDropdown.prop('options').should.eql(
+      ['ALL', 'COMPLAINTS', 'SUSTAINED', 'USE OF FORCE', 'AWARDS', 'RANK/UNIT CHANGES']
+    );
+    filterDropdown.prop('className').should.eql('timeline-filter');
+    filterDropdown.prop('labels').should.eql(
+      ['ALL (10)', 'COMPLAINTS (4)', 'SUSTAINED (3)', 'USE OF FORCE (2)', 'AWARDS (1)', 'RANK/UNIT CHANGES']
+    );
+  });
+
+  it('should call changeFilter when clicking dropdown items', function () {
+    const filterCount = {
+      ALL: 0,
+      CRS: 0,
+      SUSTAINED: 0,
+      FORCE: 0,
+      AWARDS: 0,
+      RANK_UNIT_CHANGES: 0,
+    };
+
+    const changeFilterStub = stub();
+    const wrapper = mount(<Timeline changeFilter={ changeFilterStub } filterCount={ filterCount }/>);
+
+    wrapper.find('.dropdown-button').simulate('click');
+    wrapper.find('.dropdown-menu-item').at(0).simulate('click');
+
+    changeFilterStub.calledWith({
+      label: 'COMPLAINTS',
+      kind: ['CR'],
+    }).should.be.true();
   });
 });

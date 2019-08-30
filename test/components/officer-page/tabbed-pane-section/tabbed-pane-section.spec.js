@@ -10,6 +10,7 @@ import Timeline from 'components/officer-page/tabbed-pane-section/timeline';
 import Coaccusals from 'components/officer-page/tabbed-pane-section/coaccusals';
 import AttachmentsTab from 'components/officer-page/tabbed-pane-section/attachments-tab';
 import Map from 'components/officer-page/tabbed-pane-section/map';
+import HorizontalScrolling from 'components/common/horizontal-scrolling';
 
 
 describe('TabbedPaneSection component', function () {
@@ -33,6 +34,11 @@ describe('TabbedPaneSection component', function () {
         />
       </Provider>
     );
+
+    const horizontalScrollings = wrapper.find(HorizontalScrolling);
+    horizontalScrollings.should.have.length(2);
+    horizontalScrollings.at(0).prop('spaceBetween').should.eql(9);
+    horizontalScrollings.at(1).prop('spaceBetween').should.eql(9);
 
     const tabNames = wrapper.find('.tabbed-pane-tab-name');
 
