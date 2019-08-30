@@ -1,4 +1,7 @@
 'use strict';
+
+const assert = require('assert');
+
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 
@@ -192,7 +195,7 @@ const mockTimeline = [
     rank: 'Police Officer',
     date: '2003-02-17',
     coaccused: 4,
-    finding: 'Unfounded',
+    finding: 'Sustained',
     outcome: 'No Action Taken',
     attachments: [
       {
@@ -692,10 +695,35 @@ describe('OfficerPage test', function () {
           this.timeline.waitForElementVisible('@yearItem');
         });
 
-        it('should filter complaints', function () {
+        it('should filter complaints', function (client) {
           this.timeline.section.filter.click('@crs');
 
           this.timeline.waitForElementVisible('@crItem');
+          client.elements(
+            'css selector',
+            this.timeline.section.crItems,
+            items => assert.equal(items.value.length, 2)
+          );
+
+          this.timeline.waitForElementNotPresent('@trrItem');
+          this.timeline.waitForElementNotPresent('@awardItem');
+
+          this.timeline.waitForElementVisible('@rankChangeItem');
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should filter sustained', function (client) {
+          this.timeline.section.filter.click('@sustained');
+
+          this.timeline.waitForElementVisible('@crItem');
+          client.elements(
+            'css selector',
+            this.timeline.section.crItems,
+            items => assert.equal(items.value.length, 1)
+          );
+
           this.timeline.waitForElementNotPresent('@trrItem');
           this.timeline.waitForElementNotPresent('@awardItem');
 

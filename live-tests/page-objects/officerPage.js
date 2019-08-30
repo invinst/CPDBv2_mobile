@@ -214,6 +214,9 @@ module.exports = {
         secondUnitChangeItem: nthUnitChangeSection(2),
         firstRankChangeItem: nthRankChangeSection(1),
         secondRankChangeItem: nthRankChangeSection(2),
+        crItems: {
+          selector: '.test--timeline-cr-item',
+        },
         filter: {
           selector: '.timeline-filter',
           elements: {

@@ -10,9 +10,9 @@ import {
   includes,
   difference,
   values,
-  concat,
   filter,
-  isUndefined,
+  keys,
+  every,
 } from 'lodash';
 import moment from 'moment';
 import { createSelector } from 'reselect';
@@ -178,33 +178,16 @@ export const fillRankChange = (items) => {
   return items;
 };
 
-const filterByKind = (selectedFilter, items) => {
-  const unremovableKinds = difference(values(TIMELINE_ITEMS), TIMELINE_FILTERS.ALL.kind);
-  const filteredKinds = selectedFilter.kind;
-  const displayKinds = concat(unremovableKinds, filteredKinds);
-
-  return filter(items, (item) => includes(displayKinds, item.kind));
-};
-
 export const applyFilter = (selectedFilter, items) => {
-  let results = [];
-  let cloneSelectedFilter = cloneDeep(selectedFilter);
-  delete cloneSelectedFilter.label;
-  delete cloneSelectedFilter.kind;
+  const allKinds = values(TIMELINE_ITEMS);
+  const alwaysShownKinds = difference(allKinds, TIMELINE_FILTERS.ALL.kind);
 
-  if (!isUndefined(selectedFilter.kind)) {
-    results = filterByKind(selectedFilter, items);
-  }
+  const keptKinds = selectedFilter.kind || allKinds;
+  const criteria = difference(keys(selectedFilter), ['label', 'kind']);
+  const matchCriteria = item => includes(keptKinds, item.kind) &&
+      every(criteria.map(criterion => includes(selectedFilter[criterion], item[criterion])));
 
-  if (isEmpty(cloneSelectedFilter)) {
-    return results;
-  }
-
-  Object.keys(cloneSelectedFilter).map(key => {
-    results = filter(results, result => includes(selectedFilter[key], result[key]));
-  });
-
-  return results;
+  return filter(items, item => includes(alwaysShownKinds, item.kind) || matchCriteria(item));
 };
 
 export const timelineItemsSelector = createSelector(
