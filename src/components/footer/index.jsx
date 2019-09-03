@@ -5,6 +5,7 @@ import constants from 'constants';
 import { showIntercomMessages } from 'utils/intercom';
 import LegalModalContent from './legal-modal-content';
 import style from './footer.sass';
+import IOSPeek from 'components/common/ios-peek';
 
 class Footer extends Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class Footer extends Component {
           target='_blank'>
           <img className='invist-logo' src='/img/invist-logo.svg' alt='Invisible Institute' />
         </a>
+        <IOSPeek isBottom={ true }/>
         <Modal
           isOpen={ this.state.legalModalIsOpen }
           onRequestClose={ this.closeModal }

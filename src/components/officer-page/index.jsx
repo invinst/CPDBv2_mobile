@@ -1,10 +1,8 @@
 import React, { PropTypes, Component } from 'react';
-import { StickyContainer, Sticky } from 'react-sticky';
 import { isEmpty, noop, clone, reduce, values } from 'lodash';
 import pluralize from 'pluralize';
 
 import { scrollToTop } from 'utils/navigation-util';
-import Header from 'components/shared/header';
 import LoadingPage from 'components/shared/loading-page';
 import BottomPadding from 'components/shared/bottom-padding';
 import NotMatchedOfficerPage from './not-matched-officer-page';
@@ -19,6 +17,7 @@ import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import { TAB_MAP, OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
 import AppHistory from 'utils/history';
 import Footer from 'components/footer';
+import WithHeader from 'components/shared/with-header';
 
 
 class OfficerPage extends Component {
@@ -187,8 +186,7 @@ class OfficerPage extends Component {
     const { id, name, demographic, rank, unit, careerDuration } = summary;
 
     return (
-      <StickyContainer className={ style.officerSummary }>
-        <Sticky><Header /></Sticky>
+      <WithHeader className={ style.officerSummary }>
         <AnimatedRadarChart
           officerId={ id }
           percentileData={ threeCornerPercentile }
@@ -214,7 +212,7 @@ class OfficerPage extends Component {
         />
         <BottomPadding />
         <Footer />
-      </StickyContainer>
+      </WithHeader>
     );
   }
 }
