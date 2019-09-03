@@ -12,7 +12,7 @@ import restoreAndRedirectPinboardMiddleware from 'middleware/restore-and-redirec
 
 
 const logger = createLogger({
-  diff: true
+  diff: true,
 });
 
 export default function configureStore(initialState) {

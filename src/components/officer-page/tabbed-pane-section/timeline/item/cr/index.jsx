@@ -39,5 +39,5 @@ Cr.propTypes = {
   item: PropTypes.object,
   hasBorderBottom: PropTypes.bool,
   pathname: PropTypes.string,
-  onTrackingAttachment: PropTypes.func
+  onTrackingAttachment: PropTypes.func,
 };

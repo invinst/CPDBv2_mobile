@@ -5,5 +5,5 @@ import subscribedCRIds from './subscribed-crids';
 
 export default combineReducers({
   message,
-  subscribedCRIds
+  subscribedCRIds,
 });

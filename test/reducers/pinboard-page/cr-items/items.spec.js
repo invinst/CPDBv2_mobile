@@ -21,7 +21,7 @@ describe('crItemsReducer', function () {
         type: PINBOARD_COMPLAINTS_FETCH_REQUEST_SUCCESS,
         payload: [
           { 'crid': '2' }, { 'crid': '3' },
-        ]
+        ],
       }
     ).should.deepEqual([{ 'crid': '2' }, { 'crid': '3' }]);
   });
@@ -37,10 +37,10 @@ describe('crItemsReducer', function () {
           incidentDate: 'Apr 4, 2017',
           category: 'Use Of Force',
           point: { 'lon': 1.0, 'lat': 2.0 },
-        }
+        },
       }
     ).should.deepEqual([{
-      'crid': '1'
+      'crid': '1',
     }, {
       'crid': '2',
       'incident_date': 'Apr 4, 2017',
@@ -60,7 +60,7 @@ describe('crItemsReducer', function () {
           incidentDate: 'Apr 4, 2017',
           category: 'Use Of Force',
           point: { 'lon': 1.0, 'lat': 2.0 },
-        }
+        },
       }
     ).should.deepEqual([{ 'crid': '1' }]);
   });
@@ -77,7 +77,7 @@ describe('crItemsReducer', function () {
           fullName: 'Jerome Finnigan',
           percentile: {},
           rank: 'Officer',
-        }
+        },
       }
     ).should.deepEqual([{ 'crid': '1' }]);
   });
@@ -99,7 +99,7 @@ describe('crItemsReducer', function () {
         payload: {
           type: 'CR',
           id: '2',
-        }
+        },
       }
     ).should.deepEqual([{ 'crid': '1' }, { 'crid': '3' }]);
   });
@@ -119,7 +119,7 @@ describe('crItemsReducer', function () {
         payload: {
           type: 'CR',
           id: '3',
-        }
+        },
       }
     ).should.deepEqual([{
       'crid': '1',
@@ -146,7 +146,7 @@ describe('crItemsReducer', function () {
         payload: {
           type: 'OFFICER',
           id: '2',
-        }
+        },
       }
     ).should.deepEqual([{
       'crid': '1',
@@ -173,7 +173,7 @@ describe('crItemsReducer', function () {
         payload: {
           type: 'CR',
           ids: ['2', '1', '3'],
-        }
+        },
       }
     ).should.deepEqual([{
       'crid': '2',
@@ -200,7 +200,7 @@ describe('crItemsReducer', function () {
         payload: {
           type: 'OFFICER',
           ids: ['2', '1'],
-        }
+        },
       }
     ).should.deepEqual([{
       'crid': '1',

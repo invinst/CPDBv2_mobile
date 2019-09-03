@@ -8,11 +8,11 @@ import { cmsSelector } from 'selectors/common/cms';
 const mapStateToProps = state => ({
   complaintSummaries: complaintSummariesSelector(state),
   description: cmsSelector(state, 'landingPage', 'carousel_complaint_desc'),
-  title: cmsSelector(state, 'landingPage', 'carousel_complaint_title')
+  title: cmsSelector(state, 'landingPage', 'carousel_complaint_title'),
 });
 
 const mapDispatchToProps = {
-  requestComplaintSummaries
+  requestComplaintSummaries,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComplaintSummaries);

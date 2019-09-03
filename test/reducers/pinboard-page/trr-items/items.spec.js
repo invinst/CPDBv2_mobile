@@ -20,7 +20,7 @@ describe('Pinboard trrItemsReducer', function () {
         type: PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
         payload: [
           { 'id': '2' }, { 'id': '3' },
-        ]
+        ],
       }
     ).should.deepEqual([{ 'id': '2' }, { 'id': '3' }]);
   });
@@ -33,7 +33,7 @@ describe('Pinboard trrItemsReducer', function () {
         payload: {
           type: 'TRR',
           id: '2',
-        }
+        },
       }
     ).should.deepEqual([{ 'id': 1 }, { 'id': 3 }]);
   });
@@ -46,7 +46,7 @@ describe('Pinboard trrItemsReducer', function () {
         payload: {
           type: 'TRR',
           id: '3',
-        }
+        },
       }
     ).should.deepEqual([{ 'id': 1 }, { 'id': 2 }]);
   });
@@ -59,7 +59,7 @@ describe('Pinboard trrItemsReducer', function () {
         payload: {
           type: 'CR',
           id: '2',
-        }
+        },
       }
     ).should.deepEqual([{ 'id': 1 }, { 'id': 2 }]);
   });
@@ -72,7 +72,7 @@ describe('Pinboard trrItemsReducer', function () {
         payload: {
           type: 'TRR',
           ids: ['2', '1', '3'],
-        }
+        },
       }).should.deepEqual([{ 'id': 2 }, { 'id': 1 }]
     );
   });
@@ -85,7 +85,7 @@ describe('Pinboard trrItemsReducer', function () {
         payload: {
           type: 'CR',
           ids: ['2', '1'],
-        }
+        },
       }
     ).should.deepEqual([{ 'id': 1 }, { 'id': 2 }]);
   });

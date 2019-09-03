@@ -29,7 +29,7 @@ describe('Map component', function () {
       gender: 'male',
       race: 'White',
       age: 32,
-    }]
+    }],
   }, {
     point: {
       lat: 42.112567,
@@ -99,7 +99,7 @@ describe('Map component', function () {
         gender: 'male',
         race: 'White',
         age: 35,
-      }]
+      }],
     }];
 
     wrapper.setProps({ legend: legend, markers: concat(newMarkers, markers), clearAllMarkers: false });

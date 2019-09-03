@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { StickyContainer, Sticky } from 'react-sticky';
 import { noop } from 'lodash';
 
-import Header from 'components/shared/header';
 import BottomPadding from 'components/shared/bottom-padding';
 import Victim from './victim';
 import Complainant from './complainant';
@@ -16,6 +14,8 @@ import Investigator from './investigator';
 import PoliceWitness from './police-witness';
 import Location from './location';
 import style from './complaint-page.sass';
+import Footer from 'components/footer';
+import WithHeader from 'components/shared/with-header';
 
 
 export default class ComplaintPage extends Component {
@@ -35,8 +35,7 @@ export default class ComplaintPage extends Component {
     }
 
     return (
-      <StickyContainer className={ style.complaintPage }>
-        <Sticky><Header /></Sticky>
+      <WithHeader className={ style.complaintPage }>
         <div className='complaint-page-body'>
           <ComplaintCategory
             category={ complaint.category }
@@ -71,7 +70,8 @@ export default class ComplaintPage extends Component {
           <div />
         </div>
         <BottomPadding />
-      </StickyContainer>
+        <Footer />
+      </WithHeader>
     );
   }
 }

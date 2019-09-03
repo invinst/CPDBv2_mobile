@@ -114,7 +114,7 @@ describe('<SearchCategory />', function () {
       const items = [{
         url: 'localhost',
         type: 'recent',
-        title: 'Whatever'
+        title: 'Whatever',
       }];
 
       const wrapper = mount(
@@ -209,14 +209,14 @@ describe('<SearchCategory />', function () {
           name: 'John',
           url: '/officer/1/john/',
           badge: 'Badge #1',
-          percentile: {}
+          percentile: {},
         },
         {
           name: 'Snow',
           url: '/officer/2/snow/',
           badge: 'Badge #2',
-          percentile: {}
-        }
+          percentile: {},
+        },
       ];
 
       const wrapper = mount(
@@ -246,7 +246,7 @@ describe('<SearchCategory />', function () {
         {
           crid: '2',
           url: '/complaint/2',
-        }
+        },
       ];
 
       const wrapper = mount(
@@ -275,7 +275,7 @@ describe('<SearchCategory />', function () {
         {
           id: '2',
           url: '/trr/2',
-        }
+        },
       ];
 
       const wrapper = mount(
@@ -304,7 +304,7 @@ describe('<SearchCategory />', function () {
         {
           crid: '2',
           url: '/complaint/2',
-        }
+        },
       ];
 
       const wrapper = mount(
@@ -333,7 +333,7 @@ describe('<SearchCategory />', function () {
         {
           id: '2',
           url: '/trr/2',
-        }
+        },
       ];
 
       const wrapper = mount(
@@ -359,14 +359,14 @@ describe('<SearchCategory />', function () {
           name: 'Jerome Finnigan',
           url: '/officer/1',
           badge: 'Badge #1',
-          percentile: {}
+          percentile: {},
         },
         {
           name: 'Edward May',
           url: '/officer/2',
           badge: 'Badge #2',
-          percentile: {}
-        }
+          percentile: {},
+        },
       ];
 
       const wrapper = mount(
@@ -429,7 +429,7 @@ describe('<SearchCategory />', function () {
       const instance = wrapper.instance();
       instance.domNode = {
         offsetTop: 100,
-        clientHeight: 200
+        clientHeight: 200,
       };
 
       instance.watchActiveState();
@@ -450,7 +450,7 @@ describe('<SearchCategory />', function () {
       );
       const instance = wrapper.instance();
       instance.domNode = {
-        offsetTop: 900 + fixedHeaderHeight + 1
+        offsetTop: 900 + fixedHeaderHeight + 1,
       };
 
       instance.watchActiveState();
@@ -472,7 +472,7 @@ describe('<SearchCategory />', function () {
       const instance = wrapper.instance();
       instance.domNode = {
         offsetTop: 900,
-        clientHeight: fixedHeaderHeight + 1
+        clientHeight: fixedHeaderHeight + 1,
       };
 
       instance.watchActiveState();

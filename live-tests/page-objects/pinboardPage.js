@@ -23,9 +23,9 @@ const baseRelevantComplaints = (type) => ({
         remainingOfficers: '.remaining-officers',
         undoText: '.undo-card-text',
         undoButton: '.undo-button',
-      }
-    }
-  }
+      },
+    },
+  },
 });
 
 
@@ -53,28 +53,28 @@ module.exports = {
     pinboardDescription: '.pinboard-description',
     pinboardPaneMenu: {
       selector: '(//div[contains(@class, "pinboard-pane-section-menu")])',
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     complaintText: {
       selector: '//div[contains(@class, "legend__legend")]//div[1]//span[contains(@class, "legend-row-text")]',
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     trrText: {
       selector: '//div[contains(@class, "legend__legend")]//div[2]//span[contains(@class, "legend-row-text")]',
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     complaintNumber: {
       selector: '//div[contains(@class, "legend__legend")]//div[1]//span[contains(@class, "legend-row-number")]',
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     trrNumber: {
       selector: '//div[contains(@class, "legend__legend")]//div[2]//span[contains(@class, "legend-row-number")]',
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     currentDate: '.current-date-label',
     biggestGraphNode: {
       selector: '(//*[@r="7"])',
-      locateStrategy: 'xpath'
+      locateStrategy: 'xpath',
     },
     timelineSlider: '.test--timeline-slider',
   },
@@ -103,14 +103,14 @@ module.exports = {
                 undoCard: {
                   selector: '//div[starts-with(@class, "with-undo-card")]',
                   locateStrategy: 'xpath',
-                }
+                },
               },
             },
             secondCard: {
               selector: '.type-cards > .pinned-grid-item:nth-child(2)',
               elements: {
                 officerName: '.officer-name',
-              }
+              },
             },
           },
         },
@@ -133,14 +133,14 @@ module.exports = {
                 undoCard: {
                   selector: '//div[starts-with(@class, "with-undo-card")]',
                   locateStrategy: 'xpath',
-                }
-              }
+                },
+              },
             },
             secondCard: {
               selector: '.type-cards > .pinned-grid-item:nth-child(2)',
               elements: {
                 category: '.location-card-category',
-              }
+              },
             },
           },
         },
@@ -163,12 +163,12 @@ module.exports = {
                 undoCard: {
                   selector: '//div[starts-with(@class, "with-undo-card")]',
                   locateStrategy: 'xpath',
-                }
-              }
-            }
-          }
+                },
+              },
+            },
+          },
         },
-      }
+      },
     },
     graphNodes: {
       selector: '.node',
@@ -196,7 +196,7 @@ module.exports = {
       selector: '.graph-control-panel',
       elements: {
         toggleTimelineButton: '.toggle-timeline-btn',
-      }
+      },
     },
     pinboardPaneMenu: {
       selector: '(//div[contains(@class, "pinboard-pane-section-menu")])',
@@ -204,13 +204,13 @@ module.exports = {
       elements: {
         networkPaneName: {
           selector: '//span[contains(@class, "pinboard-pane-tab-name")][1]',
-          locateStrategy: 'xpath'
+          locateStrategy: 'xpath',
         },
         geographicPaneName: {
           selector: '//span[contains(@class, "pinboard-pane-tab-name")][2]',
-          locateStrategy: 'xpath'
-        }
-      }
+          locateStrategy: 'xpath',
+        },
+      },
     },
     relevantComplaints: baseRelevantComplaints('complaint'),
     relevantDocuments: baseRelevantComplaints('document'),
@@ -235,9 +235,9 @@ module.exports = {
             nameWrapper: '.officer-card-name-wrapper',
             undoText: '.undo-card-text',
             undoButton: '.undo-button',
-          }
-        }
-      }
+          },
+        },
+      },
     },
   },
 };

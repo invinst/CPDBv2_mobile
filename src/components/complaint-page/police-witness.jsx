@@ -47,7 +47,7 @@ const PoliceWitness = ({ policeWitnesses=[] }) => {
 };
 
 PoliceWitness.propTypes = {
-  policeWitnesses: PropTypes.array
+  policeWitnesses: PropTypes.array,
 };
 
 export default PoliceWitness;

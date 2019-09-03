@@ -21,7 +21,7 @@ const ComplaintSummaryCard = ({ allegation }) => {
 };
 
 ComplaintSummaryCard.propTypes = {
-  allegation: PropTypes.object
+  allegation: PropTypes.object,
 };
 
 export default ComplaintSummaryCard;

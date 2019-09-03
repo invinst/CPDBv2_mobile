@@ -10,7 +10,7 @@ import {
   suggestAllFromCategory,
   saveToRecent,
   updateActiveCategory,
-  updateChosenCategory
+  updateChosenCategory,
 } from 'actions/suggestion';
 import {
   officersSelector,
@@ -21,7 +21,7 @@ import {
   suggestedSelector,
   recentSelector,
   dateOfficersSelector,
-  investigatorCRsSelector
+  investigatorCRsSelector,
 } from 'selectors/search-page';
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import { addOrRemoveItemInPinboard, createPinboard } from 'actions/pinboard';

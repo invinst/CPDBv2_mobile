@@ -18,7 +18,7 @@ const SafeLink = ({ to='', children, ...rest }) => {
 
 SafeLink.propTypes = {
   to: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default SafeLink;

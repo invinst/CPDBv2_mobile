@@ -8,15 +8,15 @@ describe('officers', function () {
       types: [
         actions.OFFICERS_REQUEST_START,
         actions.OFFICERS_REQUEST_SUCCESS,
-        actions.OFFICERS_REQUEST_FAILURE
+        actions.OFFICERS_REQUEST_FAILURE,
       ],
       payload: {
         request: {
           url: `${v2Url(constants.OFFICERS_API_ENDPOINT)}`,
           adapter: undefined,
-          params: { ids: '1,2,3' }
-        }
-      }
+          params: { ids: '1,2,3' },
+        },
+      },
     });
   });
 });

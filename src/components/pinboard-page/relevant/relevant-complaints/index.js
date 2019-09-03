@@ -45,5 +45,5 @@ RelevantComplaints.propTypes = {
 };
 
 RelevantComplaints.defaultProps = {
-  complaints: []
+  complaints: [],
 };

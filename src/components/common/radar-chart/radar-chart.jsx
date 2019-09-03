@@ -44,7 +44,7 @@ export default class RadarChart extends Component {
         r: r,
         angle: this.angle(i),
         x: r * Math.cos(angleSlice * i + Math.PI / 2),
-        y: r * Math.sin(angleSlice * i + Math.PI / 2)
+        y: r * Math.sin(angleSlice * i + Math.PI / 2),
       };
     });
   }
@@ -68,7 +68,7 @@ export default class RadarChart extends Component {
       showSpineLinePoint,
       yAxisCenter,
       areaColor,
-      boundaryAreaColor
+      boundaryAreaColor,
     } = this.props;
 
     const transformData = this.embedComputedPosition(data);
@@ -154,7 +154,7 @@ RadarChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       axis: PropTypes.string.isRequired,
-      value: PropTypes.number.isRequired
+      value: PropTypes.number.isRequired,
     })
   ),
   backgroundColor: PropTypes.string,
@@ -170,6 +170,6 @@ RadarChart.propTypes = {
   showSpineLinePoint: PropTypes.bool,
   areaColor: PropTypes.string,
   boundaryAreaColor: PropTypes.string,
-  numMetrics: PropTypes.number
+  numMetrics: PropTypes.number,
 };
 

@@ -19,5 +19,5 @@ export default class DescriptionContent extends Component {
 
 DescriptionContent.propTypes = {
   content: PropTypes.object,
-  subContent: PropTypes.object
+  subContent: PropTypes.object,
 };

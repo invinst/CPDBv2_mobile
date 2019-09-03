@@ -38,5 +38,5 @@ export default class ClearableInput extends Component {
 ClearableInput.propTypes = {
   onClear: PropTypes.func,
   onChange: PropTypes.func,
-  value: PropTypes.string
+  value: PropTypes.string,
 };

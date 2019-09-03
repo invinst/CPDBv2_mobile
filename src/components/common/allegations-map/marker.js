@@ -16,7 +16,7 @@ export default class Marker extends Component {
           {
             'force': kind === constants.MAP_ITEMS.FORCE,
             'complaint': kind === constants.MAP_ITEMS.CR,
-            'sustained-finding': finding === 'Sustained'
+            'sustained-finding': finding === 'Sustained',
           },
           'test--marker'
         ) }

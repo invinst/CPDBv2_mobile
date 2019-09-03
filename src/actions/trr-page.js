@@ -19,7 +19,7 @@ export const requestTRR = (id) => get(
   [
     TRR_REQUEST_START,
     TRR_REQUEST_SUCCESS,
-    TRR_REQUEST_FAILURE
+    TRR_REQUEST_FAILURE,
   ]
 )(undefined, undefined, `${id}/`, { id });
 
@@ -30,5 +30,5 @@ export const requestDocument = ({ id, email }) => post(
 
 
 export const requestCMS = get(v2Url(constants.TRR_PAGE_CMS_API_ENDPOINT), [
-  TRR_PAGE_CMS_REQUEST_START, TRR_PAGE_CMS_REQUEST_SUCCESS, TRR_PAGE_CMS_REQUEST_FAILURE
+  TRR_PAGE_CMS_REQUEST_START, TRR_PAGE_CMS_REQUEST_SUCCESS, TRR_PAGE_CMS_REQUEST_FAILURE,
 ]);

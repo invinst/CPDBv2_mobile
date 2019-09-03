@@ -15,36 +15,36 @@ describe('<BaseComplaintCard />', function () {
       percentile: {
         year: 2015,
         items: [
-          { axis: 'Use of Force Reports', value: 20.6, },
-          { axis: 'Internal Allegations', value: 10.1, },
-          { axis: 'Civilian Allegations', value: 52.5, },
+          { axis: 'Use of Force Reports', value: 20.6 },
+          { axis: 'Internal Allegations', value: 10.1 },
+          { axis: 'Civilian Allegations', value: 52.5 },
         ],
         visualTokenBackground: '#ed7467',
         textColor: '#231F20',
-      }
+      },
     }, {
       id: 2,
       shortName: 'E. May',
-      percentile: { year: 2015, items: [] }
+      percentile: { year: 2015, items: [] },
     }, {
       id: 3,
       shortName: 'B. Lopez',
-      percentile: { year: 2015, items: [] }
+      percentile: { year: 2015, items: [] },
     }, {
       id: 4,
-      percentile: { year: 2015, items: [] }
+      percentile: { year: 2015, items: [] },
     }, {
       id: 5,
-      percentile: { year: 2015, items: [] }
+      percentile: { year: 2015, items: [] },
     }, {
       id: 6,
-      percentile: { year: 2015, items: [] }
+      percentile: { year: 2015, items: [] },
     }, {
       id: 7,
-      percentile: { year: 2015, items: [] }
+      percentile: { year: 2015, items: [] },
     }, {
       id: 8,
-      percentile: { year: 2015, items: [] }
+      percentile: { year: 2015, items: [] },
     }];
     const addItemInPinboardPage = spy();
     const wrapper = shallow(
@@ -82,9 +82,9 @@ describe('<BaseComplaintCard />', function () {
     miniVisualTokens.at(0).prop('percentile').should.eql({
       year: 2015,
       items: [
-        { axis: 'Use of Force Reports', value: 20.6, },
-        { axis: 'Internal Allegations', value: 10.1, },
-        { axis: 'Civilian Allegations', value: 52.5, },
+        { axis: 'Use of Force Reports', value: 20.6 },
+        { axis: 'Internal Allegations', value: 10.1 },
+        { axis: 'Civilian Allegations', value: 52.5 },
       ],
       visualTokenBackground: '#ed7467',
       textColor: '#231F20',
@@ -150,7 +150,7 @@ describe('<BaseComplaintCard />', function () {
       id: '123',
       category: 'Unknown',
       incidentDate: 'Apr 4, 2015',
-      point: undefined
+      point: undefined,
     });
   });
 });

@@ -27,9 +27,9 @@ describe('<RelevantCoaccusalCard />', function () {
           officerId: 123,
           year: 2015,
           items: [
-            { axis: 'Use of Force Reports', value: 20.6, },
-            { axis: 'Internal Allegations', value: 10.1, },
-            { axis: 'Civilian Allegations', value: 52.5, },
+            { axis: 'Use of Force Reports', value: 20.6 },
+            { axis: 'Internal Allegations', value: 10.1 },
+            { axis: 'Civilian Allegations', value: 52.5 },
           ],
           visualTokenBackground: '#ed7467',
         } }
@@ -41,9 +41,9 @@ describe('<RelevantCoaccusalCard />', function () {
 
     const radarChart = wrapper.find(StaticRadarChart);
     radarChart.prop('data').should.eql([
-      { axis: 'Use of Force Reports', value: 20.6, },
-      { axis: 'Internal Allegations', value: 10.1, },
-      { axis: 'Civilian Allegations', value: 52.5, },
+      { axis: 'Use of Force Reports', value: 20.6 },
+      { axis: 'Internal Allegations', value: 10.1 },
+      { axis: 'Civilian Allegations', value: 52.5 },
     ]);
     radarChart.prop('width').should.eql(148);
     radarChart.prop('height').should.eql(60);
@@ -71,12 +71,12 @@ describe('<RelevantCoaccusalCard />', function () {
         items: [
           { axis: 'Use of Force Reports', value: 20.6 },
           { axis: 'Internal Allegations', value: 10.1 },
-          { axis: 'Civilian Allegations', value: 52.5 }
+          { axis: 'Civilian Allegations', value: 52.5 },
         ],
         officerId: 123,
         visualTokenBackground: '#ed7467',
-        year: 2015
-      }
+        year: 2015,
+      },
     });
   });
 

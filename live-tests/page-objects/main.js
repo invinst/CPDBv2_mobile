@@ -15,8 +15,8 @@ module.exports = {
       elements: {
         legal: '.item:nth-child(1)',
         github: '.item:nth-child(2)',
-        logo: '.invist-logo-link'
-      }
+        logo: '.invist-logo-link',
+      },
     },
     legalModal: {
       selector: '//div[contains(@class, "legal-modal")]',
@@ -24,8 +24,8 @@ module.exports = {
       elements: {
         content: '.legal-content',
         closeButton: '.close-button-wrapper',
-        understandButton: '.confirm-button'
-      }
-    }
-  }
+        understandButton: '.confirm-button',
+      },
+    },
+  },
 };

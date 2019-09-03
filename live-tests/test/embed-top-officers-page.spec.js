@@ -18,10 +18,10 @@ const mockLandingPageCms = {
             'key': '0f97e',
             'type': 'unstyled',
             'inlineStyleRanges': [],
-            'data': {}
-          }
-        ]
-      }
+            'data': {},
+          },
+        ],
+      },
     },
     {
       'type': 'rich_text',
@@ -36,12 +36,12 @@ const mockLandingPageCms = {
             'key': '1eda3',
             'type': 'unstyled',
             'inlineStyleRanges': [],
-            'data': {}
-          }
-        ]
-      }
+            'data': {},
+          },
+        ],
+      },
     },
-  ]
+  ],
 };
 
 const mockTopByAllegation = [
@@ -60,8 +60,8 @@ const mockTopByAllegation = [
       'percentile_allegation': '99.9911',
       'year': 2005,
       'id': 13788,
-      'percentile_allegation_internal': '87.8280'
-    }
+      'percentile_allegation_internal': '87.8280',
+    },
   },
   {
     'id': 8658,
@@ -78,8 +78,8 @@ const mockTopByAllegation = [
       'percentile_allegation': '99.9822',
       'year': 2005,
       'id': 8658,
-      'percentile_allegation_internal': '99.6468'
-    }
+      'percentile_allegation_internal': '99.6468',
+    },
   },
 ];
 

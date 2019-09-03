@@ -25,7 +25,7 @@ export default class SearchPage extends Component {
 
   componentDidMount() {
     const {
-      pushBreadcrumbs, location, routes, params
+      pushBreadcrumbs, location, routes, params,
     } = this.props;
     pushBreadcrumbs({ location, routes, params });
     this.searchInput.inputElement.focus();
@@ -52,11 +52,11 @@ export default class SearchPage extends Component {
     if (this.props.toast !== nextProps.toast) {
       const { type, actionType } = nextProps.toast;
 
-      this.showToast(`${type} ${actionType}`);
+      this.showToast(`${type} ${actionType}`, actionType);
     }
   }
 
-  showToast(message) {
+  showToast(message, className) {
     const TopRightTransition = cssTransition({
       enter: 'toast-enter',
       exit: 'toast-exit',
@@ -65,7 +65,7 @@ export default class SearchPage extends Component {
     });
 
     toast(message, {
-      className: 'toast-wrapper',
+      className: `toast-wrapper ${className}`,
       bodyClassName: 'toast-body',
       transition: TopRightTransition,
     });
@@ -169,12 +169,12 @@ export default class SearchPage extends Component {
       categories = [
         {
           name: 'RECENT',
-          id: 'recent'
+          id: 'recent',
         },
         {
           name: 'SUGGESTED',
-          id: 'suggested'
-        }
+          id: 'suggested',
+        },
       ].filter((cat) => {
         const suggestions = this.props[cat.id];
         return !!suggestions && suggestions.data.length > 0;
@@ -199,6 +199,10 @@ export default class SearchPage extends Component {
               ref={ (instance) => { this.searchInput = instance; } }
               className='query-input'
               value={ query }
+              spellCheck={ false }
+              autoComplete='off'
+              autoCorrect='off'
+              autoCapitalize='off'
               placeholder='Search'
               onChange={ (e) => { this.onInputChange(e); } }
               onClear={ () => { inputChanged(''); } }

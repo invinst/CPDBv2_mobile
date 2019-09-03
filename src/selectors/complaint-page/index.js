@@ -32,7 +32,7 @@ const coaccusedTransform = coaccused => {
     id: coaccused.id,
     rank: coaccused.rank,
     findingOutcome: getFindingOutcomeMix(coaccused['final_finding'], coaccused['final_outcome']),
-    percentile: extractPercentile(coaccused)
+    percentile: extractPercentile(coaccused),
   };
 };
 
@@ -63,7 +63,7 @@ const getCoaccusedSelector = createSelector(
       [
         sortByOfficerInBreadcrumb(breadcrumbs),
         sortByOfficerFinding,
-        sortByOfficerComplaint
+        sortByOfficerComplaint,
       ]
     );
   }
@@ -74,7 +74,7 @@ const attachmentTransform = attachment => ({
   previewImageUrl: attachment['preview_image_url'],
   title: attachment['title'],
   url: attachment['url'],
-  id: attachment['id']
+  id: attachment['id'],
 });
 
 const involvedAs = type => involvement => involvement['involved_type'] === type;
@@ -90,7 +90,7 @@ export const complaintSelector = createSelector(
     const involvements = get(complaint, 'involvements', []).map(
       involvement => ({
         ...involvement,
-        percentile: involvement['officer_id'] && extractPercentile(involvement)
+        percentile: involvement['officer_id'] && extractPercentile(involvement),
       })
     );
 
@@ -111,7 +111,7 @@ export const complaintSelector = createSelector(
       address: complaint.address,
       beat: complaint.beat,
       investigators: involvements.filter(involvedAs('investigator')),
-      policeWitnesses: involvements.filter(involvedAs('police_witness'))
+      policeWitnesses: involvements.filter(involvedAs('police_witness')),
     };
   }
 );

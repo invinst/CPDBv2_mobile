@@ -2,23 +2,37 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
+import { Sticky, StickyContainer } from 'react-sticky';
 import Breadcrumbs from 'redux-breadcrumb-trail';
 
-import Header from 'components/shared/header';
+import WithHeader from 'components/shared/with-header';
+import IOSPeek from 'components/common/ios-peek';
 
-describe('<Header />', function () {
+
+describe('<WithHeader />', function () {
   it('should be renderable', function () {
     const mockStore = configureStore();
     const store = mockStore({
       breadcrumb: {
-        breadcrumbs: []
-      }
+        breadcrumbs: [],
+      },
     });
-    mount(
+    const wrapper = mount(
       <Provider store={ store }>
-        <Header />
+        <WithHeader className='test--with-header-custom-class'>
+          <div className='test--with-header-content'/>
+        </WithHeader>
       </Provider>
-    ).should.be.ok();
+    );
+
+    const stickyContainer = wrapper.find(StickyContainer);
+    stickyContainer.prop('className').should.equal('test--with-header-custom-class');
+
+    stickyContainer.find(IOSPeek).exists().should.be.true();
+
+    const sticky = stickyContainer.find(Sticky);
+    const breadcrumbs = sticky.find(Breadcrumbs);
+    breadcrumbs.prop('className').should.equal('breadcrumbs');
   });
 
   it('should render breadcrumbs', function () {
@@ -35,10 +49,10 @@ describe('<Header />', function () {
               hash: '',
               action: 'POP',
               key: null,
-              query: {}
+              query: {},
             },
             params: {},
-            current: false
+            current: false,
           },
           {
             component: 'Search',
@@ -50,10 +64,10 @@ describe('<Header />', function () {
               hash: '',
               action: 'PUSH',
               key: 'tncl66',
-              query: {}
+              query: {},
             },
             params: {},
-            current: false
+            current: false,
           },
           {
             breadcrumbKey: '/pinboard/:pinboardId/(:pinboardTitle/)',
@@ -64,13 +78,13 @@ describe('<Header />', function () {
               hash: '',
               action: 'PUSH',
               key: '40v21h',
-              query: {}
+              query: {},
             },
             params: {
               pinboardId: '2bd40cf2',
-              pinboardTitle: 'untitled-pinboard'
+              pinboardTitle: 'untitled-pinboard',
             },
-            current: false
+            current: false,
           },
           {
             breadcrumbKey: '/officer/:id',
@@ -81,19 +95,19 @@ describe('<Header />', function () {
               hash: '',
               action: 'PUSH',
               key: 'aquodh',
-              query: {}
+              query: {},
             },
             params: {
               id: '31859',
-              firstParam: 'eric-cato'
+              firstParam: 'eric-cato',
             },
-            current: true
-          }
-        ]
+            current: true,
+          },
+        ],
       },
       breadcrumbMapping: {
         '/pinboard/2bd40cf2/': 'Pinboard',
-        '/officer/31859/eric-cato/': 'Eric Cato'
+        '/officer/31859/eric-cato/': 'Eric Cato',
       },
       routing: {
         locationBeforeTransitions: {
@@ -102,14 +116,14 @@ describe('<Header />', function () {
           hash: '',
           action: 'PUSH',
           key: '4zjc3v',
-          query: {}
-        }
+          query: {},
+        },
       },
     });
 
     const wrapper = mount(
       <Provider store={ store }>
-        <Header />
+        <WithHeader />
       </Provider>
     );
 

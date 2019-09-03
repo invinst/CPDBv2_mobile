@@ -6,13 +6,13 @@ import HorizontalScrolling from 'components/common/horizontal-scrolling';
 import * as GATracking from 'utils/google_analytics_tracking';
 
 
-describe('<HorizontalScrolling />', () => {
-  it('should be renderable', () => {
+describe('<HorizontalScrolling />', function () {
+  it('should be renderable', function () {
     const wrapper = shallow(<HorizontalScrolling trackingContentType=''/>);
     wrapper.should.be.ok();
   });
 
-  it('should wrap children node', () => {
+  it('should wrap children node', function () {
     const wrapper = shallow(
       <HorizontalScrolling trackingContentType=''>
         <div>Child 1</div>
@@ -23,7 +23,7 @@ describe('<HorizontalScrolling />', () => {
     wrapper.find('.swiper-slide').should.have.length(2);
   });
 
-  it('should track swiping action', () => {
+  it('should track swiping action', function () {
     spy(GATracking, 'trackSwipeLanddingPageCarousel');
 
     const wrapper = mount(
@@ -49,7 +49,7 @@ describe('<HorizontalScrolling />', () => {
     GATracking.trackSwipeLanddingPageCarousel.restore();
   });
 
-  it('should loadMore when almost reaching the end', () => {
+  it('should loadMore when almost reaching the end', function () {
     const loadMoreSpy = spy();
     const wrapper = mount(
       <HorizontalScrolling trackingContentType='contentType' hasMore={ true } loadMore={ loadMoreSpy }>
@@ -65,7 +65,7 @@ describe('<HorizontalScrolling />', () => {
     loadMoreSpy.should.be.called();
   });
 
-  it('should loadMore when reaching the end', () => {
+  it('should loadMore when reaching the end', function () {
     const loadMoreSpy = spy();
     const wrapper = mount(
       <HorizontalScrolling trackingContentType='contentType' hasMore={ true } loadMore={ loadMoreSpy }>

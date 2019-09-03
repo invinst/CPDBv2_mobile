@@ -50,9 +50,9 @@ const officer2235 = {
       'percentile_allegation_civilian': '0.022',
       'percentile_allegation_internal': '75.065',
       'percentile_trr': '0.046',
-      'percentile_allegation': '31.201'
-    }
-  ]
+      'percentile_allegation': '31.201',
+    },
+  ],
 };
 const officerNotEnoughPercentile = {
   'officer_id': 2234,
@@ -93,9 +93,9 @@ const officerNotEnoughPercentile = {
       year: 2007,
       'percentile_allegation_civilian': '0.022',
       'percentile_allegation_internal': '75.065',
-      'percentile_allegation': '31.201'
-    }
-  ]
+      'percentile_allegation': '31.201',
+    },
+  ],
 };
 
 const mockTimeline = [
@@ -105,14 +105,14 @@ const mockTimeline = [
     'unit_description': 'District 007',
     rank: 'Detective',
     date: '2006-03-01',
-    'award_type': 'Honorable Mention'
+    'award_type': 'Honorable Mention',
   },
   {
     'unit_name': '007',
     kind: 'RANK_CHANGE',
     'unit_description': 'District 007',
     rank: 'Detective',
-    date: '2006-02-28'
+    date: '2006-02-28',
   },
   {
     'trr_id': 1,
@@ -122,7 +122,7 @@ const mockTimeline = [
     'unit_description': 'District 007',
     rank: 'Police Officer',
     date: '2005-12-17',
-    'firearm_used': false
+    'firearm_used': false,
   },
   {
     'trr_id': 2,
@@ -132,14 +132,14 @@ const mockTimeline = [
     'unit_description': 'District 007',
     rank: 'Police Officer',
     date: '2005-03-17',
-    'firearm_used': false
+    'firearm_used': false,
   },
   {
     'unit_name': '007',
     kind: 'UNIT_CHANGE',
     'unit_description': 'District 007',
     rank: 'Police Officer',
-    date: '2005-01-07'
+    date: '2005-01-07',
   },
   {
     'trr_id': 3,
@@ -149,7 +149,7 @@ const mockTimeline = [
     'unit_description': 'Mobile Strike Force',
     rank: 'Police Officer',
     date: '2004-12-17',
-    'firearm_used': true
+    'firearm_used': true,
   },
   {
     category: 'Illegal Search',
@@ -179,8 +179,8 @@ const mockTimeline = [
         url: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/262463136&amp',
         title: 'Audio Clip',
         'file_type': 'audio',
-      }
-    ]
+      },
+    ],
   },
   {
     category: 'Criminal Misconduct',
@@ -210,28 +210,28 @@ const mockTimeline = [
         'preview_image_url': 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
         title: 'CRID 294088 CR',
         'file_type': 'document',
-      }
-    ]
+      },
+    ],
   },
   {
     'unit_name': '153',
     kind: 'RANK_CHANGE',
     'unit_description': 'Mobile Strike Force',
     rank: 'Police Officer',
-    date: '2000-04-28'
+    date: '2000-04-28',
   },
   {
     'unit_name': '153',
     kind: 'UNIT_CHANGE',
     'unit_description': 'Mobile Strike Force',
     rank: 'Police Officer',
-    date: '2000-04-28'
+    date: '2000-04-28',
   },
   {
     kind: 'JOINED',
     'unit_description': 'Recruit Training Section',
-    date: '2000-02-05'
-  }
+    date: '2000-02-05',
+  },
 ];
 
 const mockCoaccusals = [
@@ -242,9 +242,9 @@ const mockCoaccusals = [
     percentile: {
       'percentile_trr': '49.1036',
       'percentile_allegation_civilian': '99.2525',
-      'percentile_allegation_internal': '79.9133'
+      'percentile_allegation_internal': '79.9133',
     },
-    'coaccusal_count': 47
+    'coaccusal_count': 47,
   },
 ];
 
@@ -264,8 +264,8 @@ const mockOfficerPageCms = {
           text: 'The corners of the triangle show the percentile score for this officer ' +
             'in each of three types of data: complaints from civilians, complaints from other officers, ' +
             'and self-reported uses of force.',
-          type: 'unstyled'
-        }]
+          type: 'unstyled',
+        }],
       },
     },
     {
@@ -282,8 +282,8 @@ const mockOfficerPageCms = {
           text: 'If one corner of the black inner triangle is close to reaching the outer triangle, ' +
             'then this officer is named in a relatively high rate ' +
             'of incidents of that type compared with other officers.',
-          type: 'unstyled'
-        }]
+          type: 'unstyled',
+        }],
       },
     },
     {
@@ -299,8 +299,8 @@ const mockOfficerPageCms = {
           key: '2ff85',
           text: 'If an officer’s percentile rank for civilian complaints is 99% ' +
             'then this means that they were accused in more civilian complaints per year than 99% of other officers.',
-          type: 'unstyled'
-        }]
+          type: 'unstyled',
+        }],
       },
     },
     {
@@ -318,8 +318,8 @@ const mockOfficerPageCms = {
             'use of force data is only available since 2004. ' +
             'The overall allegation count percentiles displayed on the officer profile page ' +
             'are calculated using data that reaches back to 1988.',
-          type: 'unstyled'
-        }]
+          type: 'unstyled',
+        }],
       },
     },
     {
@@ -334,11 +334,11 @@ const mockOfficerPageCms = {
           inlineStyleRanges: [],
           key: '2ff86',
           text: 'There is not enough data to construct a radar graph for this officer.',
-          type: 'unstyled'
-        }]
+          type: 'unstyled',
+        }],
       },
-    }
-  ]
+    },
+  ],
 };
 
 describe('OfficerPage test', function () {

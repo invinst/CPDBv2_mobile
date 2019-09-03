@@ -19,7 +19,6 @@
     background-color: white
     font-size: 14px
     padding: $side-margin
-    border-bottom: 2px solid $alto-solid
 
     .query-input-container
       position: relative
@@ -40,7 +39,7 @@
         background-color: $wild-sand
 
         @include placeholder
-          color: $dusty-gray
+          color: $boulder
           font: inherit
 
         &:not([value=''])
@@ -93,6 +92,11 @@
   padding: 0
   text-align: center
   width: auto
+  box-shadow: 0 1px 2px 0 $black15-color
+
+  &.removed
+    background-color: $wild-sand
+    color: $thunder
 
 .toast-body
   font-family: $san-francisco

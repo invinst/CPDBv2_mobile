@@ -58,7 +58,7 @@ export const trrSelector = createSelector(
     return {
       category: get(trr, 'force_category'),
       officer: officerSelector(trr),
-      info: trrInfoSelector(trr)
+      info: trrInfoSelector(trr),
     };
   }
 );

@@ -5,7 +5,7 @@ import style from './investigation-timeline.sass';
 
 const greydishColor = '#adadad';
 const altoColor = '#d8d8d8';
-const mediumGrayColor = '#9b9b9b';
+const boulderColor = '#767676';
 const hardBlackColor = '#1a1818';
 
 const milestoneDistance = 61;
@@ -42,7 +42,7 @@ export default class InvestigationTimeline extends Component {
     const timelineCircleDisplayProps = [
       { key: '1', r: '5.5', cx: '9', strokeWidth: '1', stroke: greydishColor, fill: 'white' },
       { key: '2', r: '2.5', cx: '9', fill: greydishColor },
-      { key: '3', r: '5.5', cx: '9', fill: greydishColor }
+      { key: '3', r: '5.5', cx: '9', fill: greydishColor },
     ];
 
     return (
@@ -69,7 +69,7 @@ export default class InvestigationTimeline extends Component {
           map(timeline, ({ date, events }, index) => {
             const currentY = 14 + index * milestoneDistance;
             const dateText = !date ? null : (
-              <text x='26' y={ currentY } className='date' fill={ mediumGrayColor }>
+              <text x='26' y={ currentY } className='date' fill={ boulderColor }>
                 { date }
               </text>
             );
@@ -111,5 +111,5 @@ export default class InvestigationTimeline extends Component {
 InvestigationTimeline.propTypes = {
   startDate: PropTypes.string,
   endDate: PropTypes.string,
-  incidentDate: PropTypes.string
+  incidentDate: PropTypes.string,
 };

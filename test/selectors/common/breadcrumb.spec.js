@@ -2,32 +2,32 @@ import { breadcrumbTextSelector, breadcrumbSelector } from 'selectors/common/bre
 
 
 describe('breadcrumbs selectors', function () {
-  describe('breadcrumbTextSelector', () => {
-    it('should return breadcrumb text', () => {
+  describe('breadcrumbTextSelector', function () {
+    it('should return breadcrumb text', function () {
       const state = {
         breadcrumbMapping: {
-          '/trr/123/': 'TRR 123'
-        }
+          '/trr/123/': 'TRR 123',
+        },
       };
 
       breadcrumbTextSelector(state, { url: '/trr/123/' }).should.eql('TRR 123');
     });
 
-    it('should return breadcrumb text for officer with tab name', () => {
+    it('should return breadcrumb text for officer with tab name', function () {
       const state = {
         breadcrumbMapping: {
-          '/officer/123/jerome-finnigan/': 'Jerome Finnigan'
-        }
+          '/officer/123/jerome-finnigan/': 'Jerome Finnigan',
+        },
       };
 
       breadcrumbTextSelector(state, { url: '/officer/123/jerome-finnigan/coaccusals/' }).should.eql('Jerome Finnigan');
     });
 
-    it('should return breadcrumb text for pinboard', () => {
+    it('should return breadcrumb text for pinboard', function () {
       const state = {
         breadcrumbMapping: {
-          '/pinboard/6f540c04/': 'Pinboard'
-        }
+          '/pinboard/6f540c04/': 'Pinboard',
+        },
       };
 
       breadcrumbTextSelector(state, { url: '/pinboard/6f540c04/untitled-pinboard/' }).should.eql('Pinboard');

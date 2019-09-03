@@ -10,7 +10,7 @@ describe('cms reducer', function () {
   it('should handle COMPLAINT_PAGE_CMS_REQUEST_SUCCESS', function () {
     cmsRequested({}, {
       type: COMPLAINT_PAGE_CMS_REQUEST_SUCCESS,
-      payload: { fields: [1, 2] }
+      payload: { fields: [1, 2] },
     }).should.be.true();
   });
 });

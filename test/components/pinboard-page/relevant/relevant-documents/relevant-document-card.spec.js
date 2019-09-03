@@ -21,7 +21,7 @@ describe('<RelevantDocumentCard />', function () {
       items: [
         { axis: 'Use of Force Reports', value: 63.0035 },
         { axis: 'Internal Allegations', value: 88.3297 },
-        { axis: 'Civilian Allegations', value: 98.7841 }
+        { axis: 'Civilian Allegations', value: 98.7841 },
       ],
     },
   }, {
@@ -35,7 +35,7 @@ describe('<RelevantDocumentCard />', function () {
       items: [
         { axis: 'Use of Force Reports', value: 78.2707 },
         { axis: 'Internal Allegations', value: 0 },
-        { axis: 'Civilian Allegations', value: 98.5549 }
+        { axis: 'Civilian Allegations', value: 98.5549 },
       ],
     },
   }, {

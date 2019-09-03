@@ -24,7 +24,7 @@ const Victim = ({ victims=[] }) => {
 };
 
 Victim.propTypes = {
-  victims: PropTypes.array
+  victims: PropTypes.array,
 };
 
 export default Victim;

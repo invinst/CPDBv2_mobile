@@ -21,15 +21,15 @@ describe('<SearchPage />', function () {
     IntercomUtils.showIntercomLauncher.restore();
   });
 
-  it('should be renderable', () => {
+  it('should be renderable', function () {
     const wrapper = shallow(
       <SearchPage />
     );
     wrapper.should.be.ok();
   });
 
-  describe('getCategoriesWithSuggestions', () => {
-    it('should return defined categories with data from props', () => {
+  describe('getCategoriesWithSuggestions', function () {
+    it('should return defined categories with data from props', function () {
       const wrapper = shallow(
         <SearchPage
           query={ 'ab' }
@@ -44,14 +44,14 @@ describe('<SearchPage />', function () {
           id: 'officers',
           name: 'OFFICERS',
           path: 'OFFICER',
-          filter: 'Officers'
-        }
+          filter: 'Officers',
+        },
       ]);
     });
   });
 
-  describe('onInputChange', () => {
-    it('should dispatch inputChanged action', () => {
+  describe('onInputChange', function () {
+    it('should dispatch inputChanged action', function () {
       const dummyEvent = { currentTarget: { value: 'foo' } };
       const spyInputChanged = spy();
       const wrapper = shallow(
@@ -66,7 +66,7 @@ describe('<SearchPage />', function () {
       spyInputChanged.calledWith('foo').should.be.true();
     });
 
-    it('should call suggestTerm if query is of sufficient length', () => {
+    it('should call suggestTerm if query is of sufficient length', function () {
       const dummyEvent = { currentTarget: { value: 'foo' } };
       const spySuggestTerm = spy();
       const wrapper = mount(
@@ -83,7 +83,7 @@ describe('<SearchPage />', function () {
       spySuggestTerm.calledWith({ term: 'foo' }, undefined, '').should.be.true();
     });
 
-    it('should NOT call suggestTerm if query is empty or too short', () => {
+    it('should NOT call suggestTerm if query is empty or too short', function () {
       const spySuggestTerm = spy();
       const wrapper = mount(
         <SearchPage
@@ -115,11 +115,11 @@ describe('<SearchPage />', function () {
     pushBreadcrumbsSpy.calledWith({
       location: 'location',
       routes: 'routes',
-      params: 'params'
+      params: 'params',
     }).should.be.true();
   });
 
-  it('should focus the input element when mounted', () => {
+  it('should focus the input element when mounted', function () {
     const wrapper = shallow(<SearchPage />);
     const instance = wrapper.instance();
     const spyFocus = spy();
@@ -127,8 +127,8 @@ describe('<SearchPage />', function () {
 
     instance.searchInput = {
       inputElement: {
-        focus: spyFocus
-      }
+        focus: spyFocus,
+      },
     };
     instance.componentDidMount();
 
@@ -155,8 +155,12 @@ describe('<SearchPage />', function () {
       );
 
       const clearableInput = wrapper.find('ClearableInput');
-      clearableInput.prop('value').should.be.eql('meh');
-      clearableInput.prop('placeholder').should.be.eql('Search');
+      clearableInput.prop('value').should.eql('meh');
+      clearableInput.prop('placeholder').should.eql('Search');
+      clearableInput.prop('spellCheck').should.eql(false);
+      clearableInput.prop('autoComplete').should.eql('off');
+      clearableInput.prop('autoCorrect').should.eql('off');
+      clearableInput.prop('autoCapitalize').should.eql('off');
 
       clearableInput.prop('onChange')();
       this.stubOnInputChange.calledOnce.should.be.true();
@@ -173,8 +177,8 @@ describe('<SearchPage />', function () {
     });
   });
 
-  describe('updateLastCategoryHeight', () => {
-    it('should run correctly', () => {
+  describe('updateLastCategoryHeight', function () {
+    it('should run correctly', function () {
       const wrapper = shallow(
         <SearchPage />
       );
@@ -190,7 +194,7 @@ describe('<SearchPage />', function () {
     });
   });
 
-  describe('renderCategories()', () => {
+  describe('renderCategories()', function () {
     beforeEach(function () {
       stub(SearchPage.prototype.updateLastCategoryHeight, 'bind');
       SearchPage.prototype.updateLastCategoryHeight.bind.returns(SearchPage.prototype.updateLastCategoryHeight);
@@ -200,13 +204,13 @@ describe('<SearchPage />', function () {
       SearchPage.prototype.updateLastCategoryHeight.bind.restore();
     });
 
-    it('should render SearchCategory components', () => {
+    it('should render SearchCategory components', function () {
       const officersProp = {
-        data: ['data']
+        data: ['data'],
       };
 
       const unitsProp = {
-        data: ['data']
+        data: ['data'],
       };
 
       const wrapper = shallow(
@@ -227,15 +231,15 @@ describe('<SearchPage />', function () {
       lastCategory.prop('onHeightReady').should.be.eql(SearchPage.prototype.updateLastCategoryHeight);
     });
 
-    it('should pass correct allButtonClickHandler prop to SearchCategory', () => {
+    it('should pass correct allButtonClickHandler prop to SearchCategory', function () {
       const stubBoundCallback = stub(SearchPage.prototype.chooseCategory, 'bind');
       stubBoundCallback.returns(SearchPage.prototype.chooseCategory);
 
       const officersProp = {
-        data: ['data']
+        data: ['data'],
       };
       const unitsProp = {
-        data: ['data']
+        data: ['data'],
       };
 
       const wrapper = shallow(
@@ -267,7 +271,7 @@ describe('<SearchPage />', function () {
 
       wrapper.instance().chooseCategory({
         path: 'mypath',
-        id: 'myid'
+        id: 'myid',
       });
 
       suggestAllFromCategory.calledWith('mypath', 'wa').should.be.true();
@@ -278,10 +282,10 @@ describe('<SearchPage />', function () {
   describe('"view single category" mode', function () {
     it('should only display search results of the chosen single category', function () {
       const crsProp = {
-        data: ['data']
+        data: ['data'],
       };
       const officersProp = {
-        data: ['data']
+        data: ['data'],
       };
 
       const wrapper = shallow(
@@ -334,8 +338,8 @@ describe('<SearchPage />', function () {
     const createPinboard = stub().usingPromise(Promise).resolves({
       payload: {
         id: '5cd06f2b',
-        url: '/pinboard/5cd06f2b/'
-      }
+        url: '/pinboard/5cd06f2b/',
+      },
     });
 
     const wrapper = mount(
@@ -365,9 +369,9 @@ describe('<SearchPage />', function () {
       toast: {
         type: 'OFFICER',
         actionType: 'added',
-      }
+      },
     });
 
-    showToastStub.should.be.called();
+    showToastStub.should.be.calledWith('OFFICER added', 'added');
   });
 });

@@ -17,7 +17,7 @@ describe('<Info />', function () {
       beat: '612',
       point: {
         lat: 1.2,
-        lng: 2.3
+        lng: 2.3,
       },
       trrId: 123,
     };

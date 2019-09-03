@@ -5,9 +5,9 @@ export const get = (url, types, cancelToken) => ((params, adapter=undefined, url
       request: {
         url: url + urlSuffix,
         params,
-        adapter
-      }
-    }
+        adapter,
+      },
+    },
   };
 
   if (typeof meta !== 'undefined') {
@@ -26,10 +26,10 @@ export const getUrl = (url, types, meta) => (
     types,
     payload: {
       request: {
-        url
-      }
+        url,
+      },
     },
-    meta
+    meta,
   }
 );
 
@@ -40,9 +40,9 @@ export const post = (url, types) => ((data, adapter) => ({
       method: 'POST',
       url,
       data,
-      adapter
-    }
-  }
+      adapter,
+    },
+  },
 }));
 
 export const put = (url, types) => ((data, adapter) => ({
@@ -52,7 +52,7 @@ export const put = (url, types) => ((data, adapter) => ({
       method: 'PUT',
       url,
       data,
-      adapter
-    }
-  }
+      adapter,
+    },
+  },
 }));

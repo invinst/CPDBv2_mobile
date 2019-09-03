@@ -10,12 +10,12 @@ describe('pinboard utils', function () {
     it('should return correct url', function () {
       generatePinboardUrl({
         id: '5cd06f2b',
-        title: 'Title'
+        title: 'Title',
       }).should.be.equal('/pinboard/5cd06f2b/title/');
 
       generatePinboardUrl({
         id: '5cd06f2b',
-        title: ''
+        title: '',
       }).should.be.equal('/pinboard/5cd06f2b/untitled-pinboard/');
     });
   });

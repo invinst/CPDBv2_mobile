@@ -28,7 +28,7 @@ export default function withUndoCard(
       super(props);
 
       this.state = {
-        status: DISPLAY
+        status: DISPLAY,
       };
 
       this.removeItem = this.removeItem.bind(this);
@@ -42,12 +42,12 @@ export default function withUndoCard(
 
     removeItem(item) {
       this.setState({
-        status: REMOVING
+        status: REMOVING,
       });
 
       this.countdown = setTimeout(() => {
         this.setState({
-          status: REMOVED
+          status: REMOVED,
         });
 
         get(this.props, actionName, noop)(item);
@@ -58,7 +58,7 @@ export default function withUndoCard(
       clearTimeout(this.countdown);
 
       this.setState({
-        status: DISPLAY
+        status: DISPLAY,
       });
     }
 
@@ -94,7 +94,7 @@ export default function withUndoCard(
   };
 
   _Base.defaultProps = {
-    removeItemInPinboardPage: noop
+    removeItemInPinboardPage: noop,
   };
 
   return _Base;

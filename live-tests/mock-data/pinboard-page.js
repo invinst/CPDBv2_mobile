@@ -52,9 +52,9 @@ const officer123 = {
       'percentile_allegation_civilian': '0.022',
       'percentile_allegation_internal': '75.065',
       'percentile_trr': '0.046',
-      'percentile_allegation': '31.201'
-    }
-  ]
+      'percentile_allegation': '31.201',
+    },
+  ],
 };
 
 const pinboardData = {
@@ -72,7 +72,7 @@ const pinboardCRsData = [
     'incident_date': '2010-01-01',
     'point': { 'lon': 1.0, 'lat': 1.0 },
     'most_common_category': 'Use Of Force',
-  }
+  },
 ];
 
 const pinboardOfficersData = [
@@ -93,8 +93,8 @@ const pinboardOfficersData = [
       'percentile_allegation_internal': '99.7840',
       'year': 2016,
       'id': 1,
-    }
-  }
+    },
+  },
 ];
 
 const pinboardTRRsData = [
@@ -103,7 +103,7 @@ const pinboardTRRsData = [
     'trr_datetime': '2012-01-01',
     'category': 'Impact Weapon',
     'point': { 'lon': 1.0, 'lat': 1.0 },
-  }
+  },
 ];
 
 const socialGraphData = {
@@ -114,8 +114,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '4.4000',
         'percentile_allegation_internal': '5.5000',
-        'percentile_trr': '6.6000'
-      }
+        'percentile_trr': '6.6000',
+      },
     },
     {
       'full_name': 'Isaac Lee',
@@ -123,8 +123,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '7.7000',
         'percentile_allegation_internal': '8.8000',
-        'percentile_trr': '9.9000'
-      }
+        'percentile_trr': '9.9000',
+      },
     },
     {
       'full_name': 'Thomas Kampenga',
@@ -132,8 +132,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '10.10000',
         'percentile_allegation_internal': '11.1100',
-        'percentile_trr': '12.1200'
-      }
+        'percentile_trr': '12.1200',
+      },
     },
     {
       'full_name': 'Melvin Ector',
@@ -141,8 +141,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '13.1300',
         'percentile_allegation_internal': '14.1400',
-        'percentile_trr': '15.1500'
-      }
+        'percentile_trr': '15.1500',
+      },
     },
     {
       'full_name': 'Sean Brandon',
@@ -150,8 +150,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '16.1600',
         'percentile_allegation_internal': '17.1700',
-        'percentile_trr': '18.1800'
-      }
+        'percentile_trr': '18.1800',
+      },
     },
     {
       'full_name': 'Estella Perez-Stanford',
@@ -159,8 +159,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '19.1900',
         'percentile_allegation_internal': '20.2000',
-        'percentile_trr': '21.2100'
-      }
+        'percentile_trr': '21.2100',
+      },
     },
     {
       'full_name': 'Johnny Cavers',
@@ -168,8 +168,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '22.2200',
         'percentile_allegation_internal': '23.2300',
-        'percentile_trr': '24.2400'
-      }
+        'percentile_trr': '24.2400',
+      },
     },
     {
       'full_name': 'Gilbert Cobb',
@@ -177,8 +177,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '25.2500',
         'percentile_allegation_internal': '26.2600',
-        'percentile_trr': '27.2700'
-      }
+        'percentile_trr': '27.2700',
+      },
     },
     {
       'full_name': 'John Hart',
@@ -186,8 +186,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '28.2800',
         'percentile_allegation_internal': '29.2900',
-        'percentile_trr': '30.3000'
-      }
+        'percentile_trr': '30.3000',
+      },
     },
     {
       'full_name': 'William Roberison',
@@ -195,8 +195,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '31.3100',
         'percentile_allegation_internal': '32.3200',
-        'percentile_trr': '33.3300'
-      }
+        'percentile_trr': '33.3300',
+      },
     },
     {
       'full_name': 'Francis Higgins',
@@ -204,8 +204,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '34.3400',
         'percentile_allegation_internal': '35.3500',
-        'percentile_trr': '36.3600'
-      }
+        'percentile_trr': '36.3600',
+      },
     },
     {
       'full_name': 'David Portis',
@@ -213,8 +213,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '37.3700',
         'percentile_allegation_internal': '38.3800',
-        'percentile_trr': '39.3900'
-      }
+        'percentile_trr': '39.3900',
+      },
     },
     {
       'full_name': 'Eugene Offett',
@@ -222,8 +222,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '40.4000',
         'percentile_allegation_internal': '41.4100',
-        'percentile_trr': '42.4200'
-      }
+        'percentile_trr': '42.4200',
+      },
     },
     {
       'full_name': 'Joseph Blaye',
@@ -231,8 +231,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '43.4300',
         'percentile_allegation_internal': '44.4400',
-        'percentile_trr': '45.4500'
-      }
+        'percentile_trr': '45.4500',
+      },
     },
     {
       'full_name': 'Charles Toussas',
@@ -240,8 +240,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '46.4600',
         'percentile_allegation_internal': '47.4700',
-        'percentile_trr': '48.4800'
-      }
+        'percentile_trr': '48.4800',
+      },
     },
     {
       'full_name': 'Bennie Watson',
@@ -249,8 +249,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '49.4900',
         'percentile_allegation_internal': '50.5000',
-        'percentile_trr': '51.5100'
-      }
+        'percentile_trr': '51.5100',
+      },
     },
     {
       'full_name': 'Tracy Hughes',
@@ -258,8 +258,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '52.5200',
         'percentile_allegation_internal': '53.5300',
-        'percentile_trr': '54.5400'
-      }
+        'percentile_trr': '54.5400',
+      },
     },
     {
       'full_name': 'Donnell Calhoun',
@@ -267,8 +267,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '55.5500',
         'percentile_allegation_internal': '56.5600',
-        'percentile_trr': '57.5700'
-      }
+        'percentile_trr': '57.5700',
+      },
     },
     {
       'full_name': 'Hardy White',
@@ -276,8 +276,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '58.5800',
         'percentile_allegation_internal': '59.5900',
-        'percentile_trr': '60.6000'
-      }
+        'percentile_trr': '60.6000',
+      },
     },
     {
       'full_name': 'Matthew Brandon',
@@ -285,8 +285,8 @@ const socialGraphData = {
       'percentile': {
         'percentile_allegation_civilian': '61.6100',
         'percentile_allegation_internal': '62.6200',
-        'percentile_trr': '63.6300'
-      }
+        'percentile_trr': '63.6300',
+      },
     },
   ],
   'coaccused_data': [
@@ -371,7 +371,7 @@ const socialGraphData = {
     { 'officer_id_1': 2671, 'officer_id_2': 15956, 'incident_date': '2006-03-15T00:00:00Z', 'accussed_count': 5 },
     { 'officer_id_1': 3663, 'officer_id_2': 28805, 'incident_date': '2008-01-11T00:00:00Z', 'accussed_count': 7 },
     { 'officer_id_1': 3663, 'officer_id_2': 4269, 'incident_date': '2008-01-11T00:00:00Z', 'accussed_count': 3 },
-    { 'officer_id_1': 2671, 'officer_id_2': 15956, 'incident_date': '2008-01-11T00:00:00Z', 'accussed_count': 6 }
+    { 'officer_id_1': 2671, 'officer_id_2': 15956, 'incident_date': '2008-01-11T00:00:00Z', 'accussed_count': 6 },
   ],
   'list_event': [
     '1990-01-09 00:00:00+00:00',
@@ -384,7 +384,7 @@ const socialGraphData = {
     '1999-02-08 00:00:00+00:00',
     '1999-07-22 00:00:00+00:00',
     '2006-03-15 00:00:00+00:00',
-    '2008-01-11 00:00:00+00:00'
+    '2008-01-11 00:00:00+00:00',
   ],
 };
 
@@ -409,7 +409,7 @@ const socialGraphBigData = {
     { 'full_name': 'Tracy Hughes', id: 12737 },
     { 'full_name': 'Donnell Calhoun', id: 3663 },
     { 'full_name': 'Hardy White', id: 30466 },
-    { 'full_name': 'Matthew Brandon', id: 2675 }
+    { 'full_name': 'Matthew Brandon', id: 2675 },
   ],
   'coaccused_data': [
     { 'officer_id_1': 2675, 'officer_id_2': 24157, 'incident_date': '1990-01-09', 'accussed_count': 2 },
@@ -509,7 +509,7 @@ const socialGraphBigData = {
     { 'officer_id_1': 3663, 'officer_id_2': 4269, 'incident_date': '2003-10-25', 'accussed_count': 4 },
     { 'officer_id_1': 2671, 'officer_id_2': 15956, 'incident_date': '2006-03-15', 'accussed_count': 16 },
     { 'officer_id_1': 2671, 'officer_id_2': 15956, 'incident_date': '2006-09-11', 'accussed_count': 17 },
-    { 'officer_id_1': 2671, 'officer_id_2': 15956, 'incident_date': '2008-01-11', 'accussed_count': 18 }
+    { 'officer_id_1': 2671, 'officer_id_2': 15956, 'incident_date': '2008-01-11', 'accussed_count': 18 },
   ],
   'list_event': [
     '1990-01-09',
@@ -590,13 +590,13 @@ const geographicCrsData = {
       'victims': [
         {
           'gender': 'Female',
-          'race': 'Black'
+          'race': 'Black',
         },
         {
           'gender': 'Female',
-          'race': 'Black'
-        }
-      ]
+          'race': 'Black',
+        },
+      ],
     },
     {
       'date': '1981-05-31',
@@ -606,9 +606,9 @@ const geographicCrsData = {
       'kind': 'CR',
       'point': {
         'lon': -87.6183565,
-        'lat': 41.8095411
+        'lat': 41.8095411,
       },
-      'victims': []
+      'victims': [],
     },
     {
       'date': '1981-05-31',
@@ -618,9 +618,9 @@ const geographicCrsData = {
       'kind': 'CR',
       'point': {
         'lon': -87.6183565,
-        'lat': 41.8095411
+        'lat': 41.8095411,
       },
-      'victims': []
+      'victims': [],
     },
     {
       'date': '1986-02-15',
@@ -630,9 +630,9 @@ const geographicCrsData = {
       'kind': 'CR',
       'point': {
         'lon': -87.6276846,
-        'lat': 41.8683196
+        'lat': 41.8683196,
       },
-      'victims': []
+      'victims': [],
     },
     {
       'date': '1987-05-21',
@@ -642,11 +642,11 @@ const geographicCrsData = {
       'kind': 'CR',
       'point': {
         'lon': -87.705456,
-        'lat': 41.873988
+        'lat': 41.873988,
       },
-      'victims': []
+      'victims': [],
     },
-  ]
+  ],
 };
 
 const geographicTrrsData = {
@@ -661,8 +661,8 @@ const geographicTrrsData = {
       'firearm_used': false,
       'point': {
         'lon': -87.613242,
-        'lat': 41.6445969
-      }
+        'lat': 41.6445969,
+      },
     },
     {
       'trr_id': 6238,
@@ -672,10 +672,10 @@ const geographicTrrsData = {
       'firearm_used': false,
       'point': {
         'lon': -87.6013364,
-        'lat': 41.6936152
-      }
+        'lat': 41.6936152,
+      },
     },
-  ]
+  ],
 };
 
 const updatePinboardTitleParams = {
@@ -736,7 +736,7 @@ const firstRelevantDocument = {
     'crid': '1071234',
     'category': 'Lockup Procedures',
     'incident_date': '2004-04-23',
-    'officers': [firstRelevantDocumentOfficer].concat(_.times(9, generateRelevantDocumentOfficer))
+    'officers': [firstRelevantDocumentOfficer].concat(_.times(9, generateRelevantDocumentOfficer)),
   },
 };
 const generateRelevantDocument = (id) => ({
@@ -747,8 +747,8 @@ const generateRelevantDocument = (id) => ({
     'crid': '1079876',
     'category': 'Operations/Personnel Violation',
     'incident_date': '2014-05-02',
-    'officers': []
-  }
+    'officers': [],
+  },
 });
 const firstRelevantDocumentsResponse = getPaginationResponse(
   baseRelevantDocumentsUrl,
@@ -811,15 +811,15 @@ const firstRelevantComplaint = {
       'rank': 'Police officer',
       'full_name': 'Queen Jones',
       'coaccusal_count': 47,
-    }))
-  ]
+    })),
+  ],
 };
 const generateRelevantComplaint = crid => ({
   crid,
   'category': 'Operations/Personnel Violation',
   'incident_date': '2014-05-02',
   'point': { lat: 45, lon: -87 },
-  'officers': []
+  'officers': [],
 });
 const firstRelevantComplaintsResponse = getPaginationResponse(
   baseRelevantComplaintsUrl,
@@ -850,11 +850,11 @@ const mockCMSPinboardPage = {
           type: 'unstyled',
           depth: 0,
           entityRanges: [],
-          inlineStyleRanges: []
-        }
+          inlineStyleRanges: [],
+        },
       ],
-      entityMap: {}
-    }
+      entityMap: {},
+    },
   }, {
     name: 'empty_pinboard_description',
     type: 'rich_text',
@@ -868,7 +868,7 @@ const mockCMSPinboardPage = {
           type: 'unstyled',
           depth: 0,
           entityRanges: [],
-          inlineStyleRanges: []
+          inlineStyleRanges: [],
         }, {
           key: '6qsci',
           data: {},
@@ -876,7 +876,7 @@ const mockCMSPinboardPage = {
           type: 'unstyled',
           depth: 0,
           entityRanges: [],
-          inlineStyleRanges: []
+          inlineStyleRanges: [],
         }, {
           key: '41tdu',
           data: {},
@@ -884,12 +884,12 @@ const mockCMSPinboardPage = {
           type: 'unstyled',
           depth: 0,
           entityRanges: [],
-          inlineStyleRanges: []
+          inlineStyleRanges: [],
         },
       ],
-      entityMap: {}
-    }
-  }]
+      entityMap: {},
+    },
+  }],
 };
 
 module.exports = {

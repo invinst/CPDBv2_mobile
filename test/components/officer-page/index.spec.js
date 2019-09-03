@@ -6,16 +6,18 @@ import { cloneDeep } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
 
-import Header from 'components/shared/header';
+import WithHeader from 'components/shared/with-header';
 import OfficerPage from 'components/officer-page';
 import OfficerPageContainer from 'containers/officer-page-container';
 import OfficerRadarChart from 'components/officer-page/radar-chart';
 import LoadingPage from 'components/shared/loading-page';
 import NotMatchedOfficerPage from 'components/officer-page/not-matched-officer-page';
+import AnimatedRadarChart from 'components/officer-page/radar-chart';
 import SectionRow from 'components/officer-page/section-row';
 import MetricWidget from 'components/officer-page/metric-widget';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import { OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
+import Footer from 'components/footer';
 
 
 const mockStore = configureStore();
@@ -46,9 +48,9 @@ describe('<OfficerPage />', function () {
     };
   });
 
-  it('should be renderable', function () {
+  it('should render footer', function () {
     const wrapper = shallow(<OfficerPage />);
-    wrapper.should.be.ok();
+    wrapper.find(Footer).exists.should.be.ok();
   });
 
   it('should render LoadingPage if loading', function () {
@@ -83,7 +85,7 @@ describe('<OfficerPage />', function () {
       summary: { id: 123 },
       routes: [],
       location: {},
-      params: {}
+      params: {},
     });
 
     pushBreadcrumbSpy.calledWith({ routes: [], location: { pathname: 'officer/123/' }, params: { id: 123 } });
@@ -185,7 +187,7 @@ describe('<OfficerPage />', function () {
         { lifecycleExperimental: true }
       );
 
-      wrapper.setProps({ summary: this.summary, });
+      wrapper.setProps({ summary: this.summary });
 
       window.history.replaceState.should.be.called();
       const args = window.history.replaceState.getCall(0).args;
@@ -203,7 +205,7 @@ describe('<OfficerPage />', function () {
         />,
         { lifecycleExperimental: true }
       );
-      wrapper.setProps({ summary: this.summary, });
+      wrapper.setProps({ summary: this.summary });
 
       const tabbedPaneSection = wrapper.find(TabbedPaneSection);
       tabbedPaneSection.prop('currentTab').should.eql(OFFICER_PAGE_TAB_NAMES.ATTACHMENTS);
@@ -224,7 +226,7 @@ describe('<OfficerPage />', function () {
         />,
         { lifecycleExperimental: true }
       );
-      wrapper.setProps({ summary: this.summary, });
+      wrapper.setProps({ summary: this.summary });
 
       const tabbedPaneSection = wrapper.find(TabbedPaneSection);
       tabbedPaneSection.prop('currentTab').should.eql(OFFICER_PAGE_TAB_NAMES.TIMELINE);
@@ -245,7 +247,7 @@ describe('<OfficerPage />', function () {
         />,
         { lifecycleExperimental: true }
       );
-      wrapper.setProps({ summary: this.summary, });
+      wrapper.setProps({ summary: this.summary });
 
       const tabbedPaneSection = wrapper.find(TabbedPaneSection);
       tabbedPaneSection.prop('currentTab').should.eql(OFFICER_PAGE_TAB_NAMES.ATTACHMENTS);
@@ -266,7 +268,7 @@ describe('<OfficerPage />', function () {
         />,
         { lifecycleExperimental: true }
       );
-      wrapper.setProps({ summary: this.summary, });
+      wrapper.setProps({ summary: this.summary });
 
       const tabbedPaneSection = wrapper.find(TabbedPaneSection);
       tabbedPaneSection.prop('currentTab').should.eql(OFFICER_PAGE_TAB_NAMES.TIMELINE);
@@ -287,7 +289,7 @@ describe('<OfficerPage />', function () {
         />,
         { lifecycleExperimental: true }
       );
-      wrapper.setProps({ summary: this.summary, });
+      wrapper.setProps({ summary: this.summary });
 
       const tabbedPaneSection = wrapper.find(TabbedPaneSection);
       tabbedPaneSection.prop('currentTab').should.eql(OFFICER_PAGE_TAB_NAMES.TIMELINE);
@@ -326,7 +328,8 @@ describe('<OfficerPage />', function () {
       />
     );
 
-    wrapper.find(Header).exists().should.be.true();
+    const withHeader = wrapper.find(WithHeader);
+    withHeader.find(AnimatedRadarChart).exists().should.be.true();
   });
 
   it('should have BottomPadding', function () {
@@ -357,11 +360,11 @@ describe('<OfficerPage />', function () {
           unitDisplay: ' ',
           unitName: '153',
           year: 2000,
-        }]
+        }],
       },
       isSuccess: {
-        11: true
-      }
+        11: true,
+      },
     };
     const coaccusals = {
       data: {
@@ -370,15 +373,15 @@ describe('<OfficerPage />', function () {
           'full_name': 'Edward May',
           'rank': 'Detective',
           'coaccusal_count': 4,
-        }]
+        }],
       },
       isSuccess: {
-        11: true
-      }
+        11: true,
+      },
     };
     const stateData = {
       breadcrumb: {
-        breadcrumbs: []
+        breadcrumbs: [],
       },
       officerPage: {
         officers: {
@@ -426,26 +429,26 @@ describe('<OfficerPage />', function () {
                   'percentile_allegation_civilian': '75.065',
                   'percentile_allegation_internal': '0.022',
                   'percentile_trr': '0.046',
-                  'percentile_allegation': '31.201'
-                }
-              ]
-            }
-          }
+                  'percentile_allegation': '31.201',
+                },
+              ],
+            },
+          },
         },
         timeline: timeline,
         coaccusals: coaccusals,
         cms: [
           {
             type: 'rich_text',
-            name: 'triangle_description'
-          }
-        ]
-      }
+            name: 'triangle_description',
+          },
+        ],
+      },
     };
 
     const emptyBadgeStateData = {
       breadcrumb: {
-        breadcrumbs: []
+        breadcrumbs: [],
       },
       officerPage: {
         officers: {
@@ -493,26 +496,26 @@ describe('<OfficerPage />', function () {
                   'percentile_allegation_civilian': '75.065',
                   'percentile_allegation_internal': '0.022',
                   'percentile_trr': '0.046',
-                  'percentile_allegation': '31.201'
-                }
-              ]
-            }
-          }
+                  'percentile_allegation': '31.201',
+                },
+              ],
+            },
+          },
         },
         timeline: timeline,
         coaccusals: coaccusals,
         cms: [
           {
             type: 'rich_text',
-            name: 'triangle_description'
-          }
-        ]
-      }
+            name: 'triangle_description',
+          },
+        ],
+      },
     };
 
     const emptyHistoricBadgeStateData = {
       breadcrumb: {
-        breadcrumbs: []
+        breadcrumbs: [],
       },
       officerPage: {
         officers: {
@@ -560,26 +563,26 @@ describe('<OfficerPage />', function () {
                   'percentile_allegation_civilian': '75.065',
                   'percentile_allegation_internal': '0.022',
                   'percentile_trr': '0.046',
-                  'percentile_allegation': '31.201'
-                }
-              ]
-            }
-          }
+                  'percentile_allegation': '31.201',
+                },
+              ],
+            },
+          },
         },
         timeline: timeline,
         coaccusals: coaccusals,
         cms: [
           {
             type: 'rich_text',
-            name: 'triangle_description'
-          }
-        ]
-      }
+            name: 'triangle_description',
+          },
+        ],
+      },
     };
 
     const emptyBadgeAndHistoricBadgeStateData = {
       breadcrumb: {
-        breadcrumbs: []
+        breadcrumbs: [],
       },
       officerPage: {
         officers: {
@@ -627,21 +630,21 @@ describe('<OfficerPage />', function () {
                   'percentile_allegation_civilian': '75.065',
                   'percentile_allegation_internal': '0.022',
                   'percentile_trr': '0.046',
-                  'percentile_allegation': '31.201'
-                }
-              ]
-            }
-          }
+                  'percentile_allegation': '31.201',
+                },
+              ],
+            },
+          },
         },
         timeline: timeline,
         coaccusals: coaccusals,
         cms: [
           {
             type: 'rich_text',
-            name: 'triangle_description'
-          }
-        ]
-      }
+            name: 'triangle_description',
+          },
+        ],
+      },
     };
 
     it('should return LoadingPage if request is not complete', function () {
@@ -683,13 +686,13 @@ describe('<OfficerPage />', function () {
       officerRadarChart.prop('percentileData').should.deepEqual([{
         items: [{
           axis: 'Use of Force Reports',
-          value: 0.049
+          value: 0.049,
         }, {
           axis: 'Internal Allegations',
-          value: 0.023
+          value: 0.023,
         }, {
           axis: 'Civilian Allegations',
-          value: 66.251
+          value: 66.251,
         }],
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
@@ -697,13 +700,13 @@ describe('<OfficerPage />', function () {
       }, {
         items: [{
           axis: 'Use of Force Reports',
-          value: 0.046
+          value: 0.046,
         }, {
           axis: 'Internal Allegations',
-          value: 0.022
+          value: 0.022,
         }, {
           axis: 'Civilian Allegations',
-          value: 75.065
+          value: 75.065,
         }],
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
@@ -820,7 +823,7 @@ describe('<OfficerPage />', function () {
     it('should pluralize content correctly', function () {
       const data = {
         breadcrumb: {
-          breadcrumbs: []
+          breadcrumbs: [],
         },
         officerPage: {
           officers: {
@@ -868,21 +871,21 @@ describe('<OfficerPage />', function () {
                     'percentile_allegation_civilian': '75.065',
                     'percentile_allegation_internal': '0.022',
                     'percentile_trr': '0.046',
-                    'percentile_allegation': '31.201'
-                  }
-                ]
-              }
-            }
+                    'percentile_allegation': '31.201',
+                  },
+                ],
+              },
+            },
           },
           timeline: timeline,
           coaccusals: coaccusals,
           cms: [
             {
               type: 'rich_text',
-              name: 'triangle_description'
-            }
-          ]
-        }
+              name: 'triangle_description',
+            },
+          ],
+        },
       };
 
       const wrapper = mount(
@@ -912,7 +915,7 @@ describe('<OfficerPage />', function () {
     it('should skip some content if data is not available', function () {
       const data = {
         breadcrumb: {
-          breadcrumbs: []
+          breadcrumbs: [],
         },
         officerPage: {
           officers: {
@@ -936,19 +939,19 @@ describe('<OfficerPage />', function () {
                   description: 'District 005',
                   'unit_name': '005',
                 },
-                percentiles: []
-              }
-            }
+                percentiles: [],
+              },
+            },
           },
           timeline: timeline,
           coaccusals: coaccusals,
           cms: [
             {
               type: 'rich_text',
-              name: 'triangle_description'
-            }
-          ]
-        }
+              name: 'triangle_description',
+            },
+          ],
+        },
       };
 
       const wrapper = mount(
@@ -1025,7 +1028,7 @@ describe('<OfficerPage />', function () {
       const stubGetOfficerTimeline = stub();
       const stubGetOfficerCoaccusals = stub();
       const prevProps = {
-        requestOfficerId: 123
+        requestOfficerId: 123,
       };
 
       const wrapper = shallow(

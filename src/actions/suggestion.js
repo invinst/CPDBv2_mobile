@@ -40,7 +40,7 @@ export const suggestAllFromCategory = (categoryPath, query) => {
     [
       SUGGEST_ALL_REQUEST_START,
       SUGGEST_ALL_REQUEST_SUCCESS,
-      SUGGEST_ALL_REQUEST_FAILURE
+      SUGGEST_ALL_REQUEST_FAILURE,
     ]
   );
   return suggest({ contentType: categoryPath, term: query }, undefined, '');
@@ -52,7 +52,7 @@ export const fetchSuggestedSearchItems = () => {
     [
       FETCH_SUGGESTED_SEARCH_ITEMS_START,
       FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS,
-      FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE
+      FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
     ]
   );
 
