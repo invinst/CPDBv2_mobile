@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 export const clientConfig = {
-  responseType: 'json'
+  responseType: 'json',
 };
 
 const client = axios.create(clientConfig);

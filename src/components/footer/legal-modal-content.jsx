@@ -32,7 +32,7 @@ const LegalModalContent = ({ closeModal, openContact }) => {
 
 LegalModalContent.propTypes = {
   closeModal: PropTypes.func,
-  openContact: PropTypes.func
+  openContact: PropTypes.func,
 };
 
 export default LegalModalContent;

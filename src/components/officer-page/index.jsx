@@ -18,6 +18,7 @@ import { officerUrl } from 'utils/url-util';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import { TAB_MAP, OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
 import AppHistory from 'utils/history';
+import Footer from 'components/footer';
 
 
 class OfficerPage extends Component {
@@ -26,7 +27,7 @@ class OfficerPage extends Component {
     const { firstParam, secondParam } = props.params;
     const tabName = secondParam || firstParam;
     this.state = {
-      currentTab: TAB_MAP[tabName] || OFFICER_PAGE_TAB_NAMES.TIMELINE
+      currentTab: TAB_MAP[tabName] || OFFICER_PAGE_TAB_NAMES.TIMELINE,
     };
 
     this.changeTab = this.changeTab.bind(this);
@@ -67,7 +68,7 @@ class OfficerPage extends Component {
       getOfficerCoaccusals,
       getOfficerTimeline,
       isCoaccusalSuccess,
-      isTimelineSuccess
+      isTimelineSuccess,
     } = this.props;
 
     if (!requestOfficerId) {
@@ -212,6 +213,7 @@ class OfficerPage extends Component {
           officerId={ id }
         />
         <BottomPadding />
+        <Footer />
       </StickyContainer>
     );
   }

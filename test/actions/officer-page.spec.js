@@ -24,8 +24,8 @@ describe('officer actions', function () {
           request: {
             url: `${v2Url(constants.OFFICER_API_ENDPOINT)}11/`,
             adapter: undefined,
-            params: {}
-          }
+            params: {},
+          },
         },
       });
     });
@@ -39,8 +39,8 @@ describe('officer actions', function () {
           request: {
             url: v2Url(constants.OFFICER_PAGE_CMS_API_ENDPOINT),
             adapter: undefined,
-            params: undefined
-          }
+            params: undefined,
+          },
         },
       });
     });
@@ -50,7 +50,7 @@ describe('officer actions', function () {
     it('should return the right action', function () {
       changeOfficerId(123).should.eql({
         type: CHANGE_OFFICER_ID,
-        payload: 123
+        payload: 123,
       });
     });
   });

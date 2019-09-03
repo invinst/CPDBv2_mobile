@@ -99,7 +99,7 @@ export default class AnimatedRadarChart extends Component {
         ...d,
         value: (d.value - previousData[i].value) * (transitionValue - (index - 1)) + previousData[i].value,
       })),
-      visualTokenBackground: backgroundColor
+      visualTokenBackground: backgroundColor,
     };
   }
 
@@ -142,8 +142,8 @@ export default class AnimatedRadarChart extends Component {
         width: '100%',
         height: 'calc(100vh - 40px)',
         minHeight: 'calc(100vh - 40px)',
-        padding: 0
-      }
+        padding: 0,
+      },
     };
 
     if (itemData) {

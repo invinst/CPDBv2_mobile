@@ -4,5 +4,5 @@ import officers from './officers';
 
 
 export default combineReducers({
-  officers
+  officers,
 });

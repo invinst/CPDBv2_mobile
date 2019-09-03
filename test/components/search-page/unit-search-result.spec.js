@@ -3,20 +3,20 @@ import { mount } from 'enzyme';
 
 import UnitSearchResult from 'components/search-page/unit-search-result';
 
-describe('<UnitSearchResult />', () => {
+describe('<UnitSearchResult />', function () {
 
-  it('should render units correctly', () => {
+  it('should render units correctly', function () {
     const units = [
       {
         text: '001',
         memberCount: 2,
-        activeMemberCount: 1
+        activeMemberCount: 1,
       },
       {
         text: '002',
         memberCount: 4,
-        activeMemberCount: 3
-      }
+        activeMemberCount: 3,
+      },
     ];
 
     const rows = [

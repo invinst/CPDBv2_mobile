@@ -11,10 +11,10 @@ describe('draftjs utils', function () {
       const editorState = convertContentStateToEditorState({
         blocks: [
           {
-            text: 'abc'
-          }
+            text: 'abc',
+          },
         ],
-        entityMap: {}
+        entityMap: {},
       });
       editorState.getCurrentContent().getFirstBlock().getText().should.eql('abc');
     });

@@ -25,7 +25,7 @@ const Complainant = ({ complainants=[] }) => {
 };
 
 Complainant.propTypes = {
-  complainants: PropTypes.array
+  complainants: PropTypes.array,
 };
 
 export default Complainant;

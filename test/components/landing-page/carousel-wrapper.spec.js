@@ -6,7 +6,7 @@ import CarouselWrapper from 'components/landing-page/carousel-wrapper';
 import HorizontalScrolling from 'components/common/horizontal-scrolling';
 
 
-describe('<CarouselWrapper />', () => {
+describe('<CarouselWrapper />', function () {
   it('should render enough content', function () {
     const titleCMSContent = EditorState.createEmpty();
     const descriptionCMSContent = EditorState.createEmpty();

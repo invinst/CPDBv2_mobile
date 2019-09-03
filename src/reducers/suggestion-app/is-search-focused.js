@@ -15,5 +15,5 @@ export default handleActions({
   },
   [SEARCH_RESET]: (state, action) => {
     return 0;
-  }
+  },
 }, 0);

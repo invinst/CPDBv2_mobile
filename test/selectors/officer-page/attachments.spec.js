@@ -1,7 +1,7 @@
 import {
   attachmentsComplaintTransform,
   complaintsWithAttachmentsSelector,
-  hasAttachmentSelector
+  hasAttachmentSelector,
 } from 'selectors/officer-page/attachments';
 
 
@@ -31,7 +31,7 @@ describe('Officer attachments selectors', function () {
         url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.html',
         'preview_image_url': 'https://assets.documentcloud.org/documents/3518955/pages/CRID-303350-CR-p1.gif',
         'file_type': 'document',
-        'id': '654321'
+        'id': '654321',
       },
     ],
   };
@@ -70,7 +70,7 @@ describe('Officer attachments selectors', function () {
         url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.html',
         previewImageUrl: 'https://assets.documentcloud.org/documents/3518955/pages/CRID-303350-CR-p1.gif',
         fileType: 'document',
-        id: '654321'
+        id: '654321',
       },
     ],
   };
@@ -101,7 +101,7 @@ describe('Officer attachments selectors', function () {
         officerPage: {
           timeline: {
             data: {
-              1: [complaint, complaintWithoutAttachment]
+              1: [complaint, complaintWithoutAttachment],
             },
           },
         },
@@ -117,7 +117,7 @@ describe('Officer attachments selectors', function () {
         officerPage: {
           timeline: {
             data: {
-              1: [complaintWithoutAttachment]
+              1: [complaintWithoutAttachment],
             },
           },
         },
@@ -130,7 +130,7 @@ describe('Officer attachments selectors', function () {
         officerPage: {
           timeline: {
             data: {
-              1: [complaint, complaintWithoutAttachment]
+              1: [complaint, complaintWithoutAttachment],
             },
           },
         },

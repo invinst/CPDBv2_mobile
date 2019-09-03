@@ -44,7 +44,7 @@ var buildApi = function () {
     mock: mock,
     mockPost: mockPost,
     cleanMock: cleanMock,
-    call: call
+    call: call,
   };
 };
 

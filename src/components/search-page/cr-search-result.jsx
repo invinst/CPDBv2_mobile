@@ -8,7 +8,7 @@ const CRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
   const handleClick = (name, url) => saveToRecent({
     type: categoryFilter,
     title: name,
-    url: url
+    url: url,
   });
 
   return (
@@ -34,11 +34,11 @@ const CRSearchResult = ({ items, saveToRecent, categoryFilter }) => {
 CRSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
   items: PropTypes.array,
-  categoryFilter: PropTypes.string
+  categoryFilter: PropTypes.string,
 };
 
 CRSearchResult.defaultProps = {
-  items: []
+  items: [],
 };
 
 export default CRSearchResult;

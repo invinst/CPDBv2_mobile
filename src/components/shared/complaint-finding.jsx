@@ -19,5 +19,5 @@ export default class ComplaintFinding extends Component {
 }
 
 ComplaintFinding.propTypes = {
-  finding: PropTypes.string
+  finding: PropTypes.string,
 };

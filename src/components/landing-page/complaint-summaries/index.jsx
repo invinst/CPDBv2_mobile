@@ -37,12 +37,12 @@ export default class ComplaintSummaries extends Component {
 
 ComplaintSummaries.defaultProps = {
   requestComplaintSummaries: () => {},
-  complaintSummaries: []
+  complaintSummaries: [],
 };
 
 ComplaintSummaries.propTypes = {
   complaintSummaries: PropTypes.array,
   requestComplaintSummaries: PropTypes.func,
   description: PropTypes.object,
-  title: PropTypes.object
+  title: PropTypes.object,
 };

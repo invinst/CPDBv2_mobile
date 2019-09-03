@@ -4,7 +4,7 @@ import {
   SUGGEST_ALL_REQUEST_START, SUGGEST_ALL_REQUEST_SUCCESS, SUGGEST_ALL_REQUEST_FAILURE,
   FETCH_SUGGESTED_SEARCH_ITEMS_START, FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS, FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
   SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_INPUT_CHANGED, SEARCH_RESET, SEARCH_SAVE_TO_RECENT,
-  SEARCH_QUERY_CHANGED
+  SEARCH_QUERY_CHANGED,
 } from 'actions/suggestion';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -19,9 +19,9 @@ describe('suggestions actions', function () {
           request: {
             url: v2Url(constants.SUGGESTION_API_ENDPOINT),
             adapter: undefined,
-            params: undefined
-          }
-        }
+            params: undefined,
+          },
+        },
       });
     });
   });
@@ -37,9 +37,9 @@ describe('suggestions actions', function () {
           request: {
             url: v2Url(constants.SUGGESTION_API_ENDPOINT),
             adapter: undefined,
-            params: { contentType: categoryPath, term: query }
-          }
-        }
+            params: { contentType: categoryPath, term: query },
+          },
+        },
       });
     });
   });
@@ -50,15 +50,15 @@ describe('suggestions actions', function () {
         types: [
           FETCH_SUGGESTED_SEARCH_ITEMS_START,
           FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS,
-          FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE
+          FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
         ],
         payload: {
           request: {
             url: v2Url(constants.SUGGESTION_API_ENDPOINT),
             adapter: undefined,
-            params: {}
-          }
-        }
+            params: {},
+          },
+        },
       });
     });
   });
@@ -66,7 +66,7 @@ describe('suggestions actions', function () {
   describe('focus', function () {
     it('should return right action', function () {
       focus().should.eql({
-        type: SEARCH_FOCUS
+        type: SEARCH_FOCUS,
       });
     });
   });
@@ -74,7 +74,7 @@ describe('suggestions actions', function () {
   describe('blur', function () {
     it('should return right action', function () {
       blur().should.eql({
-        type: SEARCH_BLUR
+        type: SEARCH_BLUR,
       });
     });
   });
@@ -82,7 +82,7 @@ describe('suggestions actions', function () {
   describe('clear', function () {
     it('should return right action', function () {
       clear().should.eql({
-        type: SEARCH_CLEAR
+        type: SEARCH_CLEAR,
       });
     });
   });
@@ -92,7 +92,7 @@ describe('suggestions actions', function () {
       const query = 'query';
       inputChanged(query).should.eql({
         type: SEARCH_INPUT_CHANGED,
-        payload: query
+        payload: query,
       });
     });
   });
@@ -102,7 +102,7 @@ describe('suggestions actions', function () {
       const query = 'query';
       queryChanged(query).should.eql({
         type: SEARCH_QUERY_CHANGED,
-        payload: query
+        payload: query,
       });
     });
   });
@@ -110,15 +110,15 @@ describe('suggestions actions', function () {
   describe('reset', function () {
     it('should return right action', function () {
       reset().should.eql({
-        type: SEARCH_RESET
+        type: SEARCH_RESET,
       });
     });
   });
 
-  describe('reset', function () {
+  describe('saveToRecent', function () {
     it('should return right action', function () {
       saveToRecent().should.eql({
-        type: SEARCH_SAVE_TO_RECENT
+        type: SEARCH_SAVE_TO_RECENT,
       });
     });
   });

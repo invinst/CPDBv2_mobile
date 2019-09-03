@@ -4,9 +4,9 @@ export default {
     return (state) => ({
       suggestionApp: {
         initialSuggestions: {
-          recent: state.suggestionApp.initialSuggestions.recent
-        }
-      }
+          recent: state.suggestionApp.initialSuggestions.recent,
+        },
+      },
     });
-  }
+  },
 };

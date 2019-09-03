@@ -63,5 +63,5 @@ MarkerTooltip.propTypes = {
       race: PropTypes.string,
       age: PropTypes.number,
     })
-  )
+  ),
 };

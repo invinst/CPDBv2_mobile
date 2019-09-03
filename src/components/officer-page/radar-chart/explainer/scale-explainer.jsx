@@ -8,7 +8,7 @@ export default class ScaleExplainer extends Component {
   render() {
     const {
       leftNavHandler, rightNavHandler, closeExplainer, radarChartData,
-      descriptionCMSContent, subDescriptionCMSContent
+      descriptionCMSContent, subDescriptionCMSContent,
     } = this.props;
     const { items } = radarChartData;
 
@@ -24,7 +24,7 @@ export default class ScaleExplainer extends Component {
       axisTitleFontSize: 25,
       radius: 141,
       yAxisCenter: 155,
-      areaColor: '#767676'
+      areaColor: '#767676',
     };
     const content = (
       <DescriptionContent content={ descriptionCMSContent } subContent={ subDescriptionCMSContent }/>

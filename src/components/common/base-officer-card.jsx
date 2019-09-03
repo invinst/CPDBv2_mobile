@@ -16,7 +16,7 @@ export class BaseOfficerCard extends Component {
       percentile,
       openCardInNewPage,
       bottomContent,
-      customStyle
+      customStyle,
     } = this.props;
     return (
       <Link

@@ -7,8 +7,8 @@ import { EditorState } from 'draft-js';
 import CarouselWrapper from 'components/landing-page/carousel-wrapper';
 import ComplaintDocumentCard from 'components/landing-page/new-document-allegations/complaint-document-card';
 
-describe('<NewDocumentAllegations />', () => {
-  it('should render enough contents', () => {
+describe('<NewDocumentAllegations />', function () {
+  it('should render enough contents', function () {
     const newDocumentAllegations = [{ crid: '123' }, { crid: '456' }];
     const titleCMSContent = EditorState.createEmpty();
     const descriptionCMSContent = EditorState.createEmpty();
@@ -39,7 +39,7 @@ describe('<NewDocumentAllegations />', () => {
     complaintDocumentCards.at(1).prop('onTrackingAttachment').should.eql(onTrackingAttachment);
   });
 
-  it('should call requestNewDocumentAllegations', () => {
+  it('should call requestNewDocumentAllegations', function () {
     const requestNewDocumentAllegationsSpy = spy();
     mount(
       <NewDocumentAllegations

@@ -56,8 +56,8 @@ describe('AnimatedRadarChart component', function () {
   const mockStore = configureStore();
   const store = mockStore({
     officerPage: {
-      cms: [{ type: 'rich_text', name: 'triangle_description' }]
-    }
+      cms: [{ type: 'rich_text', name: 'triangle_description' }],
+    },
   });
 
   it('should render no data RadarChart if no data', function () {
@@ -233,7 +233,7 @@ describe('AnimatedRadarChart component', function () {
           { axis: 'Internal Complaints', value: 10 },
         ],
         textColor: 'black',
-        visualTokenBackground: 'white'
+        visualTokenBackground: 'white',
       }, {
         year: 2014,
         items: [
@@ -242,7 +242,7 @@ describe('AnimatedRadarChart component', function () {
           { axis: 'Internal Complaints', value: 10 },
         ],
         textColor: 'black',
-        visualTokenBackground: 'white'
+        visualTokenBackground: 'white',
       }, {
         year: 2015,
         items: [
@@ -251,7 +251,7 @@ describe('AnimatedRadarChart component', function () {
           { axis: 'Internal Complaints', value: 10 },
         ],
         textColor: 'black',
-        visualTokenBackground: 'white'
+        visualTokenBackground: 'white',
       }, {
         year: 2016,
         items: [
@@ -260,7 +260,7 @@ describe('AnimatedRadarChart component', function () {
           { axis: 'Internal Complaints', value: 60 },
         ],
         textColor: 'black',
-        visualTokenBackground: 'white'
+        visualTokenBackground: 'white',
       }, {
         year: 2017,
         items: [
@@ -269,7 +269,7 @@ describe('AnimatedRadarChart component', function () {
           { axis: 'Internal Complaints', value: NaN },
         ],
         textColor: 'black',
-        visualTokenBackground: 'white'
+        visualTokenBackground: 'white',
       }];
 
       const wrapper = mount(<AnimatedRadarChart officerId={ 123 } percentileData={ missingData }/>);

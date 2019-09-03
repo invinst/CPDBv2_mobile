@@ -13,18 +13,18 @@ describe('coaccusals actions', function () {
         types: [
           OFFICER_COACCUSALS_REQUEST_START,
           OFFICER_COACCUSALS_REQUEST_SUCCESS,
-          OFFICER_COACCUSALS_REQUEST_FAILURE
+          OFFICER_COACCUSALS_REQUEST_FAILURE,
         ],
         payload: {
           request: {
             url: '/mobile/officers/123/coaccusals/',
             adapter: undefined,
-            params: {}
-          }
+            params: {},
+          },
         },
         meta: {
-          id: 123
-        }
+          id: 123,
+        },
       });
     });
   });

@@ -10,12 +10,13 @@ import NewDocumentAllegations from 'containers/landing-page/new-document-allegat
 import ComplaintSummaries from 'containers/landing-page/complaint-summaries';
 import magnifyingGlassIcon from 'img/ic-magnifying-glass.svg';
 import style from './landing-page.sass';
+import Footer from 'components/footer';
 
 
 export default class LandingPage extends Component {
   componentDidMount() {
     const {
-      requestCMS, pushBreadcrumbs, location, routes, params, cmsRequested
+      requestCMS, pushBreadcrumbs, location, routes, params, cmsRequested,
     } = this.props;
     pushBreadcrumbs({ location, routes, params });
 
@@ -46,6 +47,7 @@ export default class LandingPage extends Component {
         <NewDocumentAllegations />
         <ComplaintSummaries />
         <BottomPadding />
+        <Footer />
       </div>
     );
   }
@@ -53,7 +55,7 @@ export default class LandingPage extends Component {
 
 LandingPage.defaultProps = {
   requestCMS: () => {},
-  pushBreadcrumbs: () => {}
+  pushBreadcrumbs: () => {},
 };
 
 LandingPage.propTypes = {

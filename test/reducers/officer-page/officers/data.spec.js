@@ -13,24 +13,24 @@ describe('officer data reducer', function () {
     officerData({ 1: { 'full_name': 'An officer' } }, {
       type: OFFICER_REQUEST_SUCCESS,
       payload: officerResult,
-      meta: { id: 1 }
+      meta: { id: 1 },
     }).should.eql({
-      1: officerResult
+      1: officerResult,
     });
 
     officerData({ 2: { 'full_name': 'An officer' } }, {
       type: OFFICER_REQUEST_SUCCESS,
       payload: officerResult,
-      meta: { id: 1 }
+      meta: { id: 1 },
     }).should.eql({
       2: { 'full_name': 'An officer' },
-      1: officerResult
+      1: officerResult,
     });
   });
 
   it('should handle OFFICER_REQUEST_FAILURE', function () {
     officerData({ 1: { 'full_name': 'An officer' } }, {
-      type: OFFICER_REQUEST_FAILURE
+      type: OFFICER_REQUEST_FAILURE,
     }).should.eql({ 1: { 'full_name': 'An officer' } });
   });
 });

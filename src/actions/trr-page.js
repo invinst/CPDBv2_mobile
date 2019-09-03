@@ -19,7 +19,7 @@ export const requestTRR = (id) => get(
   [
     TRR_REQUEST_START,
     TRR_REQUEST_SUCCESS,
-    TRR_REQUEST_FAILURE
+    TRR_REQUEST_FAILURE,
   ]
 )(undefined, undefined, `${id}/`, { id });
 

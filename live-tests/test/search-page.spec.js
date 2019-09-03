@@ -6,9 +6,9 @@ const mockSuggestionResponse = {
   'OFFICER': [
     {
       id: 30291,
-      name: 'John Tobler'
-    }
-  ]
+      name: 'John Tobler',
+    },
+  ],
 };
 
 const mockSearchQueryResponse = {
@@ -17,8 +17,8 @@ const mockSearchQueryResponse = {
       id: 9876,
       name: 'John Wang',
       badge: '9999',
-    }
-  ]
+    },
+  ],
 };
 
 const mockSearchQueryResponseWithDate = {
@@ -40,11 +40,11 @@ const mockSearchQueryResponseWithDate = {
         summary: ['On July', 'an off-duty'],
       },
       'incident_date': '2009-06-13',
-    }
+    },
   ],
   'DATE > TRR': [
     { id: '767' },
-    { id: '773' }
+    { id: '773' },
   ],
   'DATE > OFFICERS': [
     {
@@ -58,8 +58,8 @@ const mockSearchQueryResponseWithDate = {
         year: 2010,
         id: 1234,
         'percentile_allegation_internal': '98.5982',
-      }
-    }
+      },
+    },
   ],
   OFFICER: [
     {
@@ -73,8 +73,8 @@ const mockSearchQueryResponseWithDate = {
         year: 2010,
         id: 7694,
         'percentile_allegation_internal': '88.5567',
-      }
-    }
+      },
+    },
   ],
   'CR': [
     {
@@ -94,11 +94,11 @@ const mockSearchQueryResponseWithDate = {
         summary: ['On October', 'regarding an incident that occurred'],
       },
       'incident_date': '2011-10-13',
-    }
+    },
   ],
   'TRR': [
     { id: '867' },
-    { id: '873' }
+    { id: '873' },
   ],
 };
 
@@ -121,7 +121,7 @@ const mockInvestigatorCRSearchResponse = {
         summary: ['On October', 'regarding an incident that occurred'],
       },
       'incident_date': '2011-10-13',
-    }
+    },
   ],
 };
 

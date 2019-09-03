@@ -49,7 +49,7 @@ const Factory = () => {
     createBatch,
     define,
     sequence,
-    getSchemas
+    getSchemas,
   };
 };
 

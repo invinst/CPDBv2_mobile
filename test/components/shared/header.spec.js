@@ -10,8 +10,8 @@ describe('<Header />', function () {
     const mockStore = configureStore();
     const store = mockStore({
       breadcrumb: {
-        breadcrumbs: []
-      }
+        breadcrumbs: [],
+      },
     });
     mount(
       <Provider store={ store }>

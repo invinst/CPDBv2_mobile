@@ -42,7 +42,7 @@ export default class InvestigationTimeline extends Component {
     const timelineCircleDisplayProps = [
       { key: '1', r: '5.5', cx: '9', strokeWidth: '1', stroke: greydishColor, fill: 'white' },
       { key: '2', r: '2.5', cx: '9', fill: greydishColor },
-      { key: '3', r: '5.5', cx: '9', fill: greydishColor }
+      { key: '3', r: '5.5', cx: '9', fill: greydishColor },
     ];
 
     return (
@@ -111,5 +111,5 @@ export default class InvestigationTimeline extends Component {
 InvestigationTimeline.propTypes = {
   startDate: PropTypes.string,
   endDate: PropTypes.string,
-  incidentDate: PropTypes.string
+  incidentDate: PropTypes.string,
 };

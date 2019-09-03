@@ -15,18 +15,18 @@ describe('timeline actions', function () {
         types: [
           OFFICER_TIMELINE_ITEMS_REQUEST_START,
           OFFICER_TIMELINE_ITEMS_REQUEST_SUCCESS,
-          OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE
+          OFFICER_TIMELINE_ITEMS_REQUEST_FAILURE,
         ],
         payload: {
           request: {
             url: `${v2Url(constants.OFFICER_API_ENDPOINT)}11/new-timeline-items/`,
             adapter: undefined,
-            params: {}
-          }
+            params: {},
+          },
         },
         meta: {
-          id: 11
-        }
+          id: 11,
+        },
       });
     });
   });

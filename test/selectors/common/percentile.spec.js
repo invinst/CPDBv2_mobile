@@ -6,7 +6,7 @@ import { OIG_VISUAL_TOKEN_COLOR_SCHEME_TEXT } from 'utils/visual-token';
 
 describe('percentile utils', function () {
   describe('extractPercentile', function () {
-    it('should return visualTokenBackground, textColor, items, and year', () => {
+    it('should return visualTokenBackground, textColor, items, and year', function () {
       const officerPercentile = {
         'officer_id': 1,
         year: 2015,
@@ -37,7 +37,7 @@ describe('percentile utils', function () {
       extractPercentile(officerPercentile).should.eql(expected);
     });
 
-    it('should return null if the given percentile is null or undefined', () => {
+    it('should return null if the given percentile is null or undefined', function () {
       should(extractPercentile(undefined)).be.null();
       should(extractPercentile(null)).be.null();
     });

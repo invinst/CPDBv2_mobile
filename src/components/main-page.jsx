@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 
-import Footer from 'components/footer';
 import style from './main-page.sass';
 
 
@@ -23,7 +22,6 @@ class MainPage extends Component {
     return (
       <div className={ cx('content', style.mainPage) }>
         { this.props.children }
-        <Footer />
       </div>
     );
   }
@@ -35,17 +33,17 @@ MainPage.propTypes = {
   urlQuery: PropTypes.string,
   children: PropTypes.object,
   location: PropTypes.object,
-  routeChanged: PropTypes.func
+  routeChanged: PropTypes.func,
 };
 
 MainPage.defaultProps = {
   query: '',
   urlQuery: '',
   location: {
-    pathname: ''
+    pathname: '',
   },
   routeChanged: () => {},
-  fetchSuggestedSearchItems: () => {}
+  fetchSuggestedSearchItems: () => {},
 };
 
 export default MainPage;
