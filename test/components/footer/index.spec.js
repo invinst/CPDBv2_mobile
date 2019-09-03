@@ -6,12 +6,35 @@ import Modal from 'react-modal';
 import * as intercomUtils from 'utils/intercom';
 import Footer from 'components/footer';
 import LegalModalContent from 'components/footer/legal-modal-content';
+import IOSPeek from 'components/common/ios-peek';
+import invistLogoImage from 'img/invist-logo.svg';
+import constants from 'constants';
 
 
 describe('<Footer />', function () {
-  it('should be renderable', function () {
+  it('should be enough content', function () {
     const wrapper = shallow(<Footer />);
-    wrapper.should.be.ok();
+
+    const items = wrapper.find('.item');
+
+    items.at(0).prop('className').should.containEql('legal-item');
+    items.at(0).text().should.equal('Legal');
+
+    items.at(1).prop('href').should.equal(constants.INVINST_GITHUB_URL);
+    items.at(1).text().should.equal('Github');
+
+    items.at(2).prop('className').should.containEql('contact-item');
+    items.at(2).text().should.equal('Contact');
+
+    const invistLink = wrapper.find('.invist-logo-link');
+    invistLink.prop('href').should.equal('https://invisible.institute/cpdp');
+    invistLink.prop('target').should.equal('_blank');
+
+    const invistLogo = wrapper.find('.invist-logo');
+    invistLogo.prop('src').should.equal(invistLogoImage);
+    invistLogo.prop('alt').should.equal('Invisible Institute');
+
+    wrapper.find(IOSPeek).prop('isBottom').should.be.true();
   });
 
   it('should open legal modal when click on the Legal text', function () {
