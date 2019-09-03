@@ -11,7 +11,6 @@ import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import SearchBar from 'components/pinboard-page/search-bar';
 import { PinboardPaneSectionWithSpinner } from 'components/pinboard-page/pinboard-pane-section';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
-import Footer from 'components/footer';
 import EmptyPinboardPage from 'components/pinboard-page/empty-pinboard';
 
 
@@ -167,7 +166,6 @@ describe('<PinboardPage />', function () {
       title: 'Pinboard 2',
       description: 'Description 2',
     }]);
-    wrapper.find(Footer).exists().should.be.true();
   });
 
   it('should pushBreadcrumbs on componentDidMount and componentDidUpdate', function () {
