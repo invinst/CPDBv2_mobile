@@ -5,6 +5,7 @@ import { OFFICER_REQUEST_SUCCESS } from 'actions/officer-page';
 import { COMPLAINT_REQUEST_SUCCESS } from 'actions/complaint-page';
 import { TRR_REQUEST_SUCCESS } from 'actions/trr-page';
 import {
+  PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_UPDATE_REQUEST_SUCCESS,
   PINBOARD_FETCH_REQUEST_SUCCESS,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
@@ -33,6 +34,7 @@ const breadcrumbMapping = handleActions({
     ...state,
     [`/trr/${action.payload.id}/`]: `TRR ${action.payload.id}`,
   }),
+  [PINBOARD_CREATE_REQUEST_SUCCESS]: buildPinboardBreadcrumbs,
   [PINBOARD_FETCH_REQUEST_SUCCESS]: buildPinboardBreadcrumbs,
   [PINBOARD_UPDATE_REQUEST_SUCCESS]: buildPinboardBreadcrumbs,
   [PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS]: buildPinboardBreadcrumbs,
