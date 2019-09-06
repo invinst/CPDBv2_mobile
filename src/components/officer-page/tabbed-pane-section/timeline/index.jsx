@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { values, mapValues, map, findKey } from 'lodash';
-import cx from 'classnames';
 
 import style from './timeline.sass';
 import Item from './item';
@@ -29,7 +28,7 @@ export default class Timeline extends Component {
     );
 
     return (
-      <div className={ cx(style.officerTimeline, 'test--officer-timeline') }>
+      <div className={ style.officerTimeline }>
         <div className='timeline-filter-wrapper'>
           <Dropdown
             defaultValue={ TIMELINE_FILTERS.ALL.label }

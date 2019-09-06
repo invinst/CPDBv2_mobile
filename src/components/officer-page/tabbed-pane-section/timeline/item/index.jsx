@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { get } from 'lodash';
-import cx from 'classnames';
 
 import Cr from './cr';
 import Trr from './trr';
