@@ -50,7 +50,7 @@ export default class Item extends Component {
 
   render() {
     const { item } = this.props;
-    const { className, Component } = get(this.componentMap, item.kind);
+    const { className, Component } = get(this.componentMap, item.kind, {});
     if (!Component)
       return null;
     return <Component className={ className } { ...this.props }/>;

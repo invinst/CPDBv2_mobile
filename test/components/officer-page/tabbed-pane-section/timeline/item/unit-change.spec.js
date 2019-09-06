@@ -17,9 +17,9 @@ describe('UnitChange component', function () {
       year: 1994,
     };
 
-    const instance = shallow(<UnitChange item={ unitChange }/>);
-    instance.find('.unit-change').text().should.equal('Unit 051 → Unit 153 - Mobile Strike Force');
-    instance.find('.date').text().should.equal('APR 28');
+    const instance = shallow(<UnitChange className='test--unit-change' item={ unitChange }/>);
+    instance.find('.test--unit-change .unit-change').text().should.equal('Unit 051 → Unit 153 - Mobile Strike Force');
+    instance.find('.test--unit-change .date').text().should.equal('APR 28');
   });
 
   it('should render old unit as Unassigned if the old unit is marked with Unassigned', function () {

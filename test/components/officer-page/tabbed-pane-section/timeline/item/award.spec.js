@@ -14,9 +14,10 @@ describe('Award component', function () {
       category: 'Honorable Mention',
     };
 
-    const instance = shallow(<Award item={ awardItem } hasBorderBottom={ true } />);
-    instance.find('.kind').text().should.equal('A');
-    instance.find('.category').text().should.equal('Honorable Mention');
-    instance.find('.date').text().should.equal('Jan 01');
+    const instance = shallow(<Award className='test--award-item' item={ awardItem }/>);
+    const content = instance.find('.test--award-item .content');
+    content.find('.kind').text().should.equal('A');
+    content.find('.category').text().should.equal('Honorable Mention');
+    content.find('.date').text().should.equal('Jan 01');
   });
 });
