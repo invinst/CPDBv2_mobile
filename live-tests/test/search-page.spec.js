@@ -170,7 +170,7 @@ describe('SearchPageTest', function () {
     const searchPage = this.searchPage;
 
     searchPage.expect.element('@queryInput').to.be.visible;
-    searchPage.expect.element('@queryInput').to.have.attribute('placeholder', 'Search');
+    searchPage.expect.element('@queryInput').to.have.attribute('placeholder', 'Officer name, badge number or date');
 
     searchPage.expect.element('@suggestedHeader').text.to.equal('SUGGESTED');
 
