@@ -67,35 +67,41 @@ const nthPercentileRow = (n) => ({
   },
 });
 
-const nthUnitChangeSection = (n) => ({
-  selector: `//div[contains(@class, "test--timeline-unit-change-item")][${n}]`,
-  locateStrategy: 'xpath',
-  elements: {
-    unitChange: {
-      selector: `(//div[contains(@class, "test--timeline-unit-change-item")][${n}])//span[@class="unit-change"]`,
-      locateStrategy: 'xpath',
+const nthUnitChangeSection = (n) => {
+  const mainElementSelector = `//span[contains(@class, "unit-change__wrapper")][${n}]`;
+  return {
+    selector: mainElementSelector,
+    locateStrategy: 'xpath',
+    elements: {
+      unitChange: {
+        selector: `(${mainElementSelector})//span[@class="unit-change content"]`,
+        locateStrategy: 'xpath',
+      },
+      date: {
+        selector: `(${mainElementSelector})//span[@class="date content"]`,
+        locateStrategy: 'xpath',
+      },
     },
-    date: {
-      selector: `(//div[contains(@class, "test--timeline-unit-change-item")][${n}])//span[@class="date"]`,
-      locateStrategy: 'xpath',
-    },
-  },
-});
+  };
+};
 
-const nthRankChangeSection = (n) => ({
-  selector: `//div[contains(@class, "test--timeline-rank-change-item")][${n}]`,
-  locateStrategy: 'xpath',
-  elements: {
-    rankChange: {
-      selector: `(//div[contains(@class, "test--timeline-rank-change-item")][${n}])//span[@class="rank-change"]`,
-      locateStrategy: 'xpath',
+const nthRankChangeSection = (n) => {
+  const mainElementSelector = `//span[contains(@class, "rank-change__wrapper")][${n}]`;
+  return {
+    selector: mainElementSelector,
+    locateStrategy: 'xpath',
+    elements: {
+      rankChange: {
+        selector: `(${mainElementSelector})//span[@class="rank-change content"]`,
+        locateStrategy: 'xpath',
+      },
+      date: {
+        selector: `(${mainElementSelector})//span[@class="date content"]`,
+        locateStrategy: 'xpath',
+      },
     },
-    date: {
-      selector: `(//div[contains(@class, "test--timeline-rank-change-item")][${n}])//span[@class="date"]`,
-      locateStrategy: 'xpath',
-    },
-  },
-});
+  };
+};
 
 module.exports = {
   url: function (id, tab = '') {
@@ -198,15 +204,37 @@ module.exports = {
       },
     },
     timeline: {
-      selector: '.test--officer-timeline',
+      selector: '//div[contains(@class, "timeline__officer-timeline")]',
+      locateStrategy: 'xpath',
       elements: {
-        crItem: '.test--timeline-cr-item',
-        trrItem: '.test--timeline-trr-item',
-        awardItem: '.test--timeline-award-item',
-        joinedItem: '.test--timeline-joined-item',
-        yearItem: '.test--timeline-year-item',
-        unitChangeItem: '.test--timeline-unit-change-item',
-        rankChangeItem: '.test--timeline-rank-change-item',
+        crItem: {
+          selector: '//a[contains(@class, "cr__wrapper") and contains(@class, "normal-item")]',
+          locateStrategy: 'xpath',
+        },
+        trrItem: {
+          selector: '//a[contains(@class, "trr__wrapper") and contains(@class, "normal-item")]',
+          locateStrategy: 'xpath',
+        },
+        awardItem: {
+          selector: '//div[contains(@class, "award__wrapper") and contains(@class, "normal-item")]',
+          locateStrategy: 'xpath',
+        },
+        joinedItem: {
+          selector: '//span[contains(@class, "joined__wrapper") and contains(@class, "joined-item")]',
+          locateStrategy: 'xpath',
+        },
+        yearItem: {
+          selector: '//div[contains(@class, "year__wrapper") and contains(@class, "normal-item")]',
+          locateStrategy: 'xpath',
+        },
+        unitChangeItem: {
+          selector: '//span[contains(@class, "unit-change__wrapper") and contains(@class, "change-item")]',
+          locateStrategy: 'xpath',
+        },
+        rankChangeItem: {
+          selector: '//span[contains(@class, "rank-change__wrapper") and contains(@class, "change-item")]',
+          locateStrategy: 'xpath',
+        },
         attachmentThumbnail: '.test--attachments .image',
       },
       sections: {
@@ -215,7 +243,8 @@ module.exports = {
         firstRankChangeItem: nthRankChangeSection(1),
         secondRankChangeItem: nthRankChangeSection(2),
         crItems: {
-          selector: '.test--timeline-cr-item',
+          selector: '//a[contains(@class, "cr__wrapper") and contains(@class, "normal-item")]',
+          locateStrategy: 'xpath',
         },
         filter: {
           selector: '.timeline-filter',

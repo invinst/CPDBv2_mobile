@@ -29,3 +29,25 @@
     margin: 0 auto
     display: block
 
+  .normal-item + .normal-item
+    .content
+      border-top: solid 1px $alto-solid
+
+  .change-item + .normal-item
+    border-top: solid 1px $alto-solid
+    .content
+      border-top: none
+
+  .normal-item + .change-item
+    border-top: solid 1px $alto-solid
+
+  .change-item + .change-item
+    border-top: none
+    .content
+      border-top: solid 1px $alto-solid
+
+  .normal-item + .joined-item
+    border-top: solid 1px $alto-solid
+
+  .change-item + .joined-item
+    border-top: solid 1px $alto-solid

@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { nth, values, mapValues, map, findKey } from 'lodash';
-import cx from 'classnames';
+import { values, mapValues, map, findKey } from 'lodash';
 
 import style from './timeline.sass';
 import Item from './item';
-import { TIMELINE_ITEMS, TIMELINE_FILTERS } from 'constants/officer-page/tabbed-pane-section/timeline';
+import { TIMELINE_FILTERS } from 'constants/officer-page/tabbed-pane-section/timeline';
 import Dropdown from 'components/shared/dropdown';
 
 
@@ -20,36 +19,8 @@ export default class Timeline extends Component {
     this.props.changeFilter(TIMELINE_FILTERS[key]);
   }
 
-  renderItems() {
-    const { items, pathname, onTrackingAttachment } = this.props;
-    return (
-      <div>
-        {
-          items.map((item, index) => {
-            const nextItem = nth(items, index + 1);
-            const hasBorderBottom = (
-              item.kind !== TIMELINE_ITEMS.UNIT_CHANGE
-              && nextItem !== undefined
-              && nextItem.kind !== TIMELINE_ITEMS.UNIT_CHANGE
-              && nextItem.kind !== TIMELINE_ITEMS.JOINED
-            );
-            return (
-              <Item
-                item={ item }
-                key={ item.key }
-                hasBorderBottom={ hasBorderBottom }
-                pathname={ pathname }
-                onTrackingAttachment={ onTrackingAttachment }
-              />
-            );
-          })
-        }
-      </div>
-    );
-  }
-
   render() {
-    const { filterCount } = this.props;
+    const { filterCount, pathname, items, onTrackingAttachment } = this.props;
     const options = values(mapValues(TIMELINE_FILTERS, 'label'));
     const labels = map(
       TIMELINE_FILTERS,
@@ -57,7 +28,7 @@ export default class Timeline extends Component {
     );
 
     return (
-      <div className={ cx(style.officerTimeline, 'test--officer-timeline') }>
+      <div className={ style.officerTimeline }>
         <div className='timeline-filter-wrapper'>
           <Dropdown
             defaultValue={ TIMELINE_FILTERS.ALL.label }
@@ -67,7 +38,16 @@ export default class Timeline extends Component {
             labels={ labels }
           />
         </div>
-        { this.renderItems() }
+        {
+          items.map(item => (
+            <Item
+              item={ item }
+              key={ item.key }
+              pathname={ pathname }
+              onTrackingAttachment={ onTrackingAttachment }
+            />
+          ))
+        }
       </div>
     );
   }

@@ -8,7 +8,7 @@ import Dropdown from 'components/shared/dropdown';
 
 
 describe('Timeline component', function () {
-  it('should render items with correct borders', function () {
+  it('should render items', function () {
     const year = {
       date: '1994',
       hasData: true,
@@ -65,11 +65,7 @@ describe('Timeline component', function () {
       />
     );
     const items = instance.find(Item);
-    items.at(0).prop('hasBorderBottom').should.equal(true);
-    items.at(1).prop('hasBorderBottom').should.equal(false);
-    items.at(2).prop('hasBorderBottom').should.equal(false);
-    items.at(3).prop('hasBorderBottom').should.equal(false);
-    items.at(4).prop('hasBorderBottom').should.equal(false);
+    items.should.have.length(5);
   });
 
   it('should render filter dropdown', function () {

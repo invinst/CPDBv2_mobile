@@ -15,8 +15,8 @@ describe('Year component', function () {
       unitName: '153',
     };
 
-    const instance = shallow(<Year item={ year } hasBorderBottom={ false } />);
-    instance.find('.content').text().should.equal('1994');
-    instance.find('.date').text().should.equal('1994');
+    const instance = shallow(<Year className='test--year-item' item={ year } />);
+    instance.find('.test--year-item .content').text().should.equal('1994');
+    instance.find('.test--year-item .date').text().should.equal('1994');
   });
 });

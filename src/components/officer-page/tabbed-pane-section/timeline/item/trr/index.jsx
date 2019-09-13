@@ -7,11 +7,11 @@ import styles from './trr.sass';
 
 export default class Trr extends Component {
   render() {
-    const { item, hasBorderBottom } = this.props;
+    const { item, className } = this.props;
 
     return (
-      <Link className={ styles.wrapper } to={ `/trr/${item.trrId}/` }>
-        <div className={ cx('content', { 'no-border-bottom': !hasBorderBottom }) }>
+      <Link className={ cx(styles.wrapper, className) } to={ `/trr/${item.trrId}/` }>
+        <div className='content'>
           <span className='kind'>F</span>
           <span className='category'>{ item.category }</span>
           <span className='date'>{ item.date }</span>
@@ -22,6 +22,6 @@ export default class Trr extends Component {
 }
 
 Trr.propTypes = {
+  className: PropTypes.string,
   item: PropTypes.object,
-  hasBorderBottom: PropTypes.bool,
 };

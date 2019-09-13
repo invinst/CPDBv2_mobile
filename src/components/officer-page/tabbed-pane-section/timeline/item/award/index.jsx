@@ -7,10 +7,11 @@ import styles from './award.sass';
 export default class Award extends Component {
 
   render() {
-    const { item, hasBorderBottom } = this.props;
+    const { className, item } = this.props;
+
     return (
-      <div className={ styles.wrapper }>
-        <div className={ cx('content', { 'no-border-bottom': !hasBorderBottom }) }>
+      <div className={ cx(styles.wrapper, className) }>
+        <div className='content'>
           <span className='kind'>A</span>
           <span className='category'>{ item.category }</span>
           <span className='date'>{ item.date }</span>
@@ -21,6 +22,6 @@ export default class Award extends Component {
 }
 
 Award.propTypes = {
+  className: PropTypes.string,
   item: PropTypes.object,
-  hasBorderBottom: PropTypes.bool,
 };
