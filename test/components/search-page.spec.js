@@ -213,7 +213,7 @@ describe('<SearchPage />', function () {
 
       const clearableInput = wrapper.find('ClearableInput');
       clearableInput.prop('value').should.eql('meh');
-      clearableInput.prop('placeholder').should.eql('Search');
+      clearableInput.prop('placeholder').should.eql('Officer name, badge number or date');
       clearableInput.prop('spellCheck').should.eql(false);
       clearableInput.prop('autoComplete').should.eql('off');
       clearableInput.prop('autoCorrect').should.eql('off');

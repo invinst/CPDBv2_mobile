@@ -39,7 +39,7 @@ export default class LandingPage extends Component {
           <CMSContent className='site-title' content={ title } />
           <CMSContent className='site-desc' content={ description } />
           <Link className='search-bar' to={ constants.SEARCH_PATH }>
-            <img src={ magnifyingGlassIcon } />Officer name, badge number, or date
+            <img src={ magnifyingGlassIcon } />Officer name, badge number or date
           </Link>
         </div>
         <TopOfficersByAllegation />
