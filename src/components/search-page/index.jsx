@@ -175,7 +175,7 @@ export default class SearchPage extends Component {
               autoComplete='off'
               autoCorrect='off'
               autoCapitalize='off'
-              placeholder='Search'
+              placeholder='Officer name, badge number or date'
               onChange={ (e) => { this.onInputChange(e); } }
               onClear={ () => { this.props.inputChanged(''); } }
             />
