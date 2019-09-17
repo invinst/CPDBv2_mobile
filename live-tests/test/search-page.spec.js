@@ -1,4 +1,6 @@
 'use strict';
+
+const assert = require('assert');
 const api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 
@@ -99,6 +101,81 @@ const mockSearchQueryResponseWithDate = {
   'TRR': [
     { id: '867' },
     { id: '873' },
+  ],
+};
+
+const mockOfficerSearchQueryResponse = {
+  OFFICER: [
+    {
+      id: 7694,
+      name: 'William Eaker',
+      badge: '6056',
+      percentile: {
+        'percentile_trr': '79.1048',
+        'percentile_allegation_civilian': '97.0434',
+        'percentile_allegation': '98.5554',
+        year: 2010,
+        id: 7694,
+        'percentile_allegation_internal': '88.5567',
+      },
+    },
+    {
+      id: 7695,
+      name: 'Joseph Boisso',
+      badge: '2308',
+      percentile: {
+        'percentile_trr': '65',
+        'percentile_allegation_civilian': '90',
+        'percentile_allegation': '92',
+        year: 2009,
+        id: 7695,
+        'percentile_allegation_internal': '88.5567',
+      },
+    },
+  ],
+};
+
+const mockDateOfficerSearchQueryResponse = {
+  'DATE > OFFICERS': [
+    {
+      id: 1234,
+      name: 'Jerome Finnigan',
+      badge: '6789',
+      percentile: {
+        'percentile_trr': '72.1048',
+        'percentile_allegation_civilian': '77.0532',
+        'percentile_allegation': '96.5674',
+        year: 2010,
+        id: 1234,
+        'percentile_allegation_internal': '98.5982',
+      },
+    },
+    {
+      id: 7694,
+      name: 'William Eaker',
+      badge: '6056',
+      percentile: {
+        'percentile_trr': '79.1048',
+        'percentile_allegation_civilian': '97.0434',
+        'percentile_allegation': '98.5554',
+        year: 2010,
+        id: 7694,
+        'percentile_allegation_internal': '88.5567',
+      },
+    },
+    {
+      id: 7695,
+      name: 'Joseph Boisso',
+      badge: '2308',
+      percentile: {
+        'percentile_trr': '65',
+        'percentile_allegation_civilian': '90',
+        'percentile_allegation': '92',
+        year: 2009,
+        id: 7695,
+        'percentile_allegation_internal': '88.5567',
+      },
+    },
   ],
 };
 
@@ -287,6 +364,106 @@ describe('SearchPageTest', function () {
       this.searchPage.expect.element('@dateOfficersHeader').text.to.equal('DATE > OFFICERS');
       dateOfficers.section.firstRow.expect.element('@officerName').text.to.equal('Jerome Finnigan');
       dateOfficers.section.firstRow.expect.element('@officerBadge').text.to.equal('Badge #6789');
+    });
+  });
+
+  context('single search', function () {
+    it('should show single search result when click on "ALL"', function (client) {
+      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+      api.mock(
+        'GET',
+        '/api/v2/search-mobile/?contentType=OFFICER&term=2004-04-23+ke',
+        200,
+        mockOfficerSearchQueryResponse
+      );
+      api.mock(
+        'GET',
+        '/api/v2/search-mobile/?contentType=DATE+%3E+OFFICERS&term=2004-04-23+ke',
+        200,
+        mockDateOfficerSearchQueryResponse
+      );
+
+      const expectResultCount = (rowsElement, count) => {
+        client.elements(rowsElement.locateStrategy, rowsElement.selector, function (result) {
+          assert.equal(result.value.length, count);
+        });
+      };
+
+      this.searchPage.setValue('@queryInput', '2004-04-23 ke');
+
+      this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
+      this.searchPage.expect.element('@dateTRRsHeader').to.be.present;
+      this.searchPage.expect.element('@dateOfficersHeader').to.be.present;
+      this.searchPage.expect.element('@crsHeader').to.be.present;
+      this.searchPage.expect.element('@trrsHeader').to.be.present;
+      this.searchPage.expect.element('@officersHeader').to.be.present;
+
+      const officersRows = this.searchPage.section.officers.section.rows;
+      expectResultCount(officersRows, 1);
+
+      this.searchPage.section.officers.click('@allLink');
+
+      this.searchPage.waitForElementNotPresent('@dateCRsHeader', TIMEOUT);
+      this.searchPage.expect.element('@dateTRRsHeader').to.be.not.present;
+      this.searchPage.expect.element('@dateOfficersHeader').to.be.not.present;
+      this.searchPage.expect.element('@crsHeader').to.be.not.present;
+      this.searchPage.expect.element('@trrsHeader').to.be.not.present;
+      this.searchPage.expect.element('@officersHeader').to.be.present;
+
+      this.searchPage.expect.element('@queryInput').value.to.equal('officer:2004-04-23 ke');
+
+      expectResultCount(officersRows, 2);
+
+      this.searchPage.click('@closeSingleSearchIcon');
+      this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
+      this.searchPage.expect.element('@dateTRRsHeader').to.be.present;
+      this.searchPage.expect.element('@dateOfficersHeader').to.be.present;
+      this.searchPage.expect.element('@crsHeader').to.be.present;
+      this.searchPage.expect.element('@trrsHeader').to.be.present;
+      this.searchPage.expect.element('@officersHeader').to.be.present;
+
+      this.searchPage.expect.element('@queryInput').value.to.equal('2004-04-23 ke');
+
+      this.searchPage.section.dateOfficers.click('@allLink');
+
+      this.searchPage.waitForElementNotPresent('@dateCRsHeader', TIMEOUT);
+      this.searchPage.expect.element('@dateTRRsHeader').to.be.not.present;
+      this.searchPage.expect.element('@crsHeader').to.be.not.present;
+      this.searchPage.expect.element('@trrsHeader').to.be.not.present;
+      this.searchPage.expect.element('@officersHeader').to.be.not.present;
+      this.searchPage.expect.element('@dateOfficersHeader').to.be.present;
+
+      this.searchPage.expect.element('@queryInput').value.to.equal('date-officer:2004-04-23 ke');
+
+      const dateOfficersRows = this.searchPage.section.dateOfficers.section.rows;
+
+      expectResultCount(dateOfficersRows, 3);
+    });
+
+    it('should match result with search query prefix', function () {
+      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+
+      this.searchPage.setValue('@queryInput', 'officer:2004-04-23 ke');
+
+      this.searchPage.waitForElementVisible('@officersHeader', TIMEOUT);
+      this.searchPage.expect.element('@dateCRsHeader').to.be.not.present;
+      this.searchPage.expect.element('@dateTRRsHeader').to.be.not.present;
+      this.searchPage.expect.element('@dateOfficersHeader').to.be.not.present;
+      this.searchPage.expect.element('@crsHeader').to.be.not.present;
+      this.searchPage.expect.element('@trrsHeader').to.be.not.present;
+    });
+
+    it('should match result with search term from url', function () {
+      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+
+      this.searchPage.navigate(this.searchPage.url('officer:2004-04-23 ke'));
+
+      this.searchPage.waitForElementVisible('@officersHeader', TIMEOUT);
+      this.searchPage.expect.element('@dateCRsHeader').to.be.not.present;
+      this.searchPage.expect.element('@dateTRRsHeader').to.be.not.present;
+      this.searchPage.expect.element('@dateOfficersHeader').to.be.not.present;
+      this.searchPage.expect.element('@crsHeader').to.be.not.present;
+      this.searchPage.expect.element('@trrsHeader').to.be.not.present;
     });
   });
 });

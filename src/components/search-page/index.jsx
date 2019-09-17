@@ -115,7 +115,6 @@ export default class SearchPage extends Component {
       } else {
         return <div key={ cat.id }>{ searchCategory }</div>;
       }
-
     });
   }
 
@@ -134,7 +133,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query, activeCategory, chosenCategory, router } = this.props;
+    const { query, queryPrefix, activeCategory, chosenCategory, router } = this.props;
     let categories;
 
     if (!this.isLongEnoughQuery(query)) {
@@ -159,6 +158,8 @@ export default class SearchPage extends Component {
       categories = this.getCategoriesWithSuggestions();
     }
 
+    const searchText = `${queryPrefix ? `${queryPrefix}:` : ''}${query}`;
+
     return (
       <div className={ style.searchPage }>
         <div
@@ -170,7 +171,7 @@ export default class SearchPage extends Component {
             <ClearableInput
               ref={ (instance) => { this.searchInput = instance; } }
               className='query-input'
-              value={ this.props.query }
+              value={ searchText }
               spellCheck={ false }
               autoComplete='off'
               autoCorrect='off'
@@ -192,7 +193,8 @@ export default class SearchPage extends Component {
             activeCategory={ activeCategory }
             scrollToCategory={ this.scrollToCategory }
             updateActiveCategory={ this.props.updateActiveCategory }
-            chosenCategory={ this.props.chosenCategory }
+            query={ query }
+            chosenCategory={ chosenCategory }
             clearChosenCategory={ this.props.updateChosenCategory.bind(this, '') }
           />
 
@@ -210,6 +212,7 @@ export default class SearchPage extends Component {
 
 SearchPage.propTypes = {
   query: PropTypes.string,
+  queryPrefix: PropTypes.string,
   inputChanged: PropTypes.func,
   queryChanged: PropTypes.func,
   suggestTerm: PropTypes.func,

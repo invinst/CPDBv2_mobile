@@ -4,6 +4,12 @@ const resultsSection = (name) => ({
     firstRow: nthRow(1),
     secondRow: nthRow(2),
     thirdRow: nthRow(3),
+    rows: {
+      selector: `.results.${name} a`,
+    },
+  },
+  elements: {
+    allLink: '.all',
   },
 });
 
@@ -28,7 +34,11 @@ module.exports = {
   elements: {
     body: 'body',
     queryInput: '.query-input',
-    clearIcon: '.clear-icon',
+    clearIcon: '.input-container .clear-icon',
+    closeSingleSearchIcon: {
+      selector: '//div[contains(@class, "search-navbar")]//img[@class="clear-icon"]',
+      locateStrategy: 'xpath',
+    },
     suggestedHeader: '#search-category-suggested',
     recentHeader: '#search-category-recent',
     dateCRsHeader: '#search-category-dateCRs',
@@ -44,7 +54,6 @@ module.exports = {
     suggested: {
       selector: '.results.suggested',
       sections: {
-
         officer: {
           selector: '.row.officer',
           elements: {
@@ -72,6 +81,12 @@ module.exports = {
             officerBadge: '.officer-badge',
           },
         },
+        rows: {
+          selector: '.results.officers a',
+        },
+      },
+      elements: {
+        allLink: '.all',
       },
     },
     crs: resultsSection('crs'),

@@ -6,6 +6,14 @@ import { extractPercentile } from 'selectors/common/percentile';
 import { officerUrl } from 'utils/url-util';
 
 
+export const getChosenCategory = (state) => state.suggestionApp.chosenCategory;
+export const getActiveCategory = (state) => state.suggestionApp.activeCategory;
+export const getQuery = (state) => state.suggestionApp.query;
+export const queryPrefixSelector = createSelector(
+  getChosenCategory,
+  (chosenCategory) => constants.SEARCH_CATEGORY_PREFIXES[chosenCategory]
+);
+
 export const officerFormatter = (officers) => {
   if (!officers) {
     return { data: [] };

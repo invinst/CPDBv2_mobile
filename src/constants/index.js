@@ -1,5 +1,69 @@
 let c = 0;
 
+const SEARCH_CATEGORIES = [
+  {
+    name: 'DATE > COMPLAINT RECORDS',
+    filter: 'DATE > CR',
+    id: 'dateCRs',
+    path: 'DATE > CR',
+    queryPrefix: 'date-cr',
+  },
+  {
+    name: 'DATE > TACTICAL RESPONSE REPORTS',
+    filter: 'DATE > TRR',
+    id: 'dateTRRs',
+    path: 'DATE > TRR',
+    queryPrefix: 'date-trr',
+  },
+  {
+    name: 'DATE > OFFICERS',
+    filter: 'DATE > OFFICERS',
+    id: 'dateOfficers',
+    path: 'DATE > OFFICERS',
+    queryPrefix: 'date-officer',
+  },
+  {
+    name: 'OFFICERS',
+    filter: 'Officers',
+    id: 'officers',
+    path: 'OFFICER',
+    queryPrefix: 'officer',
+  },
+  {
+    name: 'COMPLAINT RECORDS (CRs)',
+    filter: 'CR',
+    id: 'crs',
+    path: 'CR',
+    queryPrefix: 'cr',
+  },
+  {
+    name: 'TACTICAL RESPONSE REPORTS',
+    filter: 'TRR',
+    id: 'trrs',
+    path: 'TRR',
+    queryPrefix: 'trr',
+  },
+  {
+    name: 'UNITS',
+    filter: 'Units',
+    id: 'units',
+    path: 'UNIT',
+  },
+  {
+    name: 'INVESTIGATOR > CR',
+    filter: 'INVESTIGATOR > CR',
+    id: 'investigatorCRs',
+    path: 'INVESTIGATOR > CR',
+    queryPrefix: 'investigator-cr',
+  },
+];
+
+const SEARCH_CATEGORY_PREFIXES = SEARCH_CATEGORIES.reduce((result, searchCategory) => {
+  return { ...result, [searchCategory.id]: searchCategory.queryPrefix };
+}, {});
+
+const SEARCH_QUERY_PREFIX_REGEX = new RegExp(`^(${Object.values(SEARCH_CATEGORY_PREFIXES).join('|')}):`);
+
 export default {
   // MainPage events
   SEARCH_FOR: c++,
@@ -252,56 +316,9 @@ export default {
     /^\/complaint\/\d+\/?$/,
   ],
 
-  SEARCH_CATEGORIES: [
-    {
-      name: 'DATE > COMPLAINT RECORDS',
-      filter: 'DATE > CR',
-      id: 'dateCRs',
-      path: 'DATE > CR',
-    },
-    {
-      name: 'DATE > TACTICAL RESPONSE REPORTS',
-      filter: 'DATE > TRR',
-      id: 'dateTRRs',
-      path: 'DATE > TRR',
-    },
-    {
-      name: 'DATE > OFFICERS',
-      filter: 'DATE > OFFICERS',
-      id: 'dateOfficers',
-      path: 'DATE > OFFICERS',
-    },
-    {
-      name: 'OFFICERS',
-      filter: 'Officers',
-      id: 'officers',
-      path: 'OFFICER',
-    },
-    {
-      name: 'COMPLAINT RECORDS (CRs)',
-      filter: 'CR',
-      id: 'crs',
-      path: 'CR',
-    },
-    {
-      name: 'TACTICAL RESPONSE REPORTS',
-      filter: 'TRR',
-      id: 'trrs',
-      path: 'TRR',
-    },
-    {
-      name: 'UNITS',
-      filter: 'Units',
-      id: 'units',
-      path: 'UNIT',
-    },
-    {
-      name: 'INVESTIGATOR > CR',
-      filter: 'INVESTIGATOR > CR',
-      id: 'investigatorCRs',
-      path: 'INVESTIGATOR > CR',
-    },
-  ],
+  SEARCH_CATEGORIES: SEARCH_CATEGORIES,
+  SEARCH_CATEGORY_PREFIXES: SEARCH_CATEGORY_PREFIXES,
+  SEARCH_QUERY_PREFIX_REGEX: SEARCH_QUERY_PREFIX_REGEX,
 
   // These should match their SASS counterparts in styles/Variables.sass
   QUERY_INPUT_HEIGHT: 48,

@@ -74,6 +74,7 @@ describe('<SearchPage />', function () {
           name: 'OFFICERS',
           path: 'OFFICER',
           filter: 'Officers',
+          queryPrefix: 'officer',
         },
       ]);
     });
@@ -231,6 +232,17 @@ describe('<SearchPage />', function () {
 
       const refInstance = wrapper.instance().searchInput;
       (typeof refInstance).should.not.eql('undefined');
+    });
+
+    it('should change the search box with correct text if there is queryPrefix', function () {
+      const wrapper = shallow(
+        <SearchPage
+          query={ 'jerome' }
+          queryPrefix='officer'
+        />
+      );
+      const clearableInput = wrapper.find('ClearableInput');
+      clearableInput.prop('value').should.eql('officer:jerome');
     });
   });
 

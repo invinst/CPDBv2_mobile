@@ -120,11 +120,23 @@ describe('<SearchNavbar />', function () {
       wrapper.find('.clear-icon').exists().should.be.false();
     });
 
+    it('should not render "clear" button if a category is currently chosen but query is empty', function () {
+      const wrapper = mount(
+        <SearchNavbar
+          query=''
+          chosenCategory='crs'
+        />
+      );
+
+      wrapper.find('.clear-icon').exists().should.be.false();
+    });
+
     it('should render "clear" button if a category is currently chosen', function () {
       const clearChosenCategory = spy();
 
       const wrapper = mount(
         <SearchNavbar
+          query='queryString'
           chosenCategory='crs'
           clearChosenCategory={ clearChosenCategory }
         />
