@@ -5,7 +5,7 @@ const resultsSection = (name) => ({
     secondRow: nthRow(2),
     thirdRow: nthRow(3),
     rows: {
-      selector: `.results.${name} a`,
+      selector: `.results.${name} div a`,
     },
   },
   elements: {
@@ -34,11 +34,7 @@ module.exports = {
   elements: {
     body: 'body',
     queryInput: '.query-input',
-    clearIcon: '.input-container .clear-icon',
-    closeSingleSearchIcon: {
-      selector: '//div[contains(@class, "search-navbar")]//img[@class="clear-icon"]',
-      locateStrategy: 'xpath',
-    },
+    backToFullSearchLink: '.back-to-full-search-link',
     suggestedHeader: '#search-category-suggested',
     recentHeader: '#search-category-recent',
     dateCRsHeader: '#search-category-dateCRs',
@@ -82,7 +78,7 @@ module.exports = {
           },
         },
         rows: {
-          selector: '.results.officers a',
+          selector: '.results.officers div a',
         },
       },
       elements: {

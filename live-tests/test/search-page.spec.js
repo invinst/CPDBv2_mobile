@@ -260,13 +260,6 @@ describe('SearchPageTest', function () {
       officers.section.firstRow.expect.element('@officerBadge').text.to.equal('Badge #9999');
     });
 
-    it('should empty query when clear icon is tapped', function () {
-      this.searchPage.setValue('@queryInput', 'wh');
-      this.searchPage.expect.element('@queryInput').value.to.equal('wh');
-      this.searchPage.click('@clearIcon');
-      this.searchPage.expect.element('@queryInput').value.to.equal('');
-    });
-
     it('should navigate to officer summary page when tapped', function (client) {
       this.searchPage.setValue('@queryInput', 'wh');
       this.searchPage.section.officers.section.firstRow.click('@officerName');
@@ -283,7 +276,7 @@ describe('SearchPageTest', function () {
     it('should show results that match search query', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
 
-      this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR > CR');
+      this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR → CR');
 
       const investigatorCRs = this.searchPage.section.investigatorCRs;
       investigatorCRs.section.firstRow.expect.element('@itemType').text.to.equal('Unknown');
@@ -296,7 +289,7 @@ describe('SearchPageTest', function () {
     it('should able to show INVESTIGATOR > CR results via query parameter', function () {
       this.searchPage.navigate(this.searchPage.url('Kelvin'));
 
-      this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR > CR');
+      this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR → CR');
 
       const investigatorCRs = this.searchPage.section.investigatorCRs;
 
@@ -319,14 +312,14 @@ describe('SearchPageTest', function () {
 
       const dateCRs = this.searchPage.section.dateCRs;
       this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
-      this.searchPage.expect.element('@dateCRsHeader').text.to.equal('DATE > COMPLAINT RECORDS');
+      this.searchPage.expect.element('@dateCRsHeader').text.to.equal('DATE → COMPLAINT RECORDS');
       dateCRs.section.firstRow.expect.element('@itemType').text.to.equal('Domestic');
       dateCRs.section.firstRow.expect.element('@itemID').text.to.equal('CRID 297449 • 10/13/2011');
       dateCRs.section.secondRow.expect.element('@itemType').text.to.equal('Use Of Force');
       dateCRs.section.secondRow.expect.element('@itemID').text.to.equal('CRID 297473 • 06/13/2009');
       dateCRs.expect.section('@thirdRow').to.be.not.present;
 
-      this.searchPage.expect.element('@dateTRRsHeader').text.to.equal('DATE > TACTICAL RESPONSE REPORTS');
+      this.searchPage.expect.element('@dateTRRsHeader').text.to.equal('DATE → TACTICAL RESPONSE REPORTS');
       const dateTRRs = this.searchPage.section.dateTRRs;
       dateTRRs.section.firstRow.expect.element('@itemType').text.to.equal('TRR');
       dateTRRs.section.firstRow.expect.element('@itemID').text.to.equal('767');
@@ -361,7 +354,7 @@ describe('SearchPageTest', function () {
 
       const dateOfficers = this.searchPage.section.dateOfficers;
       this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
-      this.searchPage.expect.element('@dateOfficersHeader').text.to.equal('DATE > OFFICERS');
+      this.searchPage.expect.element('@dateOfficersHeader').text.to.equal('DATE → OFFICERS');
       dateOfficers.section.firstRow.expect.element('@officerName').text.to.equal('Jerome Finnigan');
       dateOfficers.section.firstRow.expect.element('@officerBadge').text.to.equal('Badge #6789');
     });
@@ -414,7 +407,7 @@ describe('SearchPageTest', function () {
 
       expectResultCount(officersRows, 2);
 
-      this.searchPage.click('@closeSingleSearchIcon');
+      this.searchPage.click('@backToFullSearchLink');
       this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
       this.searchPage.expect.element('@dateTRRsHeader').to.be.present;
       this.searchPage.expect.element('@dateOfficersHeader').to.be.present;

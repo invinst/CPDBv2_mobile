@@ -2,21 +2,21 @@ let c = 0;
 
 const SEARCH_CATEGORIES = [
   {
-    name: 'DATE > COMPLAINT RECORDS',
+    name: 'DATE → COMPLAINT RECORDS',
     filter: 'DATE > CR',
     id: 'dateCRs',
     path: 'DATE > CR',
     queryPrefix: 'date-cr',
   },
   {
-    name: 'DATE > TACTICAL RESPONSE REPORTS',
+    name: 'DATE → TACTICAL RESPONSE REPORTS',
     filter: 'DATE > TRR',
     id: 'dateTRRs',
     path: 'DATE > TRR',
     queryPrefix: 'date-trr',
   },
   {
-    name: 'DATE > OFFICERS',
+    name: 'DATE → OFFICERS',
     filter: 'DATE > OFFICERS',
     id: 'dateOfficers',
     path: 'DATE > OFFICERS',
@@ -50,7 +50,7 @@ const SEARCH_CATEGORIES = [
     path: 'UNIT',
   },
   {
-    name: 'INVESTIGATOR > CR',
+    name: 'INVESTIGATOR → CR',
     filter: 'INVESTIGATOR > CR',
     id: 'investigatorCRs',
     path: 'INVESTIGATOR > CR',
