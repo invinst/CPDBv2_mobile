@@ -82,13 +82,13 @@ describe('Timeline component', function () {
 
     wrapper.find('.timeline-filter-wrapper').exists().should.be.true();
     const filterDropdown = wrapper.find(Dropdown);
-    filterDropdown.prop('defaultValue').should.eql('ALL');
+    filterDropdown.prop('defaultValue').should.eql('All');
     filterDropdown.prop('options').should.eql(
-      ['ALL', 'COMPLAINTS', 'SUSTAINED', 'USE OF FORCE', 'AWARDS', 'RANK/UNIT CHANGES']
+      ['All', 'Complaints', 'Sustained', 'Use Of Force', 'Awards', 'Rank/Unit Changes']
     );
     filterDropdown.prop('className').should.eql('timeline-filter');
     filterDropdown.prop('labels').should.eql(
-      ['ALL (10)', 'COMPLAINTS (4)', 'SUSTAINED (3)', 'USE OF FORCE (2)', 'AWARDS (1)', 'RANK/UNIT CHANGES']
+      ['All (10)', 'Complaints (4)', 'Sustained (3)', 'Use Of Force (2)', 'Awards (1)', 'Rank/Unit Changes']
     );
   });
 
@@ -109,7 +109,7 @@ describe('Timeline component', function () {
     wrapper.find('.dropdown-menu-item').at(0).simulate('click');
 
     changeFilterStub.calledWith({
-      label: 'COMPLAINTS',
+      label: 'Complaints',
       kind: ['CR'],
     }).should.be.true();
   });

@@ -18,28 +18,28 @@ export const ATTACHMENT_TYPES = {
 
 export const TIMELINE_FILTERS = {
   ALL: {
-    label: 'ALL',
+    label: 'All',
     kind: [TIMELINE_ITEMS.CR, TIMELINE_ITEMS.FORCE, TIMELINE_ITEMS.AWARD],
   },
   CRS: {
-    label: 'COMPLAINTS',
+    label: 'Complaints',
     kind: [TIMELINE_ITEMS.CR],
   },
   SUSTAINED: {
-    label: 'SUSTAINED',
+    label: 'Sustained',
     kind: [TIMELINE_ITEMS.CR],
     finding: ['Sustained'],
   },
   FORCE: {
-    label: 'USE OF FORCE',
+    label: 'Use Of Force',
     kind: [TIMELINE_ITEMS.FORCE],
   },
   AWARDS: {
-    label: 'AWARDS',
+    label: 'Awards',
     kind: [TIMELINE_ITEMS.AWARD],
   },
   RANK_UNIT_CHANGES: {
-    label: 'RANK/UNIT CHANGES',
+    label: 'Rank/Unit Changes',
     kind: [],
   },
 };

@@ -5,15 +5,15 @@ import { OFFICER_TIMELINE_ITEMS_CHANGE_FILTER } from 'actions/officer-page/timel
 describe('filter reducer', function () {
   it('should have initial state', function () {
     items(undefined, {}).should.eql({
-      label: 'ALL',
+      label: 'All',
       kind: ['CR', 'FORCE', 'AWARD'],
     });
   });
 
   it('should handle OFFICER_NEW_TIMELINE_ITEMS_CHANGE_FILTER', function () {
-    items('ALL', {
+    items('All', {
       type: OFFICER_TIMELINE_ITEMS_CHANGE_FILTER,
-      payload: 'COMPLAINTS',
-    }).should.eql('COMPLAINTS');
+      payload: 'Complaints',
+    }).should.eql('Complaints');
   });
 });
