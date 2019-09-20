@@ -5,6 +5,7 @@ import { stub } from 'sinon';
 import Timeline from 'components/officer-page/tabbed-pane-section/timeline';
 import Item from 'components/officer-page/tabbed-pane-section/timeline/item';
 import Dropdown from 'components/shared/dropdown';
+import { TIMELINE_FILTERS } from 'constants/officer-page/tabbed-pane-section/timeline';
 
 
 describe('Timeline component', function () {
@@ -62,6 +63,7 @@ describe('Timeline component', function () {
       <Timeline
         items={ [cr, year, unitChange, year, joined] }
         filterCount={ filterCount }
+        selectedFilter={ TIMELINE_FILTERS.ALL }
       />
     );
     const items = instance.find(Item);
@@ -78,7 +80,7 @@ describe('Timeline component', function () {
       RANK_UNIT_CHANGES: 0,
     };
 
-    const wrapper = mount(<Timeline filterCount={ filterCount }/>);
+    const wrapper = mount(<Timeline filterCount={ filterCount } selectedFilter={ TIMELINE_FILTERS.ALL }/>);
 
     wrapper.find('.timeline-filter-wrapper').exists().should.be.true();
     const filterDropdown = wrapper.find(Dropdown);
@@ -103,14 +105,23 @@ describe('Timeline component', function () {
     };
 
     const changeFilterStub = stub();
-    const wrapper = mount(<Timeline changeFilter={ changeFilterStub } filterCount={ filterCount }/>);
+    const wrapper = mount(
+      <Timeline
+        selectedFilter={ TIMELINE_FILTERS.SUSTAINED }
+        changeFilter={ changeFilterStub }
+        filterCount={ filterCount }
+      />
+    );
+
+    const filterDropdown = wrapper.find(Dropdown);
+    filterDropdown.prop('defaultValue').should.eql('Sustained');
 
     wrapper.find('.dropdown-button').simulate('click');
-    wrapper.find('.dropdown-menu-item').at(0).simulate('click');
+    wrapper.find('.dropdown-menu-item').at(1).simulate('click');
 
-    changeFilterStub.calledWith({
+    changeFilterStub.should.be.calledWith({
       label: 'Complaints',
       kind: ['CR'],
-    }).should.be.true();
+    });
   });
 });

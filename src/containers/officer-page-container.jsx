@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { isNaN } from 'lodash';
 
 import OfficerPage from 'components/officer-page';
-import { fetchOfficer, requestCMS } from 'actions/officer-page';
+import { fetchOfficer, requestCMS, resetTimelineFilter } from 'actions/officer-page';
 import {
   officerSummarySelector,
   officerMetricsSelector,
@@ -54,6 +54,7 @@ const mapDispatchToProps = {
   fetchOfficer,
   getOfficerTimeline,
   getOfficerCoaccusals,
+  resetTimelineFilter,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OfficerPage));

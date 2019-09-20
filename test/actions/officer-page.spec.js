@@ -7,11 +7,11 @@ import {
   OFFICER_PAGE_CMS_REQUEST_START,
   OFFICER_PAGE_CMS_REQUEST_SUCCESS,
   OFFICER_PAGE_CMS_REQUEST_FAILURE,
-  changeOfficerId,
+  resetTimelineFilter,
 } from 'actions/officer-page';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
-import { CHANGE_OFFICER_ID } from 'constants/officer-page';
+import { RESET_TIME_LINE_FILTER } from 'constants/officer-page';
 
 
 describe('officer actions', function () {
@@ -46,11 +46,10 @@ describe('officer actions', function () {
     });
   });
 
-  describe('changeOfficerId', function () {
+  describe('resetTimelineFilter', function () {
     it('should return the right action', function () {
-      changeOfficerId(123).should.eql({
-        type: CHANGE_OFFICER_ID,
-        payload: 123,
+      resetTimelineFilter().should.eql({
+        type: RESET_TIME_LINE_FILTER,
       });
     });
   });

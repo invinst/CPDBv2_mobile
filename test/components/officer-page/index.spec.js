@@ -70,6 +70,34 @@ describe('<OfficerPage />', function () {
     wrapper.find(NotMatchedOfficerPage).should.have.length(1);
   });
 
+  it('should resetTimelineFilter when mounted', function () {
+    const resetTimelineFilter = spy();
+    mount(
+      <OfficerPage loading={ true } found={ false } resetTimelineFilter={ resetTimelineFilter }/>
+    );
+
+    resetTimelineFilter.should.be.calledOnce();
+  });
+
+  it('should resetTimelineFilter when update with new requestOfficerId', function () {
+    const resetTimelineFilter = spy();
+    const wrapper = mount(
+      <OfficerPage
+        requestOfficerId={ 1 }
+        loading={ false }
+        found={ true }
+        resetTimelineFilter={ resetTimelineFilter }
+      />
+    );
+
+    resetTimelineFilter.should.be.calledOnce();
+    resetTimelineFilter.resetHistory();
+
+    wrapper.setProps({ requestOfficerId: 2 });
+
+    resetTimelineFilter.should.be.calledOnce();
+  });
+
   it('should set to the correct officer if there is officer alias', function () {
     const pushBreadcrumbSpy = spy();
     const wrapper = shallow(
