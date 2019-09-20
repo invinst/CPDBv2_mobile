@@ -8,14 +8,14 @@ import styles from './cr.sass';
 
 export default class Cr extends Component {
   render() {
-    const { item, hasBorderBottom, pathname, onTrackingAttachment } = this.props;
+    const { item, className, pathname, onTrackingAttachment } = this.props;
 
     return (
       <Link
-        className={ cx(styles.wrapper, 'test--cr-item') }
+        className={ cx(styles.wrapper, className) }
         to={ `/complaint/${item.crid}/` }
       >
-        <div className={ cx('content', { 'no-border-bottom': !hasBorderBottom }) }>
+        <div className='content'>
           <span className={ cx('kind', { 'sustained': item.finding === 'Sustained' }) }>C</span>
           <span className='detail'>
             <div className='category'>{ item.category }</div>
@@ -36,8 +36,8 @@ export default class Cr extends Component {
 }
 
 Cr.propTypes = {
+  className: PropTypes.string,
   item: PropTypes.object,
-  hasBorderBottom: PropTypes.bool,
   pathname: PropTypes.string,
   onTrackingAttachment: PropTypes.func,
 };

@@ -1,12 +1,14 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { stub } from 'sinon';
 
 import Timeline from 'components/officer-page/tabbed-pane-section/timeline';
 import Item from 'components/officer-page/tabbed-pane-section/timeline/item';
+import Dropdown from 'components/shared/dropdown';
 
 
 describe('Timeline component', function () {
-  it('should render items with correct borders', function () {
+  it('should render items', function () {
     const year = {
       date: '1994',
       hasData: true,
@@ -47,12 +49,68 @@ describe('Timeline component', function () {
       unitName: '153',
       year: 1994,
     };
-    const instance = shallow(<Timeline items={ [cr, year, unitChange, year, joined] }/>);
+    const filterCount = {
+      ALL: 1,
+      CRS: 1,
+      SUSTAINED: 0,
+      FORCE: 0,
+      AWARDS: 0,
+      RANK_UNIT_CHANGES: 0,
+    };
+
+    const instance = shallow(
+      <Timeline
+        items={ [cr, year, unitChange, year, joined] }
+        filterCount={ filterCount }
+      />
+    );
     const items = instance.find(Item);
-    items.at(0).prop('hasBorderBottom').should.equal(true);
-    items.at(1).prop('hasBorderBottom').should.equal(false);
-    items.at(2).prop('hasBorderBottom').should.equal(false);
-    items.at(3).prop('hasBorderBottom').should.equal(false);
-    items.at(4).prop('hasBorderBottom').should.equal(false);
+    items.should.have.length(5);
+  });
+
+  it('should render filter dropdown', function () {
+    const filterCount = {
+      ALL: 10,
+      CRS: 4,
+      SUSTAINED: 3,
+      FORCE: 2,
+      AWARDS: 1,
+      RANK_UNIT_CHANGES: 0,
+    };
+
+    const wrapper = mount(<Timeline filterCount={ filterCount }/>);
+
+    wrapper.find('.timeline-filter-wrapper').exists().should.be.true();
+    const filterDropdown = wrapper.find(Dropdown);
+    filterDropdown.prop('defaultValue').should.eql('All');
+    filterDropdown.prop('options').should.eql(
+      ['All', 'Complaints', 'Sustained', 'Use Of Force', 'Awards', 'Rank/Unit Changes']
+    );
+    filterDropdown.prop('className').should.eql('timeline-filter');
+    filterDropdown.prop('labels').should.eql(
+      ['All (10)', 'Complaints (4)', 'Sustained (3)', 'Use Of Force (2)', 'Awards (1)', 'Rank/Unit Changes']
+    );
+  });
+
+  it('should call changeFilter when clicking dropdown items', function () {
+    const filterCount = {
+      ALL: 0,
+      CRS: 0,
+      SUSTAINED: 0,
+      FORCE: 0,
+      AWARDS: 0,
+      RANK_UNIT_CHANGES: 0,
+    };
+
+    const changeFilterStub = stub();
+    const wrapper = mount(<Timeline changeFilter={ changeFilterStub } filterCount={ filterCount }/>);
+
+    wrapper.find('.dropdown-button').simulate('click');
+    wrapper.find('.dropdown-menu-item').at(0).simulate('click');
+
+    changeFilterStub.calledWith({
+      label: 'Complaints',
+      kind: ['CR'],
+    }).should.be.true();
   });
 });

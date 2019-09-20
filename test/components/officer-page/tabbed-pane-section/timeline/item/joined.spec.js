@@ -15,8 +15,8 @@ describe('Joined component', function () {
       year: 1988,
     };
 
-    const instance = shallow(<Joined item={ joinedItem } hasBorderBottom={ false } />);
-    instance.find('.join').text().should.equal('Joined CPD');
-    instance.find('.date').text().should.equal('DEC 5');
+    const instance = shallow(<Joined className='test--joined' item={ joinedItem } />);
+    instance.find('.test--joined .join').text().should.equal('Joined CPD');
+    instance.find('.test--joined .date').text().should.equal('DEC 5');
   });
 });
