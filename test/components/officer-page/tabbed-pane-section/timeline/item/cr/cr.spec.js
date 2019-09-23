@@ -1,7 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Link } from 'react-router';
+import { spy } from 'sinon';
 
 import Cr from 'components/officer-page/tabbed-pane-section/timeline/item/cr';
+import Attachments from 'components/officer-page/tabbed-pane-section/timeline/item/cr/attachments';
 
 
 describe('Cr component', function () {
@@ -34,10 +37,29 @@ describe('Cr component', function () {
   };
 
   it('should render item correctly', function () {
-    const instance = shallow(<Cr item={ item } />);
-    instance.find('.kind').text().should.equal('C');
-    instance.find('.category').text().should.equal('Use of Force');
-    instance.find('.finding').text().should.equal('Sustained, Unknown');
-    instance.find('.date').text().should.equal('Jan 01');
+    const onTrackingAttachment = spy();
+    const instance = shallow(
+      <Cr
+        className='test--cr-item'
+        item={ item }
+        pathname='test-pathname'
+        onTrackingAttachment={ onTrackingAttachment }
+      />
+    );
+    const main = instance.find(Link);
+
+    main.prop('to').should.equal('/complaint/123/');
+    main.prop('className').should.containEql('test--cr-item');
+
+    const content = main.find('.content');
+    content.find('.kind').text().should.equal('C');
+    content.find('.category').text().should.equal('Use of Force');
+    content.find('.finding').text().should.equal('Sustained, Unknown');
+    content.find('.date').text().should.equal('Jan 01');
+
+    const attachments = content.find(Attachments);
+    attachments.prop('attachments').should.eql(item.attachments);
+    attachments.prop('pathname').should.eql('test-pathname');
+    attachments.prop('onTrackingAttachment').should.eql(onTrackingAttachment);
   });
 });
