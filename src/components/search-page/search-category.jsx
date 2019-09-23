@@ -28,7 +28,6 @@ const resultComponentMappings = {
 };
 
 export default class SearchCategory extends Component {
-
   componentDidMount() {
     const watchActiveState = this.watchActiveState.bind(this);
     window.addEventListener('scroll', watchActiveState);
@@ -91,7 +90,6 @@ export default class SearchCategory extends Component {
 
   render() {
     const { title, categoryId, activeCategory } = this.props;
-    const results = this.renderResults();
 
     return (
       <div className={ style.searchCategory } ref={ (domNode) => { this.domNode = domNode; } }>
@@ -102,9 +100,7 @@ export default class SearchCategory extends Component {
           { title }
         </div>
         <div className={ `results ${categoryId}` }>
-          <div>
-            { results }
-          </div>
+          { this.renderResults() }
           { this.renderAllButton() }
         </div>
       </div>

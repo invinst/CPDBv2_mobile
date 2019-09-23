@@ -20,40 +20,27 @@
     font-size: 14px
     padding: $side-margin
 
-    .query-input-container
+    .query-input
       position: relative
       width: calc(100% - #{$button-done-width})
       display: inline-block
+      outline: none
+      padding-left: $side-margin
+      border: 0
+      border-radius: 2px
+      -webkit-appearance: none // remove iphone input inner shadow
+      height: $query-input-height - 2*$side-margin
+      font-weight: 600
+      font: inherit
+      color: $thunder
+      background-color: $wild-sand
 
-      .query-input
-        outline: none
-        padding-left: $side-margin
-        width: 100%
-        border: 0
-        border-radius: 2px
-        -webkit-appearance: none // remove iphone input inner shadow
-        height: $query-input-height - 2*$side-margin
-        font-weight: 600
+      @include placeholder
+        color: $boulder
         font: inherit
-        color: $thunder
-        background-color: $wild-sand
 
-        @include placeholder
-          color: $boulder
-          font: inherit
-
-        &:not([value=''])
-          border: 1px solid $alto-solid
-
-      .clear-icon
-        position: absolute
-        top: 0
-        bottom: 0
-        right: 8px
-        height: 16px
-        width: 16px
-        margin: auto
-        cursor: pointer
+      &:not([value=''])
+        border: 1px solid $alto-solid
 
     .bt-cancel
       background-color: inherit
@@ -73,6 +60,12 @@
   .bottom-padding
     min-height: 0
     background-color: white
+
+  .back-to-full-search-link
+    height: 44px
+    line-height: 44px
+    color: $accent-blue
+    font-weight: 300
 
   .back-to-front-page-link
     display: block

@@ -4,6 +4,12 @@ const resultsSection = (name) => ({
     firstRow: nthRow(1),
     secondRow: nthRow(2),
     thirdRow: nthRow(3),
+    rows: {
+      selector: `.results.${name} div a`,
+    },
+  },
+  elements: {
+    allLink: '.all',
   },
 });
 
@@ -29,7 +35,7 @@ module.exports = {
   elements: {
     body: 'body',
     queryInput: '.query-input',
-    clearIcon: '.clear-icon',
+    backToFullSearchLink: '.back-to-full-search-link',
     suggestedHeader: '#search-category-suggested',
     recentHeader: '#search-category-recent',
     dateCRsHeader: '#search-category-dateCRs',
@@ -47,7 +53,6 @@ module.exports = {
     suggested: {
       selector: '.results.suggested',
       sections: {
-
         officer: {
           selector: '.row.officer',
           elements: {
@@ -75,6 +80,12 @@ module.exports = {
             officerBadge: '.officer-badge',
           },
         },
+        rows: {
+          selector: '.results.officers div a',
+        },
+      },
+      elements: {
+        allLink: '.all',
       },
     },
     crs: resultsSection('crs'),

@@ -6,9 +6,8 @@ import { isEmpty, noop } from 'lodash';
 import cx from 'classnames';
 
 import constants from 'constants';
-import { goUp } from 'utils/navigation-util';
+import { goUp, instantScrollToTop } from 'utils/navigation-util';
 import SearchCategory from './search-category';
-import ClearableInput from './clearable-input';
 import { showIntercomLauncher } from 'utils/intercom';
 import style from './search-page.sass';
 import * as IntercomTracking from 'utils/intercom-tracking';
@@ -21,6 +20,8 @@ export default class SearchPage extends Component {
     super(props);
 
     this.handleEmptyPinboardButtonClick = this.handleEmptyPinboardButtonClick.bind(this);
+    this.clearChosenCategory = this.clearChosenCategory.bind(this);
+    this.backToFullSearchHandler = this.backToFullSearchHandler.bind(this);
   }
 
   componentDidMount() {
@@ -28,7 +29,7 @@ export default class SearchPage extends Component {
       pushBreadcrumbs, location, routes, params,
     } = this.props;
     pushBreadcrumbs({ location, routes, params });
-    this.searchInput.inputElement.focus();
+    this.searchInput.focus();
     IntercomTracking.trackSearchPage();
     showIntercomLauncher(false);
     this.updateResults();
@@ -109,15 +110,33 @@ export default class SearchPage extends Component {
     updateChosenCategory(category.id);
   }
 
+  clearChosenCategory() {
+    const { updateChosenCategory } = this.props;
+    updateChosenCategory('');
+  }
+
+  backToFullSearchHandler() {
+    this.clearChosenCategory();
+    instantScrollToTop();
+  }
+
   renderCategories(categories) {
+    const {
+      chosenCategory,
+      saveToRecent,
+      updateActiveCategory,
+      activeCategory,
+      addOrRemoveItemInPinboard,
+    } = this.props;
     const lastIndex = categories.length - 1;
 
     return categories.map((cat, index) => {
       const showAllButton = (
         cat.id !== 'recent' &&
         cat.id !== 'suggested' &&
-        this.props.chosenCategory === ''
+        chosenCategory === ''
       );
+
       const searchCategory = (
         <SearchCategory
           categoryId={ cat.id }
@@ -126,10 +145,10 @@ export default class SearchPage extends Component {
           showAllButton={ showAllButton }
           title={ cat.longName || cat.name }
           items={ this.props[cat.id].data }
-          saveToRecent={ this.props.saveToRecent }
-          updateActiveCategory={ this.props.updateActiveCategory }
-          activeCategory={ this.props.activeCategory }
-          addOrRemoveItemInPinboard={ this.props.addOrRemoveItemInPinboard }
+          saveToRecent={ saveToRecent }
+          updateActiveCategory={ updateActiveCategory }
+          activeCategory={ activeCategory }
+          addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
         />
       );
 
@@ -144,7 +163,6 @@ export default class SearchPage extends Component {
       } else {
         return <div key={ cat.id }>{ searchCategory }</div>;
       }
-
     });
   }
 
@@ -162,7 +180,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query, chosenCategory, router, pinboard, inputChanged } = this.props;
+    const { query, queryPrefix, chosenCategory, router, pinboard } = this.props;
     let categories;
 
     if (!this.isLongEnoughQuery(query)) {
@@ -187,6 +205,8 @@ export default class SearchPage extends Component {
       categories = this.getCategoriesWithSuggestions();
     }
 
+    const searchText = `${queryPrefix ? `${queryPrefix}:` : ''}${query}`;
+
     return (
       <div className={ style.searchPage }>
         <div
@@ -195,17 +215,16 @@ export default class SearchPage extends Component {
         >
 
           <div className='input-container'>
-            <ClearableInput
+            <input
               ref={ (instance) => { this.searchInput = instance; } }
               className='query-input'
-              value={ query }
+              value={ searchText }
               spellCheck={ false }
               autoComplete='off'
               autoCorrect='off'
               autoCapitalize='off'
               placeholder='Officer name, badge number or date'
               onChange={ (e) => { this.onInputChange(e); } }
-              onClear={ () => { inputChanged(''); } }
             />
 
             <button
@@ -223,7 +242,14 @@ export default class SearchPage extends Component {
         <div className='category-details-container'>
           { this.renderCategories(categories) }
         </div>
-
+        {
+          !isEmpty(chosenCategory) &&
+          (
+            <a className='back-to-full-search-link' onClick={ this.backToFullSearchHandler }>
+              Return to full search results
+            </a>
+          )
+        }
         <a className='back-to-front-page-link' href='/'>Back to Front Page</a>
       </div>
     );
@@ -232,6 +258,7 @@ export default class SearchPage extends Component {
 
 SearchPage.propTypes = {
   query: PropTypes.string,
+  queryPrefix: PropTypes.string,
   inputChanged: PropTypes.func,
   queryChanged: PropTypes.func,
   suggestTerm: PropTypes.func,

@@ -26,8 +26,8 @@ const CRSearchResult = ({ items, saveToRecent, categoryFilter, addOrRemoveItemIn
               isPinned={ item.isPinned }
               type={ item.type }>
               <div className='item-info'>
-                <div className='item-id'>CRID { item.crid } • { item.incidentDate }</div>
                 <div className='item-type'>{ item.category }</div>
+                <div className='item-id'>CRID { item.crid } • { item.incidentDate }</div>
               </div>
             </SearchItem>
           );

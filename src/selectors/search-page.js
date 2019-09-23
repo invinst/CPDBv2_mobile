@@ -7,6 +7,14 @@ import { pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
 
 
+export const getChosenCategory = (state) => state.suggestionApp.chosenCategory;
+export const getActiveCategory = (state) => state.suggestionApp.activeCategory;
+export const getQuery = (state) => state.suggestionApp.query;
+export const queryPrefixSelector = createSelector(
+  getChosenCategory,
+  (chosenCategory) => constants.SEARCH_CATEGORY_PREFIXES[chosenCategory]
+);
+
 const isItemPinned = (type, id, pinboardItems) => {
   return (Object.prototype.hasOwnProperty.call(pinboardItems, type)) &&
          (pinboardItems[type].indexOf(id) !== -1);
