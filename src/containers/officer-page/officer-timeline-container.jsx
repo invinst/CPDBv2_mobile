@@ -1,22 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { get } from 'lodash';
 
 import TimeLine from 'components/officer-page/tabbed-pane-section/timeline';
-import { getNewTimelineItems } from 'selectors/officer-page/timeline';
+import { timelineItemsSelector, filterCountSelector } from 'selectors/officer-page/timeline';
 import { trackingClickAttachment } from 'actions/common/analytic';
-import { get } from 'lodash';
+import { changeFilter } from 'actions/officer-page/timeline';
 
 
 function mapStateToProps(state, ownProps) {
   return {
-    items: getNewTimelineItems(state, ownProps.officerId),
+    items: timelineItemsSelector(state, ownProps),
     pathname: get(ownProps, 'location.pathname'),
+    filterCount: filterCountSelector(state, ownProps),
   };
 }
 
 const mapDispatchToProps = {
   onTrackingAttachment: trackingClickAttachment,
+  changeFilter,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TimeLine));
