@@ -892,6 +892,109 @@ const mockCMSPinboardPage = {
   }],
 };
 
+const createPinboardffff6666Params = {
+  'officer_ids': [1, 2],
+  'crids': ['5678123'],
+  'trr_ids': [3, 2],
+};
+
+const createPinboardffff6666Data = {
+  'id': 'ffff6666',
+  'title': '',
+  'description': '',
+  'officer_ids': [1, 2],
+  'crids': ['5678123'],
+  'trr_ids': [3, 2],
+};
+
+const pinboardffff6666CRsData = [
+  {
+    'crid': '5678123',
+    'incident_date': '2010-01-01',
+    'point': { 'lon': 1.0, 'lat': 1.0 },
+    'most_common_category': 'Use Of Force',
+  },
+];
+
+const pinboardffff6666OfficersData = [
+  {
+    'id': 1,
+    'full_name': 'Daryl Mack',
+    'complaint_count': 10,
+    'sustained_count': 0,
+    'birth_year': 1975,
+    'complaint_percentile': 99.3450,
+    'race': 'White',
+    'gender': 'Male',
+    'rank': 'Police Officer',
+    'percentile': {
+      'percentile_trr': '12.0000',
+      'percentile_allegation': '99.3450',
+      'percentile_allegation_civilian': '98.4344',
+      'percentile_allegation_internal': '99.7840',
+      'year': 2016,
+      'id': 1,
+    },
+  },
+  {
+    'id': 2,
+    'full_name': 'Daryl Mack',
+    'complaint_count': 10,
+    'sustained_count': 0,
+    'birth_year': 1975,
+    'complaint_percentile': 99.3450,
+    'race': 'White',
+    'gender': 'Male',
+    'rank': 'Police Officer',
+    'percentile': {
+      'percentile_trr': '12.0000',
+      'percentile_allegation': '99.3450',
+      'percentile_allegation_civilian': '98.4344',
+      'percentile_allegation_internal': '99.7840',
+      'year': 2016,
+      'id': 1,
+    },
+  },
+];
+
+const pinboardffff6666TRRsData = [
+  {
+    'id': 3,
+    'trr_datetime': '2012-01-01',
+    'category': 'Impact Weapon',
+    'point': { 'lon': 1.0, 'lat': 1.0 },
+  },
+  {
+    'id': 2,
+    'trr_datetime': '2012-01-01',
+    'category': 'Impact Weapon',
+    'point': { 'lon': 1.0, 'lat': 1.0 },
+  },
+];
+
+const createPinboardeeee7777Params = {
+  'officer_ids': [1, 2],
+  'crids': ['987654', '5678123'],
+  'trr_ids': [9, 7],
+};
+
+const createPinboardeeee7777Data = {
+  'id': 'eeee7777',
+  'title': '',
+  'description': '',
+  'officer_ids': [1, 2],
+  'crids': ['5678123'],
+  'trr_ids': [],
+  'not_found_items': {
+    'crids': ['987654'],
+    'trr_ids': [9, 7],
+  },
+};
+
+const pinboardeeee7777CRsData = pinboardffff6666CRsData;
+const pinboardeeee7777OfficersData = pinboardffff6666OfficersData;
+const pinboardeeee7777TRRsData = [];
+
 module.exports = {
   pinboardData,
   pinboardCRsData,
@@ -926,4 +1029,14 @@ module.exports = {
   generateRelevantCoaccusal,
   generateRelevantComplaint,
   mockCMSPinboardPage,
+  createPinboardffff6666Params,
+  createPinboardffff6666Data,
+  pinboardffff6666CRsData,
+  pinboardffff6666OfficersData,
+  pinboardffff6666TRRsData,
+  createPinboardeeee7777Params,
+  createPinboardeeee7777Data,
+  pinboardeeee7777CRsData,
+  pinboardeeee7777OfficersData,
+  pinboardeeee7777TRRsData,
 };
