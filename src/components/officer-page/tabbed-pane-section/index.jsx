@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { get, keys, filter } from 'lodash';
+import { get, keys, filter, capitalize } from 'lodash';
 import cx from 'classnames';
 
 import HorizontalScrolling from 'components/common/horizontal-scrolling';
@@ -45,7 +45,7 @@ export default class TabbedPaneSection extends Component {
     } = this.props;
 
     return (
-      <HorizontalScrolling centeredContent={ true } className='tabbed-pane-section-menu'>
+      <HorizontalScrolling className='tabbed-pane-section-menu' spaceBetween={ 9 }>
         {
           filter(keys(tabbedPaneMap), (paneName) => get(tabbedPaneMap, `${paneName}.show`)).map(paneName => (
             <span
@@ -53,7 +53,7 @@ export default class TabbedPaneSection extends Component {
               className={ cx('tabbed-pane-tab-name', { 'active': paneName === currentTab }) }
               onClick={ () => changeOfficerTab(paneName) }
             >
-              { paneName }
+              { capitalize(paneName) }
             </span>
           ))
         }

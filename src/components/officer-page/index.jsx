@@ -34,11 +34,13 @@ class OfficerPage extends Component {
 
   componentDidMount() {
     this._fetchData();
+    this.props.resetTimelineFilter();
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.requestOfficerId !== this.props.requestOfficerId) {
       this._fetchData();
+      this.props.resetTimelineFilter();
     }
 
     const { summary, location } = this.props;
@@ -239,6 +241,7 @@ OfficerPage.propTypes = {
   getOfficerTimeline: PropTypes.func,
   isTimelineSuccess: PropTypes.bool,
   isCoaccusalSuccess: PropTypes.bool,
+  resetTimelineFilter: PropTypes.func,
 };
 
 OfficerPage.defaultProps = {
@@ -249,6 +252,7 @@ OfficerPage.defaultProps = {
   requestLandingPage: noop,
   getOfficerCoaccusals: noop,
   getOfficerTimeline: noop,
+  resetTimelineFilter: noop,
 };
 
 export default OfficerPage;
