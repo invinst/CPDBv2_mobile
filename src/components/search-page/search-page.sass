@@ -19,41 +19,26 @@ $query-input-width: 77%
     border-radius: 0
     background-color: white
     font-size: 14px
+    padding: $side-margin
 
-    .query-input-container
+    .query-input
       position: relative
-      width: calc(100% - #{$button-done-width} - 2*#{$side-margin})
+      width: calc(100% - #{$button-done-width})
       display: inline-block
-      vertical-align: middle
-      margin-right: 8px
+      outline: none
+      padding-left: $side-margin
+      border: 0
+      border-radius: 2px
+      -webkit-appearance: none // remove iphone input inner shadow
+      height: $query-input-height - 2*$side-margin
+      font-weight: 600
+      font: inherit
+      color: $thunder
+      background-color: $wild-sand
 
-      .query-input
-        outline: none
-        margin: $side-margin
-        padding-left: $side-margin
-        width: 100%
-        border: 0
-        border-radius: 2px
-        -webkit-appearance: none // remove iphone input inner shadow
-        height: $query-input-height - 2*$side-margin
-        font-weight: 600
-        font: inherit
-        color: $thunder
-        background-color: $wild-sand
-
-        @include placeholder
-          color: $boulder
-          font: inherit
-
-      .clear-icon
-        position: absolute
-        top: 0
-        bottom: 0
-        right: 0
-        height: 22px
-        width: 22px
-        margin: auto
-        cursor: pointer
+    @include placeholder
+      color: $boulder
+      font: inherit
 
     .bt-cancel
       background-color: inherit
@@ -72,3 +57,9 @@ $query-input-width: 77%
   .bottom-padding
     min-height: 0
     background-color: white
+
+  .back-to-full-search-link
+    height: 44px
+    line-height: 44px
+    color: $accent-blue
+    font-weight: 300

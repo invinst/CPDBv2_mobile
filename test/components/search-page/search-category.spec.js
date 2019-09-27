@@ -136,10 +136,12 @@ describe('<SearchCategory />', function () {
     beforeEach(function () {
       this.stubRenderFunc = stub(SearchCategory.prototype, 'renderResults');
       this.stubRenderFunc.returns((item) => item);
+      this.stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
     });
 
     afterEach(function () {
       this.stubRenderFunc.restore();
+      this.stubInstantScrollToTop.restore();
     });
 
     it('should render correctly', function () {
@@ -170,7 +172,8 @@ describe('<SearchCategory />', function () {
 
       const allButton = wrapper.find('.all');
       allButton.simulate('click');
-      allButtonClickHandler.calledWith().should.be.true();
+      allButtonClickHandler.should.be.called();
+      this.stubInstantScrollToTop.should.be.called();
     });
   });
 

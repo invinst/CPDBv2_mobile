@@ -13,6 +13,10 @@ import {
   updateChosenCategory,
 } from 'actions/suggestion';
 import {
+  getQuery,
+  queryPrefixSelector,
+  getChosenCategory,
+  getActiveCategory,
   officersSelector,
   dateCRsSelector,
   dateTRRsSelector,
@@ -27,7 +31,8 @@ import {
 
 function mapStateToProps(state, ownProps) {
   return {
-    query: state.suggestionApp.query,
+    query: getQuery(state),
+    queryPrefix: queryPrefixSelector(state),
     officers: officersSelector(state),
     dateCRs: dateCRsSelector(state),
     investigatorCRs: investigatorCRsSelector(state),
@@ -37,8 +42,8 @@ function mapStateToProps(state, ownProps) {
     trrs: trrsSelector(state),
     recent: recentSelector(state),
     suggested: suggestedSelector(state),
-    activeCategory: state.suggestionApp.activeCategory,
-    chosenCategory: state.suggestionApp.chosenCategory,
+    activeCategory: getActiveCategory(state),
+    chosenCategory: getChosenCategory(state),
   };
 }
 

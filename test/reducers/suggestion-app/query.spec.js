@@ -1,3 +1,5 @@
+import { LOCATION_CHANGE } from 'react-router-redux';
+
 import { SEARCH_INPUT_CHANGED, SEARCH_CLEAR, SEARCH_RESET } from 'actions/suggestion';
 import query from 'reducers/suggestion-app/query';
 
@@ -14,6 +16,37 @@ describe('query reducer', function () {
       type: SEARCH_INPUT_CHANGED,
       payload: queryString,
     }).should.eql(queryString);
+  });
+
+  it('should handle SEARCH_INPUT_CHANGED with prefix', function () {
+    query('', {
+      type: SEARCH_INPUT_CHANGED,
+      payload: 'officer:123',
+    }).should.eql('123');
+  });
+
+  it('should handle LOCATION_CHANGE', function () {
+    const queryString = 'queryString';
+
+    query('', {
+      type: LOCATION_CHANGE,
+      payload: {
+        query: {
+          terms: queryString,
+        },
+      },
+    }).should.eql(queryString);
+  });
+
+  it('should handle LOCATION_CHANGE with prefix', function () {
+    query('', {
+      type: LOCATION_CHANGE,
+      payload: {
+        query: {
+          terms: 'officer:123',
+        },
+      },
+    }).should.eql('123');
   });
 
   it('should handle SEARCH_CLEAR', function () {
