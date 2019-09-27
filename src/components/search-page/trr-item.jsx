@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 
 import SearchItem from './search-item';
 import searchItemStyle from './search-item.sass';
 
 
-const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard }) => {
+const TrrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard }) => {
   return (
     <SearchItem
       url={ item.url }
@@ -15,19 +16,17 @@ const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard }) => {
       type={ item.type }
       recentItemData={ item.recentItemData }
       saveToRecent={ saveToRecent }>
-      <div className={ searchItemStyle.itemInfo }>
-        <div className='item-title'>{ item.name }</div>
-        <div className='item-subtitle'>{ item.badge }</div>
+      <div className={ cx(searchItemStyle.itemInfo, 'inline') }>
+        <div className='item-title'>TRR</div>
+        <div className='item-subtitle'>{ item.id }</div>
       </div>
     </SearchItem>
   );
 };
 
-OfficerItem.propTypes = {
+TrrItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number,
-    name: PropTypes.string,
-    badge: PropTypes.string,
     url: PropTypes.string,
     isPinned: PropTypes.bool,
     type: PropTypes.string,
@@ -37,9 +36,9 @@ OfficerItem.propTypes = {
   addOrRemoveItemInPinboard: PropTypes.func,
 };
 
-OfficerItem.defaultProps = {
+TrrItem.defaultProps = {
   saveToRecent: () => {},
   item: {},
 };
 
-export default OfficerItem;
+export default TrrItem;

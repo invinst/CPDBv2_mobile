@@ -16,6 +16,11 @@ export const FETCH_SUGGESTED_SEARCH_ITEMS_START = 'FETCH_SUGGESTED_SEARCH_ITEMS_
 export const FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS = 'FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS';
 export const FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE = 'FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE';
 
+export const FETCH_RECENT_SEARCH_ITEMS_START = 'FETCH_RECENT_SEARCH_ITEMS_START';
+export const FETCH_RECENT_SEARCH_ITEMS_SUCCESS = 'FETCH_RECENT_SEARCH_ITEMS_SUCCESS';
+export const FETCH_RECENT_SEARCH_ITEMS_FAILURE = 'FETCH_RECENT_SEARCH_ITEMS_FAILURE';
+export const SET_RECENT_SUGGESTIONS_REQUESTED = 'SET_RECENT_SUGGESTIONS_REQUESTED';
+
 export const SEARCH_SAVE_TO_RECENT = 'SEARCH_SAVE_TO_RECENT';
 
 export const SEARCH_FOCUS = 'SEARCH_FOCUS';
@@ -59,6 +64,16 @@ export const fetchSuggestedSearchItems = () => {
   return suggest({}, undefined, '');
 };
 
+export const fetchRecentSearchItems = (officerIds, crids, trrIds) => get(
+  v2Url(constants.RECENT_SEARCH_ITEMS_API_ENDPOINT),
+  [
+    FETCH_RECENT_SEARCH_ITEMS_START,
+    FETCH_RECENT_SEARCH_ITEMS_SUCCESS,
+    FETCH_RECENT_SEARCH_ITEMS_FAILURE,
+  ],
+)({ 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds });
+
+export const fetchedEmptyRecentSearchItems = createAction(SET_RECENT_SUGGESTIONS_REQUESTED);
 export const saveToRecent = createAction(SEARCH_SAVE_TO_RECENT);
 
 export const focus = createAction(SEARCH_FOCUS);
