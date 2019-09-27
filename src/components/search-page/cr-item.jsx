@@ -16,8 +16,8 @@ const CrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard }) => {
       recentItemData={ item.recentItemData }
       saveToRecent={ saveToRecent }>
       <div className={ searchItemStyle.itemInfo }>
-        <div className='item-subtitle'>CRID { item.crid } • { item.incidentDate }</div>
         <div className='item-title'>{ item.category }</div>
+        <div className='item-subtitle'>CRID { item.crid } • { item.incidentDate }</div>
       </div>
     </SearchItem>
   );

@@ -13,6 +13,10 @@ import {
   investigatorCRsSelector,
   recentSuggestionsSelector,
   recentSuggestionIdsSelector,
+  getChosenCategory,
+  getActiveCategory,
+  getQuery,
+  queryPrefixSelector,
 } from 'selectors/search-page';
 
 describe('search-page selectors', function () {
@@ -708,6 +712,50 @@ describe('search-page selectors', function () {
         officerIds: [8562],
         trrIds: [123],
       });
+    });
+  });
+
+  describe('getChosenCategory', function () {
+    it('should return correct chosen category', function () {
+      const state = {
+        suggestionApp: {
+          chosenCategory: 'dateOfficers',
+        },
+      };
+      getChosenCategory(state).should.be.eql('dateOfficers');
+    });
+  });
+
+  describe('getActiveCategory', function () {
+    it('should return correct active category', function () {
+      const state = {
+        suggestionApp: {
+          activeCategory: 'dateOfficers',
+        },
+      };
+      getActiveCategory(state).should.be.eql('dateOfficers');
+    });
+  });
+
+  describe('getQuery', function () {
+    it('should return query', function () {
+      const state = {
+        suggestionApp: {
+          query: 'jerome',
+        },
+      };
+      getQuery(state).should.be.eql('jerome');
+    });
+  });
+
+  describe('queryPrefixSelector', function () {
+    it('should return correct query prefix', function () {
+      const state = {
+        suggestionApp: {
+          chosenCategory: 'dateOfficers',
+        },
+      };
+      queryPrefixSelector(state).should.be.eql('date-officer');
     });
   });
 });

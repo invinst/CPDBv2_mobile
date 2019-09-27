@@ -15,6 +15,10 @@ import {
   fetchedEmptyRecentSearchItems,
 } from 'actions/suggestion';
 import {
+  getQuery,
+  queryPrefixSelector,
+  getChosenCategory,
+  getActiveCategory,
   officersSelector,
   dateCRsSelector,
   dateTRRsSelector,
@@ -34,7 +38,8 @@ import { getToast } from 'selectors/toast';
 
 function mapStateToProps(state, ownProps) {
   return {
-    query: state.suggestionApp.query,
+    query: getQuery(state),
+    queryPrefix: queryPrefixSelector(state),
     officers: officersSelector(state),
     dateCRs: dateCRsSelector(state),
     investigatorCRs: investigatorCRsSelector(state),
@@ -43,11 +48,11 @@ function mapStateToProps(state, ownProps) {
     crs: crsSelector(state),
     trrs: trrsSelector(state),
     suggested: suggestedSelector(state),
+    activeCategory: getActiveCategory(state),
+    chosenCategory: getChosenCategory(state),
     recent: recentSuggestionsSelector(state),
     recentSuggestionIds: recentSuggestionIdsSelector(state),
     recentSuggestionsRequested: getRecentSuggestionsRequested(state),
-    activeCategory: state.suggestionApp.activeCategory,
-    chosenCategory: state.suggestionApp.chosenCategory,
     pinboard: getPinboard(state),
     toast: getToast(state),
   };
