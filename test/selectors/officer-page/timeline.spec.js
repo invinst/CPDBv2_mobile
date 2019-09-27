@@ -13,6 +13,7 @@ import {
   isTimelineSuccess,
   applyFilter,
   filterCountSelector,
+  getSelectedFilter,
 } from 'selectors/officer-page/timeline';
 import { TIMELINE_FILTERS, TIMELINE_ITEMS } from 'constants/officer-page/tabbed-pane-section/timeline';
 
@@ -1508,6 +1509,24 @@ describe('Officer timeline selectors', function () {
         'ALL': 7,
         'SUSTAINED': 0,
         'RANK_UNIT_CHANGES': 0,
+      });
+    });
+  });
+
+  describe('getSelectedFilter', function () {
+    it('should return selected filter', function () {
+      getSelectedFilter({
+        officerPage: {
+          timeline: {
+            filter: {
+              label: 'COMPLAINTS',
+              kind: [TIMELINE_ITEMS.CR],
+            },
+          },
+        },
+      }).should.eql({
+        label: 'COMPLAINTS',
+        kind: [TIMELINE_ITEMS.CR],
       });
     });
   });

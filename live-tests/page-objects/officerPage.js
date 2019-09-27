@@ -114,6 +114,10 @@ module.exports = {
   elements: {
     body: 'body',
     officerName: '.officer-name',
+    timelineTabButton: {
+      selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[1]',
+      locateStrategy: 'xpath',
+    },
     mapTabButton: {
       selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[2]',
       locateStrategy: 'xpath',
@@ -261,6 +265,7 @@ module.exports = {
         filter: {
           selector: '.timeline-filter',
           elements: {
+            selectedFilter: '.dropdown-button-text',
             button: '.dropdown-button',
             menu: '.dropdown-menu',
             crs: '.dropdown-menu-item:nth-child(1)',
