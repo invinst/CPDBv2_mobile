@@ -1,35 +1,20 @@
 import React, { PropTypes } from 'react';
 
-import SearchItem from './search-item';
-import style from './cr-search-result.sass';
+import CrItem from './cr-item';
 
 
-const CRSearchResult = ({ items, saveToRecent, categoryFilter, addOrRemoveItemInPinboard }) => {
-  const handleClick = (name, url) => saveToRecent({
-    type: categoryFilter,
-    title: name,
-    url: url,
-  });
-
+const CRSearchResult = ({ items, saveToRecent, addOrRemoveItemInPinboard }) => {
   return (
-    <div className={ style.crSearchResult }>
+    <div>
       {
         items.map((item) => {
           return (
-            <SearchItem
-              key={ item.crid }
-              url={ item.url }
-              onClick={ () => handleClick(item.crid, item.url) }
-              hasPinButton={ true }
+            <CrItem
+              key={ item.id }
+              item={ item }
+              saveToRecent={ saveToRecent }
               addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
-              id={ item.crid }
-              isPinned={ item.isPinned }
-              type={ item.type }>
-              <div className='item-info'>
-                <div className='item-type'>{ item.category }</div>
-                <div className='item-id'>CRID { item.crid } • { item.incidentDate }</div>
-              </div>
-            </SearchItem>
+            />
           );
         })
       }
@@ -40,7 +25,6 @@ const CRSearchResult = ({ items, saveToRecent, categoryFilter, addOrRemoveItemIn
 CRSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
   items: PropTypes.array,
-  categoryFilter: PropTypes.string,
   addOrRemoveItemInPinboard: PropTypes.func,
 };
 

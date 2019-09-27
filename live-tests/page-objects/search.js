@@ -16,10 +16,8 @@ const resultsSection = (name) => ({
 const nthRow = (n) => ({
   selector: `a:nth-child(${n})`,
   elements: {
-    itemType: '.item-type',
-    itemID: '.item-id',
-    officerName: '.officer-name',
-    officerBadge: '.officer-badge',
+    itemTitle: '.item-title',
+    itemSubtitle: '.item-subtitle',
     pinButton: '.item-pin-btn',
   },
 });
@@ -47,6 +45,7 @@ module.exports = {
     officersHeader: '#search-category-officers',
     pinboardBar: '.test--pinboard-bar',
     toast: '.Toastify__toast-body',
+    searchBreadcrumb: '.breadcrumb-item-wrapper:nth-child(3)',
   },
 
   sections: {
@@ -65,6 +64,32 @@ module.exports = {
 
     recent: {
       selector: '.results.recent',
+      sections: {
+        firstRecentItem: {
+          selector: 'a:nth-child(1)',
+          elements: {
+            itemTitle: '.item-title',
+            itemSubtitle: '.item-subtitle',
+            pinButton: '.item-pin-btn',
+          },
+        },
+        secondRecentItem: {
+          selector: 'a:nth-child(2)',
+          elements: {
+            itemTitle: '.item-title',
+            itemSubtitle: '.item-subtitle',
+            pinButton: '.item-pin-btn',
+          },
+        },
+        thirdRecentItem: {
+          selector: 'a:nth-child(3)',
+          elements: {
+            itemTitle: '.item-title',
+            itemSubtitle: '.item-subtitle',
+            pinButton: '.item-pin-btn',
+          },
+        },
+      },
     },
 
     dateCRs: resultsSection('dateCRs'),
@@ -76,8 +101,8 @@ module.exports = {
         firstRow: {
           selector: 'a:nth-child(1)',
           elements: {
-            officerName: '.officer-name',
-            officerBadge: '.officer-badge',
+            itemTitle: '.item-title',
+            itemSubtitle: '.item-subtitle',
           },
         },
         rows: {

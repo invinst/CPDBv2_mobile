@@ -4,30 +4,30 @@ import SearchItem from './search-item';
 import searchItemStyle from './search-item.sass';
 
 
-const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard }) => {
+const CrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard }) => {
   return (
     <SearchItem
       url={ item.url }
       hasPinButton={ true }
       addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
-      id={ item.id }
+      id={ item.crid }
       isPinned={ item.isPinned }
       type={ item.type }
       recentItemData={ item.recentItemData }
       saveToRecent={ saveToRecent }>
       <div className={ searchItemStyle.itemInfo }>
-        <div className='item-title'>{ item.name }</div>
-        <div className='item-subtitle'>{ item.badge }</div>
+        <div className='item-title'>{ item.category }</div>
+        <div className='item-subtitle'>CRID { item.crid } • { item.incidentDate }</div>
       </div>
     </SearchItem>
   );
 };
 
-OfficerItem.propTypes = {
+CrItem.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    badge: PropTypes.string,
+    crid: PropTypes.string,
+    category: PropTypes.string,
+    incidentDate: PropTypes.string,
     url: PropTypes.string,
     isPinned: PropTypes.bool,
     type: PropTypes.string,
@@ -37,9 +37,9 @@ OfficerItem.propTypes = {
   addOrRemoveItemInPinboard: PropTypes.func,
 };
 
-OfficerItem.defaultProps = {
+CrItem.defaultProps = {
   saveToRecent: () => {},
   item: {},
 };
 
-export default OfficerItem;
+export default CrItem;

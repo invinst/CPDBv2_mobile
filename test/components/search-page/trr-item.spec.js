@@ -3,32 +3,27 @@ import { Link } from 'react-router';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
 
-import OfficerItem from 'components/search-page/officer-item';
+import TrrItem from 'components/search-page/trr-item';
 import SearchItem from 'components/search-page/search-item';
 
 
-describe('<OfficerItem />', function () {
-  it('should render officer correctly', function () {
+describe('<TrrItem />', function () {
+  it('should render trr correctly', function () {
     const saveToRecentSpy = spy();
     const addOrRemoveItemInPinboardSpy = spy();
     const recentItemData = {
-      id: '8562',
-      type: 'OFFICER',
-      name: 'Jerome Finnigan',
-      badge: 'Badge #456789',
+      id: '123456',
+      type: 'TRR',
     };
-    const officer = {
-      id: '8562',
-      type: 'OFFICER',
-      name: 'Jerome Finnigan',
-      badge: 'Badge #456789',
-      url: '/officer/123456/jerome-finnigan/',
+    const trr = {
+      id: '123456',
+      type: 'TRR',
+      url: '/trr/123456/',
       recentItemData: recentItemData,
     };
-
     const wrapper = mount(
-      <OfficerItem
-        item={ officer }
+      <TrrItem
+        item={ trr }
         saveToRecent={ saveToRecentSpy }
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }
       />
@@ -38,13 +33,13 @@ describe('<OfficerItem />', function () {
     const link = wrapper.find(Link);
     link.should.have.length(1);
 
-    link.prop('to').should.eql('/officer/123456/jerome-finnigan/');
-    link.find('.item-title').text().should.eql('Jerome Finnigan');
-    link.find('.item-subtitle').text().should.eql('Badge #456789');
+    link.prop('to').should.eql('/trr/123456/');
+    link.find('.item-title').text().should.eql('TRR');
+    link.find('.item-subtitle').text().should.eql('123456');
 
     const searchItem = wrapper.find(SearchItem);
-    searchItem.prop('id').should.eql('8562');
-    searchItem.prop('type').should.eql('OFFICER');
+    searchItem.prop('id').should.eql('123456');
+    searchItem.prop('type').should.eql('TRR');
     searchItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
     searchItem.prop('recentItemData').should.eql(recentItemData);
     searchItem.prop('saveToRecent').should.eql(saveToRecentSpy);

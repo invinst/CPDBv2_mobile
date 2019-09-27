@@ -71,6 +71,7 @@ describe('Pinboard reducer', function () {
       crids: [],
       'trr_ids': [],
       saving: false,
+      isPinboardRestored: true,
       'example_pinboards': [{
         'description': 'Officers with at least 10 complaints against them generate 64% of all complaints.',
         'id': 'b20c2c36',
@@ -80,6 +81,47 @@ describe('Pinboard reducer', function () {
         'id': '22e66085',
         'title': 'Skullcap Crew',
       }],
+    });
+  });
+
+  it('should handle PINBOARD_CREATE_REQUEST_SUCCESS to remove not found items', function () {
+    pinboardReducer(
+      {
+        id: null,
+        title: 'Title 2',
+        description: 'Description 2',
+        'officer_ids': [0, 1, 2, 3],
+        crids: ['abc123', 'xyz567'],
+        'trr_ids': [3, 4, 2, 1, 5],
+        saving: true,
+        isPinboardRestored: false,
+      },
+      {
+        type: PINBOARD_CREATE_REQUEST_SUCCESS,
+        payload: {
+          id: '66ef1560',
+          title: 'Title',
+          description: 'Description',
+          'officer_ids': [1],
+          crids: ['abc123'],
+          'trr_ids': [2],
+          'not_found_items': {
+            'officer_ids': [0, 2, 88],
+            crids: ['xyz567', 'tyu890'],
+            'trr_ids': [1, 3, 99],
+          },
+        },
+      }
+    ).should.deepEqual({
+      id: '66ef1560',
+      title: 'Title 2',
+      description: 'Description 2',
+      'officer_ids': [1, 3],
+      crids: ['abc123'],
+      'trr_ids': [4, 2, 5],
+      saving: false,
+      isPinboardRestored: true,
+      'example_pinboards': undefined,
     });
   });
 
@@ -194,21 +236,34 @@ describe('Pinboard reducer', function () {
     pinboardReducer(
       {
         'id': null,
+        'officer_ids': [],
+        crids: [],
+        'trr_ids': [],
         'saving': false,
       },
       {
         type: PINBOARD_CREATE_REQUEST_START,
         payload: {
-          id: '66ef1560',
-          title: 'Title',
-          description: 'Description',
-          'officer_ids': [1],
-          crids: ['abc'],
-          'trr_ids': [1],
+          request: {
+            method: 'post',
+            url: 'http://api.cpdp.co/api/v2/pinboards/',
+            data: {
+              title: 'Title',
+              description: 'Description',
+              'officer_ids': ['1'],
+              crids: ['abc'],
+              'trr_ids': ['1'],
+            },
+          },
         },
       }
     ).should.deepEqual({
       'id': null,
+      title: 'Title',
+      description: 'Description',
+      'officer_ids': [1],
+      crids: ['abc'],
+      'trr_ids': [1],
       'saving': true,
     });
   });

@@ -23,6 +23,28 @@ const mockSearchQueryResponse = {
   ],
 };
 
+const mockSearchQueryResponseForRecentItems = {
+  'OFFICER': [
+    {
+      id: 8562,
+      name: 'Jerome Finnigan',
+      badge: '5167',
+    },
+  ],
+  'CR': [
+    {
+      crid: '1002144',
+      category: 'False Arrest',
+      'incident_date': '2006-05-29',
+    },
+  ],
+  'TRR': [
+    {
+      id: 14487,
+    },
+  ],
+};
+
 const mockSearchQueryResponseWithDate = {
   'DATE > CR': [
     {
@@ -229,11 +251,48 @@ const createEmptyPinboardResponse = {
   'description': 'Description',
 };
 
+const mockNewRecentSearchItemsResponse = [
+  {
+    'id': 8562,
+    'name': 'Jerome Finnigan',
+    'badge': '123456',
+    'type': 'OFFICER',
+  },
+  {
+    'crid': '1002144',
+    'id': '1002144',
+    'incident_date': '2010-05-29',
+    'category': 'False Arrest',
+    'type': 'CR',
+  },
+  {
+    'id': 14487,
+    'type': 'TRR',
+  },
+];
+
+const officer8562 = {
+  'officer_id': 8562,
+  'full_name': 'Jerome Finnigan',
+  'badge': '5167',
+};
+
+const cr1002144 = {
+  'crid': '1002144',
+  'incident_date': '2006-05-29',
+  'category': 'False Arrest',
+};
+
+const trr14487 = {
+  'id': 14487,
+};
+
 
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
-    api.mock('GET', '/api/v2/search-mobile/', 200, mockSuggestionResponse);
+    api.mock('GET', '/api/v2/search-mobile/?term=123', 200, mockSearchQueryResponseForRecentItems);
+    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
     this.searchPage = client.page.search();
     this.pinboardPage = client.page.pinboardPage();
     this.officerPage = client.page.officerPage();
@@ -243,9 +302,64 @@ describe('SearchPageTest', function () {
     done();
   });
 
-  it('should show search page with suggested items', function () {
-    const searchPage = this.searchPage;
+  afterEach(function (client, done) {
+    done();
+  });
 
+  it('should show recent items', function () {
+    api.mock(
+      'GET', '/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487',
+      200,
+      mockNewRecentSearchItemsResponse,
+    );
+    api.mock('GET', '/api/v2/mobile/officers/8562/', 200, officer8562);
+    api.mock('GET', '/api/v2/mobile/cr/1002144/', 200, cr1002144);
+    api.mock('GET', '/api/v2/mobile/trr/14487/', 200, trr14487);
+    this.searchPage.setValue('@queryInput', '123');
+    this.searchPage.section.officers.section.firstRow.click('@itemTitle');
+
+    this.searchPage.click('@searchBreadcrumb');
+    this.searchPage.setValue('@queryInput', '123');
+    this.searchPage.section.crs.section.firstRow.click('@itemTitle');
+
+    this.searchPage.click('@searchBreadcrumb');
+    this.searchPage.setValue('@queryInput', '123');
+    this.searchPage.section.trrs.section.firstRow.click('@itemTitle');
+
+    this.searchPage.click('@searchBreadcrumb');
+    this.searchPage.expect.element('@recentHeader').to.be.present;
+    let recentItems = this.searchPage.section.recent;
+
+    recentItems.section.firstRecentItem.expect.element('@itemTitle').text.to.equal('TRR');
+    recentItems.section.firstRecentItem.expect.element('@itemSubtitle').text.to.equal('14487');
+    recentItems.section.secondRecentItem.expect.element('@itemTitle').text.to.equal('False Arrest');
+    recentItems.section.secondRecentItem.expect.element('@itemSubtitle').text.to.equal('CRID 1002144 • 05/29/2006');
+    recentItems.section.thirdRecentItem.expect.element('@itemTitle').text.to.equal('Jerome Finnigan');
+    recentItems.section.thirdRecentItem.expect.element('@itemSubtitle').text.to.equal('Badge #5167');
+
+    this.searchPage.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty');
+    recentItems.section.firstRecentItem.click('@pinButton');
+    recentItems.section.secondRecentItem.click('@pinButton');
+    recentItems.section.thirdRecentItem.click('@pinButton');
+    this.searchPage.expect.element('@pinboardBar').text.to.equal('Pinboard (3)');
+
+    recentItems.section.firstRecentItem.click('@pinButton');
+    recentItems.section.secondRecentItem.click('@pinButton');
+    recentItems.section.thirdRecentItem.click('@pinButton');
+    this.searchPage.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty');
+
+    this.searchPage.navigate();
+    recentItems.section.firstRecentItem.expect.element('@itemTitle').text.to.equal('TRR');
+    recentItems.section.firstRecentItem.expect.element('@itemSubtitle').text.to.equal('14487');
+    recentItems.section.secondRecentItem.expect.element('@itemTitle').text.to.equal('False Arrest');
+    recentItems.section.secondRecentItem.expect.element('@itemSubtitle').text.to.equal('CRID 1002144 • 05/29/2010');
+    recentItems.section.thirdRecentItem.expect.element('@itemTitle').text.to.equal('Jerome Finnigan');
+    recentItems.section.thirdRecentItem.expect.element('@itemSubtitle').text.to.equal('Badge #123456');
+  });
+
+  it('should show search page with suggested items', function () {
+    api.mock('GET', '/api/v2/search-mobile/', 200, mockSuggestionResponse);
+    const searchPage = this.searchPage;
     searchPage.expect.element('@queryInput').to.be.visible;
     searchPage.expect.element('@queryInput').to.have.attribute('placeholder', 'Officer name, badge number or date');
 
@@ -258,14 +372,6 @@ describe('SearchPageTest', function () {
     suggested.expect.section('@officer').to.have.attribute('href').which.contains('/officer/30291/john-tobler/');
     suggestedOfficer.expect.element('@label').text.to.contain('Officer');
     suggestedOfficer.expect.element('@value').text.to.contain('John Tobler');
-  });
-
-  it('should show recent items', function () {
-    this.searchPage.section.suggested.section.officer.click('@value');
-    // this officer item should now be added into "recent" list
-    this.searchPage.navigate();
-    this.searchPage.expect.element('@recentHeader').to.be.present;
-    this.searchPage.expect.section('@recent').text.to.contain('John Tobler');
   });
 
   context('search for wh', function () {
@@ -281,13 +387,13 @@ describe('SearchPageTest', function () {
 
       let officers = this.searchPage.section.officers;
 
-      officers.section.firstRow.expect.element('@officerName').text.to.equal('John Wang');
-      officers.section.firstRow.expect.element('@officerBadge').text.to.equal('Badge #9999');
+      officers.section.firstRow.expect.element('@itemTitle').text.to.equal('John Wang');
+      officers.section.firstRow.expect.element('@itemSubtitle').text.to.equal('Badge #9999');
     });
 
     it('should navigate to officer summary page when tapped', function (client) {
       this.searchPage.setValue('@queryInput', 'wh');
-      this.searchPage.section.officers.section.firstRow.click('@officerName');
+      this.searchPage.section.officers.section.firstRow.click('@itemTitle');
       client.assert.urlContains(this.officerPage.url(9876));
     });
   });
@@ -304,10 +410,10 @@ describe('SearchPageTest', function () {
       this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR → CR');
 
       const investigatorCRs = this.searchPage.section.investigatorCRs;
-      investigatorCRs.section.firstRow.expect.element('@itemType').text.to.equal('Unknown');
-      investigatorCRs.section.firstRow.expect.element('@itemID').text.to.equal('CRID 123456 • 06/13/2009');
-      investigatorCRs.section.secondRow.expect.element('@itemType').text.to.equal('Domestic');
-      investigatorCRs.section.secondRow.expect.element('@itemID').text.to.equal('CRID 654321 • 10/13/2011');
+      investigatorCRs.section.firstRow.expect.element('@itemTitle').text.to.equal('Unknown');
+      investigatorCRs.section.firstRow.expect.element('@itemSubtitle').text.to.equal('CRID 123456 • 06/13/2009');
+      investigatorCRs.section.secondRow.expect.element('@itemTitle').text.to.equal('Domestic');
+      investigatorCRs.section.secondRow.expect.element('@itemSubtitle').text.to.equal('CRID 654321 • 10/13/2011');
       investigatorCRs.expect.section('@thirdRow').to.be.not.present;
     });
 
@@ -318,10 +424,10 @@ describe('SearchPageTest', function () {
 
       const investigatorCRs = this.searchPage.section.investigatorCRs;
 
-      investigatorCRs.section.firstRow.expect.element('@itemType').text.to.equal('Unknown');
-      investigatorCRs.section.firstRow.expect.element('@itemID').text.to.equal('CRID 123456 • 06/13/2009');
-      investigatorCRs.section.secondRow.expect.element('@itemType').text.to.equal('Domestic');
-      investigatorCRs.section.secondRow.expect.element('@itemID').text.to.equal('CRID 654321 • 10/13/2011');
+      investigatorCRs.section.firstRow.expect.element('@itemTitle').text.to.equal('Unknown');
+      investigatorCRs.section.firstRow.expect.element('@itemSubtitle').text.to.equal('CRID 123456 • 06/13/2009');
+      investigatorCRs.section.secondRow.expect.element('@itemTitle').text.to.equal('Domestic');
+      investigatorCRs.section.secondRow.expect.element('@itemSubtitle').text.to.equal('CRID 654321 • 10/13/2011');
       investigatorCRs.expect.section('@thirdRow').to.be.not.present;
     });
   });
@@ -338,39 +444,39 @@ describe('SearchPageTest', function () {
       const dateCRs = this.searchPage.section.dateCRs;
       this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
       this.searchPage.expect.element('@dateCRsHeader').text.to.equal('DATE → COMPLAINT RECORDS');
-      dateCRs.section.firstRow.expect.element('@itemType').text.to.equal('Domestic');
-      dateCRs.section.firstRow.expect.element('@itemID').text.to.equal('CRID 297449 • 10/13/2011');
-      dateCRs.section.secondRow.expect.element('@itemType').text.to.equal('Use Of Force');
-      dateCRs.section.secondRow.expect.element('@itemID').text.to.equal('CRID 297473 • 06/13/2009');
+      dateCRs.section.firstRow.expect.element('@itemTitle').text.to.equal('Domestic');
+      dateCRs.section.firstRow.expect.element('@itemSubtitle').text.to.equal('CRID 297449 • 10/13/2011');
+      dateCRs.section.secondRow.expect.element('@itemTitle').text.to.equal('Use Of Force');
+      dateCRs.section.secondRow.expect.element('@itemSubtitle').text.to.equal('CRID 297473 • 06/13/2009');
       dateCRs.expect.section('@thirdRow').to.be.not.present;
 
       this.searchPage.expect.element('@dateTRRsHeader').text.to.equal('DATE → TACTICAL RESPONSE REPORTS');
       const dateTRRs = this.searchPage.section.dateTRRs;
-      dateTRRs.section.firstRow.expect.element('@itemType').text.to.equal('TRR');
-      dateTRRs.section.firstRow.expect.element('@itemID').text.to.equal('767');
-      dateTRRs.section.secondRow.expect.element('@itemType').text.to.equal('TRR');
-      dateTRRs.section.secondRow.expect.element('@itemID').text.to.equal('773');
+      dateTRRs.section.firstRow.expect.element('@itemTitle').text.to.equal('TRR');
+      dateTRRs.section.firstRow.expect.element('@itemSubtitle').text.to.equal('767');
+      dateTRRs.section.secondRow.expect.element('@itemTitle').text.to.equal('TRR');
+      dateTRRs.section.secondRow.expect.element('@itemSubtitle').text.to.equal('773');
       dateTRRs.expect.section('@thirdRow').to.be.not.present;
 
       this.searchPage.expect.element('@officersHeader').text.to.equal('OFFICERS');
       const officers = this.searchPage.section.officers;
-      officers.section.firstRow.expect.element('@officerName').text.to.equal('William Eaker');
-      officers.section.firstRow.expect.element('@officerBadge').text.to.equal('Badge #6056');
+      officers.section.firstRow.expect.element('@itemTitle').text.to.equal('William Eaker');
+      officers.section.firstRow.expect.element('@itemSubtitle').text.to.equal('Badge #6056');
 
       this.searchPage.expect.element('@crsHeader').text.to.equal('COMPLAINT RECORDS (CRs)');
       const crs = this.searchPage.section.crs;
-      crs.section.firstRow.expect.element('@itemType').text.to.equal('Unknown');
-      crs.section.firstRow.expect.element('@itemID').text.to.equal('CRID 397449 • 06/13/2009');
-      crs.section.secondRow.expect.element('@itemType').text.to.equal('Domestic');
-      crs.section.secondRow.expect.element('@itemID').text.to.equal('CRID 397473 • 10/13/2011');
+      crs.section.firstRow.expect.element('@itemTitle').text.to.equal('Unknown');
+      crs.section.firstRow.expect.element('@itemSubtitle').text.to.equal('CRID 397449 • 06/13/2009');
+      crs.section.secondRow.expect.element('@itemTitle').text.to.equal('Domestic');
+      crs.section.secondRow.expect.element('@itemSubtitle').text.to.equal('CRID 397473 • 10/13/2011');
       crs.expect.section('@thirdRow').to.be.not.present;
 
       this.searchPage.expect.element('@trrsHeader').text.to.equal('TACTICAL RESPONSE REPORTS');
       const trrs = this.searchPage.section.trrs;
-      trrs.section.firstRow.expect.element('@itemType').text.to.equal('TRR');
-      trrs.section.firstRow.expect.element('@itemID').text.to.equal('867');
-      trrs.section.secondRow.expect.element('@itemType').text.to.equal('TRR');
-      trrs.section.secondRow.expect.element('@itemID').text.to.equal('873');
+      trrs.section.firstRow.expect.element('@itemTitle').text.to.equal('TRR');
+      trrs.section.firstRow.expect.element('@itemSubtitle').text.to.equal('867');
+      trrs.section.secondRow.expect.element('@itemTitle').text.to.equal('TRR');
+      trrs.section.secondRow.expect.element('@itemSubtitle').text.to.equal('873');
       trrs.expect.section('@thirdRow').to.be.not.present;
     });
 
@@ -380,8 +486,8 @@ describe('SearchPageTest', function () {
       const dateOfficers = this.searchPage.section.dateOfficers;
       this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
       this.searchPage.expect.element('@dateOfficersHeader').text.to.equal('DATE → OFFICERS');
-      dateOfficers.section.firstRow.expect.element('@officerName').text.to.equal('Jerome Finnigan');
-      dateOfficers.section.firstRow.expect.element('@officerBadge').text.to.equal('Badge #6789');
+      dateOfficers.section.firstRow.expect.element('@itemTitle').text.to.equal('Jerome Finnigan');
+      dateOfficers.section.firstRow.expect.element('@itemSubtitle').text.to.equal('Badge #6789');
     });
   });
 

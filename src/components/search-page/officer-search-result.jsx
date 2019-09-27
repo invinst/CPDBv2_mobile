@@ -1,35 +1,28 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
 import OfficerItem from './officer-item';
 
 
-class OfficerSearchResult extends Component {
-  render() {
-    const { items, saveToRecent, categoryFilter, addOrRemoveItemInPinboard } = this.props;
-
-    return (
-      <div>
-        {
-          items.map(officer => (
-            <OfficerItem
-              key={ officer.id }
-              saveToRecent={ saveToRecent }
-              categoryFilter={ categoryFilter }
-              item={ officer }
-              addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
-              { ...officer }
-            />
-          ))
-        }
-      </div>
-    );
-  }
-}
+const OfficerSearchResult = ({ items, saveToRecent, addOrRemoveItemInPinboard }) => {
+  return (
+    <div>
+      {
+        items.map(officer => (
+          <OfficerItem
+            key={ officer.id }
+            item={ officer }
+            saveToRecent={ saveToRecent }
+            addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+          />
+        ))
+      }
+    </div>
+  );
+};
 
 OfficerSearchResult.propTypes = {
   saveToRecent: PropTypes.func,
   items: PropTypes.array,
-  categoryFilter: PropTypes.string,
   addOrRemoveItemInPinboard: PropTypes.func,
 };
 

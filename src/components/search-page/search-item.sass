@@ -16,3 +16,27 @@
     margin-left: auto
     align-self: center
 
+\:local(.item-info)
+  box-sizing: border-box
+  margin-left: 8px
+  padding-top: 1px
+
+  .item-title
+    font-size: 14px
+    font-weight: 300
+    color: $thunder
+    margin-right: 8px
+
+  .item-subtitle
+    font-size: 12px
+    font-weight: 300
+    color: $boulder
+
+  &.inline
+    display: flex
+
+    .item-title
+      align-self: center
+
+    .item-subtitle
+      align-self: center

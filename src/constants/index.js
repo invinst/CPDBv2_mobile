@@ -267,6 +267,7 @@ export default {
   OLD_OFFICER_API_ENDPOINT: '/officers/',
   OFFICER_API_ENDPOINT: '/mobile/officers/',
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
+  RECENT_SEARCH_ITEMS_API_ENDPOINT: '/search-mobile/recent-search-items/',
   LANDING_PAGE_CMS_API_ENDPOINT: '/cms-pages/landing-page/',
   OFFICER_PAGE_CMS_API_ENDPOINT: '/cms-pages/officer-page/',
   COMPLAINT_PAGE_CMS_API_ENDPOINT: '/cms-pages/cr-page/',
