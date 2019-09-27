@@ -1,7 +1,7 @@
 import {
   FETCH_RECENT_SEARCH_ITEMS_START,
   FETCH_RECENT_SEARCH_ITEMS_SUCCESS,
-  FETCHED_EMPTY_RECENT_SEARCH_ITEMS,
+  SET_RECENT_SUGGESTIONS_REQUESTED,
 } from 'actions/suggestion';
 
 import recentSuggestionsRequested from 'reducers/suggestion-app/recent-suggestions-requested';
@@ -26,9 +26,9 @@ describe('recentSuggestionsRequested reducer', function () {
     }).should.be.true();
   });
 
-  it('should handle FETCHED_EMPTY_RECENT_SEARCH_ITEMS', function () {
+  it('should handle SET_RECENT_SUGGESTIONS_REQUESTED', function () {
     recentSuggestionsRequested(false, {
-      type: FETCHED_EMPTY_RECENT_SEARCH_ITEMS,
+      type: SET_RECENT_SUGGESTIONS_REQUESTED,
       payload: {},
     }).should.be.true();
   });

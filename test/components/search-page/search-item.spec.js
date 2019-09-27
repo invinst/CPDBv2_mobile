@@ -1,12 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { Link, Router, Route } from 'react-router';
+import { spy } from 'sinon';
+import { createMemoryHistory } from 'history';
 
 import SearchItem from 'components/search-page/search-item';
 import ItemPinButton from 'components/search-page/item-pin-button';
-import { mount } from 'enzyme';
-import { spy } from 'sinon';
-import { createMemoryHistory } from 'history';
 
 
 describe('<SearchItem />', function () {

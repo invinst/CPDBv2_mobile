@@ -36,7 +36,6 @@ describe('<CrItem />', function () {
       />
     );
 
-    wrapper.should.be.ok();
     const link = wrapper.find(Link);
     link.should.have.length(1);
 

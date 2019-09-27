@@ -19,7 +19,7 @@ export const FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE = 'FETCH_SUGGESTED_SEARCH_ITEM
 export const FETCH_RECENT_SEARCH_ITEMS_START = 'FETCH_RECENT_SEARCH_ITEMS_START';
 export const FETCH_RECENT_SEARCH_ITEMS_SUCCESS = 'FETCH_RECENT_SEARCH_ITEMS_SUCCESS';
 export const FETCH_RECENT_SEARCH_ITEMS_FAILURE = 'FETCH_RECENT_SEARCH_ITEMS_FAILURE';
-export const FETCHED_EMPTY_RECENT_SEARCH_ITEMS = 'FETCHED_EMPTY_RECENT_SEARCH_ITEMS';
+export const SET_RECENT_SUGGESTIONS_REQUESTED = 'SET_RECENT_SUGGESTIONS_REQUESTED';
 
 export const SEARCH_SAVE_TO_RECENT = 'SEARCH_SAVE_TO_RECENT';
 
@@ -73,7 +73,7 @@ export const fetchRecentSearchItems = (officerIds, crids, trrIds) => get(
   ],
 )({ 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds });
 
-export const fetchedEmptyRecentSearchItems = createAction(FETCHED_EMPTY_RECENT_SEARCH_ITEMS);
+export const fetchedEmptyRecentSearchItems = createAction(SET_RECENT_SUGGESTIONS_REQUESTED);
 export const saveToRecent = createAction(SEARCH_SAVE_TO_RECENT);
 
 export const focus = createAction(SEARCH_FOCUS);

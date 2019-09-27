@@ -22,7 +22,7 @@ import {
   SEARCH_SAVE_TO_RECENT,
   SEARCH_QUERY_CHANGED,
   FETCH_RECENT_SEARCH_ITEMS_FAILURE, FETCH_RECENT_SEARCH_ITEMS_START, FETCH_RECENT_SEARCH_ITEMS_SUCCESS,
-  FETCHED_EMPTY_RECENT_SEARCH_ITEMS,
+  SET_RECENT_SUGGESTIONS_REQUESTED,
 } from 'actions/suggestion';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -83,7 +83,7 @@ describe('suggestions actions', function () {
 
   describe('fetchRecentSearchItems', function () {
     it('should return right action', function () {
-      fetchRecentSearchItems([8562], [271235], [123]).should.eql({
+      fetchRecentSearchItems([8562], ['271235'], [123]).should.eql({
         types: [
           FETCH_RECENT_SEARCH_ITEMS_START,
           FETCH_RECENT_SEARCH_ITEMS_SUCCESS,
@@ -95,7 +95,7 @@ describe('suggestions actions', function () {
             adapter: undefined,
             params: {
               'officer_ids': [8562],
-              crids: [271235],
+              crids: ['271235'],
               'trr_ids': [123],
             },
           },
@@ -167,7 +167,7 @@ describe('suggestions actions', function () {
   describe('fetchedEmptyRecentSearchItems', function () {
     it('should return right action', function () {
       fetchedEmptyRecentSearchItems().should.eql({
-        type: FETCHED_EMPTY_RECENT_SEARCH_ITEMS,
+        type: SET_RECENT_SUGGESTIONS_REQUESTED,
       });
     });
   });
