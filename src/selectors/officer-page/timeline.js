@@ -24,7 +24,7 @@ import {
 } from 'constants/officer-page/tabbed-pane-section/timeline';
 
 
-const getSelectedFilter = (state) => get(state, 'officerPage.timeline.filter', '');
+export const getSelectedFilter = (state) => get(state, 'officerPage.timeline.filter', {});
 export const getItems = (state, props) => get(state.officerPage.timeline.data, String(props.officerId), []);
 
 export const baseTransform = (item, index) => {
