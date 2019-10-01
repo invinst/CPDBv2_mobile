@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
+import { isEmpty } from 'lodash';
 
 import clearIcon from 'img/ic-clear.svg';
 import { instantScrollToTop } from 'utils/navigation-util';
@@ -9,8 +10,8 @@ import HorizontalScrolling from 'components/common/horizontal-scrolling';
 
 export default class SearchNavbar extends Component {
   clearChosenCategoryButton() {
-    const { chosenCategory, clearChosenCategory } = this.props;
-    if (chosenCategory === '') {
+    const { chosenCategory, clearChosenCategory, query } = this.props;
+    if (chosenCategory === '' || isEmpty(query)) {
       return null;
     }
 
@@ -71,6 +72,7 @@ SearchNavbar.propTypes = {
   updateActiveCategory: PropTypes.func,
   chosenCategory: PropTypes.string,
   clearChosenCategory: PropTypes.func,
+  query: PropTypes.string,
 };
 
 SearchNavbar.defaultProps = {

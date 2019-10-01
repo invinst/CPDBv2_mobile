@@ -17,10 +17,11 @@ describe('Trr component', function () {
       unitName: '153',
     };
 
-    const instance = shallow(<Trr item={ trrItem } hasBorderBottom={ false } />);
-    instance.find('.kind').text().should.equal('F');
-    instance.find('.category').text().should.equal('Use of Force Report');
-    instance.find('.date').text().should.equal('DEC 5');
+    const instance = shallow(<Trr className='test--trr-item' item={ trrItem } />);
+    instance.find('.test--trr-item .kind').text().should.equal('F');
+    instance.find('.test--trr-item .category').text().should.equal('Use of Force Report');
+    instance.find('.test--trr-item .date').text().should.equal('DEC 5');
     instance.find(Link).prop('to').should.equal('/trr/123/');
+    instance.find(Link).prop('className').should.containEql('test--trr-item');
   });
 });
