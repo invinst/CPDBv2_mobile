@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 import TrackVisibility from 'react-on-screen';
 
-import styles from './pinboard-page.sass';
 import SearchBar from './search-bar';
 import Header from './header';
 import { PinboardPaneSectionWithSpinner } from 'components/pinboard-page/pinboard-pane-section';
@@ -13,6 +12,7 @@ import PinnedTRRsContainer from 'containers/pinboard-page/pinned-trrs';
 import Footer from 'components/footer';
 import EmptyPinboardContainer from 'containers/pinboard-page/empty-pinboard-container';
 import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
+import styles from './pinboard-page.sass';
 
 
 export default class PinboardPage extends Component {
@@ -97,7 +97,7 @@ PinboardPage.propTypes = {
   isEmptyPinboard: PropTypes.bool,
   requesting: PropTypes.bool,
   hasCMS: PropTypes.bool,
-  requestCMS: PropTypes.bool,
+  requestCMS: PropTypes.func,
 };
 
 PinboardPage.defaultProps = {

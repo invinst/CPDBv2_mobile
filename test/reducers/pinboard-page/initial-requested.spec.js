@@ -8,6 +8,9 @@ import {
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE,
+  PINBOARD_CREATE_REQUEST_START,
+  PINBOARD_CREATE_REQUEST_SUCCESS,
+  PINBOARD_CREATE_REQUEST_FAILURE,
 } from 'actions/pinboard';
 
 
@@ -55,6 +58,27 @@ describe('initialRequestedReducer', function () {
     initialRequestedReducer(
       true,
       { type: PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE }
+    ).should.be.true();
+  });
+
+  it('should handle PINBOARD_CREATE_REQUEST_START', function () {
+    initialRequestedReducer(
+      false,
+      { type: PINBOARD_CREATE_REQUEST_START }
+    ).should.be.false();
+  });
+
+  it('should handle PINBOARD_CREATE_REQUEST_SUCCESS', function () {
+    initialRequestedReducer(
+      true,
+      { type: PINBOARD_CREATE_REQUEST_SUCCESS }
+    ).should.be.true();
+  });
+
+  it('should handle PINBOARD_CREATE_REQUEST_FAILURE', function () {
+    initialRequestedReducer(
+      true,
+      { type: PINBOARD_CREATE_REQUEST_FAILURE }
     ).should.be.true();
   });
 });

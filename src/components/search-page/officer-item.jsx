@@ -1,43 +1,40 @@
 import React, { PropTypes } from 'react';
 
 import SearchItem from './search-item';
-import style from './officer-item.sass';
+import searchItemStyle from './search-item.sass';
 
 
-const OfficerItem = ({
-  item, name, badge, url, saveToRecent, categoryFilter, addOrRemoveItemInPinboard,
-}) => {
-  const handleClick = (categoryFilter, name, url) => saveToRecent({
-    type: categoryFilter,
-    title: name,
-    url: url,
-  });
-
+const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard }) => {
   return (
     <SearchItem
-      url={ url }
-      onClick={ () => handleClick(categoryFilter, name, url) }
+      url={ item.url }
       hasPinButton={ true }
       addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
       id={ item.id }
       isPinned={ item.isPinned }
-      type={ item.type }>
-      <div className={ style.officerInfo }>
-        <div className='officer-name'>{ name }</div>
-        <div className='officer-badge'>{ badge }</div>
+      type={ item.type }
+      recentItemData={ item.recentItemData }
+      saveToRecent={ saveToRecent }>
+      <div className={ searchItemStyle.itemInfo }>
+        <div className='item-title'>{ item.name }</div>
+        <div className='item-subtitle'>{ item.badge }</div>
       </div>
     </SearchItem>
   );
 };
 
 OfficerItem.propTypes = {
-  name: PropTypes.string,
-  badge: PropTypes.string,
-  url: PropTypes.string,
+  item: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    badge: PropTypes.string,
+    url: PropTypes.string,
+    isPinned: PropTypes.bool,
+    type: PropTypes.string,
+    recentItemData: PropTypes.object,
+  }),
   saveToRecent: PropTypes.func,
-  categoryFilter: PropTypes.string,
   addOrRemoveItemInPinboard: PropTypes.func,
-  item: PropTypes.object,
 };
 
 OfficerItem.defaultProps = {

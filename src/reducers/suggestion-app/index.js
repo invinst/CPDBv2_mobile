@@ -8,6 +8,7 @@ import isSuccess from './is-success';
 import initialSuggestions from './initial-suggestions';
 import activeCategory from './active-category';
 import chosenCategory from './chosen-category';
+import recentSuggestionsRequested from './recent-suggestions-requested';
 
 
 export default combineReducers({
@@ -19,4 +20,5 @@ export default combineReducers({
   initialSuggestions,
   activeCategory,
   chosenCategory,
+  recentSuggestionsRequested,
 });

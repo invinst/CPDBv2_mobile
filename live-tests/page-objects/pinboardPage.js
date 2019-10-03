@@ -30,7 +30,14 @@ const baseRelevantComplaints = (type) => ({
 
 
 module.exports = {
-  url: function (pinboardId) {
+  url: function (pinboardId, query) {
+    if (query) {
+      const officerIds = query['officer-ids'] || [];
+      const crids = query['crids'] || [];
+      const trrIds = query['trr-ids'] || [];
+      return `${this.api.globals.clientUrl}/pinboard/` +
+        `?officer-ids=${officerIds.join()}&crids=${crids.join()}&trr-ids=${trrIds.join()}`;
+    }
     if (!pinboardId)
       return `${this.api.globals.clientUrl}/pinboard/`;
     return `${this.api.globals.clientUrl}/pinboard/${pinboardId}/pinboard-title/`;
@@ -77,6 +84,8 @@ module.exports = {
       locateStrategy: 'xpath',
     },
     timelineSlider: '.test--timeline-slider',
+    firstToast: '.Toastify__toast:first-child',
+    secondToast: '.Toastify__toast:nth-child(2)',
   },
 
   sections: {

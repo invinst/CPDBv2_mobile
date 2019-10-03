@@ -55,10 +55,21 @@ export default handleActions({
     isPinboardRestored: true,
   }),
   [PINBOARD_CREATE_REQUEST_SUCCESS]: (state, action) => {
+    const notFoundOfficerIds = _.get(action.payload, 'not_found_items.officer_ids', []);
+    const notFoundCrids = _.get(action.payload, 'not_found_items.crids', []);
+    const notFoundTrrIds = _.get(action.payload, 'not_found_items.trr_ids', []);
+
+    const officerIds = _.difference(_.get(state, 'officer_ids', []), notFoundOfficerIds);
+    const crids = _.difference(_.get(state, 'crids', []), notFoundCrids);
+    const trrIds = _.difference(_.get(state, 'trr_ids', []), notFoundTrrIds);
     return {
       ...state,
+      'officer_ids': officerIds,
+      crids,
+      'trr_ids': trrIds,
       id: action.payload.id,
       saving: false,
+      isPinboardRestored: true,
       'example_pinboards': action.payload['example_pinboards'],
     };
   },
@@ -81,10 +92,16 @@ export default handleActions({
       saving: false,
     };
   },
-  [PINBOARD_CREATE_REQUEST_START]: (state, action) => ({
-    ...state,
-    saving: true,
-  }),
+  [PINBOARD_CREATE_REQUEST_START]: (state, action) => {
+    const creatingData = _.get(action.payload, 'request.data', {});
+    creatingData['officer_ids'] = _.map(creatingData['officer_ids'], _.parseInt);
+    creatingData['trr_ids'] = _.map(creatingData['trr_ids'], _.parseInt);
+    return {
+      ...state,
+      ...creatingData,
+      saving: true,
+    };
+  },
   [PINBOARD_UPDATE_REQUEST_START]: (state, action) => ({
     ...state,
     saving: true,

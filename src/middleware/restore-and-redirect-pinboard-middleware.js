@@ -1,9 +1,11 @@
 import { browserHistory } from 'react-router';
+import { isEmpty } from 'lodash';
 
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import {
   PINBOARD_FETCH_REQUEST_SUCCESS,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
+  PINBOARD_CREATE_REQUEST_SUCCESS,
   fetchPinboard,
   fetchLatestRetrievedPinboard,
   fetchPinboardComplaints,
@@ -72,13 +74,14 @@ export default store => next => action => {
           getPinboardData(store, idOnPath);
         }
       }
-    } else if (!pinboard.isPinboardRestored) {
+    } else if (!pinboard.isPinboardRestored && isEmpty(action.payload.query)) {
       store.dispatch(fetchLatestRetrievedPinboard({ create: pathname === '/pinboard/' }));
     }
   }
 
   if (
     action.type === PINBOARD_FETCH_REQUEST_SUCCESS ||
+    action.type === PINBOARD_CREATE_REQUEST_SUCCESS ||
     action.type === PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS
   ) {
     const pathname = browserHistory.getCurrentLocation().pathname;

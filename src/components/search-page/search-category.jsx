@@ -5,6 +5,7 @@ import constants from 'constants';
 import { getCurrentScrollPosition, instantScrollToTop } from 'utils/navigation-util';
 import OfficerSearchResult from './officer-search-result';
 import SuggestedSearchResult from './suggested-search-result';
+import RecentItems from './recent-items';
 import CRSearchResult from './cr-search-result';
 import TRRSearchResult from './trr-search-result';
 
@@ -23,12 +24,11 @@ const resultComponentMappings = {
   crs: CRSearchResult,
   investigatorCRs: CRSearchResult,
   trrs: TRRSearchResult,
-  recent: SuggestedSearchResult,
+  recent: RecentItems,
   suggested: SuggestedSearchResult,
 };
 
 export default class SearchCategory extends Component {
-
   componentDidMount() {
     const watchActiveState = this.watchActiveState.bind(this);
     window.addEventListener('scroll', watchActiveState);
@@ -69,7 +69,7 @@ export default class SearchCategory extends Component {
   }
 
   renderResults() {
-    const { saveToRecent, categoryId, showAllButton, categoryFilter, addOrRemoveItemInPinboard } = this.props;
+    const { saveToRecent, categoryId, showAllButton, addOrRemoveItemInPinboard } = this.props;
     const ResultComponent = resultComponentMappings[categoryId];
 
     if (typeof ResultComponent === 'undefined') {
@@ -84,14 +84,12 @@ export default class SearchCategory extends Component {
     return <ResultComponent
       items={ items }
       saveToRecent={ saveToRecent }
-      categoryFilter={ categoryFilter }
       addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
     />;
   }
 
   render() {
     const { title, categoryId, activeCategory } = this.props;
-    const results = this.renderResults();
 
     return (
       <div className={ style.searchCategory } ref={ (domNode) => { this.domNode = domNode; } }>
@@ -102,9 +100,7 @@ export default class SearchCategory extends Component {
           { title }
         </div>
         <div className={ `results ${categoryId}` }>
-          <div>
-            { results }
-          </div>
+          { this.renderResults() }
           { this.renderAllButton() }
         </div>
       </div>
@@ -116,7 +112,6 @@ SearchCategory.propTypes = {
   items: PropTypes.array,
   title: PropTypes.string,
   categoryId: PropTypes.string,
-  categoryFilter: PropTypes.string,
   showAllButton: PropTypes.bool,
   allButtonClickHandler: PropTypes.func,
   saveToRecent: PropTypes.func,

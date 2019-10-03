@@ -16,9 +16,9 @@ describe('RankChange component', function () {
       year: 1994,
     };
 
-    const instance = shallow(<RankChange item={ unitChange }/>);
-    instance.find('.rank-change').text().should.equal('Police Officer → Detective');
-    instance.find('.date').text().should.equal('APR 28');
+    const instance = shallow(<RankChange className='test--rank-change' item={ unitChange }/>);
+    instance.find('.test--rank-change .rank-change').text().should.equal('Police Officer → Detective');
+    instance.find('.test--rank-change .date').text().should.equal('APR 28');
   });
 
   it('should render old rank with different class if the old rank is marked with Unassigned', function () {

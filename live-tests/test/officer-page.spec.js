@@ -1,4 +1,7 @@
 'use strict';
+
+const assert = require('assert');
+
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 
@@ -54,6 +57,7 @@ const officer2235 = {
     },
   ],
 };
+const officer27778 = { ...officer2235, 'officer_id': 27778, 'full_name': 'Carl Suchocki' };
 const officerNotEnoughPercentile = {
   'officer_id': 2234,
   'full_name': 'Not Enough Percentile Officer',
@@ -192,7 +196,7 @@ const mockTimeline = [
     rank: 'Police Officer',
     date: '2003-02-17',
     coaccused: 4,
-    finding: 'Unfounded',
+    finding: 'Sustained',
     outcome: 'No Action Taken',
     attachments: [
       {
@@ -341,6 +345,31 @@ const mockOfficerPageCms = {
   ],
 };
 
+function checkTimelineShowChangesOnly(timeline) {
+  timeline.section.filter.expect.element('@selectedFilter').text.to.contain('Rank/Unit Changes');
+
+  timeline.waitForElementNotPresent('@crItem');
+  timeline.waitForElementNotPresent('@trrItem');
+  timeline.waitForElementNotPresent('@awardItem');
+
+  timeline.waitForElementVisible('@rankChangeItem');
+  timeline.waitForElementVisible('@unitChangeItem');
+  timeline.waitForElementVisible('@joinedItem');
+  timeline.waitForElementVisible('@yearItem');
+}
+
+function checkTimelineShowAllItems(timeline) {
+  timeline.section.filter.expect.element('@selectedFilter').text.to.contain('All');
+  timeline.waitForElementVisible('@crItem');
+  timeline.waitForElementVisible('@trrItem');
+  timeline.waitForElementVisible('@awardItem');
+
+  timeline.waitForElementVisible('@rankChangeItem');
+  timeline.waitForElementVisible('@unitChangeItem');
+  timeline.waitForElementVisible('@joinedItem');
+  timeline.waitForElementVisible('@yearItem');
+}
+
 describe('OfficerPage test', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
@@ -375,6 +404,10 @@ describe('OfficerPage test', function () {
       api.mock('GET', '/api/v2/mobile/officers/2234/', 200, officerNotEnoughPercentile);
       api.mock('GET', '/api/v2/mobile/officers/2235/new-timeline-items/', 200, mockTimeline);
       api.mock('GET', '/api/v2/mobile/officers/2235/coaccusals/', 200, mockCoaccusals);
+
+      api.mock('GET', '/api/v2/mobile/officers/27778/', 200, officer27778);
+      api.mock('GET', '/api/v2/mobile/officers/27778/new-timeline-items/', 200, mockTimeline);
+      api.mock('GET', '/api/v2/mobile/officers/27778/coaccusals/', 200, mockCoaccusals);
 
       this.officerPage = client.page.officerPage();
       this.officerPage.navigate(this.officerPage.url(2235));
@@ -676,6 +709,130 @@ describe('OfficerPage test', function () {
         this.timeline.waitForElementVisible('@crItem', TIMEOUT);
         this.timeline.click('@trrItem');
         this.timeline.assert.urlContains('/trr/1/');
+      });
+
+      describe('Timeline filter', function () {
+        beforeEach(function (client, done) {
+          this.timeline.section.filter.waitForElementVisible('@button');
+          this.timeline.section.filter.click('@button');
+          done();
+        });
+
+        it('should filter all events by by default', function () {
+          checkTimelineShowAllItems(this.timeline);
+        });
+
+        it('should filter complaints', function (client) {
+          this.timeline.section.filter.click('@crs');
+
+          this.timeline.waitForElementVisible('@crItem');
+          client.elements(
+            'css selector',
+            this.timeline.section.crItems,
+            items => assert.equal(items.value.length, 2)
+          );
+
+          this.timeline.waitForElementNotPresent('@trrItem');
+          this.timeline.waitForElementNotPresent('@awardItem');
+
+          this.timeline.waitForElementVisible('@rankChangeItem');
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should filter sustained', function (client) {
+          this.timeline.section.filter.click('@sustained');
+
+          this.timeline.waitForElementVisible('@crItem');
+          client.elements(
+            'css selector',
+            this.timeline.section.crItems,
+            items => assert.equal(items.value.length, 1)
+          );
+
+          this.timeline.waitForElementNotPresent('@trrItem');
+          this.timeline.waitForElementNotPresent('@awardItem');
+
+          this.timeline.waitForElementVisible('@rankChangeItem');
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should filter TRRs', function () {
+          this.timeline.section.filter.click('@force');
+
+          this.timeline.waitForElementNotPresent('@crItem');
+          this.timeline.waitForElementVisible('@trrItem');
+          this.timeline.waitForElementNotPresent('@awardItem');
+
+          this.timeline.waitForElementVisible('@rankChangeItem');
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should filter awards', function () {
+          this.timeline.section.filter.click('@awards');
+
+          this.timeline.waitForElementNotPresent('@crItem');
+          this.timeline.waitForElementNotPresent('@trrItem');
+          this.timeline.waitForElementVisible('@awardItem');
+
+          this.timeline.waitForElementVisible('@rankChangeItem');
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should filter rank/unit changes', function () {
+          this.timeline.section.filter.click('@changes');
+
+          this.timeline.waitForElementNotPresent('@crItem');
+          this.timeline.waitForElementNotPresent('@trrItem');
+          this.timeline.waitForElementNotPresent('@awardItem');
+
+          this.timeline.waitForElementVisible('@rankChangeItem');
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should close the menu when blurring', function () {
+          this.timeline.click('@unitChangeItem');
+          this.timeline.section.filter.waitForElementNotPresent('@menu');
+
+          this.timeline.waitForElementVisible('@unitChangeItem');
+          this.timeline.waitForElementVisible('@joinedItem');
+          this.timeline.waitForElementVisible('@yearItem');
+        });
+
+        it('should keep selected filter when changing tab', function () {
+          this.timeline.section.filter.click('@changes');
+          checkTimelineShowChangesOnly(this.timeline);
+
+          this.officerPage.click('@coaccusalsTabButton');
+          this.coaccusals = this.officerPage.section.coaccusals;
+          this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
+          this.officerPage.click('@timelineTabButton');
+
+          checkTimelineShowChangesOnly(this.timeline);
+        });
+
+        it('should reset filter when navigating to another officer page', function (client) {
+          this.timeline.section.filter.click('@changes');
+          checkTimelineShowChangesOnly(this.timeline);
+
+          this.officerPage.click('@coaccusalsTabButton');
+          this.coaccusals = this.officerPage.section.coaccusals;
+          this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
+          this.coaccusals.click('@firstCoaccusalCard');
+          this.coaccusals.assert.urlContains('/officer/27778/carl-suchocki/');
+
+          this.officerPage.click('@timelineTabButton');
+          checkTimelineShowAllItems(this.timeline);
+        });
       });
     });
 
