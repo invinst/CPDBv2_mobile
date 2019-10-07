@@ -24,7 +24,6 @@ import {
   updatePinboardInfoState,
   performFetchPinboardRelatedData,
 } from 'actions/pinboard';
-import { showToast } from 'actions/toast';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 import { Toastify } from 'utils/toastify';
 
@@ -40,6 +39,10 @@ describe('createOrUpdatePinboard middleware', function () {
       };
     },
     dispatch: stub().usingPromise(Promise).resolves(dispatchResults),
+  });
+
+  afterEach(function () {
+    Toastify.toast.resetHistory();
   });
 
   it('should not dispatch any action if action is not adding or removing items', function () {
@@ -639,7 +642,6 @@ describe('createOrUpdatePinboard middleware', function () {
     setTimeout(
       () => {
         Toastify.toast.should.not.be.called();
-        Toastify.toast.resetHistory();
         done();
       },
       50
@@ -647,7 +649,6 @@ describe('createOrUpdatePinboard middleware', function () {
   });
 
   it('should handle @@router/LOCATION_CHANGE to create pinboard and show toast', function (done) {
-    Toastify.toast.resetHistory();
     Toastify.toast.should.not.be.called();
 
     const action = {
@@ -700,7 +701,6 @@ describe('createOrUpdatePinboard middleware', function () {
         );
         Toastify.toast.should.be.calledWith('2 out of 2 TRR IDs could not be recognized (3, 99).');
 
-        Toastify.toast.resetHistory();
         done();
       },
       50
@@ -708,7 +708,7 @@ describe('createOrUpdatePinboard middleware', function () {
   });
 
   describe('toast', function () {
-    it('should show toast on ADD_OR_REMOVE_ITEM_IN_PINBOARD', function (done) {
+    it('should handle ADD_OR_REMOVE_ITEM_IN_PINBOARD and show adding toast', function () {
       const action = {
         type: ADD_OR_REMOVE_ITEM_IN_PINBOARD,
         payload: {
@@ -729,19 +729,51 @@ describe('createOrUpdatePinboard middleware', function () {
         isPinned: false,
       }));
 
-      store.dispatch.should.be.calledWith(showToast({
+      Toastify.toast.should.be.calledOnce();
+      Toastify.toast.should.be.calledWith('CR added', {
+        className: 'toast-wrapper added',
+        bodyClassName: 'toast-body',
+        transition: Toastify.cssTransition({
+          enter: 'toast-enter',
+          exit: 'toast-exit',
+          duration: 500,
+          appendPosition: true,
+        }),
+      });
+    });
+
+    it('should handle ADD_OR_REMOVE_ITEM_IN_PINBOARD and show removing toast', function () {
+      const action = {
+        type: ADD_OR_REMOVE_ITEM_IN_PINBOARD,
+        payload: {
+          id: '123',
+          type: 'CR',
+          isPinned: true,
+        },
+      };
+      const store = createStore(PinboardFactory.build());
+
+      let dispatched;
+      createOrUpdatePinboard(store)(action => dispatched = action)(action);
+      dispatched.should.eql(action);
+
+      store.dispatch.should.be.calledWith(removeItemFromPinboardState({
         id: '123',
         type: 'CR',
-        isPinned: false,
+        isPinned: true,
       }));
 
-      setTimeout(
-        () => {
-          store.dispatch.should.be.calledWith(savePinboard());
-          done();
-        },
-        50
-      );
+      Toastify.toast.should.be.calledOnce();
+      Toastify.toast.should.be.calledWith('CR removed', {
+        className: 'toast-wrapper removed',
+        bodyClassName: 'toast-body',
+        transition: Toastify.cssTransition({
+          enter: 'toast-enter',
+          exit: 'toast-exit',
+          duration: 500,
+          appendPosition: true,
+        }),
+      });
     });
   });
 });

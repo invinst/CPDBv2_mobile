@@ -26,7 +26,6 @@ import {
   updatePinboardInfoState,
   performFetchPinboardRelatedData,
 } from 'actions/pinboard';
-import { showToast } from 'actions/toast';
 import { getPathname } from 'selectors/common/routing';
 import loadPaginatedData from 'utils/load-paginated-data';
 import { Toastify } from 'utils/toastify';
@@ -82,6 +81,13 @@ function formatMessage(foundIds, notFoundIds, itemType) {
   return message.trim();
 }
 
+const TopRightTransition = Toastify.cssTransition({
+  enter: 'toast-enter',
+  exit: 'toast-exit',
+  duration: 500,
+  appendPosition: true,
+});
+
 function showCreatedToasts(payload) {
   const foundOfficerIds = _.get(payload, 'officer_ids', []);
   const foundCrids = _.get(payload, 'crids', []);
@@ -96,12 +102,6 @@ function showCreatedToasts(payload) {
   creatingMessages.push(formatMessage(foundCrids, notFoundCrids, 'allegation'));
   creatingMessages.push(formatMessage(foundTrrIds, notFoundTrrIds, 'TRR'));
 
-  const TopRightTransition = Toastify.cssTransition({
-    enter: 'toast-enter',
-    exit: 'toast-exit',
-    duration: 500,
-    appendPosition: true,
-  });
   creatingMessages.filter(_.identity).forEach(message =>
     Toastify.toast(message, {
       className: pinboardStyles.pinboardPageToast,
@@ -112,12 +112,34 @@ function showCreatedToasts(payload) {
   );
 }
 
+const TOAST_TYPE_MAP = {
+  'CR': 'CR',
+  'DATE > CR': 'CR',
+  'INVESTIGATOR > CR': 'CR',
+  'OFFICER': 'Officer',
+  'UNIT > OFFICERS': 'Officer',
+  'DATE > OFFICERS': 'Officer',
+  'TRR': 'TRR',
+  'DATE > TRR': 'TRR',
+};
+
+function showAddOrRemoveItemToast(payload) {
+  const { isPinned, type } = payload;
+  const actionType = isPinned ? 'removed' : 'added';
+
+  Toastify.toast(`${TOAST_TYPE_MAP[type]} ${actionType}`, {
+    className: `toast-wrapper ${actionType}`,
+    bodyClassName: 'toast-body',
+    transition: TopRightTransition,
+  });
+}
+
 export default store => next => action => {
   if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD || action.type === ADD_ITEM_IN_PINBOARD_PAGE) {
     const addOrRemove = action.payload.isPinned ? removeItemFromPinboardState : addItemToPinboardState;
 
     if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD) {
-      store.dispatch(showToast(action.payload));
+      showAddOrRemoveItemToast(action.payload);
     }
 
     Promise.all([store.dispatch(addOrRemove(action.payload))]).finally(() => {

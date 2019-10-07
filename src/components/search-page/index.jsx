@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import ReactHeight from 'react-height';
-import { toast, cssTransition } from 'react-toastify';
 import { browserHistory } from 'react-router';
 import { isEmpty, noop } from 'lodash';
 import cx from 'classnames';
@@ -52,10 +51,6 @@ export default class SearchPage extends Component {
     this.updateResults();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.handleToastChange(nextProps);
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.query !== prevProps.query) {
       this.updateResults();
@@ -64,29 +59,6 @@ export default class SearchPage extends Component {
 
   componentWillUnmount() {
     showIntercomLauncher(true);
-  }
-
-  handleToastChange(nextProps) {
-    if (this.props.toast !== nextProps.toast) {
-      const { type, actionType } = nextProps.toast;
-
-      this.showToast(`${type} ${actionType}`, actionType);
-    }
-  }
-
-  showToast(message, className) {
-    const TopRightTransition = cssTransition({
-      enter: 'toast-enter',
-      exit: 'toast-exit',
-      duration: 500,
-      appendPosition: true,
-    });
-
-    toast(message, {
-      className: `toast-wrapper ${className}`,
-      bodyClassName: 'toast-body',
-      transition: TopRightTransition,
-    });
   }
 
   updateResults() {
@@ -295,7 +267,6 @@ SearchPage.propTypes = {
   pinboard: PropTypes.object,
   addOrRemoveItemInPinboard: PropTypes.func,
   createPinboard: PropTypes.func,
-  toast: PropTypes.object,
   recentSuggestionIds: PropTypes.object,
   recentSuggestionsRequested: PropTypes.bool,
   fetchedEmptyRecentSearchItems: PropTypes.func,
@@ -313,7 +284,6 @@ SearchPage.defaultProps = {
   saveToRecent: noop,
   suggestAllFromCategory: noop,
   fetchRecentSearchItems: noop,
-  toast: {},
   recentSuggestionIds: {},
   recentSuggestionsRequested: false,
   fetchedEmptyRecentSearchItems: noop,
