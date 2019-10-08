@@ -26,7 +26,7 @@ export default class TopOfficersByAllegation extends Component {
   }
 
   render() {
-    const { topOfficersByAllegation, description, title, embed } = this.props;
+    const { topOfficersByAllegation, description, title, embed, addOrRemoveItemInPinboard, pinnable } = this.props;
 
     return (
       <CarouselWrapper
@@ -36,8 +36,14 @@ export default class TopOfficersByAllegation extends Component {
         trackingContentType={ constants.CAROUSEL_TYPES.ALLEGATION }
       >
         {
-          topOfficersByAllegation.map(
-            officer => <OfficerCard officer={ officer } key={ officer.id } openCardInNewPage={ embed } />
+          topOfficersByAllegation.map(officer =>
+            <OfficerCard
+              officer={ officer }
+              key={ officer.id }
+              openCardInNewPage={ embed }
+              addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+              pinnable={ pinnable }
+            />
           )
         }
       </CarouselWrapper>
@@ -47,16 +53,20 @@ export default class TopOfficersByAllegation extends Component {
 
 TopOfficersByAllegation.defaultProps = {
   requestTopOfficersByAllegation: noop,
+  addOrRemoveItemInPinboard: noop,
   requestCMS: noop,
   topOfficersByAllegation: [],
+  pinnable: true,
 };
 
 TopOfficersByAllegation.propTypes = {
   topOfficersByAllegation: PropTypes.array,
   requestTopOfficersByAllegation: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
   requestCMS: PropTypes.func,
   cmsRequested: PropTypes.bool,
   description: PropTypes.object,
   title: PropTypes.object,
   embed: PropTypes.bool,
+  pinnable: PropTypes.bool,
 };

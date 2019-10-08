@@ -4,6 +4,7 @@ import { get } from 'lodash';
 import NewDocumentAllegations from 'components/landing-page/new-document-allegations';
 import { requestNewDocumentAllegations } from 'actions/landing-page';
 import { trackingClickAttachment } from 'actions/common/analytic';
+import { addOrRemoveItemInPinboard } from 'actions/pinboard';
 import { newDocumentAllegationsSelector } from 'selectors/landing-page';
 import { cmsSelector } from 'selectors/common/cms';
 import { withRouter } from 'react-router';
@@ -19,6 +20,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = {
   requestNewDocumentAllegations,
   onTrackingAttachment: trackingClickAttachment,
+  addOrRemoveItemInPinboard,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewDocumentAllegations));

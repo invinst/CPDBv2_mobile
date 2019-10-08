@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { stub } from 'sinon';
 
-import ItemPinButton from 'components/search-page/item-pin-button';
+import ItemPinButton from 'components/common/item-pin-button';
 
 
 describe('<ItemPinButton />', function () {

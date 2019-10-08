@@ -21,6 +21,7 @@ const CoaccusedCard = ({ officer }) => {
       rank={ officer.rank }
       percentile={ officer.percentile }
       customStyle={ style.coaccusedCard }
+      pinnable={ false }
       bottomContent={
         <div className={ style.officerCardAccusedInfo }>
           <div className='category'>{ officer.category }</div>

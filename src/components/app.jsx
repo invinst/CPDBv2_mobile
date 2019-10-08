@@ -84,7 +84,7 @@ const App = React.createClass({
         </Route>
         <Route
           path={ constants.EMBED_TOP_OFFICER_PATH }
-          component={ TopOfficersByAllegationContainer }
+          component={ () => <TopOfficersByAllegationContainer pinnable={ false }/> }
         />
         <Route
           path={ constants.EMBED_OFFICERS_PATH }

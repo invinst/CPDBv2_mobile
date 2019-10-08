@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import style from './main-page.sass';
 import 'styles/toast.sass';
+import { getPageRoot } from 'utils/url-util';
 
 toast.configure();
 
@@ -31,6 +32,7 @@ class MainPage extends Component {
           closeButton={ false }
           hideProgressBar={ true }
           autoClose={ 3000 }
+          className={ getPageRoot(location.pathname) }
         />
       </div>
     );
