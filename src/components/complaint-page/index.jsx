@@ -28,7 +28,10 @@ export default class ComplaintPage extends Component {
   }
 
   render() {
-    const { complaint, complaintId, pathname, onTrackingAttachment, noAttachmentMessage } = this.props;
+    const {
+      complaint, complaintId, pathname,
+      onTrackingAttachment, noAttachmentMessage, addOrRemoveItemInPinboard,
+    } = this.props;
 
     if (!complaint) {
       return null;
@@ -42,7 +45,7 @@ export default class ComplaintPage extends Component {
             subcategory={ complaint.subcategory }
           />
           <ComplaintIncidentDate incidentDate={ complaint.incidentDate } />
-          <AccusedOfficers officers={ complaint.coaccused } />
+          <AccusedOfficers officers={ complaint.coaccused } addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }/>
           <div className='complaint-info'>
             <Victim victims={ complaint.victims } />
             <Complainant complainants={ complaint.complainants } />
@@ -82,12 +85,14 @@ ComplaintPage.propTypes = {
   complaint: PropTypes.object,
   pathname: PropTypes.string,
   onTrackingAttachment: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
   requestCMS: PropTypes.func,
   cmsRequested: PropTypes.bool,
   noAttachmentMessage: PropTypes.object,
 };
 
 ComplaintPage.defaultProps = {
-  requestComplaint: () => {},
+  requestComplaint: noop,
+  addOrRemoveItemInPinboard: noop,
   requestCMS: noop,
 };

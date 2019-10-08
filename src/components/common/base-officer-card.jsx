@@ -82,6 +82,7 @@ BaseOfficerCard.propTypes = {
 BaseOfficerCard.defaultProps = {
   topContent: null,
   hasHrefLink: true,
+  pinnable: true,
   openCardInNewPage: false,
 };
 
