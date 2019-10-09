@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import should from 'should';
+import { random } from 'faker';
+import { spy } from 'sinon';
 
 import BaseOfficerCard from 'components/common/base-officer-card';
 import RadarChart from 'components/common/radar-chart';
+import ItemPinButton from 'components/common/item-pin-button';
+import pinButtonStyles from 'components/common/item-pin-button.sass';
+import constants from 'constants';
 
 
 describe('<BaseOfficerCard />', function () {
@@ -72,4 +77,43 @@ describe('<BaseOfficerCard />', function () {
     const link = wrapper.find(Link);
     should(link.prop('to')).be.null();
   });
+
+  it('should render ItemPinButton with correct props', function () {
+    const addOrRemoveItemInPinboard = spy();
+    const id = random.number({ min: 10, max: 1000 });
+    const isPinned = random.boolean();
+
+    const wrapper = mount(
+      <BaseOfficerCard
+        officerId={ id }
+        isPinned={ isPinned }
+        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+      />
+    );
+
+    const itemPinButton = wrapper.find(ItemPinButton);
+    itemPinButton.props().className.should.equal(pinButtonStyles.cardPinnedButton);
+    itemPinButton.props().addOrRemoveItemInPinboard.should.equal(addOrRemoveItemInPinboard);
+    itemPinButton.props().item.should.eql({ type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER, id, isPinned });
+  });
+
+  it('should not render pin button if not pinnable', function () {
+    const wrapper = mount(
+      <BaseOfficerCard
+        pinnable={ false }
+      />,
+    );
+    wrapper.find(ItemPinButton).exists().should.be.false();
+  });
+
+  it('should render top content and skip pin button', function () {
+    const wrapper = mount(
+      <BaseOfficerCard
+        topContent={ <div className={ 'top-content' } /> }
+      />,
+    );
+    wrapper.find('.top-content').exists().should.be.true();
+    wrapper.find(ItemPinButton).exists().should.be.false();
+  });
+
 });

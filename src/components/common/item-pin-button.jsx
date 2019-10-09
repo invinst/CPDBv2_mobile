@@ -35,6 +35,7 @@ ItemPinButton.propTypes = {
 
 ItemPinButton.defaultProps = {
   showHint: true,
+  items: [],
 };
 
 export default withPinnable(ItemPinButton);

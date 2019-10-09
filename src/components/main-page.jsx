@@ -24,9 +24,11 @@ class MainPage extends Component {
   }
 
   render() {
+    const { children, location } = this.props;
+
     return (
       <div className={ cx('content', style.mainPage) }>
-        { this.props.children }
+        { children }
         <ToastContainer
           pauseOnFocusLoss={ false }
           closeButton={ false }

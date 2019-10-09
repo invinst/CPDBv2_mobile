@@ -51,14 +51,6 @@ export default class TopOfficersByAllegation extends Component {
   }
 }
 
-TopOfficersByAllegation.defaultProps = {
-  requestTopOfficersByAllegation: noop,
-  addOrRemoveItemInPinboard: noop,
-  requestCMS: noop,
-  topOfficersByAllegation: [],
-  pinnable: true,
-};
-
 TopOfficersByAllegation.propTypes = {
   topOfficersByAllegation: PropTypes.array,
   requestTopOfficersByAllegation: PropTypes.func,
@@ -69,4 +61,13 @@ TopOfficersByAllegation.propTypes = {
   title: PropTypes.object,
   embed: PropTypes.bool,
   pinnable: PropTypes.bool,
+};
+
+TopOfficersByAllegation.defaultProps = {
+  requestTopOfficersByAllegation: noop,
+  addOrRemoveItemInPinboard: noop,
+  requestCMS: noop,
+  topOfficersByAllegation: [],
+  pinnable: true,
+  embed: false,
 };

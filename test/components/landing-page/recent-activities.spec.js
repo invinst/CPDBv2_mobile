@@ -18,6 +18,7 @@ describe('<RecentActivities />', function () {
         recentActivities={ recentActivities }
         title={ titleCMSContent }
         description={ descriptionCMSContent }
+        pinnable={ true }
       />
     );
 
@@ -29,7 +30,9 @@ describe('<RecentActivities />', function () {
     const officerCards = carouselWrapper.find(OfficerCard);
     officerCards.should.have.length(2);
     officerCards.at(0).prop('officer').should.eql({ id: '123' });
+    officerCards.at(0).prop('pinnable').should.eql(true);
     officerCards.at(1).prop('officer').should.eql({ id: '456' });
+    officerCards.at(1).prop('pinnable').should.eql(true);
   });
 
   it('should call requestRecentActivities', function () {
@@ -37,7 +40,7 @@ describe('<RecentActivities />', function () {
     mount(
       <RecentActivities
         requestRecentActivities={ requestRecentActivitiesSpy }
-        recentActivities={ [{ percentile: {} }] }
+        recentActivities={ [{ id: 123 }, { id: 456 }] }
       />
     );
     requestRecentActivitiesSpy.called.should.be.false();

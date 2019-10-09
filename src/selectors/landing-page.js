@@ -48,13 +48,11 @@ export const newDocumentAllegationsSelector = createWithIsPinnedSelector(
 export const complaintSummariesSelector = createWithIsPinnedSelector(
   createSelector(
     state => take(state.landingPage.complaintSummaries, 20),
-    complaints => complaints.map(complaint => {
-      return {
-        crid: complaint.crid,
-        summary: complaint.summary,
-        incidentDate: formatDate(get(complaint, 'incident_date'), false),
-      };
-    })
+    complaints => complaints.map(complaint => ({
+      crid: complaint.crid,
+      summary: complaint.summary,
+      incidentDate: formatDate(get(complaint, 'incident_date'), false),
+    }))
   ),
   constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
 );

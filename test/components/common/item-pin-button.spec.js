@@ -1,29 +1,31 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { stub } from 'sinon';
 
 import ItemPinButton from 'components/common/item-pin-button';
 
 
 describe('<ItemPinButton />', function () {
-  it('should have class is-pinned if suggestion.isPinned is true', function () {
-    const wrapper = shallow(<ItemPinButton isPinned={ true } />);
-    wrapper.find('span').hasClass('is-pinned').should.be.true();
+  it('should have class is-pinned if item.isPinned is true', function () {
+    const wrapper = mount(<ItemPinButton item={ { isPinned: true } } />);
+    wrapper.find('.is-pinned').exists().should.be.true();
   });
 
-  it('should not have class is-pinned if suggesion.isPinned is false', function () {
-    const wrapper = shallow(<ItemPinButton isPinned={ false } />);
-    wrapper.find('span').hasClass('is-pinned').should.be.false();
+  it('should not have class is-pinned if item.isPinned is false', function () {
+    const wrapper = mount(<ItemPinButton item={ { isPinned: false } } />);
+    wrapper.find('.is-pinned').exists().should.be.false();
   });
 
-  it('should call addItemInPinboardPage action when cliked on', function () {
+  it('should call addItemInPinboardPage action when clicked on', function () {
     const addOrRemoveItemInPinboard = stub();
     const wrapper = mount(
       <ItemPinButton
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
-        isPinned={ false }
-        type='CR'
-        id='1'
+        item={ {
+          isPinned: false,
+          type: 'CR',
+          id: '1',
+        } }
       />
     );
     wrapper.find('span').simulate('click');
@@ -32,5 +34,17 @@ describe('<ItemPinButton />', function () {
       id: '1',
       isPinned: false,
     }).should.be.true();
+  });
+
+  it('should have class is-pinned if all items inPinned are true', function () {
+    const wrapper = mount(<ItemPinButton items={ [{ isPinned: true }, { isPinned: true }] }/>);
+
+    wrapper.find('.is-pinned').exists().should.be.true();
+  });
+
+  it('should not have class is-pinned if not all items inPinned are true', function () {
+    const wrapper = mount(<ItemPinButton items={ [{ isPinned: false }, { isPinned: true }] }/>);
+
+    wrapper.find('.is-pinned').exists().should.be.false();
   });
 });
