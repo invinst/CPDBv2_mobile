@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Factory } from 'rosie';
 import { random } from 'faker';
 

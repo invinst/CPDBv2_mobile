@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { noop } from 'lodash';
+import { noop, isEmpty } from 'lodash';
 
 import BottomPadding from 'components/shared/bottom-padding';
 import Victim from './victim';
@@ -33,7 +33,7 @@ export default class ComplaintPage extends Component {
       onTrackingAttachment, noAttachmentMessage, addOrRemoveItemInPinboard,
     } = this.props;
 
-    if (!complaint) {
+    if (isEmpty(complaint)) {
       return null;
     }
 
@@ -95,4 +95,5 @@ ComplaintPage.defaultProps = {
   requestComplaint: noop,
   addOrRemoveItemInPinboard: noop,
   requestCMS: noop,
+  complaint: {},
 };
