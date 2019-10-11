@@ -1,4 +1,6 @@
 import { handleActions } from 'redux-actions';
+import { unionBy, get } from 'lodash';
+
 import constants from 'constants';
 
 import {
@@ -6,6 +8,7 @@ import {
   SUGGESTION_REQUEST_FAILURE,
   SUGGEST_ALL_REQUEST_SUCCESS,
   SUGGEST_ALL_REQUEST_FAILURE,
+  SUGGESTION_SINGLE_REQUEST_SUCCESS,
 } from 'actions/suggestion';
 
 const categories = constants.SEARCH_CATEGORIES.map((cat) => cat.path);
@@ -46,5 +49,16 @@ export default handleActions({
   },
   [SUGGEST_ALL_REQUEST_FAILURE]: (state, action) => {
     return {};
+  },
+  [SUGGESTION_SINGLE_REQUEST_SUCCESS]: (state, action) => {
+    const request = get(action, 'request', {});
+    const { contentType } = request.params;
+    return {
+      ...state,
+      [contentType]: {
+        ...state[contentType],
+        data: unionBy(state[contentType].data, action.payload.results, 'id'),
+      },
+    };
   },
 }, defaultState);

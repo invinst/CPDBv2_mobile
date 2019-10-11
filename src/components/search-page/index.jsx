@@ -144,6 +144,10 @@ export default class SearchPage extends Component {
       updateActiveCategory,
       activeCategory,
       addOrRemoveItemInPinboard,
+      getSuggestionWithContentType,
+      query,
+      nextParams,
+      hasMore,
     } = this.props;
     const lastIndex = categories.length - 1;
 
@@ -157,6 +161,7 @@ export default class SearchPage extends Component {
       const searchCategory = (
         <SearchCategory
           categoryId={ cat.id }
+          categoryPath={ cat.path }
           allButtonClickHandler={ this.chooseCategory.bind(this, cat) }
           showAllButton={ showAllButton }
           title={ cat.longName || cat.name }
@@ -165,6 +170,10 @@ export default class SearchPage extends Component {
           updateActiveCategory={ updateActiveCategory }
           activeCategory={ activeCategory }
           addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+          getSuggestionWithContentType={ getSuggestionWithContentType }
+          query={ query }
+          nextParams={ nextParams }
+          hasMore={ hasMore }
         />
       );
 
@@ -280,7 +289,6 @@ SearchPage.propTypes = {
   officers: PropTypes.object,
   suggestAllFromCategory: PropTypes.func,
   fetchRecentSearchItems: PropTypes.func,
-  categories: PropTypes.array,
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
   chosenCategory: PropTypes.string,
@@ -299,6 +307,9 @@ SearchPage.propTypes = {
   recentSuggestionIds: PropTypes.object,
   recentSuggestionsRequested: PropTypes.bool,
   fetchedEmptyRecentSearchItems: PropTypes.func,
+  getSuggestionWithContentType: PropTypes.func,
+  nextParams: PropTypes.object,
+  hasMore: PropTypes.bool,
 };
 
 SearchPage.defaultProps = {

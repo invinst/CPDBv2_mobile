@@ -55,9 +55,10 @@ export default class SearchCategory extends Component {
   }
 
   renderAllButton() {
-    const { showAllButton, allButtonClickHandler } = this.props;
+    const { showAllButton, allButtonClickHandler, getSuggestionWithContentType, query, categoryPath } = this.props;
     const onClick = () => {
       allButtonClickHandler();
+      getSuggestionWithContentType(query, { contentType: categoryPath }).catch(()=>{});
       instantScrollToTop();
     };
 
@@ -69,7 +70,16 @@ export default class SearchCategory extends Component {
   }
 
   renderResults() {
-    const { saveToRecent, categoryId, showAllButton, addOrRemoveItemInPinboard } = this.props;
+    const {
+      saveToRecent,
+      categoryId,
+      showAllButton,
+      addOrRemoveItemInPinboard,
+      getSuggestionWithContentType,
+      query,
+      nextParams,
+      hasMore,
+    } = this.props;
     const ResultComponent = resultComponentMappings[categoryId];
 
     if (typeof ResultComponent === 'undefined') {
@@ -81,11 +91,17 @@ export default class SearchCategory extends Component {
       items = items.slice(0, 5);
     }
 
-    return <ResultComponent
-      items={ items }
-      saveToRecent={ saveToRecent }
-      addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
-    />;
+    return (
+      <ResultComponent
+        items={ items }
+        saveToRecent={ saveToRecent }
+        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+        getSuggestionWithContentType={ getSuggestionWithContentType }
+        query={ query }
+        nextParams={ nextParams }
+        hasMore={ hasMore }
+      />
+    );
   }
 
   render() {
@@ -119,4 +135,9 @@ SearchCategory.propTypes = {
   updateActiveCategory: PropTypes.func,
   fixedHeaderHeight: PropTypes.number,
   addOrRemoveItemInPinboard: PropTypes.func,
+  getSuggestionWithContentType: PropTypes.func,
+  nextParams: PropTypes.object,
+  hasMore: PropTypes.bool,
+  query: PropTypes.string,
+  categoryPath: PropTypes.string,
 };
