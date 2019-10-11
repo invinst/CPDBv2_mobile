@@ -105,9 +105,9 @@ describe('EmbedTopOfficerPage', function () {
     this.embedTopOfficersPage.expect.element('@firstPinButton').not.to.be.present;
   });
 
-  it('should go to officer summary page when click to card', function (client) {
+  it('should go to officer summary page when click on card', function (client) {
     this.embedTopOfficersPage.click('@firstCard');
     client.switchToRecentTab();
-    this.embedTopOfficersPage.assert.urlContains('/officer/13788/broderick-jones/');
+    client.expect.url().to.match(/\/officer\/\d+\/[-a-z]+\/?$/);
   });
 });
