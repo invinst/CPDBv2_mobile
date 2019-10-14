@@ -3,11 +3,9 @@ import cx from 'classnames';
 
 import constants from 'constants';
 import { getCurrentScrollPosition, instantScrollToTop } from 'utils/navigation-util';
-import OfficerSearchResult from './officer-search-result';
+import SearchResult from 'components/search-page/search-result';
 import SuggestedSearchResult from './suggested-search-result';
 import RecentItems from './recent-items';
-import CRSearchResult from './cr-search-result';
-import TRRSearchResult from './trr-search-result';
 
 import style from './search-category.sass';
 
@@ -17,13 +15,13 @@ const fixedHeaderHeight = (
 );
 
 const resultComponentMappings = {
-  dateCRs: CRSearchResult,
-  dateTRRs: TRRSearchResult,
-  dateOfficers: OfficerSearchResult,
-  officers: OfficerSearchResult,
-  crs: CRSearchResult,
-  investigatorCRs: CRSearchResult,
-  trrs: TRRSearchResult,
+  dateCRs: SearchResult,
+  dateTRRs: SearchResult,
+  dateOfficers: SearchResult,
+  officers: SearchResult,
+  crs: SearchResult,
+  investigatorCRs: SearchResult,
+  trrs: SearchResult,
   recent: RecentItems,
   suggested: SuggestedSearchResult,
 };
@@ -93,6 +91,7 @@ export default class SearchCategory extends Component {
 
     return (
       <ResultComponent
+        itemType={ categoryId }
         items={ items }
         saveToRecent={ saveToRecent }
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }

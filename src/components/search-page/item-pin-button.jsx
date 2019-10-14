@@ -31,7 +31,7 @@ export default class ItemPinButton extends Component {
 }
 
 ItemPinButton.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   type: PropTypes.string,
   isPinned: PropTypes.bool,
   addOrRemoveItemInPinboard: PropTypes.func,

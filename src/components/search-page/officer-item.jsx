@@ -25,7 +25,7 @@ const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard }) => {
 
 OfficerItem.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     name: PropTypes.string,
     badge: PropTypes.string,
     url: PropTypes.string,

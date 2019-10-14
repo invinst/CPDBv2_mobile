@@ -2,10 +2,23 @@ import React, { PropTypes } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import OfficerItem from './officer-item';
+import CrItem from './cr-item';
+import TrrItem from './trr-item';
 
 
-const OfficerSearchResult = (
+const ItemTypeMaps = {
+  officers: OfficerItem,
+  dateOfficers: OfficerItem,
+  dateCRs: CrItem,
+  crs: CrItem,
+  investigatorCRs: CrItem,
+  dateTRRs: TrrItem,
+  trrs: TrrItem,
+};
+
+const SearchResult = (
   {
+    itemType,
     items,
     saveToRecent,
     addOrRemoveItemInPinboard,
@@ -15,6 +28,7 @@ const OfficerSearchResult = (
     hasMore,
   }
 ) => {
+  const Item = ItemTypeMaps[itemType];
   return (
     <InfiniteScroll
       loadMore={ () => getSuggestionWithContentType(query, { ...nextParams }) }
@@ -23,10 +37,10 @@ const OfficerSearchResult = (
       useWindow={ true }
     >
       {
-        items.map(officer => (
-          <OfficerItem
-            key={ officer.id }
-            item={ officer }
+        items.map(item => (
+          <Item
+            key={ item.id }
+            item={ item }
             saveToRecent={ saveToRecent }
             addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
           />
@@ -36,7 +50,8 @@ const OfficerSearchResult = (
   );
 };
 
-OfficerSearchResult.propTypes = {
+SearchResult.propTypes = {
+  itemType: PropTypes.string,
   saveToRecent: PropTypes.func,
   items: PropTypes.array,
   addOrRemoveItemInPinboard: PropTypes.func,
@@ -46,8 +61,8 @@ OfficerSearchResult.propTypes = {
   query: PropTypes.string,
 };
 
-OfficerSearchResult.defaultProps = {
+SearchResult.defaultProps = {
   saveToRecent: () => {},
 };
 
-export default OfficerSearchResult;
+export default SearchResult;

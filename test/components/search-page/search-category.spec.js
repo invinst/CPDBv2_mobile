@@ -8,9 +8,7 @@ import * as NavigationUtil from 'utils/navigation-util';
 import constants from 'constants';
 import SearchCategory from 'components/search-page/search-category';
 import SuggestedSearchResult from 'components/search-page/suggested-search-result';
-import OfficerSearchResult from 'components/search-page/officer-search-result';
-import CRSearchResult from 'components/search-page/cr-search-result';
-import TRRSearchResult from 'components/search-page/trr-search-result';
+import SearchResult from 'components/search-page/search-result';
 import RecentItems from 'components/search-page/recent-items';
 
 
@@ -232,19 +230,19 @@ describe('<SearchCategory />', function () {
           hasMore={ true }
         />
       );
-      const officerSearchResult = wrapper.find(OfficerSearchResult);
-      officerSearchResult.prop('items').should.eql([{ id: '1234' }, { id: '5678' }]);
-      officerSearchResult.prop('saveToRecent').should.eql(spySaveToRecent);
-      officerSearchResult.prop('addOrRemoveItemInPinboard').should.eql(spyAddOrRemoveItemInPinboard);
-      officerSearchResult.prop('getSuggestionWithContentType').should.eql(spyGetSuggestionWithContentType);
-      officerSearchResult.prop('query').should.equal('qa');
-      officerSearchResult.prop('nextParams').should.eql({
+      const searchResult = wrapper.find(SearchResult);
+      searchResult.prop('items').should.eql([{ id: '1234' }, { id: '5678' }]);
+      searchResult.prop('saveToRecent').should.eql(spySaveToRecent);
+      searchResult.prop('addOrRemoveItemInPinboard').should.eql(spyAddOrRemoveItemInPinboard);
+      searchResult.prop('getSuggestionWithContentType').should.eql(spyGetSuggestionWithContentType);
+      searchResult.prop('query').should.equal('qa');
+      searchResult.prop('nextParams').should.eql({
         contentType: 'OFFICER',
         limit: '30',
         offset: '60',
         term: '123',
       });
-      officerSearchResult.prop('hasMore').should.be.true();
+      searchResult.prop('hasMore').should.be.true();
     });
 
     it('should return null if given invalid category id', function () {
@@ -270,8 +268,8 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerSearchResult = wrapper.find(OfficerSearchResult);
-      officerSearchResult.prop('items').should.eql(range(5));
+      const searchResult = wrapper.find(SearchResult);
+      searchResult.prop('items').should.eql(range(5));
     });
 
     it('should render officer correctly', function () {
@@ -299,10 +297,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(OfficerSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(officers);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(officers);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
 
     });
 
@@ -327,10 +325,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(CRSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(crs);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(crs);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render trrs with trr component', function () {
@@ -354,10 +352,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(TRRSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(trrs);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(trrs);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render dateCRs with cr component', function () {
@@ -381,10 +379,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(CRSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(dateCRs);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(dateCRs);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render dateTRRs with trr component', function () {
@@ -408,10 +406,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(TRRSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(dateTRRs);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(dateTRRs);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render dateOfficers with officer component', function () {
@@ -439,10 +437,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(OfficerSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(officers);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(officers);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
   });
 
