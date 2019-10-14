@@ -34,7 +34,6 @@ describe('<SearchCategory />', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
-        items={ [] }
         categoryId='crs'
       />
     );
@@ -185,24 +184,69 @@ describe('<SearchCategory />', function () {
     });
 
     it('should call allButtonClickHandler() and scroll to top on click', function () {
-      const allButtonClickHandler = spy();
+      const spyAllButtonClickHandler = spy();
+      const spyGetSuggestionWithContentType = stub().returns({ catch: spy() });
 
       const wrapper = mount(
         <SearchCategory
           items={ [] }
           showAllButton={ true }
-          allButtonClickHandler={ allButtonClickHandler }
+          allButtonClickHandler={ spyAllButtonClickHandler }
+          getSuggestionWithContentType={ spyGetSuggestionWithContentType }
+          query='qa'
+          categoryPath='OFFICER'
         />
       );
 
       const allButton = wrapper.find('.all');
       allButton.simulate('click');
-      allButtonClickHandler.should.be.called();
-      this.stubInstantScrollToTop.should.be.called();
+
+      spyAllButtonClickHandler.should.be.calledOnce();
+      spyGetSuggestionWithContentType.should.be.calledOnce();
+      spyGetSuggestionWithContentType.should.be.calledWith('qa', { contentType: 'OFFICER' });
+      this.stubInstantScrollToTop.should.be.calledOnce();
     });
   });
 
   describe('renderResults', function () {
+    it('should render ResultComponent with correct props', function () {
+      const spyAddOrRemoveItemInPinboard = spy();
+      const spyGetSuggestionWithContentType = spy();
+      const spySaveToRecent = spy();
+
+      const wrapper = shallow(
+        <SearchCategory
+          title='OFFICERS'
+          items={ [{ id: '1234' }, { id: '5678' }] }
+          categoryId='officers'
+          addOrRemoveItemInPinboard={ spyAddOrRemoveItemInPinboard }
+          getSuggestionWithContentType={ spyGetSuggestionWithContentType }
+          saveToRecent={ spySaveToRecent }
+          query={ 'qa' }
+          nextParams={ {
+            contentType: 'OFFICER',
+            limit: '30',
+            offset: '60',
+            term: '123',
+          } }
+          hasMore={ true }
+        />
+      );
+      const officerSearchResult = wrapper.find(OfficerSearchResult);
+      officerSearchResult.prop('items').should.eql([{ id: '1234' }, { id: '5678' }]);
+      officerSearchResult.prop('saveToRecent').should.eql(spySaveToRecent);
+      officerSearchResult.prop('addOrRemoveItemInPinboard').should.eql(spyAddOrRemoveItemInPinboard);
+      officerSearchResult.prop('getSuggestionWithContentType').should.eql(spyGetSuggestionWithContentType);
+      officerSearchResult.prop('query').should.equal('qa');
+      officerSearchResult.prop('nextParams').should.eql({
+        contentType: 'OFFICER',
+        limit: '30',
+        offset: '60',
+        term: '123',
+      });
+      officerSearchResult.prop('hasMore').should.be.true();
+    });
+
     it('should return null if given invalid category id', function () {
 
       const wrapper = shallow(
