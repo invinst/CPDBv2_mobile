@@ -29,7 +29,7 @@ export default class OfficerCard extends Component {
     return (
       <BaseOfficerCard
         setRef={ el => this.el = el }
-        hasHrefLink={ false }
+        hasHrefLink={ true }
         customStyle={ styles.wrapper }
         officerId={ item.officerId }
         fullName={ item.fullName }

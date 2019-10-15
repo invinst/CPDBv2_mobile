@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import { get } from 'lodash';
 
 import { mapStyle } from 'components/common/complaint-card.style';
@@ -21,9 +22,8 @@ export default class LocationCard extends Component {
   }
 
   render() {
-    const { item, dateKey } = this.props;
+    const { item, dateKey, url } = this.props;
     const { point, category } = item;
-
 
     const cardMapConfig = {
       lat: get(point, 'lat', null),
@@ -33,7 +33,7 @@ export default class LocationCard extends Component {
     };
 
     return (
-      <div className={ styles.locationCard }>
+      <Link to={ url } className={ styles.locationCard }>
         <ItemUnpinButton onClick={ this.removeItem }/>
         {
           (point === null) ?
@@ -51,7 +51,7 @@ export default class LocationCard extends Component {
           <span className='location-card-date'>{ item[dateKey] }</span>
           <span className='location-card-category'>{ category }</span>
         </div>
-      </div>
+      </Link>
     );
   }
 }
@@ -60,6 +60,7 @@ LocationCard.propTypes = {
   item: PropTypes.object,
   dateKey: PropTypes.string,
   removeItemInPinboardPage: PropTypes.func,
+  url: PropTypes.string,
 };
 
 LocationCard.defaultProps = {
