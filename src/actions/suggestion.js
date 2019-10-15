@@ -43,18 +43,6 @@ export const suggestTerm = get(
     SUGGESTION_REQUEST_FAILURE]
 );
 
-export const suggestAllFromCategory = (categoryPath, query) => {
-  const suggest = get(
-    v2Url(constants.SUGGESTION_API_ENDPOINT),
-    [
-      SUGGEST_ALL_REQUEST_START,
-      SUGGEST_ALL_REQUEST_SUCCESS,
-      SUGGEST_ALL_REQUEST_FAILURE,
-    ]
-  );
-  return suggest({ contentType: categoryPath, term: query }, undefined, '');
-};
-
 export const fetchSuggestedSearchItems = () => {
   const suggest = get(
     v2Url(constants.SUGGESTION_API_ENDPOINT),

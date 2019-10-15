@@ -122,8 +122,7 @@ export default class SearchPage extends Component {
   }
 
   chooseCategory(category) {
-    const { query, suggestAllFromCategory, updateChosenCategory } = this.props;
-    suggestAllFromCategory(category.path, query);
+    const { updateChosenCategory } = this.props;
     updateChosenCategory(category.id);
   }
 
@@ -287,7 +286,6 @@ SearchPage.propTypes = {
   queryChanged: PropTypes.func,
   suggestTerm: PropTypes.func,
   officers: PropTypes.object,
-  suggestAllFromCategory: PropTypes.func,
   fetchRecentSearchItems: PropTypes.func,
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
@@ -322,7 +320,6 @@ SearchPage.defaultProps = {
   suggestTerm: noop,
   queryChanged: noop,
   saveToRecent: noop,
-  suggestAllFromCategory: noop,
   fetchRecentSearchItems: noop,
   toast: {},
   recentSuggestionIds: {},

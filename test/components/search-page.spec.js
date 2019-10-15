@@ -372,14 +372,12 @@ describe('<SearchPage />', function () {
   });
 
   describe('chooseCategory', function () {
-    it('should call suggestAllFromCategory & updateChosenCategory with correct args', function () {
-      const suggestAllFromCategory = spy();
+    it('should call updateChosenCategory with correct args', function () {
       const updateChosenCategory = spy();
 
       const wrapper = shallow(
         <SearchPage
           query='wa'
-          suggestAllFromCategory={ suggestAllFromCategory }
           updateChosenCategory={ updateChosenCategory }
         />
       );
@@ -389,7 +387,6 @@ describe('<SearchPage />', function () {
         id: 'myid',
       });
 
-      suggestAllFromCategory.calledWith('mypath', 'wa').should.be.true();
       updateChosenCategory.calledWith('myid').should.be.true();
     });
   });
