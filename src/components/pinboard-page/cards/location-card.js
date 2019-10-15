@@ -14,7 +14,8 @@ export default class LocationCard extends Component {
     this.removeItem = this.removeItem.bind(this);
   }
 
-  removeItem() {
+  removeItem(e) {
+    e.preventDefault();
     const { item, removeItemInPinboardPage } = this.props;
     const { type, id } = item;
 
