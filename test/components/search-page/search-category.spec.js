@@ -108,7 +108,7 @@ describe('<SearchCategory />', function () {
     title.text().should.eql('foo');
   });
 
-  describe('renderRecent', function () {
+  describe('render recent', function () {
     it('should render item correctly', function () {
       const spySaveToRecent = spy();
       const items = [{
