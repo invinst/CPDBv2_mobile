@@ -1,8 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import style from './main-page.sass';
+import 'styles/toast.sass';
 
+toast.configure();
 
 class MainPage extends Component {
   componentDidMount() {
@@ -21,6 +25,12 @@ class MainPage extends Component {
     return (
       <div className={ cx('content', style.mainPage) }>
         { this.props.children }
+        <ToastContainer
+          pauseOnFocusLoss={ false }
+          closeButton={ false }
+          hideProgressBar={ true }
+          autoClose={ 3000 }
+        />
       </div>
     );
   }

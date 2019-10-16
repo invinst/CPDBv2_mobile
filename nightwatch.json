@@ -14,7 +14,8 @@
   "test_settings" : {
     "default": {
       "globals": {
-        "clientUrl": "http://localhost:9001"
+        "clientUrl": "http://localhost:9001",
+        "waitForConditionPollInterval": 50
       },
       "test_runner": {
         "type": "mocha",

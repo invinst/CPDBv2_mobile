@@ -4,13 +4,15 @@ import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
 import ReactHeight from 'react-height';
 import { noop } from 'lodash';
-
+import { Promise } from 'es6-promise';
+import { browserHistory } from 'react-router';
 import * as NavigationUtil from 'utils/navigation-util';
+
 import * as IntercomUtils from 'utils/intercom';
 import SearchPage from 'components/search-page';
 import SearchCategory from 'components/search-page/search-category';
-import constants from 'constants';
 import * as IntercomTracking from 'utils/intercom-tracking';
+
 
 describe('<SearchPage />', function () {
   beforeEach(function () {
@@ -23,37 +25,112 @@ describe('<SearchPage />', function () {
 
   it('should be renderable', function () {
     const wrapper = shallow(
-      <SearchPage query={ '' }/>
+      <SearchPage />
     );
     wrapper.should.be.ok();
   });
 
-  it('should render categories returned by getCategoriesWithSuggestions when it has query', function () {
-    const dummyCategories = [
-      {
-        name: 'Any',
-        id: 'any',
-        path: 'ANY',
-      },
-    ];
-    stub(SearchPage.prototype, 'getCategoriesWithSuggestions').callsFake( () => dummyCategories);
+  describe('componentDidMount', function () {
+    it('should call pushBreadcrumb when mounted', function () {
+      const pushBreadcrumbsSpy = spy();
+      mount(
+        <SearchPage
+          pushBreadcrumbs={ pushBreadcrumbsSpy }
+          location='location'
+          routes='routes'
+          params='params'
+          recent={ [] }
+        />
+      );
+      pushBreadcrumbsSpy.calledWith({
+        location: 'location',
+        routes: 'routes',
+        params: 'params',
+      }).should.be.true();
+    });
 
-    const wrapper = shallow(
-      <SearchPage
-        query={ 'ab' }
-        suggestAllFromCategory={ noop }
-        any={ [] }
-        inputChanged={ noop }
-        activeCategory='any'
-      />
-    );
+    it('should focus the input element when mounted', function () {
+      const wrapper = shallow(<SearchPage recent={ [] } />);
+      const instance = wrapper.instance();
+      const spyFocus = spy();
 
-    const navbar = wrapper.find('SearchNavbar');
-    navbar.prop('categories').should.equal(dummyCategories);
-    navbar.prop('activeCategory').should.be.eql('any');
-    navbar.prop('scrollToCategory').should.equal(wrapper.instance().scrollToCategory);
 
-    SearchPage.prototype.getCategoriesWithSuggestions.restore();
+      instance.searchInput = {
+        focus: spyFocus,
+      };
+      instance.componentDidMount();
+
+      spyFocus.calledOnce.should.be.true();
+    });
+
+    describe('fetchRecentSearchItems', function () {
+      it('should be called if recentSuggestionIds is not empty and recentSuggestionsRequested is false', function () {
+        const fetchRecentSearchItemsSpy = spy();
+        const recentSuggestionIds = {
+          officerIds: [8562],
+          crids: ['123456'],
+          trrIds: [456789],
+        };
+        mount(
+          <SearchPage
+            recentSuggestionIds={ recentSuggestionIds }
+            fetchRecentSearchItems={ fetchRecentSearchItemsSpy }
+            recentSuggestionsRequested={ false }
+          />
+        );
+
+        fetchRecentSearchItemsSpy.should.be.calledWith(
+          [8562],
+          ['123456'],
+          [456789],
+        );
+      });
+
+      it('should not be called if recentSuggestionIds is empty', function () {
+        const fetchRecentSearchItemsSpy = spy();
+        mount(
+          <SearchPage
+            recentSuggestionIds={ {} }
+            fetchRecentSearchItems={ fetchRecentSearchItemsSpy }
+            recentSuggestionsRequested={ false }
+          />
+        );
+
+        fetchRecentSearchItemsSpy.should.not.be.called();
+      });
+
+      it('should not be called if recentSuggestionsRequested is true', function () {
+        const fetchRecentSearchItemsSpy = spy();
+        const recentSuggestionIds = {
+          officerIds: [8562],
+          crids: ['123456'],
+          trrIds: [456789],
+        };
+        mount(
+          <SearchPage
+            recentSuggestionIds={ recentSuggestionIds }
+            fetchRecentSearchItems={ fetchRecentSearchItemsSpy }
+            recentSuggestionsRequested={ true }
+          />
+        );
+
+        fetchRecentSearchItemsSpy.should.not.be.called();
+      });
+    });
+
+    describe('fetchedEmptyRecentSearchItems', function () {
+      it('should be called if recentSuggestionsRequested is false and recentSuggestionIds is empty', function () {
+        const fetchedEmptyRecentSearchItemsSpy = spy();
+        mount(
+          <SearchPage
+            recentSuggestionIds={ {} }
+            fetchedEmptyRecentSearchItems={ fetchedEmptyRecentSearchItemsSpy }
+            recentSuggestionsRequested={ false }
+          />
+        );
+        fetchedEmptyRecentSearchItemsSpy.should.be.called();
+      });
+    });
   });
 
   describe('getCategoriesWithSuggestions', function () {
@@ -61,10 +138,8 @@ describe('<SearchPage />', function () {
       const wrapper = shallow(
         <SearchPage
           query={ 'ab' }
-          suggestAllFromCategory={ noop }
           officers={ [1] }
           undefined={ [1] }
-          inputChanged={ noop }
         />
       );
       const instance = wrapper.instance();
@@ -81,26 +156,13 @@ describe('<SearchPage />', function () {
     });
   });
 
-  describe('scrollToCategory', function () {
-    it('should call scrollToElement with a correct selector', function () {
-      const stubScrollToElement = stub(NavigationUtil, 'scrollToElement');
-      const wrapper = shallow(<SearchPage query={ '' } />);
-      wrapper.instance().scrollToCategory('an-id');
-
-      stubScrollToElement.calledWith('#search-category-an-id', '#search-page-header').should.be.true();
-      stubScrollToElement.restore();
-    });
-  });
-
   describe('onInputChange', function () {
     it('should dispatch inputChanged action', function () {
       const dummyEvent = { currentTarget: { value: 'foo' } };
       const spyInputChanged = spy();
       const wrapper = shallow(
         <SearchPage
-          query={ '' }
           inputChanged={ spyInputChanged }
-          suggestTerm={ noop }
         />
       );
       const instance = wrapper.instance();
@@ -115,10 +177,8 @@ describe('<SearchPage />', function () {
       const spySuggestTerm = spy();
       const wrapper = mount(
         <SearchPage
-          query={ '' }
-          inputChanged={ noop }
-          queryChanged={ noop }
           suggestTerm={ spySuggestTerm }
+          recent={ [] }
         />
       );
       const instance = wrapper.instance();
@@ -134,10 +194,8 @@ describe('<SearchPage />', function () {
       const spySuggestTerm = spy();
       const wrapper = mount(
         <SearchPage
-          query={ '' }
-          inputChanged={ noop }
-          queryChanged={ noop }
           suggestTerm={ spySuggestTerm }
+          recent={ [] }
         />
       );
       const instance = wrapper.instance();
@@ -150,46 +208,6 @@ describe('<SearchPage />', function () {
       wrapper.setProps({ query: 'f' });
       spySuggestTerm.called.should.be.false();
     });
-  });
-
-  it('should call pushBreadcrumb when mounted and updating', function () {
-    const pushBreadcrumbsSpy = spy();
-    const wrapper = mount(
-      <SearchPage
-        pushBreadcrumbs={ pushBreadcrumbsSpy }
-        queryChanged={ noop }
-        location='location'
-        routes='routes'
-        params='params'
-      />
-    );
-    pushBreadcrumbsSpy.calledWith({
-      location: 'location',
-      routes: 'routes',
-      params: 'params',
-    }).should.be.true();
-
-    pushBreadcrumbsSpy.resetHistory();
-    wrapper.setProps({ location: 'changed' });
-    pushBreadcrumbsSpy.calledWith({
-      location: 'changed',
-      routes: 'routes',
-      params: 'params',
-    }).should.be.true();
-  });
-
-  it('should focus the input element when mounted', function () {
-    const wrapper = shallow(<SearchPage queryChanged={ noop } />);
-    const instance = wrapper.instance();
-    const spyFocus = spy();
-
-
-    instance.searchInput = {
-      focus: spyFocus,
-    };
-    instance.componentDidMount();
-
-    spyFocus.calledOnce.should.be.true();
   });
 
   describe('search <input>', function () {
@@ -223,18 +241,18 @@ describe('<SearchPage />', function () {
       this.stubOnInputChange.calledOnce.should.be.true();
     });
 
-    it('should assign RECENT_CATEGORY to categories when we have recent', function () {
+    it('should render recent SearchCategory when we have recent', function () {
       const wrapper = shallow(<SearchPage query={ 'j' } recent={ ['data'] }/>);
 
-      const navbar = wrapper.find('SearchNavbar');
-      navbar.prop('categories').should.eql([{
-        name: 'RECENT',
-        id: 'recent',
-      }]);
+      const searchCategory = wrapper.find('SearchCategory');
+
+      searchCategory.prop('categoryId').should.eql('recent');
+      searchCategory.prop('title').should.eql('RECENT');
+      searchCategory.prop('items').should.eql(['data']);
     });
 
     it('should set this.searchInput ref to its own instance', function () {
-      const wrapper = mount(<SearchPage queryChanged={ noop } />);
+      const wrapper = mount(<SearchPage recent={ [] }/>);
 
       const refInstance = wrapper.instance().searchInput;
       (typeof refInstance).should.not.eql('undefined');
@@ -269,63 +287,6 @@ describe('<SearchPage />', function () {
     });
   });
 
-  describe('calculateDynamicBottomPaddingStyle', function () {
-    it('should return correct height when there is no last category', function () {
-      const wrapper = shallow(
-        <SearchPage />
-      );
-      const instance = wrapper.instance();
-      instance.lastCategoryHeight = null;
-
-      const result = instance.calculateDynamicBottomPaddingStyle();
-      const dynamicBottomPaddingOffset = (
-        constants.QUERY_INPUT_HEIGHT +
-        constants.SEARCH_CATEGORY_LINKS_HEIGHT +
-        2 * constants.NEW_DIVIDER_WEIGHT
-      );
-      const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
-
-      result.should.eql({
-        height,
-      });
-    });
-
-    it('should return correct height when there is category', function () {
-      const wrapper = shallow(
-        <SearchPage />
-      );
-      const instance = wrapper.instance();
-      instance.lastCategoryHeight = 1;
-
-      const result = instance.calculateDynamicBottomPaddingStyle();
-      const dynamicBottomPaddingOffset = (
-        constants.QUERY_INPUT_HEIGHT +
-        constants.SEARCH_CATEGORY_LINKS_HEIGHT +
-        2 * constants.NEW_DIVIDER_WEIGHT +
-        1
-      );
-      const height = `${window.innerHeight - dynamicBottomPaddingOffset}px`;
-
-      result.should.eql({
-        height,
-      });
-    });
-
-    it('should return minimum height when lastCategoryHeight is sufficiently large', function () {
-      const wrapper = shallow(
-        <SearchPage />
-      );
-      const instance = wrapper.instance();
-      instance.lastCategoryHeight = 9999;
-
-      const result = instance.calculateDynamicBottomPaddingStyle();
-
-      result.should.eql({
-        height: '133px',
-      });
-    });
-  });
-
   describe('renderCategories()', function () {
     beforeEach(function () {
       stub(SearchPage.prototype.updateLastCategoryHeight, 'bind');
@@ -342,11 +303,9 @@ describe('<SearchPage />', function () {
 
       const wrapper = shallow(
         <SearchPage
-          saveToRecent={ noop }
           query='qa'
           officers={ officersProp }
-          units={ unitsProp }
-          suggestAllFromCategory={ noop }/>
+          units={ unitsProp } />
       );
 
       const categoryDetails = wrapper.find('.category-details-container').children();
@@ -369,11 +328,9 @@ describe('<SearchPage />', function () {
 
       const wrapper = shallow(
         <SearchPage
-          saveToRecent={ noop }
           query='qa'
           officers={ officersProp }
-          units={ unitsProp }
-          suggestAllFromCategory={ noop }/>
+          units={ unitsProp } />
       );
 
       const searchCategory = wrapper.find(SearchCategory).at(0);
@@ -428,13 +385,13 @@ describe('<SearchPage />', function () {
   describe('Intercom', function () {
     describe('Intercom launcher', function () {
       it('should hide intercom launcher when mounted', function () {
-        mount(<SearchPage queryChanged={ noop }/>);
+        mount(<SearchPage recent={ [] } />);
 
         IntercomUtils.showIntercomLauncher.calledWith(false).should.be.true();
       });
 
       it('should show intercom launcher again when unmounted', function () {
-        const wrapper = mount(<SearchPage queryChanged={ noop }/>);
+        const wrapper = mount(<SearchPage recent={ [] } />);
         wrapper.unmount();
 
         IntercomUtils.showIntercomLauncher.calledWith(true).should.be.true();
@@ -451,7 +408,7 @@ describe('<SearchPage />', function () {
       });
 
       it('should track Intercom with search page', function () {
-        mount(<SearchPage queryChanged={ noop }/>);
+        mount(<SearchPage recent={ [] } />);
         IntercomTracking.trackSearchPage.called.should.be.true();
       });
     });
@@ -486,5 +443,47 @@ describe('<SearchPage />', function () {
 
       wrapper.find('.back-to-full-search-link').exists().should.be.false();
     });
+  });
+
+  it('should handle when click on pinboard button if pinboard does not exist', function (done) {
+    const createPinboard = stub().usingPromise(Promise).resolves({
+      payload: {
+        id: '5cd06f2b',
+        url: '/pinboard/5cd06f2b/',
+      },
+    });
+
+    const wrapper = mount(
+      <SearchPage
+        createPinboard={ createPinboard }
+        recent={ [] }
+      />
+    );
+
+    const browserHistoryPush = stub(browserHistory, 'push');
+    const pinboardButton = wrapper.find('.test--pinboard-bar');
+    pinboardButton.simulate('click');
+    createPinboard.calledWith({ officerIds: [], trrIds: [], crids: [] }).should.be.true();
+    setTimeout(() => {
+      browserHistoryPush.called.should.be.true();
+      browserHistoryPush.restore();
+      done();
+    }, 50);
+  });
+
+  it('should show toast on toast prop change', function () {
+    const showToastStub = spy(SearchPage.prototype, 'showToast');
+
+    const wrapper = shallow(
+      <SearchPage />
+    );
+    wrapper.setProps({
+      toast: {
+        type: 'OFFICER',
+        actionType: 'added',
+      },
+    });
+
+    showToastStub.should.be.calledWith('OFFICER added', 'added');
   });
 });

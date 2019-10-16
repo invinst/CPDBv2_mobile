@@ -29,6 +29,6 @@ export const requestDocument = ({ id, email }) => post(
 )({ email: email });
 
 
-export const requestCMS = () => (get(v2Url(constants.TRR_PAGE_CMS_API_ENDPOINT), [
-  TRR_PAGE_CMS_REQUEST_START, TRR_PAGE_CMS_REQUEST_SUCCESS, TRR_PAGE_CMS_REQUEST_FAILURE]
-)());
+export const requestCMS = get(v2Url(constants.TRR_PAGE_CMS_API_ENDPOINT), [
+  TRR_PAGE_CMS_REQUEST_START, TRR_PAGE_CMS_REQUEST_SUCCESS, TRR_PAGE_CMS_REQUEST_FAILURE,
+]);

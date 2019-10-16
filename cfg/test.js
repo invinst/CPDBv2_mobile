@@ -1,6 +1,7 @@
 'use strict';
 
 let path = require('path');
+const webpack = require('webpack');
 let srcPath = path.join(__dirname, '/../src/');
 
 module.exports = {
@@ -26,7 +27,7 @@ module.exports = {
         use: ['eslint-loader']
       },
       {
-        test: /\.(svg|png|jpg|gif|woff|woff2|css|sass|scss|less|styl|json)$/,
+        test: /\.(svg|png|jpg|gif|woff|woff2|less|styl|json)$/,
         use: ['null-loader']
       },
       {
@@ -36,7 +37,61 @@ module.exports = {
           path.join(__dirname, '/../src'),
           path.join(__dirname, '/../test')
         ]
-      }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.sass/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: false,
+              camelCase: true,
+              localIdentName: '[name]__[local]--[hash:base64:5]',
+            }
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+              indentedSyntax: true
+            }
+          },
+        ]
+      },
+      {
+        test: /\.scss/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+            }
+          }
+        ]
+      },
     ]
   },
   resolve: {
@@ -59,7 +114,11 @@ module.exports = {
       config: srcPath + `config/${process.env.WEBPACK_ENV}`
     }
   },
-  plugins: [],
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"test"'
+    }),
+  ],
   externals: {
     'cheerio': 'window',
     'react/addons': true,

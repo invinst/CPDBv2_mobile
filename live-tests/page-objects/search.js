@@ -16,10 +16,9 @@ const resultsSection = (name) => ({
 const nthRow = (n) => ({
   selector: `a:nth-child(${n})`,
   elements: {
-    itemType: '.item-type',
-    itemID: '.item-id',
-    officerName: '.officer-name',
-    officerBadge: '.officer-badge',
+    itemTitle: '.item-title',
+    itemSubtitle: '.item-subtitle',
+    pinButton: '.item-pin-btn',
   },
 });
 
@@ -35,7 +34,6 @@ module.exports = {
     body: 'body',
     queryInput: '.query-input',
     backToFullSearchLink: '.back-to-full-search-link',
-    suggestedHeader: '#search-category-suggested',
     recentHeader: '#search-category-recent',
     dateCRsHeader: '#search-category-dateCRs',
     dateTRRsHeader: '#search-category-dateTRRs',
@@ -44,11 +42,40 @@ module.exports = {
     investigatorCRsHeader: '#search-category-investigatorCRs',
     trrsHeader: '#search-category-trrs',
     officersHeader: '#search-category-officers',
+    pinboardBar: '.test--pinboard-bar',
+    toast: '.Toastify__toast-body',
+    searchBreadcrumb: '.breadcrumb-item-wrapper:nth-child(3)',
   },
 
   sections: {
     recent: {
       selector: '.results.recent',
+      sections: {
+        firstRecentItem: {
+          selector: 'a:nth-child(1)',
+          elements: {
+            itemTitle: '.item-title',
+            itemSubtitle: '.item-subtitle',
+            pinButton: '.item-pin-btn',
+          },
+        },
+        secondRecentItem: {
+          selector: 'a:nth-child(2)',
+          elements: {
+            itemTitle: '.item-title',
+            itemSubtitle: '.item-subtitle',
+            pinButton: '.item-pin-btn',
+          },
+        },
+        thirdRecentItem: {
+          selector: 'a:nth-child(3)',
+          elements: {
+            itemTitle: '.item-title',
+            itemSubtitle: '.item-subtitle',
+            pinButton: '.item-pin-btn',
+          },
+        },
+      },
     },
 
     dateCRs: resultsSection('dateCRs'),
@@ -60,8 +87,8 @@ module.exports = {
         firstRow: {
           selector: 'a:nth-child(1)',
           elements: {
-            officerName: '.officer-name',
-            officerBadge: '.officer-badge',
+            itemTitle: '.item-title',
+            itemSubtitle: '.item-subtitle',
           },
         },
         rows: {

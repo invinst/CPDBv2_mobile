@@ -1,0 +1,29 @@
+@import 'variables'
+
+\:local(.pinboard-pane-section)
+  background-color: white
+  height: 405px
+
+  .pinboard-pane-section-menu
+    background-color: $wild-sand
+    padding-top: 26px
+
+  .pinboard-pane-tab-name
+    color: $accent-blue
+    font-size: 14px
+    line-height: 16px
+    border-radius: 2px
+    padding: 14px 8px
+    margin-right: 8px
+    cursor: pointer
+    display: inline-block
+
+    &.active
+      color: $thunder
+      border-bottom: 2px solid $thunder
+
+\:local(.pinboard-pane-section-loading)
+  margin: 0 auto
+  display: block
+  width: 176px
+  height: 405px

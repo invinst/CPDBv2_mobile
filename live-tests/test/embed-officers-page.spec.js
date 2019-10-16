@@ -2,6 +2,7 @@
 
 var assert = require('assert');
 var api = require(__dirname + '/../mock-api');
+const { TIMEOUT } = require(__dirname + '/../constants');
 
 const mockOfficers = [
   {
@@ -68,6 +69,7 @@ describe('EmbedOfficerPage', function () {
   });
 
   it('should go to officer summary page when click to card', function (client) {
+    this.embedOfficersPage.waitForElementVisible('@firstCard', TIMEOUT);
     this.embedOfficersPage.click('@firstCard');
     client.switchToRecentTab();
     this.embedOfficersPage.assert.urlContains('/officer/13788/');

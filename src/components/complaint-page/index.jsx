@@ -84,7 +84,7 @@ ComplaintPage.propTypes = {
   onTrackingAttachment: PropTypes.func,
   requestCMS: PropTypes.func,
   cmsRequested: PropTypes.bool,
-  noAttachmentMessage: PropTypes.string,
+  noAttachmentMessage: PropTypes.object,
 };
 
 ComplaintPage.defaultProps = {

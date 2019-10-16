@@ -32,7 +32,7 @@ OfficerCard.propTypes = {
   rank: PropTypes.string,
   percentile: PropTypes.object,
   coaccusalCount: PropTypes.number,
-  customStyle: PropTypes.object,
+  customStyle: PropTypes.string,
 };
 
 export default OfficerCard;

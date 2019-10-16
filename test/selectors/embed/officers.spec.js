@@ -35,7 +35,6 @@ describe('embed', function () {
         'complaint_count': 104,
         'full_name': 'Broderick Jones',
         percentile: {
-          officerId: 13788,
           year: 2016,
           items: [
             { axis: 'Use of Force Reports', value: 0 },

@@ -4,10 +4,6 @@ const path = require('path');
 const srcPath = path.join(__dirname, '/../src');
 const defaultPort = 9967;
 
-const staticFileBase = () => {
-  return '/assets/';
-};
-
 function getDefaultModules() {
   return {
     noParse: /node_modules\/mapbox-gl\/dist\/mapbox-gl.js/,
@@ -91,14 +87,7 @@ function getDefaultModules() {
       },
       {
         test: /\.(mp4|ogg|svg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              publicPath: staticFileBase()
-            }
-          },
-        ]
+        use: ['file-loader']
       }
     ]
   };
@@ -106,10 +95,9 @@ function getDefaultModules() {
 
 module.exports = {
   srcPath: srcPath,
-  publicPath: '/assets/',
+  publicPath: '/',
   port: defaultPort,
   getDefaultModules: getDefaultModules,
-  staticFileBase: staticFileBase(),
   postcss: function () {
     return [];
   }
