@@ -42,7 +42,7 @@ describe('<SearchPage />', function () {
       <SearchPage
         query={ 'ab' }
         suggestAllFromCategory={ noop }
-        any={ { isShowingAll: false } }
+        any={ [] }
         inputChanged={ noop }
         activeCategory='any'
       />
@@ -62,8 +62,8 @@ describe('<SearchPage />', function () {
         <SearchPage
           query={ 'ab' }
           suggestAllFromCategory={ noop }
-          officers={ { data: [1] } }
-          undefined={ { data: [1] } }
+          officers={ [1] }
+          undefined={ [1] }
           inputChanged={ noop }
         />
       );
@@ -223,6 +223,16 @@ describe('<SearchPage />', function () {
       this.stubOnInputChange.calledOnce.should.be.true();
     });
 
+    it('should assign RECENT_CATEGORY to categories when we have recent', function () {
+      const wrapper = shallow(<SearchPage query={ 'j' } recent={ ['data'] }/>);
+
+      const navbar = wrapper.find('SearchNavbar');
+      navbar.prop('categories').should.eql([{
+        name: 'RECENT',
+        id: 'recent',
+      }]);
+    });
+
     it('should set this.searchInput ref to its own instance', function () {
       const wrapper = mount(<SearchPage queryChanged={ noop } />);
 
@@ -327,13 +337,8 @@ describe('<SearchPage />', function () {
     });
 
     it('should render SearchCategory components', function () {
-      const officersProp = {
-        data: ['data'],
-      };
-
-      const unitsProp = {
-        data: ['data'],
-      };
+      const officersProp = ['data'];
+      const unitsProp = ['data'];
 
       const wrapper = shallow(
         <SearchPage
@@ -359,12 +364,8 @@ describe('<SearchPage />', function () {
       const stubBoundCallback = stub(SearchPage.prototype.chooseCategory, 'bind');
       stubBoundCallback.returns(SearchPage.prototype.chooseCategory);
 
-      const officersProp = {
-        data: ['data'],
-      };
-      const unitsProp = {
-        data: ['data'],
-      };
+      const officersProp = ['data'];
+      const unitsProp = ['data'];
 
       const wrapper = shallow(
         <SearchPage
@@ -407,12 +408,8 @@ describe('<SearchPage />', function () {
 
   describe('"view single category" mode', function () {
     it('should only display search results of the chosen single category', function () {
-      const crsProp = {
-        data: ['data'],
-      };
-      const officersProp = {
-        data: ['data'],
-      };
+      const crsProp = ['data'];
+      const officersProp = ['data'];
 
       const wrapper = shallow(
         <SearchPage

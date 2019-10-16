@@ -22,8 +22,7 @@ import {
   dateTRRsSelector,
   crsSelector,
   trrsSelector,
-  suggestedSelector,
-  recentSelector,
+  getRecentSuggestions,
   dateOfficersSelector,
   investigatorCRsSelector,
 } from 'selectors/search-page';
@@ -40,8 +39,7 @@ function mapStateToProps(state, ownProps) {
     dateOfficers: dateOfficersSelector(state),
     crs: crsSelector(state),
     trrs: trrsSelector(state),
-    recent: recentSelector(state),
-    suggested: suggestedSelector(state),
+    recent: getRecentSuggestions(state),
     activeCategory: getActiveCategory(state),
     chosenCategory: getChosenCategory(state),
   };

@@ -30,16 +30,6 @@ describe('MainPage component', function () {
     wrapper.find('.bottom-padding').exists().should.be.false();
   });
 
-  it('should fetch suggested search items when mounted', function () {
-    const spyFetch = spy();
-    const wrapper = shallow(
-      <MainPage fetchSuggestedSearchItems={ spyFetch }/>
-    );
-
-    wrapper.instance().componentDidMount();
-    spyFetch.calledOnce.should.be.true();
-  });
-
   it('should dispatch routeChanged action when location changed', function () {
     const currentLocation = {
       pathname: 'current-url/',

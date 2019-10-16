@@ -5,7 +5,7 @@ import suggestions from './suggestions';
 import isSearchFocused from './is-search-focused';
 import query from './query';
 import isSuccess from './is-success';
-import initialSuggestions from './initial-suggestions';
+import recentSuggestions from './recent-suggestions';
 import activeCategory from './active-category';
 import chosenCategory from './chosen-category';
 
@@ -16,7 +16,7 @@ export default combineReducers({
   isSearchFocused,
   query,
   isSuccess,
-  initialSuggestions,
+  recentSuggestions,
   activeCategory,
   chosenCategory,
 });

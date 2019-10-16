@@ -1,8 +1,7 @@
 import {
-  suggestTerm, suggestAllFromCategory, fetchSuggestedSearchItems, focus, blur, clear, inputChanged, queryChanged,
+  suggestTerm, suggestAllFromCategory, focus, blur, clear, inputChanged, queryChanged,
   reset, saveToRecent, SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE,
   SUGGEST_ALL_REQUEST_START, SUGGEST_ALL_REQUEST_SUCCESS, SUGGEST_ALL_REQUEST_FAILURE,
-  FETCH_SUGGESTED_SEARCH_ITEMS_START, FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS, FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
   SEARCH_FOCUS, SEARCH_BLUR, SEARCH_CLEAR, SEARCH_INPUT_CHANGED, SEARCH_RESET, SEARCH_SAVE_TO_RECENT,
   SEARCH_QUERY_CHANGED,
 } from 'actions/suggestion';
@@ -38,25 +37,6 @@ describe('suggestions actions', function () {
             url: v2Url(constants.SUGGESTION_API_ENDPOINT),
             adapter: undefined,
             params: { contentType: categoryPath, term: query },
-          },
-        },
-      });
-    });
-  });
-
-  describe('fetchSuggestedSearchItems', function () {
-    it('should return right action', function () {
-      fetchSuggestedSearchItems().should.eql({
-        types: [
-          FETCH_SUGGESTED_SEARCH_ITEMS_START,
-          FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS,
-          FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
-        ],
-        payload: {
-          request: {
-            url: v2Url(constants.SUGGESTION_API_ENDPOINT),
-            adapter: undefined,
-            params: {},
           },
         },
       });

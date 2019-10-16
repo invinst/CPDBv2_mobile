@@ -47,19 +47,6 @@ module.exports = {
   },
 
   sections: {
-    suggested: {
-      selector: '.results.suggested',
-      sections: {
-        officer: {
-          selector: '.row.officer',
-          elements: {
-            label: '.suggested-type',
-            value: '.suggested-title',
-          },
-        },
-      },
-    },
-
     recent: {
       selector: '.results.recent',
     },

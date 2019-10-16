@@ -2,8 +2,7 @@ import constants from 'constants';
 
 import {
   officersSelector,
-  suggestedSelector,
-  recentSelector,
+  getRecentSuggestions,
   unitsSelector,
   crsSelector,
   trrsSelector,
@@ -22,47 +21,41 @@ describe('search-page selectors', function () {
     it('should return empty when there is no officer', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
       };
 
-      officersSelector(state).should.be.eql({ data: [] });
+      officersSelector(state).should.be.eql([]);
     });
 
     it('should return default values when the data is not available', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            OFFICER: {
-              isShowingAll: true,
-              data: [
-                {
-                  'id': 1,
-                  'name': 'Name',
-                  'badge': null,
-                  'percentile': null,
-                },
-              ],
-            },
+            OFFICER: [
+              {
+                'id': 1,
+                'name': 'Name',
+                'badge': null,
+                'percentile': null,
+              },
+            ],
           },
         },
       };
 
-      officersSelector(state).should.be.eql({
-        isShowingAll: true,
-        data: [{
+      officersSelector(state).should.be.eql([
+        {
           id: 1,
           name: 'Name',
           badge: '',
           percentile: null,
           url: `${constants.OFFICER_PATH}1/name/`,
-        }],
-      });
+        },
+      ]);
     });
 
     it('should return officer data when there are officers', function () {
-      const isShowingAll = true;
       const officer = {
         'id': 1,
         'name': 'Name',
@@ -81,44 +74,23 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            OFFICER: {
-              isShowingAll: isShowingAll,
-              data: [officer],
-            },
+            OFFICER: [officer],
           },
         },
       };
 
-      officersSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: [expectedOfficer],
-      });
+      officersSelector(state).should.be.eql([expectedOfficer]);
     });
   });
 
-  describe('suggestedSelector', function () {
+  describe('getRecentSuggestions', function () {
     it('should return correct value', function () {
       const state = {
         suggestionApp: {
-          initialSuggestions: {
-            suggested: 'foobar',
-          },
+          recentSuggestions: ['item1', 'item2'],
         },
       };
-      suggestedSelector(state).should.be.eql('foobar');
-    });
-  });
-
-  describe('recentSelector', function () {
-    it('should return correct value', function () {
-      const state = {
-        suggestionApp: {
-          initialSuggestions: {
-            recent: 'foobar',
-          },
-        },
-      };
-      recentSelector(state).should.be.eql('foobar');
+      getRecentSuggestions(state).should.be.eql(['item1', 'item2']);
     });
   });
 
@@ -126,16 +98,14 @@ describe('search-page selectors', function () {
     it('should return empty when there are no units', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
       };
 
-      unitsSelector(state).should.be.eql({ data: [] });
+      unitsSelector(state).should.be.eql([]);
     });
 
     it('should return unit data when there are units', function () {
-      const isShowingAll = true;
       const units = [
         {
           'id': '1',
@@ -172,18 +142,12 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            UNIT: {
-              isShowingAll: isShowingAll,
-              data: units,
-            },
+            UNIT: units,
           },
         },
       };
 
-      unitsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedUnits,
-      });
+      unitsSelector(state).should.be.eql(expectedUnits);
     });
   });
 
@@ -191,16 +155,14 @@ describe('search-page selectors', function () {
     it('should return empty when there are no date > crs', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
       };
 
-      dateCRsSelector(state).should.be.eql({ data: [] });
+      dateCRsSelector(state).should.be.eql([]);
     });
 
     it('should return cr data when there are date > crs', function () {
-      const isShowingAll = true;
       const dateCRs = [
         {
           category: 'Use Of Force',
@@ -224,18 +186,12 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            'DATE > CR': {
-              isShowingAll: isShowingAll,
-              data: dateCRs,
-            },
+            'DATE > CR': dateCRs,
           },
         },
       };
 
-      dateCRsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedDateCrs,
-      });
+      dateCRsSelector(state).should.be.eql(expectedDateCrs);
     });
   });
 
@@ -243,16 +199,14 @@ describe('search-page selectors', function () {
     it('should return empty when there are no trss', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
       };
 
-      dateTRRsSelector(state).should.be.eql({ data: [] });
+      dateTRRsSelector(state).should.be.eql([]);
     });
 
     it('should return trr data when there are trrs', function () {
-      const isShowingAll = true;
       const dateTRRs = [
         {
           'id': '1',
@@ -268,18 +222,12 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            'DATE > TRR': {
-              isShowingAll: isShowingAll,
-              data: dateTRRs,
-            },
+            'DATE > TRR': dateTRRs,
           },
         },
       };
 
-      dateTRRsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedDateTRRs,
-      });
+      dateTRRsSelector(state).should.be.eql(expectedDateTRRs);
     });
   });
 
@@ -287,16 +235,14 @@ describe('search-page selectors', function () {
     it('should return empty when there are no crs', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
       };
 
-      crsSelector(state).should.be.eql({ data: [] });
+      crsSelector(state).should.be.eql([]);
     });
 
     it('should return cr data when there are crs', function () {
-      const isShowingAll = true;
       const crs = [
         {
           category: 'Use Of Force',
@@ -335,18 +281,12 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            CR: {
-              isShowingAll: isShowingAll,
-              data: crs,
-            },
+            CR: crs,
           },
         },
       };
 
-      crsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedCrs,
-      });
+      crsSelector(state).should.be.eql(expectedCrs);
     });
   });
 
@@ -354,16 +294,14 @@ describe('search-page selectors', function () {
     it('should return empty when there are no INVESTIGATOR > CR data', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
       };
 
-      investigatorCRsSelector(state).should.be.eql({ data: [] });
+      investigatorCRsSelector(state).should.be.eql([]);
     });
 
     it('should return INVESTIGATOR > CR data correctly', function () {
-      const isShowingAll = true;
       const investigatorCR = [
         {
           category: 'Use Of Force',
@@ -387,18 +325,12 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            'INVESTIGATOR > CR': {
-              isShowingAll: isShowingAll,
-              data: investigatorCR,
-            },
+            'INVESTIGATOR > CR': investigatorCR,
           },
         },
       };
 
-      investigatorCRsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedInvestigatorCR,
-      });
+      investigatorCRsSelector(state).should.be.eql(expectedInvestigatorCR);
     });
   });
 
@@ -406,16 +338,14 @@ describe('search-page selectors', function () {
     it('should return empty when there are no trss', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
       };
 
-      trrsSelector(state).should.be.eql({ data: [] });
+      trrsSelector(state).should.be.eql([]);
     });
 
     it('should return trr data when there are trrs', function () {
-      const isShowingAll = true;
       const trrs = [
         {
           'id': '1',
@@ -431,18 +361,12 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            TRR: {
-              isShowingAll: isShowingAll,
-              data: trrs,
-            },
+            TRR: trrs,
           },
         },
       };
 
-      trrsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedTrrs,
-      });
+      trrsSelector(state).should.be.eql(expectedTrrs);
     });
   });
 
@@ -450,43 +374,38 @@ describe('search-page selectors', function () {
     it('should return empty when there is no DATE > OFFICERS', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
       };
 
-      dateOfficersSelector(state).should.be.eql({ data: [] });
+      dateOfficersSelector(state).should.be.eql([]);
     });
 
     it('should return correct values for DATE > OFFICERS suggestion', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            ['DATE > OFFICERS']: {
-              isShowingAll: true,
-              data: [
-                {
-                  'id': 123,
-                  'name': 'Jerome Finnigan',
-                  'badge': '56789',
-                  'percentile': null,
-                },
-              ],
-            },
+            ['DATE > OFFICERS']: [
+              {
+                'id': 123,
+                'name': 'Jerome Finnigan',
+                'badge': '56789',
+                'percentile': null,
+              },
+            ],
           },
         },
       };
 
-      dateOfficersSelector(state).should.be.eql({
-        isShowingAll: true,
-        data: [{
+      dateOfficersSelector(state).should.be.eql([
+        {
           id: 123,
           name: 'Jerome Finnigan',
           badge: 'Badge #56789',
           percentile: null,
           url: `${constants.OFFICER_PATH}123/jerome-finnigan/`,
-        }],
-      });
+        },
+      ]);
     });
   });
 
