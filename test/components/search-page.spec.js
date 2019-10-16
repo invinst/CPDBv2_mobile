@@ -223,14 +223,14 @@ describe('<SearchPage />', function () {
       this.stubOnInputChange.calledOnce.should.be.true();
     });
 
-    it('should assign RECENT_CATEGORY to categories when we have recent', function () {
+    it('should render recent SearchCategory when we have recent', function () {
       const wrapper = shallow(<SearchPage query={ 'j' } recent={ ['data'] }/>);
 
-      const navbar = wrapper.find('SearchNavbar');
-      navbar.prop('categories').should.eql([{
-        name: 'RECENT',
-        id: 'recent',
-      }]);
+      const searchCategory = wrapper.find('SearchCategory');
+
+      searchCategory.prop('categoryId').should.eql('recent');
+      searchCategory.prop('title').should.eql('RECENT');
+      searchCategory.prop('items').should.eql(['data']);
     });
 
     it('should set this.searchInput ref to its own instance', function () {

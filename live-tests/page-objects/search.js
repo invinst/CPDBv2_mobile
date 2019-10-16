@@ -35,7 +35,6 @@ module.exports = {
     body: 'body',
     queryInput: '.query-input',
     backToFullSearchLink: '.back-to-full-search-link',
-    suggestedHeader: '#search-category-suggested',
     recentHeader: '#search-category-recent',
     dateCRsHeader: '#search-category-dateCRs',
     dateTRRsHeader: '#search-category-dateTRRs',

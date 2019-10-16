@@ -241,7 +241,6 @@ SearchPage.propTypes = {
   investigatorCRs: PropTypes.array,
   dateTRRs: PropTypes.array,
   dateOfficers: PropTypes.array,
-  suggested: PropTypes.array,
   recent: PropTypes.array,
   suggestAllFromCategory: PropTypes.func,
   saveToRecent: PropTypes.func,
