@@ -11,11 +11,14 @@ describe('Pinboard <CRCard />', function () {
     const item = {
       incidentDate: '10-10-2010',
       category: 'Use Of Force',
+      id: '1234',
     };
+    const wrapper = mount(<CRCard item={ item } someOtherProp='abcd'/>);
+    const locationCard = wrapper.find(LocationCard);
 
-    const wrapper = mount(<CRCard item={ item }/>);
-
-    wrapper.find(LocationCard).should.have.length(1);
+    locationCard.props().item.should.eql(item);
+    locationCard.props().someOtherProp.should.equal('abcd');
+    locationCard.props().url.should.equal('/complaint/1234/');
   });
 });
 

@@ -100,6 +100,10 @@ module.exports = {
             firstCard: {
               selector: '.type-cards > .pinned-grid-item:first-child',
               elements: {
+                mainElement: {
+                  selector: '.',
+                  locateStrategy: 'xpath',
+                },
                 firstCardUnpinBtn: '.test--item-unpin-button',
                 firstCardRank: '.officer-rank',
                 firstCardName: '.officer-name',
@@ -131,6 +135,10 @@ module.exports = {
             firstCard: {
               selector: '.type-cards > .pinned-grid-item:first-child',
               elements: {
+                mainElement: {
+                  selector: '.',
+                  locateStrategy: 'xpath',
+                },
                 firstCardUnpinBtn: '.test--item-unpin-button',
                 firstCardDate: '.location-card-date',
                 firstCardCategory: '.location-card-category',
@@ -161,6 +169,10 @@ module.exports = {
             firstCard: {
               selector: '.type-cards > .pinned-grid-item:first-child',
               elements: {
+                mainElement: {
+                  selector: '.',
+                  locateStrategy: 'xpath',
+                },
                 firstCardUnpinBtn: '.test--item-unpin-button',
                 firstCardDate: '.location-card-date',
                 firstCardCategory: '.location-card-category',
