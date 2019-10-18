@@ -17,7 +17,8 @@ export default class OfficerCard extends Component {
     this.removeItem = this.removeItem.bind(this);
   }
 
-  removeItem() {
+  removeItem(e) {
+    e.preventDefault();
     const { item, removeItemInPinboardPage } = this.props;
     const { type, id } = item;
 
@@ -29,7 +30,7 @@ export default class OfficerCard extends Component {
     return (
       <BaseOfficerCard
         setRef={ el => this.el = el }
-        hasHrefLink={ false }
+        hasHrefLink={ true }
         customStyle={ styles.wrapper }
         officerId={ item.officerId }
         fullName={ item.fullName }

@@ -61,7 +61,7 @@ SearchItem.propTypes = {
   url: PropTypes.string,
   hasPinButton: PropTypes.bool,
   addOrRemoveItemInPinboard: PropTypes.func,
-  id: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isPinned: PropTypes.bool,
   type: PropTypes.string,
   children: PropTypes.node,
