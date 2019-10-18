@@ -85,7 +85,7 @@ describe('MainPageTest', function () {
       const cards = this.mainPage.section.recentActivities.section.cards;
       client.assertCount(cards.selector, 2, cards.locateStrategy);
       cards.click('@firstCard');
-      client.assert.urlContains('/officer/12074/');
+      client.expect.url().to.match(/\/officer\/\d+\/[-a-z]+\/?$/);
     });
   });
 
@@ -94,7 +94,7 @@ describe('MainPageTest', function () {
       const cards = this.mainPage.section.topOfficersByAllegation.section.cards;
       client.assertCount(cards.selector, 2, cards.locateStrategy);
       cards.click('@firstCard');
-      client.assert.urlContains('/officer/13788/');
+      client.expect.url().to.match(/\/officer\/\d+\/[-a-z]+\/?$/);
     });
   });
 
@@ -112,7 +112,7 @@ describe('MainPageTest', function () {
       const cards = this.mainPage.section.complaintSummaries.section.cards;
       client.assertCount(cards.selector, 2, cards.locateStrategy);
       cards.click('@firstCard');
-      client.assert.urlContains('/complaint/123/');
+      client.expect.url().to.match(/\/complaint\/\w+\/$/);
     });
   });
 

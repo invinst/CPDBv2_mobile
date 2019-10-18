@@ -1,3 +1,6 @@
+import lodash, { range, some, isEqual, sortBy } from 'lodash';
+import { spy } from 'sinon';
+
 import {
   topOfficersByAllegationSelector,
   recentActivitiesSelector,
@@ -5,6 +8,7 @@ import {
   complaintSummariesSelector,
   getCMSRequested,
   getEmbed,
+  shuffled,
 } from 'selectors/landing-page';
 import { RawDocumentCardFactory } from 'utils/tests/factories/attachment';
 import { RawOfficerCardFactory } from 'utils/tests/factories/activity-grid';
@@ -24,6 +28,21 @@ describe('landing page selectors', function () {
         },
       },
     };
+  });
+
+  describe('shuffled', function () {
+    it('should return a selector which shuffles items', function () {
+      const storeState = { items: range(40) };
+      const itemsSelector = state => state.items;
+      const shuffledItemsSelector = shuffled(itemsSelector);
+      const results = range(30).map(() => shuffledItemsSelector(storeState));
+
+      some(results.map(result => !isEqual(result, storeState.items))).should.be.true();
+      results.forEach(result => {
+        sortBy(result.slice(0, 12)).should.eql(storeState.items.slice(0, 12));
+        sortBy(result.slice(12)).should.eql(storeState.items.slice(12));
+      });
+    });
   });
 
   describe('topOfficersByAllegationSelector', function () {
@@ -53,6 +72,18 @@ describe('landing page selectors', function () {
       cards.should.have.length(2);
       [cards[0].isPinned, cards[1].isPinned].sort().should.be.eql([false, true]);
     });
+
+    it('should shuffle cards', function () {
+      const stubShuffle = spy(lodash, 'shuffle');
+      state.landingPage.topOfficersByAllegation = lodash.range(40);
+
+      topOfficersByAllegationSelector(state);
+
+      stubShuffle.should.be.calledWith(lodash.range(0, 12));
+      stubShuffle.should.be.calledWith(lodash.range(12, 40));
+
+      stubShuffle.restore();
+    });
   });
 
   describe('complaintSummariesSelector', function () {
@@ -73,7 +104,7 @@ describe('landing page selectors', function () {
           'incident_date': null,
         },
       ];
-      complaintSummariesSelector(state).should.deepEqual([
+      sortBy(complaintSummariesSelector(state), 'crid').should.deepEqual([
         {
           crid: '12345',
           summary: 'summary',
@@ -97,6 +128,18 @@ describe('landing page selectors', function () {
       const result = complaintSummariesSelector(state);
       result.should.have.length(2);
       [result[0].isPinned, result[1].isPinned].sort().should.be.eql([false, true]);
+    });
+
+    it('should shuffle cards', function () {
+      const stubShuffle = spy(lodash, 'shuffle');
+      state.landingPage.complaintSummaries = lodash.range(40);
+
+      complaintSummariesSelector(state);
+
+      stubShuffle.should.be.calledWith(lodash.range(0, 12));
+      stubShuffle.should.be.calledWith(lodash.range(12, 40));
+
+      stubShuffle.restore();
     });
   });
 
@@ -132,6 +175,18 @@ describe('landing page selectors', function () {
       const cards = recentActivitiesSelector(state);
       cards.should.have.length(2);
       cards.forEach(card => card.should.eql(expectation[card.id]));
+    });
+
+    it('should shuffle cards', function () {
+      const stubShuffle = spy(lodash, 'shuffle');
+      state.landingPage.recentActivities = lodash.range(40);
+
+      recentActivitiesSelector(state);
+
+      stubShuffle.should.be.calledWith(lodash.range(0, 12));
+      stubShuffle.should.be.calledWith(lodash.range(12, 40));
+
+      stubShuffle.restore();
     });
   });
 
