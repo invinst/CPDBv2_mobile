@@ -30,13 +30,9 @@ const baseRelevantComplaints = (type) => ({
 
 
 module.exports = {
-  url: function (pinboardId, query) {
-    if (query) {
-      const officerIds = query['officer-ids'] || [];
-      const crids = query['crids'] || [];
-      const trrIds = query['trr-ids'] || [];
-      return `${this.api.globals.clientUrl}/pinboard/` +
-        `?officer-ids=${officerIds.join()}&crids=${crids.join()}&trr-ids=${trrIds.join()}`;
+  url: function (pinboardId, queryString) {
+    if (queryString) {
+      return `${this.api.globals.clientUrl}/pinboard/${queryString}`;
     }
     if (!pinboardId)
       return `${this.api.globals.clientUrl}/pinboard/`;
