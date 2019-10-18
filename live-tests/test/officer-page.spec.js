@@ -903,5 +903,40 @@ describe('OfficerPage test', function () {
         this.map.assert.urlContains('/officer/2235/kevin-osborn/map/');
       });
     });
+
+    describe('Pinboard function', function () {
+      beforeEach(function (client, done) {
+        api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
+        this.main = client.page.main();
+        this.search = client.page.search();
+        done();
+      });
+
+      it('should display toast when pinning a coaccusal', function (client) {
+        this.officerPage.waitForElementVisible('@coaccusalsTabButton', TIMEOUT);
+        this.officerPage.click('@coaccusalsTabButton');
+
+        this.officerPage.section.coaccusals.waitForElementVisible('@firstPinButton');
+        this.officerPage.section.coaccusals.click('@firstPinButton');
+        this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal('Officer added').before(TIMEOUT);
+
+        this.officerPage.click('@landingPageBreadCrumb');
+        this.main.waitForElementVisible('@searchLink');
+        this.main.click('@searchLink');
+        this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (1)').before(TIMEOUT);
+        client.back();
+        client.back();
+
+        this.officerPage.section.coaccusals.click('@firstPinButton');
+        this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal('Officer removed').before(TIMEOUT);
+
+        this.officerPage.click('@landingPageBreadCrumb');
+        this.main.waitForElementVisible('@searchLink');
+        this.main.click('@searchLink');
+        this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
+      });
+    });
   });
 });

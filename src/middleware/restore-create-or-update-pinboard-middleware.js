@@ -28,7 +28,6 @@ import {
   updatePinboardInfoState,
   performFetchPinboardRelatedData,
 } from 'actions/pinboard';
-import { showToast } from 'actions/toast';
 import { getPathname } from 'selectors/common/routing';
 import loadPaginatedData from 'utils/load-paginated-data';
 import { Toastify } from 'utils/toastify';
@@ -134,12 +133,34 @@ function showCreatedToasts(payload) {
   creatingMessages.filter(_.identity).forEach(showPinboardToast);
 }
 
+const TOAST_TYPE_MAP = {
+  'CR': 'CR',
+  'DATE > CR': 'CR',
+  'INVESTIGATOR > CR': 'CR',
+  'OFFICER': 'Officer',
+  'UNIT > OFFICERS': 'Officer',
+  'DATE > OFFICERS': 'Officer',
+  'TRR': 'TRR',
+  'DATE > TRR': 'TRR',
+};
+
+function showAddOrRemoveItemToast(payload) {
+  const { isPinned, type } = payload;
+  const actionType = isPinned ? 'removed' : 'added';
+
+  Toastify.toast(`${TOAST_TYPE_MAP[type]} ${actionType}`, {
+    className: `toast-wrapper ${actionType}`,
+    bodyClassName: 'toast-body',
+    transition: TopRightTransition,
+  });
+}
+
 export default store => next => action => {
   if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD || action.type === ADD_ITEM_IN_PINBOARD_PAGE) {
     const addOrRemove = action.payload.isPinned ? removeItemFromPinboardState : addItemToPinboardState;
 
     if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD) {
-      store.dispatch(showToast(action.payload));
+      showAddOrRemoveItemToast(action.payload);
     }
 
     Promise.all([store.dispatch(addOrRemove(action.payload))]).finally(() => {

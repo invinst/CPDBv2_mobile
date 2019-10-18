@@ -502,20 +502,4 @@ describe('<SearchPage />', function () {
       done();
     }, 50);
   });
-
-  it('should show toast on toast prop change', function () {
-    const showToastStub = spy(SearchPage.prototype, 'showToast');
-
-    const wrapper = shallow(
-      <SearchPage />
-    );
-    wrapper.setProps({
-      toast: {
-        type: 'OFFICER',
-        actionType: 'added',
-      },
-    });
-
-    showToastStub.should.be.calledWith('OFFICER added', 'added');
-  });
 });

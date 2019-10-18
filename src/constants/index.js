@@ -354,6 +354,16 @@ export default {
       NETWORK: 'NETWORK',
       GEOGRAPHIC: 'GEOGRAPHIC',
     },
+    PINNED_ITEM_TYPES: {
+      'CR': 'CR',
+      'DATE > CR': 'CR',
+      'INVESTIGATOR > CR': 'CR',
+      'OFFICER': 'OFFICER',
+      'UNIT > OFFICERS': 'OFFICER',
+      'DATE > OFFICERS': 'OFFICER',
+      'TRR': 'TRR',
+      'DATE > TRR': 'TRR',
+    },
   },
 
   // Map constants

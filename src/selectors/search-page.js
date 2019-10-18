@@ -4,7 +4,7 @@ import { map, filter, isUndefined, isEmpty } from 'lodash';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
-import { pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
+import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
 import extractQuery from 'utils/extract-query';
 
@@ -19,11 +19,6 @@ export const queryPrefixSelector = createSelector(
   (chosenCategory) => constants.SEARCH_CATEGORY_PREFIXES[chosenCategory]
 );
 
-const isItemPinned = (type, id, pinboardItems) => {
-  return (Object.prototype.hasOwnProperty.call(pinboardItems, type)) &&
-         (pinboardItems[type].indexOf(String(id)) !== -1);
-};
-
 export const officerFormatter = (officer, pinboardItems) => ({
   id: officer.id,
   name: officer.name,
@@ -31,7 +26,7 @@ export const officerFormatter = (officer, pinboardItems) => ({
   percentile: extractPercentile(officer.percentile),
   url: officerUrl(officer.id, officer.name),
   isPinned: isItemPinned('OFFICER', officer.id, pinboardItems),
-  type: 'OFFICER',
+  type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
   recentItemData: officer,
 });
 
@@ -78,7 +73,7 @@ const crFormatter = (cr, pinboardItems) => ({
   incidentDate: moment(cr.incident_date).format(constants.SEARCH_INCIDENT_DATE_FORMAT),
   category: cr.category,
   isPinned: isItemPinned('CR', cr.crid, pinboardItems),
-  type: 'CR',
+  type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
   recentItemData: cr,
 });
 
@@ -109,7 +104,7 @@ const trrFormatter = (trr, pinboardItems) => ({
   id: trr.id,
   url: `${constants.TRR_PATH}${trr.id}/`,
   isPinned: isItemPinned('TRR', trr.id, pinboardItems),
-  type: 'TRR',
+  type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR,
   recentItemData: trr,
 });
 

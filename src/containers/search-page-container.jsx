@@ -35,7 +35,6 @@ import {
 } from 'selectors/search-page';
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import { addOrRemoveItemInPinboard, createPinboard } from 'actions/pinboard';
-import { getToast } from 'selectors/toast';
 
 
 function mapStateToProps(state, ownProps) {
@@ -56,7 +55,6 @@ function mapStateToProps(state, ownProps) {
     recentSuggestionIds: recentSuggestionIdsSelector(state),
     recentSuggestionsRequested: getRecentSuggestionsRequested(state),
     pinboard: getPinboard(state),
-    toast: getToast(state),
     nextParams: nextParamsSelector(state),
     hasMore: hasMoreSelector(state),
   };

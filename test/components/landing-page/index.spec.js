@@ -12,7 +12,7 @@ import Footer from 'components/footer';
 describe('<LandingPage />', function () {
   it('should render footer', function () {
     const wrapper = shallow(<LandingPage />);
-    wrapper.find(Footer).exists.should.be.ok();
+    wrapper.find(Footer).exists().should.be.true();
   });
 
   it('should render fake search input box that links to search page', function () {
