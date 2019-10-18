@@ -12,6 +12,10 @@ export const SUGGEST_ALL_REQUEST_START = 'SUGGEST_ALL_REQUEST_START';
 export const SUGGEST_ALL_REQUEST_SUCCESS = 'SUGGEST_ALL_REQUEST_SUCCESS';
 export const SUGGEST_ALL_REQUEST_FAILURE = 'SUGGEST_ALL_REQUEST_FAILURE';
 
+export const SUGGESTION_SINGLE_REQUEST_START = 'SUGGESTION_SINGLE_REQUEST_START';
+export const SUGGESTION_SINGLE_REQUEST_SUCCESS = 'SUGGESTION_SINGLE_REQUEST_SUCCESS';
+export const SUGGESTION_SINGLE_REQUEST_FAILURE = 'SUGGESTION_SINGLE_REQUEST_FAILURE';
+
 export const FETCH_SUGGESTED_SEARCH_ITEMS_START = 'FETCH_SUGGESTED_SEARCH_ITEMS_START';
 export const FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS = 'FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS';
 export const FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE = 'FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE';
@@ -39,18 +43,6 @@ export const suggestTerm = get(
     SUGGESTION_REQUEST_FAILURE]
 );
 
-export const suggestAllFromCategory = (categoryPath, query) => {
-  const suggest = get(
-    v2Url(constants.SUGGESTION_API_ENDPOINT),
-    [
-      SUGGEST_ALL_REQUEST_START,
-      SUGGEST_ALL_REQUEST_SUCCESS,
-      SUGGEST_ALL_REQUEST_FAILURE,
-    ]
-  );
-  return suggest({ contentType: categoryPath, term: query }, undefined, '');
-};
-
 export const fetchSuggestedSearchItems = () => {
   const suggest = get(
     v2Url(constants.SUGGESTION_API_ENDPOINT),
@@ -72,6 +64,15 @@ export const fetchRecentSearchItems = (officerIds, crids, trrIds) => get(
     FETCH_RECENT_SEARCH_ITEMS_FAILURE,
   ],
 )({ 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds });
+
+export const getSuggestionWithContentType = (term, params, adapter) => get(
+  v2Url(constants.SINGLE_SEARCH_API_ENDPOINT),
+  [
+    SUGGESTION_SINGLE_REQUEST_START,
+    SUGGESTION_SINGLE_REQUEST_SUCCESS,
+    SUGGESTION_SINGLE_REQUEST_FAILURE,
+  ],
+)({ term, ...params }, adapter);
 
 export const fetchedEmptyRecentSearchItems = createAction(SET_RECENT_SUGGESTIONS_REQUESTED);
 export const saveToRecent = createAction(SEARCH_SAVE_TO_RECENT);

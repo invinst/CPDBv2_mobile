@@ -1,16 +1,19 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import { map, filter, isUndefined } from 'lodash';
+import { map, filter, isUndefined, isEmpty } from 'lodash';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
 import { pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
+import extractQuery from 'utils/extract-query';
 
 
 export const getChosenCategory = (state) => state.suggestionApp.chosenCategory;
 export const getActiveCategory = (state) => state.suggestionApp.activeCategory;
 export const getQuery = (state) => state.suggestionApp.query;
+const getPagination = state => state.suggestionApp.pagination;
+
 export const queryPrefixSelector = createSelector(
   getChosenCategory,
   (chosenCategory) => constants.SEARCH_CATEGORY_PREFIXES[chosenCategory]
@@ -201,4 +204,20 @@ export const investigatorCRsSelector = createSelector(
   (state) => state.suggestionApp.suggestions['INVESTIGATOR > CR'],
   pinboardItemsSelector,
   crsFormatter,
+);
+
+export const isShowingSingleContentTypeSelector = createSelector(
+  getChosenCategory,
+  chosenCategory => !isEmpty(chosenCategory)
+);
+
+export const hasMoreSelector = createSelector(
+  isShowingSingleContentTypeSelector,
+  getPagination,
+  (singleContent, { next }) => (singleContent && !!next)
+);
+
+export const nextParamsSelector = createSelector(
+  getPagination,
+  ({ next }) => (extractQuery(next))
 );

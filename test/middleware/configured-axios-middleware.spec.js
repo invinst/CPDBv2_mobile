@@ -25,6 +25,7 @@ describe('configured-axios-middleware', function () {
   describe('onSuccess', function () {
     const response = {
       data: [1, 2, 3],
+      config: [4, 5, 6],
     };
 
     it('should fire action with response as payload', function () {
@@ -32,6 +33,7 @@ describe('configured-axios-middleware', function () {
         type: 'REQUEST_SUCCESS',
         payload: response.data,
         meta: undefined,
+        request: [4, 5, 6],
       });
     });
 
@@ -40,6 +42,7 @@ describe('configured-axios-middleware', function () {
       onSuccess({ action, next, response: cancelledResponse }).should.eql({
         type: 'REQUEST_CANCELLED',
         meta: undefined,
+        request: undefined,
       });
     });
 
@@ -57,6 +60,7 @@ describe('configured-axios-middleware', function () {
         type: 'REQUEST_SUCCESS',
         payload: response.data,
         meta: 'foobar',
+        request: [4, 5, 6],
       });
     });
   });

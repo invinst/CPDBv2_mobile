@@ -7,12 +7,12 @@ import {
   inputChanged,
   queryChanged,
   suggestTerm,
-  suggestAllFromCategory,
   saveToRecent,
   updateActiveCategory,
   updateChosenCategory,
   fetchRecentSearchItems,
   fetchedEmptyRecentSearchItems,
+  getSuggestionWithContentType,
 } from 'actions/suggestion';
 import {
   getQuery,
@@ -30,6 +30,8 @@ import {
   investigatorCRsSelector,
   recentSuggestionIdsSelector,
   getRecentSuggestionsRequested,
+  nextParamsSelector,
+  hasMoreSelector,
 } from 'selectors/search-page';
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import { addOrRemoveItemInPinboard, createPinboard } from 'actions/pinboard';
@@ -55,6 +57,8 @@ function mapStateToProps(state, ownProps) {
     recentSuggestionsRequested: getRecentSuggestionsRequested(state),
     pinboard: getPinboard(state),
     toast: getToast(state),
+    nextParams: nextParamsSelector(state),
+    hasMore: hasMoreSelector(state),
   };
 }
 
@@ -62,7 +66,6 @@ const mapDispatchToProps = {
   inputChanged,
   queryChanged,
   suggestTerm,
-  suggestAllFromCategory,
   fetchRecentSearchItems,
   fetchedEmptyRecentSearchItems,
   saveToRecent,
@@ -71,6 +74,7 @@ const mapDispatchToProps = {
   pushBreadcrumbs,
   addOrRemoveItemInPinboard,
   createPinboard,
+  getSuggestionWithContentType,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchPage));

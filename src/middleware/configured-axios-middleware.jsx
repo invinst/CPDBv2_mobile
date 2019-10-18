@@ -25,7 +25,10 @@ export const onSuccess = ({ action, next, response }, options) => {
   const actionType = getActionTypes(action, options)[actionTypeIndex];
 
   const actionCreator = createAction(actionType, identity, () => action.meta);
-  const nextAction = actionCreator(response.data);
+  const nextAction = {
+    ...actionCreator(response.data),
+    request: response.config,
+  };
 
   next(nextAction);
   return nextAction;
