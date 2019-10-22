@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
 import { spy } from 'sinon';
+import should from 'should';
 import configureStore from 'redux-mock-store';
 
 import ComplaintPage from 'components/complaint-page';
@@ -9,23 +10,22 @@ import Footer from 'components/footer';
 import WithHeader from 'components/shared/with-header';
 
 describe('ComplaintPage component', function () {
-  it('should render correctly', function () {
+  it('should render if there is complaint', function () {
     const wrapper = shallow(
-      <ComplaintPage />
+      <ComplaintPage complaint={ { category: 'Use of force' } }/>
     );
     wrapper.should.be.ok();
 
     const withHeader = wrapper.find(WithHeader);
-    withHeader.find('.complaint-page-body').should.have.length(0);
-    withHeader.find(Footer).exists.should.be.ok();
+    withHeader.find('.complaint-page-body').exists().should.be.true();
+    withHeader.find(Footer).exists().should.be.true();
   });
 
-  it('should render complaint page if there is complaint data', function () {
+  it('should not render if there is no complaint', function () {
     const wrapper = shallow(
-      <ComplaintPage complaint={ {} } />
+      <ComplaintPage />
     );
-
-    wrapper.find('.complaint-page-body').should.have.length(1);
+    should(wrapper.type()).equal(null);
   });
 
   it('should call requestComplaint when component mounted', function () {

@@ -7,8 +7,8 @@ import rootReducer from 'reducers/root-reducer';
 import localStorageConfig from './local-storage-config';
 import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
 import trackingMiddleware from 'middleware/tracking-middleware';
-import createOrUpdatePinboardMiddleware from 'middleware/create-or-update-pinboard-middleware';
-import restoreAndRedirectPinboardMiddleware from 'middleware/restore-and-redirect-pinboard-middleware';
+import restoreCreateOrUpdatePinboardMiddleware from 'middleware/restore-create-or-update-pinboard-middleware';
+import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pinboard-middleware';
 
 
 export default function configureStore(initialState) {
@@ -22,8 +22,8 @@ export default function configureStore(initialState) {
         configuredAxiosMiddleware,
         scrollPositionMiddleware,
         trackingMiddleware,
-        createOrUpdatePinboardMiddleware,
-        restoreAndRedirectPinboardMiddleware,
+        restoreCreateOrUpdatePinboardMiddleware,
+        fetchAndRedirectPinboardMiddleware,
       ),
       persistState(()=>{}, localStorageConfig)
     )

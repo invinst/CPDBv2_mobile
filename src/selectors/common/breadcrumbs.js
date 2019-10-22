@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
-import { compact } from 'lodash';
+import { compact, get } from 'lodash';
 
 
-export const breadcrumbSelector = state => state.breadcrumb;
+export const breadcrumbSelector = state => get(state, 'breadcrumb', { breadcrumbs: [] });
 
 const getBreadcrumbItemKey = (state, props) => {
   const urlSegments = compact(props.url.split('/'));

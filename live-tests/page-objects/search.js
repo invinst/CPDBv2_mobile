@@ -18,7 +18,10 @@ const nthRow = (n) => ({
   elements: {
     itemTitle: '.item-title',
     itemSubtitle: '.item-subtitle',
-    pinButton: '.item-pin-btn',
+    pinButton: {
+      selector: `(//div[contains(@class, "item-pin-button__item-pin-button")])[${n}]`,
+      locateStrategy: 'xpath',
+    },
   },
 });
 
@@ -61,7 +64,6 @@ module.exports = {
         },
       },
     },
-
     recent: {
       selector: '.results.recent',
       sections: {
@@ -70,7 +72,11 @@ module.exports = {
           elements: {
             itemTitle: '.item-title',
             itemSubtitle: '.item-subtitle',
-            pinButton: '.item-pin-btn',
+            pinButton: {
+              selector: '(//div[contains(@class, "recent-items__recent-items")]' +
+                '//div[contains(@class, "item-pin-button__item-pin-button")])[1]',
+              locateStrategy: 'xpath',
+            },
           },
         },
         secondRecentItem: {
@@ -78,7 +84,11 @@ module.exports = {
           elements: {
             itemTitle: '.item-title',
             itemSubtitle: '.item-subtitle',
-            pinButton: '.item-pin-btn',
+            pinButton: {
+              selector: '(//div[contains(@class, "recent-items__recent-items")]' +
+                '//div[contains(@class, "item-pin-button__item-pin-button")])[2]',
+              locateStrategy: 'xpath',
+            },
           },
         },
         thirdRecentItem: {
@@ -86,12 +96,15 @@ module.exports = {
           elements: {
             itemTitle: '.item-title',
             itemSubtitle: '.item-subtitle',
-            pinButton: '.item-pin-btn',
+            pinButton: {
+              selector: '(//div[contains(@class, "recent-items__recent-items")]' +
+                '//div[contains(@class, "item-pin-button__item-pin-button")])[3]',
+              locateStrategy: 'xpath',
+            },
           },
         },
       },
     },
-
     dateCRs: resultsSection('dateCRs'),
     dateTRRs: resultsSection('dateTRRs'),
     dateOfficers: resultsSection('dateOfficers'),

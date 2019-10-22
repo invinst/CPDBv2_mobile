@@ -7,6 +7,7 @@ import { getFindingOutcomeMix } from './finding-outcome-mix';
 import { extractPercentile } from 'selectors/common/percentile';
 import { breadcrumbSelector } from 'selectors/common/breadcrumbs';
 import { cmsSelector } from 'selectors/common/cms';
+import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
 
 
 const getComplaint = (state, props) => state.complaintPage.complaints[props.params.complaintId];
@@ -54,19 +55,22 @@ const sortByOfficerFinding = officer => {
 
 const sortByOfficerComplaint = officer => -officer.allegationCount;
 
-const getCoaccusedSelector = createSelector(
-  coaccusedSelector,
-  breadcrumbSelector,
-  (officers, { breadcrumbs }) => {
-    return sortBy(
-      officers,
-      [
-        sortByOfficerInBreadcrumb(breadcrumbs),
-        sortByOfficerFinding,
-        sortByOfficerComplaint,
-      ]
-    );
-  }
+const getCoaccusedSelector = createWithIsPinnedSelector(
+  createSelector(
+    coaccusedSelector,
+    breadcrumbSelector,
+    (officers, { breadcrumbs }) => {
+      return sortBy(
+        officers,
+        [
+          sortByOfficerInBreadcrumb(breadcrumbs),
+          sortByOfficerFinding,
+          sortByOfficerComplaint,
+        ]
+      );
+    }
+  ),
+  constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER
 );
 
 const attachmentTransform = attachment => ({

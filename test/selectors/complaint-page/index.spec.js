@@ -1,5 +1,6 @@
 import should from 'should';
 import { stub } from 'sinon';
+import { find } from 'lodash';
 
 import * as draftjsUtils from 'utils/draftjs';
 import {
@@ -8,6 +9,7 @@ import {
   buttonText,
   requestDocumentButtonMessage,
 } from 'selectors/complaint-page';
+import { CoaccusedFactory } from 'utils/tests/factories/complaint';
 
 
 describe('complaint-page selectors', function () {
@@ -164,6 +166,7 @@ describe('complaint-page selectors', function () {
             'findingOutcome': 'Sustained - Penalty Not Served',
             'percentile': null,
             'disciplined': true,
+            'isPinned': false,
           },
         ],
         'investigators': [
@@ -199,6 +202,36 @@ describe('complaint-page selectors', function () {
           },
         ],
       });
+    });
+
+    it('should return list of coaccused with isPinned', function () {
+      const state = {
+        complaintPage: {
+          complaints: {
+            '123': {
+              coaccused: [
+                CoaccusedFactory.build({ id: 1 }),
+                CoaccusedFactory.build({ id: 2 }),
+              ],
+            },
+          },
+        },
+        pinboardPage: {
+          pinboard: {
+            'officer_ids': ['1'],
+          },
+        },
+      };
+
+      const props = {
+        params: {
+          complaintId: '123',
+        },
+      };
+
+      const coaccusals = complaintSelector(state, props).coaccused;
+      find(coaccusals, { id: 1 }).isPinned.should.be.true();
+      find(coaccusals, { id: 2 }).isPinned.should.be.false();
     });
   });
 

@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import ReactHeight from 'react-height';
-import { toast, cssTransition } from 'react-toastify';
 import { browserHistory } from 'react-router';
 import { isEmpty, noop } from 'lodash';
 import cx from 'classnames';
@@ -52,10 +51,6 @@ export default class SearchPage extends Component {
     this.updateResults();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.handleToastChange(nextProps);
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.query !== prevProps.query) {
       this.updateResults();
@@ -64,29 +59,6 @@ export default class SearchPage extends Component {
 
   componentWillUnmount() {
     showIntercomLauncher(true);
-  }
-
-  handleToastChange(nextProps) {
-    if (this.props.toast !== nextProps.toast) {
-      const { type, actionType } = nextProps.toast;
-
-      this.showToast(`${type} ${actionType}`, actionType);
-    }
-  }
-
-  showToast(message, className) {
-    const TopRightTransition = cssTransition({
-      enter: 'toast-enter',
-      exit: 'toast-exit',
-      duration: 500,
-      appendPosition: true,
-    });
-
-    toast(message, {
-      className: `toast-wrapper ${className}`,
-      bodyClassName: 'toast-body',
-      transition: TopRightTransition,
-    });
   }
 
   updateResults() {
@@ -122,8 +94,7 @@ export default class SearchPage extends Component {
   }
 
   chooseCategory(category) {
-    const { query, suggestAllFromCategory, updateChosenCategory } = this.props;
-    suggestAllFromCategory(category.path, query);
+    const { updateChosenCategory } = this.props;
     updateChosenCategory(category.id);
   }
 
@@ -144,6 +115,10 @@ export default class SearchPage extends Component {
       updateActiveCategory,
       activeCategory,
       addOrRemoveItemInPinboard,
+      getSuggestionWithContentType,
+      query,
+      nextParams,
+      hasMore,
     } = this.props;
     const lastIndex = categories.length - 1;
 
@@ -157,6 +132,7 @@ export default class SearchPage extends Component {
       const searchCategory = (
         <SearchCategory
           categoryId={ cat.id }
+          categoryPath={ cat.path }
           allButtonClickHandler={ this.chooseCategory.bind(this, cat) }
           showAllButton={ showAllButton }
           title={ cat.longName || cat.name }
@@ -165,6 +141,10 @@ export default class SearchPage extends Component {
           updateActiveCategory={ updateActiveCategory }
           activeCategory={ activeCategory }
           addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+          getSuggestionWithContentType={ getSuggestionWithContentType }
+          query={ query }
+          nextParams={ nextParams }
+          hasMore={ hasMore }
         />
       );
 
@@ -278,9 +258,7 @@ SearchPage.propTypes = {
   queryChanged: PropTypes.func,
   suggestTerm: PropTypes.func,
   officers: PropTypes.object,
-  suggestAllFromCategory: PropTypes.func,
   fetchRecentSearchItems: PropTypes.func,
-  categories: PropTypes.array,
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
   chosenCategory: PropTypes.string,
@@ -295,10 +273,12 @@ SearchPage.propTypes = {
   pinboard: PropTypes.object,
   addOrRemoveItemInPinboard: PropTypes.func,
   createPinboard: PropTypes.func,
-  toast: PropTypes.object,
   recentSuggestionIds: PropTypes.object,
   recentSuggestionsRequested: PropTypes.bool,
   fetchedEmptyRecentSearchItems: PropTypes.func,
+  getSuggestionWithContentType: PropTypes.func,
+  nextParams: PropTypes.object,
+  hasMore: PropTypes.bool,
 };
 
 SearchPage.defaultProps = {
@@ -311,9 +291,7 @@ SearchPage.defaultProps = {
   suggestTerm: noop,
   queryChanged: noop,
   saveToRecent: noop,
-  suggestAllFromCategory: noop,
   fetchRecentSearchItems: noop,
-  toast: {},
   recentSuggestionIds: {},
   recentSuggestionsRequested: false,
   fetchedEmptyRecentSearchItems: noop,

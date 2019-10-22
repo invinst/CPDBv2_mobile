@@ -3,6 +3,7 @@
 const assert = require('assert');
 const api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
+const { range } = require('lodash');
 
 const mockSuggestionResponse = {
   'OFFICER': [
@@ -127,7 +128,10 @@ const mockSearchQueryResponseWithDate = {
 };
 
 const mockOfficerSearchQueryResponse = {
-  OFFICER: [
+  count: 35,
+  next: 'http://localhost:8000/api/v2/search-mobile/single/?contentType=OFFICER&offset=30&term=2004-04-23+ke',
+  previous: null,
+  results: [
     {
       id: 7694,
       name: 'William Eaker',
@@ -157,8 +161,49 @@ const mockOfficerSearchQueryResponse = {
   ],
 };
 
+const mockFirstOfficersSearchQueryResponse = {
+  count: 35,
+  next: 'http://localhost:8000/api/v2/search-mobile/single/?contentType=OFFICER&offset=30&term=2004-04-23+ke',
+  previous: null,
+  results: range(30).map(idx => ({
+    id: 7694 + idx,
+    name: `William Eaker ${idx}`,
+    badge: '6056',
+    percentile: {
+      'percentile_trr': '79.1048',
+      'percentile_allegation_civilian': '97.0434',
+      'percentile_allegation': '98.5554',
+      year: 2010,
+      id: 7694 + idx,
+      'percentile_allegation_internal': '88.5567',
+    },
+  })),
+};
+
+const mockSecondOfficersSearchQueryResponse = {
+  count: 35,
+  next: null,
+  previous: 'http://localhost:8000/api/v2/search-mobile/single/?contentType=OFFICER&limit=30&term=2004-04-23+ke',
+  results: range(5).map(idx => ({
+    id: 8697 + idx,
+    name: `Joseph Boisso ${idx}}`,
+    badge: '2308',
+    percentile: {
+      'percentile_trr': '65',
+      'percentile_allegation_civilian': '90',
+      'percentile_allegation': '92',
+      year: 2009,
+      id: 8697 + idx,
+      'percentile_allegation_internal': '88.5567',
+    },
+  })),
+};
+
 const mockDateOfficerSearchQueryResponse = {
-  'DATE > OFFICERS': [
+  count: 3,
+  next: null,
+  previous: null,
+  results: [
     {
       id: 1234,
       name: 'Jerome Finnigan',
@@ -496,13 +541,13 @@ describe('SearchPageTest', function () {
       api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
       api.mock(
         'GET',
-        '/api/v2/search-mobile/?contentType=OFFICER&term=2004-04-23+ke',
+        '/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER',
         200,
         mockOfficerSearchQueryResponse
       );
       api.mock(
         'GET',
-        '/api/v2/search-mobile/?contentType=DATE+%3E+OFFICERS&term=2004-04-23+ke',
+        '/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=DATE+%3E+OFFICERS',
         200,
         mockDateOfficerSearchQueryResponse
       );
@@ -562,6 +607,51 @@ describe('SearchPageTest', function () {
       const dateOfficersRows = this.searchPage.section.dateOfficers.section.rows;
 
       expectResultCount(dateOfficersRows, 3);
+    });
+
+    it('should able to load more when scrolling down', function (client) {
+      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+      api.mock(
+        'GET',
+        '/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER',
+        200,
+        mockFirstOfficersSearchQueryResponse
+      );
+      api.mock(
+        'GET',
+        '/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER&offset=30',
+        200,
+        mockSecondOfficersSearchQueryResponse
+      );
+
+      this.searchPage.setValue('@queryInput', '2004-04-23 ke');
+
+      this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
+      this.searchPage.expect.element('@dateTRRsHeader').to.be.present;
+      this.searchPage.expect.element('@dateOfficersHeader').to.be.present;
+      this.searchPage.expect.element('@crsHeader').to.be.present;
+      this.searchPage.expect.element('@trrsHeader').to.be.present;
+      this.searchPage.expect.element('@officersHeader').to.be.present;
+
+      const officersRows = this.searchPage.section.officers.section.rows;
+      client.assertCount(officersRows.selector, 1, officersRows.locateStrategy);
+
+      this.searchPage.section.officers.click('@allLink');
+
+      this.searchPage.waitForElementNotPresent('@dateCRsHeader', TIMEOUT);
+      this.searchPage.expect.element('@dateTRRsHeader').to.be.not.present;
+      this.searchPage.expect.element('@dateOfficersHeader').to.be.not.present;
+      this.searchPage.expect.element('@crsHeader').to.be.not.present;
+      this.searchPage.expect.element('@trrsHeader').to.be.not.present;
+      this.searchPage.expect.element('@officersHeader').to.be.present;
+
+      this.searchPage.expect.element('@queryInput').value.to.equal('officer:2004-04-23 ke');
+
+      client.assertCount(officersRows.selector, 30, officersRows.locateStrategy);
+
+      client.execute('scrollTo(0, 3000)');
+
+      client.assertCount(officersRows.selector, 35, officersRows.locateStrategy);
     });
 
     it('should match result with search query prefix', function () {

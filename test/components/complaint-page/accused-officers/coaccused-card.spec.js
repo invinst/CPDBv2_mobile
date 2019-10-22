@@ -1,12 +1,18 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Link } from 'react-router';
+import { spy } from 'sinon';
+import { random } from 'faker';
 
+import ItemPinButton from 'components/common/item-pin-button';
+import pinButtonStyles from 'components/common/item-pin-button.sass';
+import constants from 'constants';
 import CoaccusedCard from 'components/complaint-page/accused-officers/coaccused-card';
 import BaseOfficerCard from 'components/common/base-officer-card';
 
 
 describe('CoaccusedCard component', function () {
+  const isPinned = random.boolean();
   const officer = {
     fullName: 'Broderick Jones',
     id: 13788,
@@ -22,6 +28,7 @@ describe('CoaccusedCard component', function () {
     },
     findingOutcome: 'Sustained',
     category: 'CR',
+    isPinned,
   };
 
   it('should render footer correctly', function () {
@@ -31,5 +38,26 @@ describe('CoaccusedCard component', function () {
     const link = baseCard.find(Link);
     link.find('.category').text().should.equal('CR');
     link.find('.finding-outcome').text().should.equal('Sustained');
+  });
+
+  it('should render ItemPinButton with correct props', function () {
+    const addOrRemoveItemInPinboard = spy();
+
+    const wrapper = mount(
+      <CoaccusedCard
+        officer={ officer }
+        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+      />
+    );
+
+    const itemPinButton = wrapper.find(ItemPinButton);
+    itemPinButton.props().className.should.equal(pinButtonStyles.cardPinnedButton);
+    itemPinButton.props().addOrRemoveItemInPinboard.should.equal(addOrRemoveItemInPinboard);
+    itemPinButton.props().showHint.should.be.false();
+    itemPinButton.props().item.should.eql({
+      type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+      id: 13788,
+      isPinned,
+    });
   });
 });

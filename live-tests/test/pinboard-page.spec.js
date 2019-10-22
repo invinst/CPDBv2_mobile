@@ -191,6 +191,17 @@ describe('Pinboard Page', function () {
           firstCard.expect.element('@firstCardName').text.to.equal('Daryl Mack');
           firstCard.expect.element('@firstCardCRsCount').text.to.equal('10 complaints');
         });
+
+        it('should go to officer page when clicked', function (client) {
+          const pinboardPage = this.pinboardPage;
+          const pinnedSection = pinboardPage.section.pinnedSection;
+
+          const officers = pinnedSection.section.officers;
+          const firstCard = officers.section.firstCard;
+          firstCard.click('@mainElement');
+
+          client.assert.urlContains('/officer/1234/daryl-mack/');
+        });
       });
 
       context('pinned complaints', function () {
@@ -246,6 +257,17 @@ describe('Pinboard Page', function () {
           firstCard.expect.element('@firstCardDate').text.to.equal('2010-01-01');
           firstCard.expect.element('@firstCardCategory').text.to.equal('Use Of Force');
         });
+
+        it('should go to cr page when clicked', function (client) {
+          const pinboardPage = this.pinboardPage;
+          const pinnedSection = pinboardPage.section.pinnedSection;
+          const crs = pinnedSection.section.crs;
+          const firstCard = crs.section.firstCard;
+
+          firstCard.click('@mainElement');
+
+          client.assert.urlContains('/complaint/1234567/');
+        });
       });
 
       context('pinned trrs', function () {
@@ -300,6 +322,17 @@ describe('Pinboard Page', function () {
           trrs.expect.element('@title').text.to.equal('TACTICAL RESPONSE REPORTS');
           firstCard.expect.element('@firstCardDate').text.to.equal('2012-01-01');
           firstCard.expect.element('@firstCardCategory').text.to.equal('Impact Weapon');
+        });
+
+        it('should go to trr page when clicked', function (client) {
+          const pinboardPage = this.pinboardPage;
+          const pinnedSection = pinboardPage.section.pinnedSection;
+          const trrs = pinnedSection.section.trrs;
+          const firstCard = trrs.section.firstCard;
+
+          firstCard.click('@mainElement');
+
+          client.assert.urlContains('/trr/1234/');
         });
       });
     });

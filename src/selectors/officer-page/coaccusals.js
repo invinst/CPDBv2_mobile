@@ -3,6 +3,8 @@ import { createSelector } from 'reselect';
 import pluralize from 'pluralize';
 
 import { officerCardTransform } from './officer-card';
+import constants from 'constants';
+import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
 
 
 const getCoaccusals = (state, officerId) => get(state.officerPage.coaccusals.data, String(officerId), []);
@@ -10,6 +12,7 @@ const getCoaccusals = (state, officerId) => get(state.officerPage.coaccusals.dat
 const coaccusalTransform = coaccusal => ({
   ...officerCardTransform(coaccusal),
   coaccusalCount: coaccusal['coaccusal_count'],
+  isPinned: coaccusal.isPinned,
 });
 
 const coaccusalThresholds = [1, 4, 9, 14, 20, -1];
@@ -37,7 +40,7 @@ const mapCoaccusalToGroup = (coaccusal) => {
 };
 
 export const coaccusalGroupsSelector = createSelector(
-  getCoaccusals,
+  createWithIsPinnedSelector(getCoaccusals, constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER),
   coaccusals => {
     const transformedCoaccusals = coaccusals.map(coaccusalTransform);
     const groupedCoaccusals = groupBy(transformedCoaccusals, mapCoaccusalToGroup);

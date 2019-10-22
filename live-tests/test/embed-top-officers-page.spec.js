@@ -97,16 +97,17 @@ describe('EmbedTopOfficerPage', function () {
     done();
   });
 
-  it('should show officer cards', function (client) {
+  it('should show officer cards and no pin button', function (client) {
     const cards = this.embedTopOfficersPage.section.cards;
     client.elements(cards.locateStrategy, cards.selector, function (result) {
       assert.equal(result.value.length, 2);
     });
+    this.embedTopOfficersPage.expect.element('@firstPinButton').not.to.be.present;
   });
 
-  it('should go to officer summary page when click to card', function (client) {
+  it('should go to officer summary page when click on card', function (client) {
     this.embedTopOfficersPage.click('@firstCard');
     client.switchToRecentTab();
-    this.embedTopOfficersPage.assert.urlContains('/officer/13788/broderick-jones/');
+    client.expect.url().to.match(/\/officer\/\d+\/[-a-z]+\/?$/);
   });
 });

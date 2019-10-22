@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import cx from 'classnames';
 
-import ItemPinButton from './item-pin-button';
+import ItemPinButton from 'components/common/item-pin-button';
 import style from './search-item.sass';
 
 
@@ -40,6 +40,11 @@ export default class SearchItem extends Component {
             id={ id }
             isPinned={ isPinned }
             type={ type }
+            item={ {
+              type: type,
+              id: id,
+              isPinned: isPinned,
+            } }
           />
         }
 
@@ -56,7 +61,7 @@ SearchItem.propTypes = {
   url: PropTypes.string,
   hasPinButton: PropTypes.bool,
   addOrRemoveItemInPinboard: PropTypes.func,
-  id: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isPinned: PropTypes.bool,
   type: PropTypes.string,
   children: PropTypes.node,
