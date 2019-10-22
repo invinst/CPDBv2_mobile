@@ -4,6 +4,7 @@ import cx from 'classnames';
 
 import ItemPinButton from 'components/common/item-pin-button';
 import style from './search-item.sass';
+import * as GATracking from 'utils/google_analytics_tracking';
 
 
 export default class SearchItem extends Component {
@@ -13,7 +14,8 @@ export default class SearchItem extends Component {
   }
 
   handleClick() {
-    const { id, type, recentItemData, saveToRecent } = this.props;
+    const { id, type, recentItemData, saveToRecent, query, itemRank } = this.props;
+    GATracking.trackSearchFocusedItem(type, query, id, itemRank);
     saveToRecent({
       type: type,
       id: id,
@@ -68,6 +70,8 @@ SearchItem.propTypes = {
   children: PropTypes.node,
   saveToRecent: PropTypes.func,
   recentItemData: PropTypes.object,
+  query: PropTypes.string,
+  itemRank: PropTypes.number,
 };
 
 SearchItem.defaultProps = {
