@@ -44,7 +44,7 @@
     "bower-webpack-plugin": "^0.1.9",
     "browser-sync": "^2.15.0",
     "chai": "^3.2.0",
-    "chromedriver": "^76.0.1",
+    "chromedriver": "^77.0.0",
     "clean-webpack-plugin": "^0.1.19",
     "cors": "^2.8.1",
     "cross-spawn": "^4.0.0",
