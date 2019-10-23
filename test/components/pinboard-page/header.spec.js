@@ -12,7 +12,7 @@ describe('<Header /> of PinboardPage', function () {
     const header = mount(<Header />);
 
     header.find(Link).props().to.should.eql('/');
-    header.find('.highlight').text().should.be.eql('Pinboard');
+    header.find('.highlight').text().should.be.eql('Pinboards');
 
     const iosPeek = header.find(IOSPeek);
     iosPeek.prop('className').should.equal('pinboard-ios-peek');
