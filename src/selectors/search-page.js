@@ -30,16 +30,8 @@ export const officerFormatter = (officer, pinboardItems) => ({
   recentItemData: officer,
 });
 
-export const officersFormatter = (officers, pinboardItems) => {
-  if (!officers) {
-    return { data: [] };
-  }
-
-  return {
-    isShowingAll: officers.isShowingAll,
-    data: officers.data.map((officer) => officerFormatter(officer, pinboardItems)),
-  };
-};
+export const officersFormatter = (officers, pinboardItems) =>
+  map(officers, (officer) => officerFormatter(officer, pinboardItems));
 
 export const officersSelector = createSelector(
   (state) => state.suggestionApp.suggestions.OFFICER,
@@ -49,22 +41,13 @@ export const officersSelector = createSelector(
 
 export const unitsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.UNIT,
-  (units) => {
-    if (!units) {
-      return { data: [] };
-    }
-
-    return {
-      isShowingAll: units.isShowingAll,
-      data: units.data.map((unit) => ({
-        id: unit.id,
-        text: unit.text,
-        url: unit.url,
-        memberCount: unit.member_count,
-        activeMemberCount: unit.active_member_count,
-      })),
-    };
-  }
+  (units) => map(units, (unit) => ({
+    id: unit.id,
+    text: unit.text,
+    url: unit.url,
+    memberCount: unit.member_count,
+    activeMemberCount: unit.active_member_count,
+  })),
 );
 
 const crFormatter = (cr, pinboardItems) => ({
@@ -77,16 +60,8 @@ const crFormatter = (cr, pinboardItems) => ({
   recentItemData: cr,
 });
 
-const crsFormatter = (crs, pinboardItems) => {
-  if (!crs) {
-    return { data: [] };
-  }
-
-  return {
-    isShowingAll: crs.isShowingAll,
-    data: crs.data.map((cr) => crFormatter(cr, pinboardItems)),
-  };
-};
+const crsFormatter = (crs, pinboardItems) =>
+  map(crs, (cr) => crFormatter(cr, pinboardItems));
 
 export const crsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.CR,
@@ -108,16 +83,8 @@ const trrFormatter = (trr, pinboardItems) => ({
   recentItemData: trr,
 });
 
-const trrsFormatter = (trrs, pinboardItems) => {
-  if (!trrs) {
-    return { data: [] };
-  }
-
-  return {
-    isShowingAll: trrs.isShowingAll,
-    data: trrs.data.map((trr) => trrFormatter(trr, pinboardItems)),
-  };
-};
+const trrsFormatter = (trrs, pinboardItems) =>
+  map(trrs, (trr) => trrFormatter(trr, pinboardItems));
 
 export const trrsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.TRR,
@@ -131,19 +98,8 @@ export const dateTRRsSelector = createSelector(
   trrsFormatter
 );
 
-
-export const suggestedSelector = createSelector(
-  (state) => state.suggestionApp.initialSuggestions.suggested,
-  (suggested) => suggested
-);
-
-const getRecentSuggestions = (state) => state.suggestionApp.initialSuggestions.recent.data;
+const getRecentSuggestions = (state) => state.suggestionApp.recentSuggestions;
 export const getRecentSuggestionsRequested = (state) => state.suggestionApp.recentSuggestionsRequested;
-
-export const recentSelector = createSelector(
-  (state) => state.suggestionApp.initialSuggestions.recent,
-  (recent) => recent
-);
 
 const recentItemFormatterMapping = {
   'OFFICER': officerFormatter,
@@ -162,7 +118,7 @@ export const recentSuggestionsSelector = createSelector(
         recentData.push(itemFormatter(recentItem.data, pinboardItems));
       }
     });
-    return { data: recentData };
+    return recentData;
   }
 );
 

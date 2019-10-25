@@ -1,6 +1,5 @@
 import {
   suggestTerm,
-  fetchSuggestedSearchItems,
   focus,
   blur,
   clear,
@@ -11,7 +10,6 @@ import {
   fetchRecentSearchItems,
   fetchedEmptyRecentSearchItems,
   SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE,
-  FETCH_SUGGESTED_SEARCH_ITEMS_START, FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS, FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
   SEARCH_FOCUS,
   SEARCH_BLUR,
   SEARCH_CLEAR,
@@ -36,25 +34,6 @@ describe('suggestions actions', function () {
             url: v2Url(constants.SUGGESTION_API_ENDPOINT),
             adapter: undefined,
             params: undefined,
-          },
-        },
-      });
-    });
-  });
-
-  describe('fetchSuggestedSearchItems', function () {
-    it('should return right action', function () {
-      fetchSuggestedSearchItems().should.eql({
-        types: [
-          FETCH_SUGGESTED_SEARCH_ITEMS_START,
-          FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS,
-          FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
-        ],
-        payload: {
-          request: {
-            url: v2Url(constants.SUGGESTION_API_ENDPOINT),
-            adapter: undefined,
-            params: {},
           },
         },
       });

@@ -2,8 +2,6 @@ import constants from 'constants';
 
 import {
   officersSelector,
-  suggestedSelector,
-  recentSelector,
   unitsSelector,
   crsSelector,
   trrsSelector,
@@ -34,7 +32,7 @@ describe('search-page selectors', function () {
         },
       };
 
-      officersSelector(state).should.be.eql({ data: [] });
+      officersSelector(state).should.be.eql([]);
     });
 
     it('should return default values when the data is not available', function () {
@@ -47,10 +45,7 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            OFFICER: {
-              isShowingAll: true,
-              data: [officer],
-            },
+            OFFICER: [officer],
           },
         },
         pinboardPage: {
@@ -58,9 +53,8 @@ describe('search-page selectors', function () {
         },
       };
 
-      officersSelector(state).should.be.eql({
-        isShowingAll: true,
-        data: [{
+      officersSelector(state).should.be.eql([
+        {
           id: '1',
           name: 'Name',
           badge: '',
@@ -69,12 +63,11 @@ describe('search-page selectors', function () {
           isPinned: false,
           type: 'OFFICER',
           recentItemData: officer,
-        }],
-      });
+        },
+      ]);
     });
 
     it('should return officer data when there are officers', function () {
-      const isShowingAll = true;
       const officer = {
         'id': '1',
         'name': 'Name',
@@ -96,10 +89,7 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            OFFICER: {
-              isShowingAll: isShowingAll,
-              data: [officer],
-            },
+            OFFICER: [officer],
           },
         },
         pinboardPage: {
@@ -112,36 +102,7 @@ describe('search-page selectors', function () {
         },
       };
 
-      officersSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: [expectedOfficer],
-      });
-    });
-  });
-
-  describe('suggestedSelector', function () {
-    it('should return correct value', function () {
-      const state = {
-        suggestionApp: {
-          initialSuggestions: {
-            suggested: 'foobar',
-          },
-        },
-      };
-      suggestedSelector(state).should.be.eql('foobar');
-    });
-  });
-
-  describe('recentSelector', function () {
-    it('should return correct value', function () {
-      const state = {
-        suggestionApp: {
-          initialSuggestions: {
-            recent: 'foobar',
-          },
-        },
-      };
-      recentSelector(state).should.be.eql('foobar');
+      officersSelector(state).should.be.eql([expectedOfficer]);
     });
   });
 
@@ -149,16 +110,14 @@ describe('search-page selectors', function () {
     it('should return empty when there are no units', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
       };
 
-      unitsSelector(state).should.be.eql({ data: [] });
+      unitsSelector(state).should.be.eql([]);
     });
 
     it('should return unit data when there are units', function () {
-      const isShowingAll = true;
       const units = [
         {
           'id': '1',
@@ -195,18 +154,12 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            UNIT: {
-              isShowingAll: isShowingAll,
-              data: units,
-            },
+            UNIT: units,
           },
         },
       };
 
-      unitsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedUnits,
-      });
+      unitsSelector(state).should.be.eql(expectedUnits);
     });
   });
 
@@ -214,19 +167,17 @@ describe('search-page selectors', function () {
     it('should return empty when there are no date > crs', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
         pinboardPage: {
           pinboard: null,
         },
       };
 
-      dateCRsSelector(state).should.be.eql({ data: [] });
+      dateCRsSelector(state).should.be.eql([]);
     });
 
     it('should return cr data when there are date > crs', function () {
-      const isShowingAll = true;
       const dateCR = {
         category: 'Use Of Force',
         crid: '1027271',
@@ -251,10 +202,7 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            'DATE > CR': {
-              isShowingAll: isShowingAll,
-              data: [dateCR],
-            },
+            'DATE > CR': [dateCR],
           },
         },
         pinboardPage: {
@@ -267,10 +215,7 @@ describe('search-page selectors', function () {
         },
       };
 
-      dateCRsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedDateCrs,
-      });
+      dateCRsSelector(state).should.be.eql(expectedDateCrs);
     });
   });
 
@@ -278,19 +223,17 @@ describe('search-page selectors', function () {
     it('should return empty when there are no trrs', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
         pinboardPage: {
           pinboard: null,
         },
       };
 
-      dateTRRsSelector(state).should.be.eql({ data: [] });
+      dateTRRsSelector(state).should.be.eql([]);
     });
 
     it('should return trr data when there are trrs', function () {
-      const isShowingAll = true;
       const dateTRR = {
         'id': '1',
       };
@@ -307,10 +250,7 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            'DATE > TRR': {
-              isShowingAll: isShowingAll,
-              data: [dateTRR],
-            },
+            'DATE > TRR': [dateTRR],
           },
         },
         pinboardPage: {
@@ -322,10 +262,7 @@ describe('search-page selectors', function () {
         },
       };
 
-      dateTRRsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedDateTRRs,
-      });
+      dateTRRsSelector(state).should.be.eql(expectedDateTRRs);
     });
   });
 
@@ -333,19 +270,17 @@ describe('search-page selectors', function () {
     it('should return empty when there are no crs', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
         pinboardPage: {
           pinboard: null,
         },
       };
 
-      crsSelector(state).should.be.eql({ data: [] });
+      crsSelector(state).should.be.eql([]);
     });
 
     it('should return cr data when there are crs', function () {
-      const isShowingAll = true;
       const cr1 = {
         category: 'Use Of Force',
         crid: '1027271',
@@ -388,10 +323,7 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            CR: {
-              isShowingAll: isShowingAll,
-              data: [cr1, cr2],
-            },
+            CR: [cr1, cr2],
           },
         },
         pinboardPage: {
@@ -404,10 +336,7 @@ describe('search-page selectors', function () {
         },
       };
 
-      crsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedCrs,
-      });
+      crsSelector(state).should.be.eql(expectedCrs);
     });
   });
 
@@ -415,19 +344,17 @@ describe('search-page selectors', function () {
     it('should return empty when there are no INVESTIGATOR > CR data', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
         pinboardPage: {
           pinboard: null,
         },
       };
 
-      investigatorCRsSelector(state).should.be.eql({ data: [] });
+      investigatorCRsSelector(state).should.be.eql([]);
     });
 
     it('should return INVESTIGATOR > CR data correctly', function () {
-      const isShowingAll = true;
       const investigatorCR = {
         category: 'Use Of Force',
         crid: '1027271',
@@ -452,10 +379,7 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            'INVESTIGATOR > CR': {
-              isShowingAll: isShowingAll,
-              data: [investigatorCR],
-            },
+            'INVESTIGATOR > CR': [investigatorCR],
           },
         },
         pinboardPage: {
@@ -463,10 +387,7 @@ describe('search-page selectors', function () {
         },
       };
 
-      investigatorCRsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedInvestigatorCR,
-      });
+      investigatorCRsSelector(state).should.be.eql(expectedInvestigatorCR);
     });
   });
 
@@ -474,19 +395,17 @@ describe('search-page selectors', function () {
     it('should return empty when there are no trss', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
         pinboardPage: {
           pinboard: null,
         },
       };
 
-      trrsSelector(state).should.be.eql({ data: [] });
+      trrsSelector(state).should.be.eql([]);
     });
 
     it('should return trr data when there are trrs', function () {
-      const isShowingAll = true;
       const trr = {
         'id': '1',
       };
@@ -503,10 +422,7 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            TRR: {
-              isShowingAll: isShowingAll,
-              data: [trr],
-            },
+            TRR: [trr],
           },
         },
         pinboardPage: {
@@ -518,10 +434,7 @@ describe('search-page selectors', function () {
         },
       };
 
-      trrsSelector(state).should.be.eql({
-        isShowingAll: isShowingAll,
-        data: expectedTrrs,
-      });
+      trrsSelector(state).should.be.eql(expectedTrrs);
     });
   });
 
@@ -529,15 +442,14 @@ describe('search-page selectors', function () {
     it('should return empty when there is no DATE > OFFICERS', function () {
       const state = {
         suggestionApp: {
-          suggestions: {
-          },
+          suggestions: {},
         },
         pinboardPage: {
           pinboard: null,
         },
       };
 
-      dateOfficersSelector(state).should.be.eql({ data: [] });
+      dateOfficersSelector(state).should.be.eql([]);
     });
 
     it('should return correct values for DATE > OFFICERS suggestion', function () {
@@ -550,10 +462,7 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            ['DATE > OFFICERS']: {
-              isShowingAll: true,
-              data: [officer],
-            },
+            ['DATE > OFFICERS']: [officer],
           },
         },
         pinboardPage: {
@@ -561,9 +470,8 @@ describe('search-page selectors', function () {
         },
       };
 
-      dateOfficersSelector(state).should.be.eql({
-        isShowingAll: true,
-        data: [{
+      dateOfficersSelector(state).should.be.eql([
+        {
           id: 123,
           name: 'Jerome Finnigan',
           badge: 'Badge #56789',
@@ -572,8 +480,8 @@ describe('search-page selectors', function () {
           type: 'OFFICER',
           isPinned: false,
           recentItemData: officer,
-        }],
-      });
+        },
+      ]);
     });
   });
 
@@ -588,88 +496,82 @@ describe('search-page selectors', function () {
           },
         },
         suggestionApp: {
-          initialSuggestions: {
-            recent: {
-              data: [
-                {
-                  type: 'OFFICER',
-                  id: 8562,
-                  data: {
-                    id: 8562,
-                    name: 'Jerome Finnigan',
-                    badge: '123456',
-                    type: 'OFFICER',
-                  },
-                },
-                {
-                  type: 'CR',
-                  id: '271235',
-                  data: {
-                    id: '271235',
-                    crid: '271235',
-                    'incident_date': '2001-02-10',
-                    category: 'Use Of Force',
-                    type: 'CR',
-                  },
-                },
-                {
-                  type: 'TRR',
-                  id: 123456,
-                  data: {
-                    type: 'TRR',
-                    id: 123456,
-                  },
-                },
-              ],
+          recentSuggestions: [
+            {
+              type: 'OFFICER',
+              id: 8562,
+              data: {
+                id: 8562,
+                name: 'Jerome Finnigan',
+                badge: '123456',
+                type: 'OFFICER',
+              },
             },
-          },
+            {
+              type: 'CR',
+              id: '271235',
+              data: {
+                id: '271235',
+                crid: '271235',
+                'incident_date': '2001-02-10',
+                category: 'Use Of Force',
+                type: 'CR',
+              },
+            },
+            {
+              type: 'TRR',
+              id: 123456,
+              data: {
+                type: 'TRR',
+                id: 123456,
+              },
+            },
+          ],
         },
       };
 
-      recentSuggestionsSelector(state).should.be.eql({
-        data: [
-          {
+      recentSuggestionsSelector(state).should.be.eql([
+        {
+          id: 8562,
+          name: 'Jerome Finnigan',
+          badge: 'Badge #123456',
+          percentile: null,
+          url: '/officer/8562/jerome-finnigan/',
+          isPinned: true,
+          type: 'OFFICER',
+          recentItemData: {
             id: 8562,
             name: 'Jerome Finnigan',
-            badge: 'Badge #123456',
-            percentile: null,
-            url: '/officer/8562/jerome-finnigan/',
-            isPinned: true,
+            badge: '123456',
             type: 'OFFICER',
-            recentItemData: {
-              id: 8562,
-              name: 'Jerome Finnigan',
-              badge: '123456',
-              type: 'OFFICER',
-            },
           },
-          {
+        },
+        {
+          crid: '271235',
+          url: '/complaint/271235/',
+          incidentDate: '02/10/2001',
+          isPinned: false,
+          category: 'Use Of Force',
+          type: 'CR',
+          recentItemData: {
+            id: '271235',
             crid: '271235',
-            url: '/complaint/271235/',
-            incidentDate: '02/10/2001',
-            isPinned: false,
+            'incident_date': '2001-02-10',
             category: 'Use Of Force',
             type: 'CR',
-            recentItemData: {
-              id: '271235',
-              crid: '271235',
-              'incident_date': '2001-02-10',
-              category: 'Use Of Force',
-              type: 'CR',
-            },
           },
-          {
-            id: 123456,
-            url: '/trr/123456/',
-            isPinned: true,
+        },
+        {
+          id: 123456,
+          url: '/trr/123456/',
+          isPinned: true,
+          type: 'TRR',
+          recentItemData: {
             type: 'TRR',
-            recentItemData: {
-              type: 'TRR',
-              id: 123456,
-            },
+            id: 123456,
           },
-        ],
-      });
+        },
+      ]);
     });
   });
 
@@ -677,15 +579,11 @@ describe('search-page selectors', function () {
     it('should return correct recent suggestion ids', function () {
       const state = {
         suggestionApp: {
-          initialSuggestions: {
-            recent: {
-              data: [
-                { type: 'OFFICER', id: 8562, data: {} },
-                { type: 'CR', id: '271235', data: {} },
-                { type: 'TRR', id: 123, data: {} },
-              ],
-            },
-          },
+          recentSuggestions: [
+            { type: 'OFFICER', id: 8562, data: {} },
+            { type: 'CR', id: '271235', data: {} },
+            { type: 'TRR', id: 123, data: {} },
+          ],
         },
       };
 
@@ -699,15 +597,11 @@ describe('search-page selectors', function () {
     it('should exclude invalid ids', function () {
       const state = {
         suggestionApp: {
-          initialSuggestions: {
-            recent: {
-              data: [
-                { type: 'OFFICER', id: 8562, data: {} },
-                { type: 'CR', data: {} },
-                { type: 'TRR', id: 123, data: {} },
-              ],
-            },
-          },
+          recentSuggestions: [
+            { type: 'OFFICER', id: 8562, data: {} },
+            { type: 'CR', data: {} },
+            { type: 'TRR', id: 123, data: {} },
+          ],
         },
       };
 

@@ -4,7 +4,6 @@ import cx from 'classnames';
 import constants from 'constants';
 import { getCurrentScrollPosition, instantScrollToTop } from 'utils/navigation-util';
 import SearchResult from 'components/search-page/search-result';
-import SuggestedSearchResult from './suggested-search-result';
 import RecentItems from './recent-items';
 
 import style from './search-category.sass';
@@ -23,7 +22,6 @@ const resultComponentMappings = {
   investigatorCRs: SearchResult,
   trrs: SearchResult,
   recent: RecentItems,
-  suggested: SuggestedSearchResult,
 };
 
 export default class SearchCategory extends Component {

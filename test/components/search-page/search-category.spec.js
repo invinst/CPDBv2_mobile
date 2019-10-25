@@ -7,7 +7,6 @@ import * as NavigationUtil from 'utils/navigation-util';
 
 import constants from 'constants';
 import SearchCategory from 'components/search-page/search-category';
-import SuggestedSearchResult from 'components/search-page/suggested-search-result';
 import SearchResult from 'components/search-page/search-result';
 import RecentItems from 'components/search-page/recent-items';
 
@@ -106,31 +105,7 @@ describe('<SearchCategory />', function () {
     title.text().should.eql('foo');
   });
 
-  describe('renderSuggested', function () {
-    it('should render item correctly', function () {
-      const spySaveToRecent = spy();
-      const items = [{
-        url: 'localhost',
-        type: 'suggested',
-        title: 'Whatever',
-      }];
-
-      const wrapper = mount(
-        <SearchCategory
-          items={ items }
-          categoryId='suggested'
-          saveToRecent={ spySaveToRecent }
-        />
-      );
-      const itemLink = wrapper.find(SuggestedSearchResult);
-
-      itemLink.exists().should.be.true();
-      itemLink.prop('items').should.be.eql(items);
-      itemLink.prop('saveToRecent').should.be.eql(spySaveToRecent);
-    });
-  });
-
-  describe('renderRecent', function () {
+  describe('render recent', function () {
     it('should render item correctly', function () {
       const spySaveToRecent = spy();
       const items = [{
