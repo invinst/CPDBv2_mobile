@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
+import { map } from 'lodash';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
@@ -14,22 +15,13 @@ export const queryPrefixSelector = createSelector(
   (chosenCategory) => constants.SEARCH_CATEGORY_PREFIXES[chosenCategory]
 );
 
-export const officerFormatter = (officers) => {
-  if (!officers) {
-    return { data: [] };
-  }
-
-  return {
-    isShowingAll: officers.isShowingAll,
-    data: officers.data.map((officer) => ({
-      id: officer.id,
-      name: officer.name,
-      badge: officer.badge ? `Badge #${officer.badge}` : '',
-      percentile: extractPercentile(officer.percentile),
-      url: officerUrl(officer.id, officer.name),
-    })),
-  };
-};
+export const officerFormatter = (officers) => map(officers, (officer) => ({
+  id: officer.id,
+  name: officer.name,
+  badge: officer.badge ? `Badge #${officer.badge}` : '',
+  percentile: extractPercentile(officer.percentile),
+  url: officerUrl(officer.id, officer.name),
+}));
 
 export const officersSelector = createSelector(
   (state) => state.suggestionApp.suggestions.OFFICER,
@@ -38,39 +30,21 @@ export const officersSelector = createSelector(
 
 export const unitsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.UNIT,
-  (units) => {
-    if (!units) {
-      return { data: [] };
-    }
-
-    return {
-      isShowingAll: units.isShowingAll,
-      data: units.data.map((unit) => ({
-        id: unit.id,
-        text: unit.text,
-        url: unit.url,
-        memberCount: unit.member_count,
-        activeMemberCount: unit.active_member_count,
-      })),
-    };
-  }
+  (units) => map(units, (unit) => ({
+    id: unit.id,
+    text: unit.text,
+    url: unit.url,
+    memberCount: unit.member_count,
+    activeMemberCount: unit.active_member_count,
+  })),
 );
 
-const crFormatter = (crs) => {
-  if (!crs) {
-    return { data: [] };
-  }
-
-  return {
-    isShowingAll: crs.isShowingAll,
-    data: crs.data.map((cr) => ({
-      crid: cr.crid,
-      url: `${constants.COMPLAINT_PATH}${cr.crid}/`,
-      incidentDate: moment(cr.incident_date).format(constants.SEARCH_INCIDENT_DATE_FORMAT),
-      category: cr.category,
-    })),
-  };
-};
+const crFormatter = (crs) => map(crs, (cr) => ({
+  crid: cr.crid,
+  url: `${constants.COMPLAINT_PATH}${cr.crid}/`,
+  incidentDate: moment(cr.incident_date).format(constants.SEARCH_INCIDENT_DATE_FORMAT),
+  category: cr.category,
+}));
 
 export const crsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.CR,
@@ -82,19 +56,10 @@ export const dateCRsSelector = createSelector(
   crFormatter
 );
 
-const trrFormatter = (trrs) => {
-  if (!trrs) {
-    return { data: [] };
-  }
-
-  return {
-    isShowingAll: trrs.isShowingAll,
-    data: trrs.data.map((trr) => ({
-      id: trr.id,
-      url: `${constants.TRR_PATH}${trr.id}/`,
-    })),
-  };
-};
+const trrFormatter = (trrs) => map(trrs, (trr) => ({
+  id: trr.id,
+  url: `${constants.TRR_PATH}${trr.id}/`,
+}));
 
 export const trrsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.TRR,
@@ -106,17 +71,7 @@ export const dateTRRsSelector = createSelector(
   trrFormatter
 );
 
-
-export const suggestedSelector = createSelector(
-  (state) => state.suggestionApp.initialSuggestions.suggested,
-  (suggested) => suggested
-);
-
-
-export const recentSelector = createSelector(
-  (state) => state.suggestionApp.initialSuggestions.recent,
-  (recent) => recent
-);
+export const getRecentSuggestions = (state) => state.suggestionApp.recentSuggestions;
 
 export const dateOfficersSelector = createSelector(
   (state) => state.suggestionApp.suggestions['DATE > OFFICERS'],

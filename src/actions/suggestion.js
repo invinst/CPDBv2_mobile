@@ -12,10 +12,6 @@ export const SUGGEST_ALL_REQUEST_START = 'SUGGEST_ALL_REQUEST_START';
 export const SUGGEST_ALL_REQUEST_SUCCESS = 'SUGGEST_ALL_REQUEST_SUCCESS';
 export const SUGGEST_ALL_REQUEST_FAILURE = 'SUGGEST_ALL_REQUEST_FAILURE';
 
-export const FETCH_SUGGESTED_SEARCH_ITEMS_START = 'FETCH_SUGGESTED_SEARCH_ITEMS_START';
-export const FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS = 'FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS';
-export const FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE = 'FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE';
-
 export const SEARCH_SAVE_TO_RECENT = 'SEARCH_SAVE_TO_RECENT';
 
 export const SEARCH_FOCUS = 'SEARCH_FOCUS';
@@ -44,19 +40,6 @@ export const suggestAllFromCategory = (categoryPath, query) => {
     ]
   );
   return suggest({ contentType: categoryPath, term: query }, undefined, '');
-};
-
-export const fetchSuggestedSearchItems = () => {
-  const suggest = get(
-    v2Url(constants.SUGGESTION_API_ENDPOINT),
-    [
-      FETCH_SUGGESTED_SEARCH_ITEMS_START,
-      FETCH_SUGGESTED_SEARCH_ITEMS_SUCCESS,
-      FETCH_SUGGESTED_SEARCH_ITEMS_FAILURE,
-    ]
-  );
-
-  return suggest({}, undefined, '');
 };
 
 export const saveToRecent = createAction(SEARCH_SAVE_TO_RECENT);
