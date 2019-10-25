@@ -16,7 +16,7 @@ export default class AccusedOfficers extends Component {
   }
 
   render() {
-    const { officers } = this.props;
+    const { officers, addOrRemoveItemInPinboard } = this.props;
     const { expanded } = this.state;
     const coaccusedClass = cx('coaccusals', { 'expanded': expanded });
 
@@ -27,7 +27,13 @@ export default class AccusedOfficers extends Component {
         </h2>
         <div className={ coaccusedClass }>
           {
-            officers.map(officer => <CoaccusedCard key={ officer.id } officer={ officer } />)
+            officers.map(officer =>
+              <CoaccusedCard
+                key={ officer.id }
+                officer={ officer }
+                addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+              />
+            )
           }
         </div>
         {
@@ -42,8 +48,10 @@ export default class AccusedOfficers extends Component {
 
 AccusedOfficers.propTypes = {
   officers: PropTypes.array,
+  addOrRemoveItemInPinboard: PropTypes.func,
 };
 
 AccusedOfficers.defaultProps = {
   officers: [],
+  addOrRemoveItemInPinboard: () => {},
 };

@@ -7,9 +7,7 @@ import * as NavigationUtil from 'utils/navigation-util';
 
 import constants from 'constants';
 import SearchCategory from 'components/search-page/search-category';
-import OfficerSearchResult from 'components/search-page/officer-search-result';
-import CRSearchResult from 'components/search-page/cr-search-result';
-import TRRSearchResult from 'components/search-page/trr-search-result';
+import SearchResult from 'components/search-page/search-result';
 import RecentItems from 'components/search-page/recent-items';
 
 
@@ -33,7 +31,6 @@ describe('<SearchCategory />', function () {
     const wrapper = shallow(
       <SearchCategory
         title='foo'
-        items={ [] }
         categoryId='crs'
       />
     );
@@ -160,24 +157,69 @@ describe('<SearchCategory />', function () {
     });
 
     it('should call allButtonClickHandler() and scroll to top on click', function () {
-      const allButtonClickHandler = spy();
+      const spyAllButtonClickHandler = spy();
+      const spyGetSuggestionWithContentType = stub().returns({ catch: spy() });
 
       const wrapper = mount(
         <SearchCategory
           items={ [] }
           showAllButton={ true }
-          allButtonClickHandler={ allButtonClickHandler }
+          allButtonClickHandler={ spyAllButtonClickHandler }
+          getSuggestionWithContentType={ spyGetSuggestionWithContentType }
+          query='qa'
+          categoryPath='OFFICER'
         />
       );
 
       const allButton = wrapper.find('.all');
       allButton.simulate('click');
-      allButtonClickHandler.should.be.called();
-      this.stubInstantScrollToTop.should.be.called();
+
+      spyAllButtonClickHandler.should.be.calledOnce();
+      spyGetSuggestionWithContentType.should.be.calledOnce();
+      spyGetSuggestionWithContentType.should.be.calledWith('qa', { contentType: 'OFFICER' });
+      this.stubInstantScrollToTop.should.be.calledOnce();
     });
   });
 
   describe('renderResults', function () {
+    it('should render ResultComponent with correct props', function () {
+      const spyAddOrRemoveItemInPinboard = spy();
+      const spyGetSuggestionWithContentType = spy();
+      const spySaveToRecent = spy();
+
+      const wrapper = shallow(
+        <SearchCategory
+          title='OFFICERS'
+          items={ [{ id: '1234' }, { id: '5678' }] }
+          categoryId='officers'
+          addOrRemoveItemInPinboard={ spyAddOrRemoveItemInPinboard }
+          getSuggestionWithContentType={ spyGetSuggestionWithContentType }
+          saveToRecent={ spySaveToRecent }
+          query={ 'qa' }
+          nextParams={ {
+            contentType: 'OFFICER',
+            limit: '30',
+            offset: '60',
+            term: '123',
+          } }
+          hasMore={ true }
+        />
+      );
+      const searchResult = wrapper.find(SearchResult);
+      searchResult.prop('items').should.eql([{ id: '1234' }, { id: '5678' }]);
+      searchResult.prop('saveToRecent').should.eql(spySaveToRecent);
+      searchResult.prop('addOrRemoveItemInPinboard').should.eql(spyAddOrRemoveItemInPinboard);
+      searchResult.prop('getSuggestionWithContentType').should.eql(spyGetSuggestionWithContentType);
+      searchResult.prop('query').should.equal('qa');
+      searchResult.prop('nextParams').should.eql({
+        contentType: 'OFFICER',
+        limit: '30',
+        offset: '60',
+        term: '123',
+      });
+      searchResult.prop('hasMore').should.be.true();
+    });
+
     it('should return null if given invalid category id', function () {
 
       const wrapper = shallow(
@@ -201,8 +243,8 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerSearchResult = wrapper.find(OfficerSearchResult);
-      officerSearchResult.prop('items').should.eql(range(5));
+      const searchResult = wrapper.find(SearchResult);
+      searchResult.prop('items').should.eql(range(5));
     });
 
     it('should render officer correctly', function () {
@@ -230,10 +272,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(OfficerSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(officers);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(officers);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
 
     });
 
@@ -258,10 +300,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(CRSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(crs);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(crs);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render trrs with trr component', function () {
@@ -285,10 +327,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(TRRSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(trrs);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(trrs);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render dateCRs with cr component', function () {
@@ -312,10 +354,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(CRSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(dateCRs);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(dateCRs);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render dateTRRs with trr component', function () {
@@ -339,10 +381,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(TRRSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(dateTRRs);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(dateTRRs);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render dateOfficers with officer component', function () {
@@ -370,10 +412,10 @@ describe('<SearchCategory />', function () {
         />
       );
 
-      const officerElement = wrapper.find(OfficerSearchResult);
-      officerElement.exists().should.be.true();
-      officerElement.prop('items').should.be.eql(officers);
-      officerElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
+      const searchElement = wrapper.find(SearchResult);
+      searchElement.exists().should.be.true();
+      searchElement.prop('items').should.be.eql(officers);
+      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
   });
 

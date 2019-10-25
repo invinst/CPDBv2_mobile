@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { ToastContainer } from 'react-toastify';
 
 import MainPage from 'components/main-page';
 import { spy } from 'sinon';
@@ -74,5 +75,20 @@ describe('MainPage component', function () {
 
     wrapper.instance().componentDidUpdate(prevProps);
     spyRouteChanged.called.should.be.false();
+  });
+
+  it('should render ToastContainer', function () {
+    const wrapper = mount(
+      <MainPage
+        location={ { pathname: '/' } }
+      />
+    );
+
+    const toastContainer = wrapper.find(ToastContainer);
+    toastContainer.props().pauseOnFocusLoss.should.be.false();
+    toastContainer.props().closeButton.should.be.false();
+    toastContainer.props().hideProgressBar.should.be.true();
+    toastContainer.props().autoClose.should.equal(3000);
+    toastContainer.props().className.should.equal('landing');
   });
 });

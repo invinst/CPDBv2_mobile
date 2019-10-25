@@ -130,6 +130,14 @@ module.exports = {
       selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[4]',
       locateStrategy: 'xpath',
     },
+    lastToast: {
+      selector: '(//div[contains(@class, "Toastify__toast-body")])[last()]',
+      locateStrategy: 'xpath',
+    },
+    landingPageBreadCrumb: {
+      selector: '//a[@href="/" and .="cpdp"]',
+      locateStrategy: 'xpath',
+    },
   },
 
   sections: {
@@ -281,6 +289,10 @@ module.exports = {
       selector: '.test--officer-coaccusals',
       elements: {
         firstCoaccusalCard: '.test--officer-card',
+        firstPinButton: {
+          selector: '//div[contains(@class, "item-pin-button__item-pin-button")]',
+          locateStrategy: 'xpath',
+        },
       },
     },
     map: {

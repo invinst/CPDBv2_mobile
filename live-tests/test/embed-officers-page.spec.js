@@ -58,7 +58,7 @@ describe('EmbedOfficerPage', function () {
     done();
   });
 
-  it('should show title, description and officer cards', function (client) {
+  it('should show title, description and officer cards and no pin buttons', function (client) {
     this.embedOfficersPage.expect.element('@title').text.to.equal('Some title');
     this.embedOfficersPage.expect.element('@description').text.to.equal('Some description');
 
@@ -66,6 +66,7 @@ describe('EmbedOfficerPage', function () {
     client.elements(cards.locateStrategy, cards.selector, function (result) {
       assert.equal(result.value.length, 2);
     });
+    this.embedOfficersPage.expect.element('@firstPinButton').not.to.be.present;
   });
 
   it('should go to officer summary page when click to card', function (client) {

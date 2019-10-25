@@ -100,7 +100,7 @@ class OfficerPage extends Component {
       allBadges.unshift('Unknown');
 
     return (
-      <span>
+      <span className='badges'>
         { reduce(allBadges, (prev, curr) => [prev, ', ', curr]) }
       </span>
     );

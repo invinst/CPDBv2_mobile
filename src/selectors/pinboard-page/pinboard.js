@@ -15,7 +15,7 @@ const countPinnedItems = pinboard => {
 };
 
 export const getPinboard = createSelector(
-  state => state.pinboardPage.pinboard,
+  state => get(state, 'pinboardPage.pinboard', {}),
   pinboard => ({
     id: get(pinboard, 'id', null) !== null ? pinboard['id'].toString() : null,
     title: get(pinboard, 'title', ''),
@@ -41,6 +41,11 @@ export const pinboardItemsSelector = createSelector(
     'TRR': trrIds,
   })
 );
+
+export const isItemPinned = (pinnedItemType, id, pinboardItems) => {
+  return Object.prototype.hasOwnProperty.call(pinboardItems, pinnedItemType) &&
+    (pinboardItems[pinnedItemType].indexOf(String(id)) !== -1);
+};
 
 export const pinboardICRIDsSelector = createSelector(
   getPinboard,

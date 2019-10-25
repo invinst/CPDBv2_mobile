@@ -1,6 +1,5 @@
 import {
   suggestTerm,
-  suggestAllFromCategory,
   focus,
   blur,
   clear,
@@ -11,7 +10,6 @@ import {
   fetchRecentSearchItems,
   fetchedEmptyRecentSearchItems,
   SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE,
-  SUGGEST_ALL_REQUEST_START, SUGGEST_ALL_REQUEST_SUCCESS, SUGGEST_ALL_REQUEST_FAILURE,
   SEARCH_FOCUS,
   SEARCH_BLUR,
   SEARCH_CLEAR,
@@ -36,24 +34,6 @@ describe('suggestions actions', function () {
             url: v2Url(constants.SUGGESTION_API_ENDPOINT),
             adapter: undefined,
             params: undefined,
-          },
-        },
-      });
-    });
-  });
-
-  describe('suggestAllFromCategory', function () {
-    it('should return right action', function () {
-      const categoryPath = 'OFFICERS';
-      const query = 'ja';
-
-      suggestAllFromCategory(categoryPath, query).should.eql({
-        types: [SUGGEST_ALL_REQUEST_START, SUGGEST_ALL_REQUEST_SUCCESS, SUGGEST_ALL_REQUEST_FAILURE],
-        payload: {
-          request: {
-            url: v2Url(constants.SUGGESTION_API_ENDPOINT),
-            adapter: undefined,
-            params: { contentType: categoryPath, term: query },
           },
         },
       });

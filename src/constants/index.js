@@ -268,6 +268,7 @@ export default {
   OFFICER_API_ENDPOINT: '/mobile/officers/',
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
   RECENT_SEARCH_ITEMS_API_ENDPOINT: '/search-mobile/recent-search-items/',
+  SINGLE_SEARCH_API_ENDPOINT: '/search-mobile/single/',
   LANDING_PAGE_CMS_API_ENDPOINT: '/cms-pages/landing-page/',
   OFFICER_PAGE_CMS_API_ENDPOINT: '/cms-pages/officer-page/',
   COMPLAINT_PAGE_CMS_API_ENDPOINT: '/cms-pages/cr-page/',
@@ -352,6 +353,16 @@ export default {
     TAB_NAMES: {
       NETWORK: 'NETWORK',
       GEOGRAPHIC: 'GEOGRAPHIC',
+    },
+    PINNED_ITEM_TYPES: {
+      'CR': 'CR',
+      'DATE > CR': 'CR',
+      'INVESTIGATOR > CR': 'CR',
+      'OFFICER': 'OFFICER',
+      'UNIT > OFFICERS': 'OFFICER',
+      'DATE > OFFICERS': 'OFFICER',
+      'TRR': 'TRR',
+      'DATE > TRR': 'TRR',
     },
   },
 

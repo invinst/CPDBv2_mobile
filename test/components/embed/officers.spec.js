@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { shallow, mount } from 'enzyme';
 import { spy, stub } from 'sinon';
-import should from 'should';
 
 import Officers from 'components/embed/officers';
 import OfficersContainer from 'containers/embed/officers';
@@ -75,14 +74,16 @@ describe('<Officers />', function () {
       'complaint_count': 10,
       id: 13788,
     });
-    should(firstOfficer.prop('openCardInNewPage')).be.true();
+    firstOfficer.prop('openCardInNewPage').should.be.true();
+    firstOfficer.prop('pinnable').should.be.false();
 
     secondOfficer.prop('officer').should.eql({
       'full_name': 'Queen Jones',
       'complaint_count': 0,
       id: 13789,
     });
-    should(secondOfficer.prop('openCardInNewPage')).be.true();
+    secondOfficer.prop('openCardInNewPage').should.be.true();
+    secondOfficer.prop('pinnable').should.be.false();
   });
 
   it('should not open intercom', function () {

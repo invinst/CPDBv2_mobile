@@ -12,10 +12,14 @@ describe('Pinboard <TRRCard />', function () {
     const item = {
       trrDate: '10-10-2010',
       category: 'Use Of Force',
+      id: '1234',
     };
-    const trrCard = mount(<TRRCard item={ item }/>);
+    const wrapper = mount(<TRRCard item={ item } someOtherProp='abcd'/>);
+    const locationCard = wrapper.find(LocationCard);
 
-    trrCard.find(LocationCard).should.have.length(1);
+    locationCard.props().item.should.eql(item);
+    locationCard.props().someOtherProp.should.equal('abcd');
+    locationCard.props().url.should.equal('/trr/1234/');
   });
 });
 

@@ -17,7 +17,10 @@ export default class NewDocumentAllegations extends Component {
   }
 
   render() {
-    const { newDocumentAllegations, description, title, pathname, onTrackingAttachment } = this.props;
+    const {
+      newDocumentAllegations, description, title,
+      pathname, onTrackingAttachment, addOrRemoveItemInPinboard,
+    } = this.props;
 
     return (
       <CarouselWrapper
@@ -32,6 +35,7 @@ export default class NewDocumentAllegations extends Component {
               key={ allegation.crid }
               pathname={ pathname }
               onTrackingAttachment={ onTrackingAttachment }
+              addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
             />
           ))
         }
@@ -42,12 +46,14 @@ export default class NewDocumentAllegations extends Component {
 
 NewDocumentAllegations.defaultProps = {
   requestNewDocumentAllegations: () => {},
+  addOrRemoveItemInPinboard: () => {},
   newDocumentAllegations: [],
 };
 
 NewDocumentAllegations.propTypes = {
   newDocumentAllegations: PropTypes.array,
   requestNewDocumentAllegations: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
   description: PropTypes.object,
   title: PropTypes.object,
   pathname: PropTypes.string,

@@ -2,8 +2,10 @@ import { connect } from 'react-redux';
 
 import RecentActivities from 'components/landing-page/recent-activities';
 import { requestRecentActivities } from 'actions/landing-page';
+import { addOrRemoveItemInPinboard } from 'actions/pinboard';
 import { recentActivitiesSelector } from 'selectors/landing-page';
 import { cmsSelector } from 'selectors/common/cms';
+
 
 const mapStateToProps = state => ({
   recentActivities: recentActivitiesSelector(state),
@@ -13,6 +15,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   requestRecentActivities,
+  addOrRemoveItemInPinboard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecentActivities);

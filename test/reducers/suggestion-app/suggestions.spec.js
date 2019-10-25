@@ -3,6 +3,7 @@ import {
   SUGGESTION_REQUEST_FAILURE,
   SUGGEST_ALL_REQUEST_SUCCESS,
   SUGGEST_ALL_REQUEST_FAILURE,
+  SUGGESTION_SINGLE_REQUEST_SUCCESS,
 } from 'actions/suggestion';
 import suggestions from 'reducers/suggestion-app/suggestions';
 
@@ -70,5 +71,28 @@ describe('suggestions reducer', function () {
     suggestions({}, {
       type: SUGGEST_ALL_REQUEST_FAILURE,
     }).should.eql({});
+  });
+
+  it('should handle SUGGESTION_SINGLE_REQUEST_SUCCESS', function () {
+    suggestions({
+      OFFICER: [{ id: 1, a: 'b' }],
+    }, {
+      type: SUGGESTION_SINGLE_REQUEST_SUCCESS,
+      payload: {
+        results: [
+          { id: 2, c: 'd' },
+        ],
+      },
+      request: {
+        params: {
+          contentType: 'OFFICER',
+        },
+      },
+    }).should.eql({
+      OFFICER: [
+        { id: 1, a: 'b' },
+        { id: 2, c: 'd' },
+      ],
+    });
   });
 });

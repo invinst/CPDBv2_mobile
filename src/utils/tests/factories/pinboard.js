@@ -1,7 +1,7 @@
+/* istanbul ignore file */
 import { Factory } from 'rosie';
 
 
-/* istanbul ignore next */
 export const PinboardFactory = Factory.define('pinboard')
   .attr('id', null)
   .attr('title', () => '')

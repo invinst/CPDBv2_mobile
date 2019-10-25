@@ -2,10 +2,9 @@ import { Promise } from 'es6-promise';
 import { stub } from 'sinon';
 import { browserHistory } from 'react-router';
 
-import restoreAndRedirectPinboardMiddleware from 'middleware/restore-and-redirect-pinboard-middleware';
+import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pinboard-middleware';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 import {
-  fetchLatestRetrievedPinboard,
   fetchPinboard,
   PINBOARD_FETCH_REQUEST_SUCCESS,
   fetchPinboardComplaints,
@@ -19,10 +18,9 @@ import {
   fetchPinboardRelevantComplaints,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS, PINBOARD_CREATE_REQUEST_SUCCESS,
 } from 'actions/pinboard';
-import extractQuery from 'utils/extract-query';
 
 
-describe('restoreAndRedirectPinboardMiddleware', function () {
+describe('fetchAndRedirectPinboardMiddleware', function () {
   const createStore = (pinboard, pathname='') => ({
     getState: () => {
       return {
@@ -35,70 +33,6 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
   });
 
   describe('handling @@router/LOCATION_CHANGE', function () {
-    it(
-      'should dispatch fetchLatestRetrievedPinboard when LOCATION_CHANGE to some page (not pinboard page)' +
-      ' and pinboard has not been restored',
-      function () {
-        const action = {
-          type: '@@router/LOCATION_CHANGE',
-          payload: {
-            pathname: '/search/',
-          },
-        };
-        const store = createStore(PinboardFactory.build({
-          'id': '2bd40cf2',
-          'officer_ids': [123, 456],
-          'isPinboardRestored': false,
-        }));
-
-        let dispatched;
-        restoreAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
-        dispatched.should.eql(action);
-
-        store.dispatch.should.be.calledOnce();
-        store.dispatch.should.be.calledWith(fetchLatestRetrievedPinboard({ create: false }));
-      }
-    );
-
-    it(
-      'should dispatch fetchLatestRetrievedPinboard with create is true ' +
-      'when LOCATION_CHANGE to pinboard page without id',
-      function () {
-        const action = {
-          type: '@@router/LOCATION_CHANGE',
-          payload: {
-            pathname: '/pinboard/',
-          },
-        };
-        const store = createStore({});
-
-        let dispatched;
-        restoreAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
-        dispatched.should.eql(action);
-
-        store.dispatch.should.be.calledOnce();
-        store.dispatch.should.be.calledWith(fetchLatestRetrievedPinboard({ create: true }));
-      }
-    );
-
-    it('should not dispatch fetchLatestRetrievedPinboard if there is no pinboard id but query exists', function () {
-      const pathname = '/pinboard/?officer-ids=1,3,4,5,0&crids=1053673&trr-ids=,0,1';
-      const action = {
-        type: '@@router/LOCATION_CHANGE',
-        payload: {
-          pathname,
-          query: extractQuery(pathname),
-        },
-      };
-      const store = createStore({});
-
-      let dispatched;
-      restoreAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
-      dispatched.should.eql(action);
-
-      store.dispatch.should.not.be.called();
-    });
-
     it('should dispatch fetchPinboard when go to new pinboard page', function () {
       const action = {
         type: '@@router/LOCATION_CHANGE',
@@ -114,7 +48,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       }));
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       store.dispatch.should.be.calledOnce();
@@ -136,7 +70,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       }));
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       store.dispatch.callCount.should.equal(10);
@@ -166,7 +100,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       }));
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       store.dispatch.should.not.be.called();
@@ -188,7 +122,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       }));
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       store.dispatch.should.not.be.called();
@@ -218,7 +152,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       };
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       browserHistory.replace.should.not.be.called();
@@ -245,7 +179,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       };
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       browserHistory.replace.should.be.calledOnce();
@@ -273,7 +207,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       };
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       browserHistory.replace.should.be.calledOnce();
@@ -294,7 +228,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       };
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       browserHistory.replace.should.not.be.called();
@@ -325,7 +259,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       };
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       browserHistory.replace.should.be.calledOnce();
@@ -367,7 +301,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       };
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       browserHistory.replace.should.be.calledOnce();
@@ -392,7 +326,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       };
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       browserHistory.replace.should.not.be.called();
@@ -412,7 +346,7 @@ describe('restoreAndRedirectPinboardMiddleware', function () {
       };
 
       let dispatched;
-      restoreAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
       browserHistory.replace.should.not.be.called();

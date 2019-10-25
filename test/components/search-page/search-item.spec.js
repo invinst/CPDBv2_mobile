@@ -5,7 +5,7 @@ import { spy } from 'sinon';
 import { createMemoryHistory } from 'history';
 
 import SearchItem from 'components/search-page/search-item';
-import ItemPinButton from 'components/search-page/item-pin-button';
+import ItemPinButton from 'components/common/item-pin-button';
 
 
 describe('<SearchItem />', function () {

@@ -15,6 +15,9 @@ import {
   getActiveCategory,
   getQuery,
   queryPrefixSelector,
+  isShowingSingleContentTypeSelector,
+  hasMoreSelector,
+  nextParamsSelector,
 } from 'selectors/search-page';
 
 describe('search-page selectors', function () {
@@ -650,6 +653,63 @@ describe('search-page selectors', function () {
         },
       };
       queryPrefixSelector(state).should.be.eql('date-officer');
+    });
+  });
+
+  describe('isShowingSingleContentTypeSelector', function () {
+    it('should tell if showing single type of content', function () {
+      isShowingSingleContentTypeSelector({
+        suggestionApp: {
+          chosenCategory: 'OFFICER',
+        },
+      }).should.be.true();
+
+      isShowingSingleContentTypeSelector({
+        suggestionApp: {
+          chosenCategory: null,
+        },
+      }).should.be.false();
+
+      isShowingSingleContentTypeSelector({
+        suggestionApp: {},
+      }).should.be.false();
+    });
+  });
+
+  describe('hasMoreSelector', function () {
+    it('should return false when no content type is selected', function () {
+      hasMoreSelector({
+        suggestionApp: {
+          tags: [],
+          pagination: {},
+          contentType: null,
+        },
+      }).should.be.false();
+    });
+
+    it('should return false when content type is selected and there is no next url', function () {
+      hasMoreSelector({
+        suggestionApp: {
+          tags: [],
+          pagination: {},
+          contentType: 'OFFICER',
+        },
+      }).should.be.false();
+    });
+
+    describe('nextParamsSelector', function () {
+      it('should return params from url', function () {
+        nextParamsSelector({
+          suggestionApp: {
+            pagination: {
+              next: 'example.com?limit=20&offset=20',
+            },
+          },
+        }).should.deepEqual({
+          limit: '20',
+          offset: '20',
+        });
+      });
     });
   });
 });

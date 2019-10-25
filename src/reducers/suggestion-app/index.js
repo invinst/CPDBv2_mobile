@@ -9,6 +9,7 @@ import recentSuggestions from './recent-suggestions';
 import activeCategory from './active-category';
 import chosenCategory from './chosen-category';
 import recentSuggestionsRequested from './recent-suggestions-requested';
+import pagination from './pagination';
 
 
 export default combineReducers({
@@ -21,4 +22,5 @@ export default combineReducers({
   activeCategory,
   chosenCategory,
   recentSuggestionsRequested,
+  pagination,
 });

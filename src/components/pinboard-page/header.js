@@ -14,7 +14,7 @@ export default class Header extends Component {
           <div className='header-title'>cpdp</div>
           <div className='right-menu'>
             <div className='menu-item highlight' onClick={ e => e.preventDefault() }>
-              Pinboard
+              Pinboards
             </div>
           </div>
         </div>

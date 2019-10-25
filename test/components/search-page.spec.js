@@ -319,36 +319,68 @@ describe('<SearchPage />', function () {
       lastCategory.prop('onHeightReady').should.be.eql(SearchPage.prototype.updateLastCategoryHeight);
     });
 
-    it('should pass correct allButtonClickHandler prop to SearchCategory', function () {
+    it('should pass correct props to SearchCategory', function () {
       const stubBoundCallback = stub(SearchPage.prototype.chooseCategory, 'bind');
       stubBoundCallback.returns(SearchPage.prototype.chooseCategory);
+      const spySaveToRecent = spy();
+      const spyUpdateActiveCategory = spy();
+      const spyAddOrRemoveItemInPinboard = spy();
+      const spyGetSuggestionWithContentType = spy();
 
       const officersProp = ['data'];
-      const unitsProp = ['data'];
 
       const wrapper = shallow(
         <SearchPage
           query='qa'
           officers={ officersProp }
-          units={ unitsProp } />
+          chosenCategory='officers'
+          activeCategory='officers'
+          saveToRecent={ spySaveToRecent }
+          updateActiveCategory={ spyUpdateActiveCategory }
+          addOrRemoveItemInPinboard={ spyAddOrRemoveItemInPinboard }
+          getSuggestionWithContentType={ spyGetSuggestionWithContentType }
+          nextParams={ {
+            contentType: 'OFFICER',
+            limit: '30',
+            offset: '60',
+            term: '123',
+          } }
+          hasMore={ true }
+        />
       );
 
       const searchCategory = wrapper.find(SearchCategory).at(0);
+      searchCategory.prop('categoryId').should.equal('officers');
+      searchCategory.prop('categoryPath').should.equal('OFFICER');
       searchCategory.prop('allButtonClickHandler').should.eql(SearchPage.prototype.chooseCategory);
+      searchCategory.prop('showAllButton').should.be.false();
+      searchCategory.prop('title').should.equal('OFFICERS');
+      searchCategory.prop('items').should.eql(['data']);
+      searchCategory.prop('saveToRecent').should.eql(spySaveToRecent);
+      searchCategory.prop('updateActiveCategory').should.eql(spyUpdateActiveCategory);
+      searchCategory.prop('activeCategory').should.equal('officers');
+      searchCategory.prop('addOrRemoveItemInPinboard').should.eql(spyAddOrRemoveItemInPinboard);
+      searchCategory.prop('getSuggestionWithContentType').should.eql(spyGetSuggestionWithContentType);
+      searchCategory.prop('query').should.equal('qa');
+      searchCategory.prop('nextParams').should.eql({
+        contentType: 'OFFICER',
+        limit: '30',
+        offset: '60',
+        term: '123',
+      });
+      searchCategory.prop('hasMore').should.be.true();
 
       stubBoundCallback.restore();
     });
   });
 
   describe('chooseCategory', function () {
-    it('should call suggestAllFromCategory & updateChosenCategory with correct args', function () {
-      const suggestAllFromCategory = spy();
+    it('should call updateChosenCategory with correct args', function () {
       const updateChosenCategory = spy();
 
       const wrapper = shallow(
         <SearchPage
           query='wa'
-          suggestAllFromCategory={ suggestAllFromCategory }
           updateChosenCategory={ updateChosenCategory }
         />
       );
@@ -358,7 +390,6 @@ describe('<SearchPage />', function () {
         id: 'myid',
       });
 
-      suggestAllFromCategory.calledWith('mypath', 'wa').should.be.true();
       updateChosenCategory.calledWith('myid').should.be.true();
     });
   });
@@ -469,21 +500,5 @@ describe('<SearchPage />', function () {
       browserHistoryPush.restore();
       done();
     }, 50);
-  });
-
-  it('should show toast on toast prop change', function () {
-    const showToastStub = spy(SearchPage.prototype, 'showToast');
-
-    const wrapper = shallow(
-      <SearchPage />
-    );
-    wrapper.setProps({
-      toast: {
-        type: 'OFFICER',
-        actionType: 'added',
-      },
-    });
-
-    showToastStub.should.be.calledWith('OFFICER added', 'added');
   });
 });

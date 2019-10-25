@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { spy, stub } from 'sinon';
 import { EditorState } from 'draft-js';
-import should from 'should';
 
 import TopOfficersByAllegation from 'components/landing-page/top-officers-by-allegation';
 import OfficerCard from 'components/common/officer-card';
@@ -22,7 +21,7 @@ describe('<TopOfficersByAllegation />', function () {
     mount(
       <TopOfficersByAllegation
         requestTopOfficersByAllegation={ requestTopOfficersByAllegationSpy }
-        topOfficersByAllegation={ [{ percentile: {} }] }
+        topOfficersByAllegation={ [{ id: 13788 }, { id: 13789 }] }
         cmsRequested={ true }
         requestCMS={ requestCMSSpy }
       />
@@ -64,6 +63,7 @@ describe('<TopOfficersByAllegation />', function () {
         cmsRequested={ true }
         title={ titleCMSContent }
         description={ descriptionCMSContent }
+        pinnable={ true }
       />
     );
     const carouselWrapper = wrapper.find(CarouselWrapper);
@@ -81,14 +81,16 @@ describe('<TopOfficersByAllegation />', function () {
       gender: 'Male',
       id: 13788,
     });
-    should(firstOfficer.prop('openCardInNewPage')).be.undefined();
+    firstOfficer.prop('openCardInNewPage').should.be.false();
+    firstOfficer.prop('pinnable').should.be.true();
 
     secondOfficer.prop('officer').should.eql({
       'full_name': 'Queen Jones',
       gender: 'Female',
       id: 13789,
     });
-    should(secondOfficer.prop('openCardInNewPage')).be.undefined();
+    firstOfficer.prop('openCardInNewPage').should.be.false();
+    secondOfficer.prop('pinnable').should.be.true();
   });
 
   it('should not open intercom when running in embed mode', function () {

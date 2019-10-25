@@ -1,5 +1,4 @@
 import { browserHistory } from 'react-router';
-import { isEmpty } from 'lodash';
 
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import {
@@ -7,7 +6,6 @@ import {
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   fetchPinboard,
-  fetchLatestRetrievedPinboard,
   fetchPinboardComplaints,
   fetchPinboardOfficers,
   fetchPinboardTRRs,
@@ -74,8 +72,6 @@ export default store => next => action => {
           getPinboardData(store, idOnPath);
         }
       }
-    } else if (!pinboard.isPinboardRestored && isEmpty(action.payload.query)) {
-      store.dispatch(fetchLatestRetrievedPinboard({ create: pathname === '/pinboard/' }));
     }
   }
 
