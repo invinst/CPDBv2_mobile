@@ -24,7 +24,6 @@ const resultComponentMappings = {
   investigatorCRs: CRSearchResult,
   trrs: TRRSearchResult,
   recent: SuggestedSearchResult,
-  suggested: SuggestedSearchResult,
 };
 
 export default class SearchCategory extends Component {

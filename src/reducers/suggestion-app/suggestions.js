@@ -13,38 +13,23 @@ const categories = constants.SEARCH_CATEGORIES.map((cat) => cat.path);
 const defaultState = {};
 
 categories.forEach((category) => {
-  defaultState[category] = {
-    isShowingAll: false,
-    data: [],
-  };
+  defaultState[category] = [];
 });
 
 export default handleActions({
   [SUGGESTION_REQUEST_SUCCESS]: (state, action) => {
     const suggestions = {};
-    categories.forEach((category) => {
-      suggestions[category] = {
-        isShowingAll: false,
-        data: action.payload[category] || [],
-      };
-    });
+    categories.forEach((category) => suggestions[category] = action.payload[category] || []);
     return suggestions;
   },
-  [SUGGESTION_REQUEST_FAILURE]: (state, action) => {
-    return {};
-  },
+  [SUGGESTION_REQUEST_FAILURE]: (state, action) => ({}),
   [SUGGEST_ALL_REQUEST_SUCCESS]: (state, action) => {
     const category = Object.keys(action.payload)[0];
 
     return {
       ...state,
-      [category]: {
-        isShowingAll: true,
-        data: action.payload[category],
-      },
+      [category]: action.payload[category],
     };
   },
-  [SUGGEST_ALL_REQUEST_FAILURE]: (state, action) => {
-    return {};
-  },
+  [SUGGEST_ALL_REQUEST_FAILURE]: (state, action) => ({}),
 }, defaultState);

@@ -4,15 +4,6 @@ const assert = require('assert');
 const api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 
-const mockSuggestionResponse = {
-  'OFFICER': [
-    {
-      id: 30291,
-      name: 'John Tobler',
-    },
-  ],
-};
-
 const mockSearchQueryResponse = {
   'OFFICER': [
     {
@@ -205,7 +196,7 @@ const mockInvestigatorCRSearchResponse = {
 
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
-    api.mock('GET', '/api/v2/search-mobile/', 200, mockSuggestionResponse);
+    api.mock('GET', '/api/v2/search-mobile/?term=wh', 200, mockSearchQueryResponse);
     this.searchPage = client.page.search();
     this.officerPage = client.page.officerPage();
     this.searchPage.navigate();
@@ -218,29 +209,13 @@ describe('SearchPageTest', function () {
     done();
   });
 
-  it('should show search page with suggested items', function () {
-    const searchPage = this.searchPage;
+  it('should show recent items', function (client) {
+    this.searchPage.setValue('@queryInput', 'wh');
+    this.searchPage.section.officers.section.firstRow.click('@officerName');
 
-    searchPage.expect.element('@queryInput').to.be.visible;
-    searchPage.expect.element('@queryInput').to.have.attribute('placeholder', 'Officer name, badge number or date');
-
-    searchPage.expect.element('@suggestedHeader').text.to.equal('SUGGESTED');
-
-    const suggested = searchPage.section.suggested;
-
-    const suggestedOfficer = suggested.section.officer;
-
-    suggested.expect.section('@officer').to.have.attribute('href').which.contains('/officer/30291/john-tobler/');
-    suggestedOfficer.expect.element('@label').text.to.contain('Officer');
-    suggestedOfficer.expect.element('@value').text.to.contain('John Tobler');
-  });
-
-  it('should show recent items', function () {
-    this.searchPage.section.suggested.section.officer.click('@value');
-    // this officer item should now be added into "recent" list
     this.searchPage.navigate();
     this.searchPage.expect.element('@recentHeader').to.be.present;
-    this.searchPage.expect.section('@recent').text.to.contain('John Tobler');
+    this.searchPage.expect.section('@recent').text.to.contain('John Wang');
   });
 
   context('search for wh', function () {

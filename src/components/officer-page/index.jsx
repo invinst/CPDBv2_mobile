@@ -100,7 +100,7 @@ class OfficerPage extends Component {
       allBadges.unshift('Unknown');
 
     return (
-      <span>
+      <span className='badges'>
         { reduce(allBadges, (prev, curr) => [prev, ', ', curr]) }
       </span>
     );
@@ -231,7 +231,6 @@ OfficerPage.propTypes = {
   threeCornerPercentile: PropTypes.array,
   noDataCMSContent: PropTypes.object,
   hasCMS: PropTypes.bool,
-  requestLandingPage: PropTypes.func,
   location: PropTypes.object,
   params: PropTypes.object,
   hasCoaccusal: PropTypes.bool,
@@ -249,7 +248,6 @@ OfficerPage.defaultProps = {
   location: {},
   params: {},
   fetchOfficer: noop,
-  requestLandingPage: noop,
   getOfficerCoaccusals: noop,
   getOfficerTimeline: noop,
   resetTimelineFilter: noop,
