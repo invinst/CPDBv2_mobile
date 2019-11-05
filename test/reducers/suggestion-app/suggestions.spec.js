@@ -11,14 +11,14 @@ import suggestions from 'reducers/suggestion-app/suggestions';
 describe('suggestions reducer', function () {
   it('should return initial state', function () {
     suggestions(undefined, {}).should.eql({
-      'DATE > CR': { data: [], isShowingAll: false },
-      'DATE > TRR': { data: [], isShowingAll: false },
-      'DATE > OFFICERS': { data: [], isShowingAll: false },
-      'INVESTIGATOR > CR': { data: [], isShowingAll: false },
-      CR: { data: [], isShowingAll: false },
-      TRR: { data: [], isShowingAll: false },
-      OFFICER: { data: [], isShowingAll: false },
-      UNIT: { data: [], isShowingAll: false },
+      'DATE > CR': [],
+      'DATE > TRR': [],
+      'DATE > OFFICERS': [],
+      'INVESTIGATOR > CR': [],
+      CR: [],
+      TRR: [],
+      OFFICER: [],
+      UNIT: [],
     });
   });
 
@@ -38,14 +38,14 @@ describe('suggestions reducer', function () {
       type: SUGGESTION_REQUEST_SUCCESS,
       payload: suggestionResults,
     }).should.eql({
-      'DATE > CR': { data: [11, 12], isShowingAll: false },
-      'DATE > TRR': { data: [13, 14], isShowingAll: false },
-      'DATE > OFFICERS': { data: [15, 16], isShowingAll: false },
-      'INVESTIGATOR > CR': { data: [123, 456], isShowingAll: false },
-      CR: { data: [1, 2], isShowingAll: false },
-      TRR: { data: [3, 4], isShowingAll: false },
-      OFFICER: { data: [5, 6], isShowingAll: false },
-      UNIT: { data: [9, 10], isShowingAll: false },
+      'DATE > CR': [11, 12],
+      'DATE > TRR': [13, 14],
+      'DATE > OFFICERS': [15, 16],
+      'INVESTIGATOR > CR': [123, 456],
+      CR: [1, 2],
+      TRR: [3, 4],
+      OFFICER: [5, 6],
+      UNIT: [9, 10],
     });
   });
 
@@ -63,7 +63,7 @@ describe('suggestions reducer', function () {
       },
     }).should.eql({
       any: 'any',
-      CRS: { data: [1, 2], isShowingAll: true },
+      CRS: [1, 2],
     });
   });
 
@@ -75,10 +75,7 @@ describe('suggestions reducer', function () {
 
   it('should handle SUGGESTION_SINGLE_REQUEST_SUCCESS', function () {
     suggestions({
-      OFFICER: {
-        isShowing: false,
-        data: [{ id: 1, a: 'b' }],
-      },
+      OFFICER: [{ id: 1, a: 'b' }],
     }, {
       type: SUGGESTION_SINGLE_REQUEST_SUCCESS,
       payload: {
@@ -92,13 +89,10 @@ describe('suggestions reducer', function () {
         },
       },
     }).should.eql({
-      OFFICER: {
-        isShowing: false,
-        data: [
-          { id: 1, a: 'b' },
-          { id: 2, c: 'd' },
-        ],
-      },
+      OFFICER: [
+        { id: 1, a: 'b' },
+        { id: 2, c: 'd' },
+      ],
     });
   });
 });

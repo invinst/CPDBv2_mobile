@@ -11,8 +11,7 @@ toast.configure();
 
 class MainPage extends Component {
   componentDidMount() {
-    const { fetchSuggestedSearchItems, routeChanged, location } = this.props;
-    fetchSuggestedSearchItems();
+    const { routeChanged, location } = this.props;
     routeChanged({ from: '', to: location.pathname });
   }
 
@@ -42,7 +41,6 @@ class MainPage extends Component {
 }
 
 MainPage.propTypes = {
-  fetchSuggestedSearchItems: PropTypes.func.isRequired,
   query: PropTypes.string,
   urlQuery: PropTypes.string,
   children: PropTypes.object,
@@ -57,7 +55,6 @@ MainPage.defaultProps = {
     pathname: '',
   },
   routeChanged: () => {},
-  fetchSuggestedSearchItems: () => {},
 };
 
 export default MainPage;

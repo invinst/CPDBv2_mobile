@@ -5,15 +5,6 @@ const api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 const { range } = require('lodash');
 
-const mockSuggestionResponse = {
-  'OFFICER': [
-    {
-      id: 30291,
-      name: 'John Tobler',
-    },
-  ],
-};
-
 const mockSearchQueryResponse = {
   'OFFICER': [
     {
@@ -400,23 +391,6 @@ describe('SearchPageTest', function () {
     recentItems.section.secondRecentItem.expect.element('@itemSubtitle').text.to.equal('CRID 1002144 • 05/29/2010');
     recentItems.section.thirdRecentItem.expect.element('@itemTitle').text.to.equal('Jerome Finnigan');
     recentItems.section.thirdRecentItem.expect.element('@itemSubtitle').text.to.equal('Badge #123456');
-  });
-
-  it('should show search page with suggested items', function () {
-    api.mock('GET', '/api/v2/search-mobile/', 200, mockSuggestionResponse);
-    const searchPage = this.searchPage;
-    searchPage.expect.element('@queryInput').to.be.visible;
-    searchPage.expect.element('@queryInput').to.have.attribute('placeholder', 'Officer name, badge number or date');
-
-    searchPage.expect.element('@suggestedHeader').text.to.equal('SUGGESTED');
-
-    const suggested = searchPage.section.suggested;
-
-    const suggestedOfficer = suggested.section.officer;
-
-    suggested.expect.section('@officer').to.have.attribute('href').which.contains('/officer/30291/john-tobler/');
-    suggestedOfficer.expect.element('@label').text.to.contain('Officer');
-    suggestedOfficer.expect.element('@value').text.to.contain('John Tobler');
   });
 
   context('search for wh', function () {

@@ -37,7 +37,6 @@ module.exports = {
     body: 'body',
     queryInput: '.query-input',
     backToFullSearchLink: '.back-to-full-search-link',
-    suggestedHeader: '#search-category-suggested',
     recentHeader: '#search-category-recent',
     dateCRsHeader: '#search-category-dateCRs',
     dateTRRsHeader: '#search-category-dateTRRs',
@@ -52,18 +51,6 @@ module.exports = {
   },
 
   sections: {
-    suggested: {
-      selector: '.results.suggested',
-      sections: {
-        officer: {
-          selector: '.row.officer',
-          elements: {
-            label: '.suggested-type',
-            value: '.suggested-title',
-          },
-        },
-      },
-    },
     recent: {
       selector: '.results.recent',
       sections: {

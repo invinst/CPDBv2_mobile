@@ -39,7 +39,7 @@ describe('<SearchPage />', function () {
           location='location'
           routes='routes'
           params='params'
-          recent={ { data: [] } }
+          recent={ [] }
         />
       );
       pushBreadcrumbsSpy.calledWith({
@@ -50,7 +50,7 @@ describe('<SearchPage />', function () {
     });
 
     it('should focus the input element when mounted', function () {
-      const wrapper = shallow(<SearchPage recent={ { data: [] } } />);
+      const wrapper = shallow(<SearchPage recent={ [] } />);
       const instance = wrapper.instance();
       const spyFocus = spy();
 
@@ -138,8 +138,8 @@ describe('<SearchPage />', function () {
       const wrapper = shallow(
         <SearchPage
           query={ 'ab' }
-          officers={ { data: [1] } }
-          undefined={ { data: [1] } }
+          officers={ [1] }
+          undefined={ [1] }
         />
       );
       const instance = wrapper.instance();
@@ -178,7 +178,7 @@ describe('<SearchPage />', function () {
       const wrapper = mount(
         <SearchPage
           suggestTerm={ spySuggestTerm }
-          recent={ { data: [] } }
+          recent={ [] }
         />
       );
       const instance = wrapper.instance();
@@ -195,7 +195,7 @@ describe('<SearchPage />', function () {
       const wrapper = mount(
         <SearchPage
           suggestTerm={ spySuggestTerm }
-          recent={ { data: [] } }
+          recent={ [] }
         />
       );
       const instance = wrapper.instance();
@@ -241,8 +241,18 @@ describe('<SearchPage />', function () {
       this.stubOnInputChange.calledOnce.should.be.true();
     });
 
+    it('should render recent SearchCategory when we have recent', function () {
+      const wrapper = shallow(<SearchPage query={ 'j' } recent={ ['data'] }/>);
+
+      const searchCategory = wrapper.find('SearchCategory');
+
+      searchCategory.prop('categoryId').should.eql('recent');
+      searchCategory.prop('title').should.eql('RECENT');
+      searchCategory.prop('items').should.eql(['data']);
+    });
+
     it('should set this.searchInput ref to its own instance', function () {
-      const wrapper = mount(<SearchPage recent={ { data: [] } }/>);
+      const wrapper = mount(<SearchPage recent={ [] }/>);
 
       const refInstance = wrapper.instance().searchInput;
       (typeof refInstance).should.not.eql('undefined');
@@ -288,13 +298,8 @@ describe('<SearchPage />', function () {
     });
 
     it('should render SearchCategory components', function () {
-      const officersProp = {
-        data: ['data'],
-      };
-
-      const unitsProp = {
-        data: ['data'],
-      };
+      const officersProp = ['data'];
+      const unitsProp = ['data'];
 
       const wrapper = shallow(
         <SearchPage
@@ -322,9 +327,7 @@ describe('<SearchPage />', function () {
       const spyAddOrRemoveItemInPinboard = spy();
       const spyGetSuggestionWithContentType = spy();
 
-      const officersProp = {
-        data: ['data'],
-      };
+      const officersProp = ['data'];
 
       const wrapper = shallow(
         <SearchPage
@@ -393,12 +396,8 @@ describe('<SearchPage />', function () {
 
   describe('"view single category" mode', function () {
     it('should only display search results of the chosen single category', function () {
-      const crsProp = {
-        data: ['data'],
-      };
-      const officersProp = {
-        data: ['data'],
-      };
+      const crsProp = ['data'];
+      const officersProp = ['data'];
 
       const wrapper = shallow(
         <SearchPage
@@ -417,13 +416,13 @@ describe('<SearchPage />', function () {
   describe('Intercom', function () {
     describe('Intercom launcher', function () {
       it('should hide intercom launcher when mounted', function () {
-        mount(<SearchPage recent={ { data: [] } } />);
+        mount(<SearchPage recent={ [] } />);
 
         IntercomUtils.showIntercomLauncher.calledWith(false).should.be.true();
       });
 
       it('should show intercom launcher again when unmounted', function () {
-        const wrapper = mount(<SearchPage recent={ { data: [] } } />);
+        const wrapper = mount(<SearchPage recent={ [] } />);
         wrapper.unmount();
 
         IntercomUtils.showIntercomLauncher.calledWith(true).should.be.true();
@@ -440,7 +439,7 @@ describe('<SearchPage />', function () {
       });
 
       it('should track Intercom with search page', function () {
-        mount(<SearchPage recent={ { data: [] } } />);
+        mount(<SearchPage recent={ [] } />);
         IntercomTracking.trackSearchPage.called.should.be.true();
       });
     });
@@ -488,7 +487,7 @@ describe('<SearchPage />', function () {
     const wrapper = mount(
       <SearchPage
         createPinboard={ createPinboard }
-        recent={ { data: [] } }
+        recent={ [] }
       />
     );
 

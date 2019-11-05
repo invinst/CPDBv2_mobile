@@ -14,6 +14,11 @@ import { generatePinboardUrl } from 'utils/pinboard';
 import PinboardBar from './pinboard-bar';
 
 
+const RECENT_CATEGORY = {
+  name: 'RECENT',
+  id: 'recent',
+};
+
 export default class SearchPage extends Component {
   constructor(props) {
     super(props);
@@ -82,10 +87,7 @@ export default class SearchPage extends Component {
   }
 
   getCategoriesWithSuggestions() {
-    return constants.SEARCH_CATEGORIES.filter((cat) => {
-      const suggestions = this.props[cat.id];
-      return !!suggestions && suggestions.data.length > 0;
-    });
+    return constants.SEARCH_CATEGORIES.filter((cat) => !isEmpty(this.props[cat.id]));
   }
 
   updateLastCategoryHeight(newHeight) {
@@ -125,7 +127,6 @@ export default class SearchPage extends Component {
     return categories.map((cat, index) => {
       const showAllButton = (
         cat.id !== 'recent' &&
-        cat.id !== 'suggested' &&
         chosenCategory === ''
       );
 
@@ -136,7 +137,7 @@ export default class SearchPage extends Component {
           allButtonClickHandler={ this.chooseCategory.bind(this, cat) }
           showAllButton={ showAllButton }
           title={ cat.longName || cat.name }
-          items={ this.props[cat.id].data }
+          items={ this.props[cat.id] }
           saveToRecent={ saveToRecent }
           updateActiveCategory={ updateActiveCategory }
           activeCategory={ activeCategory }
@@ -176,26 +177,15 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query, queryPrefix, chosenCategory, router, pinboard } = this.props;
-    let categories;
+    const { query, queryPrefix, chosenCategory, router, pinboard, recent } = this.props;
+    let categories = [];
 
     if (!this.isLongEnoughQuery(query)) {
-      categories = [
-        {
-          name: 'RECENT',
-          id: 'recent',
-        },
-        {
-          name: 'SUGGESTED',
-          id: 'suggested',
-        },
-      ].filter((cat) => {
-        const suggestions = this.props[cat.id];
-        return !!suggestions && suggestions.data.length > 0;
-      });
+      if (!isEmpty(recent)) {
+        categories = [RECENT_CATEGORY];
+      }
     } else if (chosenCategory !== '') {
       categories = constants.SEARCH_CATEGORIES.filter(cat => cat.id === chosenCategory);
-
     } else {
       categories = this.getCategoriesWithSuggestions();
     }
@@ -257,7 +247,14 @@ SearchPage.propTypes = {
   inputChanged: PropTypes.func,
   queryChanged: PropTypes.func,
   suggestTerm: PropTypes.func,
-  officers: PropTypes.object,
+  officers: PropTypes.array,
+  crs: PropTypes.array,
+  trrs: PropTypes.array,
+  dateCRs: PropTypes.array,
+  investigatorCRs: PropTypes.array,
+  dateTRRs: PropTypes.array,
+  dateOfficers: PropTypes.array,
+  recent: PropTypes.array,
   fetchRecentSearchItems: PropTypes.func,
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
@@ -266,7 +263,6 @@ SearchPage.propTypes = {
   updateChosenCategory: PropTypes.func,
   router: PropTypes.object,
   pushBreadcrumbs: PropTypes.func,
-  requestLandingPage: PropTypes.func,
   location: PropTypes.object,
   params: PropTypes.object,
   routes: PropTypes.array,

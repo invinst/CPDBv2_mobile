@@ -3,7 +3,6 @@ import { withRouter } from 'react-router';
 
 import { routeChanged } from 'actions/navigation';
 import MainPage from 'components/main-page';
-import { fetchSuggestedSearchItems } from 'actions/suggestion';
 
 
 function mapStateToProps(state, ownProps) {
@@ -15,7 +14,6 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  fetchSuggestedSearchItems,
   routeChanged,
 };
 
