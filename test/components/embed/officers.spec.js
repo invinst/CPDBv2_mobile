@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { shallow, mount } from 'enzyme';
 import { spy, stub } from 'sinon';
-import should from 'should';
 
 import Officers from 'components/embed/officers';
 import OfficersContainer from 'containers/embed/officers';
@@ -75,14 +74,16 @@ describe('<Officers />', function () {
       'complaint_count': 10,
       id: 13788,
     });
-    should(firstOfficer.prop('openCardInNewPage')).be.true();
+    firstOfficer.prop('openCardInNewPage').should.be.true();
+    firstOfficer.prop('pinnable').should.be.false();
 
     secondOfficer.prop('officer').should.eql({
       'full_name': 'Queen Jones',
       'complaint_count': 0,
       id: 13789,
     });
-    should(secondOfficer.prop('openCardInNewPage')).be.true();
+    secondOfficer.prop('openCardInNewPage').should.be.true();
+    secondOfficer.prop('pinnable').should.be.false();
   });
 
   it('should not open intercom', function () {
@@ -97,7 +98,6 @@ describe('<Officers />', function () {
             { axis: 'Internal Allegations', value: 87.828 },
             { axis: 'Civilian Allegations', value: 99.9817 },
           ],
-          officerId: undefined,
           textColor: '#231F20',
           visualTokenBackground: '#f95125',
           year: 2005,
@@ -159,7 +159,6 @@ describe('<Officers />', function () {
           'complaint_count': 104,
           'full_name': 'Broderick Jones',
           percentile: {
-            officerId: 13788,
             year: 2016,
             items: [
               { axis: 'Use of Force Reports', value: 0 },

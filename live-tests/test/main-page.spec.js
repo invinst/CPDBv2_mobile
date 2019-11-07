@@ -1,38 +1,33 @@
 'use strict';
 
 var api = require(__dirname + '/../mock-api');
-
-const mockLandingPageCms = {
-  fields: [
-    {
-      name: 'navbar_title',
-      type: 'rich_text',
-      value: {
-        entityMap: {},
-        blocks: [{
-          data: {},
-          depth: 0,
-          entityRanges: [],
-          inlineStyleRanges: [],
-          key: '2ff82',
-          text: 'Citizens Police Data Project',
-          type: 'unstyled',
-        }],
-      },
-    },
-  ],
-};
+const { TIMEOUT } = require(__dirname + '/../constants');
+const {
+  mockLandingPageCms,
+  mockTopOfficersByAllegation,
+  mockRecentActivities,
+  mockNewDocuments,
+  mockComplaintSummaries,
+} = require(__dirname + '/../mock-data/main-page');
 
 describe('MainPageTest', function () {
   beforeEach(function (client, done) {
+    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
     api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
+    api.mock('GET', '/api/v2/officers/top-by-allegation/', 200, mockTopOfficersByAllegation);
+    api.mock('GET', '/api/v2/activity-grid/', 200, mockRecentActivities);
+    api.mock('GET', '/api/v2/cr/list-by-new-document/', 200, mockNewDocuments);
+    api.mock('GET', '/api/v2/cr/complaint-summaries/', 200, mockComplaintSummaries);
+
     this.mainPage = client.page.main();
+    this.search = client.page.search();
     this.mainPage.navigate();
     this.mainPage.expect.element('@body').to.be.present;
     done();
   });
 
   afterEach(function (client, done) {
+    api.cleanMock();
     done();
   });
 
@@ -83,5 +78,78 @@ describe('MainPageTest', function () {
 
     this.mainPage.navigate(`${mainPageUrl}/something/really/wrong/`);
     client.assert.urlEquals(mainPageUrl);
+  });
+
+  describe('Recent Activity carousel', function () {
+    it('should go to officer summary page when clicking on officer card', function (client) {
+      const cards = this.mainPage.section.recentActivities.section.cards;
+      client.assertCount(cards.selector, 2, cards.locateStrategy);
+      cards.click('@firstCard');
+      client.expect.url().to.match(/\/officer\/\d+\/[-a-z]+\/?$/);
+    });
+  });
+
+  describe('Officers By Allegation carousel', function () {
+    it('should go to officer summary page when click to card', function (client) {
+      const cards = this.mainPage.section.topOfficersByAllegation.section.cards;
+      client.assertCount(cards.selector, 2, cards.locateStrategy);
+      cards.click('@firstCard');
+      client.expect.url().to.match(/\/officer\/\d+\/[-a-z]+\/?$/);
+    });
+  });
+
+  describe('Recent Document Carousel', function () {
+    it('should go to cr page when click to card', function (client) {
+      const cards = this.mainPage.section.newDocumentAllegations.section.cards;
+      client.assertCount(cards.selector, 2, cards.locateStrategy);
+      cards.click('@firstCard');
+      client.assert.urlContains('/complaint/170123/');
+    });
+  });
+
+  describe('Complaint Summaries Carousel', function () {
+    it('should go to cr page when click to card', function (client) {
+      const cards = this.mainPage.section.complaintSummaries.section.cards;
+      client.assertCount(cards.selector, 2, cards.locateStrategy);
+      cards.click('@firstCard');
+      client.expect.url().to.match(/\/complaint\/\w+\/$/);
+    });
+  });
+
+  describe('Pinboard function', function () {
+    it('should display toast when pinning cards', function (client) {
+      const checkPinToast = (parentSelector, messagePrefix) => {
+        //Pin item
+        parentSelector.section.cards.waitForElementVisible('@firstPinButton');
+        parentSelector.section.cards.click('@firstPinButton');
+
+        //Check toast
+        this.mainPage.waitForElementVisible('@lastToast');
+        this.mainPage.expect.element('@lastToast').text.to.equal(`${messagePrefix} added`).before(TIMEOUT);
+
+        //Go to Search Page and check for pinboard item counts
+        this.mainPage.click('@searchLink');
+        this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (1)').before(TIMEOUT);
+        client.back();
+
+        //Unpin item
+        parentSelector.section.cards.waitForElementVisible('@firstPinButton');
+        parentSelector.section.cards.click('@firstPinButton');
+
+        //Check toast
+        this.mainPage.waitForElementVisible('@lastToast');
+        this.mainPage.expect.element('@lastToast').text.to.equal(`${messagePrefix} removed`).before(TIMEOUT);
+
+        //Go to Search Page and check for pinboard item counts
+        this.mainPage.click('@searchLink');
+        this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
+        client.back();
+      };
+
+      checkPinToast(this.mainPage.section.topOfficersByAllegation, 'Officer');
+      checkPinToast(this.mainPage.section.recentActivities, 'Officer');
+      checkPinToast(this.mainPage.section.newDocumentAllegations, 'CR');
+      checkPinToast(this.mainPage.section.complaintSummaries, 'CR');
+    });
   });
 });

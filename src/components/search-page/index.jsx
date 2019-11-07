@@ -1,14 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import ReactHeight from 'react-height';
-import { isEmpty } from 'lodash';
+import { browserHistory } from 'react-router';
+import { isEmpty, noop } from 'lodash';
+import cx from 'classnames';
 
 import constants from 'constants';
-import { scrollToElement, goUp, instantScrollToTop } from 'utils/navigation-util';
+import { goUp, instantScrollToTop } from 'utils/navigation-util';
 import SearchCategory from './search-category';
-import SearchNavbar from './search-navbar';
 import { showIntercomLauncher } from 'utils/intercom';
 import style from './search-page.sass';
 import * as IntercomTracking from 'utils/intercom-tracking';
+import { generatePinboardUrl } from 'utils/pinboard';
+import PinboardBar from './pinboard-bar';
 
 
 const RECENT_CATEGORY = {
@@ -19,24 +22,38 @@ const RECENT_CATEGORY = {
 export default class SearchPage extends Component {
   constructor(props) {
     super(props);
+
+    this.handleEmptyPinboardButtonClick = this.handleEmptyPinboardButtonClick.bind(this);
     this.clearChosenCategory = this.clearChosenCategory.bind(this);
     this.backToFullSearchHandler = this.backToFullSearchHandler.bind(this);
   }
 
   componentDidMount() {
     const {
-      pushBreadcrumbs, location, routes, params,
+      pushBreadcrumbs,
+      location,
+      routes,
+      params,
+      recentSuggestionIds,
+      fetchRecentSearchItems,
+      recentSuggestionsRequested,
+      fetchedEmptyRecentSearchItems,
     } = this.props;
+
+    if (!recentSuggestionsRequested) {
+      if (isEmpty(recentSuggestionIds)) {
+        fetchedEmptyRecentSearchItems();
+      } else {
+        const { officerIds, crids, trrIds } = recentSuggestionIds;
+        fetchRecentSearchItems(officerIds, crids, trrIds);
+      }
+    }
+
     pushBreadcrumbs({ location, routes, params });
     this.searchInput.focus();
     IntercomTracking.trackSearchPage();
     showIntercomLauncher(false);
     this.updateResults();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { location, params, routes, pushBreadcrumbs } = nextProps;
-    pushBreadcrumbs({ location, params, routes });
   }
 
   componentDidUpdate(prevProps) {
@@ -69,11 +86,6 @@ export default class SearchPage extends Component {
     return typeof query === 'string' && query.length >= 2;
   }
 
-  scrollToCategory(categoryId) {
-    const target = '#search-category-' + categoryId;
-    scrollToElement(target, '#search-page-header');
-  }
-
   getCategoriesWithSuggestions() {
     return constants.SEARCH_CATEGORIES.filter((cat) => !isEmpty(this.props[cat.id]));
   }
@@ -84,8 +96,7 @@ export default class SearchPage extends Component {
   }
 
   chooseCategory(category) {
-    const { query, suggestAllFromCategory, updateChosenCategory } = this.props;
-    suggestAllFromCategory(category.path, query);
+    const { updateChosenCategory } = this.props;
     updateChosenCategory(category.id);
   }
 
@@ -105,6 +116,11 @@ export default class SearchPage extends Component {
       saveToRecent,
       updateActiveCategory,
       activeCategory,
+      addOrRemoveItemInPinboard,
+      getSuggestionWithContentType,
+      query,
+      nextParams,
+      hasMore,
     } = this.props;
     const lastIndex = categories.length - 1;
 
@@ -117,7 +133,7 @@ export default class SearchPage extends Component {
       const searchCategory = (
         <SearchCategory
           categoryId={ cat.id }
-          categoryFilter={ cat.filter }
+          categoryPath={ cat.path }
           allButtonClickHandler={ this.chooseCategory.bind(this, cat) }
           showAllButton={ showAllButton }
           title={ cat.longName || cat.name }
@@ -125,6 +141,11 @@ export default class SearchPage extends Component {
           saveToRecent={ saveToRecent }
           updateActiveCategory={ updateActiveCategory }
           activeCategory={ activeCategory }
+          addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+          getSuggestionWithContentType={ getSuggestionWithContentType }
+          query={ query }
+          nextParams={ nextParams }
+          hasMore={ hasMore }
         />
       );
 
@@ -142,22 +163,21 @@ export default class SearchPage extends Component {
     });
   }
 
-  calculateDynamicBottomPaddingStyle() {
-    const lastCategoryHeight = this.lastCategoryHeight || 0;
-    const dynamicBottomPaddingOffset = (
-      constants.QUERY_INPUT_HEIGHT +
-      constants.SEARCH_CATEGORY_LINKS_HEIGHT +
-      2 * constants.NEW_DIVIDER_WEIGHT +
-      lastCategoryHeight
-    );
-    const height = Math.max(constants.BOTTOM_PADDING, window.innerHeight - dynamicBottomPaddingOffset);
-    return {
-      height: `${height}px`,
-    };
+  handleEmptyPinboardButtonClick() {
+    const { createPinboard } = this.props;
+
+    createPinboard({ 'officerIds': [], crids: [], 'trrIds': [] }).then(response => {
+      const pinboard = response.payload;
+      const url = generatePinboardUrl(pinboard);
+
+      if (!isEmpty(url)) {
+        browserHistory.push(url);
+      }
+    });
   }
 
   render() {
-    const { query, queryPrefix, activeCategory, chosenCategory, router, recent } = this.props;
+    const { query, queryPrefix, chosenCategory, router, pinboard, recent } = this.props;
     let categories = [];
 
     if (!this.isLongEnoughQuery(query)) {
@@ -193,22 +213,15 @@ export default class SearchPage extends Component {
             />
 
             <button
-              className='bt-cancel'
+              className={ cx('bt-cancel', { 'active': query !== '' } ) }
               onClick={ goUp.bind(this, router, window.location.pathname) }>
               Cancel
             </button>
           </div>
 
-          <SearchNavbar
-            categories={ categories }
-            activeCategory={ activeCategory }
-            scrollToCategory={ this.scrollToCategory }
-            updateActiveCategory={ this.props.updateActiveCategory }
-            query={ query }
-            chosenCategory={ chosenCategory }
-            clearChosenCategory={ this.clearChosenCategory }
-          />
-
+          <PinboardBar
+            pinboard={ pinboard }
+            onEmptyPinboardButtonClick={ this.handleEmptyPinboardButtonClick } />
         </div>
 
         <div className='category-details-container'>
@@ -222,7 +235,7 @@ export default class SearchPage extends Component {
             </a>
           )
         }
-        <div style={ this.calculateDynamicBottomPaddingStyle() } className='bottom-padding'/>
+        <a className='back-to-front-page-link' href='/'>Back to Front Page</a>
       </div>
     );
   }
@@ -242,7 +255,7 @@ SearchPage.propTypes = {
   dateTRRs: PropTypes.array,
   dateOfficers: PropTypes.array,
   recent: PropTypes.array,
-  suggestAllFromCategory: PropTypes.func,
+  fetchRecentSearchItems: PropTypes.func,
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
   chosenCategory: PropTypes.string,
@@ -253,11 +266,29 @@ SearchPage.propTypes = {
   location: PropTypes.object,
   params: PropTypes.object,
   routes: PropTypes.array,
+  pinboard: PropTypes.object,
+  addOrRemoveItemInPinboard: PropTypes.func,
+  createPinboard: PropTypes.func,
+  recentSuggestionIds: PropTypes.object,
+  recentSuggestionsRequested: PropTypes.bool,
+  fetchedEmptyRecentSearchItems: PropTypes.func,
+  getSuggestionWithContentType: PropTypes.func,
+  nextParams: PropTypes.object,
+  hasMore: PropTypes.bool,
 };
 
 SearchPage.defaultProps = {
-  inputChanged: function () {},
-  updateChosenCategory: function () {},
+  query: '',
+  inputChanged: noop,
+  updateChosenCategory: noop,
   chosenCategory: '',
-  pushBreadcrumbs: () => {},
+  pushBreadcrumbs: noop,
+  createPinboard: noop,
+  suggestTerm: noop,
+  queryChanged: noop,
+  saveToRecent: noop,
+  fetchRecentSearchItems: noop,
+  recentSuggestionIds: {},
+  recentSuggestionsRequested: false,
+  fetchedEmptyRecentSearchItems: noop,
 };

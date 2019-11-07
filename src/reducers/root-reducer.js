@@ -9,6 +9,7 @@ import complaintPage from './complaint-page';
 import trrPage from './trr-page';
 import breadcrumbMapping from './breadcrumb-mapping';
 import embed from './embed';
+import pinboardPage from './pinboard-page';
 
 
 export default combineReducers({
@@ -21,4 +22,5 @@ export default combineReducers({
   complaintPage,
   trrPage,
   embed,
+  pinboardPage,
 });

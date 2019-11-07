@@ -17,7 +17,7 @@ export default class ComplaintSummaries extends Component {
   }
 
   render() {
-    const { complaintSummaries, description, title } = this.props;
+    const { complaintSummaries, description, title, addOrRemoveItemInPinboard } = this.props;
 
     return (
       <CarouselWrapper
@@ -27,7 +27,11 @@ export default class ComplaintSummaries extends Component {
       >
         {
           complaintSummaries.map(allegation => (
-            <ComplaintSummaryCard allegation={ allegation } key={ allegation.crid } />
+            <ComplaintSummaryCard
+              allegation={ allegation }
+              key={ allegation.crid }
+              addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+            />
           ))
         }
       </CarouselWrapper>
@@ -37,12 +41,14 @@ export default class ComplaintSummaries extends Component {
 
 ComplaintSummaries.defaultProps = {
   requestComplaintSummaries: () => {},
+  addOrRemoveItemInPinboard: () => {},
   complaintSummaries: [],
 };
 
 ComplaintSummaries.propTypes = {
   complaintSummaries: PropTypes.array,
   requestComplaintSummaries: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
   description: PropTypes.object,
   title: PropTypes.object,
 };

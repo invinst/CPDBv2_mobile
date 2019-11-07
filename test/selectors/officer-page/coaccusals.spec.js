@@ -15,6 +15,7 @@ describe('Officer coaccusals selectors', function () {
 
     it('should group coaccusals into correct groups', function () {
       const state = {
+        pinboardPage: { pinboard: { 'officer_ids': ['1', '2'] } },
         officerPage: {
           coaccusals: {
             data: {
@@ -83,11 +84,11 @@ describe('Officer coaccusals selectors', function () {
                     'value': 94,
                   },
                 ],
-                officerId: undefined,
                 textColor: '#DFDFDF',
                 visualTokenBackground: '#f52524',
                 year: undefined,
               },
+              isPinned: true,
             },
             {
               id: 2,
@@ -110,11 +111,11 @@ describe('Officer coaccusals selectors', function () {
                     'value': 83,
                   },
                 ],
-                officerId: undefined,
                 textColor: '#DFDFDF',
                 visualTokenBackground: '#f52524',
                 year: undefined,
               },
+              isPinned: true,
             },
           ],
         },
@@ -142,11 +143,11 @@ describe('Officer coaccusals selectors', function () {
                     'value': 73,
                   },
                 ],
-                officerId: undefined,
                 textColor: '#DFDFDF',
                 visualTokenBackground: '#f32a29',
                 year: undefined,
               },
+              isPinned: false,
             },
           ],
         },
