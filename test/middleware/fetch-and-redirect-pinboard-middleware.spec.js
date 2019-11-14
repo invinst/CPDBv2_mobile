@@ -1,6 +1,7 @@
 import { Promise } from 'es6-promise';
 import { stub } from 'sinon';
 import { browserHistory } from 'react-router';
+import { CancelToken } from 'axios';
 
 import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pinboard-middleware';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
@@ -30,6 +31,14 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
       };
     },
     dispatch: stub().usingPromise(Promise).resolves('abc'),
+  });
+
+  beforeEach(function () {
+    this.cancelTokenSource = stub(CancelToken, 'source');
+  });
+
+  afterEach(function () {
+    this.cancelTokenSource.restore();
   });
 
   describe('handling @@router/LOCATION_CHANGE', function () {

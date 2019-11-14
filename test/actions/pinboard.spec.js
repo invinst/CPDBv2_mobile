@@ -152,6 +152,7 @@ describe('pinboard actions', function () {
             url: v2Url(constants.PINBOARDS_API_ENDPOINT),
             method: 'POST',
             adapter: undefined,
+            cancelToken: 'token',
             data: {
               'officer_ids': [],
               crids: ['abc'],
@@ -314,6 +315,7 @@ describe('pinboard actions', function () {
             url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/`),
             params: undefined,
             adapter: undefined,
+            cancelToken: 'token',
           },
         },
       });
