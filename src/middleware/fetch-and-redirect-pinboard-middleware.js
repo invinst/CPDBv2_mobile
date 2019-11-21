@@ -5,6 +5,7 @@ import {
   PINBOARD_FETCH_REQUEST_SUCCESS,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_SUCCESS,
+  PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS,
   fetchPinboard,
 } from 'actions/pinboard';
 import {
@@ -52,7 +53,8 @@ export default store => next => action => {
   if (
     action.type === PINBOARD_FETCH_REQUEST_SUCCESS ||
     action.type === PINBOARD_CREATE_REQUEST_SUCCESS ||
-    action.type === PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS
+    action.type === PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS ||
+    action.type === PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS
   ) {
     const pathname = browserHistory.getCurrentLocation().pathname;
     const onPinboardPage = pathname.match(pinboardPageUrlPattern) || pathname === '/pinboard/';
