@@ -728,10 +728,6 @@ describe('SearchPageTest', function () {
       done();
     });
 
-    afterEach(function (client, done) {
-      done();
-    });
-
     it('should display pinboard button with correct text when items are added/removed', function (client) {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty');
@@ -780,11 +776,15 @@ describe('SearchPageTest', function () {
   });
 
   context('create new pinboard', function () {
-    it('should go to pinboard detail page when clicking on success added toast', function (client) {
+    beforeEach(function (client, done) {
       api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
       api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
       api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, mockNewCreatedPinboard);
       api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockPinboardComplaint);
+      done();
+    });
+
+    it('should go to pinboard detail page when clicking on success added toast', function (client) {
       api.mockPost(
         '/api/v2/mobile/pinboards/',
         201,
@@ -804,10 +804,6 @@ describe('SearchPageTest', function () {
     });
 
     it('should go to pinboard detail page when clicking on error added toast', function (client) {
-      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, mockNewCreatedPinboard);
-      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockPinboardComplaint);
       api.mockPost(
         '/api/v2/mobile/pinboards/',
         500,
@@ -835,10 +831,6 @@ describe('SearchPageTest', function () {
     });
 
     it('should go to pinboard detail page when clicking on long api call added toast', function (client) {
-      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, mockNewCreatedPinboard);
-      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockPinboardComplaint);
       api.mockPost(
         '/api/v2/mobile/pinboards/',
         201,

@@ -1001,7 +1001,6 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
       restoreCreateOrUpdatePinboardMiddleware(store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
-
       store.dispatch.should.be.calledWith(addItemToPinboardState({
         id: '123',
         type: 'CR',
