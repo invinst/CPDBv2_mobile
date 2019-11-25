@@ -12,19 +12,15 @@ const defaultSettings = require('./defaults');
 const parametersMapping = {
   'production': {
     'DISABLE_SEARCH_INDEX': false,
-    'CLICKY_ID': '101220048',
+    'CLICKY_TRACKING_ID': '101220048',
   },
   'beta': {
     'DISABLE_SEARCH_INDEX': false,
-    'CLICKY_ID': '101220050',
+    'CLICKY_TRACKING_ID': '101220050',
   },
   'staging': {
     'DISABLE_SEARCH_INDEX': true,
-    'CLICKY_ID': '101227137',
-  },
-  'live-test': {
-    'DISABLE_SEARCH_INDEX': true,
-    'CLICKY_ID': '000000000',
+    'CLICKY_TRACKING_ID': '101227137',
   },
 };
 // Add needed plugins here
