@@ -10,6 +10,7 @@ const {
   mockComplaintSummaries,
 } = require(__dirname + '/../mock-data/main-page');
 
+
 describe('MainPageTest', function () {
   beforeEach(function (client, done) {
     api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});

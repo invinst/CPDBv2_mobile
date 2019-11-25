@@ -323,12 +323,61 @@ const trr14487 = {
   'id': 14487,
 };
 
+const mockNewCreatedPinboard = {
+  'id': '5cd06f2b',
+  'title': '',
+  'officer_ids': [],
+  'crids': ['123456'],
+  'trr_ids': [],
+  'description': '',
+};
+
+const mockPinboardComplaint = [
+  {
+    'crid': '123456',
+    'incident_date': '2010-01-01',
+    'point': { 'lon': 1.0, 'lat': 1.0 },
+    'category': 'Use Of Force',
+  },
+];
+
+const mockComplaintPinnedItemPinboard = {
+  'id': '5cd06f2b',
+  'title': '',
+  'officer_ids': [],
+  'crids': ['123456'],
+  'trr_ids': [],
+  'description': '',
+};
+
+const mockUpdatedComplaintPinnedItemPinboard = {
+  'id': '5cd06f2b',
+  'title': '',
+  'officer_ids': [],
+  'crids': ['123456', '654321'],
+  'trr_ids': [],
+  'description': '',
+};
+
+const mockPinboardComplaints = [
+  {
+    'crid': '123456',
+    'incident_date': '2010-01-01',
+    'point': { 'lon': 1.0, 'lat': 1.0 },
+    'category': 'Use Of Force',
+  },
+  {
+    'crid': '654321',
+    'incident_date': '2010-01-01',
+    'point': { 'lon': 1.0, 'lat': 1.0 },
+    'category': 'Use Of Force',
+  },
+];
 
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
     api.mock('GET', '/api/v2/search-mobile/?term=123', 200, mockSearchQueryResponseForRecentItems);
-    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
     this.searchPage = client.page.search();
     this.pinboardPage = client.page.pinboardPage();
     this.officerPage = client.page.officerPage();
@@ -343,6 +392,7 @@ describe('SearchPageTest', function () {
   });
 
   it('should show recent items', function () {
+    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
     api.mock(
       'GET', '/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487',
       200,
@@ -659,6 +709,7 @@ describe('SearchPageTest', function () {
     beforeEach(function (client, done) {
       api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
       api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
+      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, emptyPinboard);
       api.mockPost(
         '/api/v2/mobile/pinboards/', 201,
         { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
@@ -721,6 +772,170 @@ describe('SearchPageTest', function () {
       investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR removed');
+    });
+  });
+
+  context('create new pinboard', function () {
+    beforeEach(function (client, done) {
+      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
+      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
+      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, mockNewCreatedPinboard);
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockPinboardComplaint);
+      done();
+    });
+
+    it('should go to pinboard detail page when clicking on success added toast', function (client) {
+      api.mockPost(
+        '/api/v2/mobile/pinboards/',
+        201,
+        { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
+        createPinboardResponse
+      );
+
+      const crs = this.pinboardPage.section.pinnedSection.section.crs;
+      this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
+      this.searchPage.waitForElementVisible('@toast', TIMEOUT);
+      this.searchPage.expect.element('@toast').text.to.equal('CR added');
+
+      this.searchPage.click('@toast');
+      client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
+      client.assertCount(crs.section.card.selector, 1);
+    });
+
+    it('should go to pinboard detail page when clicking on error added toast', function (client) {
+      api.mockPost(
+        '/api/v2/mobile/pinboards/',
+        500,
+        { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
+        {}
+      );
+      api.mockPost(
+        '/api/v2/mobile/pinboards/',
+        201,
+        { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
+        createPinboardResponse
+      );
+
+      const crs = this.pinboardPage.section.pinnedSection.section.crs;
+      this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
+      this.searchPage.waitForElementVisible('@toast', TIMEOUT);
+      this.searchPage.expect.element('@toast').text.to.equal('CR added');
+
+      this.searchPage.click('@toast');
+      client.assert.urlContains('/pinboard/');
+      client.pause(1500);
+      client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
+      client.assertCount(crs.section.card.selector, 1);
+    });
+
+    it('should go to pinboard detail page when clicking on long api call added toast', function (client) {
+      api.mockPost(
+        '/api/v2/mobile/pinboards/',
+        201,
+        { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
+        createPinboardResponse,
+        1000,
+      );
+
+      const crs = this.pinboardPage.section.pinnedSection.section.crs;
+      this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
+      this.searchPage.waitForElementVisible('@toast', TIMEOUT);
+      this.searchPage.expect.element('@toast').text.to.equal('CR added');
+
+      this.searchPage.click('@toast');
+      client.assert.urlContains('/pinboard/');
+      client.pause(1500);
+      client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
+      client.assertCount(crs.section.card.selector, 1);
+    });
+  });
+
+  context('update current pinboard', function () {
+    it('should go to pinboard detail page when clicking on success removed toast', function (client) {
+      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
+      api.mock(
+        'GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200,
+        mockComplaintPinnedItemPinboard
+      );
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockPinboardComplaints);
+      api.mockPut(
+        '/api/v2/mobile/pinboards/5cd06f2b/',
+        200,
+        { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' },
+        mockUpdatedComplaintPinnedItemPinboard
+      );
+
+      const crs = this.pinboardPage.section.pinnedSection.section.crs;
+      this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
+      this.searchPage.waitForElementVisible('@toast', TIMEOUT);
+      this.searchPage.expect.element('@toast').text.to.equal('CR added');
+
+      this.searchPage.click('@toast');
+      client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
+      client.assertCount(crs.section.card.selector, 2);
+    });
+
+    it('should go to pinboard detail page when clicking on error added toast', function (client) {
+      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
+      api.mock(
+        'GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200,
+        mockComplaintPinnedItemPinboard
+      );
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockPinboardComplaints);
+      api.mockPut(
+        '/api/v2/mobile/pinboards/5cd06f2b/',
+        500,
+        { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' },
+        {},
+      );
+      api.mockPut(
+        '/api/v2/mobile/pinboards/5cd06f2b/',
+        200,
+        { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' },
+        mockUpdatedComplaintPinnedItemPinboard,
+      );
+
+      const crs = this.pinboardPage.section.pinnedSection.section.crs;
+      this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
+      this.searchPage.waitForElementVisible('@toast', TIMEOUT);
+      this.searchPage.expect.element('@toast').text.to.equal('CR added');
+
+      this.searchPage.click('@toast');
+      client.pause(1500);
+      client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
+      client.assertCount(crs.section.card.selector, 2);
+    });
+
+    it('should go to pinboard detail page when clicking on long api call added toast', function (client) {
+      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
+      api.mock(
+        'GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200,
+        mockComplaintPinnedItemPinboard
+      );
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockPinboardComplaints);
+      api.mockPut(
+        '/api/v2/mobile/pinboards/5cd06f2b/',
+        200,
+        { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' },
+        mockUpdatedComplaintPinnedItemPinboard,
+        1000
+      );
+
+      const crs = this.pinboardPage.section.pinnedSection.section.crs;
+      this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
+      this.searchPage.waitForElementVisible('@toast', TIMEOUT);
+      this.searchPage.expect.element('@toast').text.to.equal('CR added');
+
+      this.searchPage.click('@toast');
+      client.pause(1500);
+      client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
+      client.assertCount(crs.section.card.selector, 2);
     });
   });
 });

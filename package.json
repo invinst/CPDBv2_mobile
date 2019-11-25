@@ -144,7 +144,7 @@
     "react-router": "^3.0.5",
     "react-router-redux": "^4.0.8",
     "react-sticky": "^5.0.5",
-    "react-toastify": "^5.2.1",
+    "react-toastify": "5.4.0",
     "react-truncate": "^2.4.0",
     "redux": "^3.5.2",
     "redux-actions": "^0.10.0",
