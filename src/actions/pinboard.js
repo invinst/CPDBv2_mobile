@@ -144,7 +144,8 @@ export const createPinboard = cancelFetchRequests(
       PINBOARD_CREATE_REQUEST_START,
       PINBOARD_CREATE_REQUEST_SUCCESS,
       PINBOARD_CREATE_REQUEST_FAILURE,
-    ]
+    ],
+    pinboardSource && pinboardSource.token,
   )({ 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds })
 );
 
@@ -155,18 +156,22 @@ export const updatePinboard = cancelFetchRequests(
       PINBOARD_UPDATE_REQUEST_START,
       PINBOARD_UPDATE_REQUEST_SUCCESS,
       PINBOARD_UPDATE_REQUEST_FAILURE,
-    ]
+    ],
+    pinboardSource && pinboardSource.token,
   )({ title: title, description: description, 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds })
 );
 
-export const fetchPinboard = id => get(
-  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/`,
-  [
-    PINBOARD_FETCH_REQUEST_START,
-    PINBOARD_FETCH_REQUEST_SUCCESS,
-    PINBOARD_FETCH_REQUEST_FAILURE,
-  ]
-)();
+export const fetchPinboard = cancelFetchRequests(
+  id => get(
+    `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/`,
+    [
+      PINBOARD_FETCH_REQUEST_START,
+      PINBOARD_FETCH_REQUEST_SUCCESS,
+      PINBOARD_FETCH_REQUEST_FAILURE,
+    ],
+    pinboardSource && pinboardSource.token,
+  )()
+);
 
 export const fetchPinboardComplaints = id => get(
   `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/complaints/`,

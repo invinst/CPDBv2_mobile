@@ -12,6 +12,7 @@ import SearchBar from 'components/pinboard-page/search-bar';
 import { PinboardPaneSectionWithSpinner } from 'components/pinboard-page/pinboard-pane-section';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
 import EmptyPinboardPage from 'components/pinboard-page/empty-pinboard';
+import LoadingSpinner from 'components/common/loading-spinner';
 
 
 describe('<PinboardPage />', function () {
@@ -53,6 +54,19 @@ describe('<PinboardPage />', function () {
     );
 
     wrapper.find('pinboard-content').exists().should.be.false();
+  });
+
+  it('should render LoadingSpiner component if pinboardPageLoading is true', function () {
+    const wrapper = mount(
+      <PinboardPage
+        params={ { pinboardId: '5cd06f2b' } }
+        pinboard={ { id: '5cd06f2b' } }
+        initialRequested={ true }
+        pinboardPageLoading={ true }
+      />
+    );
+
+    wrapper.find(LoadingSpinner).exists().should.be.true();
   });
 
   it('should render PinnedSection component', function () {

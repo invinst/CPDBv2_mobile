@@ -15,6 +15,8 @@ import {
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
   UPDATE_PINBOARD_INFO_STATE,
   PERFORM_FETCH_PINBOARD_RELATED_DATA,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START,
+  PINBOARD_FETCH_REQUEST_START,
 } from 'actions/pinboard';
 
 
@@ -29,6 +31,8 @@ describe('Pinboard reducer', function () {
       'description': '',
       'saving': false,
       'isPinboardRestored': false,
+      'hasPendingChanges': false,
+      'needRefreshData': false,
     });
   });
 
@@ -42,6 +46,7 @@ describe('Pinboard reducer', function () {
         crids: [],
         'trr_ids': [],
         saving: true,
+        hasPendingChanges: true,
       },
       {
         type: PINBOARD_CREATE_REQUEST_SUCCESS,
@@ -72,6 +77,7 @@ describe('Pinboard reducer', function () {
       'trr_ids': [],
       saving: false,
       isPinboardRestored: true,
+      hasPendingChanges: true,
       'example_pinboards': [{
         'description': 'Officers with at least 10 complaints against them generate 64% of all complaints.',
         'id': 'b20c2c36',
@@ -95,6 +101,7 @@ describe('Pinboard reducer', function () {
         'trr_ids': [3, 4, 2, 1, 5],
         saving: true,
         isPinboardRestored: false,
+        hasPendingChanges: false,
       },
       {
         type: PINBOARD_CREATE_REQUEST_SUCCESS,
@@ -121,6 +128,50 @@ describe('Pinboard reducer', function () {
       'trr_ids': [4, 2, 5],
       saving: false,
       isPinboardRestored: true,
+      hasPendingChanges: true,
+      'example_pinboards': undefined,
+    });
+  });
+
+  it('should handle PINBOARD_CREATE_REQUEST_SUCCESS to remove not found items and set pending change', function () {
+    pinboardReducer(
+      {
+        id: null,
+        title: 'Title',
+        description: 'Description',
+        'officer_ids': [0, 1, 2, 3],
+        crids: ['abc123', 'xyz567'],
+        'trr_ids': [3, 4, 2, 1, 5],
+        saving: true,
+        isPinboardRestored: false,
+        hasPendingChanges: false,
+      },
+      {
+        type: PINBOARD_CREATE_REQUEST_SUCCESS,
+        payload: {
+          id: '66ef1560',
+          title: 'Title',
+          description: 'Description',
+          'officer_ids': [1],
+          crids: ['abc123'],
+          'trr_ids': [2],
+          'not_found_items': {
+            'officer_ids': [0, 2, 3],
+            crids: ['xyz567'],
+            'trr_ids': [3, 4, 1, 5],
+          },
+        },
+      }
+    ).should.deepEqual({
+      id: '66ef1560',
+      title: 'Title',
+      description: 'Description',
+      'officer_ids': [1],
+      crids: ['abc123'],
+      'trr_ids': [2],
+      saving: false,
+      isPinboardRestored: true,
+      hasPendingChanges: false,
       'example_pinboards': undefined,
     });
   });
@@ -162,6 +213,7 @@ describe('Pinboard reducer', function () {
         'description': '',
         'saving': true,
         'isPinboardRestored': false,
+        'hasPendingChanges': false,
       },
       {
         type: PINBOARD_UPDATE_REQUEST_SUCCESS,
@@ -201,6 +253,7 @@ describe('Pinboard reducer', function () {
         title: 'Pinboard 2',
         description: 'Description 2',
       }],
+      hasPendingChanges: true,
     });
   });
 
@@ -319,6 +372,10 @@ describe('Pinboard reducer', function () {
       'officer_ids': [1],
       crids: ['abc'],
       'trr_ids': [1],
+      isPinboardRestored: true,
+      saving: false,
+      needRefreshData: false,
+      hasPendingChanges: false,
     });
   });
 
@@ -334,6 +391,9 @@ describe('Pinboard reducer', function () {
     ).should.deepEqual({
       id: '66ef1560',
       isPinboardRestored: true,
+      saving: false,
+      needRefreshData: false,
+      hasPendingChanges: false,
     });
   });
 
@@ -362,6 +422,7 @@ describe('Pinboard reducer', function () {
       crids: [],
       'trr_ids': [],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -390,6 +451,7 @@ describe('Pinboard reducer', function () {
       crids: [],
       'trr_ids': [],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -418,6 +480,7 @@ describe('Pinboard reducer', function () {
       crids: ['1'],
       'trr_ids': [],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -446,6 +509,7 @@ describe('Pinboard reducer', function () {
       crids: ['2', '1'],
       'trr_ids': [],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -474,6 +538,7 @@ describe('Pinboard reducer', function () {
       crids: [],
       'trr_ids': [1],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -502,6 +567,7 @@ describe('Pinboard reducer', function () {
       crids: [],
       'trr_ids': [2, 1, 3],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -531,6 +597,7 @@ describe('Pinboard reducer', function () {
       crids: [],
       'trr_ids': [],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -559,6 +626,7 @@ describe('Pinboard reducer', function () {
       crids: [],
       'trr_ids': [],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -587,6 +655,7 @@ describe('Pinboard reducer', function () {
       crids: ['3', '2'],
       'trr_ids': [],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -615,6 +684,7 @@ describe('Pinboard reducer', function () {
       crids: ['2', '1'],
       'trr_ids': [],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -643,6 +713,7 @@ describe('Pinboard reducer', function () {
       crids: [],
       'trr_ids': [7, 8],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -671,6 +742,7 @@ describe('Pinboard reducer', function () {
       crids: [],
       'trr_ids': [2, 1, 3],
       needRefreshData: true,
+      hasPendingChanges: true,
     });
   });
 
@@ -698,6 +770,7 @@ describe('Pinboard reducer', function () {
       'officer_ids': [4, 3, 2],
       crids: [],
       'trr_ids': [],
+      hasPendingChanges: true,
     });
   });
 
@@ -725,6 +798,7 @@ describe('Pinboard reducer', function () {
       'officer_ids': [0, 1, 2, 3, 4],
       crids: ['4', '3', '2'],
       'trr_ids': [],
+      hasPendingChanges: true,
     });
   });
 
@@ -752,6 +826,7 @@ describe('Pinboard reducer', function () {
       'officer_ids': [10, 11, 12, 13, 14],
       crids: [],
       'trr_ids': [4, 3, 2, 1],
+      hasPendingChanges: true,
     });
   });
 
@@ -779,6 +854,7 @@ describe('Pinboard reducer', function () {
       'officer_ids': [10, 11, 12, 13, 14],
       crids: [],
       'trr_ids': [1, 2, 3, 4],
+      hasPendingChanges: true,
     });
   });
 
@@ -807,6 +883,58 @@ describe('Pinboard reducer', function () {
       crids: [],
       'trr_ids': [1, 2, 3, 4],
       needRefreshData: false,
+    });
+  });
+
+  it('should handle PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START', function () {
+    pinboardReducer(
+      {
+        id: '12345678',
+        title: 'Pinboard Title',
+        description: 'Pinboard Description',
+        'officer_ids': [10, 11, 12, 13, 14],
+        crids: [],
+        'trr_ids': [1, 2, 3, 4],
+      },
+      {
+        type: PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START,
+      },
+    ).should.deepEqual({
+      id: '12345678',
+      title: 'Pinboard Title',
+      description: 'Pinboard Description',
+      'officer_ids': [10, 11, 12, 13, 14],
+      crids: [],
+      'trr_ids': [1, 2, 3, 4],
+      saving: false,
+      needRefreshData: false,
+      hasPendingChanges: false,
+    });
+  });
+
+  it('should handle PINBOARD_FETCH_REQUEST_START', function () {
+    pinboardReducer(
+      {
+        id: '12345678',
+        title: 'Pinboard Title',
+        description: 'Pinboard Description',
+        'officer_ids': [10, 11, 12, 13, 14],
+        crids: [],
+        'trr_ids': [1, 2, 3, 4],
+      },
+      {
+        type: PINBOARD_FETCH_REQUEST_START,
+      },
+    ).should.deepEqual({
+      id: '12345678',
+      title: 'Pinboard Title',
+      description: 'Pinboard Description',
+      'officer_ids': [10, 11, 12, 13, 14],
+      crids: [],
+      'trr_ids': [1, 2, 3, 4],
+      saving: false,
+      needRefreshData: false,
+      hasPendingChanges: false,
     });
   });
 });
