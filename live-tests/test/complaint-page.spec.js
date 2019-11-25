@@ -82,6 +82,7 @@ const mockComplaint = {
 
 describe('ComplaintPageTest', function () {
   beforeEach(function (client, done) {
+    api.cleanMock();
     api.mock('GET', '/api/v2/mobile/cr/1053667/', 200, mockComplaint);
     api.mockPost(
       '/api/v2/mobile/cr/1053667/request-document/',
@@ -102,6 +103,7 @@ describe('ComplaintPageTest', function () {
   });
 
   afterEach(function (client, done) {
+    api.cleanMock();
     done();
   });
 
@@ -223,5 +225,12 @@ describe('ComplaintPageTest', function () {
       this.main.click('@searchLink');
       this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
     });
+  });
+
+  it('should have clicky installed', function (client) {
+    const page = client.page.common();
+    page.waitForElementPresent('@clickyScript');
+    page.waitForElementPresent('@clickySiteIdsScript');
+    page.waitForElementPresent('@clickyNoJavascriptGIF');
   });
 });
