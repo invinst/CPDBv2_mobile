@@ -3,7 +3,7 @@ import cx from 'classnames';
 import Swiper from 'swiper';
 
 import style from './horizontal-scrolling.sass';
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 
 
 class HorizontalScrolling extends React.Component {
@@ -54,14 +54,14 @@ class HorizontalScrolling extends React.Component {
   handleSlideNext() {
     const { trackingContentType } = this.props;
     if (trackingContentType) {
-      GATracking.trackSwipeLanddingPageCarousel('right', trackingContentType);
+      tracking.trackSwipeLandingPageCarousel('right', trackingContentType);
     }
   }
 
   handleSlidePrev() {
     const { trackingContentType } = this.props;
     if (trackingContentType) {
-      GATracking.trackSwipeLanddingPageCarousel('left', trackingContentType);
+      tracking.trackSwipeLandingPageCarousel('left', trackingContentType);
     }
   }
 

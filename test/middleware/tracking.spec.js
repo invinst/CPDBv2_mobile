@@ -3,12 +3,12 @@ import { stub } from 'sinon';
 import trackingMiddleware from 'middleware/tracking-middleware';
 import { ROUTE_CHANGED } from 'actions/navigation';
 import { SEARCH_QUERY_CHANGED, SUGGEST_ALL_REQUEST_SUCCESS, SUGGESTION_REQUEST_SUCCESS } from 'actions/suggestion';
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 
 
 describe('trackingMiddleware', function () {
   it('should track PageView event on ROUTE_CHANGED', function () {
-    stub(GATracking, 'trackPageView');
+    stub(tracking, 'trackPageView');
 
     let dispatched;
     const dispatchAction = {
@@ -21,13 +21,13 @@ describe('trackingMiddleware', function () {
     trackingMiddleware({})(action => dispatched = action)(dispatchAction);
 
     dispatched.should.eql(dispatchAction);
-    GATracking.trackPageView.should.be.calledWith('abc');
+    tracking.trackPageView.should.be.calledWith('abc');
 
-    GATracking.trackPageView.restore();
+    tracking.trackPageView.restore();
   });
 
   it('should track search query on SEARCH_QUERY_CHANGED', function () {
-    stub(GATracking, 'trackSearchQuery');
+    stub(tracking, 'trackSearchQuery');
 
     let dispatched;
     const dispatchAction = {
@@ -38,13 +38,13 @@ describe('trackingMiddleware', function () {
     trackingMiddleware({})(action => dispatched = action)(dispatchAction);
 
     dispatched.should.eql(dispatchAction);
-    GATracking.trackSearchQuery.should.be.calledWith('abc');
+    tracking.trackSearchQuery.should.be.calledWith('abc');
 
-    GATracking.trackSearchQuery.restore();
+    tracking.trackSearchQuery.restore();
   });
 
   it('should track search results count on SUGGEST_ALL_REQUEST_SUCCESS', function () {
-    stub(GATracking, 'trackSearchResultsCount');
+    stub(tracking, 'trackSearchResultsCount');
 
     let dispatched;
     const dispatchAction = {
@@ -55,13 +55,13 @@ describe('trackingMiddleware', function () {
     trackingMiddleware({})(action => dispatched = action)(dispatchAction);
 
     dispatched.should.eql(dispatchAction);
-    GATracking.trackSearchResultsCount.should.be.calledWith(1);
+    tracking.trackSearchResultsCount.should.be.calledWith(1);
 
-    GATracking.trackSearchResultsCount.restore();
+    tracking.trackSearchResultsCount.restore();
   });
 
   it('should track search results count on SUGGESTION_REQUEST_SUCCESS', function () {
-    stub(GATracking, 'trackSearchResultsCount');
+    stub(tracking, 'trackSearchResultsCount');
 
     let dispatched;
     const dispatchAction = {
@@ -75,8 +75,8 @@ describe('trackingMiddleware', function () {
     trackingMiddleware({})(action => dispatched = action)(dispatchAction);
 
     dispatched.should.eql(dispatchAction);
-    GATracking.trackSearchResultsCount.should.be.calledWith(3);
+    tracking.trackSearchResultsCount.should.be.calledWith(3);
 
-    GATracking.trackSearchResultsCount.restore();
+    tracking.trackSearchResultsCount.restore();
   });
 });

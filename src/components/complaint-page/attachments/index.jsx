@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import CRRequestDocumentButtonContainer from 'containers/common/cr-request-document-container';
 import styles from './attachments.sass';
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 import { thumbnailStyle } from './attachments.style';
 import CMSContent from 'components/common/cms-content';
 
@@ -16,7 +16,7 @@ class Attachments extends Component {
 
   handleClick(url, id) {
     const { pathname, onTrackingAttachment } = this.props;
-    GATracking.trackAttachmentClick(pathname, url);
+    tracking.trackAttachmentClick(pathname, url);
     onTrackingAttachment({ attachmentId: id, sourcePage: 'CR Page', app: 'Mobile' });
   }
 
