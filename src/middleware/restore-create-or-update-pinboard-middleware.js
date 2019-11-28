@@ -138,7 +138,7 @@ function showAddOrRemoveItemToast(store, payload) {
 
   const state = store.getState();
   const pinboard = state.pinboardPage.pinboard;
-  const url = _.isNull(pinboard.id) ? '/pinboard/' : generatePinboardUrl(pinboard);
+  const url = generatePinboardUrl(pinboard) || '/pinboard/';
 
   Toastify.toast(`${TOAST_TYPE_MAP[type]} ${actionType}`, {
     className: `toast-wrapper ${actionType}`,

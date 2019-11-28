@@ -73,8 +73,8 @@ export default handleActions({
     ...DEFAULT_PINBOARD_STATUSES,
   }),
   [PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS]: (state, action) => ({
+    ...defaultState,
     ...action.payload,
-    ...DEFAULT_PINBOARD_STATUSES,
     isPinboardRestored: true,
   }),
   [PINBOARD_CREATE_REQUEST_SUCCESS]: (state, action) => {
