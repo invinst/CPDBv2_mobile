@@ -45,6 +45,7 @@ export default class SearchItem extends Component {
               id: id,
               isPinned: isPinned,
             } }
+            className='item-pin-button'
           />
         }
 
