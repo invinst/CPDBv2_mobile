@@ -80,6 +80,10 @@ const App = React.createClass({
             breadcrumb={ BreadcrumbItemContainer }
             component={ PinboardPageContainer }
           />
+          <Redirect
+            from={ `${constants.PINBOARD_SOCIAL_GRAPH_REDIRECT_PATH}:pinboardId/` }
+            to={ `${constants.PINBOARD_PATH}:pinboardId/` }
+          />
 
         </Route>
         <Route
