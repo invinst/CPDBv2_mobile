@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var assert = require('assert');
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationResponse');
@@ -110,8 +111,40 @@ const copyOfWattsPinboard = {
   'trr_ids': [],
 };
 
+const updatedFromSourceFirstExamplePinboard = {
+  'id': '11613bb2',
+  'title': 'Watts Crew',
+  'officer_ids': [1],
+  'crids': [],
+  'trr_ids': [],
+  'description': 'Officers with at least 10 complaints against them generate 64% of all complaints.',
+};
+const updatedFromSourceSecondExamplePinboard = {
+  'id': '11613bb2',
+  'title': 'Skullcap Crew',
+  'officer_ids': [2],
+  'crids': [],
+  'trr_ids': [],
+  'description': 'It is a nickname given to a group of five Chicago Police officers in a...',
+};
+
 function mockCMS() {
   api.mock('GET', '/api/v2/cms-pages/pinboard-page/', 200, pinboardMockData.mockCMSPinboardPage);
+}
+
+function mockUpdateEmptyPinboard() {
+  api.mockPut(
+    '/api/v2/mobile/pinboards/11613bb2/',
+    200,
+    { 'source_pinboard_id': 'b20c2c36' },
+    updatedFromSourceFirstExamplePinboard
+  );
+  api.mockPut(
+    '/api/v2/mobile/pinboards/11613bb2/',
+    200,
+    { 'source_pinboard_id': '22e66085' },
+    updatedFromSourceSecondExamplePinboard
+  );
 }
 
 describe('Empty Pinboard Page', function () {
@@ -119,11 +152,11 @@ describe('Empty Pinboard Page', function () {
     api.cleanMock();
 
     mockPinboard(emptyPinboardId, emptyPinboard);
-    mockPinboard(skullcapPinboardId, copyOfSkullcapPinboard);
-    mockPinboard(wattsPinboardId, copyOfWattsPinboard);
     mockCMS();
+    mockUpdateEmptyPinboard();
 
     this.emptyPinboardPage = client.page.emptyPinboardPage();
+    this.pinboardPage = client.page.pinboardPage();
     this.emptyPinboardPage.navigate(this.emptyPinboardPage.url(emptyPinboardId));
     this.emptyPinboardPage.expect.element('@body').to.be.present;
     done();
@@ -141,13 +174,15 @@ describe('Empty Pinboard Page', function () {
 
     this.emptyPinboardPage.click('@firstExamplePinboardRow');
 
-    client.assert.urlContains('/pinboard/e71c3c78/watts-crew/');
-
-    client.back();
-
-    this.emptyPinboardPage.waitForElementVisible('@title', TIMEOUT);
-    this.emptyPinboardPage.expect.element('@title').text.to.equal('Get started');
-    client.assert.urlContains(`/pinboard/${emptyPinboardId}/empty-pinboard/`);
+    client.assert.urlContains('/pinboard/11613bb2/watts-crew/');
+    this.pinboardPage.expect.element('@pinboardTitle').to.be.visible;
+    this.pinboardPage.expect.element('@pinboardDescription').to.be.visible;
+    this.pinboardPage.getValue('@pinboardTitle', function (result) {
+      assert.equal(result.value, 'Watts Crew');
+    });
+    this.pinboardPage.getValue('@pinboardDescription', function (result) {
+      assert.equal(result.value, 'Officers with at least 10 complaints against them generate 64% of all complaints.');
+    });
   });
 
   it('should go to Skullcap Crew Pinboard when clicking on Skullcap crew row ', function (client) {
@@ -162,13 +197,16 @@ describe('Empty Pinboard Page', function () {
 
     this.emptyPinboardPage.click('@secondExamplePinboardRow');
 
-    client.assert.urlContains('/pinboard/44ab6189/skullcap-crew/');
+    client.assert.urlContains('/pinboard/11613bb2/skullcap-crew/');
 
-    client.back();
-
-    this.emptyPinboardPage.waitForElementVisible('@title', TIMEOUT);
-    this.emptyPinboardPage.expect.element('@title').text.to.equal('Get started');
-    client.assert.urlContains(`/pinboard/${emptyPinboardId}/empty-pinboard/`);
+    this.pinboardPage.expect.element('@pinboardTitle').to.be.visible;
+    this.pinboardPage.expect.element('@pinboardDescription').to.be.visible;
+    this.pinboardPage.getValue('@pinboardTitle', function (result) {
+      assert.equal(result.value, 'Skullcap Crew');
+    });
+    this.pinboardPage.getValue('@pinboardDescription', function (result) {
+      assert.equal(result.value, 'It is a nickname given to a group of five Chicago Police officers in a...');
+    });
   });
 });
 

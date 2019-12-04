@@ -24,6 +24,7 @@ import {
   removeItemInPinboardPage,
   addItemInPinboardPage,
   fetchLatestRetrievedPinboard,
+  updatePinboardFromSource,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -87,6 +88,9 @@ import {
   PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_SUCCESS,
   PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_FAILURE,
   PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_CANCELLED,
+  PINBOARD_UPDATE_FROM_SOURCE_REQUEST_START,
+  PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS,
+  PINBOARD_UPDATE_FROM_SOURCE_REQUEST_FAILURE,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -632,6 +636,28 @@ describe('pinboard actions', function () {
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}latest-retrieved-pinboard/`,
             params: undefined,
             adapter: undefined,
+          },
+        },
+      });
+    });
+  });
+
+  describe('updatePinboardFromSource', function () {
+    it('should return correct action', function () {
+      updatePinboardFromSource('abcd1234', 'abcd5678').should.deepEqual({
+        types: [
+          PINBOARD_UPDATE_FROM_SOURCE_REQUEST_START,
+          PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS,
+          PINBOARD_UPDATE_FROM_SOURCE_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}abcd1234/`,
+            method: 'PUT',
+            adapter: undefined,
+            data: {
+              'source_pinboard_id': 'abcd5678',
+            },
           },
         },
       });
