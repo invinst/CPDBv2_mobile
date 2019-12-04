@@ -16,6 +16,10 @@ export const PINBOARD_UPDATE_REQUEST_START = 'PINBOARD_UPDATE_REQUEST_START';
 export const PINBOARD_UPDATE_REQUEST_SUCCESS = 'PINBOARD_UPDATE_REQUEST_SUCCESS';
 export const PINBOARD_UPDATE_REQUEST_FAILURE = 'PINBOARD_UPDATE_REQUEST_FAILURE';
 
+export const PINBOARD_UPDATE_FROM_SOURCE_REQUEST_FAILURE = 'PINBOARD_UPDATE_FROM_SOURCE_REQUEST_FAILURE';
+export const PINBOARD_UPDATE_FROM_SOURCE_REQUEST_START = 'PINBOARD_UPDATE_FROM_SOURCE_REQUEST_START';
+export const PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS = 'PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS';
+
 export const PINBOARD_FETCH_REQUEST_START = 'PINBOARD_FETCH_REQUEST_START';
 export const PINBOARD_FETCH_REQUEST_SUCCESS = 'PINBOARD_FETCH_REQUEST_SUCCESS';
 export const PINBOARD_FETCH_REQUEST_FAILURE = 'PINBOARD_FETCH_REQUEST_FAILURE';
@@ -159,6 +163,18 @@ export const updatePinboard = cancelFetchRequests(
     ],
     pinboardSource && pinboardSource.token,
   )({ title: title, description: description, 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds })
+);
+
+export const updatePinboardFromSource = cancelFetchRequests(
+  (id, sourcePinboardId) => put(
+    `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/`,
+    [
+      PINBOARD_UPDATE_FROM_SOURCE_REQUEST_START,
+      PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS,
+      PINBOARD_UPDATE_FROM_SOURCE_REQUEST_FAILURE,
+    ],
+    pinboardSource && pinboardSource.token
+  )({ 'source_pinboard_id': sourcePinboardId })
 );
 
 export const fetchPinboard = cancelFetchRequests(

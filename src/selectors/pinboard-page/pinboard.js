@@ -34,6 +34,8 @@ export const getPinboard = createSelector(
   })
 );
 
+export const getPinboardId = state => get(state, 'pinboardPage.pinboard.id');
+
 export const pinboardItemsSelector = createSelector(
   getPinboard,
   ({ officerIds, crids, trrIds }) => ({
