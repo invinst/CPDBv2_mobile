@@ -798,6 +798,7 @@ describe('SearchPageTest', function () {
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR added');
 
+      client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
       client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
       client.assertCount(crs.section.card.selector, 1);
@@ -823,6 +824,7 @@ describe('SearchPageTest', function () {
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR added');
 
+      client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
       client.assert.urlContains('/pinboard/');
       client.pause(1500);
@@ -845,6 +847,7 @@ describe('SearchPageTest', function () {
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR added');
 
+      client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
       client.assert.urlContains('/pinboard/');
       client.pause(1500);
@@ -874,6 +877,7 @@ describe('SearchPageTest', function () {
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR added');
 
+      client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
       client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
       client.assertCount(crs.section.card.selector, 2);
@@ -905,6 +909,7 @@ describe('SearchPageTest', function () {
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR added');
 
+      client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
       client.pause(1500);
       client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
@@ -932,6 +937,7 @@ describe('SearchPageTest', function () {
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR added');
 
+      client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
       client.pause(1500);
       client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
