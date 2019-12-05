@@ -7,7 +7,13 @@ import CMSContent from 'components/common/cms-content';
 
 export default class EmptyPinboard extends Component {
   render() {
-    const { examplePinboards, emptyPinboardTitle, emptyPinboardDescription } = this.props;
+    const {
+      examplePinboards,
+      emptyPinboardTitle,
+      emptyPinboardDescription,
+      currentPinboardId,
+      updatePinboardFromSource,
+    } = this.props;
     return (
       <div className={ styles.emptyPinboard }>
         <CMSContent className='empty-pinboard-title' content={ emptyPinboardTitle }/>
@@ -18,6 +24,8 @@ export default class EmptyPinboard extends Component {
             id={ pinboard.id }
             title={ pinboard.title }
             description={ pinboard.description }
+            currentPinboardId={ currentPinboardId }
+            updatePinboardFromSource={ updatePinboardFromSource }
           />
         )) }
         <div className='arrow-head'/>
@@ -31,4 +39,6 @@ EmptyPinboard.propTypes = {
   examplePinboards: PropTypes.array,
   emptyPinboardTitle: PropTypes.object,
   emptyPinboardDescription: PropTypes.object,
+  currentPinboardId: PropTypes.string,
+  updatePinboardFromSource: PropTypes.func,
 };

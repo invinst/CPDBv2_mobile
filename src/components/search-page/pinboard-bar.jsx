@@ -18,7 +18,11 @@ export default class PinboardBar extends Component {
     const { pinboard, onEmptyPinboardButtonClick } = this.props;
 
     if (isEmpty(pinboard.id)) {
-      onEmptyPinboardButtonClick();
+      if (pinboard.hasPendingChanges) {
+        browserHistory.push('/pinboard/');
+      } else {
+        onEmptyPinboardButtonClick();
+      }
     } else {
       browserHistory.push(pinboard.url);
     }
@@ -52,6 +56,7 @@ PinboardBar.defaultProps = {
     itemsCount: 0,
     url: 0,
     isPinboardRestored: true,
+    hasPendingChanges: false,
   },
   onEmptyPinboardButtonClick: noop,
 };

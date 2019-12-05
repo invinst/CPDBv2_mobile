@@ -13,6 +13,7 @@ import Footer from 'components/footer';
 import EmptyPinboardContainer from 'containers/pinboard-page/empty-pinboard-container';
 import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
 import styles from './pinboard-page.sass';
+import LoadingSpinner from 'components/common/loading-spinner';
 
 
 export default class PinboardPage extends Component {
@@ -37,10 +38,15 @@ export default class PinboardPage extends Component {
       initialRequested,
       isEmptyPinboard,
       requesting,
+      pinboardPageLoading,
     } = this.props;
 
     if (!initialRequested) {
       return null;
+    }
+
+    if (pinboardPageLoading) {
+      return <LoadingSpinner className={ styles.pinboardLoading } />;
     }
 
     if (isEmptyPinboard) {
@@ -94,6 +100,7 @@ PinboardPage.propTypes = {
   currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
   initialRequested: PropTypes.bool,
+  pinboardPageLoading: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,
   requesting: PropTypes.bool,
   hasCMS: PropTypes.bool,

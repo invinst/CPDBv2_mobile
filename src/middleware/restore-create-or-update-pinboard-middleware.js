@@ -1,6 +1,7 @@
 import { Promise } from 'es6-promise';
 import * as _ from 'lodash';
 import pluralize from 'pluralize';
+import { browserHistory } from 'react-router';
 
 import {
   ADD_OR_REMOVE_ITEM_IN_PINBOARD,
@@ -12,15 +13,6 @@ import {
   createPinboard,
   updatePinboard,
   fetchLatestRetrievedPinboard,
-  fetchPinboardSocialGraph,
-  fetchPinboardGeographic,
-  fetchFirstPagePinboardGeographicCrs,
-  fetchOtherPagesPinboardGeographicCrs,
-  fetchFirstPagePinboardGeographicTrrs,
-  fetchOtherPagesPinboardGeographicTrrs,
-  fetchPinboardRelevantDocuments,
-  fetchPinboardRelevantCoaccusals,
-  fetchPinboardRelevantComplaints,
   addItemToPinboardState,
   removeItemFromPinboardState,
   orderPinboardState,
@@ -29,9 +21,14 @@ import {
   performFetchPinboardRelatedData,
 } from 'actions/pinboard';
 import { getPathname } from 'selectors/common/routing';
-import loadPaginatedData from 'utils/load-paginated-data';
+import {
+  dispatchFetchPinboardPageData,
+  dispatchFetchPinboardPinnedItems,
+  isEmptyPinboard,
+} from 'utils/pinboard';
 import { Toastify } from 'utils/toastify';
 import pinboardStyles from 'components/pinboard-page/pinboard-page.sass';
+import { generatePinboardUrl, getRequestPinboard } from 'utils/pinboard';
 
 
 const getIds = (query, key) => _.get(query, key, '').split(',').filter(_.identity);
@@ -57,15 +54,6 @@ const getPinboardFromQuery = (query) => {
   });
   return { pinboardFromQuery, invalidParams };
 };
-
-const getRequestPinboard = pinboard => ({
-  id: _.get(pinboard, 'id', null),
-  title: _.get(pinboard, 'title', ''),
-  officerIds: _.map(_.get(pinboard, 'officer_ids', []), id => (id.toString())),
-  crids: _.get(pinboard, 'crids', []),
-  trrIds: _.map(_.get(pinboard, 'trr_ids', []), id => (id.toString())),
-  description: _.get(pinboard, 'description', ''),
-});
 
 const MAX_RETRIES = 60;
 const RETRY_DELAY = 1000;
@@ -144,27 +132,30 @@ const TOAST_TYPE_MAP = {
   'DATE > TRR': 'TRR',
 };
 
-function showAddOrRemoveItemToast(payload) {
+function showAddOrRemoveItemToast(store, payload) {
   const { isPinned, type } = payload;
   const actionType = isPinned ? 'removed' : 'added';
+
+  const state = store.getState();
+  const pinboard = state.pinboardPage.pinboard;
+  const url = generatePinboardUrl(pinboard) || '/pinboard/';
 
   Toastify.toast(`${TOAST_TYPE_MAP[type]} ${actionType}`, {
     className: `toast-wrapper ${actionType}`,
     bodyClassName: 'toast-body',
     transition: TopRightTransition,
+    onClick: () => browserHistory.push(url),
   });
 }
 
 export default store => next => action => {
   if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD || action.type === ADD_ITEM_IN_PINBOARD_PAGE) {
     const addOrRemove = action.payload.isPinned ? removeItemFromPinboardState : addItemToPinboardState;
-
-    if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD) {
-      showAddOrRemoveItemToast(action.payload);
-    }
-
     Promise.all([store.dispatch(addOrRemove(action.payload))]).finally(() => {
       store.dispatch(savePinboard());
+      if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD) {
+        showAddOrRemoveItemToast(store, action.payload);
+      }
     });
   }
 
@@ -193,30 +184,17 @@ export default store => next => action => {
     const pinboardId = currentPinboard.id;
 
     if (!pinboard.saving) {
-      const savedPinboard = getRequestPinboard(action.payload);
-
-      if (_.isEmpty(action.payload) || !_.isEqual(currentPinboard, savedPinboard)) {
+      if (pinboard.hasPendingChanges) {
         dispatchUpdateOrCreatePinboard(store, currentPinboard);
       } else {
-        if (_.startsWith(getPathname(state), '/pinboard/') && pinboardId && pinboard.needRefreshData) {
-          store.dispatch(performFetchPinboardRelatedData());
-          store.dispatch(fetchPinboardSocialGraph(pinboardId));
-          store.dispatch(fetchPinboardGeographic());
-          loadPaginatedData(
-            { 'pinboard_id': pinboardId },
-            fetchFirstPagePinboardGeographicCrs,
-            fetchOtherPagesPinboardGeographicCrs,
-            store,
-          );
-          loadPaginatedData(
-            { 'pinboard_id': pinboardId },
-            fetchFirstPagePinboardGeographicTrrs,
-            fetchOtherPagesPinboardGeographicTrrs,
-            store,
-          );
-          store.dispatch(fetchPinboardRelevantDocuments(pinboardId));
-          store.dispatch(fetchPinboardRelevantCoaccusals(pinboardId));
-          store.dispatch(fetchPinboardRelevantComplaints(pinboardId));
+        if (_.startsWith(getPathname(state), '/pinboard/') && pinboardId) {
+          if (!state.pinboardPage.pinnedItemsRequested) {
+            dispatchFetchPinboardPinnedItems(store, pinboardId);
+          }
+          if (pinboard.needRefreshData) {
+            store.dispatch(performFetchPinboardRelatedData());
+            dispatchFetchPinboardPageData(store, pinboardId);
+          }
         }
       }
     }
@@ -225,20 +203,14 @@ export default store => next => action => {
   if (action.type === '@@router/LOCATION_CHANGE') {
     const state = store.getState();
     const pinboard = state.pinboardPage.pinboard;
-    if (pinboard.saving) {
-      const currentPinboard = getRequestPinboard(pinboard);
-      dispatchUpdateOrCreatePinboard(store, currentPinboard);
-    }
 
     const onPinboardPage = action.payload.pathname.match(/\/pinboard\//);
     const hasPinboardId = action.payload.pathname.match(/\/pinboard\/[a-fA-F0-9]+\//);
-    if (onPinboardPage && !hasPinboardId) {
+    if (onPinboardPage && !hasPinboardId && !pinboard.hasPendingChanges) {
       const { pinboardFromQuery, invalidParams } = getPinboardFromQuery(action.payload.query);
       _.isEmpty(invalidParams) || showPinboardToast(formatInvalidParamMessage(invalidParams));
 
-      const { officerIds, crids, trrIds } = pinboardFromQuery;
-      const isEmptyPinboard = _.isEmpty(officerIds) && _.isEmpty(crids) && _.isEmpty(trrIds);
-      if (!isEmptyPinboard)
+      if (!isEmptyPinboard(pinboardFromQuery))
         dispatchUpdateOrCreatePinboard(store, pinboardFromQuery, showCreatedToasts);
       else {
         _.isEmpty(action.payload.query) || showPinboardToast('Redirected to latest pinboard.');

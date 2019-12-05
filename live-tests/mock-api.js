@@ -30,7 +30,7 @@ var buildApi = function () {
     });
   };
 
-  var mockPost = function (uri, status, body, data) {
+  var mockPost = function (uri, status, body, data, delay) {
     var method = 'POST';
     if (!(method in handleMap)) {
       handleMap[method] = {};
@@ -40,11 +40,20 @@ var buildApi = function () {
     }
 
     handleMap[method][uri][hashBody(body)] = function (response) {
-      response.status(status).send(data);
+      if (delay) {
+        setTimeout(
+          function () {
+            response.status(status).send(data);
+          },
+          delay
+        );
+      } else {
+        response.status(status).send(data);
+      }
     };
   };
 
-  var mockPut = function (uri, status, body, data) {
+  var mockPut = function (uri, status, body, data, delay) {
     var method = 'PUT';
     if (!(method in handleMap)) {
       handleMap[method] = {};
@@ -54,7 +63,16 @@ var buildApi = function () {
     }
 
     handleMap[method][uri][hashBody(body)] = function (response) {
-      response.status(status).send(data);
+      if (delay) {
+        setTimeout(
+          function () {
+            response.status(status).send(data);
+          },
+          delay
+        );
+      } else {
+        response.status(status).send(data);
+      }
     };
   };
 

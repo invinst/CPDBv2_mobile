@@ -8,7 +8,10 @@ import {
   PINBOARD_UPDATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_FAILURE,
   PINBOARD_UPDATE_REQUEST_SUCCESS,
+  PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS,
+  PINBOARD_FETCH_REQUEST_START,
   PINBOARD_FETCH_REQUEST_SUCCESS,
+  PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
   ADD_ITEM_TO_PINBOARD_STATE,
   REMOVE_ITEM_FROM_PINBOARD_STATE,
@@ -16,6 +19,7 @@ import {
   PERFORM_FETCH_PINBOARD_RELATED_DATA,
   UPDATE_PINBOARD_INFO_STATE,
 } from 'actions/pinboard';
+import { getRequestPinboard } from 'utils/pinboard';
 
 
 const PINBOARD_ATTR_MAP = {
@@ -29,6 +33,12 @@ const PINBOARD_ATTR_MAP = {
   'DATE > TRR': 'trr_ids',
 };
 
+const DEFAULT_PINBOARD_STATUSES = {
+  saving: false,
+  needRefreshData: false,
+  hasPendingChanges: false,
+};
+
 const defaultState = {
   'id': null,
   'title': '',
@@ -36,21 +46,34 @@ const defaultState = {
   'crids': [],
   'trr_ids': [],
   'description': '',
-  'saving': false,
   'isPinboardRestored': false,
+  ...DEFAULT_PINBOARD_STATUSES,
 };
 
 const getFormatId = (attr) => {
   return _.includes(['officer_ids', 'trr_ids'], attr) ? _.parseInt : _.identity;
 };
 
+const hasPendingChanges = (currentPinboard, pinboard) => (
+  _.isEmpty(pinboard) || !_.isEqual(getRequestPinboard(currentPinboard), getRequestPinboard(pinboard))
+);
+
 export default handleActions({
-  [PINBOARD_FETCH_REQUEST_SUCCESS]: (state, action) => ({
+  [PINBOARD_FETCH_REQUEST_START]: (state, action) => ({
     ...state,
+    ...DEFAULT_PINBOARD_STATUSES,
+  }),
+  [PINBOARD_FETCH_REQUEST_SUCCESS]: (state, action) => ({
     ...action.payload,
+    ...DEFAULT_PINBOARD_STATUSES,
+    isPinboardRestored: true,
+  }),
+  [PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START]: (state, action) => ({
+    ...state,
+    ...DEFAULT_PINBOARD_STATUSES,
   }),
   [PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS]: (state, action) => ({
-    ...state,
+    ...defaultState,
     ...action.payload,
     isPinboardRestored: true,
   }),
@@ -62,7 +85,7 @@ export default handleActions({
     const officerIds = _.difference(_.get(state, 'officer_ids', []), notFoundOfficerIds);
     const crids = _.difference(_.get(state, 'crids', []), notFoundCrids);
     const trrIds = _.difference(_.get(state, 'trr_ids', []), notFoundTrrIds);
-    return {
+    const pinboard = {
       ...state,
       'officer_ids': officerIds,
       crids,
@@ -71,6 +94,16 @@ export default handleActions({
       saving: false,
       isPinboardRestored: true,
       'example_pinboards': action.payload['example_pinboards'],
+    };
+
+    pinboard.hasPendingChanges = hasPendingChanges(pinboard, action.payload);
+    return pinboard;
+  },
+  [PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS]: (state, action) => {
+    return {
+      ...action.payload,
+      ...DEFAULT_PINBOARD_STATUSES,
+      isPinboardRestored: true,
     };
   },
   [PINBOARD_CREATE_REQUEST_FAILURE]: (state, action) => {
@@ -83,6 +116,7 @@ export default handleActions({
     return {
       ...state,
       saving: false,
+      hasPendingChanges: hasPendingChanges(state, action.payload),
       'example_pinboards': action.payload['example_pinboards'],
     };
   },
@@ -110,6 +144,7 @@ export default handleActions({
     return {
       ...state,
       [action.payload.attr]: action.payload.value,
+      hasPendingChanges: true,
     };
   },
   [ADD_ITEM_TO_PINBOARD_STATE]: (state, action) => {
@@ -120,6 +155,7 @@ export default handleActions({
     return {
       ...state,
       [attr]: _.includes(ids, newId) ? ids : ids.concat(newId),
+      hasPendingChanges: true,
       needRefreshData: true,
     };
   },
@@ -131,6 +167,7 @@ export default handleActions({
     return {
       ...state,
       [attr]: _.reject(ids, id => id === format(action.payload.id)),
+      hasPendingChanges: true,
       needRefreshData: true,
     };
   },
@@ -142,6 +179,7 @@ export default handleActions({
     return {
       ...state,
       [attr]: _.map(ids, format),
+      hasPendingChanges: true,
     };
   },
   [PERFORM_FETCH_PINBOARD_RELATED_DATA]: (state, action) => {

@@ -64,7 +64,25 @@ describe('<PinboardBar />', function () {
     );
 
     wrapper.simulate('click');
-    browserHistoryPush.called.should.be.true();
+    browserHistoryPush.should.be.calledWith('/pinboard/1/title/');
+
+    browserHistoryPush.restore();
+  });
+
+  it('should go to /pinboard/ if pinboard is empty and hasPendingChanges is true', function () {
+    const browserHistoryPush = stub(browserHistory, 'push');
+
+    const wrapper = shallow(
+      <PinboardBar pinboard={ {
+        id: '',
+        itemsCount: 2,
+        isPinboardRestored: true,
+        hasPendingChanges: true,
+      } }/>
+    );
+
+    wrapper.simulate('click');
+    browserHistoryPush.should.be.calledWith('/pinboard/');
 
     browserHistoryPush.restore();
   });
