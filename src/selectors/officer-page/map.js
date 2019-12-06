@@ -37,7 +37,7 @@ export const crMapMarkersTransform = item => ({
   }),
   date: item.date,
   kind: item.kind,
-  finding: item.finding,
+  pointType: `${item.finding === 'Sustained' ? 'SUSTAINED-' : ''}${item.kind}`,
   id: item.crid,
   category: item.category,
 });
@@ -54,12 +54,16 @@ export const trrMapMarkerTransform = item => ({
 
 export const mapMarkersSelector = createSelector(
   rawMapMarkersSelector,
-  markers => markers.map(marker => {
-    if (marker.kind === constants.MAP_ITEMS.CR) {
-      return crMapMarkersTransform(marker);
-    }
-    if (marker.kind === constants.MAP_ITEMS.FORCE) {
-      return trrMapMarkerTransform(marker);
-    }
-  })
+  markers => {
+    const geographicCrs = markers.filter(marker => {
+      return marker.kind === constants.MAP_ITEMS.CR;
+    });
+    const geographicTrrs = markers.filter(marker => {
+      return marker.kind === constants.MAP_ITEMS.FORCE;
+    });
+    return {
+      crs: geographicCrs.map(crMapMarkersTransform),
+      trrs: geographicTrrs.map(trrMapMarkerTransform),
+    };
+  }
 );

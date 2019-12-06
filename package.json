@@ -122,7 +122,7 @@
     "history": "^3.0.0",
     "leaflet": "^1.0.3",
     "lodash": "^4.17.15",
-    "mapbox-gl": "0.42.2",
+    "mapbox-gl": "1.4.0",
     "mapbox-gl-multitouch": "^1.0.3",
     "moment": "^2.13.0",
     "muuri": "^0.7.1",
