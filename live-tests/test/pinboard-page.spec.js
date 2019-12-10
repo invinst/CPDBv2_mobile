@@ -118,6 +118,12 @@ describe('Pinboard Page', function () {
     client.assert.urlContains('pinboard/5cd06f2b/pinboard-title/');
   });
 
+  it('should be visited if accessing a pinboard geographic expanded mode via URL', function (client) {
+    client.url('/geographic/pinboard/5cd06f2b/');
+    this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Pinboard Title').before(500);
+    client.assert.urlContains('pinboard/5cd06f2b/pinboard-title/');
+  });
+
   context('pinboard pinned section', function () {
     it('should render the pinned cards correctly', function (client) {
       const pinboardPage = this.pinboardPage;

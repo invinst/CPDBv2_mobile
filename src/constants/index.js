@@ -315,6 +315,7 @@ export default {
   EMBED_OFFICERS_PATH: '/embed/officers/',
   PINBOARD_PATH: '/pinboard/',
   PINBOARD_SOCIAL_GRAPH_REDIRECT_PATH: 'social-graph/pinboard/',
+  PINBOARD_GEOGRAPHIC_REDIRECT_PATH: 'geographic/pinboard/',
 
   // Routes that don't have their corresponding component.
   // NavigationUtil.goUp() skips all of these.

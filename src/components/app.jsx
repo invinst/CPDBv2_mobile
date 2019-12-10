@@ -84,6 +84,10 @@ const App = React.createClass({
             from={ `${constants.PINBOARD_SOCIAL_GRAPH_REDIRECT_PATH}:pinboardId/` }
             to={ `${constants.PINBOARD_PATH}:pinboardId/` }
           />
+          <Redirect
+            from={ `${constants.PINBOARD_GEOGRAPHIC_REDIRECT_PATH}:pinboardId/` }
+            to={ `${constants.PINBOARD_PATH}:pinboardId/` }
+          />
 
         </Route>
         <Route
