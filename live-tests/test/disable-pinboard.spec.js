@@ -588,22 +588,22 @@ describe('Disable pinboard feature', function () {
     });
 
     it('should not display pinned buttons', function () {
-      const recentActivities = this.mainPage.section.recentActivities;
-      const topOfficersByAllegation = this.mainPage.section.topOfficersByAllegation;
-      const complaintSummaries = this.mainPage.section.complaintSummaries;
-      const newDocumentAllegations = this.mainPage.section.newDocumentAllegations;
+      const recentActivitiesCards = this.mainPage.section.recentActivities.section.cards;
+      const topOfficersByAllegationCards = this.mainPage.section.topOfficersByAllegation.section.cards;
+      const complaintSummariesCards = this.mainPage.section.complaintSummaries.section.cards;
+      const newDocumentAllegationsCards = this.mainPage.section.newDocumentAllegations.section.cards;
 
-      recentActivities.section.cards.waitForElementVisible('@firstCard');
-      recentActivities.section.cards.expect.element('@firstPinButton').to.not.be.visible;
+      recentActivitiesCards.waitForElementVisible('@firstCard');
+      recentActivitiesCards.expect.element('@firstPinButton').to.not.be.visible;
 
-      topOfficersByAllegation.section.cards.waitForElementVisible('@firstCard');
-      topOfficersByAllegation.section.cards.expect.element('@firstPinButton').to.not.be.visible;
+      topOfficersByAllegationCards.waitForElementVisible('@firstCard');
+      topOfficersByAllegationCards.expect.element('@firstPinButton').to.not.be.visible;
 
-      complaintSummaries.section.cards.waitForElementVisible('@firstCard');
-      complaintSummaries.section.cards.expect.element('@firstPinButton').to.not.be.visible;
+      complaintSummariesCards.waitForElementVisible('@firstCard');
+      complaintSummariesCards.expect.element('@firstPinButton').to.not.be.visible;
 
-      newDocumentAllegations.section.cards.waitForElementVisible('@firstCard');
-      newDocumentAllegations.section.cards.expect.element('@firstPinButton').to.not.be.visible;
+      newDocumentAllegationsCards.waitForElementVisible('@firstCard');
+      newDocumentAllegationsCards.expect.element('@firstPinButton').to.not.be.visible;
     });
   });
 
