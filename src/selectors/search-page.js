@@ -13,6 +13,7 @@ export const getChosenCategory = (state) => state.suggestionApp.chosenCategory;
 export const getActiveCategory = (state) => state.suggestionApp.activeCategory;
 export const getQuery = (state) => state.suggestionApp.query;
 const getPagination = state => state.suggestionApp.pagination;
+export const getCancelPathname = state => state.suggestionApp.cancelPathname;
 
 export const queryPrefixSelector = createSelector(
   getChosenCategory,
