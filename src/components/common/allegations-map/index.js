@@ -55,23 +55,23 @@ export default class AllegationsMap extends Component {
   }
 
   componentDidMount() {
-    this.addMapLayersOnStyleLoaded(this.props.markers);
+    this.addMapLayersOnStyleLoaded(this.props.markerGroups);
   }
 
   componentWillReceiveProps(nextProps, nextState) {
     if (nextProps.clearAllMarkers) {
       this.resetMap();
-      this.addMapLayersOnStyleLoaded(nextProps.markers);
+      this.addMapLayersOnStyleLoaded(nextProps.markerGroups);
     } else {
-      if (!isEqual(nextProps.markers, this.props.markers)) {
-        this.addMapLayersOnStyleLoaded(nextProps.markers);
+      if (!isEqual(nextProps.markerGroups, this.props.markerGroups)) {
+        this.addMapLayersOnStyleLoaded(nextProps.markerGroups);
       }
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { legend, markers } = this.props;
-    return !isEqual(legend, nextProps.legend) || !isEqual(markers, nextProps.markers);
+    const { legend, markerGroups } = this.props;
+    return !isEqual(legend, nextProps.legend) || !isEqual(markerGroups, nextProps.markerGroups);
   }
 
   gotRef(el) {
@@ -129,8 +129,8 @@ export default class AllegationsMap extends Component {
     const data = [];
     (markers || []).forEach((marker, index) => {
       const markerUid = this.markerUid(marker);
-      if (!this.currentMarkers[markerUid]) {
-        this.currentMarkers[markerUid] = true;
+      if (!this.currentMarkers.has(markerUid)) {
+        this.currentMarkers.add(markerUid);
         data.push({
           type: 'Feature',
           properties: {
@@ -154,7 +154,7 @@ export default class AllegationsMap extends Component {
 
   initMapData() {
     this.layerNames = [];
-    this.currentMarkers = {};
+    this.currentMarkers = new Set();
     this.mapboxglLayerIndex = 0;
     this.firstLayer = {};
   }
@@ -169,17 +169,17 @@ export default class AllegationsMap extends Component {
     this.initMapData();
   }
 
-  addMapLayersOnStyleLoaded(markers) {
+  addMapLayersOnStyleLoaded(markerGroups) {
     if (this.map.isStyleLoaded()) {
-      this.addMapLayers(markers);
+      this.addMapLayers(markerGroups);
     } else {
-      this.map.on('idle', () => this.addMapLayers(markers));
+      this.map.on('idle', () => this.addMapLayers(markerGroups));
     }
   }
 
-  addMapLayers(markers) {
-    Object.keys(markers).forEach(
-      (layerType) => this.addMapLayer(layerType, markers[layerType])
+  addMapLayers(markerGroups) {
+    Object.keys(markerGroups).forEach(
+      (layerType) => this.addMapLayer(layerType, markerGroups[layerType])
     );
   }
 
@@ -234,7 +234,7 @@ AllegationsMap.propTypes = {
     sustainedCount: PropTypes.number,
     useOfForceCount: PropTypes.number,
   }),
-  markers: PropTypes.shape({
+  markerGroups: PropTypes.shape({
     crs: PropTypes.arrayOf(
       PropTypes.shape({
         point: PropTypes.shape({
@@ -268,7 +268,7 @@ AllegationsMap.propTypes = {
 
 AllegationsMap.defaultProps = {
   legend: {},
-  markers: {
+  markerGroups: {
     crs: [],
     trrs: [],
   },

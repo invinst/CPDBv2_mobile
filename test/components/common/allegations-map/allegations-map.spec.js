@@ -17,7 +17,7 @@ describe('Map component', function () {
     sustainedCount: 3,
     useOfForceCount: 1,
   };
-  const markers = {
+  const markerGroups = {
     crs: [
       {
         point: {
@@ -76,7 +76,7 @@ describe('Map component', function () {
         sustainedCount: 5,
         useOfForceCount: 3,
       };
-      const newMarkers = {
+      const newMarkerGroups = {
         crs: [
           {
             point: {
@@ -98,19 +98,21 @@ describe('Map component', function () {
         trrs: [],
       };
 
-      const wrapper = shallow(<AllegationsMap legend={ legend } markers={ markers } />);
+      const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
       const instance = wrapper.instance();
-      instance.shouldComponentUpdate({ legend: newLegend, markers }).should.be.true();
-      instance.shouldComponentUpdate({ legend, markers: newMarkers }).should.be.true();
-      instance.shouldComponentUpdate({ legend: newLegend, markers: newMarkers }).should.be.true();
+      instance.shouldComponentUpdate({ legend: newLegend, markerGroups }).should.be.true();
+      instance.shouldComponentUpdate({ legend, markerGroups: newMarkerGroups }).should.be.true();
+      instance.shouldComponentUpdate({ legend: newLegend, markerGroups: newMarkerGroups }).should.be.true();
     });
 
     it('should return false if props are unchanged', function () {
-      const wrapper = shallow(<AllegationsMap legend={ legend } markers={ markers } />);
+      const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
       const instance = wrapper.instance();
-      instance.shouldComponentUpdate({ legend: cloneDeep(legend), markers: cloneDeep(markers) }).should.be.false();
+      instance.shouldComponentUpdate(
+        { legend: cloneDeep(legend), markerGroups: cloneDeep(markerGroups) }
+      ).should.be.false();
     });
   });
 
@@ -119,19 +121,19 @@ describe('Map component', function () {
       const resetMapStub = stub(AllegationsMap.prototype, 'resetMap');
       const addMapLayersOnStyleLoadedStub = stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
 
-      const wrapper = shallow(<AllegationsMap legend={ legend } markers={ markers } />);
+      const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
-      wrapper.setProps({ legend, markers, clearAllMarkers: true });
+      wrapper.setProps({ legend, markerGroups, clearAllMarkers: true });
 
       resetMapStub.should.be.called();
-      addMapLayersOnStyleLoadedStub.should.be.calledWith(markers);
+      addMapLayersOnStyleLoadedStub.should.be.calledWith(markerGroups);
       AllegationsMap.prototype.resetMap.restore();
       AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
     });
 
     it('should only call addMapLayersOnStyleLoaded if next props clearAllMarkers is false', function () {
       const addMapLayersOnStyleLoadedStub = stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
-      const newMarkers = {
+      const newMarkerGroups = {
         crs: [],
         trrs: [
           {
@@ -146,17 +148,17 @@ describe('Map component', function () {
         ],
       };
 
-      const wrapper = shallow(<AllegationsMap legend={ legend } markers={ markers } />);
+      const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
-      wrapper.setProps({ legend, markers: newMarkers, clearAllMarkers: false });
+      wrapper.setProps({ legend, markerGroups: newMarkerGroups, clearAllMarkers: false });
 
-      addMapLayersOnStyleLoadedStub.should.be.calledWith(newMarkers);
+      addMapLayersOnStyleLoadedStub.should.be.calledWith(newMarkerGroups);
       AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
     });
   });
 
   it('should render officer map and legend', function () {
-    const wrapper = mount(<AllegationsMap legend={ legend } markers={ markers } />);
+    const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
     wrapper.find(LoadingSpinner).exists().should.be.false();
     wrapper.find('.test--map').should.have.length(1);
@@ -173,14 +175,14 @@ describe('Map component', function () {
       id: index.toString(),
       kind: 'CR',
     });
-    const markers = {
+    const markerGroups = {
       crs: times(3, createMarker),
       trrs: [],
     };
 
-    mount(<AllegationsMap legend={ legend } markers={ markers } />);
+    mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
-    addMapLayersOnStyleLoadedStub.should.be.calledWith(markers);
+    addMapLayersOnStyleLoadedStub.should.be.calledWith(markerGroups);
     AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
   });
 
@@ -213,7 +215,7 @@ describe('Map component', function () {
         },
       ];
 
-      const wrapper = mount(<AllegationsMap legend={ legend } markers={ markers } />);
+      const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
       const instance = wrapper.instance();
       const mapOnStub = stub(instance.map, 'on');
@@ -281,7 +283,7 @@ describe('Map component', function () {
     it('should not add new layer if markers data is empty', function () {
       stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
 
-      const wrapper = mount(<AllegationsMap legend={ legend } markers={ markers } />);
+      const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
       const instance = wrapper.instance();
       instance.addMapLayer('crs', []);
@@ -347,7 +349,7 @@ describe('Map component', function () {
         },
       ];
 
-      const wrapper = mount(<AllegationsMap legend={ legend } markers={ markers } />);
+      const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
       const instance = wrapper.instance();
       instance.addMapLayer('crs', crMarkers1);
@@ -381,7 +383,7 @@ describe('Map component', function () {
       category: 'Use of Force',
     };
 
-    const wrapper = shallow(<AllegationsMap legend={ legend } markers={ markers } />);
+    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
     const instance = wrapper.instance();
     instance.getUrl(crMarker).should.equal('/complaint/C123456/');
@@ -395,7 +397,7 @@ describe('Map component', function () {
       category: 'False Arrest',
     };
 
-    const wrapper = shallow(<AllegationsMap legend={ legend } markers={ markers } />);
+    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
     const instance = wrapper.instance();
     instance.markerUid(crMarker).should.equal('CR-C123456');
@@ -419,7 +421,7 @@ describe('Map component', function () {
       ],
     };
 
-    const wrapper = mount(<AllegationsMap legend={ legend } markers={ markers } />);
+    const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
     const instance = wrapper.instance();
     const tooltip = (<MarkerTooltip date='2007-12-05' category='False Arrest' url='/complaint/C123456/'/>);
@@ -430,12 +432,12 @@ describe('Map component', function () {
   });
 
   it('should return initial data when calling initMapData', function () {
-    const wrapper = shallow(<AllegationsMap legend={ legend } markers={ markers } />);
+    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
     const instance = wrapper.instance();
     instance.initMapData();
     instance.layerNames.should.eql([]);
-    instance.currentMarkers.should.eql({});
+    instance.currentMarkers.should.eql(new Set());
     instance.mapboxglLayerIndex.should.eql(0);
     instance.firstLayer.should.eql({});
   });
@@ -443,7 +445,7 @@ describe('Map component', function () {
   it('should reset the map when calling resetMap', function () {
     const initMapDataSpy = spy(AllegationsMap.prototype, 'initMapData');
 
-    const wrapper = mount(<AllegationsMap legend={ legend } markers={ markers } />);
+    const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
     const instance = wrapper.instance();
     initMapDataSpy.should.be.calledOnce();
     initMapDataSpy.resetHistory();
@@ -484,7 +486,7 @@ describe('Map component', function () {
         date: '2008-12-05',
       },
     ];
-    const wrapper = shallow(<AllegationsMap legend={ legend } markers={ markers } />);
+    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
     const instance = wrapper.instance();
     instance.mapMarkersData(crMarkers).should.eql([
@@ -525,30 +527,30 @@ describe('Map component', function () {
 
   it('should call addMapLayer when calling addMapLayers', function () {
     const addMapLayerStub = stub(AllegationsMap.prototype, 'addMapLayer');
-    const wrapper = shallow(<AllegationsMap legend={ legend } markers={ markers } />);
+    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
     const instance = wrapper.instance();
     addMapLayerStub.resetHistory();
 
-    instance.addMapLayers(markers);
+    instance.addMapLayers(markerGroups);
     addMapLayerStub.should.be.calledTwice();
     AllegationsMap.prototype.addMapLayer.restore();
   });
 
   it('should add map layer when calling addMapLayersOnStyleLoaded', function () {
     const addMapLayersStub = stub(AllegationsMap.prototype, 'addMapLayers');
-    const wrapper = mount(<AllegationsMap legend={ legend } markers={ markers } />);
+    const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
     const instance = wrapper.instance();
     addMapLayersStub.resetHistory();
 
     instance.map.isStyleLoaded.returns(true);
-    instance.addMapLayersOnStyleLoaded(markers);
+    instance.addMapLayersOnStyleLoaded(markerGroups);
     addMapLayersStub.should.be.calledOnce();
     addMapLayersStub.restore();
   });
 
   it('should call addControl when component render', function () {
     const wrapper = mount(
-      <AllegationsMap legend={ legend } markers={ markers } attributionControlPosition='bottom-left' />
+      <AllegationsMap legend={ legend } markerGroups={ markerGroups } attributionControlPosition='bottom-left' />
     );
     const instance = wrapper.instance();
 

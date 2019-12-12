@@ -51,11 +51,11 @@ export const trrMapMarkerTransform = geographicDatum => ({
   category: geographicDatum['firearm_used'] ? 'Firearm' : geographicDatum.taser ? 'Taser' : 'Use of Force Report',
 });
 
-export const mapMarkersSelector = createSelector(
+export const mapMarkerGroupsSelector = createSelector(
   getGeographicCrs,
   getGeographicTrrs,
   (geographicCrs, geographicTrrs) => ({
-    crs: geographicCrs.map(marker => crMapMarkersTransform(marker)),
-    trrs: geographicTrrs.map(marker => trrMapMarkerTransform(marker)),
+    crs: geographicCrs.map(crMapMarkersTransform),
+    trrs: geographicTrrs.map(trrMapMarkerTransform),
   })
 );
