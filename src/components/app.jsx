@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 
 import AppHistory from 'utils/history';
 import constants from 'constants';
+import config from 'config';
 
 import 'swiper/dist/css/swiper.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -29,6 +30,8 @@ Modal.setAppElement('body');
 
 const App = React.createClass({
   render() {
+    const { pinboard: enablePinboardFeature } = config.enableFeatures;
+
     return (
       <Router history={ AppHistory }>
         <Route
@@ -75,11 +78,14 @@ const App = React.createClass({
             component={ TRRPageContainer }
           />
 
-          <Route
-            path={ `${constants.PINBOARD_PATH}(:pinboardId/)(:pinboardTitle/)` }
-            breadcrumb={ BreadcrumbItemContainer }
-            component={ PinboardPageContainer }
-          />
+          {
+            enablePinboardFeature &&
+            <Route
+              path={ `${constants.PINBOARD_PATH}(:pinboardId/)(:pinboardTitle/)` }
+              breadcrumb={ BreadcrumbItemContainer }
+              component={ PinboardPageContainer }
+            />
+          }
 
         </Route>
         <Route

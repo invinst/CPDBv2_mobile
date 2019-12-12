@@ -6,6 +6,11 @@ import ItemPinButton from 'components/common/item-pin-button';
 
 
 describe('<ItemPinButton />', function () {
+  it('should render correctly', function () {
+    const wrapper = mount(<ItemPinButton item={ { isPinned: true } } />);
+    wrapper.find('div').hasClass('pinboard-feature').should.be.true();
+  });
+
   it('should have class is-pinned if item.isPinned is true', function () {
     const wrapper = mount(<ItemPinButton item={ { isPinned: true } } />);
     wrapper.find('.is-pinned').exists().should.be.true();
