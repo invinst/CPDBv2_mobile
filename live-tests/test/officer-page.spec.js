@@ -371,7 +371,8 @@ function checkTimelineShowAllItems(timeline) {
 }
 
 describe('OfficerPage test', function () {
-  afterEach(function (client, done) {
+  beforeEach(function (client, done) {
+    api.cleanMock();
     done();
   });
 
@@ -692,17 +693,20 @@ describe('OfficerPage test', function () {
       });
 
       it('should go to cr page when clicking on an cr timeline item', function () {
+        this.timeline.waitForElementVisible('@crItem', TIMEOUT);
         this.timeline.click('@crItem');
         this.timeline.assert.urlContains('/complaint/294088/');
       });
 
       it('should go to attachment source page when clicking on the attachment thumbnail', function (client) {
+        this.timeline.waitForElementVisible('@attachmentThumbnail', TIMEOUT);
         this.timeline.click('@attachmentThumbnail');
         client.switchToRecentTab();
         this.timeline.assert.urlEquals('https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf');
       });
 
       it('should go to trr page when clicking on an trr timeline item', function () {
+        this.timeline.waitForElementVisible('@crItem', TIMEOUT);
         this.timeline.click('@trrItem');
         this.timeline.assert.urlContains('/trr/1/');
       });
@@ -839,9 +843,11 @@ describe('OfficerPage test', function () {
       });
 
       it('should navigate to officer page when clicking on coaccusals card', function (client) {
+        this.officerPage.waitForElementVisible('@coaccusalsTabButton', TIMEOUT);
         this.officerPage.click('@coaccusalsTabButton');
         this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
 
+        this.coaccusals.waitForElementVisible('@firstCoaccusalCard', TIMEOUT);
         this.coaccusals.click('@firstCoaccusalCard');
 
         this.coaccusals.assert.urlContains('/officer/27778/carl-suchocki/');
@@ -860,6 +866,7 @@ describe('OfficerPage test', function () {
       });
 
       it('should navigate to officer complaint when clicking on complaint header', function () {
+        this.officerPage.waitForElementVisible('@attachmentsTabButton', TIMEOUT);
         this.officerPage.click('@attachmentsTabButton');
         this.attachments.assert.urlContains('/officer/2235/kevin-osborn/documents/');
         this.attachments.section.firstComplaint.waitForElementVisible('@heading', TIMEOUT);
@@ -868,6 +875,7 @@ describe('OfficerPage test', function () {
       });
 
       it('should go to attachment source page when clicking on the attachment', function (client) {
+        this.officerPage.waitForElementVisible('@attachmentsTabButton', TIMEOUT);
         this.officerPage.click('@attachmentsTabButton');
         this.attachments.assert.urlContains('/officer/2235/kevin-osborn/documents/');
         this.attachments.section.firstComplaint.click('@firstAttachment');
@@ -890,8 +898,44 @@ describe('OfficerPage test', function () {
       });
 
       it('should add map suffix when click on map tab', function () {
+        this.officerPage.waitForElementVisible('@mapTabButton', TIMEOUT);
         this.officerPage.click('@mapTabButton');
         this.map.assert.urlContains('/officer/2235/kevin-osborn/map/');
+      });
+    });
+
+    describe('Pinboard function', function () {
+      beforeEach(function (client, done) {
+        api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
+        this.main = client.page.main();
+        this.search = client.page.search();
+        done();
+      });
+
+      it('should display toast when pinning a coaccusal', function (client) {
+        this.officerPage.waitForElementVisible('@coaccusalsTabButton', TIMEOUT);
+        this.officerPage.click('@coaccusalsTabButton');
+
+        this.officerPage.section.coaccusals.waitForElementVisible('@firstPinButton');
+        this.officerPage.section.coaccusals.click('@firstPinButton');
+        this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal('Officer added').before(TIMEOUT);
+
+        this.officerPage.click('@landingPageBreadCrumb');
+        this.main.waitForElementVisible('@searchLink');
+        this.main.click('@searchLink');
+        this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (1)').before(TIMEOUT);
+        client.back();
+        client.back();
+
+        this.officerPage.section.coaccusals.click('@firstPinButton');
+        this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal('Officer removed').before(TIMEOUT);
+
+        this.officerPage.click('@landingPageBreadCrumb');
+        this.main.waitForElementVisible('@searchLink');
+        this.main.click('@searchLink');
+        this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
       });
     });
   });

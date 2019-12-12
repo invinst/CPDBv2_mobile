@@ -1,31 +1,42 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import { map } from 'lodash';
+import { map, filter, isUndefined, isEmpty } from 'lodash';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
+import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
+import extractQuery from 'utils/extract-query';
 
 
 export const getChosenCategory = (state) => state.suggestionApp.chosenCategory;
 export const getActiveCategory = (state) => state.suggestionApp.activeCategory;
 export const getQuery = (state) => state.suggestionApp.query;
+const getPagination = state => state.suggestionApp.pagination;
+
 export const queryPrefixSelector = createSelector(
   getChosenCategory,
   (chosenCategory) => constants.SEARCH_CATEGORY_PREFIXES[chosenCategory]
 );
 
-export const officerFormatter = (officers) => map(officers, (officer) => ({
+export const officerFormatter = (officer, pinboardItems) => ({
   id: officer.id,
   name: officer.name,
   badge: officer.badge ? `Badge #${officer.badge}` : '',
   percentile: extractPercentile(officer.percentile),
   url: officerUrl(officer.id, officer.name),
-}));
+  isPinned: isItemPinned('OFFICER', officer.id, pinboardItems),
+  type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+  recentItemData: officer,
+});
+
+export const officersFormatter = (officers, pinboardItems) =>
+  map(officers, (officer) => officerFormatter(officer, pinboardItems));
 
 export const officersSelector = createSelector(
   (state) => state.suggestionApp.suggestions.OFFICER,
-  officerFormatter
+  pinboardItemsSelector,
+  officersFormatter
 );
 
 export const unitsSelector = createSelector(
@@ -39,46 +50,125 @@ export const unitsSelector = createSelector(
   })),
 );
 
-const crFormatter = (crs) => map(crs, (cr) => ({
+const crFormatter = (cr, pinboardItems) => ({
   crid: cr.crid,
   url: `${constants.COMPLAINT_PATH}${cr.crid}/`,
   incidentDate: moment(cr.incident_date).format(constants.SEARCH_INCIDENT_DATE_FORMAT),
   category: cr.category,
-}));
+  isPinned: isItemPinned('CR', cr.crid, pinboardItems),
+  type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+  recentItemData: cr,
+});
+
+const crsFormatter = (crs, pinboardItems) =>
+  map(crs, (cr) => crFormatter(cr, pinboardItems));
 
 export const crsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.CR,
-  crFormatter
+  pinboardItemsSelector,
+  crsFormatter
 );
 
 export const dateCRsSelector = createSelector(
   (state) => state.suggestionApp.suggestions['DATE > CR'],
-  crFormatter
+  pinboardItemsSelector,
+  crsFormatter,
 );
 
-const trrFormatter = (trrs) => map(trrs, (trr) => ({
+const trrFormatter = (trr, pinboardItems) => ({
   id: trr.id,
   url: `${constants.TRR_PATH}${trr.id}/`,
-}));
+  isPinned: isItemPinned('TRR', trr.id, pinboardItems),
+  type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR,
+  recentItemData: trr,
+});
+
+const trrsFormatter = (trrs, pinboardItems) =>
+  map(trrs, (trr) => trrFormatter(trr, pinboardItems));
 
 export const trrsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.TRR,
-  trrFormatter
+  pinboardItemsSelector,
+  trrsFormatter
 );
 
 export const dateTRRsSelector = createSelector(
   (state) => state.suggestionApp.suggestions['DATE > TRR'],
-  trrFormatter
+  pinboardItemsSelector,
+  trrsFormatter
 );
 
-export const getRecentSuggestions = (state) => state.suggestionApp.recentSuggestions;
+const getRecentSuggestions = (state) => state.suggestionApp.recentSuggestions;
+export const getRecentSuggestionsRequested = (state) => state.suggestionApp.recentSuggestionsRequested;
+
+const recentItemFormatterMapping = {
+  'OFFICER': officerFormatter,
+  'CR': crFormatter,
+  'TRR': trrFormatter,
+};
+
+export const recentSuggestionsSelector = createSelector(
+  getRecentSuggestions,
+  pinboardItemsSelector,
+  (recent, pinboardItems) => {
+    const recentData = [];
+    recent.forEach((recentItem) => {
+      const itemFormatter = recentItemFormatterMapping[recentItem.type];
+      if (!isUndefined(itemFormatter) && !isUndefined(recentItem.data)) {
+        recentData.push(itemFormatter(recentItem.data, pinboardItems));
+      }
+    });
+    return recentData;
+  }
+);
+
+const RECENT_SUGGESTION_TYPES = {
+  officerIds: 'OFFICER',
+  crids: 'CR',
+  trrIds: 'TRR',
+};
+
+export const recentSuggestionIdsSelector = createSelector(
+  getRecentSuggestions,
+  recentSuggestions => {
+    const result = {};
+    Object.keys(RECENT_SUGGESTION_TYPES).forEach((itemType) => {
+      const ids = map(
+        filter(recentSuggestions, (item) => item.type === RECENT_SUGGESTION_TYPES[itemType] && !isUndefined(item.id)),
+        'id'
+      );
+      if (ids.length > 0) {
+        result[itemType] = ids;
+      }
+    });
+    return result;
+  }
+);
 
 export const dateOfficersSelector = createSelector(
   (state) => state.suggestionApp.suggestions['DATE > OFFICERS'],
-  officerFormatter
+  pinboardItemsSelector,
+  officersFormatter
 );
 
 export const investigatorCRsSelector = createSelector(
   (state) => state.suggestionApp.suggestions['INVESTIGATOR > CR'],
-  crFormatter
+  pinboardItemsSelector,
+  crsFormatter,
+);
+
+export const isShowingSingleContentTypeSelector = createSelector(
+  getChosenCategory,
+  chosenCategory => !isEmpty(chosenCategory)
+);
+
+export const hasMoreSelector = createSelector(
+  isShowingSingleContentTypeSelector,
+  getPagination,
+  (singleContent, { next }) => (singleContent && !!next)
+);
+
+export const nextParamsSelector = createSelector(
+  getPagination,
+  ({ next }) => (extractQuery(next))
 );

@@ -5,7 +5,6 @@ import style from './section-row.sass';
 class SectionRow extends Component {
   render() {
     const { label, value, children } = this.props;
-
     return (
       <div className={ style.sectionRow }>
         <div className='label'>{ label }</div>
@@ -20,7 +19,7 @@ class SectionRow extends Component {
 
 SectionRow.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.node,
   children: PropTypes.node,
 };
 

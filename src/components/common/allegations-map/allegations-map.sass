@@ -1,0 +1,22 @@
+@import 'variables'
+
+\:local(.map)
+  border-bottom: 1px solid $alto-solid
+
+  .map-tab
+    height: 353px
+
+  .map-marker
+    &:hover
+      z-index: 10
+
+    &.cr-marker
+      z-index: 0
+
+    &.force-marker
+      z-index: 1
+
+.pinboard-page
+  \:local(.map)
+    .map-tab
+      height: 261px

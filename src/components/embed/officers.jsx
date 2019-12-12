@@ -28,8 +28,13 @@ export default class Officers extends Component {
         <HorizontalScrolling>
           <div className='carousel-description'>{ description }</div>
           {
-            officers.map(
-              officer => <OfficerCard officer={ officer } key={ officer.id } openCardInNewPage={ true } />
+            officers.map(officer =>
+              <OfficerCard
+                pinnable={ false }
+                officer={ officer }
+                key={ officer.id }
+                openCardInNewPage={ true }
+              />
             )
           }
         </HorizontalScrolling>

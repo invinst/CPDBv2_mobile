@@ -234,7 +234,6 @@ export const filterCountSelector = createSelector(
       });
     });
 
-    console.warn('count', count);
     return count;
   }
 );

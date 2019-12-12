@@ -103,6 +103,8 @@ const nthRankChangeSection = (n) => {
   };
 };
 
+const nthBreadcrumb = n => `.breadcrumb-item-wrapper:nth-child(${ 1 + 2 * (n - 1) })`;
+
 module.exports = {
   url: function (id, tab = '') {
     const tabSuffix = tab ? `${tab}/` : '';
@@ -128,9 +130,27 @@ module.exports = {
       selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[4]',
       locateStrategy: 'xpath',
     },
+    lastToast: {
+      selector: '(//div[contains(@class, "Toastify__toast-body")])[last()]',
+      locateStrategy: 'xpath',
+    },
+    landingPageBreadCrumb: {
+      selector: '//a[@href="/" and .="cpdp"]',
+      locateStrategy: 'xpath',
+    },
   },
 
   sections: {
+    breadcrumbs: {
+      selector: '.breadcrumbs',
+      breadcrumbSelector: '.breadcrumbs > .breadcrumb-item-wrapper',
+      elements: {
+        wrapper: '.breadcrumb-item-wrapper',
+        firstBreadcrumb: nthBreadcrumb(1),
+        secondBreadcrumb: nthBreadcrumb(2),
+        thirdBreadcrumb: nthBreadcrumb(3),
+      },
+    },
     animatedRadarChart: {
       selector: '//div[contains(@class, "animated-radar-chart")]',
       locateStrategy: 'xpath',
@@ -269,6 +289,10 @@ module.exports = {
       selector: '.test--officer-coaccusals',
       elements: {
         firstCoaccusalCard: '.test--officer-card',
+        firstPinButton: {
+          selector: '//div[contains(@class, "item-pin-button__item-pin-button")]',
+          locateStrategy: 'xpath',
+        },
       },
     },
     map: {

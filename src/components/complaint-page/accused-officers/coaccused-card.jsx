@@ -4,7 +4,7 @@ import cx from 'classnames';
 import BaseOfficerCard from 'components/common/base-officer-card';
 import style from './coaccused-card.sass';
 
-const CoaccusedCard = ({ officer }) => {
+const CoaccusedCard = ({ officer, addOrRemoveItemInPinboard }) => {
   const findingOutcomeClassName = cx(
     'text',
     {
@@ -21,6 +21,8 @@ const CoaccusedCard = ({ officer }) => {
       rank={ officer.rank }
       percentile={ officer.percentile }
       customStyle={ style.coaccusedCard }
+      isPinned={ officer.isPinned }
+      addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
       bottomContent={
         <div className={ style.officerCardAccusedInfo }>
           <div className='category'>{ officer.category }</div>
@@ -35,12 +37,14 @@ const CoaccusedCard = ({ officer }) => {
 
 CoaccusedCard.propTypes = {
   officer: PropTypes.object,
+  addOrRemoveItemInPinboard: PropTypes.func,
 };
 
 CoaccusedCard.defaultProps = {
   officer: {
     percentile: {},
   },
+  addOrRemoveItemInPinboard: () => {},
 };
 
 export default CoaccusedCard;
