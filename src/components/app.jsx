@@ -6,6 +6,13 @@ import AppHistory from 'utils/history';
 import constants from 'constants';
 import config from 'config';
 
+import 'swiper/dist/css/swiper.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+import 'styles/fonts.sass';
+import 'styles/style.sass';
+import 'styles/helper.sass';
+
 import MainPageContainer from 'containers/main-page-container';
 import AboutPageContainer from 'containers/about-page-container';
 import SearchPageContainer from 'containers/search-page-container';
@@ -18,13 +25,6 @@ import TopOfficersByAllegationContainer from 'containers/landing-page/top-office
 import OfficersContainer from 'containers/embed/officers';
 import PinboardPageContainer from 'containers/pinboard-page';
 
-import 'swiper/dist/css/swiper.css';
-import 'mapbox-gl/dist/mapbox-gl.css';
-
-import 'styles/fonts.sass';
-import 'styles/style.sass';
-import 'styles/helper.sass';
-import 'styles/custom-mapbox-gl.sass';
 
 Modal.setAppElement('body');
 

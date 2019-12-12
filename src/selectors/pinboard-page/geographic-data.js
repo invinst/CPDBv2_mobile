@@ -1,4 +1,4 @@
-import { get, isEmpty, concat } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { createSelector } from 'reselect';
 
 
@@ -51,11 +51,11 @@ export const trrMapMarkerTransform = geographicDatum => ({
   category: geographicDatum['firearm_used'] ? 'Firearm' : geographicDatum.taser ? 'Taser' : 'Use of Force Report',
 });
 
-export const mapMarkersSelector = createSelector(
+export const mapMarkerGroupsSelector = createSelector(
   getGeographicCrs,
   getGeographicTrrs,
-  (geographicCrs, geographicTrrs) => concat(
-    geographicCrs.map(marker => crMapMarkersTransform(marker)),
-    geographicTrrs.map(marker => trrMapMarkerTransform(marker)),
-  )
+  (geographicCrs, geographicTrrs) => ({
+    crs: geographicCrs.map(crMapMarkersTransform),
+    trrs: geographicTrrs.map(trrMapMarkerTransform),
+  })
 );

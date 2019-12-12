@@ -2,6 +2,7 @@
 import _mapboxgl from 'mapbox-gl';
 import { spy, stub } from 'sinon';
 import config from 'config';
+import { includes } from 'lodash';
 
 const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoiaW52aXNpYmxlaW5zdGl0dXRlIiwiYSI6ImNpZ256bXRqMDAwMDBzeGtud3VoZGplNHMifQ.ky2VSGEYU5KritRMArHY-w';
@@ -22,9 +23,10 @@ if (config.appEnv === 'test' || config.appEnv === 'live-test') {
   const removeMakerSpy = spy();
   const easeToSpy = spy();
   const getZoomStub = stub();
-  const setLngLatSpy = spy();
-  const setPopupSpy = spy();
-  const addToSpy = spy();
+  const setLngLatStub = stub().returnsThis();
+  const setHTMLStub = stub().returnsThis();
+  const setPopupStub = stub().returnsThis();
+  const addToStub = stub().returnsThis();
   const getBoundingClientRectStub = stub().returns({
     top: 0,
     bottom: 0,
@@ -34,6 +36,10 @@ if (config.appEnv === 'test' || config.appEnv === 'live-test') {
   const getContainerStub = stub().returns({
     getBoundingClientRect: getBoundingClientRectStub,
   });
+  const isStyleLoadedStub = stub();
+  const removeLayerSpy = spy();
+  const removeSourceSpy = spy();
+
 
   class MockMap {
     constructor() {
@@ -47,24 +53,39 @@ if (config.appEnv === 'test' || config.appEnv === 'live-test') {
       this.addControl = addControlSpy;
       this.remove = removeSpy;
       this.getContainer = getContainerStub;
+      this.isStyleLoaded = isStyleLoadedStub;
+      this.removeLayer = removeLayerSpy;
+      this.removeSource = removeSourceSpy;
     }
     on() {
-      arguments[arguments.length - 1]();
+      if (includes(['load', 'idle'], arguments[0])) {
+        arguments[arguments.length - 1]();
+      }
     }
   }
 
   class MockMarker {
     constructor(element) {
-      this.setLngLat = setLngLatSpy;
-      this.addTo = addToSpy;
-      this.setPopup = setPopupSpy;
+      this.setLngLat = setLngLatStub;
+      this.addTo = addToStub;
+      this.setPopup = setPopupStub;
       this.element = element;
       this.remove = removeMakerSpy;
     }
   }
 
+  class MockPopup {
+    constructor() {
+      this.setLngLat = setLngLatStub;
+      this.setHTML = setHTMLStub;
+      this.addTo = addToStub;
+      this.remove = removeSpy;
+    }
+  }
+
   _mapboxgl.Map = MockMap;
   _mapboxgl.Marker = MockMarker;
+  _mapboxgl.Popup = MockPopup;
   _mapboxgl._addSourceSpy = addSourceSpy;
   _mapboxgl._getSourceSpy = getSourceSpy;
   _mapboxgl._addLayerSpy = addLayerSpy;
@@ -73,6 +94,24 @@ if (config.appEnv === 'test' || config.appEnv === 'live-test') {
   _mapboxgl._addControlSpy = addControlSpy;
   _mapboxgl._removeSpy = removeSpy;
   _mapboxgl.NavigationControl = navigationControlSpy;
+  _mapboxgl._setHTMLStub = setHTMLStub;
+  _mapboxgl._setLngLatStub = setLngLatStub;
+  _mapboxgl._isStyleLoaded = isStyleLoadedStub;
+  _mapboxgl._addToStub = addToStub;
+
+  _mapboxgl._resetHistory = () => {
+    mapboxgl._addSourceSpy.resetHistory();
+    mapboxgl._getSourceSpy.resetHistory();
+    mapboxgl._addLayerSpy.resetHistory();
+    mapboxgl._getLayerSpy.resetHistory();
+    mapboxgl._setFilterSpy.resetHistory();
+    mapboxgl._addControlSpy.resetHistory();
+    mapboxgl._removeSpy.resetHistory();
+    mapboxgl._setLngLatStub.resetHistory();
+    mapboxgl._setHTMLStub.resetHistory();
+    mapboxgl._addToStub.resetHistory();
+    mapboxgl._isStyleLoaded.resetHistory();
+  };
 }
 
 const getMapUrl = (lat, lon, width, height, mapStyle, zoom) => [

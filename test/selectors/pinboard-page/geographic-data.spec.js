@@ -1,6 +1,6 @@
 import {
   mapLegendSelector,
-  mapMarkersSelector,
+  mapMarkerGroupsSelector,
   crMapMarkersTransform,
   trrMapMarkerTransform,
   hasMapMarkersSelector,
@@ -116,7 +116,7 @@ describe('GeographicData selectors', function () {
     });
   });
 
-  describe('mapMarkersSelector', function () {
+  describe('mapMarkerGroupsSelector', function () {
     it('should return correct marker', function () {
       const firstCr = {
         category: 'Illegal Search',
@@ -158,34 +158,42 @@ describe('GeographicData selectors', function () {
           },
         },
       };
-      mapMarkersSelector(state).should.eql([{
-        point: {
-          lat: 41.918008,
-          lon: -87.73173299999999,
-        },
-        kind: 'CR',
-        id: '1045343',
-        category: 'Illegal Search',
-        date: 'MAR 17, 2012',
-      }, {
-        category: 'Illegal Search',
-        kind: 'CR',
-        point: {
-          lat: 41.7630623832,
-          lon: -87.67122688239999,
-        },
-        id: '294619',
-        date: 'MAR 20, 2013',
-      }, {
-        point: {
-          lat: 35.3,
-          lon: 50.5,
-        },
-        kind: 'FORCE',
-        id: '123456',
-        category: 'Firearm',
-        date: 'MAY 12, 2015',
-      }]);
+      mapMarkerGroupsSelector(state).should.eql({
+        crs: [
+          {
+            point: {
+              lat: 41.918008,
+              lon: -87.73173299999999,
+            },
+            kind: 'CR',
+            id: '1045343',
+            category: 'Illegal Search',
+            date: 'MAR 17, 2012',
+          },
+          {
+            category: 'Illegal Search',
+            kind: 'CR',
+            point: {
+              lat: 41.7630623832,
+              lon: -87.67122688239999,
+            },
+            id: '294619',
+            date: 'MAR 20, 2013',
+          },
+        ],
+        trrs: [
+          {
+            point: {
+              lat: 35.3,
+              lon: 50.5,
+            },
+            kind: 'FORCE',
+            id: '123456',
+            category: 'Firearm',
+            date: 'MAY 12, 2015',
+          },
+        ],
+      });
     });
   });
 
