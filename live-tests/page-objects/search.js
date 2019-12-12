@@ -35,6 +35,7 @@ module.exports = {
 
   elements: {
     body: 'body',
+    cancelButton: 'button.bt-cancel',
     queryInput: '.query-input',
     backToFullSearchLink: '.back-to-full-search-link',
     recentHeader: '#search-category-recent',
@@ -95,24 +96,7 @@ module.exports = {
     dateCRs: resultsSection('dateCRs'),
     dateTRRs: resultsSection('dateTRRs'),
     dateOfficers: resultsSection('dateOfficers'),
-    officers: {
-      selector: '.results.officers',
-      sections: {
-        firstRow: {
-          selector: 'a:nth-child(1)',
-          elements: {
-            itemTitle: '.item-title',
-            itemSubtitle: '.item-subtitle',
-          },
-        },
-        rows: {
-          selector: '.results.officers div a',
-        },
-      },
-      elements: {
-        allLink: '.all',
-      },
-    },
+    officers: resultsSection('officers'),
     crs: resultsSection('crs'),
     investigatorCRs: resultsSection('investigatorCRs'),
     trrs: resultsSection('trrs'),

@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 
 import AppHistory from 'utils/history';
 import constants from 'constants';
+import config from 'config';
 
 import MainPageContainer from 'containers/main-page-container';
 import AboutPageContainer from 'containers/about-page-container';
@@ -29,6 +30,8 @@ Modal.setAppElement('body');
 
 const App = React.createClass({
   render() {
+    const { pinboard: enablePinboardFeature } = config.enableFeatures;
+
     return (
       <Router history={ AppHistory }>
         <Route
@@ -75,19 +78,28 @@ const App = React.createClass({
             component={ TRRPageContainer }
           />
 
-          <Route
-            path={ `${constants.PINBOARD_PATH}(:pinboardId/)(:pinboardTitle/)` }
-            breadcrumb={ BreadcrumbItemContainer }
-            component={ PinboardPageContainer }
-          />
-          <Redirect
-            from={ `${constants.PINBOARD_SOCIAL_GRAPH_REDIRECT_PATH}:pinboardId/` }
-            to={ `${constants.PINBOARD_PATH}:pinboardId/` }
-          />
-          <Redirect
-            from={ `${constants.PINBOARD_GEOGRAPHIC_REDIRECT_PATH}:pinboardId/` }
-            to={ `${constants.PINBOARD_PATH}:pinboardId/` }
-          />
+          {
+            enablePinboardFeature &&
+            <Route
+              path={ `${constants.PINBOARD_PATH}(:pinboardId/)(:pinboardTitle/)` }
+              breadcrumb={ BreadcrumbItemContainer }
+              component={ PinboardPageContainer }
+            />
+          }
+          {
+            enablePinboardFeature &&
+            <Redirect
+              from={ `${constants.PINBOARD_SOCIAL_GRAPH_REDIRECT_PATH}:pinboardId/` }
+              to={ `${constants.PINBOARD_PATH}:pinboardId/` }
+            />
+          }
+          {
+            enablePinboardFeature &&
+            <Redirect
+              from={ `${constants.PINBOARD_GEOGRAPHIC_REDIRECT_PATH}:pinboardId/` }
+              to={ `${constants.PINBOARD_PATH}:pinboardId/` }
+            />
+          }
 
         </Route>
         <Route

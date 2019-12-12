@@ -23,6 +23,7 @@ describe('<PinboardBar />', function () {
       <PinboardBar />
     );
 
+    wrapper.prop('className').should.containEql('pinboard-feature');
     wrapper.text().should.equal('Your pinboard is empty');
   });
 
@@ -35,6 +36,7 @@ describe('<PinboardBar />', function () {
       } } />
     );
 
+    wrapper.prop('className').should.containEql('pinboard-feature');
     wrapper.text().should.equal('Pinboard (2)');
   });
 
