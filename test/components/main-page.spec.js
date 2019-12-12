@@ -1,8 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { ToastContainer } from 'react-toastify';
+import { spy, stub } from 'sinon';
 
+import config from 'config';
 import MainPage from 'components/main-page';
-import { spy } from 'sinon';
+import styles from 'components/main-page.sass';
 
 
 describe('MainPage component', function () {
@@ -74,5 +77,50 @@ describe('MainPage component', function () {
 
     wrapper.instance().componentDidUpdate(prevProps);
     spyRouteChanged.called.should.be.false();
+  });
+
+  it('should render ToastContainer', function () {
+    const wrapper = mount(
+      <MainPage
+        location={ { pathname: '/' } }
+      />
+    );
+
+    const toastContainer = wrapper.find(ToastContainer);
+    toastContainer.props().pauseOnFocusLoss.should.be.false();
+    toastContainer.props().closeButton.should.be.false();
+    toastContainer.props().hideProgressBar.should.be.true();
+    toastContainer.props().autoClose.should.equal(3000);
+    toastContainer.props().className.should.equal('landing');
+  });
+
+  context('enablePinboardFeature is false', function () {
+    beforeEach(function () {
+      this.enableFeaturePinboardStub = stub(config.enableFeatures, 'pinboard').value(false);
+    });
+
+    afterEach(function () {
+      this.enableFeaturePinboardStub.restore();
+    });
+
+    it('should add pinboard-disabled class name', function () {
+      const wrapper = shallow(<MainPage />);
+      wrapper.prop('className').should.containEql(styles.mainPage).and.containEql('pinboard-disabled');
+    });
+  });
+
+  context('enablePinboardFeature is true', function () {
+    beforeEach(function () {
+      this.enableFeaturePinboardStub = stub(config.enableFeatures, 'pinboard').value(true);
+    });
+
+    afterEach(function () {
+      this.enableFeaturePinboardStub.restore();
+    });
+
+    it('should add pinboard-disabled class name', function () {
+      const wrapper = shallow(<MainPage />);
+      wrapper.prop('className').should.containEql(styles.mainPage).and.not.containEql('pinboard-disabled');
+    });
   });
 });

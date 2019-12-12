@@ -23,6 +23,14 @@ module.exports = {
       selector: '(//*[contains(@class, "investigator-row")])[2]',
       locateStrategy: 'xpath',
     },
+    lastToast: {
+      selector: '(//div[contains(@class, "Toastify__toast-body")])[last()]',
+      locateStrategy: 'xpath',
+    },
+    landingPageBreadCrumb: {
+      selector: '//a[@href="/" and .="cpdp"]',
+      locateStrategy: 'xpath',
+    },
     requestDocumentButton: '.request-button',
     incidentDate: '.incident-date-value',
   },
@@ -53,6 +61,10 @@ module.exports = {
         name: '.officer-name',
         category: '.category',
         findingOutcome: '.finding-outcome',
+        pinButton: {
+          selector: '//div[contains(@class, "item-pin-button__item-pin-button")]',
+          locateStrategy: 'xpath',
+        },
       },
     },
     firstAttachments: {

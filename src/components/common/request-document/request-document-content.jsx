@@ -64,5 +64,5 @@ RequestDocumentContent.propTypes = {
   closeModal: PropTypes.func,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isRequested: PropTypes.bool,
-  documentRequestMessage: PropTypes.string,
+  documentRequestMessage: PropTypes.object,
 };

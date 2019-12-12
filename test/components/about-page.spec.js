@@ -19,7 +19,6 @@ describe('<AboutPage />', function () {
     );
 
     wrapper.find('.sheet-body').text().should.eql('OneTwo');
-    wrapper.find(Footer).exists.should.be.ok();
+    wrapper.find(Footer).exists().should.be.true();
   });
-
 });

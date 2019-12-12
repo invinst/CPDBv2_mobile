@@ -15,7 +15,6 @@ describe('percentile utils', function () {
         'percentile_trr': '20.6',
       };
       const expected = {
-        officerId: 1,
         year: 2015,
         items: [
           {
@@ -50,7 +49,6 @@ describe('percentile utils', function () {
         'percentile_trr': '20.6',
       };
       const expected = {
-        officerId: 1,
         year: 2015,
         textColor: '#231F20',
         visualTokenBackground: '#ed7467',

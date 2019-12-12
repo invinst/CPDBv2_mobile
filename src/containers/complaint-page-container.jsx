@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { get } from 'lodash';
 
 import ComplaintPage from 'components/complaint-page';
 import { requestComplaint, requestCMS } from 'actions/complaint-page';
 import { trackingClickAttachment } from 'actions/common/analytic';
+import { addOrRemoveItemInPinboard } from 'actions/pinboard';
 import { complaintSelector, getCMSRequested } from 'selectors/complaint-page';
 import { cmsSelector } from 'selectors/common/cms';
-import { get } from 'lodash';
 
 const mapStateToProps = (state, ownProps) => ({
   complaintId: ownProps.params.complaintId,
@@ -20,6 +21,7 @@ const mapDispatchToProps = {
   requestComplaint,
   onTrackingAttachment: trackingClickAttachment,
   requestCMS,
+  addOrRemoveItemInPinboard,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ComplaintPage));

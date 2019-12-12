@@ -1,9 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-
-import RadarChart from 'components/common/radar-chart';
-import style from './base-officer-card.sass';
 import cx from 'classnames';
+
+import constants from 'constants';
+import RadarChart from 'components/common/radar-chart';
+import ItemPinButton from 'components/common/item-pin-button';
+import style from './base-officer-card.sass';
+import pinButtonStyles from 'components/common/item-pin-button.sass';
 import { officerUrl } from 'utils/url-util';
 
 
@@ -16,13 +19,33 @@ export class BaseOfficerCard extends Component {
       percentile,
       openCardInNewPage,
       bottomContent,
+      topContent,
       customStyle,
+      hasHrefLink,
+      setRef,
+      isPinned,
+      pinnable,
+      addOrRemoveItemInPinboard,
     } = this.props;
     return (
       <Link
-        to={ officerUrl(officerId, fullName) }
+        to={ hasHrefLink ? officerUrl(officerId, fullName) : null }
         target={ openCardInNewPage ? '_blank' : null }
-        className={ cx(style.baseOfficerCard, customStyle, 'test--officer-card') }>
+        className={ cx(style.baseOfficerCard, customStyle, 'test--officer-card') }
+        ref={ setRef }
+      >
+        { topContent || pinnable && (
+          <ItemPinButton
+            className={ pinButtonStyles.cardPinnedButton }
+            addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+            showHint={ false }
+            item={ {
+              type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+              id: officerId,
+              isPinned: isPinned,
+            } }
+          />
+        ) }
         <div className='radar-chart'>
           <RadarChart
             radius={ 170 }
@@ -47,7 +70,20 @@ BaseOfficerCard.propTypes = {
   percentile: PropTypes.object,
   openCardInNewPage: PropTypes.bool,
   bottomContent: PropTypes.node,
-  customStyle: PropTypes.object,
+  topContent: PropTypes.node,
+  customStyle: PropTypes.string,
+  hasHrefLink: PropTypes.bool,
+  setRef: PropTypes.func,
+  isPinned: PropTypes.bool,
+  pinnable: PropTypes.bool,
+  addOrRemoveItemInPinboard: PropTypes.func,
+};
+
+BaseOfficerCard.defaultProps = {
+  topContent: null,
+  hasHrefLink: true,
+  pinnable: true,
+  openCardInNewPage: false,
 };
 
 export default BaseOfficerCard;

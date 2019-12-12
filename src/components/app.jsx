@@ -4,6 +4,14 @@ import Modal from 'react-modal';
 
 import AppHistory from 'utils/history';
 import constants from 'constants';
+import config from 'config';
+
+import 'swiper/dist/css/swiper.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+import 'styles/fonts.sass';
+import 'styles/style.sass';
+import 'styles/helper.sass';
 
 import MainPageContainer from 'containers/main-page-container';
 import AboutPageContainer from 'containers/about-page-container';
@@ -15,18 +23,15 @@ import LandingPageContainer from 'containers/landing-page-container';
 import BreadcrumbItemContainer from 'containers/breadcrumb-container';
 import TopOfficersByAllegationContainer from 'containers/landing-page/top-officers-by-allegation';
 import OfficersContainer from 'containers/embed/officers';
+import PinboardPageContainer from 'containers/pinboard-page';
 
-import 'swiper/dist/css/swiper.css';
-import 'mapbox-gl/dist/mapbox-gl.css';
-
-import 'styles/fonts.sass';
-import 'styles/style.sass';
-import 'styles/helper.sass';
 
 Modal.setAppElement('body');
 
 const App = React.createClass({
   render() {
+    const { pinboard: enablePinboardFeature } = config.enableFeatures;
+
     return (
       <Router history={ AppHistory }>
         <Route
@@ -45,8 +50,7 @@ const App = React.createClass({
             component={ AboutPageContainer } />
 
           <Route
-            breadcrumbKey='/'
-            breadcrumb='cpdp'
+            breadcrumb='Search'
             path={ constants.SEARCH_PATH }
             component={ SearchPageContainer }>
             <Route
@@ -74,10 +78,19 @@ const App = React.createClass({
             component={ TRRPageContainer }
           />
 
+          {
+            enablePinboardFeature &&
+            <Route
+              path={ `${constants.PINBOARD_PATH}(:pinboardId/)(:pinboardTitle/)` }
+              breadcrumb={ BreadcrumbItemContainer }
+              component={ PinboardPageContainer }
+            />
+          }
+
         </Route>
         <Route
           path={ constants.EMBED_TOP_OFFICER_PATH }
-          component={ TopOfficersByAllegationContainer }
+          component={ () => <TopOfficersByAllegationContainer pinnable={ false }/> }
         />
         <Route
           path={ constants.EMBED_OFFICERS_PATH }

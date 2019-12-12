@@ -1,4 +1,7 @@
-export const get = (url, types) => ((params, adapter=undefined, urlSuffix='', meta) => {
+import { isUndefined } from 'lodash';
+
+export const get = (url, types, cancelToken) => ((params, adapter=undefined, urlSuffix='', meta) => {
+  const cancelTokenParam = isUndefined(cancelToken) ? {} : { cancelToken };
   const action = {
     types,
     payload: {
@@ -6,6 +9,7 @@ export const get = (url, types) => ((params, adapter=undefined, urlSuffix='', me
         url: url + urlSuffix,
         params,
         adapter,
+        ...cancelTokenParam,
       },
     },
   };
@@ -29,14 +33,34 @@ export const getUrl = (url, types, meta) => (
   }
 );
 
-export const post = (url, types) => ((data, adapter) => ({
-  types,
-  payload: {
-    request: {
-      method: 'POST',
-      url,
-      data,
-      adapter,
+export const post = (url, types, cancelToken) => ((data, adapter) => {
+  const cancelTokenParam = isUndefined(cancelToken) ? {} : { cancelToken };
+  return {
+    types,
+    payload: {
+      request: {
+        method: 'POST',
+        url,
+        data,
+        adapter,
+        ...cancelTokenParam,
+      },
     },
-  },
-}));
+  };
+});
+
+export const put = (url, types) => ((data, adapter, cancelToken) => {
+  const cancelTokenParam = isUndefined(cancelToken) ? {} : { cancelToken };
+  return {
+    types,
+    payload: {
+      request: {
+        method: 'PUT',
+        url,
+        data,
+        adapter,
+        ...cancelTokenParam,
+      },
+    },
+  };
+});

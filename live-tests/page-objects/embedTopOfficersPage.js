@@ -14,6 +14,10 @@ module.exports = {
   elements: {
     body: 'body',
     firstCard: nthOfficerCard(1),
+    firstPinButton: {
+      selector: '//div[contains(@class, "item-pin-button__item-pin-button")]',
+      locateStrategy: 'xpath',
+    },
   },
   sections: {
     cards: nthOfficerCard(),
