@@ -9,6 +9,7 @@ let config = {
   baseUrlV2V2: 'https://api.cpdp.co/api/v2',
   gaTrackingId: 'UA-63671047-2',
   intercomAppId: 'p51vy1rb',
+  enableFeatures: { pinboard: false },
 };
 
 export default Object.freeze(Object.assign({}, baseConfig, config));

@@ -15,8 +15,28 @@ describe('<SearchItem />', function () {
   });
 
   it('should render ItemPinButton if hasPinButton is true', function () {
-    const wrapper = shallow(<SearchItem hasPinButton={ true } />);
-    wrapper.find(ItemPinButton).should.have.length(1);
+    const addOrRemoveItemInPinboard = spy();
+    const wrapper = shallow(
+      <SearchItem
+        id='213'
+        type='OFFICER'
+        hasPinButton={ true }
+        isPinned={ true }
+        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+      />
+    );
+
+    const itemPinButton = wrapper.find(ItemPinButton);
+    itemPinButton.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboard);
+    itemPinButton.prop('id').should.equal('213');
+    itemPinButton.prop('isPinned').should.be.true();
+    itemPinButton.prop('type').should.equal('OFFICER');
+    itemPinButton.prop('item').should.eql({
+      type: 'OFFICER',
+      id: '213',
+      isPinned: true,
+    });
+    itemPinButton.prop('className').should.equal('item-pin-button');
   });
 
   it('should assign className to Link component', function () {

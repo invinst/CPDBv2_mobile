@@ -3,6 +3,7 @@ import cx from 'classnames';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import config from 'config';
 import style from './main-page.sass';
 import 'styles/toast.sass';
 import { getPageRoot } from 'utils/url-util';
@@ -24,9 +25,10 @@ class MainPage extends Component {
 
   render() {
     const { children, location } = this.props;
+    const { pinboard: enablePinboardFeature } = config.enableFeatures;
 
     return (
-      <div className={ cx('content', style.mainPage) }>
+      <div className={ cx('content', style.mainPage, { 'pinboard-disabled': !enablePinboardFeature }) }>
         { children }
         <ToastContainer
           pauseOnFocusLoss={ false }
