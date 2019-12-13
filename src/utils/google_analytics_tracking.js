@@ -68,7 +68,7 @@ const _trackSearchFocusedItem = (contentType, query, itemId, rank) => {
   global.ga('send', {
     hitType: 'event',
     eventCategory: contentType,
-    eventAction: 'view_search_preview',
+    eventAction: 'suggestion_click',
     eventLabel: itemId,
     eventValue: rank,
   });
@@ -76,7 +76,7 @@ const _trackSearchFocusedItem = (contentType, query, itemId, rank) => {
   global.ga('send', {
     hitType: 'event',
     eventCategory: contentType,
-    eventAction: 'view_search_preview_with_query',
+    eventAction: 'suggestion_click_with_query',
     eventLabel: `${ itemId } - ${ query }`,
     eventValue: rank,
   });
