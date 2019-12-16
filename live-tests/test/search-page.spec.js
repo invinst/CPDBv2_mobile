@@ -4,6 +4,7 @@ const assert = require('assert');
 const api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 const { range } = require('lodash');
+const pinboardMockData = require(__dirname + '/../mock-data/pinboard-page');
 
 const mockSearchQueryResponse = {
   'OFFICER': [
@@ -388,6 +389,7 @@ describe('SearchPageTest', function () {
   });
 
   afterEach(function (client, done) {
+    api.cleanMock();
     done();
   });
 
@@ -441,6 +443,50 @@ describe('SearchPageTest', function () {
     recentItems.section.secondRecentItem.expect.element('@itemSubtitle').text.to.equal('CRID 1002144 • 05/29/2010');
     recentItems.section.thirdRecentItem.expect.element('@itemTitle').text.to.equal('Jerome Finnigan');
     recentItems.section.thirdRecentItem.expect.element('@itemSubtitle').text.to.equal('Badge #123456');
+  });
+
+  describe('Cancel button', function () {
+    it('should go back to landing page', function (client) {
+      const mainPage = client.page.main();
+
+      this.searchPage.waitForElementVisible('@cancelButton');
+      this.searchPage.click('@cancelButton');
+
+      client.assert.urlEquals(mainPage.url());
+    });
+
+    it('should go to pinboard page if search page was opened via pinboard page', function (client) {
+      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, pinboardMockData.pinboardData);
+      const pinboardPage = client.page.pinboardPage();
+      const pinboardUrl = pinboardPage.url('5cd06f2b');
+
+      pinboardPage.navigate(pinboardUrl);
+      pinboardPage.waitForElementVisible('@searchBar');
+      pinboardPage.click('@searchBar');
+
+      this.searchPage.waitForElementVisible('@cancelButton');
+      this.searchPage.click('@cancelButton');
+
+      client.assert.urlEquals(pinboardUrl);
+    });
+
+    it('should go to officer page if search page was opened via breadcrumbs on officer page', function (client) {
+      api.mock('GET', '/api/v2/mobile/officers/8562/', 200, officer8562);
+      const officerPage = client.page.officerPage();
+
+      this.searchPage.setValue('@queryInput', '123');
+      this.searchPage.section.officers.section.firstRow.click('@itemTitle');
+
+      officerPage.waitForElementVisible('@searchBreadcrumb');
+      client.assert.urlContains('/officer/8562/jerome-finnigan/');
+      officerPage.click('@searchBreadcrumb');
+
+      this.searchPage.waitForElementVisible('@cancelButton');
+      client.assert.urlContains('/search/');
+      this.searchPage.click('@cancelButton');
+
+      client.assert.urlContains('/officer/8562/jerome-finnigan/');
+    });
   });
 
   context('search for wh', function () {

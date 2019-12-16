@@ -18,6 +18,7 @@ import {
   isShowingSingleContentTypeSelector,
   hasMoreSelector,
   nextParamsSelector,
+  getCancelPathname,
 } from 'selectors/search-page';
 
 describe('search-page selectors', function () {
@@ -710,6 +711,17 @@ describe('search-page selectors', function () {
           offset: '20',
         });
       });
+    });
+  });
+
+  describe('getCancelPathname', function () {
+    it('should return the return path for the cancel button', function () {
+      const state = {
+        suggestionApp: {
+          cancelPathname: '/pinboard/abc123/',
+        },
+      };
+      getCancelPathname(state).should.equal('/pinboard/abc123/');
     });
   });
 });
