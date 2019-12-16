@@ -13,3 +13,5 @@ export const officerUrl = (officerId, name = '', tab = '') => {
   const tabSuffix = tabName ? `${tabName}/` : '';
   return officerId && `${constants.OFFICER_PATH}${officerId}/${nameSuffix}${tabSuffix}`;
 };
+
+export const getPageRoot = url => url.split('/')[1] || 'landing';

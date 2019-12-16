@@ -4,6 +4,8 @@ import { get } from 'lodash';
 
 import constants from 'constants';
 import style from './complaint-document-card.sass';
+import ItemPinButton from 'components/common/item-pin-button';
+import pinButtonStyles from 'components/common/item-pin-button.sass';
 import * as GATracking from 'utils/google_analytics_tracking';
 
 
@@ -22,7 +24,7 @@ class ComplaintDocumentCard extends React.Component {
   }
 
   render() {
-    const { allegation } = this.props;
+    const { allegation, addOrRemoveItemInPinboard } = this.props;
     const document = get(allegation, 'document', {});
     const { incidentDate, category } = allegation;
     return (
@@ -31,6 +33,16 @@ class ComplaintDocumentCard extends React.Component {
         className={ style.complaintDocumentCard }
         onClick={ this.handleClick }
       >
+        <ItemPinButton
+          className={ pinButtonStyles.cardPinnedButton }
+          addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+          showHint={ false }
+          item={ {
+            type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+            id: allegation.crid,
+            isPinned: allegation.isPinned,
+          } }
+        />
         <div className='document-preview'>
           <img className='preview-image' src={ document.previewImageUrl } />
         </div>
@@ -47,6 +59,7 @@ ComplaintDocumentCard.propTypes = {
   allegation: PropTypes.object,
   pathname: PropTypes.string,
   onTrackingAttachment: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
 };
 
 ComplaintDocumentCard.defaultProps = {

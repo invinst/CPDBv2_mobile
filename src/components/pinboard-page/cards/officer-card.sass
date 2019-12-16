@@ -1,0 +1,20 @@
+@import 'variables'
+
+\:local(.wrapper)
+  position: relative
+
+  &.hide
+    opacity: 0
+
+  &.fade-in
+    transition: opacity 1s ease-in-out
+    opacity: 1
+
+\:local(.officer-complaints-count)
+  height: 44px
+  line-height: 44px
+  padding-left: 8px
+  overflow: hidden
+  font-size: 14px
+  box-sizing: border-box
+  color: $thunder

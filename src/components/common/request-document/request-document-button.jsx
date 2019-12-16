@@ -81,7 +81,7 @@ RequestDocumentButton.propTypes = {
   requestDocument: PropTypes.func,
   message: PropTypes.string,
   customClassName: PropTypes.string,
-  documentRequestMessage: PropTypes.string,
+  documentRequestMessage: PropTypes.object,
   buttonText: PropTypes.string,
 };
 

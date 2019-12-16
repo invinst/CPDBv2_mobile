@@ -48,4 +48,36 @@ describe('<HorizontalScrolling />', function () {
 
     GATracking.trackSwipeLanddingPageCarousel.restore();
   });
+
+  it('should loadMore when almost reaching the end', function () {
+    const loadMoreSpy = spy();
+    const wrapper = mount(
+      <HorizontalScrolling trackingContentType='contentType' hasMore={ true } loadMore={ loadMoreSpy }>
+        <div>Child 1</div>
+        <div>Child 2</div>
+        <div>Child 3</div>
+      </HorizontalScrolling>
+    );
+
+    const instance = wrapper.instance();
+    instance.onSnapIndexChange(1, false);
+
+    loadMoreSpy.should.be.called();
+  });
+
+  it('should loadMore when reaching the end', function () {
+    const loadMoreSpy = spy();
+    const wrapper = mount(
+      <HorizontalScrolling trackingContentType='contentType' hasMore={ true } loadMore={ loadMoreSpy }>
+        <div>Child 1</div>
+        <div>Child 2</div>
+        <div>Child 3</div>
+      </HorizontalScrolling>
+    );
+
+    const instance = wrapper.instance();
+    instance.onSnapIndexChange(0, true);
+
+    loadMoreSpy.should.be.called();
+  });
 });

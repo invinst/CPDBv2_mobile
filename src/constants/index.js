@@ -267,10 +267,13 @@ export default {
   OLD_OFFICER_API_ENDPOINT: '/officers/',
   OFFICER_API_ENDPOINT: '/mobile/officers/',
   SUGGESTION_API_ENDPOINT: '/search-mobile/',
+  RECENT_SEARCH_ITEMS_API_ENDPOINT: '/search-mobile/recent-search-items/',
+  SINGLE_SEARCH_API_ENDPOINT: '/search-mobile/single/',
   LANDING_PAGE_CMS_API_ENDPOINT: '/cms-pages/landing-page/',
   OFFICER_PAGE_CMS_API_ENDPOINT: '/cms-pages/officer-page/',
   COMPLAINT_PAGE_CMS_API_ENDPOINT: '/cms-pages/cr-page/',
   TRR_PAGE_CMS_API_ENDPOINT: '/cms-pages/trr-page/',
+  PINBOARD_PAGE_CMS_API_ENDPOINT: '/cms-pages/pinboard-page/',
   COMPLAINT_API_ENDPOINT: '/mobile/cr/',
   TRR_API_ENDPOINT: '/mobile/trr/',
   TOP_OFFICERS_BY_ALLEGATION_ENDPOINT: '/officers/top-by-allegation/',
@@ -278,6 +281,10 @@ export default {
   RECENT_ACTIVITIES_ENDPOINT: '/activity-grid/',
   NEW_DOCUMENT_ALLEGATIONS_ENDPOINT: '/cr/list-by-new-document/',
   COMPLAINT_SUMMARIES_ENDPOINT: '/cr/complaint-summaries/',
+  PINBOARDS_API_ENDPOINT: '/mobile/pinboards/',
+  SOCIAL_GRAPH_API_ENDPOINT: '/mobile/social-graph/',
+  SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT: '/mobile/social-graph/geographic-crs/',
+  SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT: '/mobile/social-graph/geographic-trrs/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
@@ -306,6 +313,9 @@ export default {
   TRR_PATH: '/trr/',
   EMBED_TOP_OFFICER_PATH: '/embed/top-officers-page',
   EMBED_OFFICERS_PATH: '/embed/officers/',
+  PINBOARD_PATH: '/pinboard/',
+  PINBOARD_SOCIAL_GRAPH_REDIRECT_PATH: 'social-graph/pinboard/',
+  PINBOARD_GEOGRAPHIC_REDIRECT_PATH: 'geographic/pinboard/',
 
   // Routes that don't have their corresponding component.
   // NavigationUtil.goUp() skips all of these.
@@ -334,4 +344,40 @@ export default {
     'ALLEGATION': 'ALLEGATION',
     'DOCUMENT': 'DOCUMENT',
   },
+
+  // Pinboard page constants
+  PINBOARD_PAGE: {
+    UNDO_CARD_VISIBLE_TIME: 1000,
+    UNDO_CARD_THEMES: {
+      LIGHT: 'light',
+      DARK: 'dark',
+    },
+    TAB_NAMES: {
+      NETWORK: 'NETWORK',
+      GEOGRAPHIC: 'GEOGRAPHIC',
+    },
+    PINNED_ITEM_TYPES: {
+      'CR': 'CR',
+      'DATE > CR': 'CR',
+      'INVESTIGATOR > CR': 'CR',
+      'OFFICER': 'OFFICER',
+      'UNIT > OFFICERS': 'OFFICER',
+      'DATE > OFFICERS': 'OFFICER',
+      'TRR': 'TRR',
+      'DATE > TRR': 'TRR',
+    },
+  },
+
+  // Map constants
+  MAP_ITEMS: {
+    CR: 'CR',
+    FORCE: 'FORCE',
+  },
+  MAP_INFO: {
+    CENTER_LAT: 41.85677,
+    CENTER_LNG: -87.6024055,
+    ZOOM1: 9,
+    ZOOM2: 13,
+  },
+  MAPBOX_STYLE: 'mapbox://styles/invisibleinstitute/cj8ugtswqe8dx2ss2kwhfnvte',
 };

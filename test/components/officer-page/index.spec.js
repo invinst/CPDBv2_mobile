@@ -48,11 +48,6 @@ describe('<OfficerPage />', function () {
     };
   });
 
-  it('should render footer', function () {
-    const wrapper = shallow(<OfficerPage />);
-    wrapper.find(Footer).exists.should.be.ok();
-  });
-
   it('should render LoadingPage if loading', function () {
     const wrapper = shallow(
       <OfficerPage loading={ true } found={ false }/>
@@ -346,7 +341,7 @@ describe('<OfficerPage />', function () {
     });
   });
 
-  it('should render Header', function () {
+  it('should render Header and Footer', function () {
     const wrapper = shallow(
       <OfficerPage
         loading={ false }
@@ -358,6 +353,7 @@ describe('<OfficerPage />', function () {
 
     const withHeader = wrapper.find(WithHeader);
     withHeader.find(AnimatedRadarChart).exists().should.be.true();
+    withHeader.find(Footer).exists().should.be.true();
   });
 
   it('should have BottomPadding', function () {
@@ -722,7 +718,6 @@ describe('<OfficerPage />', function () {
           axis: 'Civilian Allegations',
           value: 66.251,
         }],
-        officerId: 1,
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
         year: 2006,
@@ -737,7 +732,6 @@ describe('<OfficerPage />', function () {
           axis: 'Civilian Allegations',
           value: 75.065,
         }],
-        officerId: 1,
         textColor: '#231F20',
         visualTokenBackground: '#fc5d2c',
         year: 2007,

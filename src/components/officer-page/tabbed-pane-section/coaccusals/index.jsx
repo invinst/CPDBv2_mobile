@@ -7,8 +7,7 @@ import style from './coaccusals.sass';
 
 export default class Coaccusals extends Component {
   render() {
-    const { coaccusalGroups } = this.props;
-
+    const { coaccusalGroups, addOrRemoveItemInPinboard } = this.props;
     return (
       <div className={ cx(style.officerCoaccusals, 'test--officer-coaccusals') }>
         {
@@ -22,6 +21,7 @@ export default class Coaccusals extends Component {
                       { ...coaccusal }
                       key={ cardIndex }
                       customStyle={ style.inlineOfficerCard }
+                      addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
                     />
                   ))
                 }
@@ -36,4 +36,5 @@ export default class Coaccusals extends Component {
 
 Coaccusals.propTypes = {
   coaccusalGroups: PropTypes.array,
+  addOrRemoveItemInPinboard: PropTypes.func,
 };

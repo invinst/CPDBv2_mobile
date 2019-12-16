@@ -1,49 +1,45 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
 
-import RadarChart from 'components/common/radar-chart';
-import style from './officer-item.sass';
+import SearchItem from './search-item';
+import searchItemStyle from './search-item.sass';
 
 
-const OfficerItem = ({ name, badge, url, percentile, saveToRecent, categoryFilter }) => {
-  const handleClick = (categoryFilter, name, url) => saveToRecent({
-    type: categoryFilter,
-    title: name,
-    url: url,
-  });
-
+const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard }) => {
   return (
-    <Link
-      to={ url }
-      className={ style.officerItem }
-      onClick={ () => handleClick(categoryFilter, name, url) }>
-      <div className='radar-chart-wrapper'>
-        <RadarChart
-          radius={ 150 }
-          backgroundColor={ percentile && percentile.visualTokenBackground }
-          data={ percentile && percentile.items }
-        />
+    <SearchItem
+      url={ item.url }
+      hasPinButton={ true }
+      addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+      id={ item.id }
+      isPinned={ item.isPinned }
+      type={ item.type }
+      recentItemData={ item.recentItemData }
+      saveToRecent={ saveToRecent }>
+      <div className={ searchItemStyle.itemInfo }>
+        <div className='item-title'>{ item.name }</div>
+        <div className='item-subtitle'>{ item.badge }</div>
       </div>
-      <div className='officer-info'>
-        <div className='officer-name'>{ name }</div>
-        <div className='officer-badge'>{ badge }</div>
-      </div>
-    </Link>
+    </SearchItem>
   );
 };
 
 OfficerItem.propTypes = {
-  name: PropTypes.string,
-  badge: PropTypes.string,
-  url: PropTypes.string,
-  percentile: PropTypes.object,
+  item: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    name: PropTypes.string,
+    badge: PropTypes.string,
+    url: PropTypes.string,
+    isPinned: PropTypes.bool,
+    type: PropTypes.string,
+    recentItemData: PropTypes.object,
+  }),
   saveToRecent: PropTypes.func,
-  categoryFilter: PropTypes.string,
+  addOrRemoveItemInPinboard: PropTypes.func,
 };
 
 OfficerItem.defaultProps = {
-  percentile: {},
   saveToRecent: () => {},
+  item: {},
 };
 
 export default OfficerItem;

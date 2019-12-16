@@ -1,4 +1,4 @@
-import { v2Url, officerUrl } from 'utils/url-util';
+import { v2Url, officerUrl, getPageRoot } from 'utils/url-util';
 
 
 describe('URL util module', function () {
@@ -16,6 +16,18 @@ describe('URL util module', function () {
       officerUrl(123, 'Kevin Wang', 'DOCUMENT').should.eql('/officer/123/kevin-wang/');
       officerUrl(123, 'Kevin Wang', 'COACCUSALS').should.eql('/officer/123/kevin-wang/coaccusals/');
       officerUrl(123, 'Kevin Wang', 'TIMELINE').should.eql('/officer/123/kevin-wang/');
+    });
+  });
+
+  describe('getPageRoot', function () {
+    it('should return landing if url is /', function () {
+      getPageRoot('/').should.equal('landing');
+    });
+
+    it('should return first section', function () {
+      getPageRoot('/search/').should.equal('search');
+      getPageRoot('/pinboard/abc123/').should.equal('pinboard');
+      getPageRoot('/officer/123/').should.equal('officer');
     });
   });
 });

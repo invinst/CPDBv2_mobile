@@ -65,6 +65,18 @@ yarn run live-test -- --file live-tests/test/complaint-page.spec.js
 yarn run live-test -- --file complaint-page
 ```
 
+### Building & pushing the docker image for CI:
+
+**Important: Current version of Docker image is 0.0.1. Please update this when you make changes to it.**
+
+```bash
+docker login
+docker build -t cpdbdev/cpdbv2_mobile:0.0.1 .circleci/docker
+docker push cpdbdev/cpdbv2_mobile:0.0.1
+```
+
+Remember to bump the version of course.
+
 # Deployment
 ## Ansible
 We are using Ansible as a configuration manager and deploy tool. You can install it through your OS package manager or pip, but [pipenv](https://github.com/pypa/pipenv) is encouraged.  After the installation steps (`brew install pipenv`, then `pipenv install`), you can run Ansible:

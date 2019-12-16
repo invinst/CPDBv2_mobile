@@ -2,7 +2,7 @@ import { get, isUndefined } from 'lodash';
 import { createSelector } from 'reselect';
 
 import { getOfficerInfo } from 'selectors/officer-page';
-import { MAP_ITEMS } from 'constants/officer-page/tabbed-pane-section/map';
+import constants from 'constants';
 
 
 export const mapLegendSelector = createSelector(
@@ -17,8 +17,8 @@ export const mapLegendSelector = createSelector(
 const getMapMarkers = (state, officerId) => get(state.officerPage.timeline.data, String(officerId), []);
 
 const isMapMarker = item => (
-  item.kind === MAP_ITEMS.CR && ['Not Sustained', 'Sustained'].includes(item.finding)
-  || item.kind === MAP_ITEMS.FORCE
+  item.kind === constants.MAP_ITEMS.CR && ['Not Sustained', 'Sustained'].includes(item.finding)
+  || item.kind === constants.MAP_ITEMS.FORCE
 );
 
 export const rawMapMarkersSelector = createSelector(
@@ -35,31 +35,35 @@ export const crMapMarkersTransform = item => ({
   point: get(item, 'point', {
     lon: 0, lat: 0,
   }),
+  date: item.date,
   kind: item.kind,
-  finding: item.finding,
+  pointType: `${item.finding === 'Sustained' ? 'SUSTAINED-' : ''}${item.kind}`,
   id: item.crid,
   category: item.category,
-  victims: item.victims,
-  coaccused: item.coaccused,
 });
 
 export const trrMapMarkerTransform = item => ({
   point: get(item, 'point', {
     lon: 0, lat: 0,
   }),
+  date: item.date,
   kind: item.kind,
   id: item.trr_id.toString(),
   category: item['firearm_used'] ? 'Firearm' : item.taser ? 'Taser' : 'Use of Force Report',
 });
 
-export const mapMarkersSelector = createSelector(
+export const mapMarkerGroupsSelector = createSelector(
   rawMapMarkersSelector,
-  markers => markers.map(marker => {
-    if (marker.kind === MAP_ITEMS.CR) {
-      return crMapMarkersTransform(marker);
-    }
-    if (marker.kind === MAP_ITEMS.FORCE) {
-      return trrMapMarkerTransform(marker);
-    }
-  })
+  markers => {
+    const geographicCrs = markers.filter(marker => {
+      return marker.kind === constants.MAP_ITEMS.CR;
+    });
+    const geographicTrrs = markers.filter(marker => {
+      return marker.kind === constants.MAP_ITEMS.FORCE;
+    });
+    return {
+      crs: geographicCrs.map(crMapMarkersTransform),
+      trrs: geographicTrrs.map(trrMapMarkerTransform),
+    };
+  }
 );

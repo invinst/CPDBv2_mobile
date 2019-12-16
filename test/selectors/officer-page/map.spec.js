@@ -1,6 +1,6 @@
 import {
   mapLegendSelector,
-  mapMarkersSelector,
+  mapMarkerGroupsSelector,
   crMapMarkersTransform,
   trrMapMarkerTransform,
   rawMapMarkersSelector,
@@ -22,14 +22,8 @@ describe('Officer map selectors', function () {
     'unit_description': 'Mobile Strike Force',
     rank: 'Police Officer',
     date: '2011-05-11',
-    coaccused: 6,
     finding: 'Sustained',
     outcome: 'No Action Taken',
-    victims: [{
-      gender: 'Male',
-      race: 'White',
-      age: 35,
-    }],
   };
   const exoneratedCr = {
     category: 'Illegal Search',
@@ -44,7 +38,6 @@ describe('Officer map selectors', function () {
     'unit_description': 'Mobile Strike Force',
     rank: 'Police Officer',
     date: '2003-12-21',
-    coaccused: 9,
     outcome: 'No Action Taken',
     finding: 'Exonerated',
     attachments: [
@@ -81,37 +74,14 @@ describe('Officer map selectors', function () {
     it('should return correct item', function () {
       const crItem = {
         category: 'Conduct Unbecoming (Off-Duty)',
-        'unit_name': '153',
+        finding: 'Not Sustained',
         kind: 'CR',
-        subcategory: 'Association With Felon',
         point: {
           lat: 41.887673,
           lon: -87.62355,
         },
         crid: '1002787',
-        'unit_description': 'Mobile Strike Force',
-        rank: 'Police Officer',
         date: '2007-01-18',
-        coaccused: 1,
-        finding: 'Not Sustained',
-        outcome: 'No Action Taken',
-        victims: [
-          {
-            gender: 'Male',
-            age: null,
-            race: 'Hispanic',
-          },
-          {
-            gender: 'Female',
-            age: null,
-            race: 'White',
-          },
-          {
-            gender: 'Male',
-            age: 46,
-            race: 'Hispanic',
-          },
-        ],
       };
       crMapMarkersTransform(crItem).should.eql({
         point: {
@@ -119,27 +89,10 @@ describe('Officer map selectors', function () {
           lon: -87.62355,
         },
         kind: 'CR',
-        finding: 'Not Sustained',
+        pointType: 'CR',
         id: '1002787',
         category: 'Conduct Unbecoming (Off-Duty)',
-        victims: [
-          {
-            gender: 'Male',
-            age: null,
-            race: 'Hispanic',
-          },
-          {
-            gender: 'Female',
-            age: null,
-            race: 'White',
-          },
-          {
-            gender: 'Male',
-            age: 46,
-            race: 'Hispanic',
-          },
-        ],
-        coaccused: 1,
+        date: '2007-01-18',
       });
     });
   });
@@ -150,7 +103,7 @@ describe('Officer map selectors', function () {
         'trr_id': '56789',
         kind: 'FORCE',
         taser: true,
-        rank: 'Police Officer',
+        date: '2007-01-18',
         'firearm_used': false,
         point: {
           lat: 50,
@@ -165,6 +118,7 @@ describe('Officer map selectors', function () {
         kind: 'FORCE',
         id: '56789',
         category: 'Taser',
+        date: '2007-01-18',
       });
     });
   });
@@ -231,7 +185,7 @@ describe('Officer map selectors', function () {
     });
   });
 
-  describe('mapMarkersSelector', function () {
+  describe('mapMarkerGroupsSelector', function () {
     it('should return correct marker', function () {
       const state = {
         officerPage: {
@@ -242,30 +196,33 @@ describe('Officer map selectors', function () {
           },
         },
       };
-      mapMarkersSelector(state, 8562).should.eql([{
-        point: {
-          lat: 41.918008,
-          lon: -87.73173299999999,
-        },
-        kind: 'CR',
-        finding: 'Sustained',
-        id: '1045343',
-        category: 'Illegal Search',
-        victims: [{
-          gender: 'Male',
-          race: 'White',
-          age: 35,
-        }],
-        coaccused: 6,
-      }, {
-        point: {
-          lat: 35.3,
-          lon: 50.5,
-        },
-        kind: 'FORCE',
-        id: '123456',
-        category: 'Firearm',
-      }]);
+      mapMarkerGroupsSelector(state, 8562).should.eql({
+        crs: [
+          {
+            point: {
+              lat: 41.918008,
+              lon: -87.73173299999999,
+            },
+            kind: 'CR',
+            pointType: 'SUSTAINED-CR',
+            id: '1045343',
+            category: 'Illegal Search',
+            date: '2011-05-11',
+          },
+        ],
+        trrs: [
+          {
+            point: {
+              lat: 35.3,
+              lon: 50.5,
+            },
+            kind: 'FORCE',
+            id: '123456',
+            category: 'Firearm',
+            date: '2004-12-17',
+          },
+        ],
+      });
     });
   });
 

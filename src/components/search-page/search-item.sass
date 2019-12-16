@@ -1,0 +1,44 @@
+@import 'variables'
+
+\:local(.wrapper)
+  display: flex
+  padding: 11px 0
+  text-decoration: none
+
+  .item-pin-button
+    margin-right: 8px
+
+  .item-indicator
+    display: block
+    width: 7px
+    height: 12px
+    background-image: url('/img/disclosure-indicator-gray.svg')
+    background-position: center
+    background-repeat: no-repeat
+    background-size: 7px 12px
+    margin-left: auto
+    align-self: center
+
+\:local(.item-info)
+  box-sizing: border-box
+  padding-top: 1px
+
+  .item-title
+    font-size: 14px
+    font-weight: 300
+    color: $thunder
+    margin-right: 8px
+
+  .item-subtitle
+    font-size: 12px
+    font-weight: 300
+    color: $boulder
+
+  &.inline
+    display: flex
+
+    .item-title
+      align-self: center
+
+    .item-subtitle
+      align-self: center

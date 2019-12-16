@@ -1,7 +1,7 @@
 @import 'variables'
+@import 'fonts'
 @import 'mixins'
 
-$query-input-width: 77%
 
 \:local(.search-page)
   margin: 0 $side-margin
@@ -13,10 +13,9 @@ $query-input-width: 77%
     right: 0
 
   .category-details-container
-    padding-top: $query-input-height + $search-category-links-height + 2*$new-divider-weight
+    padding-top: $query-input-height + $pinboard-bar-height
 
   .input-container
-    border-radius: 0
     background-color: white
     font-size: 14px
     padding: $side-margin
@@ -36,13 +35,16 @@ $query-input-width: 77%
       color: $thunder
       background-color: $wild-sand
 
-    @include placeholder
-      color: $boulder
-      font: inherit
+      @include placeholder
+        color: $boulder
+        font: inherit
+
+      &:not([value=''])
+        border: 1px solid $alto-solid
 
     .bt-cancel
       background-color: inherit
-      color: $boulder
+      color: $accent-blue
       border: none
       padding: 0 !important
       font: inherit
@@ -50,16 +52,53 @@ $query-input-width: 77%
       display: inline-block
       width: $button-done-width
       text-align: right
-      padding-right: $side-margin
-      vertical-align: middle
-      margin-top: 0
+      font-weight: 300
+
+      &.active
+        color: $boulder
 
   .bottom-padding
     min-height: 0
     background-color: white
 
   .back-to-full-search-link
+    font-size: 14px
     height: 44px
     line-height: 44px
     color: $accent-blue
     font-weight: 300
+
+  .back-to-front-page-link
+    display: block
+    color: $accent-blue
+    line-height: 16px
+    margin: 128px 0
+    padding: 12px 0
+    font-size: 14px
+    font-weight: 300
+
+.toast-wrapper
+  background-color: $sprout-color
+  border-radius: 2px
+  color: $japanese-laurel
+  line-height: 40px
+  min-height: 40px
+  padding: 0
+  text-align: center
+  width: auto
+  box-shadow: 0 1px 2px 0 $black15-color
+
+  &.removed
+    background-color: $wild-sand
+    color: $thunder
+
+.toast-body
+  font-family: $san-francisco
+  font-weight: 300
+  font-size: 14px
+
+.pinboard-disabled
+  \:local(.search-page)
+    .category-details-container
+      padding-top: $query-input-height
+

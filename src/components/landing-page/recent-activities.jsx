@@ -17,7 +17,7 @@ export default class RecentActivities extends Component {
   }
 
   render() {
-    const { recentActivities, description, title } = this.props;
+    const { recentActivities, description, title, addOrRemoveItemInPinboard } = this.props;
 
     return (
       <CarouselWrapper
@@ -26,7 +26,14 @@ export default class RecentActivities extends Component {
         trackingContentType={ constants.CAROUSEL_TYPES.ACTIVITY }
       >
         {
-          recentActivities.map(officer => <OfficerCard officer={ officer } key={ officer.id } />)
+          recentActivities.map(officer =>
+            <OfficerCard
+              pinnable={ true }
+              officer={ officer }
+              key={ officer.id }
+              addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+            />
+          )
         }
       </CarouselWrapper>
     );
@@ -35,12 +42,14 @@ export default class RecentActivities extends Component {
 
 RecentActivities.defaultProps = {
   requestRecentActivities: () => {},
+  addOrRemoveItemInPinboard: () => {},
   recentActivities: [],
 };
 
 RecentActivities.propTypes = {
   recentActivities: PropTypes.array,
   requestRecentActivities: PropTypes.func,
+  addOrRemoveItemInPinboard: PropTypes.func,
   description: PropTypes.object,
   title: PropTypes.object,
 };

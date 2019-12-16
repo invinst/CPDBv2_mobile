@@ -25,7 +25,7 @@ describe('<TRRPage />', function () {
     withHeader.find('Info').prop('victimDemographic').should.equal('Black, Male, 27 years old');
     withHeader.find('Info').prop('trrId').should.equal(1);
     withHeader.find('.trr-header').text().should.equal('Other');
-    withHeader.find(Footer).exists.should.be.ok();
+    withHeader.find(Footer).exists().should.be.true();
   });
 
   it('render nothing if trr is not available yet', function () {
