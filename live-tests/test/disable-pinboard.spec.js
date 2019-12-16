@@ -546,6 +546,8 @@ const trr14487 = {
 
 describe('Disable pinboard feature', function () {
   beforeEach(function (client, done) {
+    api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
+
     client.page.main().navigate();
     client.execute(
       function () {
@@ -573,10 +575,31 @@ describe('Disable pinboard feature', function () {
     client.assert.urlEquals('http://localhost:9001/');
   });
 
+  it('should open landing page if accessing a pinboard network map expanded mode via URL', function (client) {
+    const mainPage = client.page.main();
+    const mainPageUrl = mainPage.url();
+
+    client.url('/social-graph/pinboard/5cd06f2b/');
+    client.pause(200);
+
+    mainPage.expect.element('@title').text.to.contain('Citizens Police Data Project').before(500);
+    client.assert.urlEquals(mainPageUrl);
+  });
+
+  it('should open landing page if accessing a pinboard geographic expanded mode via URL', function (client) {
+    const mainPage = client.page.main();
+    const mainPageUrl = mainPage.url();
+
+    client.url('/geographic/pinboard/5cd06f2b/');
+    client.pause(200);
+
+    mainPage.expect.element('@title').text.to.contain('Citizens Police Data Project').before(500);
+    client.assert.urlEquals(mainPageUrl);
+  });
+
   describe('Landing page', function () {
     beforeEach(function (client, done) {
       api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-      api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
       api.mock('GET', '/api/v2/officers/top-by-allegation/', 200, mockTopOfficersByAllegation);
       api.mock('GET', '/api/v2/activity-grid/', 200, mockRecentActivities);
       api.mock('GET', '/api/v2/cr/list-by-new-document/', 200, mockNewDocuments);
