@@ -138,6 +138,7 @@ module.exports = {
       selector: '//a[@href="/" and .="cpdp"]',
       locateStrategy: 'xpath',
     },
+    searchBreadcrumb: '.breadcrumb-item-wrapper:nth-child(3)',
   },
 
   sections: {

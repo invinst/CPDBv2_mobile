@@ -12,7 +12,7 @@ class ItemPinButton extends Component {
     const isPinned = every(isEmpty(items) ? [item] : items, item => item.isPinned);
 
     return (
-      <div className={ cx(styles.itemPinButton, { 'is-pinned': isPinned }, className) }/>
+      <div className={ cx('pinboard-feature', styles.itemPinButton, { 'is-pinned': isPinned }, className) }/>
     );
   }
 }

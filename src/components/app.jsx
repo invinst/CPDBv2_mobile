@@ -4,6 +4,14 @@ import Modal from 'react-modal';
 
 import AppHistory from 'utils/history';
 import constants from 'constants';
+import config from 'config';
+
+import 'swiper/dist/css/swiper.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+import 'styles/fonts.sass';
+import 'styles/style.sass';
+import 'styles/helper.sass';
 
 import MainPageContainer from 'containers/main-page-container';
 import AboutPageContainer from 'containers/about-page-container';
@@ -17,18 +25,13 @@ import TopOfficersByAllegationContainer from 'containers/landing-page/top-office
 import OfficersContainer from 'containers/embed/officers';
 import PinboardPageContainer from 'containers/pinboard-page';
 
-import 'swiper/dist/css/swiper.css';
-import 'mapbox-gl/dist/mapbox-gl.css';
-
-import 'styles/fonts.sass';
-import 'styles/style.sass';
-import 'styles/helper.sass';
-import 'styles/custom-mapbox-gl.sass';
 
 Modal.setAppElement('body');
 
 const App = React.createClass({
   render() {
+    const { pinboard: enablePinboardFeature } = config.enableFeatures;
+
     return (
       <Router history={ AppHistory }>
         <Route
@@ -75,11 +78,28 @@ const App = React.createClass({
             component={ TRRPageContainer }
           />
 
-          <Route
-            path={ `${constants.PINBOARD_PATH}(:pinboardId/)(:pinboardTitle/)` }
-            breadcrumb={ BreadcrumbItemContainer }
-            component={ PinboardPageContainer }
-          />
+          {
+            enablePinboardFeature &&
+            <Route
+              path={ `${constants.PINBOARD_PATH}(:pinboardId/)(:pinboardTitle/)` }
+              breadcrumb={ BreadcrumbItemContainer }
+              component={ PinboardPageContainer }
+            />
+          }
+          {
+            enablePinboardFeature &&
+            <Redirect
+              from={ `${constants.PINBOARD_SOCIAL_GRAPH_REDIRECT_PATH}:pinboardId/` }
+              to={ `${constants.PINBOARD_PATH}:pinboardId/` }
+            />
+          }
+          {
+            enablePinboardFeature &&
+            <Redirect
+              from={ `${constants.PINBOARD_GEOGRAPHIC_REDIRECT_PATH}:pinboardId/` }
+              to={ `${constants.PINBOARD_PATH}:pinboardId/` }
+            />
+          }
 
         </Route>
         <Route
