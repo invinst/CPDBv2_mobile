@@ -62,14 +62,11 @@ export default class AnimatedSocialGraph extends Component {
   }
 
   intervalTickTimeline() {
-    const { isVisible } = this.props;
     const { timelineIdx } = this.state;
-    if (isVisible) {
-      if (timelineIdx < this.props.listEvent.length - 1) {
-        this.setState({ timelineIdx: timelineIdx + 1 });
-      } else {
-        this.stopTimeline();
-      }
+    if (timelineIdx < this.props.listEvent.length - 1) {
+      this.setState({ timelineIdx: timelineIdx + 1 });
+    } else {
+      this.stopTimeline();
     }
   }
 
@@ -85,7 +82,7 @@ export default class AnimatedSocialGraph extends Component {
   }
 
   graphControlPanel() {
-    const { listEvent, isVisible } = this.props;
+    const { listEvent } = this.props;
     const { timelineIdx, refreshIntervalId } = this.state;
     if (listEvent) {
       const numOfEvents = listEvent.length;
@@ -113,7 +110,7 @@ export default class AnimatedSocialGraph extends Component {
             />
             <div className='graph-actions'>
               <button
-                className={ cx('toggle-timeline-btn', (refreshIntervalId && isVisible) ? 'pause-icon' : 'play-icon') }
+                className={ cx('toggle-timeline-btn', (refreshIntervalId) ? 'pause-icon' : 'play-icon') }
                 onClick={ this.toggleTimeline }
               />
               <span className='current-date-label'>{ currentDateString }</span>
@@ -154,9 +151,4 @@ AnimatedSocialGraph.propTypes = {
   officers: PropTypes.array,
   coaccusedData: PropTypes.array,
   listEvent: PropTypes.array,
-  isVisible: PropTypes.bool,
-};
-
-AnimatedSocialGraph.defaultProps = {
-  isVisible: true,
 };
