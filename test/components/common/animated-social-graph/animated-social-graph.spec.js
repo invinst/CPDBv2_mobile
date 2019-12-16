@@ -1,11 +1,13 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { spy, useFakeTimers } from 'sinon';
 import Slider from 'rc-slider';
 import should from 'should';
 
-import AnimatedSocialGraph from 'components/common/animated-social-graph';
+import AnimatedSocialGraph, { AnimatedSocialGraphWithSpinner } from 'components/common/animated-social-graph';
 import SocialGraph from 'components/common/animated-social-graph/social-graph';
+import LoadingSpinner from 'components/common/loading-spinner';
+import graphStyles from 'components/common/animated-social-graph/animated-social-graph.sass';
 
 
 describe('AnimatedSocialGraph component', function () {
@@ -71,6 +73,39 @@ describe('AnimatedSocialGraph component', function () {
   it('should not render graph control panel if there is no event', function () {
     wrapper = mount(<AnimatedSocialGraph/>);
     wrapper.find('.graph-control-panel').should.have.length(0);
+  });
+
+  context('withLoadingSpinner', function () {
+    it('should render LoadingSpinner only if requesting is true', function () {
+      const wrapper = shallow(
+        <AnimatedSocialGraphWithSpinner
+          officers={ officers }
+          coaccusedData={ coaccusedData }
+          listEvent={ listEvent }
+          requesting={ true }
+        />
+      );
+
+      wrapper.find(AnimatedSocialGraph).exists().should.be.false();
+
+      const loadingSpinner = wrapper.find(LoadingSpinner);
+      loadingSpinner.prop('className').should.equal(graphStyles.socialGraphLoading);
+    });
+
+    it('should not render LoadingSpinner only if requesting is false', function () {
+      const wrapper = shallow(
+        <AnimatedSocialGraphWithSpinner
+          timelineIdx={ 0 }
+          officers={ officers }
+          coaccusedData={ coaccusedData }
+          listEvent={ listEvent }
+          requesting={ false }
+        />
+      );
+
+      wrapper.find(AnimatedSocialGraph).exists().should.be.true();
+      wrapper.find(LoadingSpinner).exists().should.be.false();
+    });
   });
 
   it('should call toggle timeline', function () {

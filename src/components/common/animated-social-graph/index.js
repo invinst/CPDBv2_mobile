@@ -8,6 +8,7 @@ import cx from 'classnames';
 import SocialGraph from './social-graph';
 import styles from './animated-social-graph.sass';
 import sliderStyles from 'components/common/slider.sass';
+import withLoadingSpinner from 'components/common/with-loading-spinner';
 
 const AMINATE_SPEED = 150;
 
@@ -152,3 +153,5 @@ AnimatedSocialGraph.propTypes = {
   coaccusedData: PropTypes.array,
   listEvent: PropTypes.array,
 };
+
+export const AnimatedSocialGraphWithSpinner = withLoadingSpinner(AnimatedSocialGraph, styles.socialGraphLoading);

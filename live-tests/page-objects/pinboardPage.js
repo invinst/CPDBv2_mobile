@@ -54,9 +54,15 @@ module.exports = {
     playButton: '.play-icon',
     pinboardTitle: '.pinboard-title',
     pinboardDescription: '.pinboard-description',
-    pinboardPaneMenu: {
-      selector: '(//div[contains(@class, "pinboard-pane-section-menu")])',
+    navigationNextButton: '.swiper-button-next',
+    navigationPreviousButton: '.swiper-button-prev',
+    firstBullet: {
       locateStrategy: 'xpath',
+      selector: '//span[contains(@class, "swiper-pagination-bullet")][1]',
+    },
+    secondBullet: {
+      locateStrategy: 'xpath',
+      selector: '//span[contains(@class, "swiper-pagination-bullet")][2]',
     },
     complaintText: {
       selector: '//div[contains(@class, "legend__legend")]//div[1]//span[contains(@class, "legend-row-text")]',
@@ -187,6 +193,14 @@ module.exports = {
         },
       },
     },
+    animatedSocialGraphSection: {
+      locateStrategy: 'xpath',
+      selector: '(//div[contains(@class, "visualization-item")])[1]',
+    },
+    geographicSection: {
+      locateStrategy: 'xpath',
+      selector: '(//div[contains(@class, "visualization-item")])[2]',
+    },
     graphNodes: {
       selector: '.node',
     },
@@ -213,20 +227,6 @@ module.exports = {
       selector: '.graph-control-panel',
       elements: {
         toggleTimelineButton: '.toggle-timeline-btn',
-      },
-    },
-    pinboardPaneMenu: {
-      selector: '(//div[contains(@class, "pinboard-pane-section-menu")])',
-      locateStrategy: 'xpath',
-      elements: {
-        networkPaneName: {
-          selector: '//span[contains(@class, "pinboard-pane-tab-name")][1]',
-          locateStrategy: 'xpath',
-        },
-        geographicPaneName: {
-          selector: '//span[contains(@class, "pinboard-pane-tab-name")][2]',
-          locateStrategy: 'xpath',
-        },
       },
     },
     relevantComplaints: baseRelevantComplaints('complaint'),

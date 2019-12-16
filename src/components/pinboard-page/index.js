@@ -3,7 +3,6 @@ import cx from 'classnames';
 
 import SearchBar from './search-bar';
 import Header from './header';
-import PinboardPaneSection from 'components/pinboard-page/pinboard-pane-section';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
 import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
 import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
@@ -13,6 +12,7 @@ import EmptyPinboardContainer from 'containers/pinboard-page/empty-pinboard-cont
 import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
 import styles from './pinboard-page.sass';
 import LoadingSpinner from 'components/common/loading-spinner';
+import PinboardDataVisualization from 'components/pinboard-page/pinboard-data-visualization';
 
 
 export default class PinboardPage extends Component {
@@ -35,6 +35,7 @@ export default class PinboardPage extends Component {
       initialRequested,
       isEmptyPinboard,
       pinboardPageLoading,
+      pinboard,
     } = this.props;
 
     if (!initialRequested) {
@@ -52,9 +53,7 @@ export default class PinboardPage extends Component {
     return (
       <div className='pinboard-content'>
         <PinboardInfoContainer />
-        <div className='data-visualizations'>
-          <PinboardPaneSection hasMapMarker={ hasMapMarker }/>
-        </div>
+        <PinboardDataVisualization pinboard={ pinboard } hasMapMarker={ hasMapMarker }/>
         <div className='pinned-section'>
           <PinnedOfficersContainer/>
           <PinnedCRsContainer/>
