@@ -794,6 +794,13 @@ const lastRelevantCoaccusalsResponse = getPaginationResponse(
   4, 8, 10
 );
 
+const emptyPaginationResponse = {
+  count: 0,
+  next: null,
+  previous: null,
+  results: [],
+};
+
 const firstRelevantComplaint = {
   'crid': '1071234',
   'category': 'Lockup Procedures',
@@ -1039,4 +1046,5 @@ module.exports = {
   pinboardeeee7777CRsData,
   pinboardeeee7777OfficersData,
   pinboardeeee7777TRRsData,
+  emptyPaginationResponse,
 };
