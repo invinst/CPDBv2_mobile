@@ -49,13 +49,11 @@ module.exports = {
     },
     socialGraphTitle: '.sidenav-title',
     coaccusalsThresholdText: '.coaccusals-threshold-text',
-    startDate: '.start-date-label',
-    endDate: '.end-date-label',
-    playButton: '.play-icon',
     pinboardTitle: '.pinboard-title',
     pinboardDescription: '.pinboard-description',
     navigationNextButton: '.swiper-button-next',
     navigationPreviousButton: '.swiper-button-prev',
+    refreshButton: '.refresh-button',
     firstBullet: {
       locateStrategy: 'xpath',
       selector: '//span[contains(@class, "swiper-pagination-bullet")][1]',
@@ -80,12 +78,10 @@ module.exports = {
       selector: '//div[contains(@class, "legend__legend")]//div[2]//span[contains(@class, "legend-row-number")]',
       locateStrategy: 'xpath',
     },
-    currentDate: '.current-date-label',
     biggestGraphNode: {
       selector: '(//*[@r="7"])',
       locateStrategy: 'xpath',
     },
-    timelineSlider: '.test--timeline-slider',
     firstToast: '.Toastify__toast:first-child',
     secondToast: '.Toastify__toast:nth-child(2)',
   },
@@ -222,12 +218,6 @@ module.exports = {
     hiddenGraphLinks: {
       selector: '//*[name()="line" and contains(@class, "link") and contains(@style, "opacity: 0.1")]',
       locateStrategy: 'xpath',
-    },
-    timeline: {
-      selector: '.graph-control-panel',
-      elements: {
-        toggleTimelineButton: '.toggle-timeline-btn',
-      },
     },
     relevantComplaints: baseRelevantComplaints('complaint'),
     relevantDocuments: baseRelevantComplaints('document'),

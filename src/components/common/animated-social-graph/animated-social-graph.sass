@@ -1,47 +1,18 @@
 @import 'variables'
 
 \:local(.animatedSocialGraph)
-  .graph-control-panel
-    padding: 0 8px
+  position: relative
 
-    .date-labels
-      font-size: 12px
-      color: $boulder
-      margin-bottom: 3px
-
-      .start-date-label
-        float: left
-
-      .end-date-label
-        float: right
-
-    .graph-actions
-      padding: 10px 0
-
-      .toggle-timeline-btn
-        float: left
-        box-sizing: border-box
-        width: 24px
-        height: 24px
-        padding: 7px 0
-        border: 1px solid $alto-solid
-        border-radius: 12px
-        outline: none
-        background-size: 7px 8px
-        background: white center no-repeat
-
-        &.pause-icon
-          background-image: url('/img/ic-pause.svg')
-
-        &.play-icon
-          background-image: url('/img/ic-play.svg')
-
-      .current-date-label
-        float: left
-        font-size: 14px
-        line-height: 24px
-        color: $thunder
-        margin-left: 6px
+  .refresh-button
+    width: 44px
+    height: 44px
+    border-radius: 2px
+    border: 1px solid $alto-solid
+    background-color: $wild-sand
+    outline: none
+    position: absolute
+    bottom: 8px
+    right: 8px
 
 \:local(.social-graph-loading)
   width: 120px
