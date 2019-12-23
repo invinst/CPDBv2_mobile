@@ -128,6 +128,7 @@ describe('Pinboard Social Graph', function () {
       const pinboardPage = this.pinboardPage;
       waitForGraphAnimationEnd(pinboardPage, client);
 
+      client.waitForAnimationEnd(pinboardPage.elements.biggestGraphNode.selector, 'xpath', 10000);
       pinboardPage.expect.element('@biggestGraphNode').to.be.visible;
       pinboardPage.moveToElement('@biggestGraphNode', undefined, undefined);
       client.doubleClick();
