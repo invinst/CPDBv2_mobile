@@ -32,18 +32,17 @@ export const trackSearchResultsCount = (count) => {
   });
 };
 
-export function trackSearchQuery(query) {
-  this.throttledClickyLog = this.throttledClickyLog || throttle(clickyLog, 500, { 'leading': false });
-  this.throttledSearchQueryGA = this.throttledSearchQueryGA || throttle(window.ga, 500, { 'leading': false });
-
-  this.throttledClickyLog(`change_query: ${query}`);
-  this.throttledSearchQueryGA('send', {
+function _trackSearchQuery(query) {
+  clickyLog(`change_query: ${query}`);
+  window.ga('send', {
     hitType: 'event',
     eventCategory: 'search',
     eventAction: 'change_query',
     eventLabel: query,
   });
 }
+
+export const trackSearchQuery = throttle(_trackSearchQuery, 500, { 'leading': false });
 
 export const trackOpenExplainer = (officerId) => {
   clickyLog(`open_visual_token_explainer: ${officerId}`);

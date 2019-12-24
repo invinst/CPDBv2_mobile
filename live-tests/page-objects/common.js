@@ -6,7 +6,7 @@ module.exports = {
       locateStrategy: 'xpath',
     },
     clickySiteIdsScript: {
-      selector: '//script[text()="var clicky_site_ids = clicky_site_ids || []; clicky_site_ids.push(\'000000000\');"]',
+      selector: '//script[contains(text(), "var clicky_site_ids = clicky_site_ids || []; clicky_site_ids.push(")]',
       locateStrategy: 'xpath',
     },
     clickyNoJavascriptGIF: {
