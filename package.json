@@ -117,7 +117,7 @@
     "flux": "^2.1.1",
     "growl": "^1.10.5",
     "hammerjs": "^2.0.8",
-    "handlebars": "^4.1.2",
+    "handlebars": "^4.3.0",
     "hashids": "^1.0.2",
     "history": "^3.0.0",
     "leaflet": "^1.0.3",
