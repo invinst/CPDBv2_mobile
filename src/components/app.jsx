@@ -86,6 +86,20 @@ const App = React.createClass({
               component={ PinboardPageContainer }
             />
           }
+          {
+            enablePinboardFeature &&
+            <Redirect
+              from={ `${constants.PINBOARD_SOCIAL_GRAPH_REDIRECT_PATH}:pinboardId/` }
+              to={ `${constants.PINBOARD_PATH}:pinboardId/` }
+            />
+          }
+          {
+            enablePinboardFeature &&
+            <Redirect
+              from={ `${constants.PINBOARD_GEOGRAPHIC_REDIRECT_PATH}:pinboardId/` }
+              to={ `${constants.PINBOARD_PATH}:pinboardId/` }
+            />
+          }
 
         </Route>
         <Route

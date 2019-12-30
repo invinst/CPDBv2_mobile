@@ -23,6 +23,7 @@ import {
   getRecentSuggestionsRequested,
   nextParamsSelector,
   hasMoreSelector,
+  getCancelPathname,
   categoriesSelector,
 } from 'selectors/search-page';
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
@@ -41,6 +42,7 @@ function mapStateToProps(state, ownProps) {
     pinboard: getPinboard(state),
     nextParams: nextParamsSelector(state),
     hasMore: hasMoreSelector(state),
+    cancelPathname: getCancelPathname(state),
   };
 }
 

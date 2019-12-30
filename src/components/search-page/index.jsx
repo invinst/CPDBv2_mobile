@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import { isEmpty, noop } from 'lodash';
 import cx from 'classnames';
 
-import { goUp, instantScrollToTop } from 'utils/navigation-util';
+import { instantScrollToTop } from 'utils/navigation-util';
 import SearchCategory from './search-category';
 import { showIntercomLauncher } from 'utils/intercom';
 import style from './search-page.sass';
@@ -20,6 +20,7 @@ export default class SearchPage extends Component {
     this.handleEmptyPinboardButtonClick = this.handleEmptyPinboardButtonClick.bind(this);
     this.clearChosenCategory = this.clearChosenCategory.bind(this);
     this.backToFullSearchHandler = this.backToFullSearchHandler.bind(this);
+    this.handleGoBack = this.handleGoBack.bind(this);
   }
 
   componentDidMount() {
@@ -95,6 +96,12 @@ export default class SearchPage extends Component {
     updateChosenCategory('');
   }
 
+  handleGoBack(e) {
+    !isEmpty(e) && e.preventDefault();
+    const { cancelPathname } = this.props;
+    browserHistory.push(cancelPathname);
+  }
+
   backToFullSearchHandler() {
     this.clearChosenCategory();
     instantScrollToTop();
@@ -162,7 +169,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query, queryPrefix, chosenCategory, router, pinboard } = this.props;
+    const { query, queryPrefix, chosenCategory, pinboard } = this.props;
 
     const searchText = `${queryPrefix ? `${queryPrefix}:` : ''}${query}`;
 
@@ -188,7 +195,7 @@ export default class SearchPage extends Component {
 
             <button
               className={ cx('bt-cancel', { 'active': query !== '' } ) }
-              onClick={ goUp.bind(this, router, window.location.pathname) }>
+              onClick={ this.handleGoBack }>
               Cancel
             </button>
           </div>
@@ -241,6 +248,7 @@ SearchPage.propTypes = {
   getSuggestionWithContentType: PropTypes.func,
   nextParams: PropTypes.object,
   hasMore: PropTypes.bool,
+  cancelPathname: PropTypes.string,
   categories: PropTypes.array,
 };
 
@@ -258,5 +266,6 @@ SearchPage.defaultProps = {
   recentSuggestionIds: {},
   recentSuggestionsRequested: false,
   fetchedEmptyRecentSearchItems: noop,
+  cancelPathname: '/',
   categories: [],
 };

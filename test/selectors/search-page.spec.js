@@ -18,6 +18,7 @@ import {
   isShowingSingleContentTypeSelector,
   hasMoreSelector,
   nextParamsSelector,
+  getCancelPathname,
   categoriesSelector,
 } from 'selectors/search-page';
 
@@ -1198,6 +1199,17 @@ describe('search-page selectors', function () {
           recentItemData: investigatorCR,
         }],
       }]);
+    });
+  });
+
+  describe('getCancelPathname', function () {
+    it('should return the return path for the cancel button', function () {
+      const state = {
+        suggestionApp: {
+          cancelPathname: '/pinboard/abc123/',
+        },
+      };
+      getCancelPathname(state).should.equal('/pinboard/abc123/');
     });
   });
 });

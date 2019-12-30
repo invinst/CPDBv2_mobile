@@ -1,13 +1,12 @@
 import React from 'react';
-
 import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
 import ReactHeight from 'react-height';
 import { noop } from 'lodash';
 import { Promise } from 'es6-promise';
 import { browserHistory } from 'react-router';
-import * as NavigationUtil from 'utils/navigation-util';
 
+import * as NavigationUtil from 'utils/navigation-util';
 import * as IntercomUtils from 'utils/intercom';
 import SearchPage from 'components/search-page';
 import SearchCategory from 'components/search-page/search-category';
@@ -28,6 +27,21 @@ describe('<SearchPage />', function () {
       <SearchPage />
     );
     wrapper.should.be.ok();
+  });
+
+  it('should call browserHistory.push when user click on back button', function () {
+    const browserHistoryPush = stub(browserHistory, 'push');
+
+    const wrapper = shallow(
+      <SearchPage cancelPathname='/pinboard/123abc/'/>
+    );
+
+    wrapper.find('.bt-cancel').simulate('click', { preventDefault: noop });
+
+    browserHistoryPush.should.be.calledOnce();
+    browserHistoryPush.should.be.calledWith('/pinboard/123abc/');
+
+    browserHistoryPush.restore();
   });
 
   describe('componentDidMount', function () {
