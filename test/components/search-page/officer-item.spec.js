@@ -24,11 +24,13 @@ describe('<OfficerItem />', function () {
       badge: 'Badge #456789',
       url: '/officer/123456/jerome-finnigan/',
       recentItemData: recentItemData,
+      itemRank: 3,
     };
 
     const wrapper = mount(
       <OfficerItem
         item={ officer }
+        query='Le'
         saveToRecent={ saveToRecentSpy }
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }
       />
@@ -38,13 +40,15 @@ describe('<OfficerItem />', function () {
     const link = wrapper.find(Link);
     link.should.have.length(1);
 
-    link.prop('to').should.eql('/officer/123456/jerome-finnigan/');
-    link.find('.item-title').text().should.eql('Jerome Finnigan');
-    link.find('.item-subtitle').text().should.eql('Badge #456789');
+    link.prop('to').should.equal('/officer/123456/jerome-finnigan/');
+    link.find('.item-title').text().should.equal('Jerome Finnigan');
+    link.find('.item-subtitle').text().should.equal('Badge #456789');
 
     const searchItem = wrapper.find(SearchItem);
-    searchItem.prop('id').should.eql('8562');
-    searchItem.prop('type').should.eql('OFFICER');
+    searchItem.prop('id').should.equal('8562');
+    searchItem.prop('type').should.equal('OFFICER');
+    searchItem.prop('itemRank').should.equal(3);
+    searchItem.prop('query').should.equal('Le');
     searchItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
     searchItem.prop('recentItemData').should.eql(recentItemData);
     searchItem.prop('saveToRecent').should.eql(saveToRecentSpy);

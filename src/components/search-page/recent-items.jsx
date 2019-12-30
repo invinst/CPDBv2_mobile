@@ -6,7 +6,7 @@ import TrrItem from './trr-item';
 import style from './recent-items.sass';
 
 
-const RecentItems = ({ items, addOrRemoveItemInPinboard }) => {
+const RecentItems = ({ items, addOrRemoveItemInPinboard, query }) => {
   const itemMapping = {
     'OFFICER': OfficerItem,
     'CR': CrItem,
@@ -21,6 +21,7 @@ const RecentItems = ({ items, addOrRemoveItemInPinboard }) => {
           return (
             ItemComponent && <ItemComponent
               key={ item.id }
+              query={ query }
               item={ item }
               addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
             />
@@ -34,6 +35,7 @@ const RecentItems = ({ items, addOrRemoveItemInPinboard }) => {
 RecentItems.propTypes = {
   items: PropTypes.array,
   addOrRemoveItemInPinboard: PropTypes.func,
+  query: PropTypes.string,
 };
 
 RecentItems.defaultProps = {

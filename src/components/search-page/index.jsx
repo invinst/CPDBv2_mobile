@@ -4,7 +4,6 @@ import { browserHistory } from 'react-router';
 import { isEmpty, noop } from 'lodash';
 import cx from 'classnames';
 
-import constants from 'constants';
 import { instantScrollToTop } from 'utils/navigation-util';
 import SearchCategory from './search-category';
 import { showIntercomLauncher } from 'utils/intercom';
@@ -13,11 +12,6 @@ import * as IntercomTracking from 'utils/intercom-tracking';
 import { generatePinboardUrl } from 'utils/pinboard';
 import PinboardBar from './pinboard-bar';
 
-
-const RECENT_CATEGORY = {
-  name: 'RECENT',
-  id: 'recent',
-};
 
 export default class SearchPage extends Component {
   constructor(props) {
@@ -87,10 +81,6 @@ export default class SearchPage extends Component {
     return typeof query === 'string' && query.length >= 2;
   }
 
-  getCategoriesWithSuggestions() {
-    return constants.SEARCH_CATEGORIES.filter((cat) => !isEmpty(this.props[cat.id]));
-  }
-
   updateLastCategoryHeight(newHeight) {
     this.lastCategoryHeight = newHeight;
     this.forceUpdate();
@@ -117,9 +107,9 @@ export default class SearchPage extends Component {
     instantScrollToTop();
   }
 
-  renderCategories(categories) {
+  renderCategories() {
     const {
-      chosenCategory,
+      categories,
       saveToRecent,
       updateActiveCategory,
       activeCategory,
@@ -132,19 +122,14 @@ export default class SearchPage extends Component {
     const lastIndex = categories.length - 1;
 
     return categories.map((cat, index) => {
-      const showAllButton = (
-        cat.id !== 'recent' &&
-        chosenCategory === ''
-      );
-
       const searchCategory = (
         <SearchCategory
           categoryId={ cat.id }
           categoryPath={ cat.path }
           allButtonClickHandler={ this.chooseCategory.bind(this, cat) }
-          showAllButton={ showAllButton }
+          showAllButton={ cat.showAllButton }
           title={ cat.longName || cat.name }
-          items={ this.props[cat.id] }
+          items={ cat.items }
           saveToRecent={ saveToRecent }
           updateActiveCategory={ updateActiveCategory }
           activeCategory={ activeCategory }
@@ -184,18 +169,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { query, queryPrefix, chosenCategory, pinboard, recent } = this.props;
-    let categories = [];
-
-    if (!this.isLongEnoughQuery(query)) {
-      if (!isEmpty(recent)) {
-        categories = [RECENT_CATEGORY];
-      }
-    } else if (chosenCategory !== '') {
-      categories = constants.SEARCH_CATEGORIES.filter(cat => cat.id === chosenCategory);
-    } else {
-      categories = this.getCategoriesWithSuggestions();
-    }
+    const { query, queryPrefix, chosenCategory, pinboard } = this.props;
 
     const searchText = `${queryPrefix ? `${queryPrefix}:` : ''}${query}`;
 
@@ -232,7 +206,7 @@ export default class SearchPage extends Component {
         </div>
 
         <div className='category-details-container'>
-          { this.renderCategories(categories) }
+          { this.renderCategories() }
         </div>
         {
           !isEmpty(chosenCategory) &&
@@ -254,14 +228,6 @@ SearchPage.propTypes = {
   inputChanged: PropTypes.func,
   queryChanged: PropTypes.func,
   suggestTerm: PropTypes.func,
-  officers: PropTypes.array,
-  crs: PropTypes.array,
-  trrs: PropTypes.array,
-  dateCRs: PropTypes.array,
-  investigatorCRs: PropTypes.array,
-  dateTRRs: PropTypes.array,
-  dateOfficers: PropTypes.array,
-  recent: PropTypes.array,
   fetchRecentSearchItems: PropTypes.func,
   saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
@@ -283,6 +249,7 @@ SearchPage.propTypes = {
   nextParams: PropTypes.object,
   hasMore: PropTypes.bool,
   cancelPathname: PropTypes.string,
+  categories: PropTypes.array,
 };
 
 SearchPage.defaultProps = {
@@ -300,4 +267,5 @@ SearchPage.defaultProps = {
   recentSuggestionsRequested: false,
   fetchedEmptyRecentSearchItems: noop,
   cancelPathname: '/',
+  categories: [],
 };
