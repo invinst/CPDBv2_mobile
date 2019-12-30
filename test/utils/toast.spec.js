@@ -16,10 +16,6 @@ describe('Toast utils', function () {
     Toastify.toast.resetHistory();
   });
 
-  afterEach(function () {
-    Toastify.toast.resetHistory();
-  });
-
   const cssTransition = Toastify.cssTransition({
     enter: 'toast-enter',
     exit: 'toast-exit',
