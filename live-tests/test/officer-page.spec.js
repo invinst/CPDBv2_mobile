@@ -907,6 +907,45 @@ describe('OfficerPage test', function () {
     describe('Pinboard function', function () {
       beforeEach(function (client, done) {
         api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
+
+        api.mockPost(
+          '/api/v2/mobile/pinboards/',
+          201,
+          {
+            'officer_ids': [27778],
+            crids: [],
+            'trr_ids': [],
+          },
+          {
+            id: '5cd06f2b',
+            'officer_ids': [27778],
+            crids: [],
+            'trr_ids': [],
+            title: '',
+            description: '',
+          },
+        );
+
+        api.mockPut(
+          '/api/v2/mobile/pinboards/5cd06f2b/',
+          200,
+          {
+            'officer_ids': [],
+            crids: [],
+            'trr_ids': [],
+            title: '',
+            description: '',
+          },
+          {
+            id: '5cd06f2b',
+            'officer_ids': [],
+            crids: [],
+            'trr_ids': [],
+            title: '',
+            description: '',
+          },
+        );
+
         this.main = client.page.main();
         this.search = client.page.search();
         done();

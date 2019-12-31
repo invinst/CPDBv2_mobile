@@ -1,7 +1,12 @@
 import { reduce, values } from 'lodash';
 
 import { ROUTE_CHANGED } from 'actions/navigation';
-import { SEARCH_QUERY_CHANGED, SUGGEST_ALL_REQUEST_SUCCESS, SUGGESTION_REQUEST_SUCCESS } from 'actions/suggestion';
+import {
+  SEARCH_QUERY_CHANGED,
+  SUGGEST_ALL_REQUEST_SUCCESS,
+  SUGGESTION_REQUEST_SUCCESS,
+  SUGGESTION_SINGLE_REQUEST_SUCCESS,
+} from 'actions/suggestion';
 import * as GATracking from 'utils/google_analytics_tracking';
 
 
@@ -22,6 +27,10 @@ const EVENTS = {
   [SUGGESTION_REQUEST_SUCCESS]: (store, action) => {
     const count = reduce(values(action.payload), (sum, array) => sum + array.length, 0);
     GATracking.trackSearchResultsCount(count);
+  },
+  [SUGGESTION_SINGLE_REQUEST_SUCCESS]: (store, action) => {
+    const { contentType, term } = action.request.params;
+    GATracking.trackSingleSearchResults(contentType, term, action.payload.results.length);
   },
 };
 

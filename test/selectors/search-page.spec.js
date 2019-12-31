@@ -18,6 +18,8 @@ import {
   isShowingSingleContentTypeSelector,
   hasMoreSelector,
   nextParamsSelector,
+  getCancelPathname,
+  categoriesSelector,
 } from 'selectors/search-page';
 
 describe('search-page selectors', function () {
@@ -462,7 +464,7 @@ describe('search-page selectors', function () {
       const state = {
         suggestionApp: {
           suggestions: {
-            ['DATE > OFFICERS']: [officer],
+            'DATE > OFFICERS': [officer],
           },
         },
         pinboardPage: {
@@ -696,20 +698,518 @@ describe('search-page selectors', function () {
         },
       }).should.be.false();
     });
+  });
 
-    describe('nextParamsSelector', function () {
-      it('should return params from url', function () {
-        nextParamsSelector({
-          suggestionApp: {
-            pagination: {
-              next: 'example.com?limit=20&offset=20',
+  describe('nextParamsSelector', function () {
+    it('should return params from url', function () {
+      nextParamsSelector({
+        suggestionApp: {
+          pagination: {
+            next: 'example.com?limit=20&offset=20',
+          },
+        },
+      }).should.deepEqual({
+        limit: '20',
+        offset: '20',
+      });
+    });
+  });
+
+  describe('categoriesSelector', function () {
+    it('should return RECENT if query is short', function () {
+      categoriesSelector({
+        pinboardPage: {
+          pinboard: {
+            'officer_ids': [8562],
+            crids: ['317'],
+            'trr_ids': [123456],
+          },
+        },
+        suggestionApp: {
+          query: 'K',
+          recentSuggestions: [
+            {
+              type: 'OFFICER',
+              id: 8562,
+              data: {
+                id: 8562,
+                name: 'Jerome Finnigan',
+                badge: '123456',
+                type: 'OFFICER',
+              },
+            },
+            {
+              type: 'CR',
+              id: '271235',
+              data: {
+                id: '271235',
+                crid: '271235',
+                'incident_date': '2001-02-10',
+                category: 'Use Of Force',
+                type: 'CR',
+              },
+            },
+            {
+              type: 'TRR',
+              id: 123456,
+              data: {
+                type: 'TRR',
+                id: 123456,
+              },
+            },
+          ],
+          suggestions: {
+            CR: [
+              {
+                category: 'Use Of Force',
+                crid: '1027271',
+                highlight: {
+                  summary: ['On July', 'an off-duty'],
+                },
+                id: '1027271',
+                'incident_date': '2009-06-13',
+              },
+              {
+                category: 'Domestic',
+                crid: '1049273',
+                highlight: {
+                  summary: ['On October', 'regarding an incident that occurred'],
+                },
+                id: '1049273',
+                'incident_date': '2011-10-13',
+              },
+            ],
+          },
+        },
+      }).should.be.eql([{
+        name: 'RECENT',
+        id: 'recent',
+        items: [
+          {
+            id: 8562,
+            itemRank: 1,
+            name: 'Jerome Finnigan',
+            badge: 'Badge #123456',
+            percentile: null,
+            url: '/officer/8562/jerome-finnigan/',
+            isPinned: true,
+            type: 'OFFICER',
+            recentItemData: {
+              id: 8562,
+              name: 'Jerome Finnigan',
+              badge: '123456',
+              type: 'OFFICER',
             },
           },
-        }).should.deepEqual({
-          limit: '20',
-          offset: '20',
-        });
-      });
+          {
+            crid: '271235',
+            itemRank: 2,
+            url: '/complaint/271235/',
+            incidentDate: '02/10/2001',
+            isPinned: false,
+            category: 'Use Of Force',
+            type: 'CR',
+            recentItemData: {
+              id: '271235',
+              crid: '271235',
+              'incident_date': '2001-02-10',
+              category: 'Use Of Force',
+              type: 'CR',
+            },
+          },
+          {
+            id: 123456,
+            itemRank: 3,
+            url: '/trr/123456/',
+            isPinned: true,
+            type: 'TRR',
+            recentItemData: {
+              type: 'TRR',
+              id: 123456,
+            },
+          },
+        ],
+        showAllButton: false,
+      }]);
+    });
+
+    it('should return chosen category if query is long enough and chosenCategory is not null', function () {
+      const cr1 = {
+        category: 'Use Of Force',
+        crid: '1027271',
+        highlight: {
+          summary: ['On July', 'an off-duty'],
+        },
+        id: '1027271',
+        'incident_date': '2009-06-13',
+      };
+      const cr2 = {
+        category: 'Domestic',
+        crid: '1049273',
+        highlight: {
+          summary: ['On October', 'regarding an incident that occurred'],
+        },
+        id: '1049273',
+        'incident_date': '2011-10-13',
+      };
+      categoriesSelector({
+        pinboardPage: {
+          pinboard: {
+            id: 99,
+            'officer_ids': [1],
+            crids: ['1049273'],
+            'trr_ids': [1],
+          },
+        },
+        suggestionApp: {
+          query: 'Ke',
+          chosenCategory: 'crs',
+          recentSuggestions: [
+            {
+              type: 'OFFICER',
+              id: 8562,
+              data: {
+                id: 8562,
+                name: 'Jerome Finnigan',
+                badge: '123456',
+                type: 'OFFICER',
+              },
+            },
+            {
+              type: 'CR',
+              id: '271235',
+              data: {
+                id: '271235',
+                crid: '271235',
+                'incident_date': '2001-02-10',
+                category: 'Use Of Force',
+                type: 'CR',
+              },
+            },
+            {
+              type: 'TRR',
+              id: 123456,
+              data: {
+                type: 'TRR',
+                id: 123456,
+              },
+            },
+          ],
+          suggestions: {
+            CR: [cr1, cr2],
+          },
+        },
+      }).should.be.eql([{
+        name: 'COMPLAINT RECORDS (CRs)',
+        filter: 'CR',
+        id: 'crs',
+        path: 'CR',
+        queryPrefix: 'cr',
+        showAllButton: false,
+        items: [
+          {
+            crid: '1027271',
+            itemRank: 1,
+            url: '/complaint/1027271/',
+            category: 'Use Of Force',
+            incidentDate: '06/13/2009',
+            type: 'CR',
+            isPinned: false,
+            recentItemData: cr1,
+          },
+          {
+            crid: '1049273',
+            itemRank: 2,
+            url: '/complaint/1049273/',
+            category: 'Domestic',
+            incidentDate: '10/13/2011',
+            type: 'CR',
+            isPinned: true,
+            recentItemData: cr2,
+          },
+        ],
+      }]);
+    });
+
+    it('should return categories with max 5 items if query is long enough and chosenCategory is null', function () {
+      const cr1 = {
+        category: 'Use Of Force',
+        crid: '1027271',
+        highlight: {
+          summary: ['On July', 'an off-duty'],
+        },
+        id: '1027271',
+        'incident_date': '2009-06-13',
+      };
+      const cr2 = {
+        category: 'Domestic',
+        crid: '1049273',
+        highlight: {
+          summary: ['On October', 'regarding an incident that occurred'],
+        },
+        id: '1049273',
+        'incident_date': '2011-10-13',
+      };
+      const officer = {
+        id: '1',
+        'name': 'Name',
+        'badge': '12314',
+        'percentile': null,
+      };
+      const dateCR = {
+        category: 'Use Of Force',
+        crid: '1027271',
+        highlight: {
+          summary: ['On July', 'an off-duty'],
+        },
+        id: '1027271',
+        'incident_date': '2009-06-13',
+      };
+      const dateTRR = {
+        id: '1',
+      };
+      const dateOfficer = {
+        id: 123,
+        'name': 'Jerome Finnigan',
+        'badge': '56789',
+        'percentile': null,
+      };
+      const trr = {
+        id: '1',
+      };
+      const investigatorCR = {
+        category: 'Use Of Force',
+        crid: '1027271',
+        highlight: {
+          summary: ['On July', 'an off-duty'],
+        },
+        id: '1027271',
+        'incident_date': '2009-06-13',
+      };
+      categoriesSelector({
+        pinboardPage: {
+          pinboard: {
+            id: 99,
+            'officer_ids': [1],
+            crids: ['1049273'],
+            'trr_ids': [1],
+          },
+        },
+        suggestionApp: {
+          query: 'Ke',
+          chosenCategory: '',
+          recentSuggestions: [
+            {
+              type: 'OFFICER',
+              id: 8562,
+              data: {
+                id: 8562,
+                name: 'Jerome Finnigan',
+                badge: '123456',
+                type: 'OFFICER',
+              },
+            },
+            {
+              type: 'CR',
+              id: '271235',
+              data: {
+                id: '271235',
+                crid: '271235',
+                'incident_date': '2001-02-10',
+                category: 'Use Of Force',
+                type: 'CR',
+              },
+            },
+            {
+              type: 'TRR',
+              id: 123456,
+              data: {
+                type: 'TRR',
+                id: 123456,
+              },
+            },
+          ],
+          suggestions: {
+            CR: [cr1, cr2, cr1, cr2, cr1, cr2],
+            OFFICER: [officer],
+            'DATE > CR': [dateCR],
+            'DATE > TRR': [dateTRR],
+            'DATE > OFFICERS': [dateOfficer],
+            TRR: [trr],
+            'INVESTIGATOR > CR': [investigatorCR],
+          },
+        },
+      }).should.be.eql([{
+        name: 'DATE → COMPLAINT RECORDS',
+        filter: 'DATE > CR',
+        id: 'dateCRs',
+        path: 'DATE > CR',
+        queryPrefix: 'date-cr',
+        showAllButton: true,
+        items: [{
+          crid: '1027271',
+          itemRank: 1,
+          url: '/complaint/1027271/',
+          incidentDate: '06/13/2009',
+          category: 'Use Of Force',
+          type: 'CR',
+          isPinned: false,
+          recentItemData: dateCR,
+        }],
+      }, {
+        name: 'DATE → TACTICAL RESPONSE REPORTS',
+        filter: 'DATE > TRR',
+        id: 'dateTRRs',
+        path: 'DATE > TRR',
+        queryPrefix: 'date-trr',
+        showAllButton: true,
+        items: [{
+          id: '1',
+          itemRank: 2,
+          url: '/trr/1/',
+          isPinned: true,
+          type: 'TRR',
+          recentItemData: dateTRR,
+        }],
+      }, {
+        name: 'DATE → OFFICERS',
+        filter: 'DATE > OFFICERS',
+        id: 'dateOfficers',
+        path: 'DATE > OFFICERS',
+        queryPrefix: 'date-officer',
+        showAllButton: true,
+        items: [{
+          id: 123,
+          itemRank: 3,
+          name: 'Jerome Finnigan',
+          badge: 'Badge #56789',
+          percentile: null,
+          url: `${ constants.OFFICER_PATH }123/jerome-finnigan/`,
+          type: 'OFFICER',
+          isPinned: false,
+          recentItemData: dateOfficer,
+        }],
+      }, {
+        name: 'OFFICERS',
+        filter: 'Officers',
+        id: 'officers',
+        path: 'OFFICER',
+        queryPrefix: 'officer',
+        showAllButton: true,
+        items: [{
+          id: '1',
+          itemRank: 4,
+          name: 'Name',
+          badge: 'Badge #12314',
+          url: `${ constants.OFFICER_PATH }1/name/`,
+          percentile: null,
+          isPinned: true,
+          type: 'OFFICER',
+          recentItemData: officer,
+        }],
+      }, {
+        name: 'COMPLAINT RECORDS (CRs)',
+        filter: 'CR',
+        id: 'crs',
+        path: 'CR',
+        queryPrefix: 'cr',
+        showAllButton: true,
+        items: [
+          {
+            crid: '1027271',
+            itemRank: 5,
+            url: '/complaint/1027271/',
+            category: 'Use Of Force',
+            incidentDate: '06/13/2009',
+            type: 'CR',
+            isPinned: false,
+            recentItemData: cr1,
+          },
+          {
+            crid: '1049273',
+            itemRank: 6,
+            url: '/complaint/1049273/',
+            category: 'Domestic',
+            incidentDate: '10/13/2011',
+            type: 'CR',
+            isPinned: true,
+            recentItemData: cr2,
+          },
+          {
+            crid: '1027271',
+            itemRank: 7,
+            url: '/complaint/1027271/',
+            category: 'Use Of Force',
+            incidentDate: '06/13/2009',
+            type: 'CR',
+            isPinned: false,
+            recentItemData: cr1,
+          },
+          {
+            crid: '1049273',
+            itemRank: 8,
+            url: '/complaint/1049273/',
+            category: 'Domestic',
+            incidentDate: '10/13/2011',
+            type: 'CR',
+            isPinned: true,
+            recentItemData: cr2,
+          },
+          {
+            crid: '1027271',
+            itemRank: 9,
+            url: '/complaint/1027271/',
+            category: 'Use Of Force',
+            incidentDate: '06/13/2009',
+            type: 'CR',
+            isPinned: false,
+            recentItemData: cr1,
+          },
+        ],
+      }, {
+        name: 'TACTICAL RESPONSE REPORTS',
+        filter: 'TRR',
+        id: 'trrs',
+        path: 'TRR',
+        queryPrefix: 'trr',
+        showAllButton: true,
+        items: [{
+          id: '1',
+          itemRank: 10,
+          url: '/trr/1/',
+          isPinned: true,
+          type: 'TRR',
+          recentItemData: trr,
+        }],
+      }, {
+        name: 'INVESTIGATOR → CR',
+        filter: 'INVESTIGATOR > CR',
+        id: 'investigatorCRs',
+        path: 'INVESTIGATOR > CR',
+        queryPrefix: 'investigator-cr',
+        showAllButton: true,
+        items: [{
+          crid: '1027271',
+          itemRank: 11,
+          url: '/complaint/1027271/',
+          incidentDate: '06/13/2009',
+          category: 'Use Of Force',
+          type: 'CR',
+          isPinned: false,
+          recentItemData: investigatorCR,
+        }],
+      }]);
+    });
+  });
+
+  describe('getCancelPathname', function () {
+    it('should return the return path for the cancel button', function () {
+      const state = {
+        suggestionApp: {
+          cancelPathname: '/pinboard/abc123/',
+        },
+      };
+      getCancelPathname(state).should.equal('/pinboard/abc123/');
     });
   });
 });

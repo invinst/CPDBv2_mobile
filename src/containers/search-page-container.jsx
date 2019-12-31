@@ -19,18 +19,12 @@ import {
   queryPrefixSelector,
   getChosenCategory,
   getActiveCategory,
-  officersSelector,
-  dateCRsSelector,
-  dateTRRsSelector,
-  crsSelector,
-  trrsSelector,
-  recentSuggestionsSelector,
-  dateOfficersSelector,
-  investigatorCRsSelector,
   recentSuggestionIdsSelector,
   getRecentSuggestionsRequested,
   nextParamsSelector,
   hasMoreSelector,
+  getCancelPathname,
+  categoriesSelector,
 } from 'selectors/search-page';
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import { addOrRemoveItemInPinboard, createPinboard } from 'actions/pinboard';
@@ -40,21 +34,15 @@ function mapStateToProps(state, ownProps) {
   return {
     query: getQuery(state),
     queryPrefix: queryPrefixSelector(state),
-    officers: officersSelector(state),
-    dateCRs: dateCRsSelector(state),
-    investigatorCRs: investigatorCRsSelector(state),
-    dateTRRs: dateTRRsSelector(state),
-    dateOfficers: dateOfficersSelector(state),
-    crs: crsSelector(state),
-    trrs: trrsSelector(state),
+    categories: categoriesSelector(state),
     activeCategory: getActiveCategory(state),
     chosenCategory: getChosenCategory(state),
-    recent: recentSuggestionsSelector(state),
     recentSuggestionIds: recentSuggestionIdsSelector(state),
     recentSuggestionsRequested: getRecentSuggestionsRequested(state),
     pinboard: getPinboard(state),
     nextParams: nextParamsSelector(state),
     hasMore: hasMoreSelector(state),
+    cancelPathname: getCancelPathname(state),
   };
 }
 

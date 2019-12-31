@@ -4,13 +4,15 @@ import SearchItem from './search-item';
 import searchItemStyle from './search-item.sass';
 
 
-const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard }) => {
+const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
   return (
     <SearchItem
       url={ item.url }
       hasPinButton={ true }
       addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
       id={ item.id }
+      query={ query }
+      itemRank={ item.itemRank }
       isPinned={ item.isPinned }
       type={ item.type }
       recentItemData={ item.recentItemData }
@@ -29,12 +31,14 @@ OfficerItem.propTypes = {
     name: PropTypes.string,
     badge: PropTypes.string,
     url: PropTypes.string,
+    itemRank: PropTypes.number,
     isPinned: PropTypes.bool,
     type: PropTypes.string,
     recentItemData: PropTypes.object,
   }),
   saveToRecent: PropTypes.func,
   addOrRemoveItemInPinboard: PropTypes.func,
+  query: PropTypes.string,
 };
 
 OfficerItem.defaultProps = {

@@ -10,6 +10,7 @@ import activeCategory from './active-category';
 import chosenCategory from './chosen-category';
 import recentSuggestionsRequested from './recent-suggestions-requested';
 import pagination from './pagination';
+import cancelPathname from 'reducers/suggestion-app/cancel-pathname';
 
 
 export default combineReducers({
@@ -23,4 +24,5 @@ export default combineReducers({
   chosenCategory,
   recentSuggestionsRequested,
   pagination,
+  cancelPathname,
 });

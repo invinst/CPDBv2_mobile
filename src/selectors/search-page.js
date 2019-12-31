@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import { map, filter, isUndefined, isEmpty } from 'lodash';
+import { get, map, filter, isUndefined, isEmpty, forEach } from 'lodash';
 
 import constants from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
@@ -13,6 +13,7 @@ export const getChosenCategory = (state) => state.suggestionApp.chosenCategory;
 export const getActiveCategory = (state) => state.suggestionApp.activeCategory;
 export const getQuery = (state) => state.suggestionApp.query;
 const getPagination = state => state.suggestionApp.pagination;
+export const getCancelPathname = state => state.suggestionApp.cancelPathname;
 
 export const queryPrefixSelector = createSelector(
   getChosenCategory,
@@ -171,4 +172,63 @@ export const hasMoreSelector = createSelector(
 export const nextParamsSelector = createSelector(
   getPagination,
   ({ next }) => (extractQuery(next))
+);
+
+const isLongEnoughQuery = query => typeof query === 'string' && query.length >= 2;
+
+const suggestionGroupsSelector = createSelector(
+  officersSelector,
+  dateCRsSelector,
+  investigatorCRsSelector,
+  dateTRRsSelector,
+  dateOfficersSelector,
+  crsSelector,
+  trrsSelector,
+  (officers, dateCRs, investigatorCRs, dateTRRs, dateOfficers, crs, trrs) => ({
+    officers: officers || [],
+    dateCRs: dateCRs || [],
+    investigatorCRs: investigatorCRs || [],
+    dateTRRs: dateTRRs || [],
+    dateOfficers: dateOfficers || [],
+    crs: crs || [],
+    trrs: trrs || [],
+  })
+);
+
+export const categoriesSelector = createSelector(
+  getQuery,
+  getChosenCategory,
+  recentSuggestionsSelector,
+  suggestionGroupsSelector,
+  (query, chosenCategory, recentSuggestions, suggestionGroups) => {
+    let categories = [];
+
+    if (!isLongEnoughQuery(query)) {
+      if (!isEmpty(recentSuggestions)) {
+        categories = [{
+          name: 'RECENT',
+          id: 'recent',
+          items: recentSuggestions,
+          showAllButton: false,
+        }];
+      }
+    } else if (chosenCategory !== '') {
+      const category = constants.SEARCH_CATEGORIES.filter(cat => cat.id === chosenCategory)[0];
+      categories = [{
+        ...category,
+        items: get(suggestionGroups, category.id, []),
+        showAllButton: false,
+      }];
+    } else {
+      categories = constants.SEARCH_CATEGORIES.map((cat) => ({
+        ...cat,
+        items: get(suggestionGroups, cat.id, []).slice(0, 5),
+        showAllButton: true,
+      })).filter(cat => !isEmpty(cat.items));
+    }
+
+    let itemRankCounter = 1;
+    forEach(categories, category => forEach(category.items, item => item.itemRank = itemRankCounter++));
+    return categories;
+  }
 );
