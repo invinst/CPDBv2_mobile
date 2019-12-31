@@ -1,11 +1,12 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Link, Router, Route } from 'react-router';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import { createMemoryHistory } from 'history';
 
 import SearchItem from 'components/search-page/search-item';
 import ItemPinButton from 'components/common/item-pin-button';
+import * as tracking from 'utils/tracking';
 
 
 describe('<SearchItem />', function () {
@@ -48,7 +49,8 @@ describe('<SearchItem />', function () {
     wrapper.find(Link).props().className.should.containEql('custom');
   });
 
-  it('should call saveToRecent when click on item', function () {
+  it('should call saveToRecent and trackSearchFocusedItem when click on item', function () {
+    stub(tracking, 'trackSearchFocusedItem');
     const saveToRecentSpy = spy();
     const officer = {
       id: '8562',
@@ -64,6 +66,8 @@ describe('<SearchItem />', function () {
           () => <SearchItem
             type='OFFICER'
             id='8562'
+            query='Ke'
+            itemRank={ 3 }
             saveToRecent={ saveToRecentSpy }
             recentItemData={ officer }
           />
@@ -72,10 +76,14 @@ describe('<SearchItem />', function () {
     );
 
     wrapper.find(Link).simulate('click');
-    saveToRecentSpy.calledWith({
+    saveToRecentSpy.should.be.calledWith({
       type: 'OFFICER',
       id: '8562',
       data: officer,
-    }).should.be.true();
+    });
+
+    tracking.trackSearchFocusedItem.should.be.calledOnce();
+    tracking.trackSearchFocusedItem.should.be.calledWith('OFFICER', 'Ke', '8562', 3);
+    tracking.trackSearchFocusedItem.restore();
   });
 });

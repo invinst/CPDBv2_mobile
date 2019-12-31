@@ -96,7 +96,6 @@ export const PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START = 'PINBOARD_LATEST_RE
 export const PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS = 'PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS';
 export const PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE = 'PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_FAILURE';
 
-export const CHANGE_PINBOARD_TAB = 'CHANGE_PINBOARD_TAB';
 export const UPDATE_PINBOARD_INFO = 'UPDATE_PINBOARD_INFO';
 
 export const ADD_OR_REMOVE_ITEM_IN_PINBOARD = 'ADD_OR_REMOVE_ITEM_IN_PINBOARD';
@@ -278,8 +277,6 @@ export const fetchOtherPagesPinboardGeographicTrrs = (params) => get(
   ],
   pinboardSource && pinboardSource.token
 )(params);
-
-export const changePinboardTab = createAction(CHANGE_PINBOARD_TAB);
 
 const getWithPaginate = (pinboardRelevantAPI, types) => (id, params) => {
   const queryString = map(entries(params), ([key, val]) => `${key}=${val}`).join('&');

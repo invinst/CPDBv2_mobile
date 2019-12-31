@@ -361,10 +361,6 @@ describe('Pinboard Page', function () {
       pinboardPage.getValue('@pinboardDescription', function (result) {
         assert.equal(result.value, 'Pinboard Description');
       });
-
-      pinboardPage.expect.section('@pinboardPaneMenu').to.be.visible;
-      pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('Network');
-      pinboardPage.expect.section('@pinboardPaneMenu').text.to.contain('Geographic');
     });
 
     it('should update title and description after editing and out focusing them', function (client) {
@@ -385,7 +381,7 @@ describe('Pinboard Page', function () {
       pinboardPage.click('@pinboardDescription');
       pinboardPage.clearValue('@pinboardDescription');
       pinboardPage.setValue('@pinboardDescription', 'Updated Description');
-      pinboardPage.click('@pinboardPaneMenu');
+      pinboardPage.click('@coaccusalsThresholdText');
 
       pinboardPage.getValue('@pinboardTitle', function (result) {
         assert.equal(result.value, 'Updated Title');
@@ -885,16 +881,36 @@ describe('Pinboard Page', function () {
     });
   });
 
-  context('Geographic section', function () {
-    it('should render geographic section', function () {
+  context('Pinboard visualization', function () {
+    it('should render animated social graph and geographic section', function (client) {
       const pinboardPage = this.pinboardPage;
-      pinboardPage.expect.section('@pinboardPaneMenu').to.be.visible;
-      pinboardPage.section.pinboardPaneMenu.click('@geographicPaneName');
+      client.resizeWindow(500, 1000);
+      const animatedSocialGraphSection = pinboardPage.section.animatedSocialGraphSection;
+      const geographicSection = pinboardPage.section.geographicSection;
 
-      pinboardPage.expect.element('@complaintText').text.to.equal('Complaint');
-      pinboardPage.expect.element('@complaintNumber').text.to.equal('5');
-      pinboardPage.expect.element('@trrText').text.to.equal('Use of Force Report');
-      pinboardPage.expect.element('@trrNumber').text.to.equal('2');
+      client.assertInViewport(animatedSocialGraphSection.selector, animatedSocialGraphSection.locateStrategy);
+      client.assertInViewport(geographicSection.selector, geographicSection.locateStrategy, false);
+
+      pinboardPage.expect.element('@navigationPreviousButton').to.be.not.visible;
+      pinboardPage.expect.element('@navigationNextButton').to.be.visible;
+      pinboardPage.expect.element('@firstBullet').to.have.attribute('class').equals(
+        'swiper-pagination-bullet swiper-pagination-bullet-active'
+      );
+      pinboardPage.click('@navigationNextButton');
+
+      client.waitForAnimationEnd(geographicSection.selector, geographicSection.locateStrategy);
+      client.assertInViewport(animatedSocialGraphSection.selector, animatedSocialGraphSection.locateStrategy, false);
+      client.assertInViewport(geographicSection.selector, geographicSection.locateStrategy);
+      pinboardPage.expect.element('@navigationNextButton').to.be.not.visible;
+      pinboardPage.expect.element('@navigationPreviousButton').to.be.visible;
+      pinboardPage.expect.element('@secondBullet').to.have.attribute('class').equals(
+        'swiper-pagination-bullet swiper-pagination-bullet-active'
+      );
+
+      pinboardPage.click('@navigationPreviousButton');
+      client.waitForAnimationEnd(animatedSocialGraphSection.selector, animatedSocialGraphSection.locateStrategy);
+      client.assertInViewport(animatedSocialGraphSection.selector, animatedSocialGraphSection.locateStrategy);
+      client.assertInViewport(geographicSection.selector, geographicSection.locateStrategy, false);
     });
   });
 });

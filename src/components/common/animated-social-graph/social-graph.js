@@ -4,7 +4,6 @@ import { isEmpty, orderBy } from 'lodash';
 import moment from 'moment';
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
-import 'rc-slider/assets/index.css';
 import cx from 'classnames';
 
 import styles from './social-graph.sass';
@@ -120,6 +119,7 @@ export default class SocialGraph extends Component {
 
     this.svg.attr('width', this.width).attr('height', this.height);
     this.force.size([this.width, this.height]);
+    this.force.start();
   }
 
   _resetNodes() {

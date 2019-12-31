@@ -69,22 +69,17 @@ export default class SearchCategory extends Component {
     const {
       saveToRecent,
       categoryId,
-      showAllButton,
       addOrRemoveItemInPinboard,
       getSuggestionWithContentType,
       query,
       nextParams,
       hasMore,
+      items,
     } = this.props;
     const ResultComponent = resultComponentMappings[categoryId];
 
     if (typeof ResultComponent === 'undefined') {
       return null;
-    }
-
-    let items = this.props.items;
-    if (showAllButton) {
-      items = items.slice(0, 5);
     }
 
     return (

@@ -2,7 +2,12 @@ import { stub } from 'sinon';
 
 import trackingMiddleware from 'middleware/tracking-middleware';
 import { ROUTE_CHANGED } from 'actions/navigation';
-import { SEARCH_QUERY_CHANGED, SUGGEST_ALL_REQUEST_SUCCESS, SUGGESTION_REQUEST_SUCCESS } from 'actions/suggestion';
+import {
+  SEARCH_QUERY_CHANGED,
+  SUGGEST_ALL_REQUEST_SUCCESS,
+  SUGGESTION_REQUEST_SUCCESS,
+  SUGGESTION_SINGLE_REQUEST_SUCCESS,
+} from 'actions/suggestion';
 import * as tracking from 'utils/tracking';
 
 
@@ -78,5 +83,26 @@ describe('trackingMiddleware', function () {
     tracking.trackSearchResultsCount.should.be.calledWith(3);
 
     tracking.trackSearchResultsCount.restore();
+  });
+
+  it('should trackSingleSearchResults on SUGGESTION_SINGLE_REQUEST_SUCCESS', function () {
+    stub(tracking, 'trackSingleSearchResults');
+
+    let dispatched;
+    const dispatchAction = {
+      type: SUGGESTION_SINGLE_REQUEST_SUCCESS,
+      payload: {
+        count: 203,
+        results: [{ id: 1 }, { id: 2 }],
+      },
+      request: { params: { contentType: 'OFFICER', term: '123' } },
+    };
+
+    trackingMiddleware({})(action => dispatched = action)(dispatchAction);
+
+    dispatched.should.eql(dispatchAction);
+    tracking.trackSingleSearchResults.should.be.calledWith('OFFICER', '123', 2);
+
+    tracking.trackSingleSearchResults.restore();
   });
 });

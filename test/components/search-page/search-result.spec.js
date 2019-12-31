@@ -28,9 +28,21 @@ describe('SearchResult />', function () {
       />
     );
     const infiniteScroll = wrapper.find(InfiniteScroll);
-    infiniteScroll.props().initialLoad.should.be.true();
-    infiniteScroll.props().hasMore.should.be.true();
-    infiniteScroll.props().useWindow.should.be.true();
+    infiniteScroll.prop('initialLoad').should.be.true();
+    infiniteScroll.prop('hasMore').should.be.true();
+    infiniteScroll.prop('useWindow').should.be.true();
+
+    infiniteScroll.prop('loadMore')();
+    spyGetSuggestionWithContentType.should.be.calledOnce();
+    spyGetSuggestionWithContentType.should.be.calledWith(
+      'qa',
+      {
+        contentType: 'OFFICER',
+        limit: '30',
+        offset: '60',
+        term: '123',
+      }
+    );
   });
 
   it('should render correct items based on item type', function () {
