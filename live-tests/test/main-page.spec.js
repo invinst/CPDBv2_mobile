@@ -181,4 +181,11 @@ describe('MainPageTest', function () {
       checkPinToast(this.mainPage.section.complaintSummaries, 'CR');
     });
   });
+
+  it('should have clicky installed ', function (client) {
+    const page = client.page.common();
+    page.waitForElementPresent('@clickyScript');
+    page.waitForElementPresent('@clickySiteIdsScript');
+    page.waitForElementPresent('@clickyNoJavascriptGIF');
+  });
 });

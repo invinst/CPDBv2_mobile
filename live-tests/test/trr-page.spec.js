@@ -105,4 +105,11 @@ describe('TRRPageTest', function () {
       'Sorry, we can not subscribe your email'
     );
   });
+
+  it('should have clicky installed ', function (client) {
+    const page = client.page.common();
+    page.waitForElementPresent('@clickyScript');
+    page.waitForElementPresent('@clickySiteIdsScript');
+    page.waitForElementPresent('@clickyNoJavascriptGIF');
+  });
 });

@@ -1,7 +1,12 @@
 import { throttle } from 'lodash';
 
 
-export const trackSwipeLanddingPageCarousel = (direction, type) => {
+function clickyLog(title) {
+  global.clicky.log(document.location.pathname, title);
+}
+
+export const trackSwipeLandingPageCarousel = (direction, type) => {
+  global.clicky.log('/', `swipe_${direction}_${type}`);
   global.ga('send', {
     hitType: 'event',
     eventCategory: 'landing_page_carousel',
@@ -18,6 +23,7 @@ export const trackPageView = (pathname) => {
 };
 
 export const trackSearchResultsCount = (count) => {
+  clickyLog(`num_results: ${count}`);
   window.ga('send', {
     hitType: 'event',
     eventCategory: 'search',
@@ -26,9 +32,9 @@ export const trackSearchResultsCount = (count) => {
   });
 };
 
-export function trackSearchQuery(query) {
-  this.throttledSearchQueryGA = this.throttledSearchQueryGA || throttle(window.ga, 500, { 'leading': false });
-  this.throttledSearchQueryGA('send', {
+function _trackSearchQuery(query) {
+  clickyLog(`change_query: ${query}`);
+  window.ga('send', {
     hitType: 'event',
     eventCategory: 'search',
     eventAction: 'change_query',
@@ -36,7 +42,10 @@ export function trackSearchQuery(query) {
   });
 }
 
+export const trackSearchQuery = throttle(_trackSearchQuery, 500, { 'leading': false });
+
 export const trackOpenExplainer = (officerId) => {
+  clickyLog(`open_visual_token_explainer: ${officerId}`);
   window.ga('send', {
     hitType: 'event',
     eventCategory: 'visual_token_explainer',
@@ -46,6 +55,7 @@ export const trackOpenExplainer = (officerId) => {
 };
 
 export const trackAttachmentClick = (sourceUrl, targetUrl) => {
+  clickyLog(`attachment_click: Source URL ${sourceUrl} - Target URL ${targetUrl}`);
   window.ga('send', {
     hitType: 'event',
     eventCategory: 'attachment_click',

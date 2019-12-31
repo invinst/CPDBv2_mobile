@@ -6,7 +6,7 @@ import { createMemoryHistory } from 'history';
 
 import SearchItem from 'components/search-page/search-item';
 import ItemPinButton from 'components/common/item-pin-button';
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 
 
 describe('<SearchItem />', function () {
@@ -50,7 +50,7 @@ describe('<SearchItem />', function () {
   });
 
   it('should call saveToRecent and trackSearchFocusedItem when click on item', function () {
-    stub(GATracking, 'trackSearchFocusedItem');
+    stub(tracking, 'trackSearchFocusedItem');
     const saveToRecentSpy = spy();
     const officer = {
       id: '8562',
@@ -82,8 +82,8 @@ describe('<SearchItem />', function () {
       data: officer,
     });
 
-    GATracking.trackSearchFocusedItem.should.be.calledOnce();
-    GATracking.trackSearchFocusedItem.should.be.calledWith('OFFICER', 'Ke', '8562', 3);
-    GATracking.trackSearchFocusedItem.restore();
+    tracking.trackSearchFocusedItem.should.be.calledOnce();
+    tracking.trackSearchFocusedItem.should.be.calledWith('OFFICER', 'Ke', '8562', 3);
+    tracking.trackSearchFocusedItem.restore();
   });
 });

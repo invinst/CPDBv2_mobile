@@ -6,7 +6,7 @@ import constants from 'constants';
 import style from './complaint-document-card.sass';
 import ItemPinButton from 'components/common/item-pin-button';
 import pinButtonStyles from 'components/common/item-pin-button.sass';
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 
 
 class ComplaintDocumentCard extends React.Component {
@@ -19,7 +19,7 @@ class ComplaintDocumentCard extends React.Component {
     const { allegation, pathname, onTrackingAttachment } = this.props;
     const document = get(allegation, 'document', {});
     const url = `${constants.COMPLAINT_PATH}${allegation.crid}/`;
-    GATracking.trackAttachmentClick(pathname, url);
+    tracking.trackAttachmentClick(pathname, url);
     onTrackingAttachment({ attachmentId: document['id'], sourcePage: 'Landing Page', app: 'Mobile' });
   }
 

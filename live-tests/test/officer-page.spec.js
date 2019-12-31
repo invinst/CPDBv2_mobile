@@ -977,5 +977,12 @@ describe('OfficerPage test', function () {
         this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
       });
     });
+
+    it('should have clicky installed', function (client) {
+      const page = client.page.common();
+      page.waitForElementPresent('@clickyScript');
+      page.waitForElementPresent('@clickySiteIdsScript');
+      page.waitForElementPresent('@clickyNoJavascriptGIF');
+    });
   });
 });

@@ -7,30 +7,30 @@ import {
   SUGGESTION_REQUEST_SUCCESS,
   SUGGESTION_SINGLE_REQUEST_SUCCESS,
 } from 'actions/suggestion';
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 
 
 const EVENTS = {
   [ROUTE_CHANGED]: (store, action) => {
-    GATracking.trackPageView(action.payload.to);
+    tracking.trackPageView(action.payload.to);
   },
 
   [SEARCH_QUERY_CHANGED]: (store, action) => {
-    GATracking.trackSearchQuery(action.payload);
+    tracking.trackSearchQuery(action.payload);
   },
 
   [SUGGEST_ALL_REQUEST_SUCCESS]: (store, action) => {
     const category = Object.keys(action.payload)[0];
-    GATracking.trackSearchResultsCount(action.payload[category].length);
+    tracking.trackSearchResultsCount(action.payload[category].length);
   },
 
   [SUGGESTION_REQUEST_SUCCESS]: (store, action) => {
     const count = reduce(values(action.payload), (sum, array) => sum + array.length, 0);
-    GATracking.trackSearchResultsCount(count);
+    tracking.trackSearchResultsCount(count);
   },
   [SUGGESTION_SINGLE_REQUEST_SUCCESS]: (store, action) => {
     const { contentType, term } = action.request.params;
-    GATracking.trackSingleSearchResults(contentType, term, action.payload.results.length);
+    tracking.trackSingleSearchResults(contentType, term, action.payload.results.length);
   },
 };
 

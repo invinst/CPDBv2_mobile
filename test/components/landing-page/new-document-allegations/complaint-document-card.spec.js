@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { stub } from 'sinon';
 import { Router, Route, createMemoryHistory } from 'react-router';
 
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 import ComplaintDocumentCard from 'components/landing-page/new-document-allegations/complaint-document-card';
 import ItemPinButton from 'components/common/item-pin-button';
 import pinButtonStyles from 'components/common/item-pin-button.sass';
@@ -47,7 +47,7 @@ describe('<ComplaintDocumentCard />', function () {
   });
 
   it('should track click event', function () {
-    const stubTrackAttachmentClick = stub(GATracking, 'trackAttachmentClick');
+    const stubTrackAttachmentClick = stub(tracking, 'trackAttachmentClick');
     const allegation = {
       'crid': '123456',
     };

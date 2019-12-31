@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import { spy } from 'sinon';
 
 import HorizontalScrolling from 'components/common/horizontal-scrolling';
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 
 
 describe('<HorizontalScrolling />', function () {
@@ -25,7 +25,7 @@ describe('<HorizontalScrolling />', function () {
   });
 
   it('should track swiping action', function () {
-    spy(GATracking, 'trackSwipeLanddingPageCarousel');
+    spy(tracking, 'trackSwipeLandingPageCarousel');
 
     const wrapper = mount(
       <HorizontalScrolling trackingContentType='contentType'>
@@ -42,12 +42,12 @@ describe('<HorizontalScrolling />', function () {
     instance.swiper.slideNext();
     instance.swiper.slidePrev();
 
-    GATracking.trackSwipeLanddingPageCarousel.callCount.should.equal(3);
-    GATracking.trackSwipeLanddingPageCarousel.getCall(0).args.should.eql(['right', 'contentType']);
-    GATracking.trackSwipeLanddingPageCarousel.getCall(1).args.should.eql(['right', 'contentType']);
-    GATracking.trackSwipeLanddingPageCarousel.getCall(2).args.should.eql(['left', 'contentType']);
+    tracking.trackSwipeLandingPageCarousel.callCount.should.equal(3);
+    tracking.trackSwipeLandingPageCarousel.getCall(0).args.should.eql(['right', 'contentType']);
+    tracking.trackSwipeLandingPageCarousel.getCall(1).args.should.eql(['right', 'contentType']);
+    tracking.trackSwipeLandingPageCarousel.getCall(2).args.should.eql(['left', 'contentType']);
 
-    GATracking.trackSwipeLanddingPageCarousel.restore();
+    tracking.trackSwipeLandingPageCarousel.restore();
   });
 
   it('should loadMore when almost reaching the end', function () {
