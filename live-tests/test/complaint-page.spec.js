@@ -102,11 +102,6 @@ describe('ComplaintPageTest', function () {
     done();
   });
 
-  afterEach(function (client, done) {
-    api.cleanMock();
-    done();
-  });
-
   it('should show proper header with CR title', function (client) {
     const comlaintCategory = this.complaintPage.section.complaintCategory;
     comlaintCategory.expect.element('@category').text.to.contain('Operation/Personnel Violations');
