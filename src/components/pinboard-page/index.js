@@ -1,10 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
-import TrackVisibility from 'react-on-screen';
 
 import SearchBar from './search-bar';
 import Header from './header';
-import { PinboardPaneSectionWithSpinner } from 'components/pinboard-page/pinboard-pane-section';
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
 import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
 import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
@@ -14,6 +12,7 @@ import EmptyPinboardContainer from 'containers/pinboard-page/empty-pinboard-cont
 import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
 import styles from './pinboard-page.sass';
 import LoadingSpinner from 'components/common/loading-spinner';
+import PinboardDataVisualization from 'components/pinboard-page/pinboard-data-visualization';
 
 
 export default class PinboardPage extends Component {
@@ -31,14 +30,12 @@ export default class PinboardPage extends Component {
 
   renderContent() {
     const {
-      changePinboardTab,
-      currentTab,
       hasMapMarker,
       params,
       initialRequested,
       isEmptyPinboard,
-      requesting,
       pinboardPageLoading,
+      pinboard,
     } = this.props;
 
     if (!initialRequested) {
@@ -56,16 +53,7 @@ export default class PinboardPage extends Component {
     return (
       <div className='pinboard-content'>
         <PinboardInfoContainer />
-        <div className='data-visualizations'>
-          <TrackVisibility partialVisibility={ true }>
-            <PinboardPaneSectionWithSpinner
-              changePinboardTab={ changePinboardTab }
-              currentTab={ currentTab }
-              hasMapMarker={ hasMapMarker }
-              requesting={ requesting }
-            />
-          </TrackVisibility>
-        </div>
+        <PinboardDataVisualization pinboard={ pinboard } hasMapMarker={ hasMapMarker }/>
         <div className='pinned-section'>
           <PinnedOfficersContainer/>
           <PinnedCRsContainer/>
@@ -96,13 +84,10 @@ PinboardPage.propTypes = {
   pushBreadcrumbs: PropTypes.func,
   location: PropTypes.object,
   pinboard: PropTypes.object,
-  changePinboardTab: PropTypes.func,
-  currentTab: PropTypes.string,
   hasMapMarker: PropTypes.bool,
   initialRequested: PropTypes.bool,
   pinboardPageLoading: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,
-  requesting: PropTypes.bool,
   hasCMS: PropTypes.bool,
   requestCMS: PropTypes.func,
 };

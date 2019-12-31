@@ -6,6 +6,16 @@ import style from './horizontal-scrolling.sass';
 import * as GATracking from 'utils/google_analytics_tracking';
 
 
+const PAGINATION_OPTIONS = {
+  pagination: {
+    el: '.swiper-pagination',
+  },
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+};
+
 class HorizontalScrolling extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +27,7 @@ class HorizontalScrolling extends React.Component {
   }
 
   componentDidMount() {
-    const { centeredContent, slideOptions, spaceBetween } = this.props;
+    const { centeredContent, slideOptions, spaceBetween, hasPagination } = this.props;
     const defaultOptions = {
       spaceBetween,
       slidesPerView: 'auto',
@@ -34,7 +44,10 @@ class HorizontalScrolling extends React.Component {
         slidePrevTransitionStart: this.handleSlidePrev,
       },
     };
-    this.swiper = new Swiper(this.el, { ...defaultOptions, ...slideOptions });
+
+    const paginationOptions = hasPagination ? PAGINATION_OPTIONS : {};
+
+    this.swiper = new Swiper(this.el, { ...defaultOptions, ...paginationOptions, ...slideOptions });
   }
 
   componentDidUpdate() {
@@ -66,11 +79,11 @@ class HorizontalScrolling extends React.Component {
   }
 
   render() {
-    const { className, children } = this.props;
+    const { className, children, hasPagination } = this.props;
 
     return (
       <div className={ cx(style.horizontalScrolling, className) }>
-        <div ref={ el => this.el = el }>
+        <div ref={ el => this.el = el } className='swiper-container'>
           <div className='swiper-wrapper'>
             {
               React.Children.map(children, child => (
@@ -80,6 +93,14 @@ class HorizontalScrolling extends React.Component {
               ))
             }
           </div>
+          {
+            hasPagination &&
+            <div className='swiper-pagination-container'>
+              <div className='swiper-pagination' />
+              <div className='swiper-button-next' />
+              <div className='swiper-button-prev' />
+            </div>
+          }
         </div>
       </div>
     );
@@ -96,6 +117,7 @@ HorizontalScrolling.propTypes = {
   hasMore: PropTypes.bool,
   spaceBetween: PropTypes.number,
   loadMoreThreshold: PropTypes.number,
+  hasPagination: PropTypes.bool,
 };
 
 HorizontalScrolling.defaultProps = {
@@ -103,6 +125,7 @@ HorizontalScrolling.defaultProps = {
   loadMore: () => {},
   spaceBetween: 8,
   loadMoreThreshold: 2,
+  hasPagination: false,
 };
 
 export default HorizontalScrolling;

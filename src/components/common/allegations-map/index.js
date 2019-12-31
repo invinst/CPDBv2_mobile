@@ -17,6 +17,7 @@ import {
   CLAYGRAY_COLOR,
   BRIGHT_ORANGE_TWO_COLOR,
 } from 'constants/colors';
+import withLoadingSpinner from 'components/common/with-loading-spinner';
 
 
 const MAPBOXGL_POINT_STYLE = {
@@ -275,3 +276,5 @@ AllegationsMap.defaultProps = {
   clearAllMarkers: true,
   attributionControlPosition: 'bottom-right',
 };
+
+export const AllegationsMapWithSpinner = withLoadingSpinner(AllegationsMap, styles.allegationMapLoading);
