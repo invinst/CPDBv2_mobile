@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 import { Link } from 'react-router';
 
 import ComplaintSummaryCard from 'components/landing-page/complaint-summaries/complaint-summary-card';
+import ItemPinButton from 'components/common/item-pin-button';
+import constants from 'constants';
 
 describe('<ComplaintSummaryCard />', function () {
   it('should render enough contents', function () {
@@ -10,6 +12,8 @@ describe('<ComplaintSummaryCard />', function () {
       crid: '123456',
       incidentDate: 'Jan 23, 2000',
       summary: 'Lorem ipsum',
+      isPinned: true,
+      categoryNames: ['Verbal Abuse'],
     };
     const wrapper = shallow(<ComplaintSummaryCard allegation={ allegation } />);
     const element = wrapper.find(Link);
@@ -18,5 +22,16 @@ describe('<ComplaintSummaryCard />', function () {
     const summary = element.find('.complaint-summary');
     summary.text().should.eql('Lorem ipsum');
     summary.find('.gradient').exists().should.be.true();
+
+    const itemPinButton = wrapper.find(ItemPinButton);
+    itemPinButton.props().item.should.eql(
+      {
+        type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+        id: allegation.crid,
+        isPinned: allegation.isPinned,
+        incidentDate: allegation.incidentDate,
+        category: allegation.categoryNames.join(', '),
+      }
+    );
   });
 });

@@ -75,6 +75,7 @@ const complaintSummariesCardsSelector = createSelector(
   complaints => complaints.map(complaint => ({
     crid: complaint.crid,
     summary: complaint.summary,
+    categoryNames: get(complaint, 'category_names', []),
     incidentDate: formatDate(get(complaint, 'incident_date'), false),
   }))
 );

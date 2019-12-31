@@ -15,6 +15,11 @@ export class BaseOfficerCard extends Component {
     const {
       officerId,
       fullName,
+      complaintCount,
+      sustainedCount,
+      age,
+      race,
+      gender,
       rank,
       percentile,
       openCardInNewPage,
@@ -42,7 +47,14 @@ export class BaseOfficerCard extends Component {
             item={ {
               type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
               id: officerId,
-              isPinned: isPinned,
+              isPinned,
+              fullName,
+              complaintCount,
+              sustainedCount,
+              age,
+              race,
+              gender,
+              rank,
             } }
           />
         ) }
@@ -66,6 +78,11 @@ export class BaseOfficerCard extends Component {
 BaseOfficerCard.propTypes = {
   officerId: PropTypes.number,
   fullName: PropTypes.string,
+  complaintCount: PropTypes.number,
+  sustainedCount: PropTypes.number,
+  age: PropTypes.string,
+  race: PropTypes.string,
+  gender: PropTypes.string,
   rank: PropTypes.string,
   percentile: PropTypes.object,
   openCardInNewPage: PropTypes.bool,

@@ -21,6 +21,8 @@ const ComplaintSummaryCard = ({ allegation, addOrRemoveItemInPinboard }) => {
           type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
           id: allegation.crid,
           isPinned: allegation.isPinned,
+          incidentDate: allegation.incidentDate,
+          category: allegation.categoryNames.join(', '),
         } }
       />
       <div className='incident-date'>{ allegation.incidentDate }</div>

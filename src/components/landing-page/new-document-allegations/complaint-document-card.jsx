@@ -41,6 +41,8 @@ class ComplaintDocumentCard extends React.Component {
             type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
             id: allegation.crid,
             isPinned: allegation.isPinned,
+            category: allegation.category,
+            incidentDate: allegation.incidentDate,
           } }
         />
         <div className='document-preview'>

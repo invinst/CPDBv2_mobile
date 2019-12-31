@@ -8,6 +8,7 @@ const {
   mockRecentActivities,
   mockNewDocuments,
   mockComplaintSummaries,
+  mockToasts,
 } = require(__dirname + '/../mock-data/main-page');
 
 
@@ -19,6 +20,7 @@ describe('MainPageTest', function () {
     api.mock('GET', '/api/v2/activity-grid/', 200, mockRecentActivities);
     api.mock('GET', '/api/v2/cr/list-by-new-document/', 200, mockNewDocuments);
     api.mock('GET', '/api/v2/cr/complaint-summaries/', 200, mockComplaintSummaries);
+    api.mock('GET', '/api/v2/toast/', 200, mockToasts);
 
     this.mainPage = client.page.main();
     this.search = client.page.search();
@@ -147,16 +149,20 @@ describe('MainPageTest', function () {
         },
       );
 
-      const checkPinToast = (parentSelector, messagePrefix) => {
+      const checkPinToast = (parentSelector, patternPrefix) => {
+        const addedPattern = new RegExp(patternPrefix.source + /added.$/.source);
+        const removedPattern = new RegExp(patternPrefix.source + /removed.$/.source);
+
         //Pin item
         parentSelector.section.cards.waitForElementVisible('@firstPinButton');
         parentSelector.section.cards.click('@firstPinButton');
 
         //Check toast
         this.mainPage.waitForElementVisible('@lastToast');
-        this.mainPage.expect.element('@lastToast').text.to.equal(`${messagePrefix} added`).before(TIMEOUT);
+        this.mainPage.expect.element('@lastToast').text.to.match(addedPattern).before(TIMEOUT);
 
         //Go to Search Page and check for pinboard item counts
+        this.mainPage.waitForElementNotVisible('@lastToast', TIMEOUT);
         this.mainPage.click('@searchLink');
         this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (1)').before(TIMEOUT);
         client.back();
@@ -167,18 +173,22 @@ describe('MainPageTest', function () {
 
         //Check toast
         this.mainPage.waitForElementVisible('@lastToast');
-        this.mainPage.expect.element('@lastToast').text.to.equal(`${messagePrefix} removed`).before(TIMEOUT);
+        this.mainPage.expect.element('@lastToast').text.to.match(removedPattern).before(TIMEOUT);
 
         //Go to Search Page and check for pinboard item counts
+        this.mainPage.waitForElementNotVisible('@lastToast', TIMEOUT);
         this.mainPage.click('@searchLink');
         this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
         client.back();
       };
 
-      checkPinToast(this.mainPage.section.topOfficersByAllegation, 'Officer');
-      checkPinToast(this.mainPage.section.recentActivities, 'Officer');
-      checkPinToast(this.mainPage.section.newDocumentAllegations, 'CR');
-      checkPinToast(this.mainPage.section.complaintSummaries, 'CR');
+      const officerPatternPrefix = /^[A-Za-z\s]+ [\d]+ [A-Za-z\s]+,\nwith [\d]+ complaints, [\d]+ sustained /;
+      const crPatternPrefix = /^CR #[\w]+ categorized as [A-Za-z\s]+\nhappened in [\w\s]+, [\d]+ | [\d-]+ /;
+
+      checkPinToast(this.mainPage.section.topOfficersByAllegation, officerPatternPrefix);
+      checkPinToast(this.mainPage.section.recentActivities, officerPatternPrefix);
+      checkPinToast(this.mainPage.section.newDocumentAllegations, crPatternPrefix);
+      checkPinToast(this.mainPage.section.complaintSummaries, crPatternPrefix);
     });
   });
 

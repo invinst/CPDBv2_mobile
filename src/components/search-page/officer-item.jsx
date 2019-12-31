@@ -5,6 +5,15 @@ import searchItemStyle from './search-item.sass';
 
 
 const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
+  const extraInfo = {
+    fullName: item.name,
+    complaintCount: item.complaintCount,
+    sustainedCount: item.sustainedCount,
+    age: item.age,
+    race: item.race,
+    gender: item.gender,
+    rank: item.rank,
+  };
   return (
     <SearchItem
       url={ item.url }
@@ -16,7 +25,9 @@ const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) =
       isPinned={ item.isPinned }
       type={ item.type }
       recentItemData={ item.recentItemData }
-      saveToRecent={ saveToRecent }>
+      saveToRecent={ saveToRecent }
+      extraInfo={ extraInfo }
+    >
       <div className={ searchItemStyle.itemInfo }>
         <div className='item-title'>{ item.name }</div>
         <div className='item-subtitle'>{ item.badge }</div>
@@ -29,6 +40,12 @@ OfficerItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     name: PropTypes.string,
+    complaintCount: PropTypes.number,
+    sustainedCount: PropTypes.number,
+    age: PropTypes.string,
+    race: PropTypes.string,
+    gender: PropTypes.string,
+    rank: PropTypes.string,
     badge: PropTypes.string,
     url: PropTypes.string,
     itemRank: PropTypes.number,

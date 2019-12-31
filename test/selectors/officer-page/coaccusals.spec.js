@@ -24,6 +24,11 @@ describe('Officer coaccusals selectors', function () {
                   id: 1,
                   'full_name': 'Jerome Finnigan',
                   'coaccusal_count': 4,
+                  'complaint_count': 10,
+                  'sustained_count': 5,
+                  'birth_year': 1975,
+                  race: 'White',
+                  gender: 'Male',
                   rank: 'Po As Detective',
                   'percentile': {
                     'percentile_allegation_civilian': '94.0',
@@ -35,6 +40,11 @@ describe('Officer coaccusals selectors', function () {
                   id: 2,
                   'full_name': 'Edward May',
                   'coaccusal_count': 2,
+                  'complaint_count': 10,
+                  'sustained_count': 5,
+                  'birth_year': 1975,
+                  race: 'White',
+                  gender: 'Male',
                   rank: 'Po As Detective',
                   'percentile': {
                     'percentile_allegation_civilian': '83.0',
@@ -46,6 +56,11 @@ describe('Officer coaccusals selectors', function () {
                   id: 3,
                   'full_name': 'Richard Coyle',
                   'coaccusal_count': 1,
+                  'complaint_count': 10,
+                  'sustained_count': 5,
+                  'birth_year': 1975,
+                  race: 'White',
+                  gender: 'Male',
                   rank: 'Police Officer',
                   'percentile': {
                     'percentile_allegation_civilian': '73.0',
@@ -68,6 +83,11 @@ describe('Officer coaccusals selectors', function () {
               officerId: 1,
               fullName: 'Jerome Finnigan',
               coaccusalCount: 4,
+              complaintCount: 10,
+              sustainedCount: 5,
+              race: 'White',
+              gender: 'Male',
+              age: 42,
               rank: 'Po As Detective',
               percentile: {
                 items: [
@@ -95,6 +115,11 @@ describe('Officer coaccusals selectors', function () {
               officerId: 2,
               fullName: 'Edward May',
               coaccusalCount: 2,
+              complaintCount: 10,
+              sustainedCount: 5,
+              race: 'White',
+              gender: 'Male',
+              age: 42,
               rank: 'Po As Detective',
               percentile: {
                 items: [
@@ -127,6 +152,11 @@ describe('Officer coaccusals selectors', function () {
               officerId: 3,
               fullName: 'Richard Coyle',
               coaccusalCount: 1,
+              complaintCount: 10,
+              sustainedCount: 5,
+              race: 'White',
+              gender: 'Male',
+              age: 42,
               rank: 'Police Officer',
               percentile: {
                 items: [

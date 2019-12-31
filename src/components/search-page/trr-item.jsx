@@ -6,6 +6,10 @@ import searchItemStyle from './search-item.sass';
 
 
 const TrrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
+  const extraInfo = {
+    incidentDate: item.incidentDate,
+    forceType: item.forceType,
+  };
   return (
     <SearchItem
       url={ item.url }
@@ -17,7 +21,9 @@ const TrrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
       isPinned={ item.isPinned }
       type={ item.type }
       recentItemData={ item.recentItemData }
-      saveToRecent={ saveToRecent }>
+      saveToRecent={ saveToRecent }
+      extraInfo={ extraInfo }
+    >
       <div className={ cx(searchItemStyle.itemInfo, 'inline') }>
         <div className='item-title'>TRR</div>
         <div className='item-subtitle'>{ item.id }</div>
@@ -32,6 +38,8 @@ TrrItem.propTypes = {
     url: PropTypes.string,
     isPinned: PropTypes.bool,
     type: PropTypes.string,
+    incidentDate: PropTypes.string,
+    forceType: PropTypes.string,
     recentItemData: PropTypes.object,
     itemRank: PropTypes.number,
   }),

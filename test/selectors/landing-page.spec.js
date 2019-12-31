@@ -97,11 +97,13 @@ describe('landing page selectors', function () {
           'crid': '12345',
           'summary': 'summary',
           'incident_date': '2016-04-18',
+          'category_names': ['Verbal Abuse'],
         },
         {
           'crid': '12346',
           'summary': 'summary',
           'incident_date': null,
+          'category_names': ['Illegal Search'],
         },
       ];
       sortBy(complaintSummariesSelector(state), 'crid').should.deepEqual([
@@ -110,12 +112,14 @@ describe('landing page selectors', function () {
           summary: 'summary',
           incidentDate: 'Apr 18, 2016',
           isPinned: false,
+          categoryNames: ['Verbal Abuse'],
         },
         {
           crid: '12346',
           summary: 'summary',
           incidentDate: null,
           isPinned: false,
+          categoryNames: ['Illegal Search'],
         },
       ]);
     });

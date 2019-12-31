@@ -43,6 +43,8 @@ describe('<ComplaintDocumentCard />', function () {
       type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
       id: '123',
       isPinned: true,
+      category: 'Operation/Personnel Violations',
+      incidentDate: 'Jan 23, 2000',
     });
   });
 

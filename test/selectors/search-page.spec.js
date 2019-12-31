@@ -41,6 +41,12 @@ describe('search-page selectors', function () {
       const officer = {
         'id': '1',
         'name': 'Name',
+        'allegation_count': 10,
+        'sustained_count': 5,
+        'birth_year': 1975,
+        'race': 'White',
+        'gender': 'Male',
+        'rank': 'Police Officer',
         'badge': null,
         'percentile': null,
       };
@@ -59,6 +65,12 @@ describe('search-page selectors', function () {
         {
           id: '1',
           name: 'Name',
+          complaintCount: 10,
+          sustainedCount: 5,
+          age: 42,
+          race: 'White',
+          gender: 'Male',
+          rank: 'Police Officer',
           badge: '',
           percentile: null,
           url: `${constants.OFFICER_PATH}1/name/`,
@@ -73,6 +85,12 @@ describe('search-page selectors', function () {
       const officer = {
         'id': '1',
         'name': 'Name',
+        'allegation_count': 10,
+        'sustained_count': 5,
+        'birth_year': 1975,
+        'race': 'White',
+        'gender': 'Male',
+        'rank': 'Police Officer',
         'badge': '12314',
         'percentile': null,
       };
@@ -80,6 +98,12 @@ describe('search-page selectors', function () {
       const expectedOfficer = {
         id: '1',
         name: 'Name',
+        complaintCount: 10,
+        sustainedCount: 5,
+        age: 42,
+        race: 'White',
+        gender: 'Male',
+        rank: 'Police Officer',
         badge: 'Badge #12314',
         url: `${constants.OFFICER_PATH}1/name/`,
         percentile: null,
@@ -238,6 +262,8 @@ describe('search-page selectors', function () {
     it('should return trr data when there are trrs', function () {
       const dateTRR = {
         'id': '1',
+        'incident_date': '2012-04-30',
+        'force_type': 'Member Presence',
       };
       const expectedDateTRRs = [
         {
@@ -245,6 +271,8 @@ describe('search-page selectors', function () {
           url: '/trr/1/',
           isPinned: false,
           type: 'TRR',
+          incidentDate: '2012-04-30',
+          forceType: 'Member Presence',
           recentItemData: dateTRR,
         },
       ];
@@ -394,7 +422,7 @@ describe('search-page selectors', function () {
   });
 
   describe('trrsSelector', function () {
-    it('should return empty when there are no trss', function () {
+    it('should return empty when there are no trrs', function () {
       const state = {
         suggestionApp: {
           suggestions: {},
@@ -410,6 +438,8 @@ describe('search-page selectors', function () {
     it('should return trr data when there are trrs', function () {
       const trr = {
         'id': '1',
+        'incident_date': '2012-04-30',
+        'force_type': 'Member Presence',
       };
       const expectedTrrs = [
         {
@@ -417,6 +447,8 @@ describe('search-page selectors', function () {
           url: '/trr/1/',
           isPinned: true,
           type: 'TRR',
+          incidentDate: '2012-04-30',
+          forceType: 'Member Presence',
           recentItemData: trr,
         },
       ];
@@ -458,6 +490,12 @@ describe('search-page selectors', function () {
       const officer = {
         'id': 123,
         'name': 'Jerome Finnigan',
+        'allegation_count': 10,
+        'sustained_count': 5,
+        'birth_year': 1975,
+        'race': 'White',
+        'gender': 'Male',
+        'rank': 'Police Officer',
         'badge': '56789',
         'percentile': null,
       };
@@ -476,6 +514,12 @@ describe('search-page selectors', function () {
         {
           id: 123,
           name: 'Jerome Finnigan',
+          complaintCount: 10,
+          sustainedCount: 5,
+          age: 42,
+          race: 'White',
+          gender: 'Male',
+          rank: 'Police Officer',
           badge: 'Badge #56789',
           percentile: null,
           url: `${constants.OFFICER_PATH}123/jerome-finnigan/`,
@@ -505,6 +549,12 @@ describe('search-page selectors', function () {
               data: {
                 id: 8562,
                 name: 'Jerome Finnigan',
+                'allegation_count': 10,
+                'sustained_count': 5,
+                'birth_year': 1975,
+                race: 'White',
+                gender: 'Male',
+                rank: 'Police Officer',
                 badge: '123456',
                 type: 'OFFICER',
               },
@@ -526,6 +576,8 @@ describe('search-page selectors', function () {
               data: {
                 type: 'TRR',
                 id: 123456,
+                'incident_date': '2001-02-10',
+                'force_type': 'Member Presence',
               },
             },
           ],
@@ -536,6 +588,12 @@ describe('search-page selectors', function () {
         {
           id: 8562,
           name: 'Jerome Finnigan',
+          complaintCount: 10,
+          sustainedCount: 5,
+          age: 42,
+          race: 'White',
+          gender: 'Male',
+          rank: 'Police Officer',
           badge: 'Badge #123456',
           percentile: null,
           url: '/officer/8562/jerome-finnigan/',
@@ -544,6 +602,12 @@ describe('search-page selectors', function () {
           recentItemData: {
             id: 8562,
             name: 'Jerome Finnigan',
+            'allegation_count': 10,
+            'sustained_count': 5,
+            'birth_year': 1975,
+            race: 'White',
+            gender: 'Male',
+            rank: 'Police Officer',
             badge: '123456',
             type: 'OFFICER',
           },
@@ -568,9 +632,13 @@ describe('search-page selectors', function () {
           url: '/trr/123456/',
           isPinned: true,
           type: 'TRR',
+          incidentDate: '2001-02-10',
+          forceType: 'Member Presence',
           recentItemData: {
             type: 'TRR',
             id: 123456,
+            'incident_date': '2001-02-10',
+            'force_type': 'Member Presence',
           },
         },
       ]);
@@ -734,6 +802,12 @@ describe('search-page selectors', function () {
               data: {
                 id: 8562,
                 name: 'Jerome Finnigan',
+                'allegation_count': 10,
+                'sustained_count': 5,
+                'birth_year': 1975,
+                race: 'White',
+                gender: 'Male',
+                rank: 'Police Officer',
                 badge: '123456',
                 type: 'OFFICER',
               },
@@ -755,6 +829,8 @@ describe('search-page selectors', function () {
               data: {
                 type: 'TRR',
                 id: 123456,
+                'incident_date': '2001-02-10',
+                'force_type': 'Member Presence',
               },
             },
           ],
@@ -789,6 +865,12 @@ describe('search-page selectors', function () {
             id: 8562,
             itemRank: 1,
             name: 'Jerome Finnigan',
+            complaintCount: 10,
+            sustainedCount: 5,
+            age: 42,
+            race: 'White',
+            gender: 'Male',
+            rank: 'Police Officer',
             badge: 'Badge #123456',
             percentile: null,
             url: '/officer/8562/jerome-finnigan/',
@@ -797,6 +879,12 @@ describe('search-page selectors', function () {
             recentItemData: {
               id: 8562,
               name: 'Jerome Finnigan',
+              'allegation_count': 10,
+              'sustained_count': 5,
+              'birth_year': 1975,
+              race: 'White',
+              gender: 'Male',
+              rank: 'Police Officer',
               badge: '123456',
               type: 'OFFICER',
             },
@@ -823,9 +911,13 @@ describe('search-page selectors', function () {
             url: '/trr/123456/',
             isPinned: true,
             type: 'TRR',
+            incidentDate: '2001-02-10',
+            forceType: 'Member Presence',
             recentItemData: {
               type: 'TRR',
               id: 123456,
+              'incident_date': '2001-02-10',
+              'force_type': 'Member Presence',
             },
           },
         ],
@@ -953,6 +1045,12 @@ describe('search-page selectors', function () {
       const officer = {
         id: '1',
         'name': 'Name',
+        'allegation_count': 10,
+        'sustained_count': 5,
+        'birth_year': 1975,
+        race: 'White',
+        gender: 'Male',
+        rank: 'Police Officer',
         'badge': '12314',
         'percentile': null,
       };
@@ -967,15 +1065,25 @@ describe('search-page selectors', function () {
       };
       const dateTRR = {
         id: '1',
+        'incident_date': '2001-02-10',
+        'force_type': 'Member Presence',
       };
       const dateOfficer = {
         id: 123,
         'name': 'Jerome Finnigan',
+        'allegation_count': 10,
+        'sustained_count': 5,
+        'birth_year': 1975,
+        race: 'White',
+        gender: 'Male',
+        rank: 'Police Officer',
         'badge': '56789',
         'percentile': null,
       };
       const trr = {
         id: '1',
+        'incident_date': '2001-02-10',
+        'force_type': 'Member Presence',
       };
       const investigatorCR = {
         category: 'Use Of Force',
@@ -1005,6 +1113,12 @@ describe('search-page selectors', function () {
               data: {
                 id: 8562,
                 name: 'Jerome Finnigan',
+                'allegation_count': 10,
+                'sustained_count': 5,
+                'birth_year': 1975,
+                race: 'White',
+                gender: 'Male',
+                rank: 'Police Officer',
                 badge: '123456',
                 type: 'OFFICER',
               },
@@ -1026,6 +1140,8 @@ describe('search-page selectors', function () {
               data: {
                 type: 'TRR',
                 id: 123456,
+                'incident_date': '2001-02-10',
+                'force_type': 'Member Presence',
               },
             },
           ],
@@ -1069,6 +1185,8 @@ describe('search-page selectors', function () {
           url: '/trr/1/',
           isPinned: true,
           type: 'TRR',
+          incidentDate: '2001-02-10',
+          forceType: 'Member Presence',
           recentItemData: dateTRR,
         }],
       }, {
@@ -1082,6 +1200,12 @@ describe('search-page selectors', function () {
           id: 123,
           itemRank: 3,
           name: 'Jerome Finnigan',
+          complaintCount: 10,
+          sustainedCount: 5,
+          age: 42,
+          race: 'White',
+          gender: 'Male',
+          rank: 'Police Officer',
           badge: 'Badge #56789',
           percentile: null,
           url: `${ constants.OFFICER_PATH }123/jerome-finnigan/`,
@@ -1100,6 +1224,12 @@ describe('search-page selectors', function () {
           id: '1',
           itemRank: 4,
           name: 'Name',
+          complaintCount: 10,
+          sustainedCount: 5,
+          age: 42,
+          race: 'White',
+          gender: 'Male',
+          rank: 'Police Officer',
           badge: 'Badge #12314',
           url: `${ constants.OFFICER_PATH }1/name/`,
           percentile: null,
@@ -1179,6 +1309,8 @@ describe('search-page selectors', function () {
           url: '/trr/1/',
           isPinned: true,
           type: 'TRR',
+          incidentDate: '2001-02-10',
+          forceType: 'Member Presence',
           recentItemData: trr,
         }],
       }, {

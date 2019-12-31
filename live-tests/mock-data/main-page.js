@@ -173,6 +173,7 @@ const mockTopOfficersByAllegation = [
     'complaint_percentile': 99.9911,
     'race': 'Black',
     'gender': 'Male',
+    'rank': 'Police Officer',
     'percentile': {
       'percentile_trr': '0.0000',
       'percentile_allegation_civilian': '99.9817',
@@ -191,6 +192,7 @@ const mockTopOfficersByAllegation = [
     'complaint_percentile': 99.9822,
     'race': 'Black',
     'gender': 'Male',
+    'rank': 'Police Officer',
     'percentile': {
       'percentile_trr': '0.0000',
       'percentile_allegation_civilian': '99.9696',
@@ -212,6 +214,7 @@ const mockRecentActivities = [
     'complaint_percentile': 99.9911,
     'race': 'Black',
     'gender': 'Male',
+    'rank': 'Police Officer',
     'percentile': {
       'percentile_trr': '0.0000',
       'percentile_allegation_civilian': '99.9817',
@@ -231,6 +234,7 @@ const mockRecentActivities = [
     'complaint_percentile': 99.9822,
     'race': 'Black',
     'gender': 'Male',
+    'rank': 'Police Officer',
     'percentile': {
       'percentile_trr': '0.0000',
       'percentile_allegation_civilian': '99.9696',
@@ -267,13 +271,29 @@ const mockComplaintSummaries = [
     crid: '123',
     summary: 'regarding an incident that occurred',
     'incident_date': '2016-11-30',
-    'category_names': 'Use of Force',
+    'category_names': ['Use of Force'],
   },
   {
     crid: '456',
     summary: 'Officer A was off-duty and inside her residence.',
     'incident_date': '2009-06-13',
-    'category_names': 'Domestic',
+    'category_names': ['Domestic'],
+  },
+];
+
+const mockToasts = [
+  {
+    name: 'OFFICER',
+    template: '**{rank} {full_name}** {age} {race} {gender},' +
+      '\nwith *{complaint_count} complaints*, *{sustained_count} sustained* {action_type}.',
+  },
+  {
+    name: 'CR',
+    template: '**CR #{crid}** *categorized as {category}*\nhappened in {incident_date} {action_type}.',
+  },
+  {
+    name: 'TRR',
+    template: '**TRR #{id}** *categorized as {force_type}*\nhappened in {incident_date} {action_type}.',
   },
 ];
 
@@ -283,4 +303,5 @@ module.exports = {
   mockRecentActivities: mockRecentActivities,
   mockNewDocuments: mockNewDocuments,
   mockComplaintSummaries: mockComplaintSummaries,
+  mockToasts: mockToasts,
 };
