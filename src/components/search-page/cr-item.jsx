@@ -4,13 +4,15 @@ import SearchItem from './search-item';
 import searchItemStyle from './search-item.sass';
 
 
-const CrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard }) => {
+const CrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
   return (
     <SearchItem
       url={ item.url }
       hasPinButton={ true }
       addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
       id={ item.crid }
+      itemRank={ item.itemRank }
+      query={ query }
       isPinned={ item.isPinned }
       type={ item.type }
       recentItemData={ item.recentItemData }
@@ -29,12 +31,14 @@ CrItem.propTypes = {
     category: PropTypes.string,
     incidentDate: PropTypes.string,
     url: PropTypes.string,
+    itemRank: PropTypes.number,
     isPinned: PropTypes.bool,
     type: PropTypes.string,
     recentItemData: PropTypes.object,
   }),
   saveToRecent: PropTypes.func,
   addOrRemoveItemInPinboard: PropTypes.func,
+  query: PropTypes.func,
 };
 
 CrItem.defaultProps = {

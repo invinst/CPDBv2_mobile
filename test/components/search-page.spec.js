@@ -53,7 +53,6 @@ describe('<SearchPage />', function () {
           location='location'
           routes='routes'
           params='params'
-          recent={ [] }
         />
       );
       pushBreadcrumbsSpy.calledWith({
@@ -64,7 +63,7 @@ describe('<SearchPage />', function () {
     });
 
     it('should focus the input element when mounted', function () {
-      const wrapper = shallow(<SearchPage recent={ [] } />);
+      const wrapper = shallow(<SearchPage />);
       const instance = wrapper.instance();
       const spyFocus = spy();
 
@@ -147,29 +146,6 @@ describe('<SearchPage />', function () {
     });
   });
 
-  describe('getCategoriesWithSuggestions', function () {
-    it('should return defined categories with data from props', function () {
-      const wrapper = shallow(
-        <SearchPage
-          query={ 'ab' }
-          officers={ [1] }
-          undefined={ [1] }
-        />
-      );
-      const instance = wrapper.instance();
-
-      instance.getCategoriesWithSuggestions().should.eql([
-        {
-          id: 'officers',
-          name: 'OFFICERS',
-          path: 'OFFICER',
-          filter: 'Officers',
-          queryPrefix: 'officer',
-        },
-      ]);
-    });
-  });
-
   describe('onInputChange', function () {
     it('should dispatch inputChanged action', function () {
       const dummyEvent = { currentTarget: { value: 'foo' } };
@@ -190,10 +166,7 @@ describe('<SearchPage />', function () {
       const dummyEvent = { currentTarget: { value: 'foo' } };
       const spySuggestTerm = spy();
       const wrapper = mount(
-        <SearchPage
-          suggestTerm={ spySuggestTerm }
-          recent={ [] }
-        />
+        <SearchPage suggestTerm={ spySuggestTerm }/>
       );
       const instance = wrapper.instance();
 
@@ -207,10 +180,7 @@ describe('<SearchPage />', function () {
     it('should NOT call suggestTerm if query is empty or too short', function () {
       const spySuggestTerm = spy();
       const wrapper = mount(
-        <SearchPage
-          suggestTerm={ spySuggestTerm }
-          recent={ [] }
-        />
+        <SearchPage suggestTerm={ spySuggestTerm }/>
       );
       const instance = wrapper.instance();
 
@@ -256,7 +226,18 @@ describe('<SearchPage />', function () {
     });
 
     it('should render recent SearchCategory when we have recent', function () {
-      const wrapper = shallow(<SearchPage query={ 'j' } recent={ ['data'] }/>);
+      const wrapper = shallow(
+        <SearchPage
+          query={ 'j' }
+          recent={ ['data'] }
+          categories={ [{
+            name: 'RECENT',
+            id: 'recent',
+            items: ['data'],
+            showAllButton: false,
+          }] }
+        />
+      );
 
       const searchCategory = wrapper.find('SearchCategory');
 
@@ -266,7 +247,7 @@ describe('<SearchPage />', function () {
     });
 
     it('should set this.searchInput ref to its own instance', function () {
-      const wrapper = mount(<SearchPage recent={ [] }/>);
+      const wrapper = mount(<SearchPage />);
 
       const refInstance = wrapper.instance().searchInput;
       (typeof refInstance).should.not.eql('undefined');
@@ -312,14 +293,80 @@ describe('<SearchPage />', function () {
     });
 
     it('should render SearchCategory components', function () {
-      const officersProp = ['data'];
-      const unitsProp = ['data'];
+      const cr1 = {
+        category: 'Use Of Force',
+        crid: '1027271',
+        highlight: {
+          summary: ['On July', 'an off-duty'],
+        },
+        id: '1027271',
+        'incident_date': '2009-06-13',
+      };
+      const cr2 = {
+        category: 'Domestic',
+        crid: '1049273',
+        highlight: {
+          summary: ['On October', 'regarding an incident that occurred'],
+        },
+        id: '1049273',
+        'incident_date': '2011-10-13',
+      };
+      const categories = [{
+        name: 'DATE → OFFICERS',
+        filter: 'DATE > OFFICERS',
+        id: 'dateOfficers',
+        path: 'DATE > OFFICERS',
+        queryPrefix: 'date-officer',
+        showAllButton: true,
+        items: [{
+          id: 123,
+          itemRank: 1,
+          name: 'Jerome Finnigan',
+          badge: 'Badge #56789',
+          percentile: null,
+          url: '/officer/123/jerome-finnigan/',
+          type: 'OFFICER',
+          isPinned: false,
+          recentItemData: {
+            'id': '1',
+            'name': 'Name',
+            'badge': '12314',
+            'percentile': null,
+          },
+        }],
+      }, {
+        name: 'COMPLAINT RECORDS (CRs)',
+        filter: 'CR',
+        id: 'crs',
+        path: 'CR',
+        queryPrefix: 'cr',
+        showAllButton: true,
+        items: [
+          {
+            crid: '1027271',
+            itemRank: 2,
+            url: '/complaint/1027271/',
+            category: 'Use Of Force',
+            incidentDate: '06/13/2009',
+            type: 'CR',
+            isPinned: false,
+            recentItemData: cr1,
+          },
+          {
+            crid: '1049273',
+            itemRank: 3,
+            url: '/complaint/1049273/',
+            category: 'Domestic',
+            incidentDate: '10/13/2011',
+            type: 'CR',
+            isPinned: true,
+            recentItemData: cr2,
+          },
+        ],
+      }];
 
       const wrapper = shallow(
-        <SearchPage
-          query='qa'
-          officers={ officersProp }
-          units={ unitsProp } />
+        <SearchPage query='qa' categories={ categories }/>
       );
 
       const categoryDetails = wrapper.find('.category-details-container').children();
@@ -341,12 +388,35 @@ describe('<SearchPage />', function () {
       const spyAddOrRemoveItemInPinboard = spy();
       const spyGetSuggestionWithContentType = spy();
 
-      const officersProp = ['data'];
+      const categories = [{
+        name: 'OFFICERS',
+        filter: 'Officers',
+        id: 'officers',
+        path: 'OFFICER',
+        queryPrefix: 'officer',
+        showAllButton: true,
+        items: [{
+          id: '1',
+          itemRank: 4,
+          name: 'Name',
+          badge: 'Badge #12314',
+          url: '/officer/1/name/',
+          percentile: null,
+          isPinned: true,
+          type: 'OFFICER',
+          recentItemData: {
+            id: '1',
+            name: 'Name',
+            badge: '12314',
+            percentile: null,
+          },
+        }],
+      }];
 
       const wrapper = shallow(
         <SearchPage
           query='qa'
-          officers={ officersProp }
+          categories={ categories }
           chosenCategory='officers'
           activeCategory='officers'
           saveToRecent={ spySaveToRecent }
@@ -367,9 +437,9 @@ describe('<SearchPage />', function () {
       searchCategory.prop('categoryId').should.equal('officers');
       searchCategory.prop('categoryPath').should.equal('OFFICER');
       searchCategory.prop('allButtonClickHandler').should.eql(SearchPage.prototype.chooseCategory);
-      searchCategory.prop('showAllButton').should.be.false();
+      searchCategory.prop('showAllButton').should.be.true();
       searchCategory.prop('title').should.equal('OFFICERS');
-      searchCategory.prop('items').should.eql(['data']);
+      searchCategory.prop('items').should.eql(categories[0].items);
       searchCategory.prop('saveToRecent').should.eql(spySaveToRecent);
       searchCategory.prop('updateActiveCategory').should.eql(spyUpdateActiveCategory);
       searchCategory.prop('activeCategory').should.equal('officers');
@@ -410,14 +480,59 @@ describe('<SearchPage />', function () {
 
   describe('"view single category" mode', function () {
     it('should only display search results of the chosen single category', function () {
-      const crsProp = ['data'];
-      const officersProp = ['data'];
+      const cr1 = {
+        category: 'Use Of Force',
+        crid: '1027271',
+        highlight: {
+          summary: ['On July', 'an off-duty'],
+        },
+        id: '1027271',
+        'incident_date': '2009-06-13',
+      };
+      const cr2 = {
+        category: 'Domestic',
+        crid: '1049273',
+        highlight: {
+          summary: ['On October', 'regarding an incident that occurred'],
+        },
+        id: '1049273',
+        'incident_date': '2011-10-13',
+      };
+      const categories = [{
+        name: 'COMPLAINT RECORDS (CRs)',
+        filter: 'CR',
+        id: 'crs',
+        path: 'CR',
+        queryPrefix: 'cr',
+        showAllButton: false,
+        items: [
+          {
+            crid: '1027271',
+            itemRank: 2,
+            url: '/complaint/1027271/',
+            category: 'Use Of Force',
+            incidentDate: '06/13/2009',
+            type: 'CR',
+            isPinned: false,
+            recentItemData: cr1,
+          },
+          {
+            crid: '1049273',
+            itemRank: 3,
+            url: '/complaint/1049273/',
+            category: 'Domestic',
+            incidentDate: '10/13/2011',
+            type: 'CR',
+            isPinned: true,
+            recentItemData: cr2,
+          },
+        ],
+      }];
 
       const wrapper = shallow(
         <SearchPage
           query='qa'
-          officers={ officersProp }
-          crs={ crsProp }
+          categories={ categories }
           chosenCategory='crs'
         />
       );
@@ -430,13 +545,13 @@ describe('<SearchPage />', function () {
   describe('Intercom', function () {
     describe('Intercom launcher', function () {
       it('should hide intercom launcher when mounted', function () {
-        mount(<SearchPage recent={ [] } />);
+        mount(<SearchPage />);
 
         IntercomUtils.showIntercomLauncher.calledWith(false).should.be.true();
       });
 
       it('should show intercom launcher again when unmounted', function () {
-        const wrapper = mount(<SearchPage recent={ [] } />);
+        const wrapper = mount(<SearchPage />);
         wrapper.unmount();
 
         IntercomUtils.showIntercomLauncher.calledWith(true).should.be.true();
@@ -453,7 +568,7 @@ describe('<SearchPage />', function () {
       });
 
       it('should track Intercom with search page', function () {
-        mount(<SearchPage recent={ [] } />);
+        mount(<SearchPage />);
         IntercomTracking.trackSearchPage.called.should.be.true();
       });
     });
@@ -499,10 +614,7 @@ describe('<SearchPage />', function () {
     });
 
     const wrapper = mount(
-      <SearchPage
-        createPinboard={ createPinboard }
-        recent={ [] }
-      />
+      <SearchPage createPinboard={ createPinboard }/>
     );
 
     const browserHistoryPush = stub(browserHistory, 'push');

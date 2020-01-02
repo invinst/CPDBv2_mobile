@@ -6,7 +6,7 @@ import { stub } from 'sinon';
 
 import Attachments from 'components/complaint-page/attachments';
 import RequestDocumentButton from 'components/common/request-document/request-document-button';
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 import CMSContent from 'components/common/cms-content';
 
 
@@ -65,7 +65,7 @@ describe('Attachments component', function () {
         },
       },
     });
-    const stubTrackAttachmentClick = stub(GATracking, 'trackAttachmentClick');
+    const stubTrackAttachmentClick = stub(tracking, 'trackAttachmentClick');
     const attachments = [{
       'url': 'https://www.documentcloud.org/documents/4769822-CRID-1002813-CR.html',
       'fileType': 'document',

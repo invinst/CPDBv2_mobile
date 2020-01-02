@@ -9,6 +9,20 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const baseConfig = require('./base');
 const defaultSettings = require('./defaults');
 
+const parametersMapping = {
+  'production': {
+    'DISABLE_SEARCH_INDEX': false,
+    'CLICKY_TRACKING_ID': '101220048',
+  },
+  'beta': {
+    'DISABLE_SEARCH_INDEX': false,
+    'CLICKY_TRACKING_ID': '101220050',
+  },
+  'staging': {
+    'DISABLE_SEARCH_INDEX': true,
+    'CLICKY_TRACKING_ID': '101227137',
+  },
+};
 // Add needed plugins here
 
 let config = Object.assign({}, baseConfig, {
@@ -36,9 +50,7 @@ let config = Object.assign({}, baseConfig, {
     new HtmlWebpackPlugin({
       template: './src/index.html.template',
       filename: 'index.html',
-      templateParameters: {
-        'DISABLE_SEARCH_INDEX': process.env.WEBPACK_ENV === 'staging',
-      },
+      templateParameters: parametersMapping[process.env.WEBPACK_ENV],
     }),
   ],
   module: defaultSettings.getDefaultModules()

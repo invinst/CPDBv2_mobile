@@ -1,3 +1,5 @@
+@import 'variables'
+
 \:local(.horizontal-scrolling)
   overflow: hidden
   box-sizing: content-box
@@ -9,3 +11,42 @@
   .swiper-slide
     display: inline-block
     width: auto
+
+  .swiper-pagination-container
+    position: relative
+
+    .swiper-pagination-bullets
+      position: relative
+      padding: 24px 0
+      width: 100%
+
+      .swiper-pagination-bullet
+        margin: 0 4px
+        width: 8px
+        height: 8px
+        display: inline-block
+        border-radius: 100%
+        background-color: $greyish
+        opacity: 1
+
+        &.swiper-pagination-bullet-active
+          background-color: $accent-blue
+
+    .swiper-button-prev, .swiper-button-next
+      width: 44px
+      height: 44px
+      border-radius: 22px
+      border: 1px solid $alto-solid
+      outline: none
+      box-sizing: border-box
+      background: $wild-sand url('/img/ic-long-arrow.svg') center no-repeat
+
+      &.swiper-button-disabled
+        display: none
+
+    .swiper-button-prev
+      left: 0
+      transform: rotate(180deg)
+
+    .swiper-button-next
+      right: 0

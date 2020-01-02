@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { stub } from 'sinon';
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 
 import Attachments from 'components/officer-page/tabbed-pane-section/timeline/item/cr/attachments';
 
@@ -55,7 +55,7 @@ describe('Attachments component', function () {
   });
 
   it('should track click event', function () {
-    const stubTrackAttachmentClick = stub(GATracking, 'trackAttachmentClick');
+    const stubTrackAttachmentClick = stub(tracking, 'trackAttachmentClick');
     const attachments = [{
       url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-1-of-3.html',
       previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',

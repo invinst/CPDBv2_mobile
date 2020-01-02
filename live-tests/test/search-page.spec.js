@@ -990,4 +990,11 @@ describe('SearchPageTest', function () {
       client.assertCount(crs.section.card.selector, 2);
     });
   });
+
+  it('should have clicky installed', function (client) {
+    const page = client.page.common();
+    page.waitForElementPresent('@clickyScript');
+    page.waitForElementPresent('@clickySiteIdsScript');
+    page.waitForElementPresent('@clickyNoJavascriptGIF');
+  });
 });

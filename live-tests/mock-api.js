@@ -1,9 +1,12 @@
-var hashBody = (body) => JSON.stringify(body, Object.keys(body).sort());
+const { isNil } = require('lodash');
 
-var buildApi = function () {
-  var handleMap = {};
+const hashBody = (body) => JSON.stringify(body, Object.keys(body).sort());
+const return404 = (response) => response.status(404).send();
 
-  var getCurrentResponse = function (responseObj) {
+const buildApi = function () {
+  let handleMap = {};
+
+  const getCurrentResponse = function (responseObj) {
     if (responseObj === undefined) {
       return null;
     }
@@ -13,7 +16,7 @@ var buildApi = function () {
     return response;
   };
 
-  var mock = function (method, uri, status, data) {
+  const mock = function (method, uri, status, data) {
     if (!(method in handleMap)) {
       handleMap[method] = {};
     }
@@ -30,8 +33,7 @@ var buildApi = function () {
     });
   };
 
-  var mockPost = function (uri, status, body, data, delay) {
-    var method = 'POST';
+  const mockPostPut = function (uri, status, body, data, delay=0, sideEffects, method) {
     if (!(method in handleMap)) {
       handleMap[method] = {};
     }
@@ -39,52 +41,59 @@ var buildApi = function () {
       handleMap[method][uri] = {};
     }
 
-    handleMap[method][uri][hashBody(body)] = function (response) {
-      if (delay) {
-        setTimeout(
-          function () {
-            response.status(status).send(data);
-          },
-          delay
-        );
-      } else {
-        response.status(status).send(data);
-      }
+    const resolveFunc = function (response) {
+      const responseIndex = Math.min(resolveFunc.responses.length -1, resolveFunc.counter);
+      const content = resolveFunc.responses[responseIndex];
+      resolveFunc.counter += 1;
+      setTimeout(
+        () => (typeof content === 'undefined') ?
+          return404(response) :
+          response.status(status).send(content),
+        delay
+      );
     };
+    resolveFunc.counter = 0;
+    resolveFunc.responses = sideEffects || [data];
+
+    handleMap[method][uri][hashBody(body)] = resolveFunc;
   };
 
-  var mockPut = function (uri, status, body, data, delay) {
-    var method = 'PUT';
+  const mockPostPutNoBody = function (uri, status, data, method) {
     if (!(method in handleMap)) {
       handleMap[method] = {};
     }
-    if (!(uri in handleMap[method])) {
-      handleMap[method][uri] = {};
-    }
 
-    handleMap[method][uri][hashBody(body)] = function (response) {
-      if (delay) {
-        setTimeout(
-          function () {
-            response.status(status).send(data);
-          },
-          delay
-        );
-      } else {
-        response.status(status).send(data);
-      }
-    };
+    handleMap[method][uri] = response => response.status(status).send(data);
   };
 
-  var cleanMock = function () {
+  const mockPost = function (uri, status, body, data, delay=0, sideEffects) {
+    if (isNil(body)) {
+      mockPostPutNoBody(uri, status, data, 'POST');
+    } else {
+      mockPostPut(uri, status, body, data, delay, sideEffects, 'POST');
+    }
+  };
+
+  const mockPut = function (uri, status, body, data, delay = 0, sideEffects) {
+    if (isNil(body)) {
+      mockPostPutNoBody(uri, status, data, 'PUT');
+    } else {
+      mockPostPut(uri, status, body, data, delay, sideEffects, 'PUT');
+    }
+  };
+
+  const cleanMock = function () {
     handleMap = {};
   };
 
-  var call = function (req) {
-    var uri = req.originalUrl;
-    var return404 = (response) => response.status(404).send();
+  const call = function (req) {
+    const uri = req.originalUrl;
     if (req.method === 'POST' || req.method === 'PUT') {
-      return ((handleMap[req.method] || {})[uri] || {})[hashBody(req.body)] || return404;
+      const handler = (handleMap[req.method] || {})[uri] || {};
+      if (typeof handler === 'function') {
+        return handler;
+      }
+      return handler[hashBody(req.body)] || return404;
     } else {
       return getCurrentResponse((handleMap[req.method] || {})[uri]) || return404;
     }

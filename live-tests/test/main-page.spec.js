@@ -119,6 +119,34 @@ describe('MainPageTest', function () {
 
   describe('Pinboard function', function () {
     it('should display toast when pinning cards', function (client) {
+      api.mockPost(
+        '/api/v2/mobile/pinboards/',
+        201,
+        undefined,
+        {
+          id: '5cd06f2b',
+          'officer_ids': [],
+          crids: [],
+          'trr_ids': [],
+          title: '',
+          description: '',
+        },
+      );
+
+      api.mockPut(
+        '/api/v2/mobile/pinboards/5cd06f2b/',
+        200,
+        undefined,
+        {
+          id: '5cd06f2b',
+          'officer_ids': [],
+          crids: [],
+          'trr_ids': [],
+          title: '',
+          description: '',
+        },
+      );
+
       const checkPinToast = (parentSelector, messagePrefix) => {
         //Pin item
         parentSelector.section.cards.waitForElementVisible('@firstPinButton');
@@ -152,5 +180,12 @@ describe('MainPageTest', function () {
       checkPinToast(this.mainPage.section.newDocumentAllegations, 'CR');
       checkPinToast(this.mainPage.section.complaintSummaries, 'CR');
     });
+  });
+
+  it('should have clicky installed ', function (client) {
+    const page = client.page.common();
+    page.waitForElementPresent('@clickyScript');
+    page.waitForElementPresent('@clickySiteIdsScript');
+    page.waitForElementPresent('@clickyNoJavascriptGIF');
   });
 });

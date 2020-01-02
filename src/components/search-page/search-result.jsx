@@ -41,6 +41,7 @@ const SearchResult = (
           <Item
             key={ item.id }
             item={ item }
+            query={ query }
             saveToRecent={ saveToRecent }
             addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
           />
