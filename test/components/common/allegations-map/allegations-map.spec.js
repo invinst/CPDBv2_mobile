@@ -5,10 +5,12 @@ import { stub, spy } from 'sinon';
 import ReactDOMServer from 'react-dom/server';
 import should from 'should';
 
-import AllegationsMap from 'components/common/allegations-map';
+import AllegationsMap, { AllegationsMapWithSpinner } from 'components/common/allegations-map';
 import LoadingSpinner from 'components/common/loading-spinner';
 import MarkerTooltip from 'components/common/allegations-map/marker-tooltip';
 import { mapboxgl } from 'utils/mapbox';
+import Legend from 'components/common/allegations-map/legend';
+import mapStyles from 'components/common/allegations-map/allegations-map.sass';
 
 
 describe('Map component', function () {
@@ -163,6 +165,28 @@ describe('Map component', function () {
     wrapper.find(LoadingSpinner).exists().should.be.false();
     wrapper.find('.test--map').should.have.length(1);
     wrapper.find('.test--legend').should.have.length(1);
+  });
+
+  context('WithSpinner', function () {
+    it('should render only loading spinner if requesting is true ', function () {
+      const wrapper = mount(<AllegationsMapWithSpinner legend={ legend } requesting={ true } />);
+
+      const loadingSpinner = wrapper.find(LoadingSpinner);
+      loadingSpinner.prop('className').should.equal(mapStyles.allegationMapLoading);
+
+      wrapper.find(AllegationsMap).exists().should.be.false();
+      wrapper.find(Legend).exists().should.be.false();
+      wrapper.find('.map-tab').exists().should.be.false();
+    });
+
+    it('should not render loading spinner if requesting is false', function () {
+      const wrapper = mount(<AllegationsMapWithSpinner legend={ legend } requesting={ false } />);
+
+      wrapper.find(LoadingSpinner).exists().should.be.false();
+      wrapper.find(Legend).exists().should.be.true();
+      wrapper.find(AllegationsMap).exists().should.be.true();
+      wrapper.find('.map-tab').exists().should.be.true();
+    });
   });
 
   it('should call addMapLayersOnStyleLoaded when componentDidMount', function () {

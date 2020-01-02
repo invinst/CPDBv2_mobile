@@ -26,10 +26,12 @@ describe('<CrItem />', function () {
       isPinned: false,
       type: 'CR',
       recentItemData: recentItemData,
+      itemRank: 2,
     };
 
     const wrapper = mount(
       <CrItem
+        query='Ke'
         item={ cr }
         saveToRecent={ saveToRecentSpy }
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }
@@ -39,13 +41,15 @@ describe('<CrItem />', function () {
     const link = wrapper.find(Link);
     link.should.have.length(1);
 
-    link.prop('to').should.eql('/complaint/1027271/');
-    link.find('.item-subtitle').text().should.eql('CRID 1027271 • 06/13/2009');
-    link.find('.item-title').text().should.eql('Use Of Force');
+    link.prop('to').should.equal('/complaint/1027271/');
+    link.find('.item-subtitle').text().should.equal('CRID 1027271 • 06/13/2009');
+    link.find('.item-title').text().should.equal('Use Of Force');
 
     const searchItem = wrapper.find(SearchItem);
-    searchItem.prop('id').should.eql('1027271');
-    searchItem.prop('type').should.eql('CR');
+    searchItem.prop('id').should.equal('1027271');
+    searchItem.prop('query').should.equal('Ke');
+    searchItem.prop('type').should.equal('CR');
+    searchItem.prop('itemRank').should.equal(2);
     searchItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
     searchItem.prop('recentItemData').should.eql(recentItemData);
     searchItem.prop('saveToRecent').should.eql(saveToRecentSpy);

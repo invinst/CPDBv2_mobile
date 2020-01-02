@@ -75,4 +75,11 @@ describe('EmbedOfficerPage', function () {
     client.switchToRecentTab();
     this.embedOfficersPage.assert.urlContains('/officer/13788/');
   });
+
+  it('should have clicky installed ', function (client) {
+    const page = client.page.common();
+    page.waitForElementPresent('@clickyScript');
+    page.waitForElementPresent('@clickySiteIdsScript');
+    page.waitForElementPresent('@clickyNoJavascriptGIF');
+  });
 });

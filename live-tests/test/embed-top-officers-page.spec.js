@@ -110,4 +110,11 @@ describe('EmbedTopOfficerPage', function () {
     client.switchToRecentTab();
     client.expect.url().to.match(/\/officer\/\d+\/[-a-z]+\/?$/);
   });
+
+  it('should have clicky installed ', function (client) {
+    const page = client.page.common();
+    page.waitForElementPresent('@clickyScript');
+    page.waitForElementPresent('@clickySiteIdsScript');
+    page.waitForElementPresent('@clickyNoJavascriptGIF');
+  });
 });

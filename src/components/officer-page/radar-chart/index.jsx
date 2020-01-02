@@ -9,7 +9,7 @@ import style from './radar-chart.sass';
 import { hasEnoughRadarChartData } from 'utils/visual-token';
 import CMSContent from 'components/common/cms-content';
 import * as IntercomTracking from 'utils/intercom-tracking';
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 
 
 export default class AnimatedRadarChart extends Component {
@@ -115,7 +115,7 @@ export default class AnimatedRadarChart extends Component {
   openExplainer() {
     const { officerId } = this.props;
 
-    GATracking.trackOpenExplainer(officerId);
+    tracking.trackOpenExplainer(officerId);
     IntercomTracking.trackOpenExplainer(officerId);
 
     this.setState({ explainerOpened: true });

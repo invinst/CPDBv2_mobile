@@ -13,7 +13,7 @@ class WaitForAnimationEnd extends events.EventEmitter {
     this.startTimeInMilliseconds = null;
   }
 
-  command(element, timeoutInMilliseconds) {
+  command(element, selectorType='css selector', timeoutInMilliseconds=null) {
     this.startTimeInMilliseconds = new Date().getTime();
 
     if (typeof timeoutInMilliseconds !== 'number') {
@@ -21,6 +21,7 @@ class WaitForAnimationEnd extends events.EventEmitter {
     }
 
     this.repeatedlyCheckPosition(
+      selectorType,
       element,
       result => {
         assert.equal(
@@ -36,8 +37,9 @@ class WaitForAnimationEnd extends events.EventEmitter {
     return this;
   }
 
-  repeatedlyCheckPosition(element, callback, maxTimeInMilliseconds, previousPosition = null) {
+  repeatedlyCheckPosition(selectorType, element, callback, maxTimeInMilliseconds, previousPosition=null) {
     this.api.getLocation(
+      selectorType,
       element,
       result => {
         const now = new Date().getTime();
@@ -45,7 +47,7 @@ class WaitForAnimationEnd extends events.EventEmitter {
           callback(true);
         } else if (now - this.startTimeInMilliseconds < maxTimeInMilliseconds) {
           setTimeout(
-            () => this.repeatedlyCheckPosition(element, callback, maxTimeInMilliseconds, result.value),
+            () => this.repeatedlyCheckPosition(selectorType, element, callback, maxTimeInMilliseconds, result.value),
             CHECK_INTERVAL
           );
         } else {

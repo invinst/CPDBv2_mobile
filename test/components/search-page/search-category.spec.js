@@ -2,7 +2,6 @@ import should from 'should';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { stub, spy } from 'sinon';
-import { range } from 'lodash';
 import * as NavigationUtil from 'utils/navigation-util';
 
 import constants from 'constants';
@@ -231,20 +230,6 @@ describe('<SearchCategory />', function () {
 
       const result = wrapper.instance().renderResults();
       should.equal(result, null);
-    });
-
-    it('should return only the first 5 items if not in single category mode', function () {
-      const items = range(11);
-      const wrapper = shallow(
-        <SearchCategory
-          items={ items }
-          categoryId='officers'
-          showAllButton={ true }
-        />
-      );
-
-      const searchResult = wrapper.find(SearchResult);
-      searchResult.prop('items').should.eql(range(5));
     });
 
     it('should render officer correctly', function () {

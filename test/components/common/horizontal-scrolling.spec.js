@@ -3,13 +3,14 @@ import { shallow, mount } from 'enzyme';
 import { spy } from 'sinon';
 
 import HorizontalScrolling from 'components/common/horizontal-scrolling';
-import * as GATracking from 'utils/google_analytics_tracking';
+import * as tracking from 'utils/tracking';
 
 
 describe('<HorizontalScrolling />', function () {
   it('should be renderable', function () {
     const wrapper = shallow(<HorizontalScrolling trackingContentType=''/>);
     wrapper.should.be.ok();
+    wrapper.find('.swiper-pagination-container').exists().should.be.false();
   });
 
   it('should wrap children node', function () {
@@ -24,7 +25,7 @@ describe('<HorizontalScrolling />', function () {
   });
 
   it('should track swiping action', function () {
-    spy(GATracking, 'trackSwipeLanddingPageCarousel');
+    spy(tracking, 'trackSwipeLandingPageCarousel');
 
     const wrapper = mount(
       <HorizontalScrolling trackingContentType='contentType'>
@@ -41,12 +42,12 @@ describe('<HorizontalScrolling />', function () {
     instance.swiper.slideNext();
     instance.swiper.slidePrev();
 
-    GATracking.trackSwipeLanddingPageCarousel.callCount.should.equal(3);
-    GATracking.trackSwipeLanddingPageCarousel.getCall(0).args.should.eql(['right', 'contentType']);
-    GATracking.trackSwipeLanddingPageCarousel.getCall(1).args.should.eql(['right', 'contentType']);
-    GATracking.trackSwipeLanddingPageCarousel.getCall(2).args.should.eql(['left', 'contentType']);
+    tracking.trackSwipeLandingPageCarousel.callCount.should.equal(3);
+    tracking.trackSwipeLandingPageCarousel.getCall(0).args.should.eql(['right', 'contentType']);
+    tracking.trackSwipeLandingPageCarousel.getCall(1).args.should.eql(['right', 'contentType']);
+    tracking.trackSwipeLandingPageCarousel.getCall(2).args.should.eql(['left', 'contentType']);
 
-    GATracking.trackSwipeLanddingPageCarousel.restore();
+    tracking.trackSwipeLandingPageCarousel.restore();
   });
 
   it('should loadMore when almost reaching the end', function () {
@@ -79,5 +80,19 @@ describe('<HorizontalScrolling />', function () {
     instance.onSnapIndexChange(0, true);
 
     loadMoreSpy.should.be.called();
+  });
+
+  it('should render swiper pagination container if hasPagination is true', function () {
+    const wrapper = mount(
+      <HorizontalScrolling hasPagination={ true }>
+        <div>Child 1</div>
+        <div>Child 2</div>
+        <div>Child 3</div>
+      </HorizontalScrolling>
+    );
+    wrapper.find('.swiper-pagination-container').exists().should.be.true();
+    wrapper.find('.swiper-pagination').exists().should.be.true();
+    wrapper.find('.swiper-button-next').exists().should.be.true();
+    wrapper.find('.swiper-button-prev').exists().should.be.true();
   });
 });

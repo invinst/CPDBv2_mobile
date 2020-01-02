@@ -49,14 +49,18 @@ module.exports = {
     },
     socialGraphTitle: '.sidenav-title',
     coaccusalsThresholdText: '.coaccusals-threshold-text',
-    startDate: '.start-date-label',
-    endDate: '.end-date-label',
-    playButton: '.play-icon',
     pinboardTitle: '.pinboard-title',
     pinboardDescription: '.pinboard-description',
-    pinboardPaneMenu: {
-      selector: '(//div[contains(@class, "pinboard-pane-section-menu")])',
+    navigationNextButton: '.swiper-button-next',
+    navigationPreviousButton: '.swiper-button-prev',
+    refreshButton: '.refresh-button',
+    firstBullet: {
       locateStrategy: 'xpath',
+      selector: '//span[contains(@class, "swiper-pagination-bullet")][1]',
+    },
+    secondBullet: {
+      locateStrategy: 'xpath',
+      selector: '//span[contains(@class, "swiper-pagination-bullet")][2]',
     },
     complaintText: {
       selector: '//div[contains(@class, "legend__legend")]//div[1]//span[contains(@class, "legend-row-text")]',
@@ -74,12 +78,10 @@ module.exports = {
       selector: '//div[contains(@class, "legend__legend")]//div[2]//span[contains(@class, "legend-row-number")]',
       locateStrategy: 'xpath',
     },
-    currentDate: '.current-date-label',
     biggestGraphNode: {
       selector: '(//*[@r="7"])',
       locateStrategy: 'xpath',
     },
-    timelineSlider: '.test--timeline-slider',
     firstToast: '.Toastify__toast:first-child',
     secondToast: '.Toastify__toast:nth-child(2)',
   },
@@ -187,6 +189,14 @@ module.exports = {
         },
       },
     },
+    animatedSocialGraphSection: {
+      locateStrategy: 'xpath',
+      selector: '(//div[contains(@class, "visualization-item")])[1]',
+    },
+    geographicSection: {
+      locateStrategy: 'xpath',
+      selector: '(//div[contains(@class, "visualization-item")])[2]',
+    },
     graphNodes: {
       selector: '.node',
     },
@@ -208,26 +218,6 @@ module.exports = {
     hiddenGraphLinks: {
       selector: '//*[name()="line" and contains(@class, "link") and contains(@style, "opacity: 0.1")]',
       locateStrategy: 'xpath',
-    },
-    timeline: {
-      selector: '.graph-control-panel',
-      elements: {
-        toggleTimelineButton: '.toggle-timeline-btn',
-      },
-    },
-    pinboardPaneMenu: {
-      selector: '(//div[contains(@class, "pinboard-pane-section-menu")])',
-      locateStrategy: 'xpath',
-      elements: {
-        networkPaneName: {
-          selector: '//span[contains(@class, "pinboard-pane-tab-name")][1]',
-          locateStrategy: 'xpath',
-        },
-        geographicPaneName: {
-          selector: '//span[contains(@class, "pinboard-pane-tab-name")][2]',
-          locateStrategy: 'xpath',
-        },
-      },
     },
     relevantComplaints: baseRelevantComplaints('complaint'),
     relevantDocuments: baseRelevantComplaints('document'),

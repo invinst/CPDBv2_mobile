@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import AllegationsMap from 'components/common/allegations-map';
+import { AllegationsMapWithSpinner } from 'components/common/allegations-map';
 import {
   mapLegendSelector,
   mapMarkerGroupsSelector,
+  geographicDataRequestingSelector,
   getClearAllMarkers,
 } from 'selectors/pinboard-page/geographic-data';
 
@@ -14,7 +15,8 @@ function mapStateToProps(state, ownProps) {
     legend: mapLegendSelector(state),
     markerGroups: mapMarkerGroupsSelector(state),
     clearAllMarkers: getClearAllMarkers(state),
+    requesting: geographicDataRequestingSelector(state),
   };
 }
 
-export default withRouter(connect(mapStateToProps)(AllegationsMap));
+export default withRouter(connect(mapStateToProps)(AllegationsMapWithSpinner));
