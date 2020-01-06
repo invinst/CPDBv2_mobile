@@ -64,6 +64,7 @@ describe('tracking utils', function () {
         eventLabel: 'query',
         eventValue: 123,
       });
+      global.clicky.log.should.be.calledWith(document.location.pathname, 'single_search_query: query with 123 results');
     });
   });
 
@@ -76,6 +77,7 @@ describe('tracking utils', function () {
       clock.tick(550);
 
       global.ga.should.be.calledTwice();
+      global.clicky.log.should.be.calledTwice();
       global.ga.should.be.calledWith('send', {
         hitType: 'event',
         eventCategory: 'contentType',
@@ -90,6 +92,11 @@ describe('tracking utils', function () {
         eventLabel: 'itemId2 - query',
         eventValue: 2,
       });
+      global.clicky.log.should.be.calledWith(document.location.pathname, 'Item itemId2 with rank 2 is focused');
+      global.clicky.log.should.be.calledWith(
+        document.location.pathname,
+        'Item itemId2 with rank 2 is focused via "query" query'
+      );
 
       clock.tick(1000);
       tracking.trackSearchFocusedItem('contentType', 'query', 'itemId3');

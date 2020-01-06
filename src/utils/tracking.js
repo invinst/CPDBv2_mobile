@@ -65,6 +65,7 @@ export const trackAttachmentClick = (sourceUrl, targetUrl) => {
 };
 
 export const trackSingleSearchResults = (contentType, query, resultsCount) => {
+  clickyLog(`single_search_query: ${query} with ${resultsCount} results`);
   global.ga('send', {
     hitType: 'event',
     eventCategory: contentType,
@@ -75,6 +76,7 @@ export const trackSingleSearchResults = (contentType, query, resultsCount) => {
 };
 
 const _trackSearchFocusedItem = (contentType, query, itemId, rank) => {
+  clickyLog(`Item ${itemId} with rank ${rank} is focused`);
   global.ga('send', {
     hitType: 'event',
     eventCategory: contentType,
@@ -83,6 +85,7 @@ const _trackSearchFocusedItem = (contentType, query, itemId, rank) => {
     eventValue: rank,
   });
 
+  clickyLog(`Item ${itemId} with rank ${rank} is focused via "${query}" query`);
   global.ga('send', {
     hitType: 'event',
     eventCategory: contentType,
