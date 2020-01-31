@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
-import { isEmpty, noop, clone, reduce, values } from 'lodash';
+import { isEmpty, noop, clone, reduce, values, compact } from 'lodash';
 import pluralize from 'pluralize';
+import DocumentMeta from 'react-document-meta';
 
 import { scrollToTop } from 'utils/navigation-util';
 import LoadingPage from 'components/shared/loading-page';
@@ -187,34 +188,41 @@ class OfficerPage extends Component {
 
     const { id, name, demographic, rank, unit, careerDuration } = summary;
 
+    const pageTitle = compact([
+      rank === 'N/A' ? '' : rank,
+      name,
+    ]).join(' ');
+
     return (
-      <WithHeader className={ style.officerSummary }>
-        <AnimatedRadarChart
-          officerId={ id }
-          percentileData={ threeCornerPercentile }
-          noDataCMSContent={ noDataCMSContent }/>
-        <h1 className='officer-name header' onClick={ scrollToTop() }>
-          { name }
-        </h1>
-        <div className='officer-summary-body'>
-          <div className='officer-demographic'>{ demographic }</div>
-          <SectionRow label='Badge' value={ this.badges() } />
-          <SectionRow label='Rank' value={ rank } />
-          <SectionRow label='Unit' value={ unit } />
-          <SectionRow label='Career' value={ careerDuration }/>
-        </div>
-        { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
-        <TabbedPaneSection
-          changeOfficerTab={ this.changeTab }
-          currentTab={ this.state.currentTab }
-          hasCoaccusal={ hasCoaccusal }
-          hasAttachment={ hasAttachment }
-          hasMapMarker={ hasMapMarker }
-          officerId={ id }
-        />
-        <BottomPadding />
-        <Footer />
-      </WithHeader>
+      <DocumentMeta title={ pageTitle } >
+        <WithHeader className={ style.officerSummary }>
+          <AnimatedRadarChart
+            officerId={ id }
+            percentileData={ threeCornerPercentile }
+            noDataCMSContent={ noDataCMSContent }/>
+          <h1 className='officer-name header' onClick={ scrollToTop() }>
+            { name }
+          </h1>
+          <div className='officer-summary-body'>
+            <div className='officer-demographic'>{ demographic }</div>
+            <SectionRow label='Badge' value={ this.badges() } />
+            <SectionRow label='Rank' value={ rank } />
+            <SectionRow label='Unit' value={ unit } />
+            <SectionRow label='Career' value={ careerDuration }/>
+          </div>
+          { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
+          <TabbedPaneSection
+            changeOfficerTab={ this.changeTab }
+            currentTab={ this.state.currentTab }
+            hasCoaccusal={ hasCoaccusal }
+            hasAttachment={ hasAttachment }
+            hasMapMarker={ hasMapMarker }
+            officerId={ id }
+          />
+          <BottomPadding />
+          <Footer />
+        </WithHeader>
+      </DocumentMeta>
     );
   }
 }

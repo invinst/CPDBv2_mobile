@@ -5,6 +5,7 @@ import { spy, stub } from 'sinon';
 import { cloneDeep } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
+import DocumentMeta from 'react-document-meta';
 
 import WithHeader from 'components/shared/with-header';
 import OfficerPage from 'components/officer-page';
@@ -32,6 +33,7 @@ describe('<OfficerPage />', function () {
       badge: 'badge',
       historicBadges: ['1', '2'],
       careerDuration: 'SEP 23, 2015—Present',
+      rank: 'Police Officer',
     };
 
     this.metrics = {
@@ -1071,6 +1073,20 @@ describe('<OfficerPage />', function () {
       wrapper.instance().componentDidUpdate(prevProps);
       stubGetOfficerTimeline.calledWith(456).should.be.true();
       stubGetOfficerCoaccusals.calledWith(456).should.be.true();
+    });
+
+    it('should render officer title', function () {
+      const wrapper = shallow(
+        <OfficerPage
+          loading={ false }
+          found={ true }
+          summary={ this.summary }
+          metrics={ this.metrics }
+        />
+      );
+
+      const documentMeta = wrapper.find(DocumentMeta);
+      documentMeta.prop('title').should.equal('Police Officer Officer 11');
     });
   });
 });
