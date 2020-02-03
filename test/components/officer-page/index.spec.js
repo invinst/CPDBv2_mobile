@@ -1075,18 +1075,77 @@ describe('<OfficerPage />', function () {
       stubGetOfficerCoaccusals.calledWith(456).should.be.true();
     });
 
-    it('should render officer title', function () {
+    it('should render officer title and description', function () {
       const wrapper = shallow(
         <OfficerPage
           loading={ false }
           found={ true }
           summary={ this.summary }
           metrics={ this.metrics }
+          numAttachments={ 3 }
         />
       );
 
       const documentMeta = wrapper.find(DocumentMeta);
       documentMeta.prop('title').should.equal('Police Officer Officer 11');
+      documentMeta.prop('description').should.equal(
+        'Officer Officer 11 of the Chicago Police Department with Badge Number badge has 1 complaint, ' +
+        '7 use of force reports, and 3 original documents available.'
+      );
     });
+
+    it('should add badge number into document description if officer name is not unique and badge is not Unknown',
+      function () {
+        const summary = {
+          id: 123,
+          name: 'Jerome Finnigan',
+          rank: 'Officer',
+          badge: '1424',
+          hasUniqueName: false,
+        };
+        const wrapper = shallow(
+          <OfficerPage
+            loading={ false }
+            found={ true }
+            summary={ summary }
+            metrics={ this.metrics }
+            numAttachments={ 3 }
+          />
+        );
+
+        const documentMeta = wrapper.find(DocumentMeta);
+        documentMeta.prop('description').should.equal(
+          'Officer Jerome Finnigan of the Chicago Police Department with Badge Number 1424 has 1 complaint, ' +
+          '7 use of force reports, and 3 original documents available.'
+        );
+      }
+    );
+
+    it('should not add badge number into document description if badge is Unknown',
+      function () {
+        const summary = {
+          id: 123,
+          name: 'Jerome Finnigan',
+          rank: 'Officer',
+          badge: 'Unknown',
+          hasUniqueName: false,
+        };
+        const wrapper = shallow(
+          <OfficerPage
+            loading={ false }
+            found={ true }
+            summary={ summary }
+            metrics={ this.metrics }
+            numAttachments={ 3 }
+          />
+        );
+
+        const documentMeta = wrapper.find(DocumentMeta);
+        documentMeta.prop('description').should.equal(
+          'Officer Jerome Finnigan of the Chicago Police Department has 1 complaint, 7 use of force reports, ' +
+          'and 3 original documents available.'
+        );
+      }
+    );
   });
 });

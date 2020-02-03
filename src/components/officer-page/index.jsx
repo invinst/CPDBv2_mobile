@@ -171,6 +171,7 @@ class OfficerPage extends Component {
       noDataCMSContent,
       hasCoaccusal,
       hasAttachment,
+      numAttachments,
       hasMapMarker,
     } = this.props;
 
@@ -193,8 +194,19 @@ class OfficerPage extends Component {
       name,
     ]).join(' ');
 
+    const hasUnknownBadge = (summary.badge || 'Unknown') === 'Unknown';
+    const withBadge = summary.hasUniqueName || hasUnknownBadge ?
+      '' :
+      `with Badge Number ${summary.badge} `;
+
+    const pageDescription = `Officer ${name} of the Chicago Police Department ` +
+       withBadge +
+      `has ${pluralize('complaint', metrics.allegationCount, true)}, ` +
+      `${pluralize('use of force report', metrics.trrCount, true)}, ` +
+      `and ${pluralize('original document', numAttachments, true)} available.`;
+
     return (
-      <DocumentMeta title={ pageTitle } >
+      <DocumentMeta title={ pageTitle } description={ pageDescription }>
         <WithHeader className={ style.officerSummary }>
           <AnimatedRadarChart
             officerId={ id }
@@ -249,6 +261,7 @@ OfficerPage.propTypes = {
   isTimelineSuccess: PropTypes.bool,
   isCoaccusalSuccess: PropTypes.bool,
   resetTimelineFilter: PropTypes.func,
+  numAttachments: PropTypes.number,
 };
 
 OfficerPage.defaultProps = {

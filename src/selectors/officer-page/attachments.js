@@ -1,4 +1,4 @@
-import { get, isEmpty, isUndefined } from 'lodash';
+import { get, isEmpty, isUndefined, sum } from 'lodash';
 import moment from 'moment/moment';
 import { createSelector } from 'reselect';
 
@@ -27,4 +27,9 @@ export const complaintsWithAttachmentsSelector = createSelector(
 export const hasAttachmentSelector = createSelector(
   getItems,
   items => !isUndefined(items.find(attachedComplaint))
+);
+
+export const numAttachmentsSelector = createSelector(
+  getItems,
+  items => sum(items.map(item => (item.attachments || []).length))
 );
