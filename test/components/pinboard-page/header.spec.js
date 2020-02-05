@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, createMemoryHistory, Route, Router } from 'react-router';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import Header from 'components/pinboard-page/header';
 import IOSPeek from 'components/common/ios-peek';
@@ -19,7 +19,7 @@ describe('<Header /> of PinboardPage', function () {
   });
 
   it('should preventDefault when clicking on menu item', function () {
-    const preventDefault = spy();
+    const preventDefault = sinon.spy();
     const header = mount(
       <Router history={ createMemoryHistory() }>
         <Route path='/' component={ () => <Header /> } />

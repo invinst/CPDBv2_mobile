@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import { stub } from 'sinon';
+import sinon from 'sinon';
 
 import { OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
@@ -113,7 +113,7 @@ describe('TabbedPaneSection component', function () {
   });
 
   it('should call changeOfficerTab when clicking on header tab name', function () {
-    const stubChangeOfficerTab = stub();
+    const stubChangeOfficerTab = sinon.stub();
     const wrapper = mount(
       <Provider store={ store }>
         <TabbedPaneSection
@@ -128,7 +128,7 @@ describe('TabbedPaneSection component', function () {
   });
 
   it('should call changeOfficerTab when clicking on footer tab name', function () {
-    const stubChangeOfficerTab = stub();
+    const stubChangeOfficerTab = sinon.stub();
     const wrapper = mount(
       <Provider store={ store }>
         <TabbedPaneSection

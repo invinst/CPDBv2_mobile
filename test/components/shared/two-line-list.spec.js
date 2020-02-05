@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 import { Link } from 'react-router';
 
 import TwoLineList from 'components/shared/two-line-list';
@@ -31,8 +31,8 @@ describe('<TwoLineList />', function () {
   });
 
   it('should render Link tag with proper onClick() if url is provided', function () {
-    const onClick1 = spy();
-    const onClick2 = spy();
+    const onClick1 = sinon.spy();
+    const onClick2 = sinon.spy();
 
     const rows = [
       {
@@ -63,8 +63,8 @@ describe('<TwoLineList />', function () {
   });
 
   it('should render div tag with proper onClick() if url is NOT provided', function () {
-    const onClick1 = spy();
-    const onClick2 = spy();
+    const onClick1 = sinon.spy();
+    const onClick2 = sinon.spy();
 
     const rows = [
       {

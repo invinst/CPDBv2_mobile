@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { spy, useFakeTimers, stub } from 'sinon';
+import sinon from 'sinon';
 import should from 'should';
 
 import AnimatedSocialGraph, { AnimatedSocialGraphWithSpinner } from 'components/common/animated-social-graph';
@@ -89,7 +89,7 @@ describe('AnimatedSocialGraph component', function () {
   });
 
   it('should update refreshIntervalId and timelineIdx values when startTimelineFromBeginning', function () {
-    const clock = useFakeTimers();
+    const clock = sinon.useFakeTimers();
     wrapper = mount(
       <AnimatedSocialGraph
         officers={ officers }
@@ -107,11 +107,10 @@ describe('AnimatedSocialGraph component', function () {
     wrapper.state('timelineIdx').should.equal(0);
     wrapper.state('refreshIntervalId').should.not.be.null();
     wrapper.state('refreshIntervalId').should.not.eql(oldRefreshInterval);
-    clock.restore();
   });
 
   it('should update refreshIntervalId value when stop timeline', function () {
-    const clock = useFakeTimers();
+    const clock = sinon.useFakeTimers();
     wrapper = mount(
       <AnimatedSocialGraph
         officers={ officers }
@@ -128,7 +127,6 @@ describe('AnimatedSocialGraph component', function () {
     socialGraph.props().stopTimeline();
     should(wrapper.state('refreshIntervalId')).be.null();
     wrapper.state('timelineIdx').should.equal(1);
-    clock.restore();
   });
 
   it('should call stopTimeline when componentWillUnmount', function () {
@@ -141,13 +139,13 @@ describe('AnimatedSocialGraph component', function () {
     );
 
     const instance = wrapper.instance();
-    const stopTimelineSpy = spy(instance, 'stopTimeline');
+    const stopTimelineSpy = sinon.spy(instance, 'stopTimeline');
     wrapper.unmount();
     stopTimelineSpy.called.should.be.true();
   });
 
   it('should call startTimelineFromBeginning when clicking on refresh button', function () {
-    const startTimelineFromBeginningStub = stub(AnimatedSocialGraph.prototype, 'startTimelineFromBeginning');
+    const startTimelineFromBeginningStub = sinon.stub(AnimatedSocialGraph.prototype, 'startTimelineFromBeginning');
     wrapper = mount(
       <AnimatedSocialGraph
         officers={ officers }
@@ -160,6 +158,5 @@ describe('AnimatedSocialGraph component', function () {
     refreshButton.simulate('click');
 
     startTimelineFromBeginningStub.should.be.called();
-    startTimelineFromBeginningStub.restore();
   });
 });

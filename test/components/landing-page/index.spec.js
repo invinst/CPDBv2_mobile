@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
@@ -33,8 +33,8 @@ describe('<LandingPage />', function () {
       },
     });
 
-    const spyRequestCMS = spy();
-    const pushBreadcrumbsSpy = spy();
+    const spyRequestCMS = sinon.spy();
+    const pushBreadcrumbsSpy = sinon.spy();
     mount(
       <Provider store={ store }>
         <LandingPage
@@ -56,7 +56,7 @@ describe('<LandingPage />', function () {
   });
 
   it('should call pushBreadcrumb when updating', function () {
-    const pushBreadcrumbsSpy = spy();
+    const pushBreadcrumbsSpy = sinon.spy();
     const wrapper = shallow(
       <LandingPage
         pushBreadcrumbs={ pushBreadcrumbsSpy }

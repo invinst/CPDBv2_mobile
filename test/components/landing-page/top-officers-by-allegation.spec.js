@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { spy, stub } from 'sinon';
+import sinon from 'sinon';
 import { EditorState } from 'draft-js';
 
 import TopOfficersByAllegation from 'components/landing-page/top-officers-by-allegation';
@@ -16,8 +16,8 @@ describe('<TopOfficersByAllegation />', function () {
   });
 
   it('should call request TopOfficersByAllegation and CMS if they are not requested', function () {
-    const requestTopOfficersByAllegationSpy = spy();
-    const requestCMSSpy = spy();
+    const requestTopOfficersByAllegationSpy = sinon.spy();
+    const requestCMSSpy = sinon.spy();
     mount(
       <TopOfficersByAllegation
         requestTopOfficersByAllegation={ requestTopOfficersByAllegationSpy }
@@ -118,7 +118,7 @@ describe('<TopOfficersByAllegation />', function () {
         'sustained_count': 11,
       },
     ];
-    stub(IntercomUtils, 'showIntercomLauncher');
+    sinon.stub(IntercomUtils, 'showIntercomLauncher');
 
     const wrapper = mount(
       <TopOfficersByAllegation
@@ -137,6 +137,5 @@ describe('<TopOfficersByAllegation />', function () {
 
     wrapper.unmount();
     IntercomUtils.showIntercomLauncher.calledWith(true).should.be.true();
-    IntercomUtils.showIntercomLauncher.restore();
   });
 });

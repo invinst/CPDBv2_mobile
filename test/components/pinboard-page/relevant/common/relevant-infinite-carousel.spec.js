@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { spy, stub } from 'sinon';
+import sinon from 'sinon';
 
 import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/relevant-infinite-carousel';
 import HorizontalScrolling from 'components/common/horizontal-scrolling';
@@ -9,7 +9,7 @@ import LoadingSpinner from 'components/common/loading-spinner';
 
 describe('<RelevantInfiniteCarousel />', function () {
   it('should render enough content', function () {
-    const loadMoreStub = spy();
+    const loadMoreStub = sinon.spy();
     const wrapper = shallow(
       <RelevantInfiniteCarousel
         childWidth={ 128 }
@@ -38,7 +38,7 @@ describe('<RelevantInfiniteCarousel />', function () {
   });
 
   it('should render nothing if there is no child and not requesting', function () {
-    const loadMoreStub = spy();
+    const loadMoreStub = sinon.spy();
     const wrapper = shallow(
       <RelevantInfiniteCarousel
         childWidth={ 128 }
@@ -53,7 +53,7 @@ describe('<RelevantInfiniteCarousel />', function () {
   });
 
   it('should render LoadingSpinner if there is no child and questing is true', function () {
-    const loadMoreStub = stub();
+    const loadMoreStub = sinon.stub();
     const wrapper = shallow(
       <RelevantInfiniteCarousel
         childWidth={ 128 }

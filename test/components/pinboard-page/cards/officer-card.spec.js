@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Router, createMemoryHistory, Route } from 'react-router';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import OfficerCard, { OfficerCardWithUndo } from 'components/pinboard-page/cards/officer-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
@@ -26,7 +26,7 @@ describe('Pinboard <OfficerCard />', function () {
   });
 
   it('should invoke removeItemInPinboardPage when clicking on ItemUnpinButton', function () {
-    const removeItemInPinboardPage = spy();
+    const removeItemInPinboardPage = sinon.spy();
 
     const item = {
       type: 'OFFICER',

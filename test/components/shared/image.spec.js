@@ -1,13 +1,10 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { useFakeTimers } from 'sinon';
+import sinon from 'sinon';
 import Image from 'components/shared/image';
 
-let clock;
-
 describe('Image component', function () {
-  before(function () { clock = useFakeTimers(); });
-  after(function () { clock.restore(); });
+  before(function () { sinon.useFakeTimers(); });
 
   it('should be renderable', function () {
     shallow(

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { stub } from 'sinon';
+import sinon from 'sinon';
 import Modal from 'react-modal';
 
 import * as intercomUtils from 'utils/intercom';
@@ -52,10 +52,9 @@ describe('<Footer />', function () {
   });
 
   it('should show intercom messages when click on Contact item', function () {
-    stub(intercomUtils, 'showIntercomMessages');
+    sinon.stub(intercomUtils, 'showIntercomMessages');
     const wrapper = shallow(<Footer />);
     wrapper.find('.contact-item').simulate('click');
     intercomUtils.showIntercomMessages.calledWith(true).should.be.true();
-    intercomUtils.showIntercomMessages.restore();
   });
 });

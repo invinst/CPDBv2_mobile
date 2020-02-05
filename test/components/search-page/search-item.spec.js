@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Link, Router, Route } from 'react-router';
-import { spy, stub } from 'sinon';
+import sinon from 'sinon';
 import { createMemoryHistory } from 'history';
 
 import SearchItem from 'components/search-page/search-item';
@@ -16,7 +16,7 @@ describe('<SearchItem />', function () {
   });
 
   it('should render ItemPinButton if hasPinButton is true', function () {
-    const addOrRemoveItemInPinboard = spy();
+    const addOrRemoveItemInPinboard = sinon.spy();
     const wrapper = shallow(
       <SearchItem
         id='213'
@@ -50,8 +50,8 @@ describe('<SearchItem />', function () {
   });
 
   it('should call saveToRecent and trackSearchFocusedItem when click on item', function () {
-    stub(tracking, 'trackSearchFocusedItem');
-    const saveToRecentSpy = spy();
+    sinon.stub(tracking, 'trackSearchFocusedItem');
+    const saveToRecentSpy = sinon.spy();
     const officer = {
       id: '8562',
       type: 'OFFICER',
@@ -84,6 +84,5 @@ describe('<SearchItem />', function () {
 
     tracking.trackSearchFocusedItem.should.be.calledOnce();
     tracking.trackSearchFocusedItem.should.be.calledWith('OFFICER', 'Ke', '8562', 3);
-    tracking.trackSearchFocusedItem.restore();
   });
 });

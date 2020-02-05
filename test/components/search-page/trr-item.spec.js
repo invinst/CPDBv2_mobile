@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import TrrItem from 'components/search-page/trr-item';
 import SearchItem from 'components/search-page/search-item';
@@ -9,8 +9,8 @@ import SearchItem from 'components/search-page/search-item';
 
 describe('<TrrItem />', function () {
   it('should render trr correctly', function () {
-    const saveToRecentSpy = spy();
-    const addOrRemoveItemInPinboardSpy = spy();
+    const saveToRecentSpy = sinon.spy();
+    const addOrRemoveItemInPinboardSpy = sinon.spy();
     const recentItemData = {
       id: '123456',
       type: 'TRR',

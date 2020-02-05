@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Link } from 'react-router';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import Cr from 'components/officer-page/tabbed-pane-section/timeline/item/cr';
 import Attachments from 'components/officer-page/tabbed-pane-section/timeline/item/cr/attachments';
@@ -37,7 +37,7 @@ describe('Cr component', function () {
   };
 
   it('should render item correctly', function () {
-    const onTrackingAttachment = spy();
+    const onTrackingAttachment = sinon.spy();
     const instance = shallow(
       <Cr
         className='test--cr-item'

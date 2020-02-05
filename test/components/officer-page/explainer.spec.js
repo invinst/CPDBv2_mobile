@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import RadarExplainer from 'components/officer-page/radar-chart/explainer';
 import TriangleExplainer from 'components/officer-page/radar-chart/explainer/triangle-explainer';
@@ -48,7 +48,7 @@ describe('Explainer component', function () {
   });
 
   it('should render TriangleExplainer by default', function () {
-    const closeExplainerSpy = spy();
+    const closeExplainerSpy = sinon.spy();
 
     let radarExplainer = null;
     const wrapper = mount(
@@ -114,7 +114,7 @@ describe('Explainer component', function () {
   });
 
   it('should invoke closeExplainer when clicking on the close button', function () {
-    const closeExplainerSpy = spy();
+    const closeExplainerSpy = sinon.spy();
     const wrapper = mount(
       <Provider store={ store }>
         <RadarExplainer percentileData={ data } closeExplainer={ closeExplainerSpy }/>

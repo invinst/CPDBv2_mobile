@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 import should from 'should';
 
 import LocationMap from 'components/common/location-map';
@@ -30,31 +30,29 @@ describe('LocationMap component', function () {
     const wrapper = mount(<LocationMap lng={ 0 } lat={ 0 } />);
     const instance = wrapper.instance();
     instance.handleMapClick();
-    const zoomOutSpy = spy(instance, 'zoomOut');
+    const zoomOutSpy = sinon.spy(instance, 'zoomOut');
 
     instance.map.getZoom.returns(13);
 
     wrapper.setProps({ lng: 1, lat: 1 });
 
     zoomOutSpy.called.should.be.true();
-    instance.map.getZoom.resetHistory();
   });
 
   it('should call zoomIn when click and map is zoomed out', function () {
     const wrapper = mount(<LocationMap lng={ 1 } lat={ 1 } />);
     const instance = wrapper.instance();
-    const zoomIn = spy(instance, 'zoomIn');
+    const zoomIn = sinon.spy(instance, 'zoomIn');
 
     instance.map.getZoom.returns(8);
     instance.handleMapClick();
     zoomIn.called.should.be.true();
-    instance.map.getZoom.resetHistory();
   });
 
   it('should call zoomOut when click and map is zoomed in', function () {
     const wrapper = mount(<LocationMap lng={ 1 } lat={ 1 } />);
     const instance = wrapper.instance();
-    const zoomOut = spy(instance, 'zoomOut');
+    const zoomOut = sinon.spy(instance, 'zoomOut');
 
     instance.map.getZoom.returns(13);
     instance.handleMapClick();

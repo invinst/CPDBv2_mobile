@@ -1,4 +1,4 @@
-import { stub } from 'sinon';
+import sinon from 'sinon';
 
 import trackingMiddleware from 'middleware/tracking-middleware';
 import { ROUTE_CHANGED } from 'actions/navigation';
@@ -13,7 +13,7 @@ import * as tracking from 'utils/tracking';
 
 describe('trackingMiddleware', function () {
   it('should track PageView event on ROUTE_CHANGED', function () {
-    stub(tracking, 'trackPageView');
+    sinon.stub(tracking, 'trackPageView');
 
     let dispatched;
     const dispatchAction = {
@@ -27,12 +27,10 @@ describe('trackingMiddleware', function () {
 
     dispatched.should.eql(dispatchAction);
     tracking.trackPageView.should.be.calledWith('abc');
-
-    tracking.trackPageView.restore();
   });
 
   it('should track search query on SEARCH_QUERY_CHANGED', function () {
-    stub(tracking, 'trackSearchQuery');
+    sinon.stub(tracking, 'trackSearchQuery');
 
     let dispatched;
     const dispatchAction = {
@@ -44,12 +42,10 @@ describe('trackingMiddleware', function () {
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSearchQuery.should.be.calledWith('abc');
-
-    tracking.trackSearchQuery.restore();
   });
 
   it('should track search results count on SUGGEST_ALL_REQUEST_SUCCESS', function () {
-    stub(tracking, 'trackSearchResultsCount');
+    sinon.stub(tracking, 'trackSearchResultsCount');
 
     let dispatched;
     const dispatchAction = {
@@ -61,12 +57,10 @@ describe('trackingMiddleware', function () {
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSearchResultsCount.should.be.calledWith(1);
-
-    tracking.trackSearchResultsCount.restore();
   });
 
   it('should track search results count on SUGGESTION_REQUEST_SUCCESS', function () {
-    stub(tracking, 'trackSearchResultsCount');
+    sinon.stub(tracking, 'trackSearchResultsCount');
 
     let dispatched;
     const dispatchAction = {
@@ -81,12 +75,10 @@ describe('trackingMiddleware', function () {
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSearchResultsCount.should.be.calledWith(3);
-
-    tracking.trackSearchResultsCount.restore();
   });
 
   it('should trackSingleSearchResults on SUGGESTION_SINGLE_REQUEST_SUCCESS', function () {
-    stub(tracking, 'trackSingleSearchResults');
+    sinon.stub(tracking, 'trackSingleSearchResults');
 
     let dispatched;
     const dispatchAction = {
@@ -102,7 +94,5 @@ describe('trackingMiddleware', function () {
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSingleSearchResults.should.be.calledWith('OFFICER', '123', 2);
-
-    tracking.trackSingleSearchResults.restore();
   });
 });

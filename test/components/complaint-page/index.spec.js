@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 import should from 'should';
 import configureStore from 'redux-mock-store';
 
@@ -29,7 +29,7 @@ describe('ComplaintPage component', function () {
   });
 
   it('should call requestComplaint when component mounted', function () {
-    const requestComplaintSpy = spy();
+    const requestComplaintSpy = sinon.spy();
     const store = configureStore()({
       breadcrumb: {
         breadcrumbs: [],

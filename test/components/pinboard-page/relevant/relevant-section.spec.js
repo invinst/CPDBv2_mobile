@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import RelevantSection from 'components/pinboard-page/relevant';
 import RelevantDocuments from 'components/pinboard-page/relevant/relevant-documents';
@@ -23,10 +23,10 @@ describe('<RelevantSection />', function () {
   });
 
   it('should render relevant rows correctly', function () {
-    const fetchPinboardRelevantDocuments = spy();
-    const fetchPinboardRelevantCoaccusals = spy();
-    const fetchPinboardRelevantComplaints = spy();
-    const addItemInPinboardPage = spy();
+    const fetchPinboardRelevantDocuments = sinon.spy();
+    const fetchPinboardRelevantCoaccusals = sinon.spy();
+    const fetchPinboardRelevantComplaints = sinon.spy();
+    const addItemInPinboardPage = sinon.spy();
 
     const wrapper = shallow(
       <RelevantSection

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import OfficerItem from 'components/search-page/officer-item';
 import SearchItem from 'components/search-page/search-item';
@@ -9,8 +9,8 @@ import SearchItem from 'components/search-page/search-item';
 
 describe('<OfficerItem />', function () {
   it('should render officer correctly', function () {
-    const saveToRecentSpy = spy();
-    const addOrRemoveItemInPinboardSpy = spy();
+    const saveToRecentSpy = sinon.spy();
+    const addOrRemoveItemInPinboardSpy = sinon.spy();
     const recentItemData = {
       id: '8562',
       type: 'OFFICER',

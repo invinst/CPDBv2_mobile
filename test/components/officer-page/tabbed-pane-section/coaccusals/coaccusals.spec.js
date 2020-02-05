@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { stub } from 'sinon';
+import sinon from 'sinon';
 
 import Coaccusals from 'components/officer-page/tabbed-pane-section/coaccusals';
 import OfficerCard from 'components/officer-page/tabbed-pane-section/coaccusals/officer-card';
@@ -10,7 +10,7 @@ import styles from 'components/officer-page/tabbed-pane-section/coaccusals/coacc
 describe('Coaccusals component', function () {
 
   it('should render enough groups and coaccusal cards', function () {
-    const addOrRemoveItemInPinboard = stub();
+    const addOrRemoveItemInPinboard = sinon.stub();
     const coaccusalGroups = [
       {
         name: 'COACCUSED 2-4 TIMES',

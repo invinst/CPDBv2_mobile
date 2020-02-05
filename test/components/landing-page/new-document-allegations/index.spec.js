@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import NewDocumentAllegations from 'components/landing-page/new-document-allegations';
 import { EditorState } from 'draft-js';
@@ -12,7 +12,7 @@ describe('<NewDocumentAllegations />', function () {
     const newDocumentAllegations = [{ crid: '123' }, { crid: '456' }];
     const titleCMSContent = EditorState.createEmpty();
     const descriptionCMSContent = EditorState.createEmpty();
-    const onTrackingAttachment = spy();
+    const onTrackingAttachment = sinon.spy();
 
     const wrapper = shallow(
       <NewDocumentAllegations
@@ -40,7 +40,7 @@ describe('<NewDocumentAllegations />', function () {
   });
 
   it('should call requestNewDocumentAllegations', function () {
-    const requestNewDocumentAllegationsSpy = spy();
+    const requestNewDocumentAllegationsSpy = sinon.spy();
     mount(
       <NewDocumentAllegations
         requestNewDocumentAllegations={ requestNewDocumentAllegationsSpy }

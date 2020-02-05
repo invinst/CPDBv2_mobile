@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { stub } from 'sinon';
+import sinon from 'sinon';
 
 import Timeline from 'components/officer-page/tabbed-pane-section/timeline';
 import Item from 'components/officer-page/tabbed-pane-section/timeline/item';
@@ -104,7 +104,7 @@ describe('Timeline component', function () {
       RANK_UNIT_CHANGES: 0,
     };
 
-    const changeFilterStub = stub();
+    const changeFilterStub = sinon.stub();
     const wrapper = mount(
       <Timeline
         selectedFilter={ TIMELINE_FILTERS.SUSTAINED }

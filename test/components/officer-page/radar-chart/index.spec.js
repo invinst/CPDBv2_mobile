@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import should from 'should';
 import { mount, shallow, ReactWrapper } from 'enzyme';
-import { stub, useFakeTimers, spy } from 'sinon';
+import sinon from 'sinon';
 import Modal from 'react-modal';
 import { EditorState } from 'draft-js';
 
@@ -111,13 +111,8 @@ describe('AnimatedRadarChart component', function () {
 
   context('open the explainer', function () {
     beforeEach(function () {
-      stub(IntercomTracking, 'trackOpenExplainer');
-      stub(tracking, 'trackOpenExplainer');
-    });
-
-    afterEach(function () {
-      tracking.trackOpenExplainer.restore();
-      IntercomTracking.trackOpenExplainer.restore();
+      sinon.stub(IntercomTracking, 'trackOpenExplainer');
+      sinon.stub(tracking, 'trackOpenExplainer');
     });
 
     it('should open the explainer clicking on the radar chart and track this event', function () {
@@ -158,11 +153,7 @@ describe('AnimatedRadarChart component', function () {
   describe('test animate', function () {
     let clock;
     beforeEach(function () {
-      clock = useFakeTimers();
-    });
-
-    afterEach(function () {
-      clock.restore();
+      clock = sinon.useFakeTimers();
     });
 
     it('should not animate if data length is 1', function () {
@@ -197,7 +188,7 @@ describe('AnimatedRadarChart component', function () {
       );
       const instance = wrapper.instance();
 
-      const stopTimerSpy = spy(instance, 'stopTimer');
+      const stopTimerSpy = sinon.spy(instance, 'stopTimer');
       wrapper.unmount();
 
       stopTimerSpy.called.should.be.true();
@@ -211,7 +202,7 @@ describe('AnimatedRadarChart component', function () {
           <AnimatedRadarChart officerId={ 123 } ref={ (c) => {animatedRadarChart = c;} } percentileData={ data }/>
         </Provider>
       );
-      const startAnimation = spy(animatedRadarChart, 'startAnimation');
+      const startAnimation = sinon.spy(animatedRadarChart, 'startAnimation');
 
       wrapper.find('.radar-chart-container').simulate('click');
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import CrItem from 'components/search-page/cr-item';
 import SearchItem from 'components/search-page/search-item';
@@ -9,8 +9,8 @@ import SearchItem from 'components/search-page/search-item';
 
 describe('<CrItem />', function () {
   it('should render cr correctly', function () {
-    const saveToRecentSpy = spy();
-    const addOrRemoveItemInPinboardSpy = spy();
+    const saveToRecentSpy = sinon.spy();
+    const addOrRemoveItemInPinboardSpy = sinon.spy();
     const recentItemData = {
       crid: '1027271',
       url: '/complaint/1027271/',

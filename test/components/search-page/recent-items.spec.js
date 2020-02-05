@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import RecentItems from 'components/search-page/recent-items';
 import OfficerItem from 'components/search-page/officer-item';
@@ -10,7 +10,7 @@ import TrrItem from 'components/search-page/trr-item';
 
 describe('<RecentItems />', function () {
   it('should render items correctly', function () {
-    const addOrRemoveItemInPinboardSpy = spy();
+    const addOrRemoveItemInPinboardSpy = sinon.spy();
     const cr = {
       crid: '1027271',
       url: '/complaint/1027271/',

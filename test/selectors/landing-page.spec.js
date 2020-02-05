@@ -1,5 +1,5 @@
 import lodash, { range, some, isEqual, sortBy } from 'lodash';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import {
   topOfficersByAllegationSelector,
@@ -74,15 +74,13 @@ describe('landing page selectors', function () {
     });
 
     it('should shuffle cards', function () {
-      const stubShuffle = spy(lodash, 'shuffle');
+      const stubShuffle = sinon.spy(lodash, 'shuffle');
       state.landingPage.topOfficersByAllegation = lodash.range(40);
 
       topOfficersByAllegationSelector(state);
 
       stubShuffle.should.be.calledWith(lodash.range(0, 12));
       stubShuffle.should.be.calledWith(lodash.range(12, 40));
-
-      stubShuffle.restore();
     });
   });
 
@@ -131,15 +129,13 @@ describe('landing page selectors', function () {
     });
 
     it('should shuffle cards', function () {
-      const stubShuffle = spy(lodash, 'shuffle');
+      const stubShuffle = sinon.spy(lodash, 'shuffle');
       state.landingPage.complaintSummaries = lodash.range(40);
 
       complaintSummariesSelector(state);
 
       stubShuffle.should.be.calledWith(lodash.range(0, 12));
       stubShuffle.should.be.calledWith(lodash.range(12, 40));
-
-      stubShuffle.restore();
     });
   });
 
@@ -178,15 +174,13 @@ describe('landing page selectors', function () {
     });
 
     it('should shuffle cards', function () {
-      const stubShuffle = spy(lodash, 'shuffle');
+      const stubShuffle = sinon.spy(lodash, 'shuffle');
       state.landingPage.recentActivities = lodash.range(40);
 
       recentActivitiesSelector(state);
 
       stubShuffle.should.be.calledWith(lodash.range(0, 12));
       stubShuffle.should.be.calledWith(lodash.range(12, 40));
-
-      stubShuffle.restore();
     });
   });
 

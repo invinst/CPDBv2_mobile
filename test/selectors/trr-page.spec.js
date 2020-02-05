@@ -1,5 +1,5 @@
 import should from 'should';
-import { stub } from 'sinon';
+import sinon from 'sinon';
 
 import { trrSelector, getCMSRequested, buttonText, requestDocumentButtonMessage } from 'selectors/trr-page';
 import * as draftjsUtils from 'utils/draftjs';
@@ -169,7 +169,7 @@ describe('trr-page selectors', function () {
 
   describe('requestDocumentButtonMessage selector', function () {
     it('should return document request instruction message', function () {
-      stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
+      sinon.stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
       const state = {
         trrPage: {
           cms: [
@@ -186,7 +186,6 @@ describe('trr-page selectors', function () {
       };
 
       requestDocumentButtonMessage(state).should.eql('This is document request instruction message');
-      draftjsUtils.convertContentStateToEditorState.restore();
     });
   });
 });

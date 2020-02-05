@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import should from 'should';
 import { Link } from 'react-router';
-import { stub, useFakeTimers } from 'sinon';
+import sinon from 'sinon';
 
 import RelevantComplaintCard, { RelevantComplaintCardWithUndo }
   from 'components/pinboard-page/relevant/relevant-complaints/relevant-complaint-card';
@@ -57,7 +57,7 @@ describe('<RelevantComplaintCard />', function () {
   }];
 
   it('should render enough content correctly', function () {
-    const addItemInPinboardPageStub = stub();
+    const addItemInPinboardPageStub = sinon.stub();
 
     const wrapper = mount(
       <RelevantComplaintCard
@@ -89,7 +89,7 @@ describe('<RelevantComplaintCard />', function () {
   });
 
   it('should render when no point', function () {
-    const addItemInPinboardPageStub = stub();
+    const addItemInPinboardPageStub = sinon.stub();
 
     const wrapper = shallow(
       <RelevantComplaintCard
@@ -118,15 +118,11 @@ describe('<RelevantComplaintCard />', function () {
     let clock;
 
     beforeEach(function () {
-      clock = useFakeTimers();
-    });
-
-    afterEach(function () {
-      clock.restore();
+      clock = sinon.useFakeTimers();
     });
 
     it('should render remove text correctly', function () {
-      const addItemInPinboardPageStub = stub();
+      const addItemInPinboardPageStub = sinon.stub();
       const wrapper = mount(
         <RelevantComplaintCardWithUndo
           crid='123'
@@ -145,7 +141,7 @@ describe('<RelevantComplaintCard />', function () {
     });
 
     it('should not be reversed after the undo card disappears', function () {
-      const addItemInPinboardPageStub = stub();
+      const addItemInPinboardPageStub = sinon.stub();
       const wrapper = mount(
         <RelevantComplaintCardWithUndo
           crid='123'

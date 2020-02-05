@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount, ReactWrapper } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 import Modal from 'react-modal';
 
 import RequestDocumentButton from 'components/common/request-document/request-document-button';
@@ -22,7 +22,7 @@ describe('RequestDocumentButton component', function () {
   });
 
   it('should open the request form when being clicked', function () {
-    const requestDocumentSpy = spy();
+    const requestDocumentSpy = sinon.spy();
     const wrapper = mount(
       <RequestDocumentButton
         requestDocument={ requestDocumentSpy }
@@ -46,7 +46,7 @@ describe('RequestDocumentButton component', function () {
   });
 
   it('should close the the request form when closeRequestForm is called', function () {
-    const requestDocumentSpy = spy();
+    const requestDocumentSpy = sinon.spy();
     const wrapper = mount(
       <RequestDocumentButton
         requestDocument={ requestDocumentSpy }

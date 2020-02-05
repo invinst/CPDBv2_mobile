@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Link } from 'react-router';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 import { random } from 'faker';
 
 import ItemPinButton from 'components/common/item-pin-button';
@@ -41,7 +41,7 @@ describe('CoaccusedCard component', function () {
   });
 
   it('should render ItemPinButton with correct props', function () {
-    const addOrRemoveItemInPinboard = spy();
+    const addOrRemoveItemInPinboard = sinon.spy();
 
     const wrapper = mount(
       <CoaccusedCard

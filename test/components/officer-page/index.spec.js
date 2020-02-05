@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount, shallow } from 'enzyme';
-import { spy, stub } from 'sinon';
+import sinon from 'sinon';
 import { cloneDeep } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
@@ -66,7 +66,7 @@ describe('<OfficerPage />', function () {
   });
 
   it('should resetTimelineFilter when mounted', function () {
-    const resetTimelineFilter = spy();
+    const resetTimelineFilter = sinon.spy();
     mount(
       <OfficerPage loading={ true } found={ false } resetTimelineFilter={ resetTimelineFilter }/>
     );
@@ -75,7 +75,7 @@ describe('<OfficerPage />', function () {
   });
 
   it('should resetTimelineFilter when update with new requestOfficerId', function () {
-    const resetTimelineFilter = spy();
+    const resetTimelineFilter = sinon.spy();
     const wrapper = mount(
       <OfficerPage
         requestOfficerId={ 1 }
@@ -94,7 +94,7 @@ describe('<OfficerPage />', function () {
   });
 
   it('should set to the correct officer if there is officer alias', function () {
-    const pushBreadcrumbSpy = spy();
+    const pushBreadcrumbSpy = sinon.spy();
     const wrapper = shallow(
       <OfficerPage
         loading={ false }
@@ -115,7 +115,7 @@ describe('<OfficerPage />', function () {
   });
 
   it('should not fetch officer data if summary is already available', function () {
-    const spyfetchOfficer = spy();
+    const spyfetchOfficer = sinon.spy();
 
     const wrapper = shallow(
       <OfficerPage
@@ -131,9 +131,9 @@ describe('<OfficerPage />', function () {
   });
 
   it('should not fetch officer data if officer id is empty', function () {
-    const spyfetchOfficer = spy();
-    const spyGetOfficerTimeline = spy();
-    const spyGetOfficerCoaccusals = spy();
+    const spyfetchOfficer = sinon.spy();
+    const spyGetOfficerTimeline = sinon.spy();
+    const spyGetOfficerCoaccusals = sinon.spy();
 
     const wrapper = shallow(
       <OfficerPage
@@ -153,7 +153,7 @@ describe('<OfficerPage />', function () {
   });
 
   it('should fetch officer data if summary is not available', function () {
-    const spyfetchOfficer = spy();
+    const spyfetchOfficer = sinon.spy();
 
     const wrapper = shallow(
       <OfficerPage
@@ -171,11 +171,7 @@ describe('<OfficerPage />', function () {
 
   describe('Path name', function () {
     beforeEach(function () {
-      spy(window.history, 'replaceState');
-    });
-
-    afterEach(function () {
-      window.history.replaceState.restore();
+      sinon.spy(window.history, 'replaceState');
     });
 
     it('should be replaced with correct one', function () {
@@ -1027,8 +1023,8 @@ describe('<OfficerPage />', function () {
     });
 
     it('should get officer timeline and officer coaccusals after the component is mounted', function () {
-      const stubGetOfficerTimeline = stub();
-      const stubGetOfficerCoaccusals = stub();
+      const stubGetOfficerTimeline = sinon.stub();
+      const stubGetOfficerCoaccusals = sinon.stub();
 
       const wrapper = shallow(
         <OfficerPage
@@ -1049,8 +1045,8 @@ describe('<OfficerPage />', function () {
     });
 
     it('should get officer timeline and officer coaccusals if the component is updated', function () {
-      const stubGetOfficerTimeline = stub();
-      const stubGetOfficerCoaccusals = stub();
+      const stubGetOfficerTimeline = sinon.stub();
+      const stubGetOfficerCoaccusals = sinon.stub();
       const prevProps = {
         requestOfficerId: 123,
       };

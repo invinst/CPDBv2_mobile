@@ -1,4 +1,4 @@
-import { stub } from 'sinon';
+import sinon from 'sinon';
 
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 import {
@@ -54,7 +54,7 @@ describe('pinboard utils', function () {
             },
           };
         },
-        dispatch: stub().usingPromise(Promise).resolves('abc'),
+        dispatch: sinon.stub().usingPromise(Promise).resolves('abc'),
       };
       dispatchFetchPinboardPageData(store, '66ef1560');
 
@@ -82,7 +82,7 @@ describe('pinboard utils', function () {
             },
           };
         },
-        dispatch: stub().usingPromise(Promise).resolves('abc'),
+        dispatch: sinon.stub().usingPromise(Promise).resolves('abc'),
       };
       dispatchFetchPinboardPinnedItems(store, '66ef1560');
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { stub, spy } from 'sinon';
+import sinon from 'sinon';
 
 import PinboardInfo from 'components/pinboard-page/pinboard-info';
 import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-textarea-input';
@@ -8,7 +8,7 @@ import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-te
 
 describe('<PinboardInfo />', function () {
   it('should render correctly', function () {
-    const updatePinboardInfoStub = stub();
+    const updatePinboardInfoStub = sinon.stub();
     const pinboard = {
       title: 'This is pinboard title',
       description: 'This is pinboard description',
@@ -48,9 +48,9 @@ describe('<PinboardInfo />', function () {
   });
 
   it('should replace location history when title is updated', function () {
-    spy(window.history, 'replaceState');
+    sinon.spy(window.history, 'replaceState');
 
-    const updatePinboardInfoStub = stub();
+    const updatePinboardInfoStub = sinon.stub();
     const pinboard = {
       id: '66ef1560',
       url: '/pinboard/66ef1560/this-is-pinboard-title/',
@@ -86,7 +86,5 @@ describe('<PinboardInfo />', function () {
     wrapper.setProps({ pinboard: newDescriptionPinboard, updatePinboardInfo: updatePinboardInfoStub });
 
     window.history.replaceState.should.not.be.called();
-
-    window.history.replaceState.restore();
   });
 });

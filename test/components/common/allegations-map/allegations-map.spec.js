@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { times, cloneDeep } from 'lodash';
-import { stub, spy } from 'sinon';
+import sinon from 'sinon';
 import ReactDOMServer from 'react-dom/server';
 import should from 'should';
 
@@ -120,8 +120,8 @@ describe('Map component', function () {
 
   describe('componentWillReceiveProps', function () {
     it('should call resetMap and addMapLayersOnStyleLoaded if next props clearAllMarkers is true', function () {
-      const resetMapStub = stub(AllegationsMap.prototype, 'resetMap');
-      const addMapLayersOnStyleLoadedStub = stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      const resetMapStub = sinon.stub(AllegationsMap.prototype, 'resetMap');
+      const addMapLayersOnStyleLoadedStub = sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
 
       const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
@@ -129,12 +129,10 @@ describe('Map component', function () {
 
       resetMapStub.should.be.called();
       addMapLayersOnStyleLoadedStub.should.be.calledWith(markerGroups);
-      AllegationsMap.prototype.resetMap.restore();
-      AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
     });
 
     it('should only call addMapLayersOnStyleLoaded if next props clearAllMarkers is false', function () {
-      const addMapLayersOnStyleLoadedStub = stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      const addMapLayersOnStyleLoadedStub = sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
       const newMarkerGroups = {
         crs: [],
         trrs: [
@@ -155,7 +153,6 @@ describe('Map component', function () {
       wrapper.setProps({ legend, markerGroups: newMarkerGroups, clearAllMarkers: false });
 
       addMapLayersOnStyleLoadedStub.should.be.calledWith(newMarkerGroups);
-      AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
     });
   });
 
@@ -190,7 +187,7 @@ describe('Map component', function () {
   });
 
   it('should call addMapLayersOnStyleLoaded when componentDidMount', function () {
-    const addMapLayersOnStyleLoadedStub = stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+    const addMapLayersOnStyleLoadedStub = sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
     const createMarker = (index) => ({
       point: {
         lat: 42.012567,
@@ -207,12 +204,11 @@ describe('Map component', function () {
     mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
     addMapLayersOnStyleLoadedStub.should.be.calledWith(markerGroups);
-    AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
   });
 
   describe('addMapLayer', function () {
     it('should bind click event when calling addMapLayer', function () {
-      stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
       const crMarkers = [
         {
           point: {
@@ -242,7 +238,7 @@ describe('Map component', function () {
       const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
       const instance = wrapper.instance();
-      const mapOnStub = stub(instance.map, 'on');
+      const mapOnStub = sinon.stub(instance.map, 'on');
 
       instance.addMapLayer('crs', crMarkers);
       instance.map.addSource.should.be.calledWith(
@@ -299,13 +295,10 @@ describe('Map component', function () {
       mouseClickArgs[0].should.eql('click');
       mouseClickArgs[1].should.eql('layer-0');
       mouseClickArgs[2].should.eql(instance.openTooltip);
-
-      mapOnStub.restore();
-      AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
     });
 
     it('should not add new layer if markers data is empty', function () {
-      stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
 
       const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
@@ -314,12 +307,10 @@ describe('Map component', function () {
 
       instance.map.addSource.should.not.be.called();
       instance.map.addLayer.should.not.be.called();
-
-      AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
     });
 
     it('should addLayer with correct aboveLayerName', function () {
-      stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
       const crMarkers1 = [
         {
           point: {
@@ -390,8 +381,6 @@ describe('Map component', function () {
       instance.map.addLayer.resetHistory();
       instance.addMapLayer('crs', crMarkers3);
       instance.map.addLayer.getCall(0).args[1].should.equal('layer-2');
-
-      AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
     });
   });
 
@@ -467,7 +456,7 @@ describe('Map component', function () {
   });
 
   it('should reset the map when calling resetMap', function () {
-    const initMapDataSpy = spy(AllegationsMap.prototype, 'initMapData');
+    const initMapDataSpy = sinon.spy(AllegationsMap.prototype, 'initMapData');
 
     const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
     const instance = wrapper.instance();
@@ -481,7 +470,6 @@ describe('Map component', function () {
     initMapDataSpy.should.be.calledOnce();
     instance.map.removeLayer.should.be.calledWith('layer-0');
     instance.map.removeSource.should.be.calledWith('layer-0');
-    AllegationsMap.prototype.initMapData.restore();
   });
 
   it('should return correct data when calling mapMarkersData', function () {
@@ -550,18 +538,17 @@ describe('Map component', function () {
   });
 
   it('should call addMapLayer when calling addMapLayers', function () {
-    const addMapLayerStub = stub(AllegationsMap.prototype, 'addMapLayer');
+    const addMapLayerStub = sinon.stub(AllegationsMap.prototype, 'addMapLayer');
     const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
     const instance = wrapper.instance();
     addMapLayerStub.resetHistory();
 
     instance.addMapLayers(markerGroups);
     addMapLayerStub.should.be.calledTwice();
-    AllegationsMap.prototype.addMapLayer.restore();
   });
 
   it('should add map layer when calling addMapLayersOnStyleLoaded', function () {
-    const addMapLayersStub = stub(AllegationsMap.prototype, 'addMapLayers');
+    const addMapLayersStub = sinon.stub(AllegationsMap.prototype, 'addMapLayers');
     const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
     const instance = wrapper.instance();
     addMapLayersStub.resetHistory();
@@ -569,7 +556,6 @@ describe('Map component', function () {
     instance.map.isStyleLoaded.returns(true);
     instance.addMapLayersOnStyleLoaded(markerGroups);
     addMapLayersStub.should.be.calledOnce();
-    addMapLayersStub.restore();
   });
 
   it('should call addControl when component render', function () {

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import should from 'should';
 import { Link } from 'react-router';
-import { stub, useFakeTimers } from 'sinon';
+import sinon from 'sinon';
 
 import RelevantCoaccusalCard, { RelevantCoaccusalCardWithUndo }
   from 'components/pinboard-page/relevant/relevant-coaccusals/relevant-coaccusal-card';
@@ -13,7 +13,7 @@ import constants from 'constants';
 
 describe('<RelevantCoaccusalCard />', function () {
   it('should render enough content correctly', function () {
-    const addItemInPinboardPageStub = stub();
+    const addItemInPinboardPageStub = sinon.stub();
 
     const wrapper = shallow(
       <RelevantCoaccusalCard
@@ -81,7 +81,7 @@ describe('<RelevantCoaccusalCard />', function () {
   });
 
   it('should render pluralize coaccusalCount and handle no percentile data', function () {
-    const addItemInPinboardPageStub = stub();
+    const addItemInPinboardPageStub = sinon.stub();
 
     const wrapper = shallow(
       <RelevantCoaccusalCard
@@ -114,15 +114,11 @@ describe('<RelevantCoaccusalCard />', function () {
     let clock;
 
     beforeEach(function () {
-      clock = useFakeTimers();
-    });
-
-    afterEach(function () {
-      clock.restore();
+      clock = sinon.useFakeTimers();
     });
 
     it('should render remove text correctly', function () {
-      const addItemInPinboardPageStub = stub();
+      const addItemInPinboardPageStub = sinon.stub();
       const wrapper = mount(
         <RelevantCoaccusalCardWithUndo
           addItemInPinboardPage={ addItemInPinboardPageStub }
@@ -141,7 +137,7 @@ describe('<RelevantCoaccusalCard />', function () {
     });
 
     it('should not be reversed after the undo card disappears', function () {
-      const addItemInPinboardPageStub = stub();
+      const addItemInPinboardPageStub = sinon.stub();
       const wrapper = mount(
         <RelevantCoaccusalCardWithUndo
           addItemInPinboardPage={ addItemInPinboardPageStub }

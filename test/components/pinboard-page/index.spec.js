@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 
@@ -75,7 +75,7 @@ describe('<PinboardPage />', function () {
       'CR': [],
       'TRR': [],
     };
-    const removeItemInPinboardPage = spy();
+    const removeItemInPinboardPage = sinon.spy();
     const wrapper = mount(
       <Provider store={ store }>
         <PinboardPage
@@ -188,8 +188,8 @@ describe('<PinboardPage />', function () {
       'CR': [],
       'TRR': [],
     };
-    const removeItemInPinboardPage = spy();
-    const pushBreadcrumbs = spy();
+    const removeItemInPinboardPage = sinon.spy();
+    const pushBreadcrumbs = sinon.spy();
     const routes = [];
     const location = { pathname: '/pinboard/5cd06f2b/' };
     const params = { pinboardId: '5cd06f2b' };
@@ -232,7 +232,7 @@ describe('<PinboardPage />', function () {
   });
 
   it('should requestCMS if does not hasCMS', function () {
-    const requestCMSSpy = spy();
+    const requestCMSSpy = sinon.spy();
 
     mount(
       <PinboardPage
@@ -248,7 +248,7 @@ describe('<PinboardPage />', function () {
   });
 
   it('should not requestCMS if hasCMS', function () {
-    const requestCMSSpy = spy();
+    const requestCMSSpy = sinon.spy();
 
     mount(
       <PinboardPage

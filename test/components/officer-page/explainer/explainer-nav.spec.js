@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import ExplainerNav from 'components/officer-page/radar-chart/explainer/explainer-nav';
 
@@ -19,8 +19,8 @@ describe('ExplainerNav component', function () {
   });
 
   it('should invoke leftNavHandler and rightNavHandler when clicking on navigation buttons', function () {
-    const leftNavHandlerSpy = spy();
-    const rightNavHandlerSpy = spy();
+    const leftNavHandlerSpy = sinon.spy();
+    const rightNavHandlerSpy = sinon.spy();
     const wrapper = shallow(
       <ExplainerNav
         leftNavigationText='some left text'

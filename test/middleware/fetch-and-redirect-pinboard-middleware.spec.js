@@ -1,5 +1,5 @@
 import { Promise } from 'es6-promise';
-import { stub } from 'sinon';
+import sinon from 'sinon';
 import { browserHistory } from 'react-router';
 import { CancelToken } from 'axios';
 
@@ -32,15 +32,11 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
         },
       };
     },
-    dispatch: stub().usingPromise(Promise).resolves('abc'),
+    dispatch: sinon.stub().usingPromise(Promise).resolves('abc'),
   });
 
   beforeEach(function () {
-    this.cancelTokenSource = stub(CancelToken, 'source');
-  });
-
-  afterEach(function () {
-    this.cancelTokenSource.restore();
+    sinon.stub(CancelToken, 'source');
   });
 
   describe('handling @@router/LOCATION_CHANGE', function () {
@@ -142,15 +138,9 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
   describe('handling PINBOARD_FETCH_REQUEST_SUCCESS', function () {
     beforeEach(function () {
-      stub(browserHistory, 'replace');
-      stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/2bd40cf2/old-title/' });
+      sinon.stub(browserHistory, 'replace');
+      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/2bd40cf2/old-title/' });
       this.store = createStore();
-    });
-
-    afterEach(function () {
-      browserHistory.replace.restore();
-      browserHistory.getCurrentLocation.restore();
-      this.store.dispatch.resetHistory();
     });
 
     it('should fetch pinboard data if being on pinboard page', function () {
@@ -228,7 +218,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
     it('should do nothing if not being on a pinboard page', function () {
       browserHistory.getCurrentLocation.restore();
-      stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/search/' });
+      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/search/' });
 
       const action = {
         type: PINBOARD_FETCH_REQUEST_SUCCESS,
@@ -249,15 +239,9 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
   describe('handling PINBOARD_CREATE_REQUEST_SUCCESS', function () {
     beforeEach(function () {
-      stub(browserHistory, 'replace');
-      stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/' });
+      sinon.stub(browserHistory, 'replace');
+      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/' });
       this.store = createStore();
-    });
-
-    afterEach(function () {
-      browserHistory.replace.restore();
-      browserHistory.getCurrentLocation.restore();
-      this.store.dispatch.resetHistory();
     });
 
     it('should fetch new pinboard data and replace location', function () {
@@ -291,15 +275,9 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
   describe('handling PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS', function () {
     beforeEach(function () {
-      stub(browserHistory, 'replace');
-      stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/' });
+      sinon.stub(browserHistory, 'replace');
+      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/' });
       this.store = createStore();
-    });
-
-    afterEach(function () {
-      browserHistory.replace.restore();
-      browserHistory.getCurrentLocation.restore();
-      this.store.dispatch.resetHistory();
     });
 
     it('should fetch pinboard data with new id and replace location when new pinboard was returned', function () {
@@ -346,7 +324,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
     it('should do nothing if not being on a pinboard page', function () {
       browserHistory.getCurrentLocation.restore();
-      stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/search/' });
+      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/search/' });
 
       const action = {
         type: PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
@@ -367,15 +345,9 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
   describe('handling PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS', function () {
     beforeEach(function () {
-      stub(browserHistory, 'replace');
-      stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/' });
+      sinon.stub(browserHistory, 'replace');
+      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/' });
       this.store = createStore();
-    });
-
-    afterEach(function () {
-      browserHistory.replace.restore();
-      browserHistory.getCurrentLocation.restore();
-      this.store.dispatch.resetHistory();
     });
 
     it('should fetch pinboard data with new id and replace location when new pinboard was returned', function () {

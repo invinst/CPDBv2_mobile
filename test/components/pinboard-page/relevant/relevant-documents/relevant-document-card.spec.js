@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { stub, useFakeTimers } from 'sinon';
+import sinon from 'sinon';
 
 import RelevantDocumentCard, { RelevantDocumentCardWithUndo }
   from 'components/pinboard-page/relevant/relevant-documents/relevant-document-card';
@@ -62,7 +62,7 @@ describe('<RelevantDocumentCard />', function () {
   };
 
   it('should render enough content correctly', function () {
-    const addItemInPinboardPageStub = stub();
+    const addItemInPinboardPageStub = sinon.stub();
 
     const wrapper = mount(
       <RelevantDocumentCard
@@ -98,15 +98,11 @@ describe('<RelevantDocumentCard />', function () {
     let clock;
 
     beforeEach(function () {
-      clock = useFakeTimers();
-    });
-
-    afterEach(function () {
-      clock.restore();
+      clock = sinon.useFakeTimers();
     });
 
     it('should render remove text correctly', function () {
-      const addItemInPinboardPageStub = stub();
+      const addItemInPinboardPageStub = sinon.stub();
       const wrapper = mount(
         <RelevantDocumentCardWithUndo
           url='https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
@@ -124,7 +120,7 @@ describe('<RelevantDocumentCard />', function () {
     });
 
     it('should be reversed after the undo card disappears', function () {
-      const addItemInPinboardPageStub = stub();
+      const addItemInPinboardPageStub = sinon.stub();
       const wrapper = mount(
         <RelevantDocumentCardWithUndo
           url='https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'

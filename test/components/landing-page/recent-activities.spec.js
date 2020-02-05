@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import RecentActivities from 'components/landing-page/recent-activities';
 import { EditorState } from 'draft-js';
@@ -36,7 +36,7 @@ describe('<RecentActivities />', function () {
   });
 
   it('should call requestRecentActivities', function () {
-    const requestRecentActivitiesSpy = spy();
+    const requestRecentActivitiesSpy = sinon.spy();
     mount(
       <RecentActivities
         requestRecentActivities={ requestRecentActivitiesSpy }

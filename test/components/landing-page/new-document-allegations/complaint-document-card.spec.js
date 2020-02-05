@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Link } from 'react-router';
-import { stub } from 'sinon';
+import sinon from 'sinon';
 import { Router, Route, createMemoryHistory } from 'react-router';
 
 import * as tracking from 'utils/tracking';
@@ -13,7 +13,7 @@ import constants from 'constants';
 
 describe('<ComplaintDocumentCard />', function () {
   it('should render enough contents', function () {
-    const addOrRemoveItemInPinboard = stub();
+    const addOrRemoveItemInPinboard = sinon.stub();
     const allegation = {
       crid: '123',
       category: 'Operation/Personnel Violations',
@@ -47,7 +47,7 @@ describe('<ComplaintDocumentCard />', function () {
   });
 
   it('should track click event', function () {
-    const stubTrackAttachmentClick = stub(tracking, 'trackAttachmentClick');
+    const stubTrackAttachmentClick = sinon.stub(tracking, 'trackAttachmentClick');
     const allegation = {
       'crid': '123456',
     };
@@ -64,11 +64,10 @@ describe('<ComplaintDocumentCard />', function () {
       '/',
       '/complaint/123456/'
     );
-    stubTrackAttachmentClick.restore();
   });
 
   it('should track click on attachment event', function () {
-    const stubOnTrackingAttachment = stub();
+    const stubOnTrackingAttachment = sinon.stub();
     const allegation ={
       'crid': '123456',
       'document': {

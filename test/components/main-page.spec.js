@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { ToastContainer } from 'react-toastify';
-import { spy, stub } from 'sinon';
+import sinon from 'sinon';
 
 import config from 'config';
 import MainPage from 'components/main-page';
@@ -15,7 +15,7 @@ describe('MainPage component', function () {
   });
 
   it('should dispatch routeChanged action on mount', function () {
-    const spyRouteChanged = spy();
+    const spyRouteChanged = sinon.spy();
     const wrapper = shallow(
       <MainPage
         routeChanged={ spyRouteChanged }
@@ -43,7 +43,7 @@ describe('MainPage component', function () {
     const prevProps = {
       location: prevLocation,
     };
-    const spyRouteChanged = spy();
+    const spyRouteChanged = sinon.spy();
 
     const wrapper = shallow(
       <MainPage
@@ -66,7 +66,7 @@ describe('MainPage component', function () {
     const prevProps = {
       location: prevLocation,
     };
-    const spyRouteChanged = spy();
+    const spyRouteChanged = sinon.spy();
 
     const wrapper = shallow(
       <MainPage
@@ -96,11 +96,7 @@ describe('MainPage component', function () {
 
   context('enablePinboardFeature is false', function () {
     beforeEach(function () {
-      this.enableFeaturePinboardStub = stub(config.enableFeatures, 'pinboard').value(false);
-    });
-
-    afterEach(function () {
-      this.enableFeaturePinboardStub.restore();
+      sinon.stub(config.enableFeatures, 'pinboard').value(false);
     });
 
     it('should add pinboard-disabled class name', function () {
@@ -111,11 +107,7 @@ describe('MainPage component', function () {
 
   context('enablePinboardFeature is true', function () {
     beforeEach(function () {
-      this.enableFeaturePinboardStub = stub(config.enableFeatures, 'pinboard').value(true);
-    });
-
-    afterEach(function () {
-      this.enableFeaturePinboardStub.restore();
+      sinon.stub(config.enableFeatures, 'pinboard').value(true);
     });
 
     it('should add pinboard-disabled class name', function () {

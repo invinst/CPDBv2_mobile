@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import HorizontalScrolling from 'components/common/horizontal-scrolling';
 import * as tracking from 'utils/tracking';
@@ -25,7 +25,7 @@ describe('<HorizontalScrolling />', function () {
   });
 
   it('should track swiping action', function () {
-    spy(tracking, 'trackSwipeLandingPageCarousel');
+    sinon.spy(tracking, 'trackSwipeLandingPageCarousel');
 
     const wrapper = mount(
       <HorizontalScrolling trackingContentType='contentType'>
@@ -46,12 +46,10 @@ describe('<HorizontalScrolling />', function () {
     tracking.trackSwipeLandingPageCarousel.getCall(0).args.should.eql(['right', 'contentType']);
     tracking.trackSwipeLandingPageCarousel.getCall(1).args.should.eql(['right', 'contentType']);
     tracking.trackSwipeLandingPageCarousel.getCall(2).args.should.eql(['left', 'contentType']);
-
-    tracking.trackSwipeLandingPageCarousel.restore();
   });
 
   it('should loadMore when almost reaching the end', function () {
-    const loadMoreSpy = spy();
+    const loadMoreSpy = sinon.spy();
     const wrapper = mount(
       <HorizontalScrolling trackingContentType='contentType' hasMore={ true } loadMore={ loadMoreSpy }>
         <div>Child 1</div>
@@ -67,7 +65,7 @@ describe('<HorizontalScrolling />', function () {
   });
 
   it('should loadMore when reaching the end', function () {
-    const loadMoreSpy = spy();
+    const loadMoreSpy = sinon.spy();
     const wrapper = mount(
       <HorizontalScrolling trackingContentType='contentType' hasMore={ true } loadMore={ loadMoreSpy }>
         <div>Child 1</div>

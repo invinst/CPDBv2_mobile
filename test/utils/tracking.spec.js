@@ -1,17 +1,12 @@
-import { spy, stub, useFakeTimers } from 'sinon';
+import sinon from 'sinon';
 
 import * as tracking from 'utils/tracking';
 
 
 describe('tracking utils', function () {
   beforeEach(function () {
-    spy(window, 'ga');
-    stub(window.clicky, 'log');
-  });
-
-  afterEach(function () {
-    window.ga.restore();
-    window.clicky.log.restore();
+    sinon.spy(window, 'ga');
+    sinon.stub(window.clicky, 'log');
   });
 
   describe('trackSwipeLandingPageCarousel', function () {
@@ -70,7 +65,7 @@ describe('tracking utils', function () {
 
   describe('trackSearchFocusedItem', function () {
     it('should send event analytic at most once in 500ms', function () {
-      const clock = useFakeTimers();
+      const clock = sinon.useFakeTimers();
 
       tracking.trackSearchFocusedItem('contentType', 'query', 'itemId1', 1);
       tracking.trackSearchFocusedItem('contentType', 'query', 'itemId2', 2);
@@ -103,14 +98,12 @@ describe('tracking utils', function () {
       clock.tick(550);
 
       global.ga.callCount.should.equal(4);
-
-      clock.restore();
     });
   });
 
   describe('trackSearchQuery', function () {
     it('should send event analytic at most once in 500ms', function () {
-      const clock = useFakeTimers();
+      const clock = sinon.useFakeTimers();
 
       tracking.trackSearchQuery('que');
       tracking.trackSearchQuery('quer');
@@ -132,8 +125,6 @@ describe('tracking utils', function () {
 
       window.ga.should.be.calledTwice();
       window.clicky.log.should.be.calledTwice();
-
-      clock.restore();
     });
   });
 

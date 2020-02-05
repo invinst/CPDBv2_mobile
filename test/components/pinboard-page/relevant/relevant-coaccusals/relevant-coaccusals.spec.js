@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { stub } from 'sinon';
+import sinon from 'sinon';
 
 import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/relevant-infinite-carousel';
 import RelevantCoaccusals from 'components/pinboard-page/relevant/relevant-coaccusals';
@@ -23,8 +23,8 @@ describe('<RelevantCoaccusals />', function () {
       rank: 'Police Officer',
       coaccusalCount: 0,
     }];
-    const addItemInPinboardPageStub = stub();
-    const fetchPinboardRelevantCoaccusalsStub = stub();
+    const addItemInPinboardPageStub = sinon.stub();
+    const fetchPinboardRelevantCoaccusalsStub = sinon.stub();
 
     const wrapper = mount(
       <RelevantCoaccusals

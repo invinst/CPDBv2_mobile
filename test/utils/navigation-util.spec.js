@@ -1,31 +1,31 @@
-import { spy, stub, useFakeTimers } from 'sinon';
+import sinon from 'sinon';
 
 import * as NavigationUtil from 'utils/navigation-util';
 
 describe('NavigationUtil', function () {
   describe('goUp', function () {
     it('should do nothing if already at root path', function () {
-      const router = { push: spy() };
+      const router = { push: sinon.spy() };
       NavigationUtil.goUp(router, '/');
       router.push.called.should.be.false();
     });
 
     it('should go back one level if link is not one of NONEXISTENT_ROUTES', function () {
-      const router = { push: spy() };
+      const router = { push: sinon.spy() };
       NavigationUtil.goUp(router, '/existent/1/');
 
       router.push.calledWith('/existent/').should.be.true();
     });
 
     it('should go to root if currently at /existent/', function () {
-      const router = { push: spy() };
+      const router = { push: sinon.spy() };
       NavigationUtil.goUp(router, '/existent/');
 
       router.push.calledWith('/').should.be.true();
     });
 
     it('should go to straight root if current path is /officer/<id>/', function () {
-      const router = { push: spy() };
+      const router = { push: sinon.spy() };
       NavigationUtil.goUp(router, '/officer/11/');
 
       router.push.calledWith('/').should.be.true();
@@ -35,11 +35,7 @@ describe('NavigationUtil', function () {
 
   describe('scrollTo', function () {
     beforeEach(function () {
-      this.clock = useFakeTimers();
-    });
-
-    afterEach(function () {
-      this.clock.restore();
+      this.clock = sinon.useFakeTimers();
     });
 
     it('should do nothing if duration <= 0', function () {
@@ -68,11 +64,7 @@ describe('NavigationUtil', function () {
 
   describe('scrollToTop', function () {
     beforeEach(function () {
-      this.animatedScrollTo = spy(NavigationUtil, 'animatedScrollTo');
-    });
-
-    afterEach(function () {
-      this.animatedScrollTo.restore();
+      this.animatedScrollTo = sinon.spy(NavigationUtil, 'animatedScrollTo');
     });
 
     it('should call scrollTop with appropriate params', function () {
@@ -84,45 +76,34 @@ describe('NavigationUtil', function () {
 
   describe('instantScrollToTop', function () {
     it('should scroll whole body to top', function () {
-      const scrollToStub = stub(window, 'scrollTo');
+      const scrollToStub = sinon.stub(window, 'scrollTo');
 
       NavigationUtil.instantScrollToTop();
 
       scrollToStub.should.be.calledOnce();
       scrollToStub.should.be.calledWith(0, 0);
-
-      scrollToStub.restore();
     });
   });
 
   describe('getCurrentScrollPosition', function () {
     it('should return body scrollTop', function () {
-      const scrollTopStub = stub(document.body, 'scrollTop').value(12);
+      sinon.stub(document.body, 'scrollTop').value(12);
 
       NavigationUtil.getCurrentScrollPosition().should.eql(12);
-
-      scrollTopStub.restore();
     });
 
     it('should return documentElement scrollTop if body scrollTop is undefined', function () {
-      const bodyScrollTopStub = stub(document.body, 'scrollTop').value(undefined);
-      const documentElementScrollTopStub = stub(document.documentElement, 'scrollTop').value(13);
+      sinon.stub(document.body, 'scrollTop').value(undefined);
+      sinon.stub(document.documentElement, 'scrollTop').value(13);
 
       NavigationUtil.getCurrentScrollPosition().should.eql(13);
-
-      bodyScrollTopStub.restore();
-      documentElementScrollTopStub.restore();
     });
   });
 
 
   describe('instantScrollTo', function () {
     beforeEach(function () {
-      this.stubScrollTo = stub(window, 'scrollTo');
-    });
-
-    afterEach(function () {
-      this.stubScrollTo.restore();
+      this.stubScrollTo = sinon.stub(window, 'scrollTo');
     });
 
     it('should call window.scrollTo', function () {
@@ -133,13 +114,8 @@ describe('NavigationUtil', function () {
 
   describe('getPageYBottomOffset', function () {
     beforeEach(function () {
-      this.stubOffsetHeight = stub(window.document.body, 'offsetHeight').value(1000);
-      this.stubPageYOffset = stub(window, 'pageYOffset').value(300);
-    });
-
-    afterEach(function () {
-      this.stubOffsetHeight.restore();
-      this.stubPageYOffset.restore();
+      sinon.stub(window.document.body, 'offsetHeight').value(1000);
+      sinon.stub(window, 'pageYOffset').value(300);
     });
 
     it('should return distance to bottom', function () {
@@ -149,13 +125,8 @@ describe('NavigationUtil', function () {
 
   describe('scrollByBottomOffset', function () {
     beforeEach(function () {
-      this.stubOffsetHeight = stub(window.document.body, 'offsetHeight').value(1000);
-      this.stubScrollTo = stub(window, 'scrollTo');
-    });
-
-    afterEach(function () {
-      this.stubOffsetHeight.restore();
-      this.stubScrollTo.restore();
+      sinon.stub(window.document.body, 'offsetHeight').value(1000);
+      this.stubScrollTo = sinon.stub(window, 'scrollTo');
     });
 
     it('should return distance to bottom', function () {

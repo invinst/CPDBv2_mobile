@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { shallow, mount } from 'enzyme';
-import { spy, stub } from 'sinon';
+import sinon from 'sinon';
 
 import Officers from 'components/embed/officers';
 import OfficersContainer from 'containers/embed/officers';
@@ -17,7 +17,7 @@ describe('<Officers />', function () {
   });
 
   it('should call request Officers if not requested', function () {
-    const requestOfficersSpy = spy();
+    const requestOfficersSpy = sinon.spy();
     mount(
       <Officers
         requestOfficers={ requestOfficersSpy }
@@ -104,7 +104,7 @@ describe('<Officers />', function () {
         },
       },
     ];
-    stub(IntercomUtils, 'showIntercomLauncher');
+    sinon.stub(IntercomUtils, 'showIntercomLauncher');
 
     mount(
       <Officers
@@ -115,7 +115,6 @@ describe('<Officers />', function () {
     );
 
     IntercomUtils.showIntercomLauncher.calledWith(false).should.be.true();
-    IntercomUtils.showIntercomLauncher.restore();
   });
 
   describe('officersContainer', function () {
