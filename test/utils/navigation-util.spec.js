@@ -1,4 +1,3 @@
-import React from 'react';
 import { spy, stub, useFakeTimers } from 'sinon';
 
 import * as NavigationUtil from 'utils/navigation-util';
