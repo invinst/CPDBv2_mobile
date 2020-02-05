@@ -29,7 +29,7 @@ describe('<TRRPage />', function () {
   });
 
   it('render nothing if trr is not available yet', function () {
-    const wrapper = shallow(<TRRPage/>);
+    const wrapper = shallow(<TRRPage/>, { disableLifecycleMethods: true });
     should(wrapper.type()).equal(null);
   });
 

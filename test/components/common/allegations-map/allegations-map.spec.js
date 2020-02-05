@@ -100,7 +100,10 @@ describe('Map component', function () {
         trrs: [],
       };
 
-      const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+      const wrapper = shallow(
+        <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+        { disableLifecycleMethods: true },
+      );
 
       const instance = wrapper.instance();
       instance.shouldComponentUpdate({ legend: newLegend, markerGroups }).should.be.true();
@@ -109,7 +112,10 @@ describe('Map component', function () {
     });
 
     it('should return false if props are unchanged', function () {
-      const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+      const wrapper = shallow(
+        <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+        { disableLifecycleMethods: true },
+      );
 
       const instance = wrapper.instance();
       instance.shouldComponentUpdate(
@@ -396,7 +402,10 @@ describe('Map component', function () {
       category: 'Use of Force',
     };
 
-    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+    const wrapper = shallow(
+      <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+      { disableLifecycleMethods: true },
+    );
 
     const instance = wrapper.instance();
     instance.getUrl(crMarker).should.equal('/complaint/C123456/');
@@ -410,7 +419,10 @@ describe('Map component', function () {
       category: 'False Arrest',
     };
 
-    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+    const wrapper = shallow(
+      <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+      { disableLifecycleMethods: true },
+    );
 
     const instance = wrapper.instance();
     instance.markerUid(crMarker).should.equal('CR-C123456');
@@ -445,7 +457,10 @@ describe('Map component', function () {
   });
 
   it('should return initial data when calling initMapData', function () {
-    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+    const wrapper = shallow(
+      <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+      { disableLifecycleMethods: true },
+    );
 
     const instance = wrapper.instance();
     instance.initMapData();
@@ -498,7 +513,10 @@ describe('Map component', function () {
         date: '2008-12-05',
       },
     ];
-    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+    const wrapper = shallow(
+      <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+      { disableLifecycleMethods: true },
+    );
 
     const instance = wrapper.instance();
     instance.mapMarkersData(crMarkers).should.eql([
@@ -539,7 +557,10 @@ describe('Map component', function () {
 
   it('should call addMapLayer when calling addMapLayers', function () {
     const addMapLayerStub = sinon.stub(AllegationsMap.prototype, 'addMapLayer');
-    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+    const wrapper = shallow(
+      <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+      { disableLifecycleMethods: true },
+    );
     const instance = wrapper.instance();
     addMapLayerStub.resetHistory();
 

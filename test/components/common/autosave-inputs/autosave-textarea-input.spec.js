@@ -28,9 +28,10 @@ describe('AutosaveTextareaInput component', function () {
         fieldType='description'
         save={ saveStub }
         value='value'
-      />
+      />,
+      { disableLifecycleMethods: true },
     );
-    const textarea = wrapper.find('textarea');
+    const textarea = wrapper.find('textarea').first();
     textarea.simulate('focus');
     textarea.simulate('change', { target: { value: 'New Description' } });
     textarea.simulate('blur');
@@ -44,7 +45,8 @@ describe('AutosaveTextareaInput component', function () {
         textareaLineHeight={ 16 }
         fieldType='description'
         value='value'
-      />
+      />,
+      { disableLifecycleMethods: true },
     );
     const textarea = wrapper.find('textarea');
     textarea.simulate('focus');

@@ -22,7 +22,7 @@ class TwoLineList extends Component {
         <Link
           to={ url }
           onClick={ onClick }
-          className={ '--test-two-line-item ' + twoLineListStyle.itemStyle }
+          className={ 'test--two-line-item ' + twoLineListStyle.itemStyle }
           key={ index }
         >
           { contents }
@@ -32,7 +32,7 @@ class TwoLineList extends Component {
       return (
         <div
           onClick={ onClick }
-          className={ '--test-two-line-item ' + twoLineListStyle.itemStyle }
+          className={ 'test--two-line-item ' + twoLineListStyle.itemStyle }
           key={ index }
         >
           { contents }

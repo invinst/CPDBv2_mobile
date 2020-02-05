@@ -135,6 +135,7 @@ describe('<RelevantDocumentCard />', function () {
       plusButton.simulate('click');
 
       clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME + 50);
+      wrapper.update();
 
       wrapper.find(RelevantDocumentCard).should.have.length(1);
     });

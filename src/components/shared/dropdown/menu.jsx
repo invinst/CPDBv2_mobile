@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { get } from 'lodash';
+import cx from 'classnames';
 
 import styles from './menu.sass';
 
@@ -9,7 +10,7 @@ export default class Menu extends Component {
     const { options, onSelect, selectedIndex } = this.props;
     const labels = get(this.props, 'labels', this.props.options);
     return (
-      <div className={ styles.dropdownMenu }>
+      <div className={ cx(styles.dropdownMenu, 'test--dropdown-menu') }>
         {
           options.map((option, index) => (
             option !== options[selectedIndex] ? (

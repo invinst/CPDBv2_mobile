@@ -15,7 +15,7 @@ describe('<PinboardBar />', function () {
       } } />
     );
 
-    should(wrapper.getNode()).be.null();
+    should(wrapper.getElement()).be.null();
   });
 
   it('should render "Your pinboard is empty" if pinboard is empty', function () {

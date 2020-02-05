@@ -130,6 +130,6 @@ describe('Item component', function () {
       kind: 'INCORRECTKIND',
     };
     const wrapper = shallow(<Item item={ someItem }/>);
-    should(wrapper.getNode()).be.null();
+    should(wrapper.getElement()).be.null();
   });
 });

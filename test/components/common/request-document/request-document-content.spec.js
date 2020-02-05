@@ -117,7 +117,7 @@ describe('RequestDocumentContent component', function () {
 
       requestForm.instance().state.warning.should.be.false();
       const emailInput = requestForm.find('input.email-input');
-      emailInput.node.value = 'abc@xyz.com';
+      emailInput.instance().value = 'abc@xyz.com';
       requestForm.simulate('submit');
       requestDocumentCallback.calledWith({ id: 1, email: 'abc@xyz.com' }).should.be.true();
     }
@@ -125,6 +125,7 @@ describe('RequestDocumentContent component', function () {
     // TODO: BUG - when one case failed, then other case failed as well !
     it('- invalid email, should set "warning" state to true, show the messageBox', function (done) {
       assertInCallbackTest = function (requestForm) {
+        requestForm.update();
         requestForm.instance().state.should.containEql( { warning: true } );
         requestForm.find('.message-box').text().should.be.eql('Default message');
       };
@@ -133,6 +134,7 @@ describe('RequestDocumentContent component', function () {
 
     it('- valid email, should set "warning" state as false and call closeModal after 1.5s', function (done) {
       assertInCallbackTest = function (requestForm) {
+        requestForm.update();
         requestForm.instance().state.should.containEql( { warning: false } );
         requestForm.prop('closeModal').called.should.be.false();
         clock.tick(1550);

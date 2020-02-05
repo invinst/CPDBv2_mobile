@@ -72,7 +72,8 @@ describe('MainPage component', function () {
       <MainPage
         location={ currentLocation }
         routeChanged={ spyRouteChanged }
-      />
+      />,
+      { disableLifecycleMethods: true },
     );
 
     wrapper.instance().componentDidUpdate(prevProps);

@@ -68,6 +68,7 @@ describe('withUndoCard higher-order component', function () {
       unpinButton.simulate('click');
 
       clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME);
+      instance.update();
 
       instance.find('.undo-card-text').exists().should.be.false();
       instance.find('.undo-button').exists().should.be.false();

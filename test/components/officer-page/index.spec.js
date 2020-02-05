@@ -181,8 +181,7 @@ describe('<OfficerPage />', function () {
           loading={ false }
           found={ true }
           metrics={ this.metrics }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
 
       wrapper.setProps({ summary: null });
@@ -202,8 +201,7 @@ describe('<OfficerPage />', function () {
           requestOfficerId={ 456 }
           loading={ false }
           found={ true }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
 
       wrapper.setProps({ summary: this.summary });
@@ -221,8 +219,7 @@ describe('<OfficerPage />', function () {
           found={ true }
           metrics={ this.metrics }
           params={ { firstParam: '3213', secondParam: 'documents' } }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
       wrapper.setProps({ summary: this.summary });
 
@@ -242,8 +239,7 @@ describe('<OfficerPage />', function () {
           found={ true }
           metrics={ this.metrics }
           params={ { firstParam: '', secondParam: 'document' } }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
       wrapper.setProps({ summary: this.summary });
 
@@ -263,8 +259,7 @@ describe('<OfficerPage />', function () {
           found={ true }
           metrics={ this.metrics }
           params={ { firstParam: 'documents', secondParam: '' } }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
       wrapper.setProps({ summary: this.summary });
 
@@ -284,8 +279,7 @@ describe('<OfficerPage />', function () {
           found={ true }
           metrics={ this.metrics }
           params={ { firstParam: 'document', secondParam: '' } }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
       wrapper.setProps({ summary: this.summary });
 
@@ -305,8 +299,7 @@ describe('<OfficerPage />', function () {
           found={ true }
           metrics={ this.metrics }
           params={ { firstParam: 'document', secondParam: '' } }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
       wrapper.setProps({ summary: this.summary });
 

@@ -20,7 +20,8 @@ describe('<SearchPage />', function () {
 
   it('should be renderable', function () {
     const wrapper = shallow(
-      <SearchPage />
+      <SearchPage />,
+      { disableLifecycleMethods: true },
     );
     wrapper.should.be.ok();
   });
@@ -29,7 +30,8 @@ describe('<SearchPage />', function () {
     const browserHistoryPush = sinon.stub(browserHistory, 'push');
 
     const wrapper = shallow(
-      <SearchPage cancelPathname='/pinboard/123abc/'/>
+      <SearchPage cancelPathname='/pinboard/123abc/'/>,
+      { disableLifecycleMethods: true },
     );
 
     wrapper.find('.bt-cancel').simulate('click', { preventDefault: noop });
@@ -47,7 +49,8 @@ describe('<SearchPage />', function () {
           location='location'
           routes='routes'
           params='params'
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
       pushBreadcrumbsSpy.calledWith({
         location: 'location',
@@ -57,7 +60,10 @@ describe('<SearchPage />', function () {
     });
 
     it('should focus the input element when mounted', function () {
-      const wrapper = shallow(<SearchPage />);
+      const wrapper = shallow(
+        <SearchPage />,
+        { disableLifecycleMethods: true },
+      );
       const instance = wrapper.instance();
       const spyFocus = sinon.spy();
 
@@ -145,9 +151,8 @@ describe('<SearchPage />', function () {
       const dummyEvent = { currentTarget: { value: 'foo' } };
       const spyInputChanged = sinon.spy();
       const wrapper = shallow(
-        <SearchPage
-          inputChanged={ spyInputChanged }
-        />
+        <SearchPage inputChanged={ spyInputChanged }/>,
+        { disableLifecycleMethods: true },
       );
       const instance = wrapper.instance();
 
@@ -200,7 +205,8 @@ describe('<SearchPage />', function () {
         <SearchPage
           query={ 'meh' }
           inputChanged={ spyInputChanged }
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
 
       const queryInput = wrapper.find('.query-input');
@@ -226,7 +232,8 @@ describe('<SearchPage />', function () {
             items: ['data'],
             showAllButton: false,
           }] }
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
 
       const searchCategory = wrapper.find('SearchCategory');
@@ -248,7 +255,8 @@ describe('<SearchPage />', function () {
         <SearchPage
           query={ 'jerome' }
           queryPrefix='officer'
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
       const clearableInput = wrapper.find('.query-input');
       clearableInput.prop('value').should.eql('officer:jerome');
@@ -258,7 +266,8 @@ describe('<SearchPage />', function () {
   describe('updateLastCategoryHeight', function () {
     it('should run correctly', function () {
       const wrapper = shallow(
-        <SearchPage />
+        <SearchPage />,
+        { disableLifecycleMethods: true },
       );
       const instance = wrapper.instance();
       const spyForceUpdate = sinon.spy(instance, 'forceUpdate');
@@ -350,7 +359,8 @@ describe('<SearchPage />', function () {
       }];
 
       const wrapper = shallow(
-        <SearchPage query='qa' categories={ categories }/>
+        <SearchPage query='qa' categories={ categories }/>,
+        { disableLifecycleMethods: true },
       );
 
       const categoryDetails = wrapper.find('.category-details-container').children();
@@ -414,7 +424,8 @@ describe('<SearchPage />', function () {
             term: '123',
           } }
           hasMore={ true }
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
 
       const searchCategory = wrapper.find(SearchCategory).at(0);
@@ -448,7 +459,8 @@ describe('<SearchPage />', function () {
         <SearchPage
           query='wa'
           updateChosenCategory={ updateChosenCategory }
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
 
       wrapper.instance().chooseCategory({
@@ -516,7 +528,8 @@ describe('<SearchPage />', function () {
           query='qa'
           categories={ categories }
           chosenCategory='crs'
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
 
       const searchCategories = wrapper.find('SearchCategory');

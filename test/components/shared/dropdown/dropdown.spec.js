@@ -29,8 +29,7 @@ describe('Dropdown component', function () {
     wrapper.setState({
       open: true,
     });
-    wrapper.find('.dropdown-menu');
-    wrapper.find('dropdown-menu').should.be.ok();
+    wrapper.find('.test--dropdown-menu').should.have.length(1);
 
     const menuItems = wrapper.find('.dropdown-menu-item');
     menuItems.should.have.length(2);
@@ -39,18 +38,19 @@ describe('Dropdown component', function () {
   });
 
   it('should close menu when clicked on an item', function () {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Dropdown
         defaultValue={ '1' }
         options={ ['1', '2', '3'] }
       />
     );
     wrapper.find('.dropdown-button').simulate('click');
+    wrapper.find('.test--dropdown-menu').should.have.length(1);
+    wrapper.find('.dropdown-menu-item').should.have.length(2);
 
-    const firstMenuItem = wrapper.find('.dropdown-menu-item').at(0);
-    firstMenuItem.simulate('click');
+    wrapper.find('.dropdown-menu-item').first().simulate('click');
 
-    wrapper.find('.dropdown-menu').should.have.length(0);
+    wrapper.find('.test--dropdown-menu').should.have.length(0);
     wrapper.find('.dropdown-menu-item').should.have.length(0);
   });
 
@@ -67,8 +67,7 @@ describe('Dropdown component', function () {
       open: true,
     });
 
-    const firstMenuItem = wrapper.find('.dropdown-menu-item').at(0);
-    firstMenuItem.simulate('click');
+    wrapper.find('.dropdown-menu-item').first().simulate('click');
 
     wrapper.state('selectedIndex').should.eql(1);
     onChangeStub.should.be.calledWith('2');
@@ -76,20 +75,21 @@ describe('Dropdown component', function () {
 
   it('should close menu when losing focus', function () {
     const onChangeStub = sinon.stub();
-    const wrapper = shallow(
+    const wrapper = mount(
       <Dropdown
         defaultValue={ '1' }
         onChange={ onChangeStub }
         options={ ['1', '2', '3'] }
       />
     );
-    wrapper.setState({
-      open: true,
-    });
+
+    wrapper.find('.dropdown-button').simulate('click');
+    wrapper.find('.test--dropdown-menu').should.have.length(1);
+    wrapper.find('.dropdown-menu-item').should.have.length(2);
 
     wrapper.simulate('blur');
 
-    wrapper.find('.dropdown-menu').should.have.length(0);
+    wrapper.find('.test--dropdown-menu').should.have.length(0);
     wrapper.find('.dropdown-menu-item').should.have.length(0);
 
     onChangeStub.should.not.be.called();

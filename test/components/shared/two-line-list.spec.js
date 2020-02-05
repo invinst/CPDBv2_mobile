@@ -80,7 +80,7 @@ describe('<TwoLineList />', function () {
     ];
     const wrapper = shallow(<TwoLineList rows={ rows } />);
 
-    const divs = wrapper.find('div.--test-two-line-item');
+    const divs = wrapper.find('div.test--two-line-item');
     divs.should.have.length(2);
     divs.at(0).prop('onClick').should.equal(onClick1);
     divs.at(0).text().should.eql('JohnBadge #1');
@@ -103,7 +103,7 @@ describe('<TwoLineList />', function () {
     ];
     const wrapper = shallow(<TwoLineList rows={ rows } />);
 
-    const items = wrapper.find('.--test-two-line-item');
+    const items = wrapper.find('.test--two-line-item');
     items.should.have.length(2);
     items.at(0).text().should.eql('JohnBadge #1');
     items.at(0).find('.icon').prop('style').backgroundColor.should.eql('red');

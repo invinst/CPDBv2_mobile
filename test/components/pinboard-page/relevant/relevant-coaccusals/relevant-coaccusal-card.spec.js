@@ -154,6 +154,8 @@ describe('<RelevantCoaccusalCard />', function () {
 
       clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME + 50);
 
+      wrapper.update();
+
       wrapper.isEmptyRender().should.be.true();
     });
   });

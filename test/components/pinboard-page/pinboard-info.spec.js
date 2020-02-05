@@ -41,8 +41,8 @@ describe('<PinboardInfo />', function () {
     pinboardDescription.prop('save').should.eql(updatePinboardInfoStub);
     pinboardDescription.prop('textareaLineHeight').should.eql(16);
 
-    const title = wrapper.find('.pinboard-title');
-    const description = wrapper.find('.pinboard-description');
+    const title = wrapper.find('.pinboard-title').first();
+    const description = wrapper.find('.pinboard-description').first();
     title.text().should.eql('This is pinboard title');
     description.text().should.eql('This is pinboard description');
   });
