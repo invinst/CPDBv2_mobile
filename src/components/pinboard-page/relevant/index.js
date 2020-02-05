@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import { isEmpty, every } from 'lodash';
 
 import styles from './relevant-section.sass';
