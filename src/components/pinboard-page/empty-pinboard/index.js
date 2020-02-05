@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 import styles from './empty-pinboard.sass';
 import ExamplePinboardLink from 'components/pinboard-page/empty-pinboard/example-pinboard-link';

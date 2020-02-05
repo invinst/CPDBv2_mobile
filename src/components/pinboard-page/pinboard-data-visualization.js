@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 import GeographicContainer from 'containers/pinboard-page/geographic-container';
 import SocialGraphContainer from 'containers/pinboard-page/social-graph-container';

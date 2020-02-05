@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import AppHistory from 'utils/history';
 
 import styles from './pinboard-info.sass';
