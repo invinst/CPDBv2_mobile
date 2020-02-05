@@ -41,7 +41,7 @@ let config = Object.assign({}, baseConfig, {
 // Add needed rules to the defaults here
 config.module.rules.push({
   test: /\.(js|jsx)$/,
-  use: ['react-hot-loader', 'babel-loader'],
+  use: ['babel-loader'],
   include: [path.join(__dirname, '/../src')]
 });
 
