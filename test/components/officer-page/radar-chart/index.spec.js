@@ -2,9 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import should from 'should';
-import { mount, shallow, ReactWrapper } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import sinon from 'sinon';
-import Modal from 'react-modal';
 import { EditorState } from 'draft-js';
 
 import AnimatedRadarChart from 'components/officer-page/radar-chart';
@@ -141,9 +140,7 @@ describe('AnimatedRadarChart component', function () {
       wrapper.find('.radar-chart-container').exists().should.be.true();
       wrapper.find('.radar-chart-container').simulate('click');
 
-      const modalWrapper = new ReactWrapper(wrapper.find(Modal).node.portal, true);
-
-      const explainer = modalWrapper.find(RadarExplainer);
+      const explainer = wrapper.find(RadarExplainer);
       explainer.exists().should.be.true();
       explainer.prop('percentileData').should.equal(data);
     });
@@ -206,12 +203,11 @@ describe('AnimatedRadarChart component', function () {
 
       wrapper.find('.radar-chart-container').simulate('click');
 
-      const modalWrapper = new ReactWrapper(wrapper.find(Modal).node.portal, true);
-      modalWrapper.find(RadarExplainer).exists().should.be.true();
+      wrapper.find(RadarExplainer).exists().should.be.true();
 
-      modalWrapper.find('.explainer-close-button').simulate('click');
+      wrapper.find('.explainer-close-button').simulate('click');
 
-      modalWrapper.find(RadarExplainer).exists().should.be.false();
+      wrapper.find(RadarExplainer).exists().should.be.false();
       startAnimation.calledOnce.should.be.true();
     });
 

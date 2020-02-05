@@ -28,93 +28,89 @@ import PinboardPageContainer from 'containers/pinboard-page';
 
 Modal.setAppElement('body');
 
-const App = React.createClass({
-  render() {
-    const { pinboard: enablePinboardFeature } = config.enableFeatures;
+export default function App() {
+  const { pinboard: enablePinboardFeature } = config.enableFeatures;
 
-    return (
-      <Router history={ AppHistory }>
-        <Route
-          path='/(edit)'
-          component={ MainPageContainer }
+  return (
+    <Router history={ AppHistory }>
+      <Route
+        path='/(edit)'
+        component={ MainPageContainer }
+        breadcrumbKey='/'
+      >
+        <IndexRoute
           breadcrumbKey='/'
-        >
-          <IndexRoute
-            breadcrumbKey='/'
-            breadcrumb='cpdp'
-            component={ LandingPageContainer } />
+          breadcrumb='cpdp'
+          component={ LandingPageContainer } />
 
+        <Route
+          breadcrumbKey={ constants.ABOUT_PATH }
+          path={ constants.ABOUT_PATH }
+          component={ AboutPageContainer } />
+
+        <Route
+          breadcrumb='Search'
+          path={ constants.SEARCH_PATH }
+          component={ SearchPageContainer }>
           <Route
-            breadcrumbKey={ constants.ABOUT_PATH }
-            path={ constants.ABOUT_PATH }
-            component={ AboutPageContainer } />
-
-          <Route
-            breadcrumb='Search'
-            path={ constants.SEARCH_PATH }
-            component={ SearchPageContainer }>
-            <Route
-              path={ constants.SEARCH_PATH + ':query' }
-              component={ SearchPageContainer }
-              useParentBreadcrumb={ true } />
-          </Route>
-
-          <Route
-            breadcrumbKey={ `${constants.OFFICER_PATH}:id` }
-            path={ `${constants.OFFICER_PATH}:id(/:firstParam)(/:secondParam)` }
-            breadcrumb={ BreadcrumbItemContainer }
-            component={ OfficerPageContainer }> >
-          </Route>
-
-          <Route
-            path={ `${constants.COMPLAINT_PATH}:complaintId/` }
-            breadcrumb={ BreadcrumbItemContainer }
-            component={ ComplaintPageContainer }
-          />
-
-          <Route
-            path={ `${constants.TRR_PATH}:trrId/` }
-            breadcrumb={ BreadcrumbItemContainer }
-            component={ TRRPageContainer }
-          />
-
-          {
-            enablePinboardFeature &&
-            <Route
-              path={ `${constants.PINBOARD_PATH}(:pinboardId/)(:pinboardTitle/)` }
-              breadcrumb={ BreadcrumbItemContainer }
-              component={ PinboardPageContainer }
-            />
-          }
-          {
-            enablePinboardFeature &&
-            <Redirect
-              from={ `${constants.PINBOARD_SOCIAL_GRAPH_REDIRECT_PATH}:pinboardId/` }
-              to={ `${constants.PINBOARD_PATH}:pinboardId/` }
-            />
-          }
-          {
-            enablePinboardFeature &&
-            <Redirect
-              from={ `${constants.PINBOARD_GEOGRAPHIC_REDIRECT_PATH}:pinboardId/` }
-              to={ `${constants.PINBOARD_PATH}:pinboardId/` }
-            />
-          }
-
+            path={ constants.SEARCH_PATH + ':query' }
+            component={ SearchPageContainer }
+            useParentBreadcrumb={ true } />
         </Route>
+
         <Route
-          path={ constants.EMBED_TOP_OFFICER_PATH }
-          component={ () => <TopOfficersByAllegationContainer pinnable={ false }/> }
-        />
+          breadcrumbKey={ `${constants.OFFICER_PATH}:id` }
+          path={ `${constants.OFFICER_PATH}:id(/:firstParam)(/:secondParam)` }
+          breadcrumb={ BreadcrumbItemContainer }
+          component={ OfficerPageContainer }> >
+        </Route>
+
         <Route
-          path={ constants.EMBED_OFFICERS_PATH }
-          component={ OfficersContainer }
+          path={ `${constants.COMPLAINT_PATH}:complaintId/` }
+          breadcrumb={ BreadcrumbItemContainer }
+          component={ ComplaintPageContainer }
         />
 
-        <Redirect from='*' to='/'/>
-      </Router>
-    );
-  },
-});
+        <Route
+          path={ `${constants.TRR_PATH}:trrId/` }
+          breadcrumb={ BreadcrumbItemContainer }
+          component={ TRRPageContainer }
+        />
 
-export default App;
+        {
+          enablePinboardFeature &&
+          <Route
+            path={ `${constants.PINBOARD_PATH}(:pinboardId/)(:pinboardTitle/)` }
+            breadcrumb={ BreadcrumbItemContainer }
+            component={ PinboardPageContainer }
+          />
+        }
+        {
+          enablePinboardFeature &&
+          <Redirect
+            from={ `${constants.PINBOARD_SOCIAL_GRAPH_REDIRECT_PATH}:pinboardId/` }
+            to={ `${constants.PINBOARD_PATH}:pinboardId/` }
+          />
+        }
+        {
+          enablePinboardFeature &&
+          <Redirect
+            from={ `${constants.PINBOARD_GEOGRAPHIC_REDIRECT_PATH}:pinboardId/` }
+            to={ `${constants.PINBOARD_PATH}:pinboardId/` }
+          />
+        }
+
+      </Route>
+      <Route
+        path={ constants.EMBED_TOP_OFFICER_PATH }
+        component={ () => <TopOfficersByAllegationContainer pinnable={ false }/> }
+      />
+      <Route
+        path={ constants.EMBED_OFFICERS_PATH }
+        component={ OfficersContainer }
+      />
+
+      <Redirect from='*' to='/'/>
+    </Router>
+  );
+}

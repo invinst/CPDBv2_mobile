@@ -27,7 +27,7 @@ module.exports = {
         use: ['eslint-loader']
       },
       {
-        test: /\.(svg|png|jpg|gif|woff|woff2|less|styl|json)$/,
+        test: /\.(svg|png|jpg|gif|woff|woff2|less|styl)$/,
         use: ['null-loader']
       },
       {
@@ -95,7 +95,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.json'],
     alias: {
       actions: srcPath + 'actions/',
       helpers: path.join(__dirname, '/../test/helpers'),

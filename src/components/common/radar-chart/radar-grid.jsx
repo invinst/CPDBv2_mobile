@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { range } from 'lodash';
 import { curveLinearClosed, radialLine } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';

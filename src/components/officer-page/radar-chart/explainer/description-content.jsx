@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import style from './description-content.sass';
 import CMSContent from 'components/common/cms-content';

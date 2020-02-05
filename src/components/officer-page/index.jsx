@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { isEmpty, noop, clone, reduce, values } from 'lodash';
 import pluralize from 'pluralize';
 
