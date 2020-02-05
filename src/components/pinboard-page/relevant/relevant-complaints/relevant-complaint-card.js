@@ -8,39 +8,37 @@ import withUndoCard from 'components/pinboard-page/cards/with-undo-card';
 import constants from 'constants';
 
 
-export default class RelevantComplaintCard extends Component {
-  render() {
-    const {
-      crid,
-      incidentDate,
-      category,
-      officers,
-      point,
-      addItemInPinboardPage,
-    } = this.props;
+export default function RelevantComplaintCard(props) {
+  const {
+    crid,
+    incidentDate,
+    category,
+    officers,
+    point,
+    addItemInPinboardPage,
+  } = props;
 
-    const leftChild = (
-      <Link
-        to={ `/complaint/${crid}/` }
-        className={ styles.relevantComplaintMap }
-        style={ point ? {
-          background: `url("${getComplaintMapUrl(point.lat, point.lon, 130, 176)}") no-repeat center/cover`,
-        }: null }
-      />
-    );
+  const leftChild = (
+    <Link
+      to={ `/complaint/${crid}/` }
+      className={ styles.relevantComplaintMap }
+      style={ point ? {
+        background: `url("${getComplaintMapUrl(point.lat, point.lon, 130, 176)}") no-repeat center/cover`,
+      }: null }
+    />
+  );
 
-    return (
-      <BaseComplaintCard
-        crid={ crid }
-        incidentDate={ incidentDate }
-        category={ category }
-        point={ point }
-        officers={ officers }
-        leftChild={ leftChild }
-        addItemInPinboardPage={ addItemInPinboardPage }
-      />
-    );
-  }
+  return (
+    <BaseComplaintCard
+      crid={ crid }
+      incidentDate={ incidentDate }
+      category={ category }
+      point={ point }
+      officers={ officers }
+      leftChild={ leftChild }
+      addItemInPinboardPage={ addItemInPinboardPage }
+    />
+  );
 }
 
 RelevantComplaintCard.propTypes = {

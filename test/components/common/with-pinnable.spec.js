@@ -12,11 +12,10 @@ describe('ItemPinButton component', function () {
   const secondCRID = lorem.word();
   const officerID = random.number({ min: 10, max: 1000 });
 
-  class TestComponent extends Component {
-    render() {
-      return <div className='test--classname' />;
-    }
+  function TestComponent(props) {
+    return <div className='test--classname' />;
   }
+
   const TestComponentWithPinnable = withPinnable(TestComponent);
 
   it('should render children', function () {

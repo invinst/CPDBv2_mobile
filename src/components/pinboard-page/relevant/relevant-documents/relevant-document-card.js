@@ -6,36 +6,34 @@ import withUndoCard from 'components/pinboard-page/cards/with-undo-card';
 import constants from 'constants';
 
 
-export default class RelevantDocumentCard extends Component {
-  render() {
-    const {
-      allegation,
-      url,
-      previewImageUrl,
-      addItemInPinboardPage,
-      pinned,
-    } = this.props;
+export default function RelevantDocumentCard(props) {
+  const {
+    allegation,
+    url,
+    previewImageUrl,
+    addItemInPinboardPage,
+    pinned,
+  } = props;
 
-    const leftChild = (
-      <a
-        className={ styles.documentCardThumbnail }
-        href={ url }
-        target='_blank'
-      >
-        <img className='document-card-thumbnail-img' src={ previewImageUrl }/>
-      </a>
-    );
+  const leftChild = (
+    <a
+      className={ styles.documentCardThumbnail }
+      href={ url }
+      target='_blank'
+    >
+      <img className='document-card-thumbnail-img' src={ previewImageUrl }/>
+    </a>
+  );
 
-    return (
-      <BaseComplaintCard
-        { ...allegation }
-        leftChild={ leftChild }
-        addItemInPinboardPage={ pinned ? null : addItemInPinboardPage }
-        pinned={ pinned }
-        fadePlusButtonOnly={ true }
-      />
-    );
-  }
+  return (
+    <BaseComplaintCard
+      { ...allegation }
+      leftChild={ leftChild }
+      addItemInPinboardPage={ pinned ? null : addItemInPinboardPage }
+      pinned={ pinned }
+      fadePlusButtonOnly={ true }
+    />
+  );
 }
 
 RelevantDocumentCard.propTypes = {

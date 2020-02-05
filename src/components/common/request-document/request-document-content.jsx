@@ -6,8 +6,8 @@ import style from './request-document-content.sass';
 
 
 export default class RequestDocumentContent extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = { warning: false };
   }

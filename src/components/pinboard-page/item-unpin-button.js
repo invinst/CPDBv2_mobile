@@ -4,14 +4,12 @@ import cx from 'classnames';
 import style from './item-unpin-button.sass';
 
 
-export default class ItemUnpinButton extends Component {
-  render() {
-    return (
-      <span
-        className={ cx(style.wrapper, 'test--item-unpin-button') }
-        onClick={ this.props.onClick } />
-    );
-  }
+export default function ItemUnpinButton(props) {
+  return (
+    <span
+      className={ cx(style.wrapper, 'test--item-unpin-button') }
+      onClick={ props.onClick } />
+  );
 }
 
 ItemUnpinButton.propTypes = {

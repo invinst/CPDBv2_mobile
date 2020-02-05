@@ -5,34 +5,32 @@ import ExamplePinboardLink from 'components/pinboard-page/empty-pinboard/example
 import CMSContent from 'components/common/cms-content';
 
 
-export default class EmptyPinboard extends Component {
-  render() {
-    const {
-      examplePinboards,
-      emptyPinboardTitle,
-      emptyPinboardDescription,
-      currentPinboardId,
-      updatePinboardFromSource,
-    } = this.props;
-    return (
-      <div className={ styles.emptyPinboard }>
-        <CMSContent className='empty-pinboard-title' content={ emptyPinboardTitle }/>
-        <CMSContent className='empty-pinboard-description' content={ emptyPinboardDescription }/>
-        { examplePinboards.map(pinboard => (
-          <ExamplePinboardLink
-            key={ pinboard.id }
-            id={ pinboard.id }
-            title={ pinboard.title }
-            description={ pinboard.description }
-            currentPinboardId={ currentPinboardId }
-            updatePinboardFromSource={ updatePinboardFromSource }
-          />
-        )) }
-        <div className='arrow-head'/>
-        <div className='arrow-shaft'/>
-      </div>
-    );
-  }
+export default function EmptyPinboard(props) {
+  const {
+    examplePinboards,
+    emptyPinboardTitle,
+    emptyPinboardDescription,
+    currentPinboardId,
+    updatePinboardFromSource,
+  } = props;
+  return (
+    <div className={ styles.emptyPinboard }>
+      <CMSContent className='empty-pinboard-title' content={ emptyPinboardTitle }/>
+      <CMSContent className='empty-pinboard-description' content={ emptyPinboardDescription }/>
+      { examplePinboards.map(pinboard => (
+        <ExamplePinboardLink
+          key={ pinboard.id }
+          id={ pinboard.id }
+          title={ pinboard.title }
+          description={ pinboard.description }
+          currentPinboardId={ currentPinboardId }
+          updatePinboardFromSource={ updatePinboardFromSource }
+        />
+      )) }
+      <div className='arrow-head'/>
+      <div className='arrow-shaft'/>
+    </div>
+  );
 }
 
 EmptyPinboard.propTypes = {

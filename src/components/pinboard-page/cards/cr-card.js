@@ -4,12 +4,8 @@ import withUndoCard from './with-undo-card';
 import LocationCard from './location-card.js';
 
 
-export default class CRCard extends Component {
-  render() {
-    return (
-      <LocationCard { ...this.props } dateKey='incidentDate' url={ `/complaint/${this.props.item.id}/` }/>
-    );
-  }
+export default function CRCard(props) {
+  return <LocationCard { ...props } dateKey='incidentDate' url={ `/complaint/${props.item.id}/` }/>;
 }
 
 CRCard.propTypes = {
