@@ -6,10 +6,6 @@ import style from './cr-location-map.sass';
 
 
 const CRLocationMap = ({ lng, lat }) => {
-  const marker = (
-    <div className='marker' />
-  );
-
   return (
     <div className={ style.crLocationMap }>
       <LocationMap
@@ -18,7 +14,7 @@ const CRLocationMap = ({ lng, lat }) => {
         zoomOutLevel={ 9 }
         zoomInLevel={ 13 }
         mapboxStyle='mapbox://styles/mapbox/streets-v10'
-        markerEl={ marker } />
+        customMarkerClassName='marker' />
     </div>
   );
 };

@@ -7,7 +7,6 @@ import LocationMap from 'components/common/location-map';
 
 
 describe('LocationMap component', function () {
-
   it('should render location map with default marker', function () {
     const wrapper = mount(<LocationMap lng={ 1 } lat={ 1 } />);
 
@@ -61,22 +60,19 @@ describe('LocationMap component', function () {
   });
 
   it('should render with custom marker', function () {
-    const customMarker = <div className='custom-marker'/>;
-    const wrapper = mount(<LocationMap lng={ 1 } lat={ 1 } markerEl={ customMarker }/>);
+    const wrapper = mount(<LocationMap lng={ 1 } lat={ 1 } customMarkerClassName='custom-marker' />);
 
     wrapper.instance().marker.element.className.should.equal('custom-marker');
   });
 
-  it('shouldn\'t render custom marker if lng or lat is missing', function () {
-    const customMarker = <div className='custom-marker'/>;
-    const wrapper = mount(<LocationMap lng={ 1 } markerEl={ customMarker }/>);
+  it('shouldn\'t render marker if lng or lat is missing', function () {
+    const wrapper = mount(<LocationMap lng={ 1 } />);
 
     should(wrapper.instance().marker).not.be.ok();
   });
 
   it('should remove old marker if new lng or lat is missing', function () {
-    const customMarker = <div className='custom-marker'/>;
-    const wrapper = mount(<LocationMap lng={ 1 } lat={ 1 } markerEl={ customMarker }/>);
+    const wrapper = mount(<LocationMap lng={ 1 } lat={ 1 } customMarkerClassName='custom-marker' />);
 
     wrapper.instance().marker.element.className.should.equal('custom-marker');
 
