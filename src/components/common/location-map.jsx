@@ -22,7 +22,7 @@ export default class LocationMap extends Component {
     addEventListener('scroll', this.handleScroll);
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
+  UNSAFE_componentWillReceiveProps(nextProps, nextState) {
     const { lat, lng, zoomInLevel } = this.props;
 
     if (lat !== nextProps.lat || lng !== nextProps.lng) {

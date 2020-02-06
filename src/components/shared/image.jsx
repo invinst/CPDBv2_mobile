@@ -12,7 +12,7 @@ class Img extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const image = new Image();
     image.src = this.props.src;
     /* istanbul ignore next */

@@ -23,7 +23,7 @@ export default class LandingPage extends Component {
     cmsRequested || requestCMS();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { location, params, routes, pushBreadcrumbs } = nextProps;
     if (location !== this.props.location) {
       pushBreadcrumbs({ location, params, routes });

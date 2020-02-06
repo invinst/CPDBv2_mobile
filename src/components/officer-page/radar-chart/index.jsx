@@ -36,7 +36,7 @@ export default class AnimatedRadarChart extends Component {
     this.startTimer();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (!isEqual(this.props.percentileData, nextProps.percentileData)) {
       this.animatedData = this.getAnimatedData(nextProps.percentileData);
     }

@@ -46,7 +46,12 @@
     "camelcase": [
       2,
       {
-        "properties": "always"
+        "properties": "always",
+         "allow": [
+            "UNSAFE_componentWillMount",
+            "UNSAFE_componentWillReceiveProps",
+            "UNSAFE_componentWillUpdate"
+        ]
       }
     ],
     "eol-last": [
