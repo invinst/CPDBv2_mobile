@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import persistState from 'redux-localstorage';
 import thunk from 'redux-thunk';
-import createLogger from 'redux-logger';
 
 import config from 'config';
 import configuredAxiosMiddleware from 'middleware/configured-axios-middleware';
@@ -14,16 +13,11 @@ import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pi
 
 
 const { pinboard: enablePinboardFeature } = config.enableFeatures;
-const logger = createLogger({
-  diff: true,
-});
-
 export default function configureStore(initialState) {
   /* istanbul ignore next */
   let middleware = [
     thunk,
     configuredAxiosMiddleware,
-    logger,
     scrollPositionMiddleware,
     trackingMiddleware,
     fetchAndRedirectPinboardMiddleware,
