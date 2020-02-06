@@ -11,18 +11,13 @@ import * as tracking from 'utils/tracking';
 
 
 class ComplaintDocumentCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
+  handleClick = () => {
     const { allegation, pathname, onTrackingAttachment } = this.props;
     const document = get(allegation, 'document', {});
     const url = `${constants.COMPLAINT_PATH}${allegation.crid}/`;
     tracking.trackAttachmentClick(pathname, url);
     onTrackingAttachment({ attachmentId: document['id'], sourcePage: 'Landing Page', app: 'Mobile' });
-  }
+  };
 
   render() {
     const { allegation, addOrRemoveItemInPinboard } = this.props;

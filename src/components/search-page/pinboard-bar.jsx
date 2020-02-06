@@ -9,13 +9,7 @@ import style from './pinboard-bar.sass';
 
 
 export default class PinboardBar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
+  handleClick = () => {
     const { pinboard, onEmptyPinboardButtonClick } = this.props;
 
     if (isEmpty(pinboard.id)) {
@@ -27,7 +21,7 @@ export default class PinboardBar extends Component {
     } else {
       browserHistory.push(pinboard.url);
     }
-  }
+  };
 
   render() {
     const { pinboard } = this.props;

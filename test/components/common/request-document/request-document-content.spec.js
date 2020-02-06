@@ -94,18 +94,6 @@ describe('RequestDocumentContent component', function () {
       const requestDocumentCallback = sinon.stub().returns(promise);
       let requestForm;
 
-      const oldHandleSubmit = RequestDocumentContent.prototype.handleSubmit;
-      RequestDocumentContent.prototype.handleSubmit = function (event) {
-        event.preventDefault = sinon.spy();
-
-        const temp = oldHandleSubmit.call(this, event);
-        event.preventDefault.calledOnce.should.be.true();
-        temp.then(() => {
-          assertInCallbackTest(requestForm);
-          RequestDocumentContent.prototype.handleSubmit = oldHandleSubmit;
-        }).then(done);
-      };
-
       requestForm = mount(
         <RequestDocumentContent
           message={ 'Default message' }
@@ -115,14 +103,26 @@ describe('RequestDocumentContent component', function () {
         />
       );
 
-      requestForm.instance().state.warning.should.be.false();
+      const instance = requestForm.instance();
+      const oldHandleSubmit = instance.handleSubmit;
+      instance.handleSubmit = function (event) {
+        event.preventDefault = sinon.spy();
+
+        const temp = oldHandleSubmit.call(this, event);
+        event.preventDefault.calledOnce.should.be.true();
+        temp.then(() => {
+          assertInCallbackTest(requestForm);
+        }).then(done);
+      };
+      instance.forceUpdate();
+
+      instance.state.warning.should.be.false();
       const emailInput = requestForm.find('input.email-input');
       emailInput.instance().value = 'abc@xyz.com';
       requestForm.simulate('submit');
       requestDocumentCallback.calledWith({ id: 1, email: 'abc@xyz.com' }).should.be.true();
     }
 
-    // TODO: BUG - when one case failed, then other case failed as well !
     it('- invalid email, should set "warning" state to true, show the messageBox', function (done) {
       assertInCallbackTest = function (requestForm) {
         requestForm.update();

@@ -6,15 +6,10 @@ import styles from './plus-button.sass';
 
 
 export class PlusButton extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(e) {
+  handleClick = e => {
     e.preventDefault();
     this.props.onClick(e);
-  }
+  };
 
   render() {
     const { className, darkMode } = this.props;

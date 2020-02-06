@@ -9,11 +9,10 @@ import style from './request-document-content.sass';
 export default class RequestDocumentContent extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = { warning: false };
   }
 
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault();
     const { requestDocument, id, closeModal } = this.props;
     return requestDocument({ id, email: this.refs.email.value }).then((action) => {
@@ -22,7 +21,7 @@ export default class RequestDocumentContent extends Component {
     }).catch(e => {
       this.setState({ warning: true });
     });
-  }
+  };
 
   render() {
     const {

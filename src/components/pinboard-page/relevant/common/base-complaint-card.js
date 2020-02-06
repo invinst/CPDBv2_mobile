@@ -9,17 +9,12 @@ import PlusButton from 'components/pinboard-page/relevant/common/plus-button';
 
 
 export class BaseComplaintCard extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(e) {
+  handleClick = e => {
     e.preventDefault();
 
     const { crid, addItemInPinboardPage, incidentDate, category, point } = this.props;
     addItemInPinboardPage({ type: 'CR', id: crid, incidentDate, category, point });
-  }
+  };
 
   render() {
     const {

@@ -21,10 +21,6 @@ class HorizontalScrolling extends React.Component {
   constructor(props) {
     super(props);
     this.swiper = null;
-
-    this.handleSlideNext = this.handleSlideNext.bind(this);
-    this.handleSlidePrev = this.handleSlidePrev.bind(this);
-    this.onSnapIndexChange = this.onSnapIndexChange.bind(this);
   }
 
   componentDidMount() {
@@ -58,26 +54,26 @@ class HorizontalScrolling extends React.Component {
     }
   }
 
-  onSnapIndexChange(activeIndex, isEnd) {
+  onSnapIndexChange = (activeIndex, isEnd) => {
     const { children, loadMoreThreshold, hasMore, loadMore } = this.props;
     if (isEnd || children.length - activeIndex <= loadMoreThreshold) {
       hasMore && loadMore();
     }
-  }
+  };
 
-  handleSlideNext() {
+  handleSlideNext = () => {
     const { trackingContentType } = this.props;
     if (trackingContentType) {
       tracking.trackSwipeLandingPageCarousel('right', trackingContentType);
     }
-  }
+  };
 
-  handleSlidePrev() {
+  handleSlidePrev = () => {
     const { trackingContentType } = this.props;
     if (trackingContentType) {
       tracking.trackSwipeLandingPageCarousel('left', trackingContentType);
     }
-  }
+  };
 
   render() {
     const { className, children, hasPagination } = this.props;

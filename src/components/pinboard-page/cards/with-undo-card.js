@@ -32,8 +32,6 @@ export default function withUndoCard(
         status: DISPLAY,
       };
 
-      this.removeItem = this.removeItem.bind(this);
-      this.undo = this.undo.bind(this);
       this.countdown = undefined;
     }
 
@@ -41,7 +39,7 @@ export default function withUndoCard(
       clearTimeout(this.countdown);
     }
 
-    removeItem(item) {
+    removeItem = item => {
       this.setState({
         status: REMOVING,
       });
@@ -53,15 +51,15 @@ export default function withUndoCard(
 
         get(this.props, actionName, noop)(item);
       }, UNDO_CARD_VISIBLE_TIME);
-    }
+    };
 
-    undo() {
+    undo = () => {
       clearTimeout(this.countdown);
 
       this.setState({
         status: DISPLAY,
       });
-    }
+    };
 
     render() {
       const { status } = this.state;

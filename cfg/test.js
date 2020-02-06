@@ -18,7 +18,7 @@ module.exports = {
           loader: 'istanbul-instrumenter-loader',
           options: { esModules: true }
         },
-        enforce: 'pre',
+        enforce: 'post',
       },
       {
         test: /\.(js|jsx)$/,

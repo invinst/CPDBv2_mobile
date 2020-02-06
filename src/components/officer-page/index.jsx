@@ -29,8 +29,6 @@ class OfficerPage extends Component {
     this.state = {
       currentTab: TAB_MAP[tabName] || OFFICER_PAGE_TAB_NAMES.TIMELINE,
     };
-
-    this.changeTab = this.changeTab.bind(this);
   }
 
   componentDidMount() {
@@ -55,10 +53,10 @@ class OfficerPage extends Component {
     }
   }
 
-  changeTab(tab) {
+  changeTab = tab => {
     if (values(OFFICER_PAGE_TAB_NAMES).includes(tab))
       this.setState({ currentTab: tab });
-  }
+  };
 
   _fetchData() {
     const {

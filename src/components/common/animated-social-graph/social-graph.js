@@ -25,11 +25,6 @@ export default class SocialGraph extends Component {
     this.height = DEFAULT_GRAPH_HEIGHT;
 
     this.setInitialData();
-
-    this.resizeGraph = this.resizeGraph.bind(this);
-    this.tick = this.tick.bind(this);
-    this.connectedNodes = this.connectedNodes.bind(this);
-    this.collide = this.collide.bind(this);
   }
 
   componentDidMount() {
@@ -106,7 +101,7 @@ export default class SocialGraph extends Component {
     startTimelineFromBeginning();
   }
 
-  resizeGraph() {
+  resizeGraph = () => {
     const chartDiv = d3.select(ReactDOM.findDOMNode(this.refs.chart)).node();
     this.width = chartDiv.clientWidth;
     this.height = chartDiv.clientHeight;
@@ -121,7 +116,7 @@ export default class SocialGraph extends Component {
     this.svg.attr('width', this.width).attr('height', this.height);
     this.force.size([this.width, this.height]);
     this.force.start();
-  }
+  };
 
   _resetNodes() {
     const { officers } = this.props;
@@ -238,7 +233,7 @@ export default class SocialGraph extends Component {
     this.force.start();
   }
 
-  tick(e) {
+  tick = e => {
     // bounded graph
     this.node.attr('cx', (d) => {
       const nodeRadius = this.nodeRadius(d);
@@ -254,9 +249,9 @@ export default class SocialGraph extends Component {
       .attr('y1', (d) => d.source.y)
       .attr('x2', (d) => d.target.x)
       .attr('y2', (d) => d.target.y);
-  }
+  };
 
-  connectedNodes(currentNode) {
+  connectedNodes = currentNode => {
     const neighboring = (a, b) => {
       return this.data.linkedByIndex[a.index + ',' + b.index];
     };
@@ -277,7 +272,7 @@ export default class SocialGraph extends Component {
       this.link.style('opacity', 1);
       this.toggleNode = 0;
     }
-  }
+  };
 
   filterAndRestart() {
     const { listEvent, timelineIdx } = this.props;
@@ -288,7 +283,7 @@ export default class SocialGraph extends Component {
     this.restart();
   }
 
-  collide() {
+  collide = () => {
     const quadtree = d3.geom.quadtree(this.data.nodes);
     return (currentNode) => {
       let r = this.nodeRadius(currentNode) + MAX_RADIUS,
@@ -313,7 +308,7 @@ export default class SocialGraph extends Component {
         return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
       });
     };
-  }
+  };
 
   render() {
     const { officers } = this.props;

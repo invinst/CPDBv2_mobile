@@ -145,7 +145,6 @@ describe('AnimatedSocialGraph component', function () {
   });
 
   it('should call startTimelineFromBeginning when clicking on refresh button', function () {
-    const startTimelineFromBeginningStub = sinon.stub(AnimatedSocialGraph.prototype, 'startTimelineFromBeginning');
     wrapper = mount(
       <AnimatedSocialGraph
         officers={ officers }
@@ -153,6 +152,10 @@ describe('AnimatedSocialGraph component', function () {
         listEvent={ listEvent }
       />
     );
+
+    const instance = wrapper.instance();
+    const startTimelineFromBeginningStub = sinon.stub(instance, 'startTimelineFromBeginning');
+    instance.forceUpdate();
 
     const refreshButton = wrapper.find('.refresh-button');
     refreshButton.simulate('click');

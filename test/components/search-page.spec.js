@@ -280,11 +280,6 @@ describe('<SearchPage />', function () {
   });
 
   describe('renderCategories()', function () {
-    beforeEach(function () {
-      sinon.stub(SearchPage.prototype.updateLastCategoryHeight, 'bind');
-      SearchPage.prototype.updateLastCategoryHeight.bind.returns(SearchPage.prototype.updateLastCategoryHeight);
-    });
-
     it('should render SearchCategory components', function () {
       const cr1 = {
         category: 'Use Of Force',
@@ -371,7 +366,7 @@ describe('<SearchPage />', function () {
       // Last component should be wrapped inside ReactHeight:
       const lastCategory = categoryDetails.at(1);
       lastCategory.type().should.be.eql(ReactHeight);
-      lastCategory.prop('onHeightReady').should.be.eql(SearchPage.prototype.updateLastCategoryHeight);
+      lastCategory.prop('onHeightReady').should.be.eql(wrapper.instance().updateLastCategoryHeight);
     });
 
     it('should pass correct props to SearchCategory', function () {

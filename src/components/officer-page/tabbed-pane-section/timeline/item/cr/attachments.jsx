@@ -8,14 +8,8 @@ import * as tracking from 'utils/tracking';
 
 
 export default class Attachments extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
   // this is necessary at we cannot use nested anchors
-  handleClick(e) {
+  handleClick = e => {
     e.preventDefault();
     const { pathname, attachments, onTrackingAttachment } = this.props;
     const url = attachments[0].url;
@@ -23,7 +17,7 @@ export default class Attachments extends Component {
     tracking.trackAttachmentClick(pathname, url);
     onTrackingAttachment({ attachmentId: id, sourcePage: 'Officer Page - Timeline Tab', app: 'Mobile' });
     window.open(url, '_blank');
-  }
+  };
 
   render() {
     const firstAttachment = this.props.attachments[0];

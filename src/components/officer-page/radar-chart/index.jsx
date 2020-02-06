@@ -25,11 +25,6 @@ export default class AnimatedRadarChart extends Component {
     this.timer = null;
 
     this.animatedData = this.getAnimatedData(props.percentileData);
-
-    this.openExplainer = this.openExplainer.bind(this);
-    this.closeExplainer = this.closeExplainer.bind(this);
-    this.animate = this.animate.bind(this);
-    this.getCurrentTransitionData = this.getCurrentTransitionData.bind(this);
   }
 
   componentDidMount() {
@@ -56,7 +51,7 @@ export default class AnimatedRadarChart extends Component {
     return filter(data, item => hasEnoughRadarChartData(item.items));
   }
 
-  animate() {
+  animate = () => {
     const maxValue = this.animatedData.length - 1;
     this.setState({
       transitionValue: Math.min(this.state.transitionValue + this.velocity, maxValue),
@@ -64,7 +59,7 @@ export default class AnimatedRadarChart extends Component {
     if (this.state.transitionValue >= maxValue) {
       this.stopTimer();
     }
-  }
+  };
 
   startTimer() {
     if (this.animatedData && this.animatedData.length > 1 && !this.timer) {
@@ -77,7 +72,7 @@ export default class AnimatedRadarChart extends Component {
     this.timer = null;
   }
 
-  getCurrentTransitionData() {
+  getCurrentTransitionData = () => {
     const { transitionValue } = this.state;
 
     // ensure at least 2 elements
@@ -102,7 +97,7 @@ export default class AnimatedRadarChart extends Component {
       })),
       visualTokenBackground: backgroundColor,
     };
-  }
+  };
 
   startAnimation() {
     if (this.timer) {
@@ -113,19 +108,19 @@ export default class AnimatedRadarChart extends Component {
     this.startTimer();
   }
 
-  openExplainer() {
+  openExplainer = () => {
     const { officerId } = this.props;
 
     tracking.trackOpenExplainer(officerId);
     IntercomTracking.trackOpenExplainer(officerId);
 
     this.setState({ explainerOpened: true });
-  }
+  };
 
-  closeExplainer() {
+  closeExplainer = () => {
     this.setState({ explainerOpened: false });
     this.startAnimation();
-  }
+  };
 
   render() {
     const { transitionValue, explainerOpened } = this.state;

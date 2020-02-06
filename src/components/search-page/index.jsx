@@ -15,15 +15,6 @@ import PinboardBar from './pinboard-bar';
 
 
 export default class SearchPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleEmptyPinboardButtonClick = this.handleEmptyPinboardButtonClick.bind(this);
-    this.clearChosenCategory = this.clearChosenCategory.bind(this);
-    this.backToFullSearchHandler = this.backToFullSearchHandler.bind(this);
-    this.handleGoBack = this.handleGoBack.bind(this);
-  }
-
   componentDidMount() {
     const {
       pushBreadcrumbs,
@@ -82,31 +73,31 @@ export default class SearchPage extends Component {
     return typeof query === 'string' && query.length >= 2;
   }
 
-  updateLastCategoryHeight(newHeight) {
+  updateLastCategoryHeight = (newHeight) => {
     this.lastCategoryHeight = newHeight;
     this.forceUpdate();
-  }
+  };
 
   chooseCategory(category) {
     const { updateChosenCategory } = this.props;
     updateChosenCategory(category.id);
   }
 
-  clearChosenCategory() {
+  clearChosenCategory = () => {
     const { updateChosenCategory } = this.props;
     updateChosenCategory('');
-  }
+  };
 
-  handleGoBack(e) {
+  handleGoBack = e => {
     !isEmpty(e) && e.preventDefault();
     const { cancelPathname } = this.props;
     browserHistory.push(cancelPathname);
-  }
+  };
 
-  backToFullSearchHandler() {
+  backToFullSearchHandler = () => {
     this.clearChosenCategory();
     instantScrollToTop();
-  }
+  };
 
   renderCategories() {
     const {
@@ -145,7 +136,7 @@ export default class SearchPage extends Component {
       if (index === lastIndex) {
         // Track last category's DOM element height to use in dynamic bottom padding height calculation
         return (
-          <ReactHeight key={ cat.id } onHeightReady={ this.updateLastCategoryHeight.bind(this) }>
+          <ReactHeight key={ cat.id } onHeightReady={ this.updateLastCategoryHeight }>
             { searchCategory }
           </ReactHeight>
         );
@@ -156,7 +147,7 @@ export default class SearchPage extends Component {
     });
   }
 
-  handleEmptyPinboardButtonClick() {
+  handleEmptyPinboardButtonClick = () => {
     const { createPinboard } = this.props;
 
     createPinboard({ 'officerIds': [], crids: [], 'trrIds': [] }).then(response => {
@@ -167,7 +158,7 @@ export default class SearchPage extends Component {
         browserHistory.push(url);
       }
     });
-  }
+  };
 
   render() {
     const { query, queryPrefix, chosenCategory, pinboard } = this.props;

@@ -11,7 +11,6 @@ const scrollTopMargin = 40; // this value depends on the height of Header
 export default class LocationMap extends Component {
   constructor(props) {
     super(props);
-    this.handleScroll = this.handleScroll.bind(this);
     this.prevTop = 0;
     this.prevBottom = 0;
   }
@@ -52,7 +51,7 @@ export default class LocationMap extends Component {
         center: [centerLng, centerLat],
         interactive: false,
       });
-      this.map.on('click', this.handleMapClick.bind(this));
+      this.map.on('click', this.handleMapClick);
       this.addMarker(lat, lng, customMarkerClassName);
     }
   }
@@ -73,13 +72,13 @@ export default class LocationMap extends Component {
     }
   }
 
-  handleMapClick(e) {
+  handleMapClick = (e) => {
     if (this.map.getZoom() === this.props.zoomOutLevel) {
       this.zoomIn();
     } else {
       this.zoomOut();
     }
-  }
+  };
 
   zoomIn() {
     const { lng, lat, zoomInLevel } = this.props;
@@ -99,7 +98,7 @@ export default class LocationMap extends Component {
     });
   }
 
-  handleScroll(event) {
+  handleScroll = event => {
     /* istanbul ignore next */
     // Logic: zoom in the map if it closes to top or bottom of the current window
     if (this.map) {
@@ -120,7 +119,7 @@ export default class LocationMap extends Component {
       this.prevTop = top;
       this.prevBottom = bottom;
     }
-  }
+  };
 
   render() {
 

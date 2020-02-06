@@ -9,12 +9,7 @@ import * as tracking from 'utils/tracking';
 
 
 export default class SearchItem extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
+  handleClick = () => {
     const { id, type, recentItemData, saveToRecent, query, itemRank } = this.props;
     tracking.trackSearchFocusedItem(type, query, id, itemRank);
     saveToRecent({
@@ -22,7 +17,7 @@ export default class SearchItem extends Component {
       id: id,
       data: recentItemData,
     });
-  }
+  };
 
   render() {
     const {

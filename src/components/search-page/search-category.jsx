@@ -27,10 +27,9 @@ const resultComponentMappings = {
 
 export default class SearchCategory extends Component {
   componentDidMount() {
-    const watchActiveState = this.watchActiveState.bind(this);
-    window.addEventListener('scroll', watchActiveState);
+    window.addEventListener('scroll', this.watchActiveState);
     this.unwatchActiveState = () => {
-      window.removeEventListener('scroll', watchActiveState);
+      window.removeEventListener('scroll', this.watchActiveState);
     };
   }
 
@@ -38,7 +37,7 @@ export default class SearchCategory extends Component {
     this.unwatchActiveState();
   }
 
-  watchActiveState() {
+  watchActiveState = () => {
     // Don't need to do anything if this category is already active
     if (this.props.activeCategory === this.props.categoryId) {
       return;
@@ -49,7 +48,7 @@ export default class SearchCategory extends Component {
     if (offsetTop <= fixedHeaderScrollPosition && fixedHeaderScrollPosition < offsetTop + clientHeight) {
       this.props.updateActiveCategory(this.props.categoryId);
     }
-  }
+  };
 
   renderAllButton() {
     const { showAllButton, allButtonClickHandler, getSuggestionWithContentType, query, categoryPath } = this.props;

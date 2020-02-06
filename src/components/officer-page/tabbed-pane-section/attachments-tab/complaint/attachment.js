@@ -8,17 +8,12 @@ import { thumbnailStyle } from 'components/complaint-page/attachments/attachment
 
 
 class Attachment extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
+  handleClick = () => {
     const { onTrackingAttachment, attachment } = this.props;
     onTrackingAttachment(
       { attachmentId: attachment['id'], sourcePage: 'Officer Page - Attachments Tab', app: 'Mobile' }
     );
-  }
+  };
 
   render() {
     const { title, url, previewImageUrl, fileType } = this.props.attachment;

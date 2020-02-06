@@ -9,19 +9,13 @@ import styles from './location-card.sass';
 
 
 export default class LocationCard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.removeItem = this.removeItem.bind(this);
-  }
-
-  removeItem(e) {
+  removeItem = e => {
     e.preventDefault();
     const { item, removeItemInPinboardPage } = this.props;
     const { type, id } = item;
 
     removeItemInPinboardPage({ type, id });
-  }
+  };
 
   render() {
     const { item, dateKey, url } = this.props;

@@ -9,16 +9,10 @@ import Dropdown from 'components/shared/dropdown';
 
 
 export default class Timeline extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleDropdownChange = this.handleDropdownChange.bind(this);
-  }
-
-  handleDropdownChange(label) {
+  handleDropdownChange = label => {
     const key = findKey(TIMELINE_FILTERS, ['label', label]);
     this.props.changeFilter(TIMELINE_FILTERS[key]);
-  }
+  };
 
   render() {
     const { filterCount, pathname, items, onTrackingAttachment, selectedFilter } = this.props;

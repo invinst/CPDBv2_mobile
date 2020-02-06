@@ -4,12 +4,7 @@ import { noop, every, isEmpty } from 'lodash';
 
 export default function withPinnable(WrappedComponent) {
   class _Base extends Component {
-    constructor(props) {
-      super(props);
-      this.handlePinButtonClick = this.handlePinButtonClick.bind(this);
-    }
-
-    handlePinButtonClick(e) {
+    handlePinButtonClick = e => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -25,7 +20,7 @@ export default function withPinnable(WrappedComponent) {
             isPinned: addOrRemoveItem.isPinned,
           });
       });
-    }
+    };
 
     render() {
       return (

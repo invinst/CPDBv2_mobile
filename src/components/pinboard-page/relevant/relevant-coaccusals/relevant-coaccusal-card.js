@@ -12,12 +12,7 @@ import constants from 'constants';
 
 
 export default class RelevantCoaccusalCard extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(e) {
+  handleClick = e => {
     e.preventDefault();
 
     const {
@@ -36,7 +31,7 @@ export default class RelevantCoaccusalCard extends Component {
       complaintCount,
       rank,
     });
-  }
+  };
 
   render() {
     const {

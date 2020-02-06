@@ -8,7 +8,6 @@ import RequestDocumentContent from './request-document-content';
 
 
 export default class RequestDocumentButton extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -28,18 +27,15 @@ export default class RequestDocumentButton extends Component {
         border: 0,
       },
     };
-
-    this.closeRequestForm = this.closeRequestForm.bind(this);
-    this.openRequestForm = this.openRequestForm.bind(this);
   }
 
-  closeRequestForm() {
+  closeRequestForm = () => {
     this.setState({ requestFormOpened: false });
-  }
+  };
 
-  openRequestForm() {
+  openRequestForm = () => {
     this.setState({ requestFormOpened: true });
-  }
+  };
 
   render() {
     const {
