@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import cx from 'classnames';
@@ -7,33 +7,31 @@ import Attachments from './attachments';
 import styles from './cr.sass';
 
 
-export default class Cr extends Component {
-  render() {
-    const { item, className, pathname, onTrackingAttachment } = this.props;
+export default function Cr(props) {
+  const { item, className, pathname, onTrackingAttachment } = props;
 
-    return (
-      <Link
-        className={ cx(styles.wrapper, className) }
-        to={ `/complaint/${item.crid}/` }
-      >
-        <div className='content'>
-          <span className={ cx('kind', { 'sustained': item.finding === 'Sustained' }) }>C</span>
-          <span className='detail'>
-            <div className='category'>{ item.category }</div>
-            <div className='finding'>{ item.finding }, { item.outcome }</div>
-          </span>
-          <span className='right'>
-            <Attachments
-              attachments={ item.attachments }
-              pathname={ pathname }
-              onTrackingAttachment={ onTrackingAttachment }
-            />
-            <span className='date'>{ item.date }</span>
-          </span>
-        </div>
-      </Link>
-    );
-  }
+  return (
+    <Link
+      className={ cx(styles.wrapper, className) }
+      to={ `/complaint/${item.crid}/` }
+    >
+      <div className='content'>
+        <span className={ cx('kind', { 'sustained': item.finding === 'Sustained' }) }>C</span>
+        <span className='detail'>
+          <div className='category'>{ item.category }</div>
+          <div className='finding'>{ item.finding }, { item.outcome }</div>
+        </span>
+        <span className='right'>
+          <Attachments
+            attachments={ item.attachments }
+            pathname={ pathname }
+            onTrackingAttachment={ onTrackingAttachment }
+          />
+          <span className='date'>{ item.date }</span>
+        </span>
+      </div>
+    </Link>
+  );
 }
 
 Cr.propTypes = {

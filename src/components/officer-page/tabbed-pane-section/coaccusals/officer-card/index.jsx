@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -7,30 +7,28 @@ import style from './officer-card.sass';
 import pluralize from 'pluralize';
 
 
-export class OfficerCard extends Component {
-  render() {
-    const {
-      officerId, fullName, rank, percentile, coaccusalCount, customStyle,
-      isPinned, addOrRemoveItemInPinboard,
-    } = this.props;
-    return (
-      <BaseOfficerCard
-        officerId={ officerId }
-        fullName={ fullName }
-        rank={ rank }
-        percentile={ percentile }
-        customStyle={ customStyle }
-        isPinned={ isPinned }
-        pinnable={ true }
-        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
-        bottomContent={
-          <div className={ cx(style.officerCardCoaccusalCount, 'coaccusal-count') }>
-            {`${coaccusalCount} ${pluralize('Coaccusal', coaccusalCount)}`}
-          </div>
-        }
-      />
-    );
-  }
+export function OfficerCard(props) {
+  const {
+    officerId, fullName, rank, percentile, coaccusalCount, customStyle,
+    isPinned, addOrRemoveItemInPinboard,
+  } = props;
+  return (
+    <BaseOfficerCard
+      officerId={ officerId }
+      fullName={ fullName }
+      rank={ rank }
+      percentile={ percentile }
+      customStyle={ customStyle }
+      isPinned={ isPinned }
+      pinnable={ true }
+      addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+      bottomContent={
+        <div className={ cx(style.officerCardCoaccusalCount, 'coaccusal-count') }>
+          {`${coaccusalCount} ${pluralize('Coaccusal', coaccusalCount)}`}
+        </div>
+      }
+    />
+  );
 }
 
 OfficerCard.propTypes = {

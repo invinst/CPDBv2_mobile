@@ -1,23 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import styles from './year.sass';
 
 
-export default class Year extends Component {
-  render() {
-    const { className, item } = this.props;
-    const { date, hasData } = item;
+export default function Year(props) {
+  const { className, item } = props;
+  const { date, hasData } = item;
 
-    return (
-      <div className={ cx(styles.wrapper, className) }>
-        <div className={ cx('content', { 'no-data': !hasData }) }>
-          <div className={ cx('date', { 'no-data': !hasData }) }>{ date }</div>
-        </div>
+  return (
+    <div className={ cx(styles.wrapper, className) }>
+      <div className={ cx('content', { 'no-data': !hasData }) }>
+        <div className={ cx('date', { 'no-data': !hasData }) }>{ date }</div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 Year.propTypes = {

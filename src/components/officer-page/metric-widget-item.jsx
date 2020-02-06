@@ -1,30 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import style from './metric-widget-item.sass';
 
 
-export default class MetricWidgetItem extends Component {
-  render() {
-    const { value, name, description, isHighlight, firstChunk, lastChunk } = this.props;
-    const active = value > 0;
+export default function MetricWidgetItem(props) {
+  const { value, name, description, isHighlight, firstChunk, lastChunk } = props;
+  const active = value > 0;
 
-    return (
-      <div
-        className={ classnames(style.metricWidgetItem, { 'first-chunk': firstChunk, 'last-chunk': lastChunk }) }>
-        <div className={ classnames('value', { active: active, highlight: isHighlight }) }>
-          { value }
-        </div>
-        <div className={ classnames('name', { active: active }) }>
-          { name }
-        </div>
-        <div className='description'>
-          { description }
-        </div>
+  return (
+    <div
+      className={ classnames(style.metricWidgetItem, { 'first-chunk': firstChunk, 'last-chunk': lastChunk }) }>
+      <div className={ classnames('value', { active: active, highlight: isHighlight }) }>
+        { value }
       </div>
-    );
-  }
+      <div className={ classnames('name', { active: active }) }>
+        { name }
+      </div>
+      <div className='description'>
+        { description }
+      </div>
+    </div>
+  );
 }
 
 MetricWidgetItem.defaultProps = {

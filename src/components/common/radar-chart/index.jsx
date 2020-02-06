@@ -1,30 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import RadarChart from './radar-chart';
 import { hasEnoughRadarChartData } from 'utils/visual-token';
 
 
-export default class StaticRadarChart extends Component {
-  render() {
-    const { data, width, height, radius, yAxisCenter } = this.props;
-    if (!hasEnoughRadarChartData(data)) {
-      return (
-        <RadarChart
-          numMetrics={ 3 }
-          width={ width }
-          height={ height }
-          radius={ radius }
-          yAxisCenter={ yAxisCenter }
-          showGrid={ true }
-          gridColor='#8f8f8f'
-          boundaryAreaColor='#adadad'
-        />
-      );
-    }
-
-    return <RadarChart{ ...this.props }/>;
+export default function StaticRadarChart(props) {
+  const { data, width, height, radius, yAxisCenter } = props;
+  if (!hasEnoughRadarChartData(data)) {
+    return (
+      <RadarChart
+        numMetrics={ 3 }
+        width={ width }
+        height={ height }
+        radius={ radius }
+        yAxisCenter={ yAxisCenter }
+        showGrid={ true }
+        gridColor='#8f8f8f'
+        boundaryAreaColor='#adadad'
+      />
+    );
   }
+
+  return <RadarChart{ ...props }/>;
 }
 
 

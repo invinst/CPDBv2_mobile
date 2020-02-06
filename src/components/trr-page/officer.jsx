@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
@@ -7,61 +7,59 @@ import RadarChart from 'components/common/radar-chart';
 import { officerUrl } from 'utils/url-util';
 
 
-class Officer extends Component {
-  render() {
-    const {
-      officerId, fullName, demographic, careerDuration,
-      unitName, unitDescription,
-      assignedBeat, onDuty, inUniform, percentile,
-    } = this.props;
+function Officer(props) {
+  const {
+    officerId, fullName, demographic, careerDuration,
+    unitName, unitDescription,
+    assignedBeat, onDuty, inUniform, percentile,
+  } = props;
 
-    const visualTokenConfig = percentile ? {
-      backgroundColor: percentile && percentile.visualTokenBackground,
-      data: percentile && percentile.items,
-    } : {};
+  const visualTokenConfig = percentile ? {
+    backgroundColor: percentile && percentile.visualTokenBackground,
+    data: percentile && percentile.items,
+  } : {};
 
-    return (
-      <div className={ style.trrOfficer }>
-        <Link
-          className='officer-row'
-          to={ officerUrl(officerId, fullName) }
-        >
-          <div className='officer-visual-token'>
-            <RadarChart { ...visualTokenConfig }/>
-          </div>
-          <div className='officer-profile'>
-            <div className='rank'>Officer</div>
-            <div className='full-name'>{ fullName }</div>
-          </div>
-          <img className='navigation-arrow' src='/img/disclosure-indicator.svg'/>
-        </Link>
-        <div className='row'>
-          <div className='title'>{ demographic }</div>
+  return (
+    <div className={ style.trrOfficer }>
+      <Link
+        className='officer-row'
+        to={ officerUrl(officerId, fullName) }
+      >
+        <div className='officer-visual-token'>
+          <RadarChart { ...visualTokenConfig }/>
         </div>
-        <div className='row'>
-          <div className='title'>Career</div>
-          <div className='value'>{ careerDuration }</div>
+        <div className='officer-profile'>
+          <div className='rank'>Officer</div>
+          <div className='full-name'>{ fullName }</div>
         </div>
-        <div className='row'>
-          <div className='title'>Unit</div>
-          <div className='value'>{ unitDescription || unitName }</div>
-          <img className='navigation-arrow' src='/img/disclosure-indicator.svg'/>
-        </div>
-        <div className='row'>
-          <div className='title'>Assigned Beat</div>
-          <div className='value'>{ assignedBeat }</div>
-        </div>
-        <div className='row'>
-          <div className='title'>On Duty</div>
-          <div className='value'>{ onDuty }</div>
-        </div>
-        <div className='row'>
-          <div className='title'>In Uniform</div>
-          <div className='value'>{ inUniform }</div>
-        </div>
+        <img className='navigation-arrow' src='/img/disclosure-indicator.svg'/>
+      </Link>
+      <div className='row'>
+        <div className='title'>{ demographic }</div>
       </div>
-    );
-  }
+      <div className='row'>
+        <div className='title'>Career</div>
+        <div className='value'>{ careerDuration }</div>
+      </div>
+      <div className='row'>
+        <div className='title'>Unit</div>
+        <div className='value'>{ unitDescription || unitName }</div>
+        <img className='navigation-arrow' src='/img/disclosure-indicator.svg'/>
+      </div>
+      <div className='row'>
+        <div className='title'>Assigned Beat</div>
+        <div className='value'>{ assignedBeat }</div>
+      </div>
+      <div className='row'>
+        <div className='title'>On Duty</div>
+        <div className='value'>{ onDuty }</div>
+      </div>
+      <div className='row'>
+        <div className='title'>In Uniform</div>
+        <div className='value'>{ inUniform }</div>
+      </div>
+    </div>
+  );
 }
 
 

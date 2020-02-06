@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { every } from 'lodash';
 
@@ -7,43 +7,41 @@ import { curveLinearClosed, radialLine } from 'd3-shape';
 import style from './radar-area.sass';
 
 
-export default class RadarArea extends Component {
-  render() {
+export default function RadarArea(props) {
 
-    const { rPoints, drawStroke, strokeWidth, areaColor } = this.props;
-    if (!rPoints || !every(rPoints, (point) => !isNaN(point.r)))
-      return <g className='radar-wrapper'/>;
+  const { rPoints, drawStroke, strokeWidth, areaColor } = props;
+  if (!rPoints || !every(rPoints, (point) => !isNaN(point.r)))
+    return <g className='radar-wrapper'/>;
 
-    const radarLine = radialLine()
-      .curve(curveLinearClosed)
-      .radius(d => d.r - strokeWidth)
-      .angle(d => d.angle);
+  const radarLine = radialLine()
+    .curve(curveLinearClosed)
+    .radius(d => d.r - strokeWidth)
+    .angle(d => d.angle);
 
-    // required the rPoints as follows [{'angle': 0.15, 'r': 2}]
-    const pathD = radarLine(rPoints);
+  // required the rPoints as follows [{'angle': 0.15, 'r': 2}]
+  const pathD = radarLine(rPoints);
 
-    return (
-      <g className='radar-wrapper'>
-        <g>
+  return (
+    <g className='radar-wrapper'>
+      <g>
+        <path
+          className={ style.radarArea }
+          d={ pathD }
+          fill={ areaColor }
+        />
+
+        { drawStroke && (
           <path
-            className={ style.radarArea }
+            className='test--radar-stroke'
             d={ pathD }
-            fill={ areaColor }
+            style={ { strokeWidth } }
+            stroke={ areaColor }
+            fill='none'
           />
-
-          { drawStroke && (
-            <path
-              className='test--radar-stroke'
-              d={ pathD }
-              style={ { strokeWidth } }
-              stroke={ areaColor }
-              fill='none'
-            />
-          ) }
-        </g>
+        ) }
       </g>
-    );
-  }
+    </g>
+  );
 }
 
 RadarArea.defaultProps = {

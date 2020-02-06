@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import cx from 'classnames';
@@ -8,20 +8,18 @@ import HorizontalScrolling from 'components/common/horizontal-scrolling';
 import style from './carousel-wrapper.sass';
 
 
-export default class CarouselWrapper extends Component {
-  render() {
-    const { children, className, title, description, embed, trackingContentType } = this.props;
+export default function CarouselWrapper(props) {
+  const { children, className, title, description, embed, trackingContentType } = props;
 
-    return (
-      <div className={ cx(style.carouselWrapper, className, { embed }) }>
-        <CMSContent className='carousel-title' content={ title } />
-        <HorizontalScrolling trackingContentType={ trackingContentType }>
-          <CMSContent className='carousel-description' content={ description } />
-          { children }
-        </HorizontalScrolling>
-      </div>
-    );
-  }
+  return (
+    <div className={ cx(style.carouselWrapper, className, { embed }) }>
+      <CMSContent className='carousel-title' content={ title } />
+      <HorizontalScrolling trackingContentType={ trackingContentType }>
+        <CMSContent className='carousel-description' content={ description } />
+        { children }
+      </HorizontalScrolling>
+    </div>
+  );
 }
 
 CarouselWrapper.propTypes = {

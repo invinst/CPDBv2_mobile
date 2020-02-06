@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import style from './description-content.sass';
 import CMSContent from 'components/common/cms-content';
 
 
-export default class DescriptionContent extends Component {
-  render() {
-    const { content, subContent } = this.props;
+export default function DescriptionContent(props) {
+  const { content, subContent } = props;
 
-    return (
-      <div className={ style.descriptionContent }>
-        <CMSContent className='content' content={ content }/>
-        <CMSContent className='sub-content' content={ subContent }/>
-      </div>
-    );
-  }
+  return (
+    <div className={ style.descriptionContent }>
+      <CMSContent className='content' content={ content }/>
+      <CMSContent className='sub-content' content={ subContent }/>
+    </div>
+  );
 }
 
 DescriptionContent.propTypes = {
