@@ -44,7 +44,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
-          pathname: '/pinboard/5cd06f2b/',
+          location: { pathname: '/pinboard/5cd06f2b/' },
           action: 'PUSH',
         },
       };
@@ -66,7 +66,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
-          pathname: '/pinboard/2bd40cf2/',
+          location: { pathname: '/pinboard/2bd40cf2/' },
           action: 'PUSH',
         },
       };
@@ -96,7 +96,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
-          pathname: '/pinboard/5cd06f2b/',
+          location: { pathname: '/pinboard/5cd06f2b/' },
           action: 'REPLACE',
         },
       };
@@ -117,7 +117,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
-          pathname: '/pinboard/2bd40cf2/pinboard-title/',
+          location: { pathname: '/pinboard/2bd40cf2/pinboard-title/' },
           action: 'REPLACE',
         },
       };
@@ -139,7 +139,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
   describe('handling PINBOARD_FETCH_REQUEST_SUCCESS', function () {
     beforeEach(function () {
       sinon.stub(browserHistory, 'replace');
-      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/2bd40cf2/old-title/' });
+      sinon.stub(browserHistory, 'location').value({ pathname: '/pinboard/2bd40cf2/old-title/' });
       this.store = createStore();
     });
 
@@ -217,8 +217,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
     });
 
     it('should do nothing if not being on a pinboard page', function () {
-      browserHistory.getCurrentLocation.restore();
-      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/search/' });
+      sinon.stub(browserHistory, 'location').value({ pathname: '/search/' });
 
       const action = {
         type: PINBOARD_FETCH_REQUEST_SUCCESS,
@@ -240,7 +239,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
   describe('handling PINBOARD_CREATE_REQUEST_SUCCESS', function () {
     beforeEach(function () {
       sinon.stub(browserHistory, 'replace');
-      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/' });
+      sinon.stub(browserHistory, 'location').value({ pathname: '/pinboard/' });
       this.store = createStore();
     });
 
@@ -276,7 +275,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
   describe('handling PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS', function () {
     beforeEach(function () {
       sinon.stub(browserHistory, 'replace');
-      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/' });
+      sinon.stub(browserHistory, 'location').value({ pathname: '/pinboard/' });
       this.store = createStore();
     });
 
@@ -323,8 +322,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
     });
 
     it('should do nothing if not being on a pinboard page', function () {
-      browserHistory.getCurrentLocation.restore();
-      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/search/' });
+      sinon.stub(browserHistory, 'location').value({ pathname: '/search/' });
 
       const action = {
         type: PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
@@ -346,7 +344,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
   describe('handling PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS', function () {
     beforeEach(function () {
       sinon.stub(browserHistory, 'replace');
-      sinon.stub(browserHistory, 'getCurrentLocation').returns({ pathname: '/pinboard/' });
+      sinon.stub(browserHistory, 'location').value({ pathname: '/pinboard/' });
       this.store = createStore();
     });
 

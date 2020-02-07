@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import { cloneDeep } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
+import { MemoryRouter, Route } from 'react-router';
 
 import WithHeader from 'components/shared/with-header';
 import OfficerPage from 'components/officer-page';
@@ -91,27 +92,6 @@ describe('<OfficerPage />', function () {
     wrapper.setProps({ requestOfficerId: 2 });
 
     resetTimelineFilter.should.be.calledOnce();
-  });
-
-  it('should set to the correct officer if there is officer alias', function () {
-    const pushBreadcrumbSpy = sinon.spy();
-    const wrapper = shallow(
-      <OfficerPage
-        loading={ false }
-        found={ false }
-        pushBreadcrumbs={ pushBreadcrumbSpy }
-      />
-    );
-
-    wrapper.setProps({
-      requestOfficerId: 456,
-      summary: { id: 123 },
-      routes: [],
-      location: {},
-      params: {},
-    });
-
-    pushBreadcrumbSpy.calledWith({ routes: [], location: { pathname: 'officer/123/' }, params: { id: 123 } });
   });
 
   it('should not fetch officer data if summary is already available', function () {
@@ -666,7 +646,9 @@ describe('<OfficerPage />', function () {
       const requestingSummaryStore = mockStore(requestingSummary);
       const wrapper = mount(
         <Provider store={ requestingSummaryStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
 
@@ -680,7 +662,9 @@ describe('<OfficerPage />', function () {
 
       const wrapper = mount(
         <Provider store={ requestingOfficerStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
       wrapper.find(NotMatchedOfficerPage).exists().should.be.true();
@@ -690,7 +674,9 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
 
@@ -731,7 +717,9 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
 
@@ -759,7 +747,9 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(emptyBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
 
@@ -773,7 +763,9 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(emptyHistoricBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
 
@@ -787,7 +779,9 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(emptyBadgeAndHistoricBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
 
@@ -801,7 +795,9 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
 
@@ -903,7 +899,9 @@ describe('<OfficerPage />', function () {
 
       const wrapper = mount(
         <Provider store={ mockStore(data) }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
 
@@ -969,7 +967,9 @@ describe('<OfficerPage />', function () {
 
       const wrapper = mount(
         <Provider store={ mockStore(data) }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
 
@@ -1005,7 +1005,9 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11, firstParam: 'coaccusals' } } />
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/coaccusals/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
       const tabbedPaneSection = wrapper.find(TabbedPaneSection);

@@ -1,8 +1,9 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Link } from 'react-router-dom';
 
+import { mountWithRouter } from 'utils/tests';
 import LocationCard from 'components/pinboard-page/cards/location-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 
@@ -13,7 +14,7 @@ describe('LocationCard component', function () {
       dateKey: '10-10-2010',
       category: 'Use Of Force',
     };
-    const wrapper = mount(<LocationCard item={ item } dateKey='dateKey' url='/complaint/1234/'/>);
+    const wrapper = shallow(<LocationCard item={ item } dateKey='dateKey' url='/complaint/1234/'/>);
 
     wrapper.find(Link).props().to.should.equal('/complaint/1234/');
     wrapper.find(ItemUnpinButton).should.have.length(1);
@@ -23,7 +24,7 @@ describe('LocationCard component', function () {
 
   it('should render card map with style if point of item is not null', function () {
     const item = { point: { 'lat': 1.0, 'lon': 1.0 } };
-    const wrapper = mount(<LocationCard item={ item }/>);
+    const wrapper = shallow(<LocationCard item={ item }/>);
 
     wrapper.find('.location-card-map').should.have.length(1);
     wrapper.find('.empty-map').should.have.length(0);
@@ -31,7 +32,7 @@ describe('LocationCard component', function () {
 
   it('should not render card map with style if point of item is null', function () {
     const item = { point: null };
-    const wrapper = mount(<LocationCard item={ item }/>);
+    const wrapper = shallow(<LocationCard item={ item }/>);
 
     wrapper.find('.location-card-map').should.have.length(1);
     wrapper.find('.empty-map').should.have.length(1);
@@ -47,7 +48,7 @@ describe('LocationCard component', function () {
       incidentDate: '10-10-2010',
       category: 'Use Of Force',
     };
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <LocationCard
         item={ item }
         removeItemInPinboardPage={ removeItemInPinboardPage }

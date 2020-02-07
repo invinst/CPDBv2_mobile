@@ -34,8 +34,8 @@ describe('chosenCategory reducer', function () {
     chosenCategory('', {
       type: LOCATION_CHANGE,
       payload: {
-        query: {
-          terms: 'officer:123',
+        location: {
+          search: 'terms=officer:123',
         },
       },
     }).should.eql('officers');
@@ -45,8 +45,8 @@ describe('chosenCategory reducer', function () {
     chosenCategory('', {
       type: LOCATION_CHANGE,
       payload: {
-        query: {
-          terms: 'abc:123',
+        location: {
+          search: 'terms=abc:123',
         },
       },
     }).should.eql('');

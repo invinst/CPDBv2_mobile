@@ -1,8 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { Router, createMemoryHistory, Route } from 'react-router';
+import { Router, Route } from 'react-router';
+import { createBrowserHistory } from 'history';
 import sinon from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import OfficerCard, { OfficerCardWithUndo } from 'components/pinboard-page/cards/officer-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 import RadarChart from 'components/common/radar-chart';
@@ -15,7 +17,7 @@ describe('Pinboard <OfficerCard />', function () {
       fullName: 'James David',
       complaintCount: '10',
     };
-    const officerCard = mount(<OfficerCard item={ item } />);
+    const officerCard = mountWithRouter(<OfficerCard item={ item } />);
 
     officerCard.exists(ItemUnpinButton).should.be.true();
     officerCard.exists(RadarChart).should.be.true();
@@ -37,7 +39,7 @@ describe('Pinboard <OfficerCard />', function () {
       complaintCount: '10',
     };
     const wrapper = mount(
-      <Router history={ createMemoryHistory() }>
+      <Router history={ createBrowserHistory() }>
         <Route path='/' component={ () =>
           <OfficerCard
             item={ item }
@@ -68,7 +70,7 @@ describe('OfficerCardWithUndo component', function () {
       complaintCount: '10',
     };
     const wrapper = mount(
-      <Router history={ createMemoryHistory() }>
+      <Router history={ createBrowserHistory() }>
         <Route path='/' component={ () => <OfficerCardWithUndo item={ item } /> } />
       </Router>
     );

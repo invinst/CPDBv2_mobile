@@ -41,24 +41,6 @@ describe('<SearchPage />', function () {
   });
 
   describe('componentDidMount', function () {
-    it('should call pushBreadcrumb when mounted', function () {
-      const pushBreadcrumbsSpy = sinon.spy();
-      mount(
-        <SearchPage
-          pushBreadcrumbs={ pushBreadcrumbsSpy }
-          location='location'
-          routes='routes'
-          params='params'
-        />,
-        { disableLifecycleMethods: true },
-      );
-      pushBreadcrumbsSpy.calledWith({
-        location: 'location',
-        routes: 'routes',
-        params: 'params',
-      }).should.be.true();
-    });
-
     it('should focus the input element when mounted', function () {
       const wrapper = shallow(
         <SearchPage />,

@@ -3,6 +3,7 @@ import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { MemoryRouter } from 'react-router';
 
 import constants from 'constants';
 import LandingPage from 'components/landing-page';
@@ -22,7 +23,7 @@ describe('<LandingPage />', function () {
     searchBar.prop('to').should.eql(constants.SEARCH_PATH);
   });
 
-  it('should request landing page data and pushBreadcrumb on mount', function () {
+  it('should request landing page data', function () {
     const store = configureStore()({
       landingPage: {
         topOfficersByAllegation: [1],
@@ -34,43 +35,19 @@ describe('<LandingPage />', function () {
     });
 
     const spyRequestCMS = sinon.spy();
-    const pushBreadcrumbsSpy = sinon.spy();
     mount(
       <Provider store={ store }>
-        <LandingPage
-          cmsRequested={ false }
-          requestCMS={ spyRequestCMS }
-          pushBreadcrumbs={ pushBreadcrumbsSpy }
-          location='location'
-          routes='routes'
-          params='params'
-        />
+        <MemoryRouter>
+          <LandingPage
+            cmsRequested={ false }
+            requestCMS={ spyRequestCMS }
+            location='location'
+            routes='routes'
+            params='params'
+          />
+        </MemoryRouter>
       </Provider>
     );
     spyRequestCMS.calledWith().should.be.true();
-    pushBreadcrumbsSpy.calledWith({
-      location: 'location',
-      routes: 'routes',
-      params: 'params',
-    }).should.be.true();
-  });
-
-  it('should call pushBreadcrumb when updating', function () {
-    const pushBreadcrumbsSpy = sinon.spy();
-    const wrapper = shallow(
-      <LandingPage
-        pushBreadcrumbs={ pushBreadcrumbsSpy }
-        location='location'
-        routes='routes'
-        params='params'
-      />
-    );
-
-    wrapper.setProps({ location: 'changed' });
-    pushBreadcrumbsSpy.calledWith({
-      location: 'changed',
-      routes: 'routes',
-      params: 'params',
-    }).should.be.true();
   });
 });

@@ -1,7 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import sinon from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/relevant-infinite-carousel';
 import RelevantComplaints from 'components/pinboard-page/relevant/relevant-complaints';
 import RelevantComplaintCard, { RelevantComplaintCardWithUndo }
@@ -75,7 +75,7 @@ describe('<RelevantComplaints />', function () {
     const addItemInPinboardPageStub = sinon.stub();
     const fetchPinboardRelevantComplaintsStub = sinon.stub();
 
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <RelevantComplaints
         requesting={ false }
         addItemInPinboardPage={ addItemInPinboardPageStub }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { ToastContainer } from 'react-toastify';
 import sinon from 'sinon';
 
@@ -81,7 +81,7 @@ describe('MainPage component', function () {
   });
 
   it('should render ToastContainer', function () {
-    const wrapper = mount(
+    const wrapper = shallow(
       <MainPage
         location={ { pathname: '/' } }
       />

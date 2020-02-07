@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import { Router, Route } from 'react-router';
 import { Link } from 'react-router-dom';
 import sinon from 'sinon';
-import { createMemoryHistory } from 'history';
+import { createBrowserHistory } from 'history';
 
 import SearchItem from 'components/search-page/search-item';
 import ItemPinButton from 'components/common/item-pin-button';
@@ -62,7 +62,7 @@ describe('<SearchItem />', function () {
     };
 
     const wrapper = mount(
-      <Router history={ createMemoryHistory() }>
+      <Router history={ createBrowserHistory() }>
         <Route path='/' component={
           () => <SearchItem
             type='OFFICER'

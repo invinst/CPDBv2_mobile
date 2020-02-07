@@ -2,7 +2,9 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Link } from 'react-router-dom';
 import sinon from 'sinon';
-import { Router, Route, createMemoryHistory } from 'react-router';
+import { Router, Route } from 'react-router';
+import { createBrowserHistory } from 'history';
+
 
 import * as tracking from 'utils/tracking';
 import ComplaintDocumentCard from 'components/landing-page/new-document-allegations/complaint-document-card';
@@ -55,7 +57,7 @@ describe('<ComplaintDocumentCard />', function () {
       <ComplaintDocumentCard allegation={ allegation } pathname='/'/>
     );
     const wrapper = mount(
-      <Router history={ createMemoryHistory() }>
+      <Router history={ createBrowserHistory() }>
         <Route path='/' component={ complaintDocumentCard } />
       </Router>
     );
@@ -82,7 +84,7 @@ describe('<ComplaintDocumentCard />', function () {
       />
     );
     const wrapper = mount(
-      <Router history={ createMemoryHistory() }>
+      <Router history={ createBrowserHistory() }>
         <Route path='/' component={ complaintDocumentCard } />
       </Router>
     );

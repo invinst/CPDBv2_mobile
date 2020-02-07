@@ -1,9 +1,11 @@
 import React from 'react';
-import { Router, createMemoryHistory, Route } from 'react-router';
+import { Router, Route } from 'react-router';
+import { createBrowserHistory } from 'history';
 
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import OfficerCard, { OfficerCardWithUndo } from 'components/pinboard-page/cards/officer-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 import constants from 'constants';
@@ -25,7 +27,7 @@ describe('withUndoCard higher-order component', function () {
   });
 
   it('should render wrapped component', function () {
-    instance = mount(<OfficerCardWithUndo item={ item } />);
+    instance = mountWithRouter(<OfficerCardWithUndo item={ item } />);
 
     instance.exists(OfficerCard).should.be.true();
     instance.find('.undo-card-text').exists().should.be.false();
@@ -34,7 +36,7 @@ describe('withUndoCard higher-order component', function () {
 
   it('should render undo card when user click remove', function () {
     instance = mount(
-      <Router history={ createMemoryHistory() }>
+      <Router history={ createBrowserHistory() }>
         <Route path='/' component={ () => <OfficerCardWithUndo item={ item }/> } />
       </Router>
     );
@@ -57,7 +59,7 @@ describe('withUndoCard higher-order component', function () {
     it('should render nothing when user click unpin but not undo', function () {
       const removeItemInPinboardPage = sinon.spy();
       instance = mount(
-        <Router history={ createMemoryHistory() }>
+        <Router history={ createBrowserHistory() }>
           <Route path='/' component={
             () => <OfficerCardWithUndo item={ item } removeItemInPinboardPage={ removeItemInPinboardPage }/>
           } />
@@ -78,7 +80,7 @@ describe('withUndoCard higher-order component', function () {
     it('should trigger to remove item 1s after click on remove button', function () {
       const removeItemInPinboardPage = sinon.spy();
       instance = mount(
-        <Router history={ createMemoryHistory() }>
+        <Router history={ createBrowserHistory() }>
           <Route path='/' component={
             () => <OfficerCardWithUndo item={ item } removeItemInPinboardPage={ removeItemInPinboardPage }/>
           } />
@@ -99,7 +101,7 @@ describe('withUndoCard higher-order component', function () {
     it('should cancel remove item if click on undo button', function () {
       const removeItemInPinboardPage = sinon.spy();
       instance = mount(
-        <Router history={ createMemoryHistory() }>
+        <Router history={ createBrowserHistory() }>
           <Route path='/' component={
             () => <OfficerCardWithUndo item={ item } removeItemInPinboardPage={ removeItemInPinboardPage }/>
           } />

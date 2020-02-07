@@ -1,7 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { Router, createMemoryHistory, Route } from 'react-router';
+import { Router, Route } from 'react-router';
+import { createBrowserHistory } from 'history';
 
+import { mountWithRouter } from 'utils/tests';
 import TRRCard, { TRRCardWithUndo } from 'components/pinboard-page/cards/trr-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 import LocationCard from 'components/pinboard-page/cards/location-card';
@@ -14,7 +16,7 @@ describe('Pinboard <TRRCard />', function () {
       category: 'Use Of Force',
       id: '1234',
     };
-    const wrapper = mount(<TRRCard item={ item } someOtherProp='abcd'/>);
+    const wrapper = mountWithRouter(<TRRCard item={ item } someOtherProp='abcd'/>);
     const locationCard = wrapper.find(LocationCard);
 
     locationCard.props().item.should.eql(item);
@@ -31,7 +33,7 @@ describe('Pinboard <TRRCardWithUndo />', function () {
     };
 
     const wrapper = mount(
-      <Router history={ createMemoryHistory() }>
+      <Router history={ createBrowserHistory() }>
         <Route path='/' component={ () => <TRRCardWithUndo item={ item }/> } />
       </Router>
     );

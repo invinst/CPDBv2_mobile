@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
+import { MemoryRouter } from 'react-router';
 
 import RadarExplainer from 'components/officer-page/radar-chart/explainer';
 import TriangleExplainer from 'components/officer-page/radar-chart/explainer/triangle-explainer';
@@ -53,11 +54,13 @@ describe('Explainer component', function () {
     let radarExplainer = null;
     const wrapper = mount(
       <Provider store={ store }>
-        <RadarExplainer
-          ref={ (c) => {radarExplainer = c;} }
-          percentileData={ data }
-          closeExplainer={ closeExplainerSpy }
-        />
+        <MemoryRouter>
+          <RadarExplainer
+            ref={ (c) => {radarExplainer = c;} }
+            percentileData={ data }
+            closeExplainer={ closeExplainerSpy }
+          />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -82,7 +85,9 @@ describe('Explainer component', function () {
   it('should navigate correctly between explainers', function () {
     const wrapper = mount(
       <Provider store={ store }>
-        <RadarExplainer percentileData={ data }/>
+        <MemoryRouter>
+          <RadarExplainer percentileData={ data }/>
+        </MemoryRouter>
       </Provider>
     );
 
@@ -117,7 +122,9 @@ describe('Explainer component', function () {
     const closeExplainerSpy = sinon.spy();
     const wrapper = mount(
       <Provider store={ store }>
-        <RadarExplainer percentileData={ data } closeExplainer={ closeExplainerSpy }/>
+        <MemoryRouter>
+          <RadarExplainer percentileData={ data } closeExplainer={ closeExplainerSpy }/>
+        </MemoryRouter>
       </Provider>
     );
     const explainer = wrapper.find(TriangleExplainer);

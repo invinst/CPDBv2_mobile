@@ -31,8 +31,8 @@ describe('query reducer', function () {
     query('', {
       type: LOCATION_CHANGE,
       payload: {
-        query: {
-          terms: queryString,
+        location: {
+          search: `terms=${queryString}`,
         },
       },
     }).should.eql(queryString);
@@ -42,8 +42,8 @@ describe('query reducer', function () {
     query('', {
       type: LOCATION_CHANGE,
       payload: {
-        query: {
-          terms: 'officer:123',
+        location: {
+          search: 'terms=officer:123',
         },
       },
     }).should.eql('123');

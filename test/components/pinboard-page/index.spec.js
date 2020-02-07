@@ -3,7 +3,9 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router';
 
+import { mountWithRouter } from 'utils/tests';
 import PinboardPage from 'components/pinboard-page';
 import PinnedOfficersContainer from 'containers/pinboard-page/pinned-officers';
 import PinnedCRsContainer from 'containers/pinboard-page/pinned-crs';
@@ -45,7 +47,7 @@ describe('<PinboardPage />', function () {
   });
 
   it('should not render the pinboard if initialRequested is false', function () {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <PinboardPage
         params={ { pinboardId: '5cd06f2b' } }
         pinboard={ { id: '5cd06f2b' } }
@@ -57,7 +59,7 @@ describe('<PinboardPage />', function () {
   });
 
   it('should render LoadingSpiner component if pinboardPageLoading is true', function () {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <PinboardPage
         params={ { pinboardId: '5cd06f2b' } }
         pinboard={ { id: '5cd06f2b' } }
@@ -78,12 +80,14 @@ describe('<PinboardPage />', function () {
     const removeItemInPinboardPage = sinon.spy();
     const wrapper = mount(
       <Provider store={ store }>
-        <PinboardPage
-          itemsByTypes={ itemsByTypes }
-          removeItemInPinboardPage={ removeItemInPinboardPage }
-          params={ { pinboardId: '5cd06f2b' } }
-          pinboard={ { id: '5cd06f2b', 'crids': ['123'] } }
-        />
+        <MemoryRouter>
+          <PinboardPage
+            itemsByTypes={ itemsByTypes }
+            removeItemInPinboardPage={ removeItemInPinboardPage }
+            params={ { pinboardId: '5cd06f2b' } }
+            pinboard={ { id: '5cd06f2b', 'crids': ['123'] } }
+          />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -96,10 +100,12 @@ describe('<PinboardPage />', function () {
   it('should render SearchBar component', function () {
     const wrapper = mount(
       <Provider store={ store }>
-        <PinboardPage
-          params={ { pinboardId: '5cd06f2b' } }
-          pinboard={ { id: '5cd06f2b', 'crids': ['123'] } }
-        />
+        <MemoryRouter>
+          <PinboardPage
+            params={ { pinboardId: '5cd06f2b' } }
+            pinboard={ { id: '5cd06f2b', 'crids': ['123'] } }
+          />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -116,10 +122,12 @@ describe('<PinboardPage />', function () {
 
     const wrapper = mount(
       <Provider store={ store }>
-        <PinboardPage
-          params={ { pinboardId: '5cd06f2b' } }
-          pinboard={ pinboard }
-        />
+        <MemoryRouter>
+          <PinboardPage
+            params={ { pinboardId: '5cd06f2b' } }
+            pinboard={ pinboard }
+          />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -154,11 +162,13 @@ describe('<PinboardPage />', function () {
 
     const wrapper = mount(
       <Provider store={ store }>
-        <PinboardPage
-          params={ { pinboardId: '5cd06f2b' } }
-          pinboard={ pinboard }
-          isEmptyPinboard={ true }
-        />
+        <MemoryRouter>
+          <PinboardPage
+            params={ { pinboardId: '5cd06f2b' } }
+            pinboard={ pinboard }
+            isEmptyPinboard={ true }
+          />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -182,59 +192,10 @@ describe('<PinboardPage />', function () {
     }]);
   });
 
-  it('should pushBreadcrumbs on componentDidMount and componentDidUpdate', function () {
-    const itemsByTypes = {
-      'OFFICER': [],
-      'CR': [],
-      'TRR': [],
-    };
-    const removeItemInPinboardPage = sinon.spy();
-    const pushBreadcrumbs = sinon.spy();
-    const routes = [];
-    const location = { pathname: '/pinboard/5cd06f2b/' };
-    const params = { pinboardId: '5cd06f2b' };
-    const pinboard = { id: '5cd06f2b', 'crids': ['123'] };
-
-    const wrapper = mount(
-      <Provider store={ store }>
-        <PinboardPage
-          itemsByTypes={ itemsByTypes }
-          removeItemInPinboardPage={ removeItemInPinboardPage }
-          params={ params }
-          pinboard={ pinboard }
-          pushBreadcrumbs={ pushBreadcrumbs }
-          routes={ routes }
-          location={ location }
-        />
-      </Provider>
-    );
-
-    pushBreadcrumbs.should.be.calledOnce();
-    pushBreadcrumbs.should.be.calledWith({ location, routes, params });
-
-    const newParams = { pinboardId: '5c23adf1' };
-    const newLocation = { pathname: '/pinboard/5c23adf1/' };
-    const newPinboard = { id: '5c23adf1', 'crids': ['123'] };
-    wrapper.setProps( { children: (
-      <PinboardPage
-        itemsByTypes={ itemsByTypes }
-        removeItemInPinboardPage={ removeItemInPinboardPage }
-        params={ newParams }
-        pinboard={ newPinboard }
-        pushBreadcrumbs={ pushBreadcrumbs }
-        routes={ routes }
-        location={ newLocation }
-      />
-    ) });
-
-    pushBreadcrumbs.should.be.calledTwice();
-    pushBreadcrumbs.should.be.calledWith({ location: newLocation, routes, params: newParams });
-  });
-
   it('should requestCMS if does not hasCMS', function () {
     const requestCMSSpy = sinon.spy();
 
-    mount(
+    mountWithRouter(
       <PinboardPage
         params={ { pinboardId: '5cd06f2b' } }
         pinboard={ { id: '5cd06f2b' } }
@@ -250,7 +211,7 @@ describe('<PinboardPage />', function () {
   it('should not requestCMS if hasCMS', function () {
     const requestCMSSpy = sinon.spy();
 
-    mount(
+    mountWithRouter(
       <PinboardPage
         params={ { pinboardId: '5cd06f2b' } }
         pinboard={ { id: '5cd06f2b' } }

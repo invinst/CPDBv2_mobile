@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Redirect, Switch } from 'react-router';
 import Modal from 'react-modal';
 
@@ -104,3 +105,10 @@ export default function App(props) {
     </Switch>
   );
 }
+
+App.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string,
+  }).isRequired,
+};

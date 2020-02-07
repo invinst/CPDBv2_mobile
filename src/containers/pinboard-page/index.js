@@ -12,6 +12,7 @@ import { hasCMS } from 'selectors/common/cms';
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
+  params: ownProps.match.params,
   pinboard: getPinboard(state),
   hasMapMarker: hasMapMarkersSelector(state),
   initialRequested: getInitialRequested(state),

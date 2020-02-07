@@ -1,8 +1,9 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { EditorState } from 'draft-js';
 
+import { mountWithRouter } from 'utils/tests';
 import TopOfficersByAllegation from 'components/landing-page/top-officers-by-allegation';
 import OfficerCard from 'components/common/officer-card';
 import CarouselWrapper from 'components/landing-page/carousel-wrapper';
@@ -18,7 +19,7 @@ describe('<TopOfficersByAllegation />', function () {
   it('should call request TopOfficersByAllegation and CMS if they are not requested', function () {
     const requestTopOfficersByAllegationSpy = sinon.spy();
     const requestCMSSpy = sinon.spy();
-    mount(
+    mountWithRouter(
       <TopOfficersByAllegation
         requestTopOfficersByAllegation={ requestTopOfficersByAllegationSpy }
         topOfficersByAllegation={ [{ id: 13788 }, { id: 13789 }] }
@@ -31,7 +32,7 @@ describe('<TopOfficersByAllegation />', function () {
 
     requestTopOfficersByAllegationSpy.resetHistory();
     requestCMSSpy.resetHistory();
-    mount(
+    mountWithRouter(
       <TopOfficersByAllegation
         requestTopOfficersByAllegation={ requestTopOfficersByAllegationSpy }
         requestCMS={ requestCMSSpy }
@@ -120,7 +121,7 @@ describe('<TopOfficersByAllegation />', function () {
     ];
     sinon.stub(IntercomUtils, 'showIntercomLauncher');
 
-    const wrapper = mount(
+    const wrapper = shallow(
       <TopOfficersByAllegation
         topOfficersByAllegation={ topOfficersByAllegation }
         cmsRequested={ true }

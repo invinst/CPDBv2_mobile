@@ -1,7 +1,8 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import RecentActivities from 'components/landing-page/recent-activities';
 import { EditorState } from 'draft-js';
 import CarouselWrapper from 'components/landing-page/carousel-wrapper';
@@ -37,7 +38,7 @@ describe('<RecentActivities />', function () {
 
   it('should call requestRecentActivities', function () {
     const requestRecentActivitiesSpy = sinon.spy();
-    mount(
+    mountWithRouter(
       <RecentActivities
         requestRecentActivities={ requestRecentActivitiesSpy }
         recentActivities={ [{ id: 123 }, { id: 456 }] }
@@ -46,7 +47,7 @@ describe('<RecentActivities />', function () {
     requestRecentActivitiesSpy.called.should.be.false();
 
     requestRecentActivitiesSpy.resetHistory();
-    mount(
+    mountWithRouter(
       <RecentActivities
         requestRecentActivities={ requestRecentActivitiesSpy }
       />

@@ -28,7 +28,6 @@ import {
 } from 'actions/pinboard';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 import { Toastify } from 'utils/toastify';
-import extractQuery from 'utils/extract-query';
 import toastStyles from 'utils/toast.sass';
 import * as ToastUtils from 'utils/toast';
 import { CancelToken } from 'axios/index';
@@ -717,7 +716,9 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
   it('should handle @@router/LOCATION_CHANGE and do nothing if not saving and isPinboardRestored', function () {
     const action = {
       type: '@@router/LOCATION_CHANGE',
-      payload: { pathname: '/search/' },
+      payload: {
+        location: { pathname: '/search/' },
+      },
     };
     const store = createStore(PinboardFactory.build({
       'id': '66ef1560',
@@ -776,7 +777,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     };
 
     it('should handle @@router/LOCATION_CHANGE with query to create pinboard but may not show toasts', function (done) {
-      const pathname = '/pinboard/?officer-ids=1,3,4,5&crids=1053673&trr-ids=1,2';
+      const pathname = '/pinboard/';
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
@@ -785,14 +786,17 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
             crids: '1053673',
             'trr-ids': '1,2',
           },
-          pathname,
+          location: {
+            pathname,
+            search: 'officer-ids=1,3,4,5&crids=1053673&trr-ids=1,2',
+          },
         },
       };
       testCreatePinboardWith(action, pathname, done);
     });
 
     it('should accept params without s', function (done) {
-      const pathname = '/pinboard/?officer-id=1,3,4,5&crid=1053673&trr-id=1,2';
+      const pathname = '/pinboard/';
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
@@ -801,14 +805,17 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
             crid: '1053673',
             'trr-id': '1,2',
           },
-          pathname,
+          location: {
+            pathname,
+            search: 'officer-id=1,3,4,5&crid=1053673&trr-id=1,2',
+          },
         },
       };
       testCreatePinboardWith(action, pathname, done);
     });
 
     it('should accept params with under score', function (done) {
-      const pathname = '/pinboard/?officer_ids=1,3,4,5&crid=1053673&trr_ids=1,2';
+      const pathname = '/pinboard/';
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
@@ -817,14 +824,17 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
             crid: '1053673',
             'trr_ids': '1,2',
           },
-          pathname,
+          location: {
+            pathname,
+            search: 'officer_ids=1,3,4,5&crid=1053673&trr_ids=1,2',
+          },
         },
       };
       testCreatePinboardWith(action, pathname, done);
     });
 
     it('should accept camelCase params', function (done) {
-      const pathname = '/pinboard/?officerId=1,3,4,5&crids=1053673&trrIds=1,2';
+      const pathname = '/pinboard/';
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
@@ -833,23 +843,24 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
             crid: '1053673',
             trrIds: '1,2',
           },
-          pathname,
+          location: {
+            pathname,
+            search: 'officerId=1,3,4,5&crids=1053673&trrIds=1,2',
+          },
         },
       };
       testCreatePinboardWith(action, pathname, done);
     });
 
     it('should accept params with some capitalizing mistakes', function (done) {
-      const pathname = '/pinboard/?officeR-ids=1,3,4,5&CRids=1053673&tRRIds=1,2';
+      const pathname = '/pinboard/';
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
-          query: {
-            'officeR-ids': '1,3,4,5',
-            CRids: '1053673',
-            tRRIds: '1,2',
+          location: {
+            pathname: pathname,
+            search: 'officeR-ids=1,3,4,5&CRids=1053673&tRRIds=1,2',
           },
-          pathname,
         },
       };
       testCreatePinboardWith(action, pathname, done);
@@ -858,16 +869,14 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     it('should handle @@router/LOCATION_CHANGE to create pinboard and show toast', function (done) {
       Toastify.toast.should.not.be.called();
 
-      const pathname = '/pinboard/?officer-id=1&crids=xyz567,1053673,tyu890&trr-ids=3,99';
+      const pathname = '/pinboard/';
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
-          query: {
-            'officer-ids': '1',
-            crids: 'xyz567,1053673,tyu890',
-            'trr-ids': '3,99',
+          location: {
+            pathname,
+            search: 'officer-id=1&crids=xyz567,1053673,tyu890&trr-ids=3,99',
           },
-          pathname,
         },
       };
       const store = createStore(
@@ -916,17 +925,14 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     });
 
     it('should skip invalid param and show invalid param message', function (done) {
-      const pathname = '/pinboard/?officer-ids=1&crids=xyz567,1053673,tyu890&trr-ids=3,99&invalid-param=1,2';
+      const pathname = '/pinboard/';
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
-          query: {
-            'officer-ids': '1',
-            crids: 'xyz567,1053673,tyu890',
-            'trr-ids': '3,99',
-            'invalid-param': '1,2',
+          location: {
+            pathname,
+            search: 'officer-ids=1&crids=xyz567,1053673,tyu890&trr-ids=3,99&invalid-param=1,2',
           },
-          pathname,
         },
       };
       const store = createStore(
@@ -978,7 +984,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     });
 
     it('should skip invalid params and show invalid params message', function (done) {
-      const pathname = '/pinboard/?officer-ids=1&crids=xyz567,1053673,tyu890&invalid-param-a=1,2&invalid-param-b=2,1';
+      const pathname = '/pinboard/';
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
@@ -988,7 +994,10 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
             'invalid-param-a': '1,2',
             'invalid-param-b': '2,1',
           },
-          pathname,
+          location: {
+            pathname,
+            search: 'officer-ids=1&crids=xyz567,1053673,tyu890&invalid-param-a=1,2&invalid-param-b=2,1',
+          },
         },
       };
       const store = createStore(
@@ -1042,7 +1051,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
-          pathname: '/search/',
+          location: { pathname: '/search/' },
         },
       };
       const store = createStore(PinboardFactory.build({
@@ -1062,7 +1071,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
-          pathname: '/pinboard/5cd06f2b/',
+          location: { pathname: '/pinboard/5cd06f2b/' },
         },
       };
       const store = createStore(PinboardFactory.build({
@@ -1085,7 +1094,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
         const action = {
           type: '@@router/LOCATION_CHANGE',
           payload: {
-            pathname: '/search/',
+            location: { pathname: '/search/' },
           },
         };
         const store = createStore(PinboardFactory.build({
@@ -1110,7 +1119,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
         const action = {
           type: '@@router/LOCATION_CHANGE',
           payload: {
-            pathname: '/pinboard/',
+            location: { pathname: '/pinboard/' },
           },
         };
         const store = createStore({});
@@ -1125,12 +1134,13 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     );
 
     it('should not dispatch fetchLatestRetrievedPinboard if there is no pinboard id but query exists', function () {
-      const pathname = '/pinboard/?officer-ids=1,3,4,5,0&crids=1053673&trr-ids=,0,1';
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
-          pathname,
-          query: extractQuery(pathname),
+          location: {
+            pathname: '/pinboard/',
+            search: 'officer-ids=1,3,4,5,0&crids=1053673&trr-ids=,0,1',
+          },
         },
       };
       const store = createStore({});
@@ -1145,12 +1155,13 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     });
 
     it('should fetchLatestRetrievedPinboard if there is query but not on pinboard page', function () {
-      const pathname = '/search/?officer-ids=1,3,4,5,0&crids=1053673&trr-ids=,0,1';
       const action = {
         type: '@@router/LOCATION_CHANGE',
         payload: {
-          pathname,
-          query: extractQuery(pathname),
+          location: {
+            pathname: '/search/',
+            search: 'officer-ids=1,3,4,5,0&crids=1053673&trr-ids=,0,1',
+          },
         },
       };
       const store = createStore({});

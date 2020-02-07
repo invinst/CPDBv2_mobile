@@ -1,9 +1,10 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import should from 'should';
 import { Link } from 'react-router-dom';
 import sinon from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import RelevantCoaccusalCard, { RelevantCoaccusalCardWithUndo }
   from 'components/pinboard-page/relevant/relevant-coaccusals/relevant-coaccusal-card';
 import StaticRadarChart from 'components/common/radar-chart';
@@ -119,7 +120,7 @@ describe('<RelevantCoaccusalCard />', function () {
 
     it('should render remove text correctly', function () {
       const addItemInPinboardPageStub = sinon.stub();
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <RelevantCoaccusalCardWithUndo
           addItemInPinboardPage={ addItemInPinboardPageStub }
           id={ 123 }
@@ -138,7 +139,7 @@ describe('<RelevantCoaccusalCard />', function () {
 
     it('should not be reversed after the undo card disappears', function () {
       const addItemInPinboardPageStub = sinon.stub();
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <RelevantCoaccusalCardWithUndo
           addItemInPinboardPage={ addItemInPinboardPageStub }
           id={ 123 }

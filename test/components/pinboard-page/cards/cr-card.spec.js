@@ -1,6 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
 
+import { mountWithRouter } from 'utils/tests';
 import CRCard, { CRCardWithUndo } from 'components/pinboard-page/cards/cr-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 import LocationCard from 'components/pinboard-page/cards/location-card';
@@ -13,7 +13,7 @@ describe('Pinboard <CRCard />', function () {
       category: 'Use Of Force',
       id: '1234',
     };
-    const wrapper = mount(<CRCard item={ item } someOtherProp='abcd'/>);
+    const wrapper = mountWithRouter(<CRCard item={ item } someOtherProp='abcd'/>);
     const locationCard = wrapper.find(LocationCard);
 
     locationCard.props().item.should.eql(item);
@@ -29,7 +29,7 @@ describe('Pinboard <CRCardWithUndo />', function () {
       category: 'Use Of Force',
     };
 
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <CRCardWithUndo item={ item }/>
     );
     const crCard = wrapper.find(CRCard);

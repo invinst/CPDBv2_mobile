@@ -1,7 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import { Link } from 'react-router-dom';
 
+import { mountWithRouter } from 'utils/tests';
 import OfficerCard from 'components/common/officer-card';
 import BaseOfficerCard from 'components/common/base-officer-card';
 
@@ -24,7 +24,7 @@ describe('<OfficerCard />', function () {
   };
 
   it('should render footer correctly', function () {
-    const wrapper = mount(<OfficerCard officer={ officer } />);
+    const wrapper = mountWithRouter(<OfficerCard officer={ officer } />);
 
     const baseCard = wrapper.find(BaseOfficerCard);
     const link = baseCard.find(Link);
@@ -39,7 +39,7 @@ describe('<OfficerCard />', function () {
       percentile: undefined,
       rank: 'Police Officer',
     };
-    const wrapper = mount(<OfficerCard officer={ noPercentileOfficer } />);
+    const wrapper = mountWithRouter(<OfficerCard officer={ noPercentileOfficer } />);
 
     const baseCard = wrapper.find(BaseOfficerCard);
     const link = baseCard.find(Link);

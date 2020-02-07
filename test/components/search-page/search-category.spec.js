@@ -4,6 +4,7 @@ import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
 import * as NavigationUtil from 'utils/navigation-util';
 
+import { mountWithRouter } from 'utils/tests';
 import constants from 'constants';
 import SearchCategory from 'components/search-page/search-category';
 import SearchResult from 'components/search-page/search-result';
@@ -237,7 +238,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ officers }
           categoryId='officers'
@@ -265,7 +266,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ crs }
           categoryId='crs'
@@ -292,7 +293,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ trrs }
           categoryId='trrs'
@@ -319,7 +320,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ dateCRs }
           categoryId='dateCRs'
@@ -346,7 +347,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ dateTRRs }
           categoryId='dateTRRs'
@@ -377,7 +378,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ officers }
           categoryId='dateOfficers'

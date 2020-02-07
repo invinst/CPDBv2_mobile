@@ -1,8 +1,9 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import InfiniteScroll from 'react-infinite-scroller';
 
+import { mountWithRouter } from 'utils/tests';
 import SearchResult from 'components/search-page/search-result';
 import OfficerItem from 'components/search-page/officer-item';
 import CrItem from 'components/search-page/cr-item';
@@ -12,7 +13,7 @@ import TrrItem from 'components/search-page/trr-item';
 describe('SearchResult />', function () {
   it('should render InfiniteScroll with correct props', function () {
     const spyGetSuggestionWithContentType = sinon.spy();
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <SearchResult
         items={ [{ id: 1 }] }
         itemType='officers'

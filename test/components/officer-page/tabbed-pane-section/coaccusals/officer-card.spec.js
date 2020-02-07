@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { mount } from 'enzyme';
 
+import { mountWithRouter } from 'utils/tests';
 import OfficerCard from 'components/officer-page/tabbed-pane-section/coaccusals/officer-card';
 import BaseOfficerCard from 'components/common/base-officer-card';
 
@@ -25,7 +25,7 @@ describe('CoaccusalCard', function () {
   };
 
   it('should render footer correctly', function () {
-    const wrapper = mount(<OfficerCard { ...officer } />);
+    const wrapper = mountWithRouter(<OfficerCard { ...officer } />);
 
     const baseCard = wrapper.find(BaseOfficerCard);
     const link = baseCard.find(Link);
@@ -41,7 +41,7 @@ describe('CoaccusalCard', function () {
       coaccusalCount: 1,
       rank: 'Detective',
     };
-    const wrapper = mount(<OfficerCard { ...noPercentileOfficer } />);
+    const wrapper = mountWithRouter(<OfficerCard { ...noPercentileOfficer } />);
     const baseCard = wrapper.find(BaseOfficerCard);
     const link = baseCard.find(Link);
 

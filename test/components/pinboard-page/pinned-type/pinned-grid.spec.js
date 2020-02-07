@@ -1,6 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import PinnedGrid from 'components/pinboard-page/pinned-type/pinned-grid';
 import { CRCardWithUndo } from 'components/pinboard-page/cards/cr-card';
@@ -109,7 +109,7 @@ describe('<PinnedGrid />', function () {
     sinon.stub(navigation, 'getPageYBottomOffset').returns(700);
     sinon.stub(navigation, 'scrollByBottomOffset');
 
-    const wrapper = mount(<PinnedGrid type='TRR' items={ [{ 'id': '1' }] } />);
+    const wrapper = shallow(<PinnedGrid type='TRR' items={ [{ 'id': '1' }] } />);
 
     const items = [{ 'id': '1' }, { 'id': '2' }];
     wrapper.setProps({ items });
@@ -137,7 +137,7 @@ describe('<PinnedGrid />', function () {
     const MuuriStub = sinon.stub(muuriVendor, 'Muuri').callsFake(() => ({ 'on': onMuuriStub }));
 
     const items = [{ 'id': '1' }, { 'id': '2' }];
-    const wrapper = mount(<PinnedGrid type='OFFICER' items={ items } />);
+    const wrapper = shallow(<PinnedGrid type='OFFICER' items={ items } />);
     const instance = wrapper.instance();
 
     MuuriStub.should.be.calledWith(instance.grid, {
@@ -156,7 +156,7 @@ describe('<PinnedGrid />', function () {
     }));
 
     const items = [{ 'id': '1' }, { 'id': '2' }];
-    const wrapper = mount(<PinnedGrid type='OFFICER' items={ items } />);
+    const wrapper = shallow(<PinnedGrid type='OFFICER' items={ items } />);
     const instance = wrapper.instance();
 
     onMuuriStub.resetHistory();
@@ -177,7 +177,7 @@ describe('<PinnedGrid />', function () {
     const removeItemInPinboardPage = sinon.stub();
 
     const items = [{ 'id': '1' }, { 'id': '2' }];
-    const wrapper = mount(
+    const wrapper = shallow(
       <PinnedGrid
         type='OFFICER'
         items={ items }
@@ -204,7 +204,7 @@ describe('<PinnedGrid />', function () {
     const orderPinboard = sinon.stub();
 
     const items = [{ 'id': 1 }, { 'id': 2 }];
-    const wrapper = mount(
+    const wrapper = shallow(
       <PinnedGrid
         type='OFFICER'
         items={ items }
@@ -233,7 +233,7 @@ describe('<PinnedGrid />', function () {
     const orderPinboard = sinon.stub();
 
     const items = [{ 'id': 1 }, { 'id': 2 }];
-    const wrapper = mount(
+    const wrapper = shallow(
       <PinnedGrid
         type='OFFICER'
         items={ items }
@@ -260,7 +260,7 @@ describe('<PinnedGrid />', function () {
     const orderPinboard = sinon.stub();
 
     const items = [{ 'id': '1' }, { 'id': '2' }];
-    const wrapper = mount(
+    const wrapper = shallow(
       <PinnedGrid
         type='CR'
         items={ items }
@@ -287,7 +287,7 @@ describe('<PinnedGrid />', function () {
     const orderPinboard = sinon.stub();
 
     const items = [{ 'id': 1 }, { 'id': 2 }];
-    const wrapper = mount(
+    const wrapper = shallow(
       <PinnedGrid
         type='TRR'
         items={ items }
@@ -312,7 +312,7 @@ describe('<PinnedGrid />', function () {
     muuri.destroy.resetHistory();
 
     const items = [{ 'id': 1 }, { 'id': 2 }];
-    const wrapper = mount(
+    const wrapper = shallow(
       <PinnedGrid
         type='TRR'
         items={ items }

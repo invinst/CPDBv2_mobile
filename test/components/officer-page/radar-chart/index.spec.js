@@ -6,6 +6,7 @@ import { mount, shallow } from 'enzyme';
 import sinon from 'sinon';
 import { EditorState } from 'draft-js';
 
+import { mountWithRouter } from 'utils/tests';
 import AnimatedRadarChart from 'components/officer-page/radar-chart';
 import StaticRadarChart from 'components/common/radar-chart';
 import RadarExplainer from 'components/officer-page/radar-chart/explainer';
@@ -115,7 +116,7 @@ describe('AnimatedRadarChart component', function () {
     });
 
     it('should open the explainer clicking on the radar chart and track this event', function () {
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <Provider store={ store }>
           <AnimatedRadarChart officerId={ 123 } percentileData={ data }/>
         </Provider>
@@ -130,7 +131,7 @@ describe('AnimatedRadarChart component', function () {
     });
 
     it('should open explainer when click on radar chart', function () {
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <Provider store={ store }>
           <AnimatedRadarChart officerId={ 123 } percentileData={ data }/>
         </Provider>
@@ -194,7 +195,7 @@ describe('AnimatedRadarChart component', function () {
     it('should start to animate after closing explainer', function () {
       let animatedRadarChart = null;
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <Provider store={ store }>
           <AnimatedRadarChart officerId={ 123 } ref={ (c) => {animatedRadarChart = c;} } percentileData={ data }/>
         </Provider>

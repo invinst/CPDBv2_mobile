@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { mount } from 'enzyme';
 import sinon from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import TrrItem from 'components/search-page/trr-item';
 import SearchItem from 'components/search-page/search-item';
 
@@ -22,7 +22,7 @@ describe('<TrrItem />', function () {
       recentItemData: recentItemData,
       itemRank: 3,
     };
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <TrrItem
         query='Ke'
         item={ trr }

@@ -1,8 +1,9 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Link } from 'react-router-dom';
 
+import { mountWithRouter } from 'utils/tests';
 import TwoLineList from 'components/shared/two-line-list';
 
 describe('<TwoLineList />', function () {
@@ -48,7 +49,7 @@ describe('<TwoLineList />', function () {
         onClick: onClick2,
       },
     ];
-    const wrapper = mount(<TwoLineList rows={ rows } />);
+    const wrapper = mountWithRouter(<TwoLineList rows={ rows } />);
 
     const links = wrapper.find(Link);
     links.should.have.length(2);
