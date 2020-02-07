@@ -20,11 +20,10 @@ export default class LocationMap extends Component {
     addEventListener('scroll', this.handleScroll);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps, nextState) {
-    const { lat, lng, zoomInLevel } = this.props;
-
-    if (lat !== nextProps.lat || lng !== nextProps.lng) {
-      this.addMarker(nextProps.lat, nextProps.lng, nextProps.customMarkerClassName);
+  componentDidUpdate(prevProps) {
+    const { lat, lng, customMarkerClassName, zoomInLevel } = this.props;
+    if (prevProps.lat !== lat || prevProps.lng !== lng) {
+      this.addMarker(lat, lng, customMarkerClassName);
 
       if (this.map.getZoom() === zoomInLevel) {
         this.zoomOut();

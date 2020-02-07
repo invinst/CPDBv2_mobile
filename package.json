@@ -125,6 +125,7 @@
     "lodash": "^4.17.15",
     "mapbox-gl": "^1.7.0",
     "mapbox-gl-multitouch": "^1.0.3",
+    "memoize-one": "^5.1.1",
     "moment": "^2.13.0",
     "muuri": "^0.7.1",
     "normalize.css": "^4.0.0",

@@ -7,10 +7,10 @@ import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-te
 
 
 export default class PinboardInfo extends Component {
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { pinboard } = this.props;
-    if (pinboard.url !== nextProps.pinboard.url) {
-      AppHistory.replace(nextProps.pinboard.url);
+    if (prevProps.pinboard.url !== pinboard.url) {
+      AppHistory.replace(pinboard.url);
     }
   }
 

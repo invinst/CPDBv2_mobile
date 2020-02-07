@@ -124,17 +124,31 @@ describe('Map component', function () {
     });
   });
 
-  describe('componentWillReceiveProps', function () {
+  describe('componentDidUpdate', function () {
     it('should call resetMap and addMapLayersOnStyleLoaded if next props clearAllMarkers is true', function () {
       const resetMapStub = sinon.stub(AllegationsMap.prototype, 'resetMap');
       const addMapLayersOnStyleLoadedStub = sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      const newMarkers = {
+        crs: [],
+        trrs: [
+          {
+            point: {
+              lat: 42.212567,
+              lon: -87.280291,
+            },
+            kind: 'FORCE',
+            id: '1234',
+            category: 'Use of Force Report',
+          },
+        ],
+      };
 
       const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
-      wrapper.setProps({ legend, markerGroups, clearAllMarkers: true });
+      wrapper.setProps({ legend, markerGroups: newMarkers, clearAllMarkers: true });
 
       resetMapStub.should.be.called();
-      addMapLayersOnStyleLoadedStub.should.be.calledWith(markerGroups);
+      addMapLayersOnStyleLoadedStub.should.be.calledWith(newMarkers);
     });
 
     it('should only call addMapLayersOnStyleLoaded if next props clearAllMarkers is false', function () {
