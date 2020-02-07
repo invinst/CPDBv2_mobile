@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import { reducer as breadcrumb } from 'redux-breadcrumb-trail';
+// import { reducer as breadcrumb } from 'redux-breadcrumb-trail';
 
 import suggestionApp from './suggestion-app';
 import officerPage from './officer-page';
@@ -13,7 +13,7 @@ import pinboardPage from './pinboard-page';
 
 
 export default (history) => combineReducers({
-  breadcrumb,
+  // breadcrumb,
   breadcrumbMapping,
   suggestionApp,
   router: connectRouter(history),

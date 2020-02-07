@@ -18,7 +18,7 @@ export default class LandingPage extends Component {
     const {
       requestCMS, pushBreadcrumbs, location, routes, params, cmsRequested,
     } = this.props;
-    pushBreadcrumbs({ location, routes, params });
+    // pushBreadcrumbs({ location, routes, params });
 
     cmsRequested || requestCMS();
   }
@@ -26,7 +26,7 @@ export default class LandingPage extends Component {
   componentDidUpdate(prevProps) {
     const { location, params, routes, pushBreadcrumbs } = this.props;
     if (prevProps.location !== location) {
-      pushBreadcrumbs({ location, params, routes });
+      // pushBreadcrumbs({ location, params, routes });
     }
   }
 

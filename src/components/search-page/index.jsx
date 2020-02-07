@@ -36,7 +36,7 @@ export default class SearchPage extends Component {
       }
     }
 
-    pushBreadcrumbs({ location, routes, params });
+    // pushBreadcrumbs({ location, routes, params });
     this.searchInput.focus();
     IntercomTracking.trackSearchPage();
     showIntercomLauncher(false);

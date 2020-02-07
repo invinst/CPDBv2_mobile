@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import Breadcrumbs from 'redux-breadcrumb-trail';
+// import Breadcrumbs from 'redux-breadcrumb-trail';
 import cx from 'classnames';
 import { get, includes } from 'lodash';
 
@@ -20,14 +20,14 @@ const WithHeader = ({ router, location, routes, params, children, className, ...
     <React.Fragment>
       <IOSPeek className={ styles.breadcrumbsIosPeek }/>
       <div className={ cx(styles.header, styles.sticky) }>
-        <Breadcrumbs
-          className='breadcrumbs'
-          routes={ routes }
-          params={ params }
-          location={ location }
-          separatorRenderer={ separatorRenderer }
-          itemRenderer={ breadcrumbsItemRenderer }
-        />
+        {/*<Breadcrumbs*/}
+        {/*  className='breadcrumbs'*/}
+        {/*  routes={ routes }*/}
+        {/*  params={ params }*/}
+        {/*  location={ location }*/}
+        {/*  separatorRenderer={ separatorRenderer }*/}
+        {/*  itemRenderer={ breadcrumbsItemRenderer }*/}
+        {/*/>*/}
       </div>
       <div className={ cx(styles.stickyContent, className) } { ...rest }>
         { children }

@@ -19,14 +19,14 @@ import PinboardDataVisualization from 'components/pinboard-page/pinboard-data-vi
 export default class PinboardPage extends Component {
   componentDidMount() {
     const { params, pushBreadcrumbs, location, routes, requestCMS, hasCMS } = this.props;
-    pushBreadcrumbs({ location, routes, params });
+    // pushBreadcrumbs({ location, routes, params });
 
     hasCMS || requestCMS();
   }
 
   componentDidUpdate() {
     const { params, pushBreadcrumbs, location, routes } = this.props;
-    pushBreadcrumbs({ location, routes, params });
+    // pushBreadcrumbs({ location, routes, params });
   }
 
   renderContent() {
