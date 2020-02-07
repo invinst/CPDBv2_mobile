@@ -20,19 +20,19 @@ import { hasMapMarkersSelector } from 'selectors/officer-page/map';
 
 
 function mapStateToProps(state, ownProps) {
-  const parsedId = Number.parseInt(ownProps.params.id);
+  const parsedId = Number.parseInt(ownProps.match.params.id);
   const pk = isNaN(parsedId) ? null : parsedId;
 
   const props = {
     ...ownProps,
     params: {
-      ...ownProps.params,
+      ...ownProps.match.params,
       id: pk,
     },
   };
   return {
     location: ownProps.location,
-    params: ownProps.params,
+    params: ownProps.match.params,
     loading: state.officerPage.officers.isRequesting,
     found: state.officerPage.officers.isSuccess,
     summary: officerSummarySelector(state, props),

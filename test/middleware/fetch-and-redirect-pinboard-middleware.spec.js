@@ -1,6 +1,6 @@
 import { Promise } from 'es6-promise';
 import sinon from 'sinon';
-import { browserHistory } from 'react-router';
+import browserHistory from 'utils/history';
 import { CancelToken } from 'axios';
 
 import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pinboard-middleware';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import sinon from 'sinon';
 
 import Cr from 'components/officer-page/tabbed-pane-section/timeline/item/cr';

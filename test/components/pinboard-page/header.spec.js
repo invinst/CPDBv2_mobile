@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link, createMemoryHistory, Route, Router } from 'react-router';
+import { createMemoryHistory, Route, Router } from 'react-router';
+import { Link } from 'react-router-dom';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 

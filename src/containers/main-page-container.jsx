@@ -7,7 +7,6 @@ import MainPage from 'components/main-page';
 
 function mapStateToProps(state, ownProps) {
   return {
-    urlQuery: ownProps.params.query,
     query: state.suggestionApp.query,
     isSearchFocused: state.suggestionApp.isSearchFocused,
   };

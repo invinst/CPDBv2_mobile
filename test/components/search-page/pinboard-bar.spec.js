@@ -1,5 +1,5 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
+import browserHistory from 'utils/history';
 import { shallow } from 'enzyme';
 import should from 'should';
 import sinon from 'sinon';

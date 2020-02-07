@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactHeight from 'react-height';
-import { browserHistory } from 'react-router';
+import browserHistory from 'utils/history';
 import { isEmpty, noop } from 'lodash';
 import cx from 'classnames';
 

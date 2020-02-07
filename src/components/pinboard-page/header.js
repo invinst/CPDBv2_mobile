@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import style from './header.sass';
 import IOSPeek from 'components/common/ios-peek';

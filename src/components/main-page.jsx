@@ -8,6 +8,7 @@ import config from 'config';
 import style from './main-page.sass';
 import 'styles/toast.sass';
 import { getPageRoot } from 'utils/url-util';
+import App from 'components/app';
 
 toast.configure();
 
@@ -25,12 +26,12 @@ class MainPage extends Component {
   }
 
   render() {
-    const { children, location } = this.props;
+    const { location } = this.props;
     const { pinboard: enablePinboardFeature } = config.enableFeatures;
 
     return (
       <div className={ cx('content', style.mainPage, { 'pinboard-disabled': !enablePinboardFeature }) }>
-        { children }
+        <App location={ location }/>
         <ToastContainer
           pauseOnFocusLoss={ false }
           closeButton={ false }
@@ -45,7 +46,6 @@ class MainPage extends Component {
 
 MainPage.propTypes = {
   query: PropTypes.string,
-  urlQuery: PropTypes.string,
   children: PropTypes.object,
   location: PropTypes.object,
   routeChanged: PropTypes.func,
@@ -53,7 +53,6 @@ MainPage.propTypes = {
 
 MainPage.defaultProps = {
   query: '',
-  urlQuery: '',
   location: {
     pathname: '',
   },

@@ -6,7 +6,7 @@ import { getCareerDuration, getCurrentAge } from 'utils/date';
 
 
 const getOfficer = (state, props) => (
-  state.officerPage.officers.data[props.params.id] || null
+  state.officerPage.officers.data[props.match.params.id] || null
 );
 
 export const getOfficerInfo = (state, officerId) => get(state.officerPage.officers.data, String(officerId), []);

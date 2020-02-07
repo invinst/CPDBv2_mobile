@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import TwoLineList from 'components/shared/two-line-list';
 

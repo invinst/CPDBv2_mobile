@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import OfficerCard from 'components/common/officer-card';
 import BaseOfficerCard from 'components/common/base-officer-card';

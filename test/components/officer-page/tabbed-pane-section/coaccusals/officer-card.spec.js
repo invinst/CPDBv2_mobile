@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { mount } from 'enzyme';
 
 import OfficerCard from 'components/officer-page/tabbed-pane-section/coaccusals/officer-card';

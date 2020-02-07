@@ -10,7 +10,7 @@ import { cmsSelector } from 'selectors/common/cms';
 import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
 
 
-const getComplaint = (state, props) => state.complaintPage.complaints[props.params.complaintId];
+const getComplaint = (state, props) => state.complaintPage.complaints[props.match.params.complaintId];
 
 const formatDate = (date) => {
   if (!date) {

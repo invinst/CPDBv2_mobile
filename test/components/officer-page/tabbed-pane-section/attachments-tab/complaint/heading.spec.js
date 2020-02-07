@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { shallow } from 'enzyme';
 
 import Heading from 'components/officer-page/tabbed-pane-section/attachments-tab/complaint/heading';

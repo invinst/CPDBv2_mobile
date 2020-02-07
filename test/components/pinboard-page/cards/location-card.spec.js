@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import LocationCard from 'components/pinboard-page/cards/location-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';

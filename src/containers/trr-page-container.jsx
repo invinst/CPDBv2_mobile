@@ -8,7 +8,7 @@ import { requestCMS } from 'actions/trr-page';
 
 
 const mapStateToProps = (state, ownProps) => ({
-  trrId: Number.parseInt(ownProps.params.trrId),
+  trrId: Number.parseInt(ownProps.match.params.trrId),
   trr: trrSelector(state, ownProps),
   cmsRequested: getCMSRequested(state),
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { shallow, mount } from 'enzyme';
 import should from 'should';
 import { random } from 'faker';
