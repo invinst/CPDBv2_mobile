@@ -14,7 +14,6 @@ import 'styles/style.sass';
 import 'styles/helper.sass';
 
 import MainPageContainer from 'containers/main-page-container';
-import AboutPageContainer from 'containers/about-page-container';
 import SearchPageContainer from 'containers/search-page-container';
 import OfficerPageContainer from 'containers/officer-page-container';
 import ComplaintPageContainer from 'containers/complaint-page-container';
@@ -42,11 +41,6 @@ export default function App() {
           breadcrumbKey='/'
           breadcrumb='cpdp'
           component={ LandingPageContainer } />
-
-        <Route
-          breadcrumbKey={ constants.ABOUT_PATH }
-          path={ constants.ABOUT_PATH }
-          component={ AboutPageContainer } />
 
         <Route
           breadcrumb='Search'

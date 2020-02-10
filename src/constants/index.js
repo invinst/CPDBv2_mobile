@@ -306,7 +306,6 @@ export default {
   SUBSCRIBE_FORM_FAILURE: 'SUBSCRIBE_FORM_FAILURE',
 
   // Router paths
-  ABOUT_PATH: '/about/',
   SEARCH_PATH: '/search/',
   OFFICER_PATH: '/officer/',
   COMPLAINT_PATH: '/complaint/',
