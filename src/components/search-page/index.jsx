@@ -17,10 +17,6 @@ import PinboardBar from './pinboard-bar';
 export default class SearchPage extends Component {
   componentDidMount() {
     const {
-      pushBreadcrumbs,
-      location,
-      routes,
-      params,
       recentSuggestionIds,
       fetchRecentSearchItems,
       recentSuggestionsRequested,
@@ -36,7 +32,6 @@ export default class SearchPage extends Component {
       }
     }
 
-    // pushBreadcrumbs({ location, routes, params });
     this.searchInput.focus();
     IntercomTracking.trackSearchPage();
     showIntercomLauncher(false);
@@ -227,10 +222,6 @@ SearchPage.propTypes = {
   updateActiveCategory: PropTypes.func,
   updateChosenCategory: PropTypes.func,
   router: PropTypes.object,
-  pushBreadcrumbs: PropTypes.func,
-  location: PropTypes.object,
-  params: PropTypes.object,
-  routes: PropTypes.array,
   pinboard: PropTypes.object,
   addOrRemoveItemInPinboard: PropTypes.func,
   createPinboard: PropTypes.func,
@@ -249,7 +240,6 @@ SearchPage.defaultProps = {
   inputChanged: noop,
   updateChosenCategory: noop,
   chosenCategory: '',
-  pushBreadcrumbs: noop,
   createPinboard: noop,
   suggestTerm: noop,
   queryChanged: noop,

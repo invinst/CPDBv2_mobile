@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-// import { push as pushBreadcrumbs } from 'redux-breadcrumb-trail';
 
 import { getPinboard, isEmptyPinboardSelector } from 'selectors/pinboard-page/pinboard';
 import PinboardPage from 'components/pinboard-page';
@@ -22,7 +21,6 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = {
-  // pushBreadcrumbs,
   requestCMS,
 };
 

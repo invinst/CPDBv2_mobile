@@ -16,18 +16,10 @@ import Footer from 'components/footer';
 export default class LandingPage extends Component {
   componentDidMount() {
     const {
-      requestCMS, pushBreadcrumbs, location, routes, params, cmsRequested,
+      requestCMS, cmsRequested,
     } = this.props;
-    // pushBreadcrumbs({ location, routes, params });
 
     cmsRequested || requestCMS();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { location, params, routes, pushBreadcrumbs } = this.props;
-    if (prevProps.location !== location) {
-      // pushBreadcrumbs({ location, params, routes });
-    }
   }
 
   render() {
@@ -59,12 +51,8 @@ LandingPage.defaultProps = {
 };
 
 LandingPage.propTypes = {
-  pushBreadcrumbs: PropTypes.func,
   requestCMS: PropTypes.func,
   cmsRequested: PropTypes.bool,
   title: PropTypes.object,
   description: PropTypes.object,
-  location: PropTypes.object,
-  params: PropTypes.object,
-  routes: PropTypes.array,
 };

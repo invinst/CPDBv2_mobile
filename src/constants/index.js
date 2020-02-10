@@ -64,6 +64,8 @@ const SEARCH_CATEGORY_PREFIXES = SEARCH_CATEGORIES.reduce((result, searchCategor
 
 const SEARCH_QUERY_PREFIX_REGEX = new RegExp(`^(${Object.values(SEARCH_CATEGORY_PREFIXES).join('|')}):`);
 
+const SEARCH_PATH = '/search/';
+
 export default {
   // MainPage events
   SEARCH_FOR: c++,
@@ -306,7 +308,7 @@ export default {
   SUBSCRIBE_FORM_FAILURE: 'SUBSCRIBE_FORM_FAILURE',
 
   // Router paths
-  SEARCH_PATH: '/search/',
+  SEARCH_PATH,
   OFFICER_PATH: '/officer/',
   COMPLAINT_PATH: '/complaint/',
   TRR_PATH: '/trr/',
@@ -379,4 +381,8 @@ export default {
     ZOOM2: 13,
   },
   MAPBOX_STYLE: 'mapbox://styles/invisibleinstitute/cj8ugtswqe8dx2ss2kwhfnvte',
+
+  BREADCRUMB_DEFAULT_MAPPING: {
+    [SEARCH_PATH]: 'Search',
+  },
 };

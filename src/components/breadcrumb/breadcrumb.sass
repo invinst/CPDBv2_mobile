@@ -1,0 +1,38 @@
+@import 'variables'
+
+\:local(.breadcrumb)
+  display: flex
+  align-items: center
+  max-width: 100%
+  overflow: scroll
+
+  .breadcrumb-item
+    color: $thunder
+    font-size: 14px
+    font-weight: 400
+    padding: 0 8px
+    line-height: 14px
+    flex: 0 0 auto
+    -webkit-flex: 0 0 auto
+    white-space: nowrap
+
+    &.auto-width
+      flex: 1 1 auto
+      -webkit-flex: 1 1 auto
+      overflow: hidden
+      text-overflow: ellipsis
+      min-width: 72px
+
+  a.breadcrumb-item
+    text-decoration: none
+    color: $boulder
+
+  .shareable-header-breadcrumb-separator
+    padding: 2px 8px 0 0
+    height: 12px
+    width: 7.4px
+    background: url('/img/disclosure-indicator.svg') no-repeat scroll
+    vertical-align: middle
+    display: inline-block
+    font-weight: 500
+    line-height: 40px
