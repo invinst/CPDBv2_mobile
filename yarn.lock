@@ -8267,13 +8267,6 @@ react-router@^3.0.5:
     react-is "^16.8.6"
     warning "^3.0.0"
 
-react-sticky@^5.0.5:
-  version "5.0.8"
-  resolved "https://registry.yarnpkg.com/react-sticky/-/react-sticky-5.0.8.tgz#d5f85f96977f410081d792ab81886c622c5d8b14"
-  integrity sha1-1fhflpd/QQCB15KrgYhsYixdixQ=
-  dependencies:
-    prop-types "^15.5.8"
-
 react-stub-context@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-stub-context/-/react-stub-context-0.7.0.tgz#a1c7b0caacf1bff0cac4758a754d7b1bb9a11b67"

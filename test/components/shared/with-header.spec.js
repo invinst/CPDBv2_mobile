@@ -2,7 +2,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
-import { Sticky, StickyContainer } from 'react-sticky';
 import Breadcrumbs from 'redux-breadcrumb-trail';
 
 import WithHeader from 'components/shared/with-header';
@@ -25,13 +24,12 @@ describe('<WithHeader />', function () {
       </Provider>
     );
 
-    const stickyContainer = wrapper.find(StickyContainer);
-    stickyContainer.prop('className').should.equal('test--with-header-custom-class');
+    const container = wrapper.childAt(0);
+    container.prop('className').should.equal('test--with-header-custom-class');
 
-    stickyContainer.find(IOSPeek).exists().should.be.true();
+    container.find(IOSPeek).exists().should.be.true();
 
-    const sticky = stickyContainer.find(Sticky);
-    const breadcrumbs = sticky.find(Breadcrumbs);
+    const breadcrumbs = container.find(Breadcrumbs);
     breadcrumbs.prop('className').should.equal('breadcrumbs');
   });
 
