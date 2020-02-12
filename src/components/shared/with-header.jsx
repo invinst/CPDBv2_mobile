@@ -5,7 +5,7 @@ import cx from 'classnames';
 
 import styles from './with-header.sass';
 import IOSPeek from 'components/common/ios-peek';
-import BreadcrumbContainer from 'containers/breadcrumb-container';
+import BreadcrumbContainer from 'containers/breadcrumb';
 
 
 const WithHeader = ({ router, location, routes, params, children, className, ...rest }) => {

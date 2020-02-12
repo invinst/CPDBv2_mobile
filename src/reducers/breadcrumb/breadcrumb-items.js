@@ -1,14 +1,18 @@
 import { handleActions } from 'redux-actions';
 import { LOCATION_CHANGE } from 'connected-react-router';
-import { get, concat, slice } from 'lodash';
+import { get, concat, slice, findIndex } from 'lodash';
 
+import { getPathNameKey } from 'utils/paths';
 
 export default handleActions({
   [LOCATION_CHANGE]: (state, action) => {
     let pathname = get(action.payload, 'location.pathname');
 
     if (pathname) {
-      const itemIndex = state.indexOf(pathname);
+      if (pathname === '/') {
+        return [];
+      }
+      const itemIndex = findIndex(state, item => item.includes(getPathNameKey(pathname)));
       if (itemIndex >= 0) {
         return slice(state, 0, itemIndex + 1);
       }
@@ -16,8 +20,4 @@ export default handleActions({
     }
     return state;
   },
-  // [UPDATE_PATH_NAME]: (state, action) => {
-  //   const pathname = action.payload;
-  //   return concat(slice(state, 0, state.length - 1), pathname);
-  // },
 }, []);

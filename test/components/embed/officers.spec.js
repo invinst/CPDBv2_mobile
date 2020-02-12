@@ -149,7 +149,7 @@ describe('<Officers />', function () {
         <Provider store={ store }>
           <MemoryRouter>
             <OfficersContainer
-              location={ { query: { ids: '13788,13789', title: 'title', description: 'description' } } }
+              location={ { search: '?ids=13788,13789&title=title&description=description' } }
             />
           </MemoryRouter>
         </Provider>

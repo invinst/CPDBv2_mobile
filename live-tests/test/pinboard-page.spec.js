@@ -97,14 +97,13 @@ describe('Pinboard Page', function () {
     client.assert.urlContains('/officer/123/richard-sullivan/');
 
     const breadcrumbs = officerPage.section.breadcrumbs;
-    client.assertCount('.breadcrumbs > .breadcrumb-item-wrapper', 3);
-
+    client.assertCount('.breadcrumb-item', 3);
     breadcrumbs.expect.element('@firstBreadcrumb').text.to.equal('cpdp');
     breadcrumbs.expect.element('@secondBreadcrumb').text.to.equal('Pinboard - Pinboard Title');
     breadcrumbs.expect.element('@thirdBreadcrumb').text.to.equal('Richard Sullivan');
 
-    breadcrumbs.expect.element('@thirdBreadcrumb').to.have.attribute(
-      'class', 'breadcrumb-item-wrapper auto-width'
+    breadcrumbs.expect.element('@secondBreadcrumb').to.have.attribute(
+      'class', 'breadcrumb-item auto-width'
     );
 
     breadcrumbs.click('@secondBreadcrumb');
@@ -381,7 +380,7 @@ describe('Pinboard Page', function () {
       pinboardPage.click('@pinboardDescription');
       pinboardPage.clearValue('@pinboardDescription');
       pinboardPage.setValue('@pinboardDescription', 'Updated Description');
-      pinboardPage.click('@coaccusalsThresholdText');
+      pinboardPage.click('@visualizationTitle');
 
       pinboardPage.getValue('@pinboardTitle', function (result) {
         assert.equal(result.value, 'Updated Title');

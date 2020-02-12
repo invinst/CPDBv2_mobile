@@ -18,7 +18,7 @@ import OfficerPageContainer from 'containers/officer-page-container';
 import ComplaintPageContainer from 'containers/complaint-page-container';
 import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
-import BreadcrumbItemContainer from 'containers/breadcrumb-container';
+import BreadcrumbItemContainer from 'containers/breadcrumb';
 import TopOfficersByAllegationContainer from 'containers/landing-page/top-officers-by-allegation';
 import OfficersContainer from 'containers/embed/officers';
 import PinboardPageContainer from 'containers/pinboard-page';
@@ -43,12 +43,8 @@ export default function App(props) {
         exact={ true }
         breadcrumb='Search'
         path={ constants.SEARCH_PATH }
-        component={ SearchPageContainer }>
-        {/*<Route*/}
-        {/*  path={ constants.SEARCH_PATH + ':query' }*/}
-        {/*  component={ SearchPageContainer }*/}
-        {/*  useParentBreadcrumb={ true } />*/}
-      </Route>
+        component={ SearchPageContainer }
+      />
 
       <Route
         breadcrumbKey={ `${constants.OFFICER_PATH}:id` }

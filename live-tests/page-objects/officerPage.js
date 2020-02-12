@@ -103,7 +103,7 @@ const nthRankChangeSection = (n) => {
   };
 };
 
-const nthBreadcrumb = n => `.breadcrumb-item-wrapper:nth-child(${ 1 + 2 * (n - 1) })`;
+const nthBreadcrumb = n => `//*[contains(@class, "breadcrumb-item")][${n}]`;
 
 module.exports = {
   url: function (id, tab = '') {
@@ -138,18 +138,29 @@ module.exports = {
       selector: '//a[@href="/" and .="cpdp"]',
       locateStrategy: 'xpath',
     },
-    searchBreadcrumb: '.breadcrumb-item-wrapper:nth-child(3)',
+    searchBreadcrumb: {
+      selector: nthBreadcrumb(2),
+      locateStrategy: 'xpath',
+    },
   },
 
   sections: {
     breadcrumbs: {
-      selector: '.breadcrumbs',
-      breadcrumbSelector: '.breadcrumbs > .breadcrumb-item-wrapper',
+      selector: '//div[contains(@class, "breadcrumb__breadcrumb")]',
+      locateStrategy: 'xpath',
       elements: {
-        wrapper: '.breadcrumb-item-wrapper',
-        firstBreadcrumb: nthBreadcrumb(1),
-        secondBreadcrumb: nthBreadcrumb(2),
-        thirdBreadcrumb: nthBreadcrumb(3),
+        firstBreadcrumb: {
+          selector: nthBreadcrumb(1),
+          locateStrategy: 'xpath',
+        },
+        secondBreadcrumb: {
+          selector: nthBreadcrumb(2),
+          locateStrategy: 'xpath',
+        },
+        thirdBreadcrumb: {
+          selector: nthBreadcrumb(3),
+          locateStrategy: 'xpath',
+        },
       },
     },
     animatedRadarChart: {

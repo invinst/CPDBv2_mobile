@@ -246,7 +246,7 @@ describe('complaint-page selectors', function () {
   it('should prioritize officers user visited', function () {
     const state = {
       breadcrumb: {
-        breadcrumbs: [
+        breadcrumbItems: [
           {
             url: '/officer/1/',
             params: {

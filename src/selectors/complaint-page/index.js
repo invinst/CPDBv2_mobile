@@ -54,8 +54,9 @@ const breadcrumbOfficerIdsSelector = createSelector(
   (breadcrumbItems) => {
     const results = [];
 
-    each(breadcrumbItems, (item) => {
-      const officerId = getOfficerId(item);
+
+    each(breadcrumbItems, ({ url }) => {
+      const officerId = getOfficerId(url);
       if (officerId) {
         results.push(officerId);
       }

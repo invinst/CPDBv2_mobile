@@ -48,7 +48,7 @@ module.exports = {
     officersHeader: '#search-category-officers',
     pinboardBar: '.test--pinboard-bar',
     toast: '.Toastify__toast-body',
-    searchBreadcrumb: '.breadcrumb-item-wrapper:nth-child(3)',
+    searchBreadcrumb: '.breadcrumb-item:nth-child(3)',
   },
 
   sections: {
