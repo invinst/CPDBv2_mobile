@@ -1,5 +1,6 @@
 import { Promise } from 'es6-promise';
 import { get, keys, isNil, isEmpty, identity, noop, toLower, camelCase, startsWith } from 'lodash';
+import { LOCATION_CHANGE } from 'connected-react-router';
 
 import browserHistory from 'utils/history';
 import config from 'config';
@@ -170,7 +171,7 @@ export default store => next => {
       }
     }
 
-    if (action.type === '@@router/LOCATION_CHANGE') {
+    if (action.type === LOCATION_CHANGE) {
       const state = store.getState();
       const pinboard = state.pinboardPage.pinboard;
 

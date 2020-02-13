@@ -1,7 +1,8 @@
 import { Promise } from 'es6-promise';
 import { stub, useFakeTimers } from 'sinon';
-import browserHistory from 'utils/history';
+import { LOCATION_CHANGE } from 'connected-react-router';
 
+import browserHistory from 'utils/history';
 import restoreCreateOrUpdatePinboardMiddleware from 'middleware/restore-create-or-update-pinboard-middleware';
 import {
   ADD_OR_REMOVE_ITEM_IN_PINBOARD,
@@ -744,9 +745,9 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     });
   });
 
-  it('should handle @@router/LOCATION_CHANGE and do nothing if not saving and isPinboardRestored', function () {
+  it('should handle LOCATION_CHANGE and do nothing if not saving and isPinboardRestored', function () {
     const action = {
-      type: '@@router/LOCATION_CHANGE',
+      type: LOCATION_CHANGE,
       payload: {
         location: { pathname: '/search/' },
       },
@@ -806,9 +807,9 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
       );
     };
 
-    it('should handle @@router/LOCATION_CHANGE with query to create pinboard but may not show toasts', function (done) {
+    it('should handle LOCATION_CHANGE with query to create pinboard but may not show toasts', function (done) {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           query: {
             'officer-ids': '1,3,4,5',
@@ -826,7 +827,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
 
     it('should accept params without s', function (done) {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           query: {
             'officer-id': '1,3,4,5',
@@ -844,7 +845,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
 
     it('should accept params with under score', function (done) {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           query: {
             'officer_ids': '1,3,4,5',
@@ -862,7 +863,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
 
     it('should accept camelCase params', function (done) {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           query: {
             officerId: '1,3,4,5',
@@ -880,7 +881,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
 
     it('should accept params with some capitalizing mistakes', function (done) {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           location: {
             pathname: '/pinboard/',
@@ -891,11 +892,11 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
       testCreatePinboardWith(action, done);
     });
 
-    it('should handle @@router/LOCATION_CHANGE to create pinboard and show toast', function (done) {
+    it('should handle LOCATION_CHANGE to create pinboard and show toast', function (done) {
       Toastify.toast.should.not.be.called();
 
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           location: {
             pathname: '/pinboard/',
@@ -949,7 +950,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
 
     it('should skip invalid param and show invalid param message', function (done) {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           location: {
             pathname: '/pinboard/',
@@ -1006,7 +1007,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
 
     it('should skip invalid params and show invalid params message', function (done) {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           query: {
             'officer-ids': '1',
@@ -1068,7 +1069,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
   describe('Restore pinboard', function () {
     it('should not dispatch if pinboard is restored', function () {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           location: { pathname: '/search/' },
         },
@@ -1088,7 +1089,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
 
     it('should not dispatch if location change is pinboard detail page', function () {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           location: { pathname: '/pinboard/5cd06f2b/' },
         },
@@ -1111,7 +1112,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
       ' and pinboard has not been restored',
       function () {
         const action = {
-          type: '@@router/LOCATION_CHANGE',
+          type: LOCATION_CHANGE,
           payload: {
             location: { pathname: '/search/' },
           },
@@ -1136,7 +1137,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
       'when LOCATION_CHANGE to pinboard page without id',
       function () {
         const action = {
-          type: '@@router/LOCATION_CHANGE',
+          type: LOCATION_CHANGE,
           payload: {
             location: { pathname: '/pinboard/' },
           },
@@ -1154,7 +1155,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
 
     it('should not dispatch fetchLatestRetrievedPinboard if there is no pinboard id but query exists', function () {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           location: {
             pathname: '/pinboard/',
@@ -1175,7 +1176,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
 
     it('should fetchLatestRetrievedPinboard if there is query but not on pinboard page', function () {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           location: {
             pathname: '/search/',

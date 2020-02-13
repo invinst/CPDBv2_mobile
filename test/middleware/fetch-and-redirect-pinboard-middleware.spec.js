@@ -2,6 +2,7 @@ import { Promise } from 'es6-promise';
 import { stub } from 'sinon';
 import browserHistory from 'utils/history';
 import { CancelToken } from 'axios';
+import { LOCATION_CHANGE } from 'connected-react-router';
 
 import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pinboard-middleware';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
@@ -39,10 +40,10 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
     stub(CancelToken, 'source');
   });
 
-  describe('handling @@router/LOCATION_CHANGE', function () {
+  describe('handling LOCATION_CHANGE', function () {
     it('should dispatch fetchPinboard when go to new pinboard page', function () {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           location: { pathname: '/pinboard/5cd06f2b/' },
           action: 'PUSH',
@@ -64,7 +65,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
     it('should dispatch fetch pinboard data when go to current pinboard page', function () {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           location: { pathname: '/pinboard/2bd40cf2/' },
           action: 'PUSH',
@@ -94,7 +95,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
     it('should not dispatch fetchPinboard after redirect pinboard', function () {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           location: { pathname: '/pinboard/5cd06f2b/' },
           action: 'REPLACE',
@@ -115,7 +116,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
     it('should not fetch pinboard data after replace the pinboard title postfix', function () {
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           location: { pathname: '/pinboard/2bd40cf2/pinboard-title/' },
           action: 'REPLACE',

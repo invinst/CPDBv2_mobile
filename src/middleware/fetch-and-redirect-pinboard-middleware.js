@@ -1,5 +1,6 @@
-import browserHistory from 'utils/history';
+import { LOCATION_CHANGE } from 'connected-react-router';
 
+import browserHistory from 'utils/history';
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import {
   PINBOARD_FETCH_REQUEST_SUCCESS,
@@ -31,7 +32,7 @@ function getPinboardData(store, pinboardId) {
 export default store => next => action => {
   const result = next(action);
 
-  if (action.type === '@@router/LOCATION_CHANGE') {
+  if (action.type === LOCATION_CHANGE) {
     const pathname = action.payload.location.pathname;
     const idOnPath = getPinboardID(pathname);
     const state = store.getState();
