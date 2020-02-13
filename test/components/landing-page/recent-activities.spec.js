@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import { mountWithRouter } from 'utils/tests';
 import RecentActivities from 'components/landing-page/recent-activities';
@@ -37,7 +37,7 @@ describe('<RecentActivities />', function () {
   });
 
   it('should call requestRecentActivities', function () {
-    const requestRecentActivitiesSpy = sinon.spy();
+    const requestRecentActivitiesSpy = spy();
     mountWithRouter(
       <RecentActivities
         requestRecentActivities={ requestRecentActivitiesSpy }

@@ -1,7 +1,7 @@
 import React from 'react';
 import should from 'should';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import TRRPage from 'components/trr-page';
 import Footer from 'components/footer';
@@ -11,7 +11,7 @@ import WithHeader from 'components/shared/with-header';
 describe('<TRRPage />', function () {
 
   it('should be render enough contents', function () {
-    const spyRequestTRR = sinon.spy();
+    const spyRequestTRR = spy();
     const trr = {
       category: 'Other',
       officer: { officerId: 123 },
@@ -34,7 +34,7 @@ describe('<TRRPage />', function () {
   });
 
   it('should fetch trr data if not available yet', function () {
-    const spyRequestTRR = sinon.spy();
+    const spyRequestTRR = spy();
     const wrapper = shallow(
       <TRRPage
         trrId={ 1 }

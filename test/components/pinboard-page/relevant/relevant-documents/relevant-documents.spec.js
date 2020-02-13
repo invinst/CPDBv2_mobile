@@ -1,5 +1,5 @@
 import React from 'react';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 
 import { mountWithRouter } from 'utils/tests';
 import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/relevant-infinite-carousel';
@@ -84,8 +84,8 @@ describe('<RelevantDocuments />', function () {
       previewImageUrl: 'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif',
       pinned: false,
     }];
-    const addItemInPinboardPageStub = sinon.stub();
-    const fetchPinboardRelevantDocumentsStub = sinon.stub();
+    const addItemInPinboardPageStub = stub();
+    const fetchPinboardRelevantDocumentsStub = stub();
 
     const wrapper = mountWithRouter(
       <RelevantDocuments

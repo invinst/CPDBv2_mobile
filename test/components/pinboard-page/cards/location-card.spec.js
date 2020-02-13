@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 import { Link } from 'react-router-dom';
 
 import { mountWithRouter } from 'utils/tests';
@@ -39,7 +39,7 @@ describe('LocationCard component', function () {
   });
 
   it('should removeItemInPinboardPage when clicking on ItemUnpinButton', function () {
-    const removeItemInPinboardPage = sinon.spy();
+    const removeItemInPinboardPage = spy();
 
     const item = {
       type: 'CR',

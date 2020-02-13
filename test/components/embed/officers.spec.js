@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 import { MemoryRouter } from 'react-router-dom';
 
 import { mountWithRouter } from 'utils/tests';
@@ -19,7 +19,7 @@ describe('<Officers />', function () {
   });
 
   it('should call request Officers if not requested', function () {
-    const requestOfficersSpy = sinon.spy();
+    const requestOfficersSpy = spy();
     mountWithRouter(
       <Officers
         requestOfficers={ requestOfficersSpy }
@@ -106,7 +106,7 @@ describe('<Officers />', function () {
         },
       },
     ];
-    sinon.stub(IntercomUtils, 'showIntercomLauncher');
+    stub(IntercomUtils, 'showIntercomLauncher');
 
     mountWithRouter(
       <Officers

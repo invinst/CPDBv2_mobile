@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 
 import Dropdown from 'components/shared/dropdown';
 
@@ -55,7 +55,7 @@ describe('Dropdown component', function () {
   });
 
   it('should invoke onChange when selected item is changed', function () {
-    const onChangeStub = sinon.stub();
+    const onChangeStub = stub();
     const wrapper = mount(
       <Dropdown
         defaultValue={ '1' }
@@ -74,7 +74,7 @@ describe('Dropdown component', function () {
   });
 
   it('should close menu when losing focus', function () {
-    const onChangeStub = sinon.stub();
+    const onChangeStub = stub();
     const wrapper = mount(
       <Dropdown
         defaultValue={ '1' }

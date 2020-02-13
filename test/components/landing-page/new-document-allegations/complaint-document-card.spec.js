@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 import { Router, Route, Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
@@ -14,7 +14,7 @@ import constants from 'constants';
 
 describe('<ComplaintDocumentCard />', function () {
   it('should render enough contents', function () {
-    const addOrRemoveItemInPinboard = sinon.stub();
+    const addOrRemoveItemInPinboard = stub();
     const allegation = {
       crid: '123',
       category: 'Operation/Personnel Violations',
@@ -48,7 +48,7 @@ describe('<ComplaintDocumentCard />', function () {
   });
 
   it('should track click event', function () {
-    const stubTrackAttachmentClick = sinon.stub(tracking, 'trackAttachmentClick');
+    const stubTrackAttachmentClick = stub(tracking, 'trackAttachmentClick');
     const allegation = {
       'crid': '123456',
     };
@@ -68,7 +68,7 @@ describe('<ComplaintDocumentCard />', function () {
   });
 
   it('should track click on attachment event', function () {
-    const stubOnTrackingAttachment = sinon.stub();
+    const stubOnTrackingAttachment = stub();
     const allegation ={
       'crid': '123456',
       'document': {

@@ -1,16 +1,16 @@
 /* istanbul ignore next */
 import config from 'config';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 import * as _toastify from 'react-toastify';
 
 
 let _Toastify = _toastify;
 
 if (config.appEnv === 'test') {
-  const toastSpy = sinon.spy();
-  const cssTransitionStub = sinon.stub();
+  const toastSpy = spy();
+  const cssTransitionStub = stub();
   cssTransitionStub.returnsArg(0);
-  toastSpy.dismiss = sinon.spy();
+  toastSpy.dismiss = spy();
   _Toastify = {
     toast: toastSpy,
     cssTransition: cssTransitionStub,

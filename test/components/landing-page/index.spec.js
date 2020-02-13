@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { MemoryRouter } from 'react-router-dom';
@@ -34,7 +34,7 @@ describe('<LandingPage />', function () {
       },
     });
 
-    const spyRequestCMS = sinon.spy();
+    const spyRequestCMS = spy();
     mount(
       <Provider store={ store }>
         <MemoryRouter>

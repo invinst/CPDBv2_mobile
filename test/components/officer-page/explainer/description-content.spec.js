@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import DescriptionContent from 'components/officer-page/radar-chart/explainer/description-content';
 import CMSContent from 'components/common/cms-content';
@@ -8,8 +8,8 @@ import CMSContent from 'components/common/cms-content';
 
 describe('DescriptionContent component', function () {
   it('should render content and subContent', function () {
-    const contentSpy = sinon.spy();
-    const subContentSpy = sinon.spy();
+    const contentSpy = spy();
+    const subContentSpy = spy();
     const wrapper = shallow(
       <DescriptionContent
         content={ contentSpy }

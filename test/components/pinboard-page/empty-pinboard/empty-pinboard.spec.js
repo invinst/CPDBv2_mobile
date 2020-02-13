@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 
 import EmptyPinboard from 'components/pinboard-page/empty-pinboard';
 import ExamplePinboardLink from 'components/pinboard-page/empty-pinboard/example-pinboard-link';
@@ -9,8 +9,8 @@ import CMSContent from 'components/common/cms-content';
 
 describe('EmptyPinboard component', function () {
   it('should have enough contents', function () {
-    const emptyPinboardTitleStub = sinon.stub();
-    const emptyPinboardDescriptionStub = sinon.stub();
+    const emptyPinboardTitleStub = stub();
+    const emptyPinboardDescriptionStub = stub();
 
     const examplePinboards = [{
       id: '66ef1561',

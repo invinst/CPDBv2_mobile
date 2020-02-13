@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import ClampLines from 'react-clamp-lines';
+import { stub } from 'sinon';
 
 import Attachment from 'components/officer-page/tabbed-pane-section/attachments-tab/complaint/attachment';
-import sinon from 'sinon';
 
 
 describe('Attachment component', function () {
@@ -70,7 +70,7 @@ describe('Attachment component', function () {
   });
 
   it('should track click on attachment event', function () {
-    const stubOnTrackingAttachment = sinon.stub();
+    const stubOnTrackingAttachment = stub();
     const attachment = {
       title: 'CRID 1071970 OCIR 2 of 3',
       url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-3-of-3.html',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import PercentileExplainer from 'components/officer-page/radar-chart/explainer/percentile-explainer';
 import ExplainerLayout from 'components/officer-page/radar-chart/explainer/explainer-layout';
@@ -30,9 +30,9 @@ describe('PercentileExplainer component', function () {
 
 
   it('should render enough content', function () {
-    const closeExplainerSpy = sinon.spy();
-    const leftNavHandlerSpy = sinon.spy();
-    const rightNavHandlerSpy = sinon.spy();
+    const closeExplainerSpy = spy();
+    const leftNavHandlerSpy = spy();
+    const rightNavHandlerSpy = spy();
 
     const wrapper = mount(
       <PercentileExplainer

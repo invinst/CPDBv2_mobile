@@ -3,7 +3,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 import { noop } from 'lodash';
 
 import App from 'components/app';
@@ -35,46 +35,46 @@ const renderRouter = (initialEntry) => {
 
 describe('App', function () {
   it('should render LandingPage when visit /', function () {
-    sinon.stub(LandingPage.prototype, 'componentDidMount').returns(noop);
-    sinon.stub(TopOfficersByAllegation.prototype, 'componentDidMount').returns(noop);
-    sinon.stub(RecentActivities.prototype, 'componentDidMount').returns(noop);
-    sinon.stub(NewDocumentAllegations.prototype, 'componentDidMount').returns(noop);
-    sinon.stub(ComplaintSummaries.prototype, 'componentDidMount').returns(noop);
+    stub(LandingPage.prototype, 'componentDidMount').returns(noop);
+    stub(TopOfficersByAllegation.prototype, 'componentDidMount').returns(noop);
+    stub(RecentActivities.prototype, 'componentDidMount').returns(noop);
+    stub(NewDocumentAllegations.prototype, 'componentDidMount').returns(noop);
+    stub(ComplaintSummaries.prototype, 'componentDidMount').returns(noop);
     renderRouter('/').find(LandingPage).exists().should.be.true();
   });
 
   it('should render SearchPage when visit /search/', function () {
-    sinon.stub(SearchPage.prototype, 'componentDidMount').returns(noop);
+    stub(SearchPage.prototype, 'componentDidMount').returns(noop);
     renderRouter('/search/').find(SearchPage).exists().should.be.true();
   });
 
   it('should render OfficerPage when visit /officer/123/', function () {
-    sinon.stub(OfficerPage.prototype, 'componentDidMount').returns(noop);
+    stub(OfficerPage.prototype, 'componentDidMount').returns(noop);
     renderRouter('/officer/123').find(OfficerPage).exists().should.be.true();
   });
 
   it('should render ComplaintPage when visit /complaint/123/', function () {
-    sinon.stub(ComplaintPage.prototype, 'componentDidMount').returns(noop);
+    stub(ComplaintPage.prototype, 'componentDidMount').returns(noop);
     renderRouter('/complaint/123/').find(ComplaintPage).exists().should.be.true();
   });
 
   it('should render TRRPage when visit /trr/123/', function () {
-    sinon.stub(TRRPage.prototype, 'componentDidMount').returns(noop);
+    stub(TRRPage.prototype, 'componentDidMount').returns(noop);
     renderRouter('/trr/123').find(TRRPage).exists().should.be.true();
   });
 
   it('should render PinboardPage when visit /pinboard/123/pinboard-title/', function () {
-    sinon.stub(PinboardPage.prototype, 'componentDidMount').returns(noop);
+    stub(PinboardPage.prototype, 'componentDidMount').returns(noop);
     renderRouter('/pinboard/123/pinboard-title/').find(PinboardPage).exists().should.be.true();
   });
 
   it('should render TopOfficersByAllegation when visit /embed/top-officers-page', function () {
-    sinon.stub(TopOfficersByAllegation.prototype, 'componentDidMount').returns(noop);
+    stub(TopOfficersByAllegation.prototype, 'componentDidMount').returns(noop);
     renderRouter('/embed/top-officers-page/').find(TopOfficersByAllegation).exists().should.be.true();
   });
 
   it('should render Officers when visit /embed/officers/', function () {
-    sinon.stub(Officers.prototype, 'componentDidMount').returns(noop);
+    stub(Officers.prototype, 'componentDidMount').returns(noop);
     renderRouter('/embed/officers/').find(Officers).exists().should.be.true();
   });
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import ScaleExplainer from 'components/officer-page/radar-chart/explainer/scale-explainer';
 import ExplainerLayout from 'components/officer-page/radar-chart/explainer/explainer-layout';
@@ -22,9 +22,9 @@ describe('ScaleExplainer component', function () {
 
 
   it('should render enough content', function () {
-    const closeExplainerSpy = sinon.spy();
-    const leftNavHandlerSpy = sinon.spy();
-    const rightNavHandlerSpy = sinon.spy();
+    const closeExplainerSpy = spy();
+    const leftNavHandlerSpy = spy();
+    const rightNavHandlerSpy = spy();
     const descriptionCMSContent = EditorState.createEmpty();
     const subDescriptionCMSContent = EditorState.createEmpty();
 

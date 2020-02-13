@@ -1,11 +1,11 @@
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import * as IntercomTracking from 'utils/intercom-tracking';
 
 
 describe('IntercomTracking', function () {
   beforeEach(function () {
-    sinon.spy(window, 'Intercom');
+    spy(window, 'Intercom');
   });
 
   describe('trackOpenExplainer', function () {

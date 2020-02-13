@@ -1,5 +1,5 @@
 import lodash, { range, some, isEqual, sortBy } from 'lodash';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import {
   topOfficersByAllegationSelector,
@@ -74,7 +74,7 @@ describe('landing page selectors', function () {
     });
 
     it('should shuffle cards', function () {
-      const stubShuffle = sinon.spy(lodash, 'shuffle');
+      const stubShuffle = spy(lodash, 'shuffle');
       state.landingPage.topOfficersByAllegation = lodash.range(40);
 
       topOfficersByAllegationSelector(state);
@@ -129,7 +129,7 @@ describe('landing page selectors', function () {
     });
 
     it('should shuffle cards', function () {
-      const stubShuffle = sinon.spy(lodash, 'shuffle');
+      const stubShuffle = spy(lodash, 'shuffle');
       state.landingPage.complaintSummaries = lodash.range(40);
 
       complaintSummariesSelector(state);
@@ -174,7 +174,7 @@ describe('landing page selectors', function () {
     });
 
     it('should shuffle cards', function () {
-      const stubShuffle = sinon.spy(lodash, 'shuffle');
+      const stubShuffle = spy(lodash, 'shuffle');
       state.landingPage.recentActivities = lodash.range(40);
 
       recentActivitiesSelector(state);

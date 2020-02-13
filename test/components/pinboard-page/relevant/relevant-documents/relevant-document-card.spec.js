@@ -1,5 +1,5 @@
 import React from 'react';
-import sinon from 'sinon';
+import { stub, useFakeTimers } from 'sinon';
 
 import { mountWithRouter } from 'utils/tests';
 import RelevantDocumentCard, { RelevantDocumentCardWithUndo }
@@ -62,7 +62,7 @@ describe('<RelevantDocumentCard />', function () {
   };
 
   it('should render enough content correctly', function () {
-    const addItemInPinboardPageStub = sinon.stub();
+    const addItemInPinboardPageStub = stub();
 
     const wrapper = mountWithRouter(
       <RelevantDocumentCard
@@ -98,11 +98,11 @@ describe('<RelevantDocumentCard />', function () {
     let clock;
 
     beforeEach(function () {
-      clock = sinon.useFakeTimers();
+      clock = useFakeTimers();
     });
 
     it('should render remove text correctly', function () {
-      const addItemInPinboardPageStub = sinon.stub();
+      const addItemInPinboardPageStub = stub();
       const wrapper = mountWithRouter(
         <RelevantDocumentCardWithUndo
           url='https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
@@ -120,7 +120,7 @@ describe('<RelevantDocumentCard />', function () {
     });
 
     it('should be reversed after the undo card disappears', function () {
-      const addItemInPinboardPageStub = sinon.stub();
+      const addItemInPinboardPageStub = stub();
       const wrapper = mountWithRouter(
         <RelevantDocumentCardWithUndo
           url='https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'

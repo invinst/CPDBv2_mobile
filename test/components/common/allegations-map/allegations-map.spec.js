@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { times, cloneDeep } from 'lodash';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 import ReactDOMServer from 'react-dom/server';
 import should from 'should';
 
@@ -126,8 +126,8 @@ describe('Map component', function () {
 
   describe('componentDidUpdate', function () {
     it('should call resetMap and addMapLayersOnStyleLoaded if next props clearAllMarkers is true', function () {
-      const resetMapStub = sinon.stub(AllegationsMap.prototype, 'resetMap');
-      const addMapLayersOnStyleLoadedStub = sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      const resetMapStub = stub(AllegationsMap.prototype, 'resetMap');
+      const addMapLayersOnStyleLoadedStub = stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
       const newMarkers = {
         crs: [],
         trrs: [
@@ -152,7 +152,7 @@ describe('Map component', function () {
     });
 
     it('should only call addMapLayersOnStyleLoaded if next props clearAllMarkers is false', function () {
-      const addMapLayersOnStyleLoadedStub = sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      const addMapLayersOnStyleLoadedStub = stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
       const newMarkerGroups = {
         crs: [],
         trrs: [
@@ -207,7 +207,7 @@ describe('Map component', function () {
   });
 
   it('should call addMapLayersOnStyleLoaded when componentDidMount', function () {
-    const addMapLayersOnStyleLoadedStub = sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+    const addMapLayersOnStyleLoadedStub = stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
     const createMarker = (index) => ({
       point: {
         lat: 42.012567,
@@ -228,7 +228,7 @@ describe('Map component', function () {
 
   describe('addMapLayer', function () {
     it('should bind click event when calling addMapLayer', function () {
-      sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
       const crMarkers = [
         {
           point: {
@@ -258,7 +258,7 @@ describe('Map component', function () {
       const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
       const instance = wrapper.instance();
-      const mapOnStub = sinon.stub(instance.map, 'on');
+      const mapOnStub = stub(instance.map, 'on');
 
       instance.addMapLayer('crs', crMarkers);
       instance.map.addSource.should.be.calledWith(
@@ -318,7 +318,7 @@ describe('Map component', function () {
     });
 
     it('should not add new layer if markers data is empty', function () {
-      sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
 
       const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
@@ -330,7 +330,7 @@ describe('Map component', function () {
     });
 
     it('should addLayer with correct aboveLayerName', function () {
-      sinon.stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
       const crMarkers1 = [
         {
           point: {
@@ -485,7 +485,7 @@ describe('Map component', function () {
   });
 
   it('should reset the map when calling resetMap', function () {
-    const initMapDataSpy = sinon.spy(AllegationsMap.prototype, 'initMapData');
+    const initMapDataSpy = spy(AllegationsMap.prototype, 'initMapData');
 
     const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
     const instance = wrapper.instance();
@@ -570,7 +570,7 @@ describe('Map component', function () {
   });
 
   it('should call addMapLayer when calling addMapLayers', function () {
-    const addMapLayerStub = sinon.stub(AllegationsMap.prototype, 'addMapLayer');
+    const addMapLayerStub = stub(AllegationsMap.prototype, 'addMapLayer');
     const wrapper = shallow(
       <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
       { disableLifecycleMethods: true },
@@ -583,7 +583,7 @@ describe('Map component', function () {
   });
 
   it('should add map layer when calling addMapLayersOnStyleLoaded', function () {
-    const addMapLayersStub = sinon.stub(AllegationsMap.prototype, 'addMapLayers');
+    const addMapLayersStub = stub(AllegationsMap.prototype, 'addMapLayers');
     const wrapper = mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
     const instance = wrapper.instance();
     addMapLayersStub.resetHistory();

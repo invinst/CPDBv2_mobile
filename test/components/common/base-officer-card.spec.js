@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { shallow } from 'enzyme';
 import should from 'should';
 import { random } from 'faker';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import { mountWithRouter } from 'utils/tests';
 import BaseOfficerCard from 'components/common/base-officer-card';
@@ -80,7 +80,7 @@ describe('<BaseOfficerCard />', function () {
   });
 
   it('should render ItemPinButton with correct props', function () {
-    const addOrRemoveItemInPinboard = sinon.spy();
+    const addOrRemoveItemInPinboard = spy();
     const id = random.number({ min: 10, max: 1000 });
     const isPinned = random.boolean();
 

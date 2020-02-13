@@ -1,5 +1,5 @@
 import browserHistory from 'utils/history';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 
 import { Toastify } from 'utils/toastify';
 import toastStyles from 'utils/toast.sass';
@@ -40,7 +40,7 @@ describe('Toast utils', function () {
 
   describe('showAddOrRemoveItemToast', function () {
     it('should show added toast if isPinned is false', function () {
-      const browserHistoryPush = sinon.stub(browserHistory, 'push');
+      const browserHistoryPush = stub(browserHistory, 'push');
 
       const pinboard = { id: '123abc' };
       showAddOrRemoveItemToast(pinboard, false, 'CR');
@@ -131,7 +131,7 @@ describe('Toast utils', function () {
 
   describe('showAlertToast', function () {
     it('should show toast with autoClose is false', function () {
-      const onClick = sinon.stub();
+      const onClick = stub();
       showAlertToast('toast message', onClick);
 
       Toastify.toast.should.be.calledOnce();

@@ -1,4 +1,4 @@
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import { showIntercomLauncher, showIntercomMessages } from 'utils/intercom';
 
@@ -9,7 +9,7 @@ describe('Intercom utils', function () {
   beforeEach(function () {
     oldIntercom = window.Intercom;
     window.Intercom = function () {};
-    sinon.spy(window, 'Intercom');
+    spy(window, 'Intercom');
   });
 
   afterEach(function () {

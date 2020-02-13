@@ -1,5 +1,5 @@
 import should from 'should';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 import { find } from 'lodash';
 
 import * as draftjsUtils from 'utils/draftjs';
@@ -396,7 +396,7 @@ describe('complaint-page selectors', function () {
 
   describe('requestDocumentButtonMessage selector', function () {
     beforeEach(function () {
-      sinon.stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
+      stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
     });
 
     it('should return document request instruction message', function () {

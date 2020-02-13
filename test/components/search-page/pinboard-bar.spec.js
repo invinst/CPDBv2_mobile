@@ -2,7 +2,7 @@ import React from 'react';
 import browserHistory from 'utils/history';
 import { shallow } from 'enzyme';
 import should from 'should';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 
 import PinboardBar from 'components/search-page/pinboard-bar';
 
@@ -41,7 +41,7 @@ describe('<PinboardBar />', function () {
   });
 
   it('should call onEmptyPinboardButtonClick if we click on the button when pinboard id is null', function () {
-    const onEmptyPinboardButtonClick = sinon.spy();
+    const onEmptyPinboardButtonClick = spy();
 
     const wrapper = shallow(
       <PinboardBar
@@ -54,7 +54,7 @@ describe('<PinboardBar />', function () {
   });
 
   it('should redirect if we click on the button when pinboard is exist', function () {
-    const browserHistoryPush = sinon.stub(browserHistory, 'push');
+    const browserHistoryPush = stub(browserHistory, 'push');
 
     const wrapper = shallow(
       <PinboardBar pinboard={ {
@@ -70,7 +70,7 @@ describe('<PinboardBar />', function () {
   });
 
   it('should go to /pinboard/ if pinboard is empty and hasPendingChanges is true', function () {
-    const browserHistoryPush = sinon.stub(browserHistory, 'push');
+    const browserHistoryPush = stub(browserHistory, 'push');
 
     const wrapper = shallow(
       <PinboardBar pinboard={ {

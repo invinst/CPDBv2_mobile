@@ -1,4 +1,4 @@
-import sinon from 'sinon';
+import { stub } from 'sinon';
 
 import trackingMiddleware from 'middleware/tracking-middleware';
 import { ROUTE_CHANGED } from 'actions/navigation';
@@ -13,7 +13,7 @@ import * as tracking from 'utils/tracking';
 
 describe('trackingMiddleware', function () {
   it('should track PageView event on ROUTE_CHANGED', function () {
-    sinon.stub(tracking, 'trackPageView');
+    stub(tracking, 'trackPageView');
 
     let dispatched;
     const dispatchAction = {
@@ -30,7 +30,7 @@ describe('trackingMiddleware', function () {
   });
 
   it('should track search query on SEARCH_QUERY_CHANGED', function () {
-    sinon.stub(tracking, 'trackSearchQuery');
+    stub(tracking, 'trackSearchQuery');
 
     let dispatched;
     const dispatchAction = {
@@ -45,7 +45,7 @@ describe('trackingMiddleware', function () {
   });
 
   it('should track search results count on SUGGEST_ALL_REQUEST_SUCCESS', function () {
-    sinon.stub(tracking, 'trackSearchResultsCount');
+    stub(tracking, 'trackSearchResultsCount');
 
     let dispatched;
     const dispatchAction = {
@@ -60,7 +60,7 @@ describe('trackingMiddleware', function () {
   });
 
   it('should track search results count on SUGGESTION_REQUEST_SUCCESS', function () {
-    sinon.stub(tracking, 'trackSearchResultsCount');
+    stub(tracking, 'trackSearchResultsCount');
 
     let dispatched;
     const dispatchAction = {
@@ -78,7 +78,7 @@ describe('trackingMiddleware', function () {
   });
 
   it('should trackSingleSearchResults on SUGGESTION_SINGLE_REQUEST_SUCCESS', function () {
-    sinon.stub(tracking, 'trackSingleSearchResults');
+    stub(tracking, 'trackSingleSearchResults');
 
     let dispatched;
     const dispatchAction = {

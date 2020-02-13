@@ -1,7 +1,7 @@
 import React from 'react';
 import should from 'should';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import PinnedType from 'components/pinboard-page/pinned-type';
 import PinnedGrid from 'components/pinboard-page/pinned-type/pinned-grid';
@@ -10,8 +10,8 @@ import LoadingSpinner from 'components/common/loading-spinner';
 
 describe('<PinnedType />', function () {
   it('should render PinnedGrid with correct props', function () {
-    const removeItemInPinboardPage = sinon.spy();
-    const orderPinboard = sinon.spy();
+    const removeItemInPinboardPage = spy();
+    const orderPinboard = spy();
     const items = [{ 'id': '1' }, { 'id': '2' }];
     const pinnedType = shallow(
       <PinnedType
@@ -33,8 +33,8 @@ describe('<PinnedType />', function () {
   });
 
   it('should still render PinnedGrid when requesting but items is not empty', function () {
-    const removeItemInPinboardPage = sinon.spy();
-    const orderPinboard = sinon.spy();
+    const removeItemInPinboardPage = spy();
+    const orderPinboard = spy();
     const items = [{ 'id': '1' }, { 'id': '2' }];
     const pinnedType = shallow(
       <PinnedType

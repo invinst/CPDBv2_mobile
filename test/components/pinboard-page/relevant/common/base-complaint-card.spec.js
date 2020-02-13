@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Link } from 'react-router-dom';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import MiniVisualToken from 'components/pinboard-page/relevant/common/mini-officer-visual-token';
 import PlusButton from 'components/pinboard-page/relevant/common/plus-button';
@@ -46,7 +46,7 @@ describe('<BaseComplaintCard />', function () {
       id: 8,
       percentile: { year: 2015, items: [] },
     }];
-    const addItemInPinboardPage = sinon.spy();
+    const addItemInPinboardPage = spy();
     const wrapper = shallow(
       <BaseComplaintCard
         leftChild={ <div className='test--left-child'/> }
@@ -109,7 +109,7 @@ describe('<BaseComplaintCard />', function () {
   });
 
   it('should hide PlusButton if pinned', function () {
-    const addItemInPinboardPage = sinon.spy();
+    const addItemInPinboardPage = spy();
     const wrapper = shallow(
       <BaseComplaintCard
         leftChild={ <div className='test--left-child'/> }
@@ -128,7 +128,7 @@ describe('<BaseComplaintCard />', function () {
   });
 
   it('should call addItemInPinboardPage when clicking on PlusButton', function () {
-    const addItemInPinboardPage = sinon.spy();
+    const addItemInPinboardPage = spy();
     const wrapper = shallow(
       <BaseComplaintCard
         leftChild={ <div className='test--left-child'/> }

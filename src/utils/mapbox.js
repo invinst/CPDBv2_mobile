@@ -1,6 +1,6 @@
 /* istanbul ignore next */
 import _mapboxgl from 'mapbox-gl';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 import config from 'config';
 import { includes } from 'lodash';
 
@@ -12,33 +12,33 @@ const MARKER_URL = 'https://cpdbv21777.blob.core.windows.net/assets/map-marker.p
 _mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 
 if (config.appEnv === 'test' || config.appEnv === 'live-test') {
-  const addSourceSpy = sinon.spy();
-  const getSourceSpy = sinon.stub().returns(undefined);
-  const addLayerSpy = sinon.spy();
-  const getLayerSpy = sinon.stub().returns(undefined);
-  const setFilterSpy = sinon.spy();
-  const addControlSpy = sinon.spy();
-  const navigationControlSpy = sinon.spy();
-  const removeSpy = sinon.spy();
-  const removeMakerSpy = sinon.spy();
-  const easeToSpy = sinon.spy();
-  const getZoomStub = sinon.stub();
-  const setLngLatStub = sinon.stub().returnsThis();
-  const setHTMLStub = sinon.stub().returnsThis();
-  const setPopupStub = sinon.stub().returnsThis();
-  const addToStub = sinon.stub().returnsThis();
-  const getBoundingClientRectStub = sinon.stub().returns({
+  const addSourceSpy = spy();
+  const getSourceSpy = stub().returns(undefined);
+  const addLayerSpy = spy();
+  const getLayerSpy = stub().returns(undefined);
+  const setFilterSpy = spy();
+  const addControlSpy = spy();
+  const navigationControlSpy = spy();
+  const removeSpy = spy();
+  const removeMakerSpy = spy();
+  const easeToSpy = spy();
+  const getZoomStub = stub();
+  const setLngLatStub = stub().returnsThis();
+  const setHTMLStub = stub().returnsThis();
+  const setPopupStub = stub().returnsThis();
+  const addToStub = stub().returnsThis();
+  const getBoundingClientRectStub = stub().returns({
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
   });
-  const getContainerStub = sinon.stub().returns({
+  const getContainerStub = stub().returns({
     getBoundingClientRect: getBoundingClientRectStub,
   });
-  const isStyleLoadedStub = sinon.stub();
-  const removeLayerSpy = sinon.spy();
-  const removeSourceSpy = sinon.spy();
+  const isStyleLoadedStub = stub();
+  const removeLayerSpy = spy();
+  const removeSourceSpy = spy();
 
 
   class MockMap {

@@ -1,5 +1,5 @@
 import React from 'react';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 
 import { mountWithRouter } from 'utils/tests';
 import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/relevant-infinite-carousel';
@@ -23,8 +23,8 @@ describe('<RelevantCoaccusals />', function () {
       rank: 'Police Officer',
       coaccusalCount: 0,
     }];
-    const addItemInPinboardPageStub = sinon.stub();
-    const fetchPinboardRelevantCoaccusalsStub = sinon.stub();
+    const addItemInPinboardPageStub = stub();
+    const fetchPinboardRelevantCoaccusalsStub = stub();
 
     const wrapper = mountWithRouter(
       <RelevantCoaccusals

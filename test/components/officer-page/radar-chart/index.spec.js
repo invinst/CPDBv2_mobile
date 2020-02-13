@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import should from 'should';
 import { mount, shallow } from 'enzyme';
-import sinon from 'sinon';
+import { spy, stub, useFakeTimers } from 'sinon';
 import { EditorState } from 'draft-js';
 
 import { mountWithRouter } from 'utils/tests';
@@ -111,8 +111,8 @@ describe('AnimatedRadarChart component', function () {
 
   context('open the explainer', function () {
     beforeEach(function () {
-      sinon.stub(IntercomTracking, 'trackOpenExplainer');
-      sinon.stub(tracking, 'trackOpenExplainer');
+      stub(IntercomTracking, 'trackOpenExplainer');
+      stub(tracking, 'trackOpenExplainer');
     });
 
     it('should open the explainer clicking on the radar chart and track this event', function () {
@@ -151,7 +151,7 @@ describe('AnimatedRadarChart component', function () {
   describe('test animate', function () {
     let clock;
     beforeEach(function () {
-      clock = sinon.useFakeTimers();
+      clock = useFakeTimers();
     });
 
     it('should not animate if data length is 1', function () {
@@ -186,7 +186,7 @@ describe('AnimatedRadarChart component', function () {
       );
       const instance = wrapper.instance();
 
-      const stopTimerSpy = sinon.spy(instance, 'stopTimer');
+      const stopTimerSpy = spy(instance, 'stopTimer');
       wrapper.unmount();
 
       stopTimerSpy.called.should.be.true();
@@ -200,7 +200,7 @@ describe('AnimatedRadarChart component', function () {
           <AnimatedRadarChart officerId={ 123 } ref={ (c) => {animatedRadarChart = c;} } percentileData={ data }/>
         </Provider>
       );
-      const startAnimation = sinon.spy(animatedRadarChart, 'startAnimation');
+      const startAnimation = spy(animatedRadarChart, 'startAnimation');
 
       wrapper.find('.radar-chart-container').simulate('click');
 

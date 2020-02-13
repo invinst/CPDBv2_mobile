@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Router, Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import { mountWithRouter } from 'utils/tests';
 import Header from 'components/pinboard-page/header';
@@ -21,7 +21,7 @@ describe('<Header /> of PinboardPage', function () {
   });
 
   it('should preventDefault when clicking on menu item', function () {
-    const preventDefault = sinon.spy();
+    const preventDefault = spy();
     const header = mount(
       <Router history={ createBrowserHistory() }>
         <Route path='/' component={ () => <Header /> } />

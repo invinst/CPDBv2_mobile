@@ -2,7 +2,7 @@ import React from 'react';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 
 import Attachments from 'components/complaint-page/attachments';
 import RequestDocumentButton from 'components/common/request-document/request-document-button';
@@ -65,7 +65,7 @@ describe('Attachments component', function () {
         },
       },
     });
-    const stubTrackAttachmentClick = sinon.stub(tracking, 'trackAttachmentClick');
+    const stubTrackAttachmentClick = stub(tracking, 'trackAttachmentClick');
     const attachments = [{
       'url': 'https://www.documentcloud.org/documents/4769822-CRID-1002813-CR.html',
       'fileType': 'document',
@@ -94,7 +94,7 @@ describe('Attachments component', function () {
         },
       },
     });
-    const stubOnTrackingAttachment = sinon.stub();
+    const stubOnTrackingAttachment = stub();
     const attachments = [{
       'url': 'https://www.documentcloud.org/documents/4769822-CRID-1002813-CR.html',
       'fileType': 'document',

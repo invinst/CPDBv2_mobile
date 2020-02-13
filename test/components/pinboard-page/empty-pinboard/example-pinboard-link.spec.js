@@ -1,7 +1,7 @@
 import React from 'react';
 import Truncate from 'react-truncate';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 
 import ExamplePinboardLink from 'components/pinboard-page/empty-pinboard/example-pinboard-link';
 import styles from 'components/pinboard-page/empty-pinboard/example-pinboard-link.sass';
@@ -9,7 +9,7 @@ import styles from 'components/pinboard-page/empty-pinboard/example-pinboard-lin
 
 describe('ExamplePinboardLink component', function () {
   it('should have enough contents', function () {
-    const updatePinboardFromSourceStub = sinon.stub();
+    const updatePinboardFromSourceStub = stub();
     const wrapper = mount(
       <ExamplePinboardLink
         id='66ef1561'

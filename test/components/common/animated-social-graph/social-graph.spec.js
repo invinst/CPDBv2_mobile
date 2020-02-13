@@ -1,5 +1,5 @@
 import React from 'react';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 import { mount } from 'enzyme';
 import { forOwn, find, filter, round } from 'lodash';
 import should from 'should';
@@ -211,8 +211,8 @@ describe('SocialGraph', function () {
   ];
 
   it('should render all sections correctly', function () {
-    const startTimelineFromBeginningStub = sinon.stub();
-    const stopTimelineStub = sinon.stub();
+    const startTimelineFromBeginningStub = stub();
+    const stopTimelineStub = stub();
     wrapper = mount(
       <SocialGraph
         officers={ officers }

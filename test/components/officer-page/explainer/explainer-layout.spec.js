@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import StaticRadarChart from 'components/common/radar-chart';
 import ExplainerLayout from 'components/officer-page/radar-chart/explainer/explainer-layout';
@@ -12,8 +12,8 @@ describe('ExplainerLayout component', function () {
     const radarChartConfig = { width: 512, height: 392 };
     const leftNavigationText = 'some left navigation text';
     const rightNavigationText = 'some right navigation text';
-    const leftNavHandlerSpy = sinon.spy();
-    const rightNavHandlerSpy = sinon.spy();
+    const leftNavHandlerSpy = spy();
+    const rightNavHandlerSpy = spy();
     const title = 'some title';
     const content = <div className='test--explainer-layout-content'/>;
 
@@ -46,7 +46,7 @@ describe('ExplainerLayout component', function () {
   });
 
   it('should invoke closeExplainer when clicking on the close button', function () {
-    const closeExplainerSpy = sinon.spy();
+    const closeExplainerSpy = spy();
 
     const wrapper = shallow(
       <ExplainerLayout closeExplainer={ closeExplainerSpy }/>

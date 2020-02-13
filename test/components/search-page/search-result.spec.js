@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import { mountWithRouter } from 'utils/tests';
@@ -12,7 +12,7 @@ import TrrItem from 'components/search-page/trr-item';
 
 describe('SearchResult />', function () {
   it('should render InfiniteScroll with correct props', function () {
-    const spyGetSuggestionWithContentType = sinon.spy();
+    const spyGetSuggestionWithContentType = spy();
     const wrapper = mountWithRouter(
       <SearchResult
         items={ [{ id: 1 }] }

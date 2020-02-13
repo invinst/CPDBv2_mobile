@@ -1,5 +1,5 @@
 import { Promise } from 'es6-promise';
-import sinon from 'sinon';
+import { stub, useFakeTimers } from 'sinon';
 import browserHistory from 'utils/history';
 
 import restoreCreateOrUpdatePinboardMiddleware from 'middleware/restore-create-or-update-pinboard-middleware';
@@ -42,12 +42,12 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
         },
       };
     },
-    dispatch: sinon.stub().usingPromise(Promise).resolves(dispatchResults),
+    dispatch: stub().usingPromise(Promise).resolves(dispatchResults),
   });
 
   beforeEach(function () {
-    sinon.stub(CancelToken, 'source');
-    sinon.stub(window, 'addEventListener');
+    stub(CancelToken, 'source');
+    stub(window, 'addEventListener');
   });
 
   afterEach(function () {
@@ -366,7 +366,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     });
 
     it('should stop the loop if nothing else to save', function () {
-      sinon.stub(browserHistory, 'location').value({ pathname: '/search/' });
+      stub(browserHistory, 'location').value({ pathname: '/search/' });
       const action = {
         type: SAVE_PINBOARD,
         payload: PinboardFactory.build({
@@ -388,7 +388,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     });
 
     it('should fetch data at end the loop when being on the pinboard page', function () {
-      sinon.stub(browserHistory, 'location').value({ pathname: '/pinboard/66ef1560/' });
+      stub(browserHistory, 'location').value({ pathname: '/pinboard/66ef1560/' });
       const action = {
         type: SAVE_PINBOARD,
         payload: PinboardFactory.build({
@@ -419,7 +419,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     });
 
     it('should not fetch data at end the loop when not being on the pinboard page', function () {
-      sinon.stub(browserHistory, 'location').value({ pathname: '/search/' });
+      stub(browserHistory, 'location').value({ pathname: '/search/' });
       const action = {
         type: SAVE_PINBOARD,
         payload: PinboardFactory.build({
@@ -467,11 +467,11 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
             },
           };
         },
-        dispatch: sinon.stub().usingPromise(Promise).rejects(new Error('abc')),
+        dispatch: stub().usingPromise(Promise).rejects(new Error('abc')),
       };
 
       const realSetTimeout = setTimeout;
-      const clock = sinon.useFakeTimers();
+      const clock = useFakeTimers();
 
       let dispatched;
       restoreCreateOrUpdatePinboardMiddleware(store)(action => dispatched = action)(action);
@@ -518,7 +518,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
             },
           };
         },
-        dispatch: sinon.stub().usingPromise(Promise).resolves('abc'),
+        dispatch: stub().usingPromise(Promise).resolves('abc'),
       };
 
       restoreCreateOrUpdatePinboardMiddleware(store)(action => action)(action);
@@ -536,12 +536,12 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
             },
           };
         },
-        dispatch: sinon.stub().usingPromise(Promise).rejects(new Error('abc')),
+        dispatch: stub().usingPromise(Promise).rejects(new Error('abc')),
       };
 
-      sinon.stub(ToastUtils, 'showAlertToast').returns('toast-id');
+      stub(ToastUtils, 'showAlertToast').returns('toast-id');
       const realSetTimeout = setTimeout;
-      const clock = sinon.useFakeTimers();
+      const clock = useFakeTimers();
 
       function repeatSave(count) {
         if (count < 61) {
@@ -591,14 +591,14 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
             },
           };
         },
-        dispatch: sinon.stub().usingPromise(Promise).rejects(new Error('No internet connection')),
+        dispatch: stub().usingPromise(Promise).rejects(new Error('No internet connection')),
       };
 
-      sinon.stub(ToastUtils, 'showAlertToast').returns('toast-id');
+      stub(ToastUtils, 'showAlertToast').returns('toast-id');
       Toastify.toast.dismiss.resetHistory();
-      const onLineStub = sinon.stub(window.navigator, 'onLine').value(false);
+      const onLineStub = stub(window.navigator, 'onLine').value(false);
       const realSetTimeout = setTimeout;
-      const clock = sinon.useFakeTimers();
+      const clock = useFakeTimers();
 
       const actionHandler = restoreCreateOrUpdatePinboardMiddleware(connectionErrorStore)(action => action);
       window.addEventListener.should.be.calledOnce();
@@ -685,14 +685,14 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
             },
           };
         },
-        dispatch: sinon.stub().usingPromise(Promise).rejects(new Error('No internet connection')),
+        dispatch: stub().usingPromise(Promise).rejects(new Error('No internet connection')),
       };
 
-      sinon.stub(ToastUtils, 'showAlertToast').returns('toast-id');
+      stub(ToastUtils, 'showAlertToast').returns('toast-id');
       Toastify.toast.dismiss.resetHistory();
-      sinon.stub(window.navigator, 'onLine').value(false);
+      stub(window.navigator, 'onLine').value(false);
       const realSetTimeout = setTimeout;
-      const clock = sinon.useFakeTimers();
+      const clock = useFakeTimers();
 
       const actionHandler = restoreCreateOrUpdatePinboardMiddleware(connectionErrorStore)(action => action);
       const delayNextSave = count => {
@@ -1221,7 +1221,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
 
       setTimeout(
         () => {
-          const browserHistoryPush = sinon.stub(browserHistory, 'push');
+          const browserHistoryPush = stub(browserHistory, 'push');
           Toastify.toast.should.be.calledOnce();
           Toastify.toast.getCall(0).args[0].should.eql('CR added');
           Toastify.toast.getCall(0).args[1]['className'].should.eql(`${toastStyles.toastWrapper} added`);
@@ -1243,7 +1243,7 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     });
 
     it('should handle ADD_OR_REMOVE_ITEM_IN_PINBOARD and show removing toast', function (done) {
-      const browserHistoryPush = sinon.stub(browserHistory, 'push');
+      const browserHistoryPush = stub(browserHistory, 'push');
       const action = {
         type: ADD_OR_REMOVE_ITEM_IN_PINBOARD,
         payload: {

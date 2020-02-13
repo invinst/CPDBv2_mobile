@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 import { EditorState } from 'draft-js';
 
 import { mountWithRouter } from 'utils/tests';
@@ -16,7 +16,7 @@ describe('<ComplaintSummaries />', function () {
     ];
     const titleCMSContent = EditorState.createEmpty();
     const descriptionCMSContent = EditorState.createEmpty();
-    const addOrRemoveItemInPinboard = sinon.stub();
+    const addOrRemoveItemInPinboard = stub();
 
     const wrapper = shallow(
       <ComplaintSummaries
@@ -39,7 +39,7 @@ describe('<ComplaintSummaries />', function () {
   });
 
   it('should call requestComplaintSummaries', function () {
-    const requestComplaintSummariesSpy = sinon.spy();
+    const requestComplaintSummariesSpy = spy();
     mountWithRouter(
       <ComplaintSummaries
         requestComplaintSummaries={ requestComplaintSummariesSpy }

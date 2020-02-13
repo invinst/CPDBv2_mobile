@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 import { EditorState } from 'draft-js';
 
 import { mountWithRouter } from 'utils/tests';
@@ -17,8 +17,8 @@ describe('<TopOfficersByAllegation />', function () {
   });
 
   it('should call request TopOfficersByAllegation and CMS if they are not requested', function () {
-    const requestTopOfficersByAllegationSpy = sinon.spy();
-    const requestCMSSpy = sinon.spy();
+    const requestTopOfficersByAllegationSpy = spy();
+    const requestCMSSpy = spy();
     mountWithRouter(
       <TopOfficersByAllegation
         requestTopOfficersByAllegation={ requestTopOfficersByAllegationSpy }
@@ -119,7 +119,7 @@ describe('<TopOfficersByAllegation />', function () {
         'sustained_count': 11,
       },
     ];
-    sinon.stub(IntercomUtils, 'showIntercomLauncher');
+    stub(IntercomUtils, 'showIntercomLauncher');
 
     const wrapper = shallow(
       <TopOfficersByAllegation

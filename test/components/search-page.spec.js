@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 import ReactHeight from 'react-height';
 import { noop } from 'lodash';
 import { Promise } from 'es6-promise';
@@ -15,7 +15,7 @@ import * as IntercomTracking from 'utils/intercom-tracking';
 
 describe('<SearchPage />', function () {
   beforeEach(function () {
-    sinon.stub(IntercomUtils, 'showIntercomLauncher');
+    stub(IntercomUtils, 'showIntercomLauncher');
   });
 
   it('should be renderable', function () {
@@ -27,7 +27,7 @@ describe('<SearchPage />', function () {
   });
 
   it('should call browserHistory.push when user click on back button', function () {
-    const browserHistoryPush = sinon.stub(browserHistory, 'push');
+    const browserHistoryPush = stub(browserHistory, 'push');
 
     const wrapper = shallow(
       <SearchPage cancelPathname='/pinboard/123abc/'/>,
@@ -47,7 +47,7 @@ describe('<SearchPage />', function () {
         { disableLifecycleMethods: true },
       );
       const instance = wrapper.instance();
-      const spyFocus = sinon.spy();
+      const spyFocus = spy();
 
 
       instance.searchInput = {
@@ -60,7 +60,7 @@ describe('<SearchPage />', function () {
 
     describe('fetchRecentSearchItems', function () {
       it('should be called if recentSuggestionIds is not empty and recentSuggestionsRequested is false', function () {
-        const fetchRecentSearchItemsSpy = sinon.spy();
+        const fetchRecentSearchItemsSpy = spy();
         const recentSuggestionIds = {
           officerIds: [8562],
           crids: ['123456'],
@@ -82,7 +82,7 @@ describe('<SearchPage />', function () {
       });
 
       it('should not be called if recentSuggestionIds is empty', function () {
-        const fetchRecentSearchItemsSpy = sinon.spy();
+        const fetchRecentSearchItemsSpy = spy();
         mount(
           <SearchPage
             recentSuggestionIds={ {} }
@@ -95,7 +95,7 @@ describe('<SearchPage />', function () {
       });
 
       it('should not be called if recentSuggestionsRequested is true', function () {
-        const fetchRecentSearchItemsSpy = sinon.spy();
+        const fetchRecentSearchItemsSpy = spy();
         const recentSuggestionIds = {
           officerIds: [8562],
           crids: ['123456'],
@@ -115,7 +115,7 @@ describe('<SearchPage />', function () {
 
     describe('fetchedEmptyRecentSearchItems', function () {
       it('should be called if recentSuggestionsRequested is false and recentSuggestionIds is empty', function () {
-        const fetchedEmptyRecentSearchItemsSpy = sinon.spy();
+        const fetchedEmptyRecentSearchItemsSpy = spy();
         mount(
           <SearchPage
             recentSuggestionIds={ {} }
@@ -131,7 +131,7 @@ describe('<SearchPage />', function () {
   describe('onInputChange', function () {
     it('should dispatch inputChanged action', function () {
       const dummyEvent = { currentTarget: { value: 'foo' } };
-      const spyInputChanged = sinon.spy();
+      const spyInputChanged = spy();
       const wrapper = shallow(
         <SearchPage inputChanged={ spyInputChanged }/>,
         { disableLifecycleMethods: true },
@@ -145,7 +145,7 @@ describe('<SearchPage />', function () {
 
     it('should call suggestTerm if query is of sufficient length', function () {
       const dummyEvent = { currentTarget: { value: 'foo' } };
-      const spySuggestTerm = sinon.spy();
+      const spySuggestTerm = spy();
       const wrapper = mount(
         <SearchPage suggestTerm={ spySuggestTerm }/>
       );
@@ -159,7 +159,7 @@ describe('<SearchPage />', function () {
     });
 
     it('should NOT call suggestTerm if query is empty or too short', function () {
-      const spySuggestTerm = sinon.spy();
+      const spySuggestTerm = spy();
       const wrapper = mount(
         <SearchPage suggestTerm={ spySuggestTerm }/>
       );
@@ -177,11 +177,11 @@ describe('<SearchPage />', function () {
 
   describe('search <input>', function () {
     beforeEach(function () {
-      this.stubOnInputChange = sinon.stub(SearchPage.prototype, 'onInputChange');
+      this.stubOnInputChange = stub(SearchPage.prototype, 'onInputChange');
     });
 
     it('should render query input component', function () {
-      const spyInputChanged = sinon.spy();
+      const spyInputChanged = spy();
 
       const wrapper = shallow(
         <SearchPage
@@ -252,7 +252,7 @@ describe('<SearchPage />', function () {
         { disableLifecycleMethods: true },
       );
       const instance = wrapper.instance();
-      const spyForceUpdate = sinon.spy(instance, 'forceUpdate');
+      const spyForceUpdate = spy(instance, 'forceUpdate');
 
       instance.updateLastCategoryHeight(1);
 
@@ -352,12 +352,12 @@ describe('<SearchPage />', function () {
     });
 
     it('should pass correct props to SearchCategory', function () {
-      const stubBoundCallback = sinon.stub(SearchPage.prototype.chooseCategory, 'bind');
+      const stubBoundCallback = stub(SearchPage.prototype.chooseCategory, 'bind');
       stubBoundCallback.returns(SearchPage.prototype.chooseCategory);
-      const spySaveToRecent = sinon.spy();
-      const spyUpdateActiveCategory = sinon.spy();
-      const spyAddOrRemoveItemInPinboard = sinon.spy();
-      const spyGetSuggestionWithContentType = sinon.spy();
+      const spySaveToRecent = spy();
+      const spyUpdateActiveCategory = spy();
+      const spyAddOrRemoveItemInPinboard = spy();
+      const spyGetSuggestionWithContentType = spy();
 
       const categories = [{
         name: 'OFFICERS',
@@ -430,7 +430,7 @@ describe('<SearchPage />', function () {
 
   describe('chooseCategory', function () {
     it('should call updateChosenCategory with correct args', function () {
-      const updateChosenCategory = sinon.spy();
+      const updateChosenCategory = spy();
 
       const wrapper = shallow(
         <SearchPage
@@ -532,7 +532,7 @@ describe('<SearchPage />', function () {
 
     describe('Intercom tracking', function () {
       beforeEach(function () {
-        sinon.stub(IntercomTracking, 'trackSearchPage');
+        stub(IntercomTracking, 'trackSearchPage');
       });
 
       it('should track Intercom with search page', function () {
@@ -544,11 +544,11 @@ describe('<SearchPage />', function () {
 
   describe('render back to search link', function () {
     beforeEach(function () {
-      this.stubInstantScrollToTop = sinon.stub(NavigationUtil, 'instantScrollToTop');
+      this.stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
     });
 
     it('should call clearChosenCategory and scroll to top on click', function () {
-      const updateChosenCategorySpy = sinon.spy();
+      const updateChosenCategorySpy = spy();
 
       const wrapper = mount(
         <SearchPage queryChanged={ noop } chosenCategory='OFFICER' updateChosenCategory={ updateChosenCategorySpy } />
@@ -570,7 +570,7 @@ describe('<SearchPage />', function () {
   });
 
   it('should handle when click on pinboard button if pinboard does not exist', function (done) {
-    const createPinboard = sinon.stub().usingPromise(Promise).resolves({
+    const createPinboard = stub().usingPromise(Promise).resolves({
       payload: {
         id: '5cd06f2b',
         url: '/pinboard/5cd06f2b/',
@@ -581,7 +581,7 @@ describe('<SearchPage />', function () {
       <SearchPage createPinboard={ createPinboard }/>
     );
 
-    const browserHistoryPush = sinon.stub(browserHistory, 'push');
+    const browserHistoryPush = stub(browserHistory, 'push');
     const pinboardButton = wrapper.find('.test--pinboard-bar');
     pinboardButton.simulate('click');
     createPinboard.calledWith({ officerIds: [], trrIds: [], crids: [] }).should.be.true();

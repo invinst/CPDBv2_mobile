@@ -1,5 +1,5 @@
 import should from 'should';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 
 import { trrSelector, getCMSRequested, buttonText, requestDocumentButtonMessage } from 'selectors/trr-page';
 import * as draftjsUtils from 'utils/draftjs';
@@ -175,7 +175,7 @@ describe('trr-page selectors', function () {
 
   describe('requestDocumentButtonMessage selector', function () {
     it('should return document request instruction message', function () {
-      sinon.stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
+      stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
       const state = {
         trrPage: {
           cms: [

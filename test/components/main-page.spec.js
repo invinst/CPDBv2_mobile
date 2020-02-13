@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { ToastContainer } from 'react-toastify';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 
 import config from 'config';
 import MainPage from 'components/main-page';
@@ -15,7 +15,7 @@ describe('MainPage component', function () {
   });
 
   it('should dispatch routeChanged action on mount', function () {
-    const spyRouteChanged = sinon.spy();
+    const spyRouteChanged = spy();
     const wrapper = shallow(
       <MainPage
         routeChanged={ spyRouteChanged }
@@ -43,7 +43,7 @@ describe('MainPage component', function () {
     const prevProps = {
       location: prevLocation,
     };
-    const spyRouteChanged = sinon.spy();
+    const spyRouteChanged = spy();
 
     const wrapper = shallow(
       <MainPage
@@ -66,7 +66,7 @@ describe('MainPage component', function () {
     const prevProps = {
       location: prevLocation,
     };
-    const spyRouteChanged = sinon.spy();
+    const spyRouteChanged = spy();
 
     const wrapper = shallow(
       <MainPage
@@ -97,7 +97,7 @@ describe('MainPage component', function () {
 
   context('enablePinboardFeature is false', function () {
     beforeEach(function () {
-      sinon.stub(config.enableFeatures, 'pinboard').value(false);
+      stub(config.enableFeatures, 'pinboard').value(false);
     });
 
     it('should add pinboard-disabled class name', function () {
@@ -108,7 +108,7 @@ describe('MainPage component', function () {
 
   context('enablePinboardFeature is true', function () {
     beforeEach(function () {
-      sinon.stub(config.enableFeatures, 'pinboard').value(true);
+      stub(config.enableFeatures, 'pinboard').value(true);
     });
 
     it('should add pinboard-disabled class name', function () {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
+import { spy, stub, useFakeTimers } from 'sinon';
 
 import RequestDocumentContent from 'components/common/request-document/request-document-content';
 import CMSContent from 'components/common/cms-content';
@@ -46,7 +46,7 @@ describe('RequestDocumentContent component', function () {
   });
 
   it('should call closeEvent when click to Close link', function () {
-    const cancelClickHandler = sinon.spy();
+    const cancelClickHandler = spy();
     const wrapper = shallow(
       <RequestDocumentContent closeModal={ cancelClickHandler }/>
     );
@@ -82,16 +82,16 @@ describe('RequestDocumentContent component', function () {
     let assertInCallbackTest;
 
     beforeEach(function () {
-      clock = sinon.useFakeTimers();
+      clock = useFakeTimers();
     });
 
     function submitRequestDocumentTest(assertInCallbackTest, done, fail=false) {
-      const closeCallback = sinon.spy();
+      const closeCallback = spy();
       const promise = new Promise((resolve, reject) => {
         if (fail) { reject(); }
         else { resolve(); }
       });
-      const requestDocumentCallback = sinon.stub().returns(promise);
+      const requestDocumentCallback = stub().returns(promise);
       let requestForm;
 
       requestForm = mount(
@@ -106,7 +106,7 @@ describe('RequestDocumentContent component', function () {
       const instance = requestForm.instance();
       const oldHandleSubmit = instance.handleSubmit;
       instance.handleSubmit = function (event) {
-        event.preventDefault = sinon.spy();
+        event.preventDefault = spy();
 
         const temp = oldHandleSubmit.call(this, event);
         event.preventDefault.calledOnce.should.be.true();

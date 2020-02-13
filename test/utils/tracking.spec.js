@@ -1,12 +1,12 @@
-import sinon from 'sinon';
+import { spy, stub, useFakeTimers } from 'sinon';
 
 import * as tracking from 'utils/tracking';
 
 
 describe('tracking utils', function () {
   beforeEach(function () {
-    sinon.spy(window, 'ga');
-    sinon.stub(window.clicky, 'log');
+    spy(window, 'ga');
+    stub(window.clicky, 'log');
   });
 
   describe('trackSwipeLandingPageCarousel', function () {
@@ -65,7 +65,7 @@ describe('tracking utils', function () {
 
   describe('trackSearchFocusedItem', function () {
     it('should send event analytic at most once in 500ms', function () {
-      const clock = sinon.useFakeTimers();
+      const clock = useFakeTimers();
 
       tracking.trackSearchFocusedItem('contentType', 'query', 'itemId1', 1);
       tracking.trackSearchFocusedItem('contentType', 'query', 'itemId2', 2);
@@ -103,7 +103,7 @@ describe('tracking utils', function () {
 
   describe('trackSearchQuery', function () {
     it('should send event analytic at most once in 500ms', function () {
-      const clock = sinon.useFakeTimers();
+      const clock = useFakeTimers();
 
       tracking.trackSearchQuery('que');
       tracking.trackSearchQuery('quer');

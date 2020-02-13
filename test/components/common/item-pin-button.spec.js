@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 
 import ItemPinButton from 'components/common/item-pin-button';
 
@@ -22,7 +22,7 @@ describe('<ItemPinButton />', function () {
   });
 
   it('should call addItemInPinboardPage action when clicked on', function () {
-    const addOrRemoveItemInPinboard = sinon.stub();
+    const addOrRemoveItemInPinboard = stub();
     const wrapper = mount(
       <ItemPinButton
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }

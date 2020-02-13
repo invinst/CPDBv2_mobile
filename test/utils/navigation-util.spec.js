@@ -1,31 +1,31 @@
-import sinon from 'sinon';
+import { spy, stub, useFakeTimers } from 'sinon';
 
 import * as NavigationUtil from 'utils/navigation-util';
 
 describe('NavigationUtil', function () {
   describe('goUp', function () {
     it('should do nothing if already at root path', function () {
-      const router = { push: sinon.spy() };
+      const router = { push: spy() };
       NavigationUtil.goUp(router, '/');
       router.push.called.should.be.false();
     });
 
     it('should go back one level if link is not one of NONEXISTENT_ROUTES', function () {
-      const router = { push: sinon.spy() };
+      const router = { push: spy() };
       NavigationUtil.goUp(router, '/existent/1/');
 
       router.push.calledWith('/existent/').should.be.true();
     });
 
     it('should go to root if currently at /existent/', function () {
-      const router = { push: sinon.spy() };
+      const router = { push: spy() };
       NavigationUtil.goUp(router, '/existent/');
 
       router.push.calledWith('/').should.be.true();
     });
 
     it('should go to straight root if current path is /officer/<id>/', function () {
-      const router = { push: sinon.spy() };
+      const router = { push: spy() };
       NavigationUtil.goUp(router, '/officer/11/');
 
       router.push.calledWith('/').should.be.true();
@@ -35,7 +35,7 @@ describe('NavigationUtil', function () {
 
   describe('scrollTo', function () {
     beforeEach(function () {
-      this.clock = sinon.useFakeTimers();
+      this.clock = useFakeTimers();
     });
 
     it('should do nothing if duration <= 0', function () {
@@ -64,7 +64,7 @@ describe('NavigationUtil', function () {
 
   describe('scrollToTop', function () {
     beforeEach(function () {
-      this.animatedScrollTo = sinon.spy(NavigationUtil, 'animatedScrollTo');
+      this.animatedScrollTo = spy(NavigationUtil, 'animatedScrollTo');
     });
 
     it('should call scrollTop with appropriate params', function () {
@@ -76,7 +76,7 @@ describe('NavigationUtil', function () {
 
   describe('instantScrollToTop', function () {
     it('should scroll whole body to top', function () {
-      const scrollToStub = sinon.stub(window, 'scrollTo');
+      const scrollToStub = stub(window, 'scrollTo');
 
       NavigationUtil.instantScrollToTop();
 
@@ -87,14 +87,14 @@ describe('NavigationUtil', function () {
 
   describe('getCurrentScrollPosition', function () {
     it('should return body scrollTop', function () {
-      sinon.stub(document.body, 'scrollTop').value(12);
+      stub(document.body, 'scrollTop').value(12);
 
       NavigationUtil.getCurrentScrollPosition().should.eql(12);
     });
 
     it('should return documentElement scrollTop if body scrollTop is undefined', function () {
-      sinon.stub(document.body, 'scrollTop').value(undefined);
-      sinon.stub(document.documentElement, 'scrollTop').value(13);
+      stub(document.body, 'scrollTop').value(undefined);
+      stub(document.documentElement, 'scrollTop').value(13);
 
       NavigationUtil.getCurrentScrollPosition().should.eql(13);
     });
@@ -103,7 +103,7 @@ describe('NavigationUtil', function () {
 
   describe('instantScrollTo', function () {
     beforeEach(function () {
-      this.stubScrollTo = sinon.stub(window, 'scrollTo');
+      this.stubScrollTo = stub(window, 'scrollTo');
     });
 
     it('should call window.scrollTo', function () {
@@ -114,8 +114,8 @@ describe('NavigationUtil', function () {
 
   describe('getPageYBottomOffset', function () {
     beforeEach(function () {
-      sinon.stub(window.document.body, 'offsetHeight').value(1000);
-      sinon.stub(window, 'pageYOffset').value(300);
+      stub(window.document.body, 'offsetHeight').value(1000);
+      stub(window, 'pageYOffset').value(300);
     });
 
     it('should return distance to bottom', function () {
@@ -125,8 +125,8 @@ describe('NavigationUtil', function () {
 
   describe('scrollByBottomOffset', function () {
     beforeEach(function () {
-      sinon.stub(window.document.body, 'offsetHeight').value(1000);
-      this.stubScrollTo = sinon.stub(window, 'scrollTo');
+      stub(window.document.body, 'offsetHeight').value(1000);
+      this.stubScrollTo = stub(window, 'scrollTo');
     });
 
     it('should return distance to bottom', function () {

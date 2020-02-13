@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -77,7 +77,7 @@ describe('<PinboardPage />', function () {
       'CR': [],
       'TRR': [],
     };
-    const removeItemInPinboardPage = sinon.spy();
+    const removeItemInPinboardPage = spy();
     const wrapper = mount(
       <Provider store={ store }>
         <MemoryRouter>
@@ -193,7 +193,7 @@ describe('<PinboardPage />', function () {
   });
 
   it('should requestCMS if does not hasCMS', function () {
-    const requestCMSSpy = sinon.spy();
+    const requestCMSSpy = spy();
 
     mountWithRouter(
       <PinboardPage
@@ -209,7 +209,7 @@ describe('<PinboardPage />', function () {
   });
 
   it('should not requestCMS if hasCMS', function () {
-    const requestCMSSpy = sinon.spy();
+    const requestCMSSpy = spy();
 
     mountWithRouter(
       <PinboardPage

@@ -1,13 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
 
 
 describe('<ItemUnpinButton />', function () {
   it('should onClick when cliked on', function () {
-    const onClick = sinon.stub();
+    const onClick = stub();
     const wrapper = mount(
       <ItemUnpinButton onClick={ onClick } />
     );

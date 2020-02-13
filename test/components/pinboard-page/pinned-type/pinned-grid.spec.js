@@ -1,5 +1,5 @@
 import React from 'react';
-import sinon from 'sinon';
+import { stub, useFakeTimers } from 'sinon';
 import { shallow } from 'enzyme';
 
 import PinnedGrid from 'components/pinboard-page/pinned-type/pinned-grid';
@@ -106,8 +106,8 @@ describe('<PinnedGrid />', function () {
   });
 
   it('should maintain the scroll position since second rerender', function () {
-    sinon.stub(navigation, 'getPageYBottomOffset').returns(700);
-    sinon.stub(navigation, 'scrollByBottomOffset');
+    stub(navigation, 'getPageYBottomOffset').returns(700);
+    stub(navigation, 'scrollByBottomOffset');
 
     const wrapper = shallow(<PinnedGrid type='TRR' items={ [{ 'id': '1' }] } />);
 
@@ -124,7 +124,7 @@ describe('<PinnedGrid />', function () {
 
     navigation.scrollByBottomOffset.resetHistory();
     navigation.getPageYBottomOffset.restore();
-    sinon.stub(navigation, 'getPageYBottomOffset').returns(400);
+    stub(navigation, 'getPageYBottomOffset').returns(400);
 
     wrapper.setProps({ items: [{ 'id': '2' }] });
 
@@ -133,8 +133,8 @@ describe('<PinnedGrid />', function () {
   });
 
   it('should init Muuri grid', function () {
-    const onMuuriStub = sinon.stub();
-    const MuuriStub = sinon.stub(muuriVendor, 'Muuri').callsFake(() => ({ 'on': onMuuriStub }));
+    const onMuuriStub = stub();
+    const MuuriStub = stub(muuriVendor, 'Muuri').callsFake(() => ({ 'on': onMuuriStub }));
 
     const items = [{ 'id': '1' }, { 'id': '2' }];
     const wrapper = shallow(<PinnedGrid type='OFFICER' items={ items } />);
@@ -148,9 +148,9 @@ describe('<PinnedGrid />', function () {
   });
 
   it('should update grid when did update', function () {
-    const onMuuriStub = sinon.stub();
-    const addMuuriStub = sinon.stub();
-    sinon.stub(muuriVendor, 'Muuri').callsFake(() => ({
+    const onMuuriStub = stub();
+    const addMuuriStub = stub();
+    stub(muuriVendor, 'Muuri').callsFake(() => ({
       'on': onMuuriStub,
       'add': addMuuriStub,
     }));
@@ -170,11 +170,11 @@ describe('<PinnedGrid />', function () {
   });
 
   it('should remove item from the grid when removeItemInPinboardPage is called', function () {
-    const clock = sinon.useFakeTimers();
+    const clock = useFakeTimers();
     const muuri = new muuriVendor.Muuri();
     muuri.remove.resetHistory();
 
-    const removeItemInPinboardPage = sinon.stub();
+    const removeItemInPinboardPage = stub();
 
     const items = [{ 'id': '1' }, { 'id': '2' }];
     const wrapper = shallow(
@@ -200,8 +200,8 @@ describe('<PinnedGrid />', function () {
     const muuri = new muuriVendor.Muuri();
     muuri.on.resetHistory();
 
-    const removeItemInPinboardPage = sinon.stub();
-    const orderPinboard = sinon.stub();
+    const removeItemInPinboardPage = stub();
+    const orderPinboard = stub();
 
     const items = [{ 'id': 1 }, { 'id': 2 }];
     const wrapper = shallow(
@@ -229,8 +229,8 @@ describe('<PinnedGrid />', function () {
     const muuri = new muuriVendor.Muuri();
     muuri.on.resetHistory();
 
-    const removeItemInPinboardPage = sinon.stub();
-    const orderPinboard = sinon.stub();
+    const removeItemInPinboardPage = stub();
+    const orderPinboard = stub();
 
     const items = [{ 'id': 1 }, { 'id': 2 }];
     const wrapper = shallow(
@@ -256,8 +256,8 @@ describe('<PinnedGrid />', function () {
   it('should invoke orderPinboard with type CR when dragEnd', function () {
     const muuri = new muuriVendor.Muuri();
 
-    const removeItemInPinboardPage = sinon.stub();
-    const orderPinboard = sinon.stub();
+    const removeItemInPinboardPage = stub();
+    const orderPinboard = stub();
 
     const items = [{ 'id': '1' }, { 'id': '2' }];
     const wrapper = shallow(
@@ -283,8 +283,8 @@ describe('<PinnedGrid />', function () {
   it('should invoke orderPinboard with type TRR when dragEnd', function () {
     const muuri = new muuriVendor.Muuri();
 
-    const removeItemInPinboardPage = sinon.stub();
-    const orderPinboard = sinon.stub();
+    const removeItemInPinboardPage = stub();
+    const orderPinboard = stub();
 
     const items = [{ 'id': 1 }, { 'id': 2 }];
     const wrapper = shallow(

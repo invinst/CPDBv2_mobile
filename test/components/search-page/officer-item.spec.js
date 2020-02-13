@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import { mountWithRouter } from 'utils/tests';
 import OfficerItem from 'components/search-page/officer-item';
@@ -9,8 +9,8 @@ import SearchItem from 'components/search-page/search-item';
 
 describe('<OfficerItem />', function () {
   it('should render officer correctly', function () {
-    const saveToRecentSpy = sinon.spy();
-    const addOrRemoveItemInPinboardSpy = sinon.spy();
+    const saveToRecentSpy = spy();
+    const addOrRemoveItemInPinboardSpy = spy();
     const recentItemData = {
       id: '8562',
       type: 'OFFICER',

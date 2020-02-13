@@ -3,7 +3,7 @@ import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import { mount } from 'enzyme';
-import sinon from 'sinon';
+import { spy, useFakeTimers } from 'sinon';
 
 import { mountWithRouter } from 'utils/tests';
 import OfficerCard, { OfficerCardWithUndo } from 'components/pinboard-page/cards/officer-card';
@@ -53,11 +53,11 @@ describe('withUndoCard higher-order component', function () {
     let clock;
 
     beforeEach(function () {
-      clock = sinon.useFakeTimers();
+      clock = useFakeTimers();
     });
 
     it('should render nothing when user click unpin but not undo', function () {
-      const removeItemInPinboardPage = sinon.spy();
+      const removeItemInPinboardPage = spy();
       instance = mount(
         <Router history={ createBrowserHistory() }>
           <Route path='/' component={
@@ -78,7 +78,7 @@ describe('withUndoCard higher-order component', function () {
     });
 
     it('should trigger to remove item 1s after click on remove button', function () {
-      const removeItemInPinboardPage = sinon.spy();
+      const removeItemInPinboardPage = spy();
       instance = mount(
         <Router history={ createBrowserHistory() }>
           <Route path='/' component={
@@ -99,7 +99,7 @@ describe('withUndoCard higher-order component', function () {
     });
 
     it('should cancel remove item if click on undo button', function () {
-      const removeItemInPinboardPage = sinon.spy();
+      const removeItemInPinboardPage = spy();
       instance = mount(
         <Router history={ createBrowserHistory() }>
           <Route path='/' component={

@@ -1,5 +1,5 @@
 import { Promise } from 'es6-promise';
-import sinon from 'sinon';
+import { stub } from 'sinon';
 import browserHistory from 'utils/history';
 import { CancelToken } from 'axios';
 
@@ -32,11 +32,11 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
         },
       };
     },
-    dispatch: sinon.stub().usingPromise(Promise).resolves('abc'),
+    dispatch: stub().usingPromise(Promise).resolves('abc'),
   });
 
   beforeEach(function () {
-    sinon.stub(CancelToken, 'source');
+    stub(CancelToken, 'source');
   });
 
   describe('handling @@router/LOCATION_CHANGE', function () {
@@ -138,8 +138,8 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
   describe('handling PINBOARD_FETCH_REQUEST_SUCCESS', function () {
     beforeEach(function () {
-      sinon.stub(browserHistory, 'replace');
-      sinon.stub(browserHistory, 'location').value({ pathname: '/pinboard/2bd40cf2/old-title/' });
+      stub(browserHistory, 'replace');
+      stub(browserHistory, 'location').value({ pathname: '/pinboard/2bd40cf2/old-title/' });
       this.store = createStore();
     });
 
@@ -217,7 +217,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
     });
 
     it('should do nothing if not being on a pinboard page', function () {
-      sinon.stub(browserHistory, 'location').value({ pathname: '/search/' });
+      stub(browserHistory, 'location').value({ pathname: '/search/' });
 
       const action = {
         type: PINBOARD_FETCH_REQUEST_SUCCESS,
@@ -238,8 +238,8 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
   describe('handling PINBOARD_CREATE_REQUEST_SUCCESS', function () {
     beforeEach(function () {
-      sinon.stub(browserHistory, 'replace');
-      sinon.stub(browserHistory, 'location').value({ pathname: '/pinboard/' });
+      stub(browserHistory, 'replace');
+      stub(browserHistory, 'location').value({ pathname: '/pinboard/' });
       this.store = createStore();
     });
 
@@ -274,8 +274,8 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
   describe('handling PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS', function () {
     beforeEach(function () {
-      sinon.stub(browserHistory, 'replace');
-      sinon.stub(browserHistory, 'location').value({ pathname: '/pinboard/' });
+      stub(browserHistory, 'replace');
+      stub(browserHistory, 'location').value({ pathname: '/pinboard/' });
       this.store = createStore();
     });
 
@@ -322,7 +322,7 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
     });
 
     it('should do nothing if not being on a pinboard page', function () {
-      sinon.stub(browserHistory, 'location').value({ pathname: '/search/' });
+      stub(browserHistory, 'location').value({ pathname: '/search/' });
 
       const action = {
         type: PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
@@ -343,8 +343,8 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
   describe('handling PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS', function () {
     beforeEach(function () {
-      sinon.stub(browserHistory, 'replace');
-      sinon.stub(browserHistory, 'location').value({ pathname: '/pinboard/' });
+      stub(browserHistory, 'replace');
+      stub(browserHistory, 'location').value({ pathname: '/pinboard/' });
       this.store = createStore();
     });
 

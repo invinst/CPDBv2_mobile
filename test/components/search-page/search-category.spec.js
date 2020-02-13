@@ -1,7 +1,7 @@
 import should from 'should';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 import * as NavigationUtil from 'utils/navigation-util';
 
 import { mountWithRouter } from 'utils/tests';
@@ -36,8 +36,8 @@ describe('<SearchCategory />', function () {
     );
     const instance = wrapper.instance();
 
-    const stubAddEventListener = sinon.stub(window, 'addEventListener');
-    sinon.stub(instance.watchActiveState, 'bind').returns(instance.watchActiveState);
+    const stubAddEventListener = stub(window, 'addEventListener');
+    stub(instance.watchActiveState, 'bind').returns(instance.watchActiveState);
 
     instance.componentDidMount();
 
@@ -54,9 +54,9 @@ describe('<SearchCategory />', function () {
     );
     const instance = wrapper.instance();
 
-    sinon.stub(window, 'addEventListener');
-    const stubRemoveEventListener = sinon.stub(window, 'removeEventListener');
-    sinon.stub(instance.watchActiveState, 'bind').returns(instance.watchActiveState);
+    stub(window, 'addEventListener');
+    const stubRemoveEventListener = stub(window, 'removeEventListener');
+    stub(instance.watchActiveState, 'bind').returns(instance.watchActiveState);
 
     instance.componentDidMount();
 
@@ -77,7 +77,7 @@ describe('<SearchCategory />', function () {
     );
     const instance = wrapper.instance();
 
-    const spyUnwatchActiveState = sinon.spy();
+    const spyUnwatchActiveState = spy();
     instance.unwatchActiveState = spyUnwatchActiveState;
 
 
@@ -100,7 +100,7 @@ describe('<SearchCategory />', function () {
 
   describe('render recent', function () {
     it('should render item correctly', function () {
-      const spySaveToRecent = sinon.spy();
+      const spySaveToRecent = spy();
       const items = [{
         url: 'localhost',
         type: 'recent',
@@ -124,9 +124,9 @@ describe('<SearchCategory />', function () {
 
   describe('renderAllButton', function () {
     beforeEach(function () {
-      this.stubRenderFunc = sinon.stub(SearchCategory.prototype, 'renderResults');
+      this.stubRenderFunc = stub(SearchCategory.prototype, 'renderResults');
       this.stubRenderFunc.returns((item) => item);
-      this.stubInstantScrollToTop = sinon.stub(NavigationUtil, 'instantScrollToTop');
+      this.stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
     });
 
     it('should render correctly', function () {
@@ -145,8 +145,8 @@ describe('<SearchCategory />', function () {
     });
 
     it('should call allButtonClickHandler() and scroll to top on click', function () {
-      const spyAllButtonClickHandler = sinon.spy();
-      const spyGetSuggestionWithContentType = sinon.stub().returns({ catch: sinon.spy() });
+      const spyAllButtonClickHandler = spy();
+      const spyGetSuggestionWithContentType = stub().returns({ catch: spy() });
 
       const wrapper = mount(
         <SearchCategory
@@ -171,9 +171,9 @@ describe('<SearchCategory />', function () {
 
   describe('renderResults', function () {
     it('should render ResultComponent with correct props', function () {
-      const spyAddOrRemoveItemInPinboard = sinon.spy();
-      const spyGetSuggestionWithContentType = sinon.spy();
-      const spySaveToRecent = sinon.spy();
+      const spyAddOrRemoveItemInPinboard = spy();
+      const spyGetSuggestionWithContentType = spy();
+      const spySaveToRecent = spy();
 
       const wrapper = shallow(
         <SearchCategory
@@ -222,7 +222,7 @@ describe('<SearchCategory />', function () {
     });
 
     it('should render officer correctly', function () {
-      const spySaveToRecent = sinon.spy();
+      const spySaveToRecent = spy();
       const officers = [
         {
           name: 'John',
@@ -254,7 +254,7 @@ describe('<SearchCategory />', function () {
     });
 
     it('should render crs with cr component', function () {
-      const spySaveToRecent = sinon.spy();
+      const spySaveToRecent = spy();
       const crs = [
         {
           crid: '1',
@@ -281,7 +281,7 @@ describe('<SearchCategory />', function () {
     });
 
     it('should render trrs with trr component', function () {
-      const spySaveToRecent = sinon.spy();
+      const spySaveToRecent = spy();
       const trrs = [
         {
           id: '1',
@@ -308,7 +308,7 @@ describe('<SearchCategory />', function () {
     });
 
     it('should render dateCRs with cr component', function () {
-      const spySaveToRecent = sinon.spy();
+      const spySaveToRecent = spy();
       const dateCRs = [
         {
           crid: '1',
@@ -335,7 +335,7 @@ describe('<SearchCategory />', function () {
     });
 
     it('should render dateTRRs with trr component', function () {
-      const spySaveToRecent = sinon.spy();
+      const spySaveToRecent = spy();
       const dateTRRs = [
         {
           id: '1',
@@ -362,7 +362,7 @@ describe('<SearchCategory />', function () {
     });
 
     it('should render dateOfficers with officer component', function () {
-      const spySaveToRecent = sinon.spy();
+      const spySaveToRecent = spy();
       const officers = [
         {
           name: 'Jerome Finnigan',
@@ -395,12 +395,12 @@ describe('<SearchCategory />', function () {
 
   describe('watchActiveState', function () {
     beforeEach(function () {
-      this.stubGetCurrentScrollPosition = sinon.stub(NavigationUtil, 'getCurrentScrollPosition');
+      this.stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
       this.stubGetCurrentScrollPosition.returns(900);
     });
 
     it('should not do anything if category is already active', function () {
-      const spyUpdateActiveCategory = sinon.spy();
+      const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
           title='foo'
@@ -419,7 +419,7 @@ describe('<SearchCategory />', function () {
     });
 
     it('should not set active if category is above header bottom', function () {
-      const spyUpdateActiveCategory = sinon.spy();
+      const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
           title='foo'
@@ -441,7 +441,7 @@ describe('<SearchCategory />', function () {
     });
 
     it('should not set active if category is below header bottom', function () {
-      const spyUpdateActiveCategory = sinon.spy();
+      const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
           title='foo'
@@ -462,7 +462,7 @@ describe('<SearchCategory />', function () {
     });
 
     it('should set active if category has touched header bottom', function () {
-      const spyUpdateActiveCategory = sinon.spy();
+      const spyUpdateActiveCategory = spy();
       const wrapper = shallow(
         <SearchCategory
           title='foo'

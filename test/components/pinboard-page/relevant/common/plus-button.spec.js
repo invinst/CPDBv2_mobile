@@ -1,13 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
+import { spy } from 'sinon';
 
 import PlusButton from 'components/pinboard-page/relevant/common/plus-button';
 
 
 describe('<PlusButton />', function () {
   it('should render enough content', function () {
-    const onClickStub = sinon.spy();
+    const onClickStub = spy();
     const wrapper = shallow(
       <PlusButton
         className='custom-class-name'
@@ -21,7 +21,7 @@ describe('<PlusButton />', function () {
   });
 
   it('should have dark mode', function () {
-    const onClickStub = sinon.spy();
+    const onClickStub = spy();
     const wrapper = shallow(
       <PlusButton
         className='custom-class-name'
