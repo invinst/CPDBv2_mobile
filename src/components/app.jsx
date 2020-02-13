@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Redirect, Switch } from 'react-router';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import Modal from 'react-modal';
 
 import constants from 'constants';

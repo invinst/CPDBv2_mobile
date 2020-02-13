@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 
 import RadarExplainer from 'components/officer-page/radar-chart/explainer';
 import TriangleExplainer from 'components/officer-page/radar-chart/explainer/triangle-explainer';

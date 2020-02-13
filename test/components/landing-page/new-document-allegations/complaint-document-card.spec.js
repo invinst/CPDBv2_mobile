@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { Link } from 'react-router-dom';
 import sinon from 'sinon';
-import { Router, Route } from 'react-router';
+import { Router, Route, Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Route, Router } from 'react-router';
+import { Route, Router, Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { Link } from 'react-router-dom';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 

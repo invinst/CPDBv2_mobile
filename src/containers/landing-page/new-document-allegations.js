@@ -7,7 +7,7 @@ import { trackingClickAttachment } from 'actions/common/analytic';
 import { addOrRemoveItemInPinboard } from 'actions/pinboard';
 import { newDocumentAllegationsSelector } from 'selectors/landing-page';
 import { cmsSelector } from 'selectors/common/cms';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 
 const mapStateToProps = (state, ownProps) => ({

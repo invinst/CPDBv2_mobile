@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { cloneDeep } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
-import { MemoryRouter, Route } from 'react-router';
+import { MemoryRouter, Route } from 'react-router-dom';
 
 import WithHeader from 'components/shared/with-header';
 import OfficerPage from 'components/officer-page';

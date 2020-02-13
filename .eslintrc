@@ -46,7 +46,7 @@
     "camelcase": [
       2,
       {
-        "properties": "always",
+        "properties": "always"
       }
     ],
     "eol-last": [

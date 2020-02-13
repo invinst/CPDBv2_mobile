@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 
 import { mountWithRouter } from 'utils/tests';
 import Officers from 'components/embed/officers';

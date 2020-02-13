@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import sinon from 'sinon';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 
 import { mountWithRouter } from 'utils/tests';
 import PinboardPage from 'components/pinboard-page';

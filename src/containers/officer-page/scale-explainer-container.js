@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 import ScaleExplainer from 'components/officer-page/radar-chart/explainer/scale-explainer';
 import { cmsSelector } from 'selectors/common/cms';

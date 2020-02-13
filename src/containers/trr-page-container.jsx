@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 import TRRPage from 'components/trr-page';
 import { requestTRR } from 'actions/trr-page';
