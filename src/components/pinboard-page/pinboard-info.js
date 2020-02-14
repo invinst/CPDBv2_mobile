@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import AppHistory from 'utils/history';
+import browserHistory from 'utils/history';
 
 import styles from './pinboard-info.sass';
 import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-textarea-input';
@@ -10,7 +10,7 @@ export default class PinboardInfo extends Component {
   componentDidUpdate(prevProps) {
     const { pinboard } = this.props;
     if (prevProps.pinboard.url !== pinboard.url) {
-      AppHistory.replace(pinboard.url);
+      browserHistory.replace(pinboard.url);
     }
   }
 

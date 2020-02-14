@@ -16,7 +16,7 @@ import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
 import { officerUrl } from 'utils/url-util';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import { TAB_MAP, OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
-import AppHistory from 'utils/history';
+import browserHistory from 'utils/history';
 import Footer from 'components/footer';
 import WithHeader from 'components/shared/with-header';
 
@@ -49,7 +49,7 @@ class OfficerPage extends Component {
     const name = summary.name;
     const correctPathName = officerUrl(summary.id, name, this.state.currentTab);
     if (name && (location.pathname !== correctPathName)) {
-      AppHistory.replace(correctPathName);
+      browserHistory.replace(correctPathName);
     }
   }
 
