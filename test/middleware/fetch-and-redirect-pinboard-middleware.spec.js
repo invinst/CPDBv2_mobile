@@ -1,9 +1,9 @@
 import { Promise } from 'es6-promise';
 import { stub } from 'sinon';
-import browserHistory from 'utils/history';
 import { CancelToken } from 'axios';
 import { LOCATION_CHANGE } from 'connected-react-router';
 
+import browserHistory from 'utils/history';
 import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pinboard-middleware';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 import {

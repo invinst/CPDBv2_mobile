@@ -1,8 +1,8 @@
-import browserHistory from 'utils/history';
 import pluralize from 'pluralize';
 import { get, identity } from 'lodash';
 import cx from 'classnames';
 
+import browserHistory from 'utils/history';
 import { PINBOARD_PATH } from 'constants/paths';
 import { Toastify } from 'utils/toastify';
 import toastStyles from './toast.sass';

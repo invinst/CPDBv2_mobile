@@ -4,8 +4,8 @@ import { spy, stub } from 'sinon';
 import ReactHeight from 'react-height';
 import { noop } from 'lodash';
 import { Promise } from 'es6-promise';
-import browserHistory from 'utils/history';
 
+import browserHistory from 'utils/history';
 import * as NavigationUtil from 'utils/navigation-util';
 import * as IntercomUtils from 'utils/intercom';
 import SearchPage from 'components/search-page';

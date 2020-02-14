@@ -1,9 +1,9 @@
 import React from 'react';
-import browserHistory from 'utils/history';
 import { shallow } from 'enzyme';
 import should from 'should';
 import { spy, stub } from 'sinon';
 
+import browserHistory from 'utils/history';
 import PinboardBar from 'components/search-page/pinboard-bar';
 
 

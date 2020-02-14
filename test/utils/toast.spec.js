@@ -1,6 +1,6 @@
-import browserHistory from 'utils/history';
 import { stub } from 'sinon';
 
+import browserHistory from 'utils/history';
 import { Toastify } from 'utils/toastify';
 import toastStyles from 'utils/toast.sass';
 import {

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactHeight from 'react-height';
-import browserHistory from 'utils/history';
 import { isEmpty, noop } from 'lodash';
 import cx from 'classnames';
 
+import browserHistory from 'utils/history';
 import { instantScrollToTop } from 'utils/navigation-util';
 import SearchCategory from './search-category';
 import { showIntercomLauncher } from 'utils/intercom';
