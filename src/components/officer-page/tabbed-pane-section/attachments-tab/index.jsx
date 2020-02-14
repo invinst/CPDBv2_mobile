@@ -30,6 +30,6 @@ AttachmentsTab.defaultProps = {
 
 AttachmentsTab.propTypes = {
   complaints: PropTypes.array,
-  officerId: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  officerId: PropTypes.number,
   onTrackingAttachment: PropTypes.func,
 };

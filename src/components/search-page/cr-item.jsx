@@ -39,7 +39,7 @@ CrItem.propTypes = {
   }),
   saveToRecent: PropTypes.func,
   addOrRemoveItemInPinboard: PropTypes.func,
-  query: PropTypes.func,
+  query: PropTypes.string,
 };
 
 CrItem.defaultProps = {
