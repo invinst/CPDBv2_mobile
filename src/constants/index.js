@@ -67,7 +67,7 @@ const SEARCH_QUERY_PREFIX_REGEX = new RegExp(`^(${Object.values(SEARCH_CATEGORY_
 const SEARCH_PATH = '/search/';
 
 export default {
-  // MainPage events
+  // App events
   SEARCH_FOR: c++,
   GO_FOR_SEARCH_DETAIL: c++,
   SEARCH_INPUT_CHANGED: c++,
@@ -92,7 +92,7 @@ export default {
   OFFICER_PAGE_FAILED_TO_RECEIVED_DATA: c++,
   OFFICER_PAGE_RELOAD: c++,
 
-  // MainPage events
+  // App events
   MAIN_PAGE_RECEIVED_DATA: c++,
   MAIN_PAGE_FAILED_TO_RECEIVED_DATA: c++,
 

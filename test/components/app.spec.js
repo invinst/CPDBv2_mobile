@@ -1,80 +1,119 @@
 import React from 'react';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router-dom';
-import { stub } from 'sinon';
-import { noop } from 'lodash';
+import { shallow } from 'enzyme';
+import { ToastContainer } from 'react-toastify';
+import { spy, stub } from 'sinon';
 
+import config from 'config';
 import App from 'components/app';
-import browserHistory from 'utils/history';
-import RootReducer from 'reducers/root-reducer';
-import LandingPage from 'components/landing-page';
-import TopOfficersByAllegation from 'components/landing-page/top-officers-by-allegation';
-import RecentActivities from 'components/landing-page/recent-activities';
-import NewDocumentAllegations from 'components/landing-page/new-document-allegations';
-import ComplaintSummaries from 'components/landing-page/complaint-summaries';
-import SearchPage from 'components/search-page';
-import OfficerPage from 'components/officer-page';
-import ComplaintPage from 'components/complaint-page';
-import TRRPage from 'components/trr-page';
-import PinboardPage from 'components/pinboard-page';
-import Officers from 'components/embed/officers';
+import styles from 'components/app.sass';
 
 
-const renderRouter = (initialEntry) => {
-  const store = createStore(RootReducer(browserHistory));
-  return mount(
-    <Provider store={ store }>
-      <MemoryRouter initialEntries={ [initialEntry] } initialIndex={ 0 }>
-        <App location={ { pathname: initialEntry } }/>
-      </MemoryRouter>
-    </Provider>
-  );
-};
-
-describe('App', function () {
-  it('should render LandingPage when visit /', function () {
-    stub(LandingPage.prototype, 'componentDidMount').returns(noop);
-    stub(TopOfficersByAllegation.prototype, 'componentDidMount').returns(noop);
-    stub(RecentActivities.prototype, 'componentDidMount').returns(noop);
-    stub(NewDocumentAllegations.prototype, 'componentDidMount').returns(noop);
-    stub(ComplaintSummaries.prototype, 'componentDidMount').returns(noop);
-    renderRouter('/').find(LandingPage).exists().should.be.true();
+describe('App component', function () {
+  it('should render', function () {
+    let wrapper = shallow(<App />);
+    wrapper.should.be.ok();
   });
 
-  it('should render SearchPage when visit /search/', function () {
-    stub(SearchPage.prototype, 'componentDidMount').returns(noop);
-    renderRouter('/search/').find(SearchPage).exists().should.be.true();
+  it('should dispatch routeChanged action on mount', function () {
+    const spyRouteChanged = spy();
+    const wrapper = shallow(
+      <App
+        routeChanged={ spyRouteChanged }
+        location={ { pathname: 'dummy/' } }
+      />
+    );
+    wrapper.instance().componentDidMount();
+
+    spyRouteChanged.calledWith({ from: '', to: 'dummy/' }).should.be.true();
   });
 
-  it('should render OfficerPage when visit /officer/123/', function () {
-    stub(OfficerPage.prototype, 'componentDidMount').returns(noop);
-    renderRouter('/officer/123').find(OfficerPage).exists().should.be.true();
+  it('should not render bottom padding element if not at root', function () {
+    const location = { pathname: '/search/' };
+    let wrapper = shallow(<App location={ location }/>);
+    wrapper.find('.bottom-padding').exists().should.be.false();
   });
 
-  it('should render ComplaintPage when visit /complaint/123/', function () {
-    stub(ComplaintPage.prototype, 'componentDidMount').returns(noop);
-    renderRouter('/complaint/123/').find(ComplaintPage).exists().should.be.true();
+  it('should dispatch routeChanged action when location changed', function () {
+    const currentLocation = {
+      pathname: 'current-url/',
+    };
+    const prevLocation = {
+      pathname: 'prev-url/',
+    };
+    const prevProps = {
+      location: prevLocation,
+    };
+    const spyRouteChanged = spy();
+
+    const wrapper = shallow(
+      <App
+        location={ currentLocation }
+        routeChanged={ spyRouteChanged }
+      />
+    );
+
+    wrapper.instance().componentDidUpdate(prevProps);
+    spyRouteChanged.calledWith({ from: 'prev-url/', to: 'current-url/' }).should.be.true();
   });
 
-  it('should render TRRPage when visit /trr/123/', function () {
-    stub(TRRPage.prototype, 'componentDidMount').returns(noop);
-    renderRouter('/trr/123').find(TRRPage).exists().should.be.true();
+  it('should not dispatch routeChaged action if location has not changed', function () {
+    const currentLocation = {
+      pathname: 'same-url/',
+    };
+    const prevLocation = {
+      pathname: 'same-url/',
+    };
+    const prevProps = {
+      location: prevLocation,
+    };
+    const spyRouteChanged = spy();
+
+    const wrapper = shallow(
+      <App
+        location={ currentLocation }
+        routeChanged={ spyRouteChanged }
+      />,
+      { disableLifecycleMethods: true },
+    );
+
+    wrapper.instance().componentDidUpdate(prevProps);
+    spyRouteChanged.called.should.be.false();
   });
 
-  it('should render PinboardPage when visit /pinboard/123/pinboard-title/', function () {
-    stub(PinboardPage.prototype, 'componentDidMount').returns(noop);
-    renderRouter('/pinboard/123/pinboard-title/').find(PinboardPage).exists().should.be.true();
+  it('should render ToastContainer', function () {
+    const wrapper = shallow(
+      <App
+        location={ { pathname: '/' } }
+      />
+    );
+
+    const toastContainer = wrapper.find(ToastContainer);
+    toastContainer.props().pauseOnFocusLoss.should.be.false();
+    toastContainer.props().closeButton.should.be.false();
+    toastContainer.props().hideProgressBar.should.be.true();
+    toastContainer.props().autoClose.should.equal(3000);
+    toastContainer.props().className.should.equal('landing');
   });
 
-  it('should render TopOfficersByAllegation when visit /embed/top-officers-page', function () {
-    stub(TopOfficersByAllegation.prototype, 'componentDidMount').returns(noop);
-    renderRouter('/embed/top-officers-page/').find(TopOfficersByAllegation).exists().should.be.true();
+  context('enablePinboardFeature is false', function () {
+    beforeEach(function () {
+      stub(config.enableFeatures, 'pinboard').value(false);
+    });
+
+    it('should add pinboard-disabled class name', function () {
+      const wrapper = shallow(<App />);
+      wrapper.prop('className').should.containEql(styles.app).and.containEql('pinboard-disabled');
+    });
   });
 
-  it('should render Officers when visit /embed/officers/', function () {
-    stub(Officers.prototype, 'componentDidMount').returns(noop);
-    renderRouter('/embed/officers/').find(Officers).exists().should.be.true();
+  context('enablePinboardFeature is true', function () {
+    beforeEach(function () {
+      stub(config.enableFeatures, 'pinboard').value(true);
+    });
+
+    it('should add pinboard-disabled class name', function () {
+      const wrapper = shallow(<App />);
+      wrapper.prop('className').should.containEql(styles.app).and.not.containEql('pinboard-disabled');
+    });
   });
 });

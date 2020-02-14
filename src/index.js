@@ -8,7 +8,7 @@ import 'web-animations-js';
 import configureStore from './stores';
 import config from 'config';
 import history from 'utils/history';
-import MainPageContainer from 'containers/main-page-container';
+import AppContainer from 'containers/app-container';
 
 
 const store = configureStore();
@@ -22,7 +22,7 @@ window.Intercom('boot', { 'app_id': config.intercomAppId } );
 render(
   <Provider store={ store }>
     <ConnectedRouter history={ history }>
-      <MainPageContainer />
+      <AppContainer />
     </ConnectedRouter>
   </Provider>,
   document.getElementById('app')
