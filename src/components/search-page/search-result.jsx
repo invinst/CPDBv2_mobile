@@ -40,7 +40,7 @@ const SearchResult = (
       {
         items.map(item => (
           <Item
-            key={ item.id }
+            key={ `${itemType}-${item.id}` }
             item={ item }
             query={ query }
             saveToRecent={ saveToRecent }

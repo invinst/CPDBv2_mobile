@@ -93,7 +93,7 @@ class OfficerPage extends Component {
     const { badge, historicBadges } = this.props.summary;
     let allBadges = clone(historicBadges) || [];
     if (badge)
-      allBadges.unshift(<span className='current-badge'>{ badge }</span>);
+      allBadges.unshift(<span className='current-badge' key='current-badge'>{ badge }</span>);
 
     if (isEmpty(allBadges))
       allBadges.unshift('Unknown');
