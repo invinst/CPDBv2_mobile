@@ -3,36 +3,6 @@ import { spy, stub, useFakeTimers } from 'sinon';
 import * as NavigationUtil from 'utils/navigation-util';
 
 describe('NavigationUtil', function () {
-  describe('goUp', function () {
-    it('should do nothing if already at root path', function () {
-      const router = { push: spy() };
-      NavigationUtil.goUp(router, '/');
-      router.push.called.should.be.false();
-    });
-
-    it('should go back one level if link is not one of NONEXISTENT_ROUTES', function () {
-      const router = { push: spy() };
-      NavigationUtil.goUp(router, '/existent/1/');
-
-      router.push.calledWith('/existent/').should.be.true();
-    });
-
-    it('should go to root if currently at /existent/', function () {
-      const router = { push: spy() };
-      NavigationUtil.goUp(router, '/existent/');
-
-      router.push.calledWith('/').should.be.true();
-    });
-
-    it('should go to straight root if current path is /officer/<id>/', function () {
-      const router = { push: spy() };
-      NavigationUtil.goUp(router, '/officer/11/');
-
-      router.push.calledWith('/').should.be.true();
-    });
-  });
-
-
   describe('scrollTo', function () {
     beforeEach(function () {
       this.clock = useFakeTimers();
