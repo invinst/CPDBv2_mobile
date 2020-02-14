@@ -3,12 +3,12 @@ import { browserHistory } from 'react-router';
 import pluralize from 'pluralize';
 import { get, identity, filter, keys } from 'lodash';
 import cx from 'classnames';
+import ReactMarkdown from 'react-markdown';
 
 import { Toastify } from 'utils/toastify';
 import toastStyles from './toast.sass';
 import { generatePinboardUrl } from 'utils/pinboard';
 import { getToasts } from 'selectors/toast';
-import ReactMarkdown from 'react-markdown';
 import MarkdownLink from 'components/common/markdown-renderers/markdown-link';
 
 function formatMessage(foundIds, notFoundIds, itemType) {
@@ -69,25 +69,15 @@ export function showCreatedToasts(pinboardSavingResponse) {
 
 const CR_TOAST_TEMPLATE = {
   'crid': 'id',
-  'incident_date': 'incidentDate',
-  'category': 'category',
 };
 
 const OFFICER_TOAST_TEMPLATE = {
   'id': 'id',
   'full_name': 'fullName',
-  'complaint_count': 'complaintCount',
-  'sustained_count': 'sustainedCount',
-  'age': 'age',
-  'race': 'race',
-  'gender': 'gender',
-  'rank': 'rank',
 };
 
 const TRR_TOAST_TEMPLATE = {
   'id': 'id',
-  'incident_date': 'incidentDate',
-  'force_type': 'forceType',
 };
 
 const TEMPLATE_TYPE_MAP = {
@@ -125,10 +115,6 @@ const TEMPLATE_TYPE_MAP = {
   },
 };
 
-function getActionType(isPinned) {
-  return isPinned ? 'removed' : 'added';
-}
-
 function getToastTemplate(toasts, name) {
   const toast = filter(toasts, toast => toast.name === TEMPLATE_TYPE_MAP[name].type)[0];
   if (toast) {
@@ -143,7 +129,7 @@ function buildToastMessage(template, item) {
   keys(TEMPLATE).forEach(
     tag => message = message.replace(`{${tag}}`, item[TEMPLATE[tag]])
   );
-  message = message.replace('{action_type}', getActionType(item.isPinned));
+  message = message.replace('{action_type}', item.isPinned ? 'removed from' : 'added to');
   return message;
 }
 
@@ -158,7 +144,7 @@ export function showAddOrRemoveItemToast(store, payload) {
   const toastMessage = buildToastMessage(toastTemplate, payload);
 
   Toastify.toast(<ReactMarkdown source={ toastMessage } renderers={ { link: MarkdownLink } } />, {
-    className: cx(toastStyles.toastWrapper, getActionType(isPinned)),
+    className: cx(toastStyles.toastWrapper, isPinned ? 'removed' : 'added'),
     bodyClassName: 'toast-body',
     transition: TopRightTransition,
     onClick: () => browserHistory.push(url),

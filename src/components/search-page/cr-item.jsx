@@ -5,10 +5,6 @@ import searchItemStyle from './search-item.sass';
 
 
 const CrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
-  const extraInfo = {
-    category: item.category,
-    incidentDate: item.incidentDate,
-  };
   return (
     <SearchItem
       url={ item.url }
@@ -21,7 +17,6 @@ const CrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
       type={ item.type }
       recentItemData={ item.recentItemData }
       saveToRecent={ saveToRecent }
-      extraInfo={ extraInfo }
     >
       <div className={ searchItemStyle.itemInfo }>
         <div className='item-title'>{ item.category }</div>

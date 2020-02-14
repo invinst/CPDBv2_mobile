@@ -4,22 +4,15 @@ import cx from 'classnames';
 
 import BaseOfficerCard from 'components/common/base-officer-card';
 import style from './officer-card.sass';
-import { getCurrentAge } from 'utils/date';
 
 
 export default class OfficerCard extends Component {
   render() {
     const { officer, openCardInNewPage, addOrRemoveItemInPinboard, pinnable } = this.props;
-    const age = officer['birth_year'] ? getCurrentAge(officer['birth_year']) : 'N/A';
     return (
       <BaseOfficerCard
         officerId={ officer.id }
         fullName={ officer.full_name }
-        complaintCount={ officer.complaint_count }
-        sustainedCount={ officer.sustained_count }
-        age={ age }
-        race={ officer.race }
-        gender={ officer.gender }
         rank={ officer.rank }
         percentile={ officer.percentile }
         openCardInNewPage={ openCardInNewPage }

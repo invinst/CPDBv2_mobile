@@ -7,7 +7,6 @@ import { extractPercentile } from 'selectors/common/percentile';
 import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
 import extractQuery from 'utils/extract-query';
-import { getCurrentAge } from 'utils/date';
 
 
 export const getChosenCategory = (state) => state.suggestionApp.chosenCategory;
@@ -24,12 +23,6 @@ export const queryPrefixSelector = createSelector(
 export const officerFormatter = (officer, pinboardItems) => ({
   id: officer.id,
   name: officer.name,
-  complaintCount: officer['allegation_count'],
-  sustainedCount: officer['sustained_count'],
-  age: officer['birth_year'] ? getCurrentAge(officer['birth_year']) : 'N/A',
-  race: officer.race,
-  gender: officer.gender,
-  rank: officer.rank,
   badge: officer.badge ? `Badge #${ officer.badge }` : '',
   percentile: extractPercentile(officer.percentile),
   url: officerUrl(officer.id, officer.name),
@@ -89,8 +82,6 @@ const trrFormatter = (trr, pinboardItems) => ({
   isPinned: isItemPinned('TRR', trr.id, pinboardItems),
   type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR,
   recentItemData: trr,
-  incidentDate: trr['incident_date'],
-  forceType: trr['force_type'],
 });
 
 const trrsFormatter = (trrs, pinboardItems) =>

@@ -8,7 +8,6 @@ import { extractPercentile } from 'selectors/common/percentile';
 import { breadcrumbSelector } from 'selectors/common/breadcrumbs';
 import { cmsSelector } from 'selectors/common/cms';
 import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
-import { getCurrentAge } from 'utils/date';
 
 
 const getComplaint = (state, props) => state.complaintPage.complaints[props.params.complaintId];
@@ -24,16 +23,11 @@ const getDemographicString = ({ race, gender, age }) =>
   compact([race, gender, age ? `Age ${age}` : null]).join(', ');
 
 const coaccusedTransform = coaccused => {
-  const age = coaccused['birth_year'] ? getCurrentAge(coaccused['birth_year']) : 'N/A';
   return {
     category: coaccused.category,
     finalFinding: coaccused.final_finding,
     finalOutcome: coaccused.final_outcome,
     fullName: coaccused.full_name,
-    sustainedCount: coaccused.sustained_count,
-    age,
-    race: coaccused.race,
-    gender: coaccused.gender,
     disciplined: coaccused.disciplined,
     allegationCount: coaccused.allegation_count,
     id: coaccused.id,

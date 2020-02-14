@@ -18,11 +18,6 @@ const CoaccusedCard = ({ officer, addOrRemoveItemInPinboard }) => {
     <BaseOfficerCard
       officerId={ officer.id }
       fullName={ officer.fullName }
-      complaintCount={ officer.allegationCount }
-      sustainedCount={ officer.sustainedCount }
-      age={ officer.age }
-      gender={ officer.gender }
-      race={ officer.race }
       rank={ officer.rank }
       percentile={ officer.percentile }
       customStyle={ style.coaccusedCard }

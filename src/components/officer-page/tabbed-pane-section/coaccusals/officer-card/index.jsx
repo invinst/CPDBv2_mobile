@@ -9,29 +9,13 @@ import pluralize from 'pluralize';
 export class OfficerCard extends Component {
   render() {
     const {
-      officerId,
-      fullName,
-      rank,
-      percentile,
-      coaccusalCount,
-      customStyle,
-      isPinned,
-      addOrRemoveItemInPinboard,
-      complaintCount,
-      sustainedCount,
-      age,
-      race,
-      gender,
+      officerId, fullName, rank, percentile, coaccusalCount, customStyle,
+      isPinned, addOrRemoveItemInPinboard,
     } = this.props;
     return (
       <BaseOfficerCard
         officerId={ officerId }
         fullName={ fullName }
-        complaintCount={ complaintCount }
-        sustainedCount={ sustainedCount }
-        age={ age }
-        race={ race }
-        gender={ gender }
         rank={ rank }
         percentile={ percentile }
         customStyle={ customStyle }
@@ -51,11 +35,6 @@ export class OfficerCard extends Component {
 OfficerCard.propTypes = {
   officerId: PropTypes.number,
   fullName: PropTypes.string,
-  complaintCount: PropTypes.number,
-  sustainedCount: PropTypes.number,
-  age: PropTypes.string,
-  race: PropTypes.string,
-  gender: PropTypes.string,
   rank: PropTypes.string,
   percentile: PropTypes.object,
   coaccusalCount: PropTypes.number,
