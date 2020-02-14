@@ -83,24 +83,12 @@ describe('<BaseOfficerCard />', function () {
     const id = random.number({ min: 10, max: 1000 });
     const isPinned = random.boolean();
     const fullName ='Jerome Finnigan';
-    const age = '54-year-old';
-    const complaintCount = 10;
-    const sustainedCount = 5;
-    const race = 'White';
-    const gender = 'Male';
-    const rank = 'Police Officer';
 
     const wrapper = mount(
       <BaseOfficerCard
         officerId={ id }
         isPinned={ isPinned }
         fullName={ fullName }
-        complaintCount={ complaintCount }
-        sustainedCount={ sustainedCount }
-        age={ age }
-        race={ race }
-        gender={ gender }
-        rank={ rank }
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
       />
     );
@@ -114,12 +102,6 @@ describe('<BaseOfficerCard />', function () {
         id,
         isPinned,
         fullName,
-        age,
-        complaintCount,
-        sustainedCount,
-        race,
-        gender,
-        rank,
       }
     );
   });

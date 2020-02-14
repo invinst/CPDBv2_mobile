@@ -15,11 +15,6 @@ describe('CoaccusedCard component', function () {
   const isPinned = random.boolean();
   const officer = {
     fullName: 'Broderick Jones',
-    age: '54-year-old',
-    allegationCount: 10,
-    sustainedCount: 5,
-    race: 'White',
-    gender: 'Male',
     id: 13788,
     rank: 'Police Officer',
     percentile: {
@@ -64,12 +59,6 @@ describe('CoaccusedCard component', function () {
       id: 13788,
       isPinned,
       fullName: officer.fullName,
-      age: officer.age,
-      complaintCount: officer.allegationCount,
-      sustainedCount: officer.sustainedCount,
-      race: officer.race,
-      gender: officer.gender,
-      rank: officer.rank,
     });
   });
 });

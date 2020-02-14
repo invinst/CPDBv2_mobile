@@ -13,7 +13,6 @@ describe('<ComplaintSummaryCard />', function () {
       incidentDate: 'Jan 23, 2000',
       summary: 'Lorem ipsum',
       isPinned: true,
-      categoryNames: ['Verbal Abuse'],
     };
     const wrapper = shallow(<ComplaintSummaryCard allegation={ allegation } />);
     const element = wrapper.find(Link);
@@ -29,8 +28,6 @@ describe('<ComplaintSummaryCard />', function () {
         type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
         id: allegation.crid,
         isPinned: allegation.isPinned,
-        incidentDate: allegation.incidentDate,
-        category: allegation.categoryNames.join(', '),
       }
     );
   });

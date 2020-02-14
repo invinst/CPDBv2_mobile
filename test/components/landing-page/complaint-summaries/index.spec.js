@@ -39,26 +39,13 @@ describe('<ComplaintSummaries />', function () {
 
   it('should call requestComplaintSummaries', function () {
     const requestComplaintSummariesSpy = spy();
-    const complaintSummaries = [
-      {
-        crid: '123',
-        incidentDate: 'Jan 23, 2000',
-        summary: 'Lorem ipsum',
-        isPinned: true,
-        categoryNames: ['Verbal Abuse'],
-      },
-      {
-        crid: '456',
-        incidentDate: 'Jan 23, 2000',
-        summary: 'Lorem ipsum',
-        isPinned: false,
-        categoryNames: ['Verbal Abuse'],
-      },
-    ];
     mount(
       <ComplaintSummaries
         requestComplaintSummaries={ requestComplaintSummariesSpy }
-        complaintSummaries={ complaintSummaries }
+        complaintSummaries={ [
+          { crid: '123', isPinned: true },
+          { crid: '456', isPinned: false },
+        ] }
       />
     );
     requestComplaintSummariesSpy.called.should.be.false();

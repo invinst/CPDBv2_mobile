@@ -194,8 +194,6 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
         type: 'CR',
         isPinned: false,
         id: '123',
-        incidentDate: '2005-09-29',
-        category: 'Verbal Abuse',
       },
     };
     const store = createStore(PinboardFactory.build({

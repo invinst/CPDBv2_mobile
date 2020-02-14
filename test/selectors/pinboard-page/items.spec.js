@@ -62,10 +62,6 @@ describe('PinboardPage Items selectors', function () {
         type: 'OFFICER',
         isPinned: true,
         complaintCount: 0,
-        sustainedCount: 0,
-        age: 42,
-        race: 'White',
-        gender: 'Male',
         fullName: 'Daryl Mack',
         officerId: 1,
         percentile: {

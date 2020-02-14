@@ -55,16 +55,15 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
       const toasts = [
         {
           name: 'OFFICER',
-          template: '**{rank} {full_name}** {age} {race} {gender},' +
-            '\nwith *{complaint_count} complaints*, *{sustained_count} sustained* {action_type}.',
+          template: '{full_name} {action_type} pinboard',
         },
         {
           name: 'CR',
-          template: '**CR #{crid}** *categorized as {category}*\nhappened in {incident_date} {action_type}.',
+          template: 'CR #{crid} {action_type} pinboard',
         },
         {
           name: 'TRR',
-          template: '**TRR #{id}** *categorized as {force_type}*\nhappened in {incident_date} {action_type}.',
+          template: 'TRR #{id} {action_type} pinboard',
         },
       ];
       this.store = createStore(pinboard, '', toasts);
