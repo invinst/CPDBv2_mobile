@@ -54,6 +54,7 @@ export const unitsSelector = createSelector(
 
 const crFormatter = (cr, pinboardItems) => ({
   crid: cr.crid,
+  id: cr.crid,
   url: `${COMPLAINT_PATH}${cr.crid}/`,
   incidentDate: moment(cr.incident_date).format(constants.SEARCH_INCIDENT_DATE_FORMAT),
   category: cr.category,

@@ -8,14 +8,14 @@ import IOSPeek from 'components/common/ios-peek';
 import BreadcrumbContainer from 'containers/breadcrumb';
 
 
-const WithHeader = ({ router, location, routes, params, children, className, ...rest }) => {
+const WithHeader = ({ children, className }) => {
   return (
     <React.Fragment>
       <IOSPeek className={ styles.breadcrumbsIosPeek }/>
       <div className={ cx(styles.header) }>
         <BreadcrumbContainer />
       </div>
-      <div className={ cx(styles.content, className) } { ...rest }>
+      <div className={ cx(styles.content, className) }>
         { children }
       </div>
     </React.Fragment>

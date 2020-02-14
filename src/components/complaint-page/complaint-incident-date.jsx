@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
 import style from './complaint-incident-date.sass';
 
@@ -11,7 +10,7 @@ const ComplaintIncidentDate = ({ incidentDate }) => {
     <div className={ style.complaintIncidentDate }>
       <div className='incident-date-label'>Date</div>
       <div className='incident-date-value'>
-        { moment(incidentDate).format('ll') }
+        { incidentDate }
       </div>
     </div>
   );
