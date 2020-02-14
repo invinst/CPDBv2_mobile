@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import browserHistory from 'utils/history';
 import cx from 'classnames';
 import { isEmpty, noop } from 'lodash';
 
-
+import browserHistory from 'utils/history';
+import { PINBOARD_PATH } from 'constants/paths';
 import style from './pinboard-bar.sass';
 
 
@@ -14,7 +14,7 @@ export default class PinboardBar extends Component {
 
     if (isEmpty(pinboard.id)) {
       if (pinboard.hasPendingChanges) {
-        browserHistory.push('/pinboard/');
+        browserHistory.push(PINBOARD_PATH);
       } else {
         onEmptyPinboardButtonClick();
       }

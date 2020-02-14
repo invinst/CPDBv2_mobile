@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { MemoryRouter } from 'react-router-dom';
 
-import constants from 'constants';
+import { SEARCH_PATH } from 'constants/paths';
 import LandingPage from 'components/landing-page';
 import Footer from 'components/footer';
 
@@ -20,7 +20,7 @@ describe('<LandingPage />', function () {
     const wrapper = shallow(<LandingPage />);
     const searchBar = wrapper.find('Link.search-bar');
     searchBar.prop('children').should.containEql('Officer name, badge number or date');
-    searchBar.prop('to').should.eql(constants.SEARCH_PATH);
+    searchBar.prop('to').should.eql(SEARCH_PATH);
   });
 
   it('should request landing page data', function () {

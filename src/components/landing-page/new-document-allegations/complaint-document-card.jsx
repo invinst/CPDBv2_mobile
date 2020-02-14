@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 
 import constants from 'constants';
+import { COMPLAINT_PATH } from 'constants/paths';
 import style from './complaint-document-card.sass';
 import ItemPinButton from 'components/common/item-pin-button';
 import pinButtonStyles from 'components/common/item-pin-button.sass';
@@ -14,7 +15,7 @@ class ComplaintDocumentCard extends React.Component {
   handleClick = () => {
     const { allegation, pathname, onTrackingAttachment } = this.props;
     const document = get(allegation, 'document', {});
-    const url = `${constants.COMPLAINT_PATH}${allegation.crid}/`;
+    const url = `${COMPLAINT_PATH}${allegation.crid}/`;
     tracking.trackAttachmentClick(pathname, url);
     onTrackingAttachment({ attachmentId: document['id'], sourcePage: 'Landing Page', app: 'Mobile' });
   };
@@ -25,7 +26,7 @@ class ComplaintDocumentCard extends React.Component {
     const { incidentDate, category } = allegation;
     return (
       <Link
-        to={ `${constants.COMPLAINT_PATH}${allegation.crid}/` }
+        to={ `${COMPLAINT_PATH}${allegation.crid}/` }
         className={ style.complaintDocumentCard }
         onClick={ this.handleClick }
       >

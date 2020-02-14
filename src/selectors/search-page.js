@@ -3,6 +3,7 @@ import moment from 'moment';
 import { get, map, filter, isUndefined, isEmpty, forEach } from 'lodash';
 
 import constants from 'constants';
+import { COMPLAINT_PATH, TRR_PATH } from 'constants/paths';
 import { extractPercentile } from 'selectors/common/percentile';
 import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
@@ -53,7 +54,7 @@ export const unitsSelector = createSelector(
 
 const crFormatter = (cr, pinboardItems) => ({
   crid: cr.crid,
-  url: `${constants.COMPLAINT_PATH}${cr.crid}/`,
+  url: `${COMPLAINT_PATH}${cr.crid}/`,
   incidentDate: moment(cr.incident_date).format(constants.SEARCH_INCIDENT_DATE_FORMAT),
   category: cr.category,
   isPinned: isItemPinned('CR', cr.crid, pinboardItems),
@@ -78,7 +79,7 @@ export const dateCRsSelector = createSelector(
 
 const trrFormatter = (trr, pinboardItems) => ({
   id: trr.id,
-  url: `${constants.TRR_PATH}${trr.id}/`,
+  url: `${TRR_PATH}${trr.id}/`,
   isPinned: isItemPinned('TRR', trr.id, pinboardItems),
   type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR,
   recentItemData: trr,

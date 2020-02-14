@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import constants from 'constants';
+import { SEARCH_PATH } from 'constants/paths';
 import CMSContent from 'components/common/cms-content';
 import BottomPadding from 'components/shared/bottom-padding';
 import TopOfficersByAllegation from 'containers/landing-page/top-officers-by-allegation';
@@ -30,7 +30,7 @@ export default class LandingPage extends Component {
         <div className='full-height-wrapper'>
           <CMSContent className='site-title' content={ title } />
           <CMSContent className='site-desc' content={ description } />
-          <Link className='search-bar' to={ constants.SEARCH_PATH }>
+          <Link className='search-bar' to={ SEARCH_PATH }>
             <img src='/img/ic-magnifying-glass.svg' />Officer name, badge number or date
           </Link>
         </div>

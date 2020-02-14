@@ -3,6 +3,7 @@ import pluralize from 'pluralize';
 import { get, identity } from 'lodash';
 import cx from 'classnames';
 
+import { PINBOARD_PATH } from 'constants/paths';
 import { Toastify } from 'utils/toastify';
 import toastStyles from './toast.sass';
 import { generatePinboardUrl } from 'utils/pinboard';
@@ -76,7 +77,7 @@ const TOAST_TYPE_MAP = {
 
 export function showAddOrRemoveItemToast(pinboard, isPinned, type) {
   const actionType = isPinned ? 'removed' : 'added';
-  const url = generatePinboardUrl(pinboard) || '/pinboard/';
+  const url = generatePinboardUrl(pinboard) || PINBOARD_PATH;
 
   Toastify.toast(`${ TOAST_TYPE_MAP[type] } ${ actionType }`, {
     className: cx(toastStyles.toastWrapper, actionType),

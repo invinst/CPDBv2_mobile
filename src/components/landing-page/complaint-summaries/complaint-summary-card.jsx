@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import constants from 'constants';
+import { COMPLAINT_PATH } from 'constants/paths';
 import style from './complaint-summary-card.sass';
 import ItemPinButton from 'components/common/item-pin-button';
 import pinButtonStyles from 'components/common/item-pin-button.sass';
@@ -11,7 +12,7 @@ import pinButtonStyles from 'components/common/item-pin-button.sass';
 const ComplaintSummaryCard = ({ allegation, addOrRemoveItemInPinboard }) => {
   return (
     <Link
-      to={ `${constants.COMPLAINT_PATH}${allegation.crid}/` }
+      to={ `${COMPLAINT_PATH}${allegation.crid}/` }
       className={ style.complaintSummaryCard }
     >
       <ItemPinButton

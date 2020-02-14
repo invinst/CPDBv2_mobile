@@ -1,5 +1,4 @@
-import constants from 'constants';
-
+import { OFFICER_PATH } from 'constants/paths';
 import {
   officersSelector,
   unitsSelector,
@@ -21,6 +20,7 @@ import {
   getCancelPathname,
   categoriesSelector,
 } from 'selectors/search-page';
+
 
 describe('search-page selectors', function () {
   describe('officersSelector', function () {
@@ -61,7 +61,7 @@ describe('search-page selectors', function () {
           name: 'Name',
           badge: '',
           percentile: null,
-          url: `${constants.OFFICER_PATH}1/name/`,
+          url: `${OFFICER_PATH}1/name/`,
           isPinned: false,
           type: 'OFFICER',
           recentItemData: officer,
@@ -81,7 +81,7 @@ describe('search-page selectors', function () {
         id: '1',
         name: 'Name',
         badge: 'Badge #12314',
-        url: `${constants.OFFICER_PATH}1/name/`,
+        url: `${OFFICER_PATH}1/name/`,
         percentile: null,
         isPinned: true,
         type: 'OFFICER',
@@ -478,7 +478,7 @@ describe('search-page selectors', function () {
           name: 'Jerome Finnigan',
           badge: 'Badge #56789',
           percentile: null,
-          url: `${constants.OFFICER_PATH}123/jerome-finnigan/`,
+          url: `${OFFICER_PATH}123/jerome-finnigan/`,
           type: 'OFFICER',
           isPinned: false,
           recentItemData: officer,
@@ -1084,7 +1084,7 @@ describe('search-page selectors', function () {
           name: 'Jerome Finnigan',
           badge: 'Badge #56789',
           percentile: null,
-          url: `${ constants.OFFICER_PATH }123/jerome-finnigan/`,
+          url: `${ OFFICER_PATH }123/jerome-finnigan/`,
           type: 'OFFICER',
           isPinned: false,
           recentItemData: dateOfficer,
@@ -1101,7 +1101,7 @@ describe('search-page selectors', function () {
           itemRank: 4,
           name: 'Name',
           badge: 'Badge #12314',
-          url: `${ constants.OFFICER_PATH }1/name/`,
+          url: `${ OFFICER_PATH }1/name/`,
           percentile: null,
           isPinned: true,
           type: 'OFFICER',
