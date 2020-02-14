@@ -173,7 +173,6 @@ const mockTopOfficersByAllegation = [
     'complaint_percentile': 99.9911,
     'race': 'Black',
     'gender': 'Male',
-    'rank': 'Police Officer',
     'percentile': {
       'percentile_trr': '0.0000',
       'percentile_allegation_civilian': '99.9817',
@@ -192,7 +191,6 @@ const mockTopOfficersByAllegation = [
     'complaint_percentile': 99.9822,
     'race': 'Black',
     'gender': 'Male',
-    'rank': 'Police Officer',
     'percentile': {
       'percentile_trr': '0.0000',
       'percentile_allegation_civilian': '99.9696',
@@ -214,7 +212,6 @@ const mockRecentActivities = [
     'complaint_percentile': 99.9911,
     'race': 'Black',
     'gender': 'Male',
-    'rank': 'Police Officer',
     'percentile': {
       'percentile_trr': '0.0000',
       'percentile_allegation_civilian': '99.9817',
@@ -234,7 +231,6 @@ const mockRecentActivities = [
     'complaint_percentile': 99.9822,
     'race': 'Black',
     'gender': 'Male',
-    'rank': 'Police Officer',
     'percentile': {
       'percentile_trr': '0.0000',
       'percentile_allegation_civilian': '99.9696',
@@ -281,27 +277,10 @@ const mockComplaintSummaries = [
   },
 ];
 
-const mockToasts = [
-  {
-    name: 'OFFICER',
-    template: '**{rank} {full_name}** {age} {race} {gender},' +
-      '\nwith *{complaint_count} complaints*, *{sustained_count} sustained* {action_type}.',
-  },
-  {
-    name: 'CR',
-    template: '**CR #{crid}** *categorized as {category}*\nhappened in {incident_date} {action_type}.',
-  },
-  {
-    name: 'TRR',
-    template: '**TRR #{id}** *categorized as {force_type}*\nhappened in {incident_date} {action_type}.',
-  },
-];
-
 module.exports = {
   mockLandingPageCms: mockLandingPageCms,
   mockTopOfficersByAllegation: mockTopOfficersByAllegation,
   mockRecentActivities: mockRecentActivities,
   mockNewDocuments: mockNewDocuments,
   mockComplaintSummaries: mockComplaintSummaries,
-  mockToasts: mockToasts,
 };

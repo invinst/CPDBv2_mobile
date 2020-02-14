@@ -4,6 +4,7 @@ const assert = require('assert');
 
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
+const { mockToasts } = require(__dirname + '/../mock-data/toasts');
 
 const officer2235 = {
   'officer_id': 2235,
@@ -350,22 +351,6 @@ const mockOfficerPageCms = {
   ],
 };
 
-const mockToasts = [
-  {
-    name: 'OFFICER',
-    template: '**{rank} {full_name}** {age} {race} {gender},' +
-      '\nwith *{complaint_count} complaints*, *{sustained_count} sustained* {action_type}.',
-  },
-  {
-    name: 'CR',
-    template: '**CR #{crid}** *categorized as {category}*\nhappened in {incident_date} {action_type}.',
-  },
-  {
-    name: 'TRR',
-    template: '**TRR #{id}** *categorized as {force_type}*\nhappened in {incident_date} {action_type}.',
-  },
-];
-
 function checkTimelineShowChangesOnly(timeline) {
   timeline.section.filter.expect.element('@selectedFilter').text.to.contain('Rank/Unit Changes');
 
@@ -394,7 +379,7 @@ function checkTimelineShowAllItems(timeline) {
 describe('OfficerPage test', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
-    api.mock('GET', '/api/v2/toast/', 200, mockToasts);
+    api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
     done();
   });
 
@@ -980,6 +965,9 @@ describe('OfficerPage test', function () {
         this.officerPage.section.coaccusals.waitForElementVisible('@firstPinButton');
         this.officerPage.section.coaccusals.click('@firstPinButton');
         this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal(
+          'Carl Suchocki added to pinboard'
+        ).before(TIMEOUT);
 
         this.officerPage.click('@landingPageBreadCrumb');
         this.main.waitForElementVisible('@searchLink');
@@ -991,7 +979,7 @@ describe('OfficerPage test', function () {
         this.officerPage.section.coaccusals.click('@firstPinButton');
         this.officerPage.waitForElementVisible('@lastToast');
         this.officerPage.expect.element('@lastToast').text.to.equal(
-          'Police Officer Carl Suchocki 42 White Male,\nwith 10 complaints, 5 sustained removed.'
+          'Carl Suchocki removed from pinboard'
         ).before(TIMEOUT);
 
         this.officerPage.click('@landingPageBreadCrumb');
