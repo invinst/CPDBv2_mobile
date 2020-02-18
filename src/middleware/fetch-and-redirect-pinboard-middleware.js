@@ -1,7 +1,6 @@
 import { browserHistory } from 'react-router';
 
 import { getPinboard } from 'selectors/pinboard-page/pinboard';
-import { hasToastsSelector } from 'selectors/toast';
 import {
   PINBOARD_FETCH_REQUEST_SUCCESS,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
@@ -9,7 +8,6 @@ import {
   PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS,
   fetchPinboard,
 } from 'actions/pinboard';
-import { fetchToast } from 'actions/toast';
 import {
   dispatchFetchPinboardPinnedItems,
   dispatchFetchPinboardPageData,
