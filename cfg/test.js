@@ -27,7 +27,7 @@ module.exports = {
         use: ['eslint-loader']
       },
       {
-        test: /\.(svg|png|jpg|gif|woff|woff2|less|styl|json)$/,
+        test: /\.(svg|png|jpg|gif|woff|woff2|less|styl)$/,
         use: ['null-loader']
       },
       {
