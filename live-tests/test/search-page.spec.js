@@ -720,7 +720,8 @@ describe('SearchPageTest', function () {
       client.assertCount(officersRows.selector, 30, officersRows.locateStrategy);
 
       client.execute('scrollTo(0, 3000)');
-
+      const newItemSelector = this.searchPage.section.officers.getRowSelector(35);
+      this.searchPage.waitForElementVisible(newItemSelector);
       client.assertCount(officersRows.selector, 35, officersRows.locateStrategy);
     });
 
