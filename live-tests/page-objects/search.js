@@ -96,7 +96,14 @@ module.exports = {
     dateCRs: resultsSection('dateCRs'),
     dateTRRs: resultsSection('dateTRRs'),
     dateOfficers: resultsSection('dateOfficers'),
-    officers: resultsSection('officers'),
+    officers: {
+      ...resultsSection('officers'),
+      commands: [{
+        getRowSelector: function (index) {
+          return nthRow(index);
+        },
+      }],
+    },
     crs: resultsSection('crs'),
     investigatorCRs: resultsSection('investigatorCRs'),
     trrs: resultsSection('trrs'),
