@@ -15,7 +15,7 @@ import { hasCoaccusalSelector, isCoaccusalSuccess } from 'selectors/officer-page
 import { isTimelineSuccess } from 'selectors/officer-page/timeline';
 import { getOfficerTimeline } from 'actions/officer-page/timeline';
 import { getOfficerCoaccusals } from 'actions/officer-page/coaccusals';
-import { hasAttachmentSelector } from 'selectors/officer-page/attachments';
+import { hasAttachmentSelector, numAttachmentsSelector } from 'selectors/officer-page/attachments';
 import { hasMapMarkersSelector } from 'selectors/officer-page/map';
 
 
@@ -46,6 +46,7 @@ function mapStateToProps(state, ownProps) {
     hasMapMarker: hasMapMarkersSelector(state, pk),
     isCoaccusalSuccess: isCoaccusalSuccess(state, pk),
     isTimelineSuccess: isTimelineSuccess(state, pk),
+    numAttachments: numAttachmentsSelector(state, pk),
   };
 }
 

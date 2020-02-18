@@ -108,6 +108,7 @@ describe('officer-page selectors', function () {
               badge: 'badge',
               'historic_badges': ['1', '2'],
               'birth_year': 1991,
+              'has_unique_name': true,
             },
           },
         },
@@ -124,6 +125,7 @@ describe('officer-page selectors', function () {
         badge: 'badge',
         historicBadges: ['1', '2'],
         careerDuration: 'SEP 23, 2015 — Present',
+        hasUniqueName: true,
       });
     });
 
@@ -144,6 +146,7 @@ describe('officer-page selectors', function () {
                 gender: 'Male',
                 badge: 'badge',
                 'historic_badges': ['1', '2'],
+                'has_unique_name': true,
               },
             },
           },
@@ -158,6 +161,7 @@ describe('officer-page selectors', function () {
         badge: 'badge',
         historicBadges: ['1', '2'],
         careerDuration: 'SEP 23, 2015 — Present',
+        hasUniqueName: true,
       });
     });
 
@@ -176,6 +180,7 @@ describe('officer-page selectors', function () {
                 'date_of_appt': '2015-09-23',
                 badge: 'badge',
                 'historic_badges': ['1', '2'],
+                'has_unique_name': true,
               },
             },
           },
@@ -190,6 +195,7 @@ describe('officer-page selectors', function () {
         badge: 'badge',
         historicBadges: ['1', '2'],
         careerDuration: 'SEP 23, 2015 — Present',
+        hasUniqueName: true,
       });
     });
 
@@ -208,6 +214,7 @@ describe('officer-page selectors', function () {
                 'date_of_appt': '2015-09-23',
                 badge: 'badge',
                 'historic_badges': ['1', '2'],
+                'has_unique_name': true,
               },
             },
           },
@@ -222,6 +229,7 @@ describe('officer-page selectors', function () {
         badge: 'badge',
         historicBadges: ['1', '2'],
         careerDuration: 'SEP 23, 2015 — Present',
+        hasUniqueName: true,
       });
     });
 
@@ -241,6 +249,7 @@ describe('officer-page selectors', function () {
                 badge: 'badge',
                 'historic_badges': ['1', '2'],
                 'birth_year': 1991,
+                'has_unique_name': true,
               },
             },
           },
@@ -255,6 +264,7 @@ describe('officer-page selectors', function () {
         badge: 'badge',
         historicBadges: ['1', '2'],
         careerDuration: 'SEP 23, 2015 — Present',
+        hasUniqueName: true,
       });
     });
 
