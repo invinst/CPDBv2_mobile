@@ -39,10 +39,6 @@ export default store => next => action => {
     const state = store.getState();
     const pinboard = getPinboard(state);
 
-    if (!hasToastsSelector(state)) {
-      store.dispatch(fetchToast());
-    }
-
     if (idOnPath) {
       if (action.payload.action !== 'REPLACE') {
         const idOnStore = pinboard.id;

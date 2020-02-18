@@ -21,7 +21,6 @@ import {
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS,
 } from 'actions/pinboard';
-import { fetchToast } from 'actions/toast';
 
 
 describe('fetchAndRedirectPinboardMiddleware', function () {
@@ -422,21 +421,6 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
 
       browserHistory.replace.should.not.be.called();
       this.store.dispatch.should.not.be.called();
-    });
-
-    it('should dispatch fetchToast when they do not exists', function () {
-      const store = createStore();
-      const action = {
-        type: '@@router/LOCATION_CHANGE',
-        payload: {
-          pathname: '/pinboard/',
-        },
-      };
-      let dispatched;
-      fetchAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
-      dispatched.should.eql(action);
-
-      store.dispatch.calledWith(fetchToast()).should.be.true();
     });
   });
 });
