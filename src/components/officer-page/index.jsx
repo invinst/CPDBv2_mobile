@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
-import { isEmpty, noop, clone, reduce, values } from 'lodash';
+import { isEmpty, noop, clone, reduce, values, compact } from 'lodash';
 import pluralize from 'pluralize';
+import DocumentMeta from 'react-document-meta';
 
 import { scrollToTop } from 'utils/navigation-util';
 import LoadingPage from 'components/shared/loading-page';
@@ -170,6 +171,7 @@ class OfficerPage extends Component {
       noDataCMSContent,
       hasCoaccusal,
       hasAttachment,
+      numAttachments,
       hasMapMarker,
     } = this.props;
 
@@ -187,34 +189,52 @@ class OfficerPage extends Component {
 
     const { id, name, demographic, rank, unit, careerDuration } = summary;
 
+    const pageTitle = compact([
+      rank === 'N/A' ? '' : rank,
+      name,
+    ]).join(' ');
+
+    const hasUnknownBadge = (summary.badge || 'Unknown') === 'Unknown';
+    const withBadge = summary.hasUniqueName || hasUnknownBadge ?
+      '' :
+      `with Badge Number ${summary.badge} `;
+
+    const pageDescription = `Officer ${name} of the Chicago Police Department ` +
+       withBadge +
+      `has ${pluralize('complaint', metrics.allegationCount, true)}, ` +
+      `${pluralize('use of force report', metrics.trrCount, true)}, ` +
+      `and ${pluralize('original document', numAttachments, true)} available.`;
+
     return (
-      <WithHeader className={ style.officerSummary }>
-        <AnimatedRadarChart
-          officerId={ id }
-          percentileData={ threeCornerPercentile }
-          noDataCMSContent={ noDataCMSContent }/>
-        <h1 className='officer-name header' onClick={ scrollToTop() }>
-          { name }
-        </h1>
-        <div className='officer-summary-body'>
-          <div className='officer-demographic'>{ demographic }</div>
-          <SectionRow label='Badge' value={ this.badges() } />
-          <SectionRow label='Rank' value={ rank } />
-          <SectionRow label='Unit' value={ unit } />
-          <SectionRow label='Career' value={ careerDuration }/>
-        </div>
-        { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
-        <TabbedPaneSection
-          changeOfficerTab={ this.changeTab }
-          currentTab={ this.state.currentTab }
-          hasCoaccusal={ hasCoaccusal }
-          hasAttachment={ hasAttachment }
-          hasMapMarker={ hasMapMarker }
-          officerId={ id }
-        />
-        <BottomPadding />
-        <Footer />
-      </WithHeader>
+      <DocumentMeta title={ pageTitle } description={ pageDescription }>
+        <WithHeader className={ style.officerSummary }>
+          <AnimatedRadarChart
+            officerId={ id }
+            percentileData={ threeCornerPercentile }
+            noDataCMSContent={ noDataCMSContent }/>
+          <h1 className='officer-name header' onClick={ scrollToTop() }>
+            { name }
+          </h1>
+          <div className='officer-summary-body'>
+            <div className='officer-demographic'>{ demographic }</div>
+            <SectionRow label='Badge' value={ this.badges() } />
+            <SectionRow label='Rank' value={ rank } />
+            <SectionRow label='Unit' value={ unit } />
+            <SectionRow label='Career' value={ careerDuration }/>
+          </div>
+          { this.props.metrics && <MetricWidget metrics={ this.getMetricWidgetData() }/> }
+          <TabbedPaneSection
+            changeOfficerTab={ this.changeTab }
+            currentTab={ this.state.currentTab }
+            hasCoaccusal={ hasCoaccusal }
+            hasAttachment={ hasAttachment }
+            hasMapMarker={ hasMapMarker }
+            officerId={ id }
+          />
+          <BottomPadding />
+          <Footer />
+        </WithHeader>
+      </DocumentMeta>
     );
   }
 }
@@ -241,6 +261,7 @@ OfficerPage.propTypes = {
   isTimelineSuccess: PropTypes.bool,
   isCoaccusalSuccess: PropTypes.bool,
   resetTimelineFilter: PropTypes.func,
+  numAttachments: PropTypes.number,
 };
 
 OfficerPage.defaultProps = {
