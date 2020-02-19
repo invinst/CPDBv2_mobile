@@ -4,7 +4,7 @@ import { spy } from 'sinon';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { MemoryRouter } from 'react-router-dom';
-import DocumentMeta from 'react-document-meta';
+import { HelmetProvider } from 'react-helmet-async';
 
 import { SEARCH_PATH } from 'constants/paths';
 import LandingPage from 'components/landing-page';
@@ -20,8 +20,7 @@ describe('<LandingPage />', function () {
   it('should render main title', function () {
     const wrapper = shallow(<LandingPage />);
 
-    const documentMeta = wrapper.find(DocumentMeta).at(0);
-    documentMeta.prop('title').should.equal('CPDP');
+    wrapper.find('title').text().should.equal('CPDP');
   });
 
   it('should render fake search input box that links to search page', function () {
@@ -45,15 +44,17 @@ describe('<LandingPage />', function () {
     const spyRequestCMS = spy();
     mount(
       <Provider store={ store }>
-        <MemoryRouter>
-          <LandingPage
-            cmsRequested={ false }
-            requestCMS={ spyRequestCMS }
-            location='location'
-            routes='routes'
-            params='params'
-          />
-        </MemoryRouter>
+        <HelmetProvider>
+          <MemoryRouter>
+            <LandingPage
+              cmsRequested={ false }
+              requestCMS={ spyRequestCMS }
+              location='location'
+              routes='routes'
+              params='params'
+            />
+          </MemoryRouter>
+        </HelmetProvider>
       </Provider>
     );
     spyRequestCMS.calledWith().should.be.true();

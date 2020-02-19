@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import DocumentMeta from 'react-document-meta';
+import { Helmet } from 'react-helmet-async';
 
 import { SEARCH_PATH } from 'constants/paths';
 import CMSContent from 'components/common/cms-content';
@@ -27,7 +27,10 @@ export default class LandingPage extends Component {
     const { title, description } = this.props;
 
     return (
-      <DocumentMeta title='CPDP'>
+      <React.Fragment>
+        <Helmet>
+          <title>CPDP</title>
+        </Helmet>
         <div className={ style.landingPage }>
           <div className='full-height-wrapper'>
             <CMSContent className='site-title' content={ title } />
@@ -43,7 +46,7 @@ export default class LandingPage extends Component {
           <BottomPadding />
           <Footer />
         </div>
-      </DocumentMeta>
+      </React.Fragment>
     );
   }
 }

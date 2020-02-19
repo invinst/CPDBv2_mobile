@@ -6,7 +6,7 @@ import { cloneDeep } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
 import { MemoryRouter, Route } from 'react-router-dom';
-import DocumentMeta from 'react-document-meta';
+import { HelmetProvider } from 'react-helmet-async';
 
 import WithHeader from 'components/shared/with-header';
 import OfficerPage from 'components/officer-page';
@@ -648,9 +648,11 @@ describe('<OfficerPage />', function () {
       const requestingSummaryStore = mockStore(requestingSummary);
       const wrapper = mount(
         <Provider store={ requestingSummaryStore }>
-          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
-            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
-          </MemoryRouter>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -676,9 +678,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
-            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
-          </MemoryRouter>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -719,9 +723,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
-            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
-          </MemoryRouter>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -749,9 +755,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(emptyBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
-            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
-          </MemoryRouter>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -765,9 +773,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(emptyHistoricBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
-            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
-          </MemoryRouter>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -781,9 +791,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(emptyBadgeAndHistoricBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
-            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
-          </MemoryRouter>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -797,9 +809,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
-            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
-          </MemoryRouter>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -901,9 +915,11 @@ describe('<OfficerPage />', function () {
 
       const wrapper = mount(
         <Provider store={ mockStore(data) }>
-          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
-            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
-          </MemoryRouter>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -969,9 +985,11 @@ describe('<OfficerPage />', function () {
 
       const wrapper = mount(
         <Provider store={ mockStore(data) }>
-          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
-            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
-          </MemoryRouter>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -1007,9 +1025,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/coaccusals/' }] }>
-            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
-          </MemoryRouter>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/coaccusals/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
       const tabbedPaneSection = wrapper.find(TabbedPaneSection);
@@ -1077,9 +1097,8 @@ describe('<OfficerPage />', function () {
         />
       );
 
-      const documentMeta = wrapper.find(DocumentMeta);
-      documentMeta.prop('title').should.equal('Police Officer Officer 11');
-      documentMeta.prop('description').should.equal(
+      wrapper.find('title').text().should.equal('Police Officer Officer 11');
+      wrapper.find('meta[name="description"]').prop('content').should.equal(
         'Officer Officer 11 of the Chicago Police Department with Badge Number badge has 1 complaint, ' +
         '7 use of force reports, and 3 original documents available.'
       );
@@ -1104,8 +1123,7 @@ describe('<OfficerPage />', function () {
           />
         );
 
-        const documentMeta = wrapper.find(DocumentMeta);
-        documentMeta.prop('description').should.equal(
+        wrapper.find('meta[name="description"]').prop('content').should.equal(
           'Officer Jerome Finnigan of the Chicago Police Department with Badge Number 1424 has 1 complaint, ' +
           '7 use of force reports, and 3 original documents available.'
         );
@@ -1131,8 +1149,7 @@ describe('<OfficerPage />', function () {
           />
         );
 
-        const documentMeta = wrapper.find(DocumentMeta);
-        documentMeta.prop('description').should.equal(
+        wrapper.find('meta[name="description"]').prop('content').should.equal(
           'Officer Jerome Finnigan of the Chicago Police Department has 1 complaint, 7 use of force reports, ' +
           'and 3 original documents available.'
         );

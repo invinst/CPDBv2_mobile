@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
+import { HelmetProvider } from 'react-helmet-async';
 
 import 'web-animations-js';
 
@@ -21,9 +22,11 @@ window.Intercom('boot', { 'app_id': config.intercomAppId } );
 // Render the main component into the dom
 render(
   <Provider store={ store }>
-    <ConnectedRouter history={ browserHistory }>
-      <AppContainer />
-    </ConnectedRouter>
+    <HelmetProvider>
+      <ConnectedRouter history={ browserHistory }>
+        <AppContainer />
+      </ConnectedRouter>
+    </HelmetProvider>
   </Provider>,
   document.getElementById('app')
 );

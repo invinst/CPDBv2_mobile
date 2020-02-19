@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import { stub } from 'sinon';
 import { noop } from 'lodash';
+import { HelmetProvider } from 'react-helmet-async';
 
 import RouterRoot from 'components/router-root';
 import browserHistory from 'utils/history';
@@ -26,9 +27,11 @@ const renderRouter = (initialEntry) => {
   const store = createStore(RootReducer(browserHistory));
   return mount(
     <Provider store={ store }>
-      <MemoryRouter initialEntries={ [initialEntry] } initialIndex={ 0 }>
-        <RouterRoot location={ { pathname: initialEntry } }/>
-      </MemoryRouter>
+      <HelmetProvider>
+        <MemoryRouter initialEntries={ [initialEntry] } initialIndex={ 0 }>
+          <RouterRoot location={ { pathname: initialEntry } }/>
+        </MemoryRouter>
+      </HelmetProvider>
     </Provider>
   );
 };

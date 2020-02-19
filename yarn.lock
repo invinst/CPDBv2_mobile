@@ -64,7 +64,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.3.1", "@babel/runtime@^7.4.0":
+"@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.0":
   version "7.8.4"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.8.4.tgz#d79f5a2040f7caa24d53e563aad49cbc05581308"
   integrity sha512-neAp3zt80trRVBI1x0azq6c57aNBqYZH8KhMm3TaB7wEI5Q4A2SHfBHE8w9gOhI/lrqxtEbXZgQIrHP+wvSGwQ==
@@ -8288,14 +8288,6 @@ react-device-detect@^1.6.1:
   resolved "https://registry.yarnpkg.com/react-device-detect/-/react-device-detect-1.7.5.tgz#04c8a6475d67b5ac4f984c8d912ec11134f5b893"
   integrity sha512-ccgJuTHVCI3yfqvgU56gQDvjueFyaHVAXsa5rJuzWRasvsd0IalzfyccSECIlygjv3E+DmAGcwNYWUarUA82Fw==
 
-react-document-meta@^3.0.0-beta.2:
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/react-document-meta/-/react-document-meta-3.0.0-beta.2.tgz#4a4b4c0b18277e4707d13ede163536ba216d5956"
-  integrity sha512-iRQ2tFsYFXVARPXIVjTmEbdkf+Ngz/NJYvQPdUjuE4U0icUpPD5F9OfpKZDy06msya3p58IWHRu+2P8x9Lli+w==
-  dependencies:
-    prop-types "^15.5.8"
-    react-side-effect "^1.1.0"
-
 react-dom@16.9.0:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.9.0.tgz#5e65527a5e26f22ae3701131bcccaee9fb0d3962"
@@ -8306,12 +8298,28 @@ react-dom@16.9.0:
     prop-types "^15.6.2"
     scheduler "^0.15.0"
 
+react-fast-compare@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
+  integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
+
 react-height@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/react-height/-/react-height-3.0.1.tgz#2252652fb59468254751224ef1e94a2bb6e90d20"
   integrity sha512-tduavxh0UamJoK3MTguUxz7zu+hpuZ1m7JivfGKXUF1Wx8D5lURsDkrxzE5TfpzDOXEeqswH7n/P0wfKRUjYAQ==
   dependencies:
     prop-types "^15.5.8"
+
+react-helmet-async@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-helmet-async/-/react-helmet-async-1.0.4.tgz#079ef10b7fefcaee6240fefd150711e62463cc97"
+  integrity sha512-KTGHE9sz8N7+fCkZ2a3vzXH9eIkiTNhL2NhKR7XzzQl3WsGlCHh76arauJUIiGdfhjeMp7DY7PkASAmYFXeJYg==
+  dependencies:
+    "@babel/runtime" "^7.3.4"
+    invariant "^2.2.4"
+    prop-types "^15.7.2"
+    react-fast-compare "^2.0.4"
+    shallowequal "^1.1.0"
 
 react-infinite-scroller@^1.2.4:
   version "1.2.4"
@@ -8406,13 +8414,6 @@ react-router@5.1.2:
     react-is "^16.6.0"
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
-
-react-side-effect@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-1.2.0.tgz#0e940c78faba0c73b9b0eba9cd3dda8dfb7e7dae"
-  integrity sha512-v1ht1aHg5k/thv56DRcjw+WtojuuDHFUgGfc+bFHOWsF4ZK6C2V57DO0Or0GPsg6+LSTE0M6Ry/gfzhzSwbc5w==
-  dependencies:
-    shallowequal "^1.0.1"
 
 react-stub-context@^0.7.0:
   version "0.7.0"
@@ -9298,7 +9299,7 @@ shallow-clone@^3.0.0:
   dependencies:
     kind-of "^6.0.2"
 
-shallowequal@^1.0.1:
+shallowequal@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==

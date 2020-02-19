@@ -2,7 +2,6 @@ import React from 'react';
 import should from 'should';
 import { shallow } from 'enzyme';
 import { spy } from 'sinon';
-import DocumentMeta from 'react-document-meta';
 
 import TRRPage from 'components/trr-page';
 import Footer from 'components/footer';
@@ -55,7 +54,6 @@ describe('<TRRPage />', function () {
 
     const wrapper = shallow(<TRRPage trrId={ 1 } trr={ trr }/>);
 
-    const documentMeta = wrapper.find(DocumentMeta);
-    documentMeta.prop('title').should.equal('TRR 1');
+    wrapper.find('title').text().should.equal('TRR 1');
   });
 });

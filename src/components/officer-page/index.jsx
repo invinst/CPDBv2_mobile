@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, noop, clone, reduce, values, compact } from 'lodash';
 import pluralize from 'pluralize';
-import DocumentMeta from 'react-document-meta';
+import { Helmet } from 'react-helmet-async';
 
 import { scrollToTop } from 'utils/navigation-util';
 import LoadingPage from 'components/shared/loading-page';
@@ -205,7 +205,11 @@ class OfficerPage extends Component {
       `and ${pluralize('original document', numAttachments, true)} available.`;
 
     return (
-      <DocumentMeta title={ pageTitle } description={ pageDescription }>
+      <React.Fragment>
+        <Helmet>
+          <title>{ pageTitle }</title>
+          <meta name='description' content={ pageDescription }/>
+        </Helmet>
         <WithHeader className={ style.officerSummary }>
           <AnimatedRadarChart
             officerId={ id }
@@ -233,7 +237,8 @@ class OfficerPage extends Component {
           <BottomPadding />
           <Footer />
         </WithHeader>
-      </DocumentMeta>
+      </React.Fragment>
+
     );
   }
 }
