@@ -180,9 +180,9 @@ describe('Empty Pinboard Page', function () {
     this.pinboardPage.getValue('@pinboardTitle', function (result) {
       assert.equal(result.value, 'Watts Crew');
     });
-    this.pinboardPage.getValue('@pinboardDescription', function (result) {
-      assert.equal(result.value, 'Officers with at least 10 complaints against them generate 64% of all complaints.');
-    });
+    this.pinboardPage.expect.element('@pinboardDescription').text.to.equal(
+      'Officers with at least 10 complaints against them generate 64% of all complaints.'
+    );
   });
 
   it('should go to Skullcap Crew Pinboard when clicking on Skullcap crew row ', function (client) {
@@ -204,9 +204,9 @@ describe('Empty Pinboard Page', function () {
     this.pinboardPage.getValue('@pinboardTitle', function (result) {
       assert.equal(result.value, 'Skullcap Crew');
     });
-    this.pinboardPage.getValue('@pinboardDescription', function (result) {
-      assert.equal(result.value, 'It is a nickname given to a group of five Chicago Police officers in a...');
-    });
+    this.pinboardPage.expect.element('@pinboardDescription').text.to.equal(
+      'It is a nickname given to a group of five Chicago Police officers in a...'
+    );
   });
 });
 
