@@ -8,6 +8,7 @@ import configureStore from 'redux-mock-store';
 import ComplaintPage from 'components/complaint-page';
 import Footer from 'components/footer';
 import WithHeader from 'components/shared/with-header';
+import DocumentMeta from 'react-document-meta';
 
 describe('ComplaintPage component', function () {
   it('should render if there is complaint', function () {
@@ -64,5 +65,14 @@ describe('ComplaintPage component', function () {
       </Provider>
     );
     requestComplaintSpy.calledWith('123').should.be.true();
+  });
+
+  it('should render complaint title', function () {
+    const wrapper = shallow(
+      <ComplaintPage complaint={ { category: 'Use of force' } } complaintId={ 'C123456' }/>
+    );
+
+    const documentMeta = wrapper.find(DocumentMeta);
+    documentMeta.prop('title').should.equal('CR C123456');
   });
 });

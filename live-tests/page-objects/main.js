@@ -1,4 +1,4 @@
-const baseCarouselSection = (mainElementSelector, cardSelector) => ({
+const baseCarouselSection = (mainElementSelector, cardSelector, cardNameSelector) => ({
   locateStrategy: 'xpath',
   selector: mainElementSelector,
   sections: {
@@ -10,9 +10,9 @@ const baseCarouselSection = (mainElementSelector, cardSelector) => ({
           locateStrategy: 'xpath',
           selector: `${mainElementSelector}${cardSelector}`,
         },
-        firstPinButton: {
+        pinButton: {
           locateStrategy: 'xpath',
-          selector: `${ mainElementSelector }${ cardSelector }` +
+          selector: `${mainElementSelector}${ cardSelector }${ cardNameSelector }` +
             '//div[contains(@class, "item-pin-button__item-pin-button")]',
         },
       },
@@ -57,21 +57,25 @@ module.exports = {
       '//div[contains(@class, "carousel-wrapper__carousel-wrapper") ' +
         'and contains(.//a/@class, "base-officer-card__base-officer-card")][1]',
       '//a[contains(@class, "base-officer-card__base-officer-card")]',
+      '[.//div[contains(@class, "officer-name") and text()="Broderick Jones"]]'
     ),
     recentActivities: baseCarouselSection(
       '//div[contains(@class, "carousel-wrapper__carousel-wrapper") ' +
         'and contains(.//a/@class, "base-officer-card__base-officer-card")][2]',
       '//a[contains(@class, "base-officer-card__base-officer-card")]',
+      '[.//div[contains(@class, "officer-name") and text()="Broderick Jones"]]'
     ),
     newDocumentAllegations: baseCarouselSection(
       '//div[contains(@class, "carousel-wrapper__carousel-wrapper") ' +
         'and contains(.//a/@class, "complaint-document-card__complaint-document-card")]',
       '//a[contains(@class, "complaint-document-card__complaint-document-card")]',
+      '[.//div[contains(@class, "complaint-info-category") and text()="Criminal Misconduct"]]'
     ),
     complaintSummaries: baseCarouselSection(
       '//div[contains(@class, "carousel-wrapper__carousel-wrapper") ' +
         'and contains(.//a/@class, "complaint-summary-card__complaint-summary-card")]',
       '//a[contains(@class, "complaint-summary-card__complaint-summary-card")]',
+      '[.//div[contains(@class, "incident-date") and text()="Nov 30, 2016"]]'
     ),
   },
 };

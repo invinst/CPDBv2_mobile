@@ -25,12 +25,13 @@ import {
 
 
 describe('fetchAndRedirectPinboardMiddleware', function () {
-  const createStore = (pinboard, pathname='') => ({
+  const createStore = (pinboard, pathname='', toasts=[]) => ({
     getState: () => {
       return {
         pinboardPage: {
           pinboard,
         },
+        toasts: toasts,
       };
     },
     dispatch: stub().usingPromise(Promise).resolves('abc'),
@@ -41,6 +42,29 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
   });
 
   describe('handling LOCATION_CHANGE', function () {
+    beforeEach(function () {
+      const pinboard = PinboardFactory.build({
+        'id': '2bd40cf2',
+        'officer_ids': [123, 456],
+        'isPinboardRestored': true,
+      });
+      const toasts = [
+        {
+          name: 'OFFICER',
+          template: '{full_name} {action_type} pinboard',
+        },
+        {
+          name: 'CR',
+          template: 'CR #{crid} {action_type} pinboard',
+        },
+        {
+          name: 'TRR',
+          template: 'TRR #{id} {action_type} pinboard',
+        },
+      ];
+      this.store = createStore(pinboard, '', toasts);
+    });
+
     it('should dispatch fetchPinboard when go to new pinboard page', function () {
       const action = {
         type: LOCATION_CHANGE,
@@ -49,18 +73,13 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
           action: 'PUSH',
         },
       };
-      const store = createStore(PinboardFactory.build({
-        'id': '2bd40cf2',
-        'officer_ids': [123, 456],
-        'isPinboardRestored': true,
-      }));
 
       let dispatched;
-      fetchAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
-      store.dispatch.should.be.calledOnce();
-      store.dispatch.should.be.calledWith(fetchPinboard('5cd06f2b'));
+      this.store.dispatch.should.be.calledOnce();
+      this.store.dispatch.should.be.calledWith(fetchPinboard('5cd06f2b'));
     });
 
     it('should dispatch fetch pinboard data when go to current pinboard page', function () {
@@ -71,26 +90,21 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
           action: 'PUSH',
         },
       };
-      const store = createStore(PinboardFactory.build({
-        'id': '2bd40cf2',
-        'officer_ids': [123, 456],
-        'isPinboardRestored': true,
-      }));
 
       let dispatched;
-      fetchAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
-      store.dispatch.callCount.should.equal(10);
-      store.dispatch.should.be.calledWith(fetchPinboardComplaints('2bd40cf2'));
-      store.dispatch.should.be.calledWith(fetchPinboardOfficers('2bd40cf2'));
-      store.dispatch.should.be.calledWith(fetchPinboardTRRs('2bd40cf2'));
-      store.dispatch.should.be.calledWith(fetchPinboardSocialGraph('2bd40cf2'));
-      store.dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicCrs({ 'pinboard_id': '2bd40cf2' }));
-      store.dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicTrrs({ 'pinboard_id': '2bd40cf2' }));
-      store.dispatch.should.be.calledWith(fetchPinboardRelevantDocuments('2bd40cf2'));
-      store.dispatch.should.be.calledWith(fetchPinboardRelevantCoaccusals('2bd40cf2'));
-      store.dispatch.should.be.calledWith(fetchPinboardRelevantComplaints('2bd40cf2'));
+      this.store.dispatch.callCount.should.equal(10);
+      this.store.dispatch.should.be.calledWith(fetchPinboardComplaints('2bd40cf2'));
+      this.store.dispatch.should.be.calledWith(fetchPinboardOfficers('2bd40cf2'));
+      this.store.dispatch.should.be.calledWith(fetchPinboardTRRs('2bd40cf2'));
+      this.store.dispatch.should.be.calledWith(fetchPinboardSocialGraph('2bd40cf2'));
+      this.store.dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicCrs({ 'pinboard_id': '2bd40cf2' }));
+      this.store.dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicTrrs({ 'pinboard_id': '2bd40cf2' }));
+      this.store.dispatch.should.be.calledWith(fetchPinboardRelevantDocuments('2bd40cf2'));
+      this.store.dispatch.should.be.calledWith(fetchPinboardRelevantCoaccusals('2bd40cf2'));
+      this.store.dispatch.should.be.calledWith(fetchPinboardRelevantComplaints('2bd40cf2'));
     });
 
     it('should not dispatch fetchPinboard after redirect pinboard', function () {
@@ -101,17 +115,12 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
           action: 'REPLACE',
         },
       };
-      const store = createStore(PinboardFactory.build({
-        'id': '2bd40cf2',
-        'officer_ids': [123, 456],
-        'isPinboardRestored': true,
-      }));
 
       let dispatched;
-      fetchAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
-      store.dispatch.should.not.be.called();
+      this.store.dispatch.should.not.be.called();
     });
 
     it('should not fetch pinboard data after replace the pinboard title postfix', function () {
@@ -122,18 +131,12 @@ describe('fetchAndRedirectPinboardMiddleware', function () {
           action: 'REPLACE',
         },
       };
-      const store = createStore(PinboardFactory.build({
-        'id': '2bd40cf2',
-        'title': 'Pinboard title',
-        'officer_ids': [123, 456],
-        'isPinboardRestored': true,
-      }));
 
       let dispatched;
-      fetchAndRedirectPinboardMiddleware(store)(action => dispatched = action)(action);
+      fetchAndRedirectPinboardMiddleware(this.store)(action => dispatched = action)(action);
       dispatched.should.eql(action);
 
-      store.dispatch.should.not.be.called();
+      this.store.dispatch.should.not.be.called();
     });
   });
 

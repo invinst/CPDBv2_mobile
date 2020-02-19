@@ -617,16 +617,16 @@ describe('Disable pinboard feature', function () {
       const newDocumentAllegationsCards = this.mainPage.section.newDocumentAllegations.section.cards;
 
       recentActivitiesCards.waitForElementVisible('@firstCard');
-      recentActivitiesCards.expect.element('@firstPinButton').to.not.be.visible;
+      recentActivitiesCards.expect.element('@pinButton').to.not.be.visible;
 
       topOfficersByAllegationCards.waitForElementVisible('@firstCard');
-      topOfficersByAllegationCards.expect.element('@firstPinButton').to.not.be.visible;
+      topOfficersByAllegationCards.expect.element('@pinButton').to.not.be.visible;
 
       complaintSummariesCards.waitForElementVisible('@firstCard');
-      complaintSummariesCards.expect.element('@firstPinButton').to.not.be.visible;
+      complaintSummariesCards.expect.element('@pinButton').to.not.be.visible;
 
       newDocumentAllegationsCards.waitForElementVisible('@firstCard');
-      newDocumentAllegationsCards.expect.element('@firstPinButton').to.not.be.visible;
+      newDocumentAllegationsCards.expect.element('@pinButton').to.not.be.visible;
     });
   });
 

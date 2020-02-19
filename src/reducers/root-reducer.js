@@ -9,6 +9,7 @@ import trrPage from './trr-page';
 import breadcrumb from './breadcrumb';
 import embed from './embed';
 import pinboardPage from './pinboard-page';
+import toasts from './toasts';
 
 
 export default (history) => combineReducers({
@@ -21,4 +22,5 @@ export default (history) => combineReducers({
   trrPage,
   embed,
   pinboardPage,
+  toasts,
 });

@@ -94,6 +94,7 @@ export default {
   SOCIAL_GRAPH_API_ENDPOINT: '/mobile/social-graph/',
   SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT: '/mobile/social-graph/geographic-crs/',
   SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT: '/mobile/social-graph/geographic-trrs/',
+  TOAST_API_ENDPOINT: '/mobile/toast/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',

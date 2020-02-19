@@ -398,7 +398,7 @@ describe('search-page selectors', function () {
   });
 
   describe('trrsSelector', function () {
-    it('should return empty when there are no trss', function () {
+    it('should return empty when there are no trrs', function () {
       const state = {
         suggestionApp: {
           suggestions: {},

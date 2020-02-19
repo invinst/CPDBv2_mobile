@@ -58,6 +58,7 @@ describe('CoaccusedCard component', function () {
       type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
       id: 13788,
       isPinned,
+      fullName: officer.fullName,
     });
   });
 });

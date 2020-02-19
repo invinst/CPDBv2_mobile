@@ -12,6 +12,7 @@ import trackingMiddleware from 'middleware/tracking-middleware';
 import restoreCreateOrUpdatePinboardMiddleware from 'middleware/restore-create-or-update-pinboard-middleware';
 import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pinboard-middleware';
 import browserHistory from 'utils/history';
+import fetchToastMiddleware from 'middleware/fetch-toast-middleware';
 
 
 const { pinboard: enablePinboardFeature } = config.enableFeatures;
@@ -25,6 +26,7 @@ function configureStore(initialState) {
     scrollPositionMiddleware,
     trackingMiddleware,
     fetchAndRedirectPinboardMiddleware,
+    fetchToastMiddleware,
   ];
   if (enablePinboardFeature) {
     middleware = [...middleware, restoreCreateOrUpdatePinboardMiddleware];

@@ -22,7 +22,7 @@ export default class SearchItem extends Component {
   render() {
     const {
       url, hasPinButton, addOrRemoveItemInPinboard,
-      id, isPinned, type, className,
+      id, isPinned, type, className, children, extraInfo,
     } = this.props;
 
     return (
@@ -42,13 +42,12 @@ export default class SearchItem extends Component {
               type: type,
               id: id,
               isPinned: isPinned,
+              ...extraInfo,
             } }
             className='item-pin-button'
           />
         }
-
-        { this.props.children }
-
+        { children }
         <span className='item-indicator' />
       </Link>
     );
@@ -68,6 +67,7 @@ SearchItem.propTypes = {
   recentItemData: PropTypes.object,
   query: PropTypes.string,
   itemRank: PropTypes.number,
+  extraInfo: PropTypes.object,
 };
 
 SearchItem.defaultProps = {

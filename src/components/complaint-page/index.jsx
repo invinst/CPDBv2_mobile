@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { noop, isEmpty } from 'lodash';
+import DocumentMeta from 'react-document-meta';
 
 import BottomPadding from 'components/shared/bottom-padding';
 import Victim from './victim';
@@ -39,43 +40,45 @@ export default class ComplaintPage extends Component {
     }
 
     return (
-      <WithHeader className={ style.complaintPage }>
-        <div className='complaint-page-body'>
-          <ComplaintCategory
-            category={ complaint.category }
-            subcategory={ complaint.subcategory }
-          />
-          <ComplaintIncidentDate incidentDate={ complaint.incidentDate } />
-          <AccusedOfficers officers={ complaint.coaccused } addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }/>
-          <div className='complaint-info'>
-            <Victim victims={ complaint.victims } />
-            <Complainant complainants={ complaint.complainants } />
-            <Summary summary={ complaint.summary } />
-            <Attachments
-              attachments={ complaint.attachments }
-              complaintId={ complaintId }
-              pathname={ pathname }
-              onTrackingAttachment={ onTrackingAttachment }
-              noAttachmentMessage={ noAttachmentMessage }
+      <DocumentMeta title={ `CR ${complaintId}` }>
+        <WithHeader className={ style.complaintPage }>
+          <div className='complaint-page-body'>
+            <ComplaintCategory
+              category={ complaint.category }
+              subcategory={ complaint.subcategory }
             />
-            <InvestigationTimeline
-              startDate={ complaint.startDate }
-              endDate={ complaint.endDate }
-              incidentDate={ complaint.incidentDate }
-            />
-            <Location
-              point={ complaint.point }
-              address={ complaint.address }
-              beat={ complaint.beat }
-              location={ complaint.location } />
-            <Investigator investigators={ complaint.investigators } />
-            <PoliceWitness policeWitnesses={ complaint.policeWitnesses } />
+            <ComplaintIncidentDate incidentDate={ complaint.incidentDate } />
+            <AccusedOfficers officers={ complaint.coaccused } addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }/>
+            <div className='complaint-info'>
+              <Victim victims={ complaint.victims } />
+              <Complainant complainants={ complaint.complainants } />
+              <Summary summary={ complaint.summary } />
+              <Attachments
+                attachments={ complaint.attachments }
+                complaintId={ complaintId }
+                pathname={ pathname }
+                onTrackingAttachment={ onTrackingAttachment }
+                noAttachmentMessage={ noAttachmentMessage }
+              />
+              <InvestigationTimeline
+                startDate={ complaint.startDate }
+                endDate={ complaint.endDate }
+                incidentDate={ complaint.incidentDate }
+              />
+              <Location
+                point={ complaint.point }
+                address={ complaint.address }
+                beat={ complaint.beat }
+                location={ complaint.location } />
+              <Investigator investigators={ complaint.investigators } />
+              <PoliceWitness policeWitnesses={ complaint.policeWitnesses } />
+            </div>
+            <div />
           </div>
-          <div />
-        </div>
-        <BottomPadding />
-        <Footer />
-      </WithHeader>
+          <BottomPadding />
+          <Footer />
+        </WithHeader>
+      </DocumentMeta>
     );
   }
 }

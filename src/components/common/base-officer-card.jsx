@@ -43,7 +43,8 @@ export class BaseOfficerCard extends Component {
             item={ {
               type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
               id: officerId,
-              isPinned: isPinned,
+              isPinned,
+              fullName,
             } }
           />
         ) }

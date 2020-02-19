@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
+import DocumentMeta from 'react-document-meta';
 
 import style from './trr-page.sass';
 import BottomPadding from 'components/shared/bottom-padding';
@@ -28,15 +29,17 @@ export default class TRRPage extends Component {
     }
 
     return (
-      <WithHeader className={ style.trrPage }>
-        <h4 className='trr-header'>{ trr.category }</h4>
-        <div className='trr-page-body'>
-          <Officer { ...trr.officer }/>
-          <Info { ...trr.info } trrId={ trrId }/>
-        </div>
-        <BottomPadding />
-        <Footer />
-      </WithHeader>
+      <DocumentMeta title={ `TRR ${trrId}` }>
+        <WithHeader className={ style.trrPage }>
+          <h4 className='trr-header'>{ trr.category }</h4>
+          <div className='trr-page-body'>
+            <Officer { ...trr.officer }/>
+            <Info { ...trr.info } trrId={ trrId }/>
+          </div>
+          <BottomPadding />
+          <Footer />
+        </WithHeader>
+      </DocumentMeta>
     );
   }
 }

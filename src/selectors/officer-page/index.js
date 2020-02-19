@@ -56,6 +56,7 @@ export const officerSummarySelector = createSelector(
       badge: officer.badge,
       historicBadges: officer['historic_badges'],
       careerDuration: getCareerDuration(officer['date_of_appt'], officer['date_of_resignation']),
+      hasUniqueName: officer['has_unique_name'],
     };
   }
 );

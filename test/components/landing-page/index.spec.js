@@ -4,6 +4,7 @@ import { spy } from 'sinon';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { MemoryRouter } from 'react-router-dom';
+import DocumentMeta from 'react-document-meta';
 
 import { SEARCH_PATH } from 'constants/paths';
 import LandingPage from 'components/landing-page';
@@ -14,6 +15,13 @@ describe('<LandingPage />', function () {
   it('should render footer', function () {
     const wrapper = shallow(<LandingPage />);
     wrapper.find(Footer).exists().should.be.true();
+  });
+
+  it('should render main title', function () {
+    const wrapper = shallow(<LandingPage />);
+
+    const documentMeta = wrapper.find(DocumentMeta).at(0);
+    documentMeta.prop('title').should.equal('CPDP');
   });
 
   it('should render fake search input box that links to search page', function () {

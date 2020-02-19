@@ -18,7 +18,8 @@ const TrrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
       isPinned={ item.isPinned }
       type={ item.type }
       recentItemData={ item.recentItemData }
-      saveToRecent={ saveToRecent }>
+      saveToRecent={ saveToRecent }
+    >
       <div className={ cx(searchItemStyle.itemInfo, 'inline') }>
         <div className='item-title'>TRR</div>
         <div className='item-subtitle'>{ item.id }</div>
