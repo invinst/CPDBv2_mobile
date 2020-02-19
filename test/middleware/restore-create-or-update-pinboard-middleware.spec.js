@@ -206,7 +206,6 @@ describe('restoreCreateOrUpdatePinboardMiddleware middleware', function () {
     setTimeout(
       () => {
         showAddOrRemoveItemToastStub.should.be.calledWith(store, action.payload);
-        showAddOrRemoveItemToastStub.restore();
         done();
       },
       50
