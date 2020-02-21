@@ -383,8 +383,8 @@ describe('Pinboard Page', function () {
         assert.equal(result.value, 'Updated Title');
       });
       pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description Updated');
-      client.source(function (result) {
-        assert.ok((/.*<p>Pinboard Description <strong>Updated<\/strong><\/p>.*/).test(result.value));
+      client.getElementProperty(pinboardPage.elements.pinboardDescription.selector, 'innerHTML', function (result) {
+        assert.equal(result.value, '<p>Pinboard Description <strong>Updated</strong></p>');
       });
       client.assert.urlContains('/updated-title/');
     });
