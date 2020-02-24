@@ -40,7 +40,7 @@ export default class LocationMap extends Component {
     return !isNil(lat) && !isNil(lng);
   }
 
-  gotRef(el) {
+  gotRef = (el) => {
     if (el && !this.map) {
       const { lat, lng, mapboxStyle, customMarkerClassName, zoomOutLevel, centerLng, centerLat } = this.props;
       this.map = new mapboxgl.Map({
@@ -53,7 +53,7 @@ export default class LocationMap extends Component {
       this.map.on('click', this.handleMapClick);
       this.addMarker(lat, lng, customMarkerClassName);
     }
-  }
+  };
 
   addMarker(lat, lng, customMarkerClassName) {
     if (this.marker && this.isValidLocation(lat, lng)) {
@@ -123,7 +123,7 @@ export default class LocationMap extends Component {
   render() {
 
     return (
-      <div className={ style.locationMap } ref={ this.gotRef.bind(this) }/>
+      <div className={ style.locationMap } ref={ this.gotRef }/>
     );
   }
 }

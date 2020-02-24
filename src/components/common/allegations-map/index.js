@@ -75,7 +75,7 @@ export default class AllegationsMap extends Component {
     }
   }
 
-  gotRef(el) {
+  gotRef = (el) => {
     const { attributionControlPosition } = this.props;
     if (el && !this.map) {
       this.map = new mapboxgl.Map({
@@ -94,7 +94,7 @@ export default class AllegationsMap extends Component {
         this.map.addControl(new MultiTouch());
       }
     }
-  }
+  };
 
   getUrl(marker) {
     if (marker.kind === 'CR') {
@@ -221,7 +221,7 @@ export default class AllegationsMap extends Component {
     const { legend } = this.props;
     return (
       <div className={ cx(styles.map, 'test--map') }>
-        <div ref={ this.gotRef.bind(this) } className='map-tab'/>
+        <div ref={ this.gotRef } className='map-tab'/>
         <Legend legend={ legend } />
       </div>
     );
