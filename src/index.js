@@ -14,6 +14,10 @@ import AppContainer from 'containers/app-container';
 
 const store = configureStore();
 
+if (module.hot) {
+  module.hot.accept();
+}
+
 // init tracking
 window.ga('create', config.gaTrackingId, 'auto');
 window.Intercom('boot', { 'app_id': config.intercomAppId } );
