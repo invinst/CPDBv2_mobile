@@ -2,6 +2,7 @@
 
 const api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
+const { mockToasts } = require(__dirname + '/../mock-data/toasts');
 
 const mockComplaint = {
   'most_common_category': {
@@ -84,6 +85,7 @@ describe('ComplaintPageTest', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
     api.mock('GET', '/api/v2/mobile/cr/1053667/', 200, mockComplaint);
+    api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
     api.mockPost(
       '/api/v2/mobile/cr/1053667/request-document/',
       200,
@@ -241,7 +243,9 @@ describe('ComplaintPageTest', function () {
     it('should display toast when pinning a coaccusal', function (client) {
       this.complaintPage.section.firstCoaccusal.click('@pinButton');
       this.complaintPage.waitForElementVisible('@lastToast');
-      this.complaintPage.expect.element('@lastToast').text.to.equal('Officer added').before(TIMEOUT);
+      this.complaintPage.expect.element('@lastToast').text.to.equal(
+        'Donovan Markiewicz added to pinboard'
+      ).before(TIMEOUT);
 
       this.complaintPage.click('@landingPageBreadCrumb');
       this.main.waitForElementVisible('@searchLink');
@@ -252,7 +256,9 @@ describe('ComplaintPageTest', function () {
 
       this.complaintPage.section.firstCoaccusal.click('@pinButton');
       this.complaintPage.waitForElementVisible('@lastToast');
-      this.complaintPage.expect.element('@lastToast').text.to.equal('Officer removed').before(TIMEOUT);
+      this.complaintPage.expect.element('@lastToast').text.to.equal(
+        'Donovan Markiewicz removed from pinboard'
+      ).before(TIMEOUT);
 
       this.complaintPage.click('@landingPageBreadCrumb');
       this.main.waitForElementVisible('@searchLink');

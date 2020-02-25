@@ -121,9 +121,7 @@ export default store => next => {
       Promise.all([store.dispatch(addOrRemove(action.payload))]).finally(() => {
         store.dispatch(savePinboard());
         if (action.type === ADD_OR_REMOVE_ITEM_IN_PINBOARD) {
-          const { isPinned, type } = action.payload;
-          const pinboard = store.getState().pinboardPage.pinboard;
-          showAddOrRemoveItemToast(pinboard, isPinned, type);
+          showAddOrRemoveItemToast(store, action.payload);
         }
       });
     }

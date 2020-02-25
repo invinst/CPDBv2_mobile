@@ -23,7 +23,7 @@ export const queryPrefixSelector = createSelector(
 export const officerFormatter = (officer, pinboardItems) => ({
   id: officer.id,
   name: officer.name,
-  badge: officer.badge ? `Badge #${officer.badge}` : '',
+  badge: officer.badge ? `Badge #${ officer.badge }` : '',
   percentile: extractPercentile(officer.percentile),
   url: officerUrl(officer.id, officer.name),
   isPinned: isItemPinned('OFFICER', officer.id, pinboardItems),
@@ -78,7 +78,7 @@ export const dateCRsSelector = createSelector(
 
 const trrFormatter = (trr, pinboardItems) => ({
   id: trr.id,
-  url: `${constants.TRR_PATH}${trr.id}/`,
+  url: `${ constants.TRR_PATH }${ trr.id }/`,
   isPinned: isItemPinned('TRR', trr.id, pinboardItems),
   type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR,
   recentItemData: trr,

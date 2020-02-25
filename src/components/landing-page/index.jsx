@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import DocumentMeta from 'react-document-meta';
 
 import constants from 'constants';
 import CMSContent from 'components/common/cms-content';
@@ -33,21 +34,23 @@ export default class LandingPage extends Component {
     const { title, description } = this.props;
 
     return (
-      <div className={ style.landingPage }>
-        <div className='full-height-wrapper'>
-          <CMSContent className='site-title' content={ title } />
-          <CMSContent className='site-desc' content={ description } />
-          <Link className='search-bar' to={ constants.SEARCH_PATH }>
-            <img src='/img/ic-magnifying-glass.svg' />Officer name, badge number or date
-          </Link>
+      <DocumentMeta title='CPDP'>
+        <div className={ style.landingPage }>
+          <div className='full-height-wrapper'>
+            <CMSContent className='site-title' content={ title } />
+            <CMSContent className='site-desc' content={ description } />
+            <Link className='search-bar' to={ constants.SEARCH_PATH }>
+              <img src='/img/ic-magnifying-glass.svg' />Officer name, badge number or date
+            </Link>
+          </div>
+          <TopOfficersByAllegation />
+          <RecentActivities />
+          <NewDocumentAllegations />
+          <ComplaintSummaries />
+          <BottomPadding />
+          <Footer />
         </div>
-        <TopOfficersByAllegation />
-        <RecentActivities />
-        <NewDocumentAllegations />
-        <ComplaintSummaries />
-        <BottomPadding />
-        <Footer />
-      </div>
+      </DocumentMeta>
     );
   }
 }

@@ -1,5 +1,6 @@
 import { browserHistory } from 'react-router';
 import { stub } from 'sinon';
+import { Promise } from 'es6-promise';
 
 import { Toastify } from 'utils/toastify';
 import toastStyles from 'utils/toast.sass';
@@ -23,6 +24,44 @@ describe('Toast utils', function () {
     appendPosition: true,
   });
 
+  const createStore = (pinboard, pathname='', dispatchResults='abc') => ({
+    getState: () => {
+      return {
+        pinboardPage: {
+          pinboard,
+          officerItems: {
+            items: [],
+            requesting: false,
+          },
+          crItems: {
+            items: [],
+            requesting: false,
+          },
+          trrItems: {
+            items: [],
+            requesting: false,
+          },
+        },
+        pathname,
+        toasts: [
+          {
+            name: 'OFFICER',
+            template: '{full_name} {action_type} pinboard',
+          },
+          {
+            name: 'CR',
+            template: 'CR #{crid} {action_type} pinboard',
+          },
+          {
+            name: 'TRR',
+            template: 'TRR #{id} {action_type} pinboard',
+          },
+        ],
+      };
+    },
+    dispatch: stub().usingPromise(Promise).resolves(dispatchResults),
+  });
+
   describe('showPinboardToast', function () {
     it('should show a toast with provided message and pinboard toast style', function () {
       showPinboardToast('toast message');
@@ -43,10 +82,16 @@ describe('Toast utils', function () {
       const browserHistoryPush = stub(browserHistory, 'push');
 
       const pinboard = { id: '123abc' };
-      showAddOrRemoveItemToast(pinboard, false, 'CR');
+      const store = createStore(pinboard);
+      const payload = {
+        type: 'CR',
+        isPinned: false,
+        id: 'C123456',
+      };
+      showAddOrRemoveItemToast(store, payload);
 
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].should.equal('CR added');
+      Toastify.toast.getCall(0).args[0].props.source.should.equal('CR #C123456 added to pinboard');
       Toastify.toast.getCall(0).args[1]['className'].should.equal(`${toastStyles.toastWrapper} added`);
       Toastify.toast.getCall(0).args[1]['transition'].should.eql(cssTransition);
       Toastify.toast.getCall(0).args[1]['onClick']();
@@ -57,38 +102,72 @@ describe('Toast utils', function () {
 
     it('should show added toast if isPinned is true', function () {
       const pinboard = { id: '123abc' };
+      const store = createStore(pinboard);
+      const dateCrPayload = {
+        type: 'DATE > CR',
+        isPinned: true,
+        id: 'C123456',
+      };
+      const investigatorCrPayload = {
+        type: 'INVESTIGATOR > CR',
+        isPinned: true,
+        id: 'C123456',
+      };
+      const unitOfficerPayload = {
+        type: 'UNIT > OFFICERS',
+        isPinned: true,
+        id: 8562,
+        fullName: 'Jerome Finnigan',
+      };
+      const trrPayload = {
+        type: 'TRR',
+        isPinned: true,
+        id: '123456',
+      };
+      const dateTrrPayload = {
+        type: 'DATE > TRR',
+        isPinned: true,
+        id: '123456',
+      };
 
-      showAddOrRemoveItemToast(pinboard, true, 'DATE > CR');
+      showAddOrRemoveItemToast(store, dateCrPayload);
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].should.equal('CR removed');
+      Toastify.toast.getCall(0).args[0].props.source.should.equal('CR #C123456 removed from pinboard');
 
       Toastify.toast.resetHistory();
-      showAddOrRemoveItemToast(pinboard, true, 'INVESTIGATOR > CR');
+      showAddOrRemoveItemToast(store, investigatorCrPayload);
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].should.equal('CR removed');
+      Toastify.toast.getCall(0).args[0].props.source.should.equal('CR #C123456 removed from pinboard');
 
       Toastify.toast.resetHistory();
-      showAddOrRemoveItemToast(pinboard, true, 'UNIT > OFFICERS');
+      showAddOrRemoveItemToast(store, unitOfficerPayload);
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].should.equal('Officer removed');
+      Toastify.toast.getCall(0).args[0].props.source.should.equal('Jerome Finnigan removed from pinboard');
 
       Toastify.toast.resetHistory();
-      showAddOrRemoveItemToast(pinboard, true, 'TRR');
+      showAddOrRemoveItemToast(store, trrPayload);
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].should.equal('TRR removed');
+      Toastify.toast.getCall(0).args[0].props.source.should.equal('TRR #123456 removed from pinboard');
 
       Toastify.toast.resetHistory();
-      showAddOrRemoveItemToast(pinboard, true, 'DATE > TRR');
+      showAddOrRemoveItemToast(store, dateTrrPayload);
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].should.equal('TRR removed');
+      Toastify.toast.getCall(0).args[0].props.source.should.equal('TRR #123456 removed from pinboard');
     });
 
     it('should show toasts with correct type message', function () {
       const pinboard = { id: '123abc' };
-      showAddOrRemoveItemToast(pinboard, true, 'OFFICER');
+      const store = createStore(pinboard);
+      const officerPayload = {
+        type: 'OFFICER',
+        isPinned: true,
+        id: 8562,
+        fullName: 'Jerome Finnigan',
+      };
+      showAddOrRemoveItemToast(store, officerPayload);
 
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].should.equal('Officer removed');
+      Toastify.toast.getCall(0).args[0].props.source.should.equal('Jerome Finnigan removed from pinboard');
       Toastify.toast.getCall(0).args[1]['className'].should.equal(`${toastStyles.toastWrapper} removed`);
       Toastify.toast.getCall(0).args[1]['transition'].should.eql(cssTransition);
     });

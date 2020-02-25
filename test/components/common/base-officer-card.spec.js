@@ -82,11 +82,13 @@ describe('<BaseOfficerCard />', function () {
     const addOrRemoveItemInPinboard = spy();
     const id = random.number({ min: 10, max: 1000 });
     const isPinned = random.boolean();
+    const fullName ='Jerome Finnigan';
 
     const wrapper = mount(
       <BaseOfficerCard
         officerId={ id }
         isPinned={ isPinned }
+        fullName={ fullName }
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
       />
     );
@@ -94,7 +96,14 @@ describe('<BaseOfficerCard />', function () {
     const itemPinButton = wrapper.find(ItemPinButton);
     itemPinButton.props().className.should.equal(pinButtonStyles.cardPinnedButton);
     itemPinButton.props().addOrRemoveItemInPinboard.should.equal(addOrRemoveItemInPinboard);
-    itemPinButton.props().item.should.eql({ type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER, id, isPinned });
+    itemPinButton.props().item.should.eql(
+      {
+        type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+        id,
+        isPinned,
+        fullName,
+      }
+    );
   });
 
   it('should not render pin button if not pinnable', function () {
