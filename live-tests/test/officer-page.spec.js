@@ -4,6 +4,7 @@ const assert = require('assert');
 
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
+const { mockToasts } = require(__dirname + '/../mock-data/toasts');
 
 const officer2235 = {
   'officer_id': 2235,
@@ -242,6 +243,11 @@ const mockCoaccusals = [
   {
     id: 27778,
     'full_name': 'Carl Suchocki',
+    'complaint_count': 10,
+    'sustained_count': 5,
+    'birth_year': 1975,
+    race: 'White',
+    gender: 'Male',
     rank: 'Police Officer',
     percentile: {
       'percentile_trr': '49.1036',
@@ -373,6 +379,7 @@ function checkTimelineShowAllItems(timeline) {
 describe('OfficerPage test', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
+    api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
     done();
   });
 
@@ -958,7 +965,9 @@ describe('OfficerPage test', function () {
         this.officerPage.section.coaccusals.waitForElementVisible('@firstPinButton');
         this.officerPage.section.coaccusals.click('@firstPinButton');
         this.officerPage.waitForElementVisible('@lastToast');
-        this.officerPage.expect.element('@lastToast').text.to.equal('Officer added').before(TIMEOUT);
+        this.officerPage.expect.element('@lastToast').text.to.equal(
+          'Carl Suchocki added to pinboard'
+        ).before(TIMEOUT);
 
         this.officerPage.click('@landingPageBreadCrumb');
         this.main.waitForElementVisible('@searchLink');
@@ -969,7 +978,9 @@ describe('OfficerPage test', function () {
 
         this.officerPage.section.coaccusals.click('@firstPinButton');
         this.officerPage.waitForElementVisible('@lastToast');
-        this.officerPage.expect.element('@lastToast').text.to.equal('Officer removed').before(TIMEOUT);
+        this.officerPage.expect.element('@lastToast').text.to.equal(
+          'Carl Suchocki removed from pinboard'
+        ).before(TIMEOUT);
 
         this.officerPage.click('@landingPageBreadCrumb');
         this.main.waitForElementVisible('@searchLink');

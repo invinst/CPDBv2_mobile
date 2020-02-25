@@ -5,6 +5,9 @@ import searchItemStyle from './search-item.sass';
 
 
 const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
+  const extraInfo = {
+    fullName: item.name,
+  };
   return (
     <SearchItem
       url={ item.url }
@@ -16,7 +19,9 @@ const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) =
       isPinned={ item.isPinned }
       type={ item.type }
       recentItemData={ item.recentItemData }
-      saveToRecent={ saveToRecent }>
+      extraInfo={ extraInfo }
+      saveToRecent={ saveToRecent }
+    >
       <div className={ searchItemStyle.itemInfo }>
         <div className='item-title'>{ item.name }</div>
         <div className='item-subtitle'>{ item.badge }</div>

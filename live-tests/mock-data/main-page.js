@@ -267,13 +267,13 @@ const mockComplaintSummaries = [
     crid: '123',
     summary: 'regarding an incident that occurred',
     'incident_date': '2016-11-30',
-    'category_names': 'Use of Force',
+    'category_names': ['Use of Force'],
   },
   {
     crid: '456',
     summary: 'Officer A was off-duty and inside her residence.',
     'incident_date': '2009-06-13',
-    'category_names': 'Domestic',
+    'category_names': ['Domestic'],
   },
 ];
 

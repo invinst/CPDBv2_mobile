@@ -1,11 +1,15 @@
+import React from 'react';
 import { browserHistory } from 'react-router';
 import pluralize from 'pluralize';
-import { get, identity } from 'lodash';
+import { get, identity, filter, keys } from 'lodash';
 import cx from 'classnames';
+import ReactMarkdown from 'react-markdown';
 
 import { Toastify } from 'utils/toastify';
 import toastStyles from './toast.sass';
 import { generatePinboardUrl } from 'utils/pinboard';
+import { getToasts } from 'selectors/toast';
+import MarkdownLink from 'components/common/markdown-renderers/markdown-link';
 
 function formatMessage(foundIds, notFoundIds, itemType) {
   let message = '';
@@ -63,23 +67,85 @@ export function showCreatedToasts(pinboardSavingResponse) {
   creatingMessages.filter(identity).forEach(showPinboardToast);
 }
 
-const TOAST_TYPE_MAP = {
-  'CR': 'CR',
-  'DATE > CR': 'CR',
-  'INVESTIGATOR > CR': 'CR',
-  'OFFICER': 'Officer',
-  'UNIT > OFFICERS': 'Officer',
-  'DATE > OFFICERS': 'Officer',
-  'TRR': 'TRR',
-  'DATE > TRR': 'TRR',
+const CR_TOAST_TEMPLATE = {
+  'crid': 'id',
 };
 
-export function showAddOrRemoveItemToast(pinboard, isPinned, type) {
-  const actionType = isPinned ? 'removed' : 'added';
-  const url = generatePinboardUrl(pinboard) || '/pinboard/';
+const OFFICER_TOAST_TEMPLATE = {
+  'id': 'id',
+  'full_name': 'fullName',
+};
 
-  Toastify.toast(`${ TOAST_TYPE_MAP[type] } ${ actionType }`, {
-    className: cx(toastStyles.toastWrapper, actionType),
+const TRR_TOAST_TEMPLATE = {
+  'id': 'id',
+};
+
+const TEMPLATE_TYPE_MAP = {
+  'CR': {
+    type: 'CR',
+    template: CR_TOAST_TEMPLATE,
+  },
+  'DATE > CR': {
+    type: 'CR',
+    template: CR_TOAST_TEMPLATE,
+  },
+  'INVESTIGATOR > CR': {
+    type: 'CR',
+    template: CR_TOAST_TEMPLATE,
+  },
+  'OFFICER': {
+    type: 'OFFICER',
+    template: OFFICER_TOAST_TEMPLATE,
+  },
+  'UNIT > OFFICERS': {
+    type: 'OFFICER',
+    template: OFFICER_TOAST_TEMPLATE,
+  },
+  'DATE > OFFICERS': {
+    type: 'OFFICER',
+    template: OFFICER_TOAST_TEMPLATE,
+  },
+  'TRR': {
+    type: 'TRR',
+    template: TRR_TOAST_TEMPLATE,
+  },
+  'DATE > TRR': {
+    type: 'TRR',
+    template: TRR_TOAST_TEMPLATE,
+  },
+};
+
+function getToastTemplate(toasts, name) {
+  const toast = filter(toasts, toast => toast.name === TEMPLATE_TYPE_MAP[name].type)[0];
+  if (toast) {
+    return toast.template;
+  }
+}
+
+function buildToastMessage(template, item) {
+  let message = template;
+  const TEMPLATE = TEMPLATE_TYPE_MAP[item.type].template;
+
+  keys(TEMPLATE).forEach(
+    tag => message = message.replace(`{${tag}}`, item[TEMPLATE[tag]])
+  );
+  message = message.replace('{action_type}', item.isPinned ? 'removed from' : 'added to');
+  return message;
+}
+
+export function showAddOrRemoveItemToast(store, payload) {
+  const { isPinned, type } = payload;
+
+  const state = store.getState();
+  const pinboard = state.pinboardPage.pinboard;
+  const url = generatePinboardUrl(pinboard) || '/pinboard/';
+  const toasts = getToasts(state);
+  const toastTemplate = getToastTemplate(toasts, type);
+  const toastMessage = buildToastMessage(toastTemplate, payload);
+
+  Toastify.toast(<ReactMarkdown source={ toastMessage } renderers={ { link: MarkdownLink } } />, {
+    className: cx(toastStyles.toastWrapper, isPinned ? 'removed' : 'added'),
+    bodyClassName: 'toast-body',
     transition: TopRightTransition,
     onClick: () => browserHistory.push(url),
   });

@@ -9,6 +9,7 @@ import localStorageConfig from './local-storage-config';
 import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
 import trackingMiddleware from 'middleware/tracking-middleware';
 import restoreCreateOrUpdatePinboardMiddleware from 'middleware/restore-create-or-update-pinboard-middleware';
+import fetchToastMiddleware from 'middleware/fetch-toast-middleware';
 
 
 const { pinboard: enablePinboardFeature } = config.enableFeatures;
@@ -19,6 +20,7 @@ export default function configureStore(initialState) {
     configuredAxiosMiddleware,
     scrollPositionMiddleware,
     trackingMiddleware,
+    fetchToastMiddleware,
   ];
   if (enablePinboardFeature) {
     middleware = [...middleware, restoreCreateOrUpdatePinboardMiddleware];

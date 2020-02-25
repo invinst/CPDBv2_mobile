@@ -9,6 +9,7 @@ const {
   mockNewDocuments,
   mockComplaintSummaries,
 } = require(__dirname + '/../mock-data/main-page');
+const { mockToasts } = require(__dirname + '/../mock-data/toasts');
 
 
 describe('MainPageTest', function () {
@@ -19,6 +20,7 @@ describe('MainPageTest', function () {
     api.mock('GET', '/api/v2/activity-grid/', 200, mockRecentActivities);
     api.mock('GET', '/api/v2/cr/list-by-new-document/', 200, mockNewDocuments);
     api.mock('GET', '/api/v2/cr/complaint-summaries/', 200, mockComplaintSummaries);
+    api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
 
     this.mainPage = client.page.main();
     this.search = client.page.search();
@@ -149,36 +151,44 @@ describe('MainPageTest', function () {
 
       const checkPinToast = (parentSelector, messagePrefix) => {
         //Pin item
-        parentSelector.section.cards.waitForElementVisible('@firstPinButton');
-        parentSelector.section.cards.click('@firstPinButton');
+        parentSelector.section.cards.waitForElementPresent('@pinButton');
+        parentSelector.section.cards.moveToElement('@pinButton', 0, 0);
+        parentSelector.section.cards.click('@pinButton');
 
         //Check toast
         this.mainPage.waitForElementVisible('@lastToast');
-        this.mainPage.expect.element('@lastToast').text.to.equal(`${messagePrefix} added`).before(TIMEOUT);
+        this.mainPage.expect.element('@lastToast').text.to.equal(
+          `${messagePrefix} added to pinboard`
+        ).before(TIMEOUT);
 
         //Go to Search Page and check for pinboard item counts
+        this.mainPage.waitForElementNotVisible('@lastToast', TIMEOUT);
         this.mainPage.click('@searchLink');
         this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (1)').before(TIMEOUT);
         client.back();
 
         //Unpin item
-        parentSelector.section.cards.waitForElementVisible('@firstPinButton');
-        parentSelector.section.cards.click('@firstPinButton');
+        parentSelector.section.cards.waitForElementPresent('@pinButton');
+        parentSelector.section.cards.moveToElement('@pinButton', 0, 0);
+        parentSelector.section.cards.click('@pinButton');
 
         //Check toast
         this.mainPage.waitForElementVisible('@lastToast');
-        this.mainPage.expect.element('@lastToast').text.to.equal(`${messagePrefix} removed`).before(TIMEOUT);
+        this.mainPage.expect.element('@lastToast').text.to.equal(
+          `${messagePrefix} removed from pinboard`
+        ).before(TIMEOUT);
 
         //Go to Search Page and check for pinboard item counts
+        this.mainPage.waitForElementNotVisible('@lastToast', TIMEOUT);
         this.mainPage.click('@searchLink');
         this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
         client.back();
       };
 
-      checkPinToast(this.mainPage.section.topOfficersByAllegation, 'Officer');
-      checkPinToast(this.mainPage.section.recentActivities, 'Officer');
-      checkPinToast(this.mainPage.section.newDocumentAllegations, 'CR');
-      checkPinToast(this.mainPage.section.complaintSummaries, 'CR');
+      checkPinToast(this.mainPage.section.topOfficersByAllegation, 'Broderick Jones');
+      checkPinToast(this.mainPage.section.recentActivities, 'Broderick Jones');
+      checkPinToast(this.mainPage.section.newDocumentAllegations, 'CR #170123');
+      checkPinToast(this.mainPage.section.complaintSummaries, 'CR #123');
     });
   });
 

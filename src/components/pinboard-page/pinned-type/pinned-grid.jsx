@@ -1,14 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import { map, differenceBy, first, get, isEqual } from 'lodash';
-import cx from 'classnames';
+import { map, find, isEqual } from 'lodash';
 import { Muuri } from 'utils/muuri';
 
-import { OfficerCardWithUndo as OfficerCard } from './cards/officer-card';
-import { CRCardWithUndo as CRCard } from './cards/cr-card';
-import { TRRCardWithUndo as TRRCard } from './cards/trr-card';
-import style from './pinned-type.sass';
+import { OfficerCardWithUndo as OfficerCard } from '../cards/officer-card';
+import { CRCardWithUndo as CRCard } from '../cards/cr-card';
+import { TRRCardWithUndo as TRRCard } from '../cards/trr-card';
+import styles from './pinned-grid.sass';
 import { getPageYBottomOffset, scrollByBottomOffset } from 'utils/navigation-util';
-import LoadingSpinner from 'components/common/loading-spinner';
 
 const CARD_MAP = {
   'OFFICER': OfficerCard,
@@ -17,7 +15,7 @@ const CARD_MAP = {
 };
 
 
-export default class PinnedType extends Component {
+export default class PinnedGrid extends Component {
   constructor(props) {
     super(props);
 
@@ -31,37 +29,37 @@ export default class PinnedType extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.items.length > 0
-      && this.props.items.length > 0
-      && nextProps.items.length > this.props.items.length
-    ) {
-      this.addedItem = first(differenceBy(nextProps.items, this.props.items, 'id'));
-    }
     this.bottomOffset = this.rendered ? getPageYBottomOffset() : null;
+    this.rendered = true;
   }
 
-  componentDidUpdate() {
-    this.gridMuuri && this.gridMuuri.destroy();
-    this.initGrid();
+  componentDidUpdate(prevProps) {
+    const { items } = this.props;
+    items.forEach(item => {
+      if (!find(prevProps.items, { id: item.id })) {
+        this.gridMuuri.add(this.itemElements[item.id]);
+      }
+    });
+
     this.bottomOffset && scrollByBottomOffset(this.bottomOffset);
   }
 
-  initGrid() {
-    if (this.grid) {
-      this.gridMuuri = new Muuri(this.grid, {
-        itemClass: 'pinned-grid-item',
-        dragEnabled: true,
-      });
+  componentWillUnmount() {
+    this.gridMuuri.destroy();
+  }
 
-      this.gridMuuri.on('dragEnd', this.updateOrder);
-    }
+  initGrid() {
+    this.gridMuuri = new Muuri(this.grid, {
+      itemClass: 'pinned-grid-item',
+      dragEnabled: true,
+    });
+
+    this.gridMuuri.on('dragEnd', this.updateOrder);
   }
 
   updateOrder() {
     const { orderPinboard, type, items } = this.props;
     const newIds = this.gridMuuri.getItems().map(item => item.getElement().getAttribute('data-id'));
-
     const currentIds = map(items, item => item.id);
 
     if (!isEqual(newIds, currentIds)) {
@@ -78,14 +76,13 @@ export default class PinnedType extends Component {
     );
   }
 
-  renderGrid() {
-    this.rendered = true;
+  render() {
     const { type, items } = this.props;
     const Card = CARD_MAP[type];
     this.itemElements = {};
 
     return (
-      <div className='type-cards' ref={ grid => this.grid = grid }>
+      <div className={ styles.pinnedGrid } ref={ grid => this.grid = grid }>
         {
           map(items, item => (
             <div
@@ -98,7 +95,6 @@ export default class PinnedType extends Component {
                 <Card
                   item={ item }
                   removeItemInPinboardPage={ this.removeItemInPinboardPage }
-                  isAdded={ get(this.addedItem, 'id') === get(item, 'id') }
                 />
               </div>
             </div>
@@ -107,40 +103,15 @@ export default class PinnedType extends Component {
       </div>
     );
   }
-
-  render() {
-    const { type, title, items, requesting } = this.props;
-    const noItems = items.length < 1;
-
-    if (!requesting && noItems) {
-      return null;
-    }
-
-    return (
-      <div className={ cx(style.wrapper, `test--${type}-section` ) }>
-        <div className='type-title'>
-          { title }
-        </div>
-        {
-          (requesting && noItems) ?
-            <LoadingSpinner className='type-cards-loading' />
-            :
-            this.renderGrid()
-        }
-      </div>
-    );
-  }
 }
 
-PinnedType.propTypes = {
+PinnedGrid.propTypes = {
   type: PropTypes.string,
-  title: PropTypes.string,
   items: PropTypes.array,
   removeItemInPinboardPage: PropTypes.func,
   orderPinboard: PropTypes.func,
-  requesting: PropTypes.bool,
 };
 
-PinnedType.defaultProps = {
+PinnedGrid.defaultProps = {
   items: [],
 };
