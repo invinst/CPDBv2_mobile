@@ -11,8 +11,10 @@ describe('officer-page selectors', function () {
   describe('officerYearlyPercentileSelector', function () {
     it('should return percentile data and mapped color', function () {
       const props = {
-        params: {
-          id: 11,
+        match: {
+          params: {
+            id: 11,
+          },
         },
       };
       const state = {
@@ -86,8 +88,10 @@ describe('officer-page selectors', function () {
 
   describe('officerSummarySelector', function () {
     const props = {
-      params: {
-        id: 11,
+      match: {
+        params: {
+          id: 11,
+        },
       },
     };
     const state = {
@@ -270,8 +274,10 @@ describe('officer-page selectors', function () {
 
     it('should return null if officer with matching ID does not exist', function () {
       const notFoundProps = {
-        params: {
-          id: 12,
+        match: {
+          params: {
+            id: 12,
+          },
         },
       };
 
@@ -281,8 +287,10 @@ describe('officer-page selectors', function () {
 
   describe('officerMetricsSelector', function () {
     const props = {
-      params: {
-        id: 11,
+      match: {
+        params: {
+          id: 11,
+        },
       },
     };
     const state = {
@@ -326,8 +334,10 @@ describe('officer-page selectors', function () {
 
     it('should return null if officer with matching ID does not exist', function () {
       const notFoundProps = {
-        params: {
-          id: 12,
+        match: {
+          params: {
+            id: 12,
+          },
         },
       };
 

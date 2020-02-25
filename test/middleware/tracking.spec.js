@@ -27,8 +27,6 @@ describe('trackingMiddleware', function () {
 
     dispatched.should.eql(dispatchAction);
     tracking.trackPageView.should.be.calledWith('abc');
-
-    tracking.trackPageView.restore();
   });
 
   it('should track search query on SEARCH_QUERY_CHANGED', function () {
@@ -44,8 +42,6 @@ describe('trackingMiddleware', function () {
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSearchQuery.should.be.calledWith('abc');
-
-    tracking.trackSearchQuery.restore();
   });
 
   it('should track search results count on SUGGEST_ALL_REQUEST_SUCCESS', function () {
@@ -61,8 +57,6 @@ describe('trackingMiddleware', function () {
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSearchResultsCount.should.be.calledWith(1);
-
-    tracking.trackSearchResultsCount.restore();
   });
 
   it('should track search results count on SUGGESTION_REQUEST_SUCCESS', function () {
@@ -81,8 +75,6 @@ describe('trackingMiddleware', function () {
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSearchResultsCount.should.be.calledWith(3);
-
-    tracking.trackSearchResultsCount.restore();
   });
 
   it('should trackSingleSearchResults on SUGGESTION_SINGLE_REQUEST_SUCCESS', function () {
@@ -102,7 +94,5 @@ describe('trackingMiddleware', function () {
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSingleSearchResults.should.be.calledWith('OFFICER', '123', 2);
-
-    tracking.trackSingleSearchResults.restore();
   });
 });

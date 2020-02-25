@@ -1,32 +1,27 @@
-import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { isEmpty, noop } from 'lodash';
 
-
+import browserHistory from 'utils/history';
+import { PINBOARD_PATH } from 'constants/paths';
 import style from './pinboard-bar.sass';
 
 
 export default class PinboardBar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
+  handleClick = () => {
     const { pinboard, onEmptyPinboardButtonClick } = this.props;
 
     if (isEmpty(pinboard.id)) {
       if (pinboard.hasPendingChanges) {
-        browserHistory.push('/pinboard/');
+        browserHistory.push(PINBOARD_PATH);
       } else {
         onEmptyPinboardButtonClick();
       }
     } else {
       browserHistory.push(pinboard.url);
     }
-  }
+  };
 
   render() {
     const { pinboard } = this.props;

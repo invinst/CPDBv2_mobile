@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { noop, isEmpty } from 'lodash';
-import DocumentMeta from 'react-document-meta';
+import { Helmet } from 'react-helmet-async';
 
 import BottomPadding from 'components/shared/bottom-padding';
 import Victim from './victim';
@@ -39,7 +40,10 @@ export default class ComplaintPage extends Component {
     }
 
     return (
-      <DocumentMeta title={ `CR ${complaintId}` }>
+      <React.Fragment>
+        <Helmet>
+          <title>{ `CR ${complaintId}` }</title>
+        </Helmet>
         <WithHeader className={ style.complaintPage }>
           <div className='complaint-page-body'>
             <ComplaintCategory
@@ -77,7 +81,7 @@ export default class ComplaintPage extends Component {
           <BottomPadding />
           <Footer />
         </WithHeader>
-      </DocumentMeta>
+      </React.Fragment>
     );
   }
 }

@@ -1,16 +1,16 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import { get, compact, sortBy, isEmpty } from 'lodash';
+import { get, compact, sortBy, isEmpty, each } from 'lodash';
 
 import constants from 'constants';
 import { getFindingOutcomeMix } from './finding-outcome-mix';
 import { extractPercentile } from 'selectors/common/percentile';
-import { breadcrumbSelector } from 'selectors/common/breadcrumbs';
 import { cmsSelector } from 'selectors/common/cms';
 import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
+import { getBreadcrumbItems } from 'selectors/breadcrumb';
 
 
-const getComplaint = (state, props) => state.complaintPage.complaints[props.params.complaintId];
+const getComplaint = (state, props) => state.complaintPage.complaints[props.match.params.complaintId];
 
 const formatDate = (date) => {
   if (!date) {
@@ -42,11 +42,32 @@ const coaccusedSelector = createSelector(
   complaint => get(complaint, 'coaccused', []).map(coaccusedTransform)
 );
 
-const sortByOfficerInBreadcrumb = breadcrumbs => officer => {
-  const officerIdsInBreadcrumb = breadcrumbs
-    .filter(item => item.url.indexOf(constants.OFFICER_PATH) > -1)
-    .map(item => item.params.officerId);
-  return -officerIdsInBreadcrumb.indexOf(String(officer.id));
+export function getOfficerId(url) {
+  if (url === undefined) {
+    return NaN;
+  }
+  return parseInt(url.replace(/.*officers?\/(\d+).*/, '$1'));
+}
+
+const breadcrumbOfficerIdsSelector = createSelector(
+  getBreadcrumbItems,
+  (breadcrumbItems) => {
+    const results = [];
+
+
+    each(breadcrumbItems, ({ url }) => {
+      const officerId = getOfficerId(url);
+      if (officerId) {
+        results.push(officerId);
+      }
+    });
+
+    return results;
+  }
+);
+
+const sortByOfficerInBreadcrumb = breadcrumbOfficerIds => officer => {
+  return -breadcrumbOfficerIds.indexOf(parseInt(officer.id));
 };
 
 const sortByOfficerFinding = officer => {
@@ -58,12 +79,12 @@ const sortByOfficerComplaint = officer => -officer.allegationCount;
 const getCoaccusedSelector = createWithIsPinnedSelector(
   createSelector(
     coaccusedSelector,
-    breadcrumbSelector,
-    (officers, { breadcrumbs }) => {
+    breadcrumbOfficerIdsSelector,
+    (officers, breadcrumbOfficerIds) => {
       return sortBy(
         officers,
         [
-          sortByOfficerInBreadcrumb(breadcrumbs),
+          sortByOfficerInBreadcrumb(breadcrumbOfficerIds),
           sortByOfficerFinding,
           sortByOfficerComplaint,
         ]

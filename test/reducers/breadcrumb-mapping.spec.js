@@ -7,7 +7,7 @@ import {
   PINBOARD_UPDATE_REQUEST_SUCCESS,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
 } from 'actions/pinboard';
-import breadcrumbMapping from 'reducers/breadcrumb-mapping';
+import breadcrumbMapping from 'reducers/breadcrumb/breadcrumb-mapping';
 
 
 describe('breadcrumbMapping reducer', function () {

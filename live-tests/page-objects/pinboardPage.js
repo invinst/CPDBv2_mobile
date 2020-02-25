@@ -48,7 +48,7 @@ module.exports = {
       selector: '(//a[starts-with(@class, "search-bar")])',
     },
     socialGraphTitle: '.sidenav-title',
-    coaccusalsThresholdText: '.coaccusals-threshold-text',
+    visualizationTitle: '.visualization-title',
     pinboardTitle: '.pinboard-title',
     pinboardDescription: '.pinboard-description',
     navigationNextButton: '.swiper-button-next',

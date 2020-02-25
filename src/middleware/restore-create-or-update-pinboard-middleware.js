@@ -1,6 +1,8 @@
 import { Promise } from 'es6-promise';
 import { get, keys, isNil, isEmpty, identity, noop, toLower, camelCase, startsWith } from 'lodash';
+import { LOCATION_CHANGE } from 'connected-react-router';
 
+import browserHistory from 'utils/history';
 import config from 'config';
 import {
   ADD_OR_REMOVE_ITEM_IN_PINBOARD,
@@ -19,7 +21,6 @@ import {
   updatePinboardInfoState,
   performFetchPinboardRelatedData,
 } from 'actions/pinboard';
-import { getPathname } from 'selectors/common/routing';
 import {
   dispatchFetchPinboardPageData,
   dispatchFetchPinboardPinnedItems,
@@ -34,6 +35,7 @@ import {
   showAlertToast,
 } from 'utils/toast';
 import { Toastify } from 'utils/toastify';
+import queryString from 'query-string';
 
 
 const getIds = (query, key) => get(query, key, '').split(',').filter(identity);
@@ -154,7 +156,7 @@ export default store => next => {
         if (pinboard.hasPendingChanges) {
           dispatchUpdateOrCreatePinboard(store, currentPinboard);
         } else {
-          if (startsWith(getPathname(state), '/pinboard/') && pinboardId) {
+          if (startsWith(browserHistory.location.pathname, '/pinboard/') && pinboardId) {
             if (!state.pinboardPage.pinnedItemsRequested) {
               dispatchFetchPinboardPinnedItems(store, pinboardId);
             }
@@ -167,20 +169,21 @@ export default store => next => {
       }
     }
 
-    if (action.type === '@@router/LOCATION_CHANGE') {
+    if (action.type === LOCATION_CHANGE) {
       const state = store.getState();
       const pinboard = state.pinboardPage.pinboard;
 
-      const onPinboardPage = action.payload.pathname.match(/\/pinboard\//);
-      const hasPinboardId = action.payload.pathname.match(/\/pinboard\/[a-fA-F0-9]+\//);
+      const onPinboardPage = action.payload.location.pathname.match(/\/pinboard\//);
+      const hasPinboardId = action.payload.location.pathname.match(/\/pinboard\/[a-fA-F0-9]+\//);
       if (onPinboardPage && !hasPinboardId && !pinboard.hasPendingChanges) {
-        const { pinboardFromQuery, invalidParams } = getPinboardFromQuery(action.payload.query);
+        const query = queryString.parse(action.payload.location.search);
+        const { pinboardFromQuery, invalidParams } = getPinboardFromQuery(query);
         isEmpty(invalidParams) || showInvalidParamToasts(invalidParams);
 
         if (!isEmptyPinboard(pinboardFromQuery))
           dispatchUpdateOrCreatePinboard(store, pinboardFromQuery, showCreatedToasts);
         else {
-          isEmpty(action.payload.query) || showPinboardToast('Redirected to latest pinboard.');
+          isEmpty(action.payload.location.search) || showPinboardToast('Redirected to latest pinboard.');
           store.dispatch(fetchLatestRetrievedPinboard({ create: true }));
         }
       } else if (!state.pinboardPage.pinboard.isPinboardRestored && !onPinboardPage) {

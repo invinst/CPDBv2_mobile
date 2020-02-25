@@ -1,15 +1,17 @@
 import React from 'react';
-import { Link, createMemoryHistory, Route, Router } from 'react-router';
+import { Route, Router, Link } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import Header from 'components/pinboard-page/header';
 import IOSPeek from 'components/common/ios-peek';
 
 
 describe('<Header /> of PinboardPage', function () {
   it('should render correctly', function () {
-    const header = mount(<Header />);
+    const header = mountWithRouter(<Header />);
 
     header.find(Link).props().to.should.eql('/');
     header.find('.highlight').text().should.be.eql('Pinboards');
@@ -21,7 +23,7 @@ describe('<Header /> of PinboardPage', function () {
   it('should preventDefault when clicking on menu item', function () {
     const preventDefault = spy();
     const header = mount(
-      <Router history={ createMemoryHistory() }>
+      <Router history={ createBrowserHistory() }>
         <Route path='/' component={ () => <Header /> } />
       </Router>
     );

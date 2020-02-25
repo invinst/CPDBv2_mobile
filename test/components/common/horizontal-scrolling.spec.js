@@ -46,8 +46,6 @@ describe('<HorizontalScrolling />', function () {
     tracking.trackSwipeLandingPageCarousel.getCall(0).args.should.eql(['right', 'contentType']);
     tracking.trackSwipeLandingPageCarousel.getCall(1).args.should.eql(['right', 'contentType']);
     tracking.trackSwipeLandingPageCarousel.getCall(2).args.should.eql(['left', 'contentType']);
-
-    tracking.trackSwipeLandingPageCarousel.restore();
   });
 
   it('should loadMore when almost reaching the end', function () {

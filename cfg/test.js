@@ -18,7 +18,7 @@ module.exports = {
           loader: 'istanbul-instrumenter-loader',
           options: { esModules: true }
         },
-        enforce: 'pre',
+        enforce: 'post',
       },
       {
         test: /\.(js|jsx)$/,
@@ -95,7 +95,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.json'],
     alias: {
       actions: srcPath + 'actions/',
       helpers: path.join(__dirname, '/../test/helpers'),

@@ -3,6 +3,7 @@ import { shallow, mount } from 'enzyme';
 import { spy, stub } from 'sinon';
 import { EditorState } from 'draft-js';
 
+import { mountWithRouter } from 'utils/tests';
 import ComplaintSummaries from 'components/landing-page/complaint-summaries';
 import CarouselWrapper from 'components/landing-page/carousel-wrapper';
 import ComplaintSummaryCard from 'components/landing-page/complaint-summaries/complaint-summary-card';
@@ -39,7 +40,7 @@ describe('<ComplaintSummaries />', function () {
 
   it('should call requestComplaintSummaries', function () {
     const requestComplaintSummariesSpy = spy();
-    mount(
+    mountWithRouter(
       <ComplaintSummaries
         requestComplaintSummaries={ requestComplaintSummariesSpy }
         complaintSummaries={ [

@@ -1,7 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import { stub, useFakeTimers } from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import RelevantDocumentCard, { RelevantDocumentCardWithUndo }
   from 'components/pinboard-page/relevant/relevant-documents/relevant-document-card';
 import BaseComplaintCard from 'components/pinboard-page/relevant/common/base-complaint-card';
@@ -64,7 +64,7 @@ describe('<RelevantDocumentCard />', function () {
   it('should render enough content correctly', function () {
     const addItemInPinboardPageStub = stub();
 
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <RelevantDocumentCard
         url='https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
         previewImageUrl='https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
@@ -101,13 +101,9 @@ describe('<RelevantDocumentCard />', function () {
       clock = useFakeTimers();
     });
 
-    afterEach(function () {
-      clock.restore();
-    });
-
     it('should render remove text correctly', function () {
       const addItemInPinboardPageStub = stub();
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <RelevantDocumentCardWithUndo
           url='https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
           previewImageUrl='https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
@@ -125,7 +121,7 @@ describe('<RelevantDocumentCard />', function () {
 
     it('should be reversed after the undo card disappears', function () {
       const addItemInPinboardPageStub = stub();
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <RelevantDocumentCardWithUndo
           url='https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
           previewImageUrl='https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
@@ -139,6 +135,7 @@ describe('<RelevantDocumentCard />', function () {
       plusButton.simulate('click');
 
       clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME + 50);
+      wrapper.update();
 
       wrapper.find(RelevantDocumentCard).should.have.length(1);
     });

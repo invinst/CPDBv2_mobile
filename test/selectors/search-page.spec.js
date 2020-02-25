@@ -1,5 +1,4 @@
-import constants from 'constants';
-
+import { OFFICER_PATH } from 'constants/paths';
 import {
   officersSelector,
   unitsSelector,
@@ -21,6 +20,7 @@ import {
   getCancelPathname,
   categoriesSelector,
 } from 'selectors/search-page';
+
 
 describe('search-page selectors', function () {
   describe('officersSelector', function () {
@@ -61,7 +61,7 @@ describe('search-page selectors', function () {
           name: 'Name',
           badge: '',
           percentile: null,
-          url: `${constants.OFFICER_PATH}1/name/`,
+          url: `${OFFICER_PATH}1/name/`,
           isPinned: false,
           type: 'OFFICER',
           recentItemData: officer,
@@ -81,7 +81,7 @@ describe('search-page selectors', function () {
         id: '1',
         name: 'Name',
         badge: 'Badge #12314',
-        url: `${constants.OFFICER_PATH}1/name/`,
+        url: `${OFFICER_PATH}1/name/`,
         percentile: null,
         isPinned: true,
         type: 'OFFICER',
@@ -192,6 +192,7 @@ describe('search-page selectors', function () {
       const expectedDateCrs = [
         {
           crid: '1027271',
+          id: '1027271',
           url: '/complaint/1027271/',
           incidentDate: '06/13/2009',
           category: 'Use Of Force',
@@ -304,6 +305,7 @@ describe('search-page selectors', function () {
       const expectedCrs = [
         {
           crid: '1027271',
+          id: '1027271',
           url: '/complaint/1027271/',
           category: 'Use Of Force',
           incidentDate: '06/13/2009',
@@ -313,6 +315,7 @@ describe('search-page selectors', function () {
         },
         {
           crid: '1049273',
+          id: '1049273',
           url: '/complaint/1049273/',
           category: 'Domestic',
           incidentDate: '10/13/2011',
@@ -369,6 +372,7 @@ describe('search-page selectors', function () {
       const expectedInvestigatorCR = [
         {
           crid: '1027271',
+          id: '1027271',
           url: '/complaint/1027271/',
           incidentDate: '06/13/2009',
           category: 'Use Of Force',
@@ -478,7 +482,7 @@ describe('search-page selectors', function () {
           name: 'Jerome Finnigan',
           badge: 'Badge #56789',
           percentile: null,
-          url: `${constants.OFFICER_PATH}123/jerome-finnigan/`,
+          url: `${OFFICER_PATH}123/jerome-finnigan/`,
           type: 'OFFICER',
           isPinned: false,
           recentItemData: officer,
@@ -550,6 +554,7 @@ describe('search-page selectors', function () {
         },
         {
           crid: '271235',
+          id: '271235',
           url: '/complaint/271235/',
           incidentDate: '02/10/2001',
           isPinned: false,
@@ -803,6 +808,7 @@ describe('search-page selectors', function () {
           },
           {
             crid: '271235',
+            id: '271235',
             itemRank: 2,
             url: '/complaint/271235/',
             incidentDate: '02/10/2001',
@@ -909,6 +915,7 @@ describe('search-page selectors', function () {
         items: [
           {
             crid: '1027271',
+            id: '1027271',
             itemRank: 1,
             url: '/complaint/1027271/',
             category: 'Use Of Force',
@@ -919,6 +926,7 @@ describe('search-page selectors', function () {
           },
           {
             crid: '1049273',
+            id: '1049273',
             itemRank: 2,
             url: '/complaint/1049273/',
             category: 'Domestic',
@@ -1048,6 +1056,7 @@ describe('search-page selectors', function () {
         showAllButton: true,
         items: [{
           crid: '1027271',
+          id: '1027271',
           itemRank: 1,
           url: '/complaint/1027271/',
           incidentDate: '06/13/2009',
@@ -1084,7 +1093,7 @@ describe('search-page selectors', function () {
           name: 'Jerome Finnigan',
           badge: 'Badge #56789',
           percentile: null,
-          url: `${ constants.OFFICER_PATH }123/jerome-finnigan/`,
+          url: `${ OFFICER_PATH }123/jerome-finnigan/`,
           type: 'OFFICER',
           isPinned: false,
           recentItemData: dateOfficer,
@@ -1101,7 +1110,7 @@ describe('search-page selectors', function () {
           itemRank: 4,
           name: 'Name',
           badge: 'Badge #12314',
-          url: `${ constants.OFFICER_PATH }1/name/`,
+          url: `${ OFFICER_PATH }1/name/`,
           percentile: null,
           isPinned: true,
           type: 'OFFICER',
@@ -1117,6 +1126,7 @@ describe('search-page selectors', function () {
         items: [
           {
             crid: '1027271',
+            id: '1027271',
             itemRank: 5,
             url: '/complaint/1027271/',
             category: 'Use Of Force',
@@ -1127,6 +1137,7 @@ describe('search-page selectors', function () {
           },
           {
             crid: '1049273',
+            id: '1049273',
             itemRank: 6,
             url: '/complaint/1049273/',
             category: 'Domestic',
@@ -1137,6 +1148,7 @@ describe('search-page selectors', function () {
           },
           {
             crid: '1027271',
+            id: '1027271',
             itemRank: 7,
             url: '/complaint/1027271/',
             category: 'Use Of Force',
@@ -1147,6 +1159,7 @@ describe('search-page selectors', function () {
           },
           {
             crid: '1049273',
+            id: '1049273',
             itemRank: 8,
             url: '/complaint/1049273/',
             category: 'Domestic',
@@ -1157,6 +1170,7 @@ describe('search-page selectors', function () {
           },
           {
             crid: '1027271',
+            id: '1027271',
             itemRank: 9,
             url: '/complaint/1027271/',
             category: 'Use Of Force',
@@ -1190,6 +1204,7 @@ describe('search-page selectors', function () {
         showAllButton: true,
         items: [{
           crid: '1027271',
+          id: '1027271',
           itemRank: 11,
           url: '/complaint/1027271/',
           incidentDate: '06/13/2009',

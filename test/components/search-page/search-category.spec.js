@@ -1,9 +1,10 @@
 import should from 'should';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { stub, spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import * as NavigationUtil from 'utils/navigation-util';
 
+import { mountWithRouter } from 'utils/tests';
 import constants from 'constants';
 import SearchCategory from 'components/search-page/search-category';
 import SearchResult from 'components/search-page/search-result';
@@ -36,14 +37,11 @@ describe('<SearchCategory />', function () {
     const instance = wrapper.instance();
 
     const stubAddEventListener = stub(window, 'addEventListener');
-    const stubWatchActiveStateBind = stub(instance.watchActiveState, 'bind').returns(instance.watchActiveState);
+    stub(instance.watchActiveState, 'bind').returns(instance.watchActiveState);
 
     instance.componentDidMount();
 
     stubAddEventListener.calledWith('scroll', instance.watchActiveState).should.be.true();
-
-    stubAddEventListener.restore();
-    stubWatchActiveStateBind.restore();
   });
 
   it('should define function to remove scroll listener', function () {
@@ -56,9 +54,9 @@ describe('<SearchCategory />', function () {
     );
     const instance = wrapper.instance();
 
-    const stubAddEventListener = stub(window, 'addEventListener');
+    stub(window, 'addEventListener');
     const stubRemoveEventListener = stub(window, 'removeEventListener');
-    const stubWatchActiveStateBind = stub(instance.watchActiveState, 'bind').returns(instance.watchActiveState);
+    stub(instance.watchActiveState, 'bind').returns(instance.watchActiveState);
 
     instance.componentDidMount();
 
@@ -67,10 +65,6 @@ describe('<SearchCategory />', function () {
     instance.unwatchActiveState();
 
     stubRemoveEventListener.calledWith('scroll', instance.watchActiveState).should.be.true();
-
-    stubAddEventListener.restore();
-    stubRemoveEventListener.restore();
-    stubWatchActiveStateBind.restore();
   });
 
   it('should unwatch active state when unmounted', function () {
@@ -133,11 +127,6 @@ describe('<SearchCategory />', function () {
       this.stubRenderFunc = stub(SearchCategory.prototype, 'renderResults');
       this.stubRenderFunc.returns((item) => item);
       this.stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
-    });
-
-    afterEach(function () {
-      this.stubRenderFunc.restore();
-      this.stubInstantScrollToTop.restore();
     });
 
     it('should render correctly', function () {
@@ -249,7 +238,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ officers }
           categoryId='officers'
@@ -277,7 +266,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ crs }
           categoryId='crs'
@@ -304,7 +293,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ trrs }
           categoryId='trrs'
@@ -331,7 +320,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ dateCRs }
           categoryId='dateCRs'
@@ -358,7 +347,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ dateTRRs }
           categoryId='dateTRRs'
@@ -389,7 +378,7 @@ describe('<SearchCategory />', function () {
         },
       ];
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <SearchCategory
           items={ officers }
           categoryId='dateOfficers'
@@ -408,10 +397,6 @@ describe('<SearchCategory />', function () {
     beforeEach(function () {
       this.stubGetCurrentScrollPosition = stub(NavigationUtil, 'getCurrentScrollPosition');
       this.stubGetCurrentScrollPosition.returns(900);
-    });
-
-    afterEach(function () {
-      this.stubGetCurrentScrollPosition.restore();
     });
 
     it('should not do anything if category is already active', function () {

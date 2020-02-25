@@ -13,7 +13,6 @@ describe('Intercom utils', function () {
   });
 
   afterEach(function () {
-    window.Intercom.restore();
     window.Intercom = oldIntercom;
   });
 

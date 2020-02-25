@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import cx from 'classnames';
 
 import ItemPinButton from 'components/common/item-pin-button';
@@ -8,12 +9,7 @@ import * as tracking from 'utils/tracking';
 
 
 export default class SearchItem extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
+  handleClick = () => {
     const { id, type, recentItemData, saveToRecent, query, itemRank } = this.props;
     tracking.trackSearchFocusedItem(type, query, id, itemRank);
     saveToRecent({
@@ -21,7 +17,7 @@ export default class SearchItem extends Component {
       id: id,
       data: recentItemData,
     });
-  }
+  };
 
   render() {
     const {

@@ -3,7 +3,9 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { shallow, mount } from 'enzyme';
 import { spy, stub } from 'sinon';
+import { MemoryRouter } from 'react-router-dom';
 
+import { mountWithRouter } from 'utils/tests';
 import Officers from 'components/embed/officers';
 import OfficersContainer from 'containers/embed/officers';
 import OfficerCard from 'components/common/officer-card';
@@ -18,7 +20,7 @@ describe('<Officers />', function () {
 
   it('should call request Officers if not requested', function () {
     const requestOfficersSpy = spy();
-    mount(
+    mountWithRouter(
       <Officers
         requestOfficers={ requestOfficersSpy }
         officers={ [{ percentile: {} }] }
@@ -106,7 +108,7 @@ describe('<Officers />', function () {
     ];
     stub(IntercomUtils, 'showIntercomLauncher');
 
-    mount(
+    mountWithRouter(
       <Officers
         officers={ officers }
         title='title'
@@ -115,7 +117,6 @@ describe('<Officers />', function () {
     );
 
     IntercomUtils.showIntercomLauncher.calledWith(false).should.be.true();
-    IntercomUtils.showIntercomLauncher.restore();
   });
 
   describe('officersContainer', function () {
@@ -146,9 +147,11 @@ describe('<Officers />', function () {
 
       const wrapper = mount(
         <Provider store={ store }>
-          <OfficersContainer
-            location={ { query: { ids: '13788,13789', title: 'title', description: 'description' } } }
-          />
+          <MemoryRouter>
+            <OfficersContainer
+              location={ { search: '?ids=13788,13789&title=title&description=description' } }
+            />
+          </MemoryRouter>
         </Provider>
       );
 

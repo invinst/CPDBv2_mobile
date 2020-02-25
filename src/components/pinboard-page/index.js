@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import cx from 'classnames';
 
 import SearchBar from './search-bar';
@@ -17,15 +18,9 @@ import PinboardDataVisualization from 'components/pinboard-page/pinboard-data-vi
 
 export default class PinboardPage extends Component {
   componentDidMount() {
-    const { params, pushBreadcrumbs, location, routes, requestCMS, hasCMS } = this.props;
-    pushBreadcrumbs({ location, routes, params });
+    const { requestCMS, hasCMS } = this.props;
 
     hasCMS || requestCMS();
-  }
-
-  componentDidUpdate() {
-    const { params, pushBreadcrumbs, location, routes } = this.props;
-    pushBreadcrumbs({ location, routes, params });
   }
 
   renderContent() {
@@ -80,9 +75,6 @@ export default class PinboardPage extends Component {
 
 PinboardPage.propTypes = {
   params: PropTypes.object,
-  routes: PropTypes.array,
-  pushBreadcrumbs: PropTypes.func,
-  location: PropTypes.object,
   pinboard: PropTypes.object,
   hasMapMarker: PropTypes.bool,
   initialRequested: PropTypes.bool,
@@ -94,7 +86,6 @@ PinboardPage.propTypes = {
 
 PinboardPage.defaultProps = {
   itemsByTypes: {},
-  pushBreadcrumbs: () => {},
   initialRequested: true,
   requestCMS: () => {},
 };

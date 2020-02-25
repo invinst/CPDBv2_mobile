@@ -4,6 +4,7 @@ import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { stub } from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import { OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import Timeline from 'components/officer-page/tabbed-pane-section/timeline';
@@ -24,7 +25,7 @@ describe('TabbedPaneSection component', function () {
   });
 
   it('should render Header and Footer with correct tab names with correct order', function () {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <Provider store={ store }>
         <TabbedPaneSection
           currentTab='TIMELINE'
@@ -54,7 +55,7 @@ describe('TabbedPaneSection component', function () {
   });
 
   it('should hide the tabs with no data', function () {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <Provider store={ store }>
         <TabbedPaneSection
           currentTab='TIMELINE'
@@ -73,7 +74,7 @@ describe('TabbedPaneSection component', function () {
   });
 
   it('should render timeline tab', function () {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <Provider store={ store }>
         <TabbedPaneSection currentTab={ OFFICER_PAGE_TAB_NAMES.TIMELINE }/>
       </Provider>
@@ -83,7 +84,7 @@ describe('TabbedPaneSection component', function () {
   });
 
   it('should render coaccusals tab', function () {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <Provider store={ store }>
         <TabbedPaneSection currentTab={ OFFICER_PAGE_TAB_NAMES.COACCUSALS } hasCoaccusal={ true } />
       </Provider>
@@ -93,7 +94,7 @@ describe('TabbedPaneSection component', function () {
   });
 
   it('should render attachments tab', function () {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <Provider store={ store }>
         <TabbedPaneSection currentTab={ OFFICER_PAGE_TAB_NAMES.ATTACHMENTS }/>
       </Provider>
@@ -103,7 +104,7 @@ describe('TabbedPaneSection component', function () {
   });
 
   it('should render map tab', function () {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <Provider store={ store }>
         <TabbedPaneSection currentTab={ OFFICER_PAGE_TAB_NAMES.MAP }/>
       </Provider>

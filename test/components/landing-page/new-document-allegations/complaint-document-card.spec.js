@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { Link } from 'react-router';
 import { stub } from 'sinon';
-import { Router, Route, createMemoryHistory } from 'react-router';
+import { Router, Route, Link } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
 
 import * as tracking from 'utils/tracking';
 import ComplaintDocumentCard from 'components/landing-page/new-document-allegations/complaint-document-card';
@@ -55,7 +56,7 @@ describe('<ComplaintDocumentCard />', function () {
       <ComplaintDocumentCard allegation={ allegation } pathname='/'/>
     );
     const wrapper = mount(
-      <Router history={ createMemoryHistory() }>
+      <Router history={ createBrowserHistory() }>
         <Route path='/' component={ complaintDocumentCard } />
       </Router>
     );
@@ -64,7 +65,6 @@ describe('<ComplaintDocumentCard />', function () {
       '/',
       '/complaint/123456/'
     );
-    stubTrackAttachmentClick.restore();
   });
 
   it('should track click on attachment event', function () {
@@ -83,7 +83,7 @@ describe('<ComplaintDocumentCard />', function () {
       />
     );
     const wrapper = mount(
-      <Router history={ createMemoryHistory() }>
+      <Router history={ createBrowserHistory() }>
         <Route path='/' component={ complaintDocumentCard } />
       </Router>
     );

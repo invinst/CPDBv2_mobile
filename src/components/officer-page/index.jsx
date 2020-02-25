@@ -1,7 +1,8 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { isEmpty, noop, clone, reduce, values, compact } from 'lodash';
 import pluralize from 'pluralize';
-import DocumentMeta from 'react-document-meta';
+import { Helmet } from 'react-helmet-async';
 
 import { scrollToTop } from 'utils/navigation-util';
 import LoadingPage from 'components/shared/loading-page';
@@ -16,7 +17,7 @@ import { DATA_NOT_AVAILABLE } from 'selectors/officer-page';
 import { officerUrl } from 'utils/url-util';
 import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import { TAB_MAP, OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
-import AppHistory from 'utils/history';
+import browserHistory from 'utils/history';
 import Footer from 'components/footer';
 import WithHeader from 'components/shared/with-header';
 
@@ -29,8 +30,6 @@ class OfficerPage extends Component {
     this.state = {
       currentTab: TAB_MAP[tabName] || OFFICER_PAGE_TAB_NAMES.TIMELINE,
     };
-
-    this.changeTab = this.changeTab.bind(this);
   }
 
   componentDidMount() {
@@ -51,14 +50,14 @@ class OfficerPage extends Component {
     const name = summary.name;
     const correctPathName = officerUrl(summary.id, name, this.state.currentTab);
     if (name && (location.pathname !== correctPathName)) {
-      AppHistory.replace(correctPathName);
+      browserHistory.replace(correctPathName);
     }
   }
 
-  changeTab(tab) {
+  changeTab = tab => {
     if (values(OFFICER_PAGE_TAB_NAMES).includes(tab))
       this.setState({ currentTab: tab });
-  }
+  };
 
   _fetchData() {
     const {
@@ -95,7 +94,7 @@ class OfficerPage extends Component {
     const { badge, historicBadges } = this.props.summary;
     let allBadges = clone(historicBadges) || [];
     if (badge)
-      allBadges.unshift(<span className='current-badge'>{ badge }</span>);
+      allBadges.unshift(<span className='current-badge' key='current-badge'>{ badge }</span>);
 
     if (isEmpty(allBadges))
       allBadges.unshift('Unknown');
@@ -206,7 +205,11 @@ class OfficerPage extends Component {
       `and ${pluralize('original document', numAttachments, true)} available.`;
 
     return (
-      <DocumentMeta title={ pageTitle } description={ pageDescription }>
+      <React.Fragment>
+        <Helmet>
+          <title>{ pageTitle }</title>
+          <meta name='description' content={ pageDescription }/>
+        </Helmet>
         <WithHeader className={ style.officerSummary }>
           <AnimatedRadarChart
             officerId={ id }
@@ -234,7 +237,8 @@ class OfficerPage extends Component {
           <BottomPadding />
           <Footer />
         </WithHeader>
-      </DocumentMeta>
+      </React.Fragment>
+
     );
   }
 }

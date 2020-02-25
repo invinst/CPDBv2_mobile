@@ -9,10 +9,6 @@ describe('scrollPositionMiddleware', function () {
     this.stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
   });
 
-  afterEach(function () {
-    this.stubInstantScrollToTop.restore();
-  });
-
   it('should do nothing if action is not ROUTE_CHANGED', function () {
 
     const store = { foo: 'bar' };

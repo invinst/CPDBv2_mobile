@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
-import { mount } from 'enzyme';
+import { Link } from 'react-router-dom';
 import { spy } from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import OfficerItem from 'components/search-page/officer-item';
 import SearchItem from 'components/search-page/search-item';
 
@@ -27,7 +27,7 @@ describe('<OfficerItem />', function () {
       itemRank: 3,
     };
 
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <OfficerItem
         item={ officer }
         query='Le'

@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 
 import PinboardDataVisualization from 'components/pinboard-page/pinboard-data-visualization';
 import AnimatedSocialGraph from 'components/common/animated-social-graph';
@@ -46,10 +47,12 @@ describe('PinboardDataVisualization component', function () {
   it('should render pinboard visualization correctly', function () {
     const wrapper = mount(
       <Provider store={ store }>
-        <PinboardDataVisualization
-          pinboard={ { id: '1234abcd' } }
-          hasMapMarker={ true }
-        />
+        <MemoryRouter>
+          <PinboardDataVisualization
+            pinboard={ { id: '1234abcd' } }
+            hasMapMarker={ true }
+          />
+        </MemoryRouter>
       </Provider>
     );
 

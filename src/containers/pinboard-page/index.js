@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { push as pushBreadcrumbs } from 'redux-breadcrumb-trail';
+import { withRouter } from 'react-router-dom';
 
 import { getPinboard, isEmptyPinboardSelector } from 'selectors/pinboard-page/pinboard';
 import PinboardPage from 'components/pinboard-page';
@@ -12,6 +11,7 @@ import { hasCMS } from 'selectors/common/cms';
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
+  params: ownProps.match.params,
   pinboard: getPinboard(state),
   hasMapMarker: hasMapMarkersSelector(state),
   initialRequested: getInitialRequested(state),
@@ -21,7 +21,6 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = {
-  pushBreadcrumbs,
   requestCMS,
 };
 

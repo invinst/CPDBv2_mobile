@@ -1,5 +1,5 @@
-import React, { PropTypes, Component } from 'react';
-import { render } from 'react-dom';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { isNil } from 'lodash';
 
 import style from './location-map.sass';
@@ -11,7 +11,6 @@ const scrollTopMargin = 40; // this value depends on the height of Header
 export default class LocationMap extends Component {
   constructor(props) {
     super(props);
-    this.handleScroll = this.handleScroll.bind(this);
     this.prevTop = 0;
     this.prevBottom = 0;
   }
@@ -21,11 +20,10 @@ export default class LocationMap extends Component {
     addEventListener('scroll', this.handleScroll);
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
-    const { lat, lng, zoomInLevel } = this.props;
-
-    if (lat !== nextProps.lat || lng !== nextProps.lng) {
-      this.addMarker(nextProps.lat, nextProps.lng, nextProps.markerEl);
+  componentDidUpdate(prevProps) {
+    const { lat, lng, customMarkerClassName, zoomInLevel } = this.props;
+    if (prevProps.lat !== lat || prevProps.lng !== lng) {
+      this.addMarker(lat, lng, customMarkerClassName);
 
       if (this.map.getZoom() === zoomInLevel) {
         this.zoomOut();
@@ -42,10 +40,9 @@ export default class LocationMap extends Component {
     return !isNil(lat) && !isNil(lng);
   }
 
-  gotRef(el) {
+  gotRef = (el) => {
     if (el && !this.map) {
-      this.el = el;
-      const { lat, lng, mapboxStyle, markerEl, zoomOutLevel, centerLng, centerLat } = this.props;
+      const { lat, lng, mapboxStyle, customMarkerClassName, zoomOutLevel, centerLng, centerLat } = this.props;
       this.map = new mapboxgl.Map({
         container: el,
         style: mapboxStyle,
@@ -53,38 +50,34 @@ export default class LocationMap extends Component {
         center: [centerLng, centerLat],
         interactive: false,
       });
-      this.map.on('click', this.handleMapClick.bind(this));
-      this.addMarker(lat, lng, markerEl);
+      this.map.on('click', this.handleMapClick);
+      this.addMarker(lat, lng, customMarkerClassName);
     }
-  }
+  };
 
-  addMarker(lat, lng, markerEl) {
+  addMarker(lat, lng, customMarkerClassName) {
     if (this.marker && this.isValidLocation(lat, lng)) {
       this.marker.setLngLat([lng, lat]);
     } else if (this.marker) {
       this.marker.remove();
       this.marker = null;
     } else if (this.isValidLocation(lat, lng)) {
-      const placeholder = document.createElement('div');
+      const markerEl = document.createElement('div');
+      markerEl.className = customMarkerClassName || 'default-marker';
 
-      const markerDOM = render(
-        markerEl || <div className='default-marker'/>,
-        placeholder
-      );
-
-      this.marker = new mapboxgl.Marker(markerDOM);
+      this.marker = new mapboxgl.Marker(markerEl);
       this.marker.setLngLat([lng, lat]);
       this.marker.addTo(this.map);
     }
   }
 
-  handleMapClick(e) {
+  handleMapClick = (e) => {
     if (this.map.getZoom() === this.props.zoomOutLevel) {
       this.zoomIn();
     } else {
       this.zoomOut();
     }
-  }
+  };
 
   zoomIn() {
     const { lng, lat, zoomInLevel } = this.props;
@@ -104,7 +97,7 @@ export default class LocationMap extends Component {
     });
   }
 
-  handleScroll(event) {
+  handleScroll = event => {
     /* istanbul ignore next */
     // Logic: zoom in the map if it closes to top or bottom of the current window
     if (this.map) {
@@ -125,12 +118,12 @@ export default class LocationMap extends Component {
       this.prevTop = top;
       this.prevBottom = bottom;
     }
-  }
+  };
 
   render() {
 
     return (
-      <div className={ style.locationMap } ref={ this.gotRef.bind(this) }/>
+      <div className={ style.locationMap } ref={ this.gotRef }/>
     );
   }
 }
@@ -139,7 +132,7 @@ LocationMap.propTypes = {
   lat: PropTypes.number,
   lng: PropTypes.number,
   mapboxStyle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  markerEl: PropTypes.element,
+  customMarkerClassName: PropTypes.string,
   zoomOutLevel: PropTypes.number,
   zoomInLevel: PropTypes.number,
   centerLat: PropTypes.number,
@@ -148,7 +141,6 @@ LocationMap.propTypes = {
 
 LocationMap.defaultProps = {
   mapboxStyle: 'mapbox://styles/mapbox/streets-v10',
-  markerEl: null,
   zoomOutLevel: 8,
   zoomInLevel: 13,
   centerLat: 41.85677,

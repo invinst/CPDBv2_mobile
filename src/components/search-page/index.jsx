@@ -1,9 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactHeight from 'react-height';
-import { browserHistory } from 'react-router';
 import { isEmpty, noop } from 'lodash';
 import cx from 'classnames';
 
+import browserHistory from 'utils/history';
 import { instantScrollToTop } from 'utils/navigation-util';
 import SearchCategory from './search-category';
 import { showIntercomLauncher } from 'utils/intercom';
@@ -14,21 +15,8 @@ import PinboardBar from './pinboard-bar';
 
 
 export default class SearchPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleEmptyPinboardButtonClick = this.handleEmptyPinboardButtonClick.bind(this);
-    this.clearChosenCategory = this.clearChosenCategory.bind(this);
-    this.backToFullSearchHandler = this.backToFullSearchHandler.bind(this);
-    this.handleGoBack = this.handleGoBack.bind(this);
-  }
-
   componentDidMount() {
     const {
-      pushBreadcrumbs,
-      location,
-      routes,
-      params,
       recentSuggestionIds,
       fetchRecentSearchItems,
       recentSuggestionsRequested,
@@ -44,7 +32,6 @@ export default class SearchPage extends Component {
       }
     }
 
-    pushBreadcrumbs({ location, routes, params });
     this.searchInput.focus();
     IntercomTracking.trackSearchPage();
     showIntercomLauncher(false);
@@ -81,31 +68,31 @@ export default class SearchPage extends Component {
     return typeof query === 'string' && query.length >= 2;
   }
 
-  updateLastCategoryHeight(newHeight) {
+  updateLastCategoryHeight = (newHeight) => {
     this.lastCategoryHeight = newHeight;
     this.forceUpdate();
-  }
+  };
 
   chooseCategory(category) {
     const { updateChosenCategory } = this.props;
     updateChosenCategory(category.id);
   }
 
-  clearChosenCategory() {
+  clearChosenCategory = () => {
     const { updateChosenCategory } = this.props;
     updateChosenCategory('');
-  }
+  };
 
-  handleGoBack(e) {
+  handleGoBack = e => {
     !isEmpty(e) && e.preventDefault();
     const { cancelPathname } = this.props;
     browserHistory.push(cancelPathname);
-  }
+  };
 
-  backToFullSearchHandler() {
+  backToFullSearchHandler = () => {
     this.clearChosenCategory();
     instantScrollToTop();
-  }
+  };
 
   renderCategories() {
     const {
@@ -144,7 +131,7 @@ export default class SearchPage extends Component {
       if (index === lastIndex) {
         // Track last category's DOM element height to use in dynamic bottom padding height calculation
         return (
-          <ReactHeight key={ cat.id } onHeightReady={ this.updateLastCategoryHeight.bind(this) }>
+          <ReactHeight key={ cat.id } onHeightReady={ this.updateLastCategoryHeight }>
             { searchCategory }
           </ReactHeight>
         );
@@ -155,7 +142,7 @@ export default class SearchPage extends Component {
     });
   }
 
-  handleEmptyPinboardButtonClick() {
+  handleEmptyPinboardButtonClick = () => {
     const { createPinboard } = this.props;
 
     createPinboard({ 'officerIds': [], crids: [], 'trrIds': [] }).then(response => {
@@ -166,7 +153,7 @@ export default class SearchPage extends Component {
         browserHistory.push(url);
       }
     });
-  }
+  };
 
   render() {
     const { query, queryPrefix, chosenCategory, pinboard } = this.props;
@@ -235,10 +222,6 @@ SearchPage.propTypes = {
   updateActiveCategory: PropTypes.func,
   updateChosenCategory: PropTypes.func,
   router: PropTypes.object,
-  pushBreadcrumbs: PropTypes.func,
-  location: PropTypes.object,
-  params: PropTypes.object,
-  routes: PropTypes.array,
   pinboard: PropTypes.object,
   addOrRemoveItemInPinboard: PropTypes.func,
   createPinboard: PropTypes.func,
@@ -257,7 +240,6 @@ SearchPage.defaultProps = {
   inputChanged: noop,
   updateChosenCategory: noop,
   chosenCategory: '',
-  pushBreadcrumbs: noop,
   createPinboard: noop,
   suggestTerm: noop,
   queryChanged: noop,

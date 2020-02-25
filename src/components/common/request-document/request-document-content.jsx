@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import CMSContent from 'components/common/cms-content';
@@ -6,13 +7,12 @@ import style from './request-document-content.sass';
 
 
 export default class RequestDocumentContent extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  constructor(props) {
+    super(props);
     this.state = { warning: false };
   }
 
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault();
     const { requestDocument, id, closeModal } = this.props;
     return requestDocument({ id, email: this.refs.email.value }).then((action) => {
@@ -21,7 +21,7 @@ export default class RequestDocumentContent extends Component {
     }).catch(e => {
       this.setState({ warning: true });
     });
-  }
+  };
 
   render() {
     const {

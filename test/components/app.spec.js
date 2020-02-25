@@ -1,23 +1,23 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { ToastContainer } from 'react-toastify';
 import { spy, stub } from 'sinon';
 
 import config from 'config';
-import MainPage from 'components/main-page';
-import styles from 'components/main-page.sass';
+import App from 'components/app';
+import styles from 'components/app.sass';
 
 
-describe('MainPage component', function () {
+describe('App component', function () {
   it('should render', function () {
-    let wrapper = shallow(<MainPage />);
+    let wrapper = shallow(<App />);
     wrapper.should.be.ok();
   });
 
   it('should dispatch routeChanged action on mount', function () {
     const spyRouteChanged = spy();
     const wrapper = shallow(
-      <MainPage
+      <App
         routeChanged={ spyRouteChanged }
         location={ { pathname: 'dummy/' } }
       />
@@ -29,7 +29,7 @@ describe('MainPage component', function () {
 
   it('should not render bottom padding element if not at root', function () {
     const location = { pathname: '/search/' };
-    let wrapper = shallow(<MainPage location={ location }/>);
+    let wrapper = shallow(<App location={ location }/>);
     wrapper.find('.bottom-padding').exists().should.be.false();
   });
 
@@ -46,7 +46,7 @@ describe('MainPage component', function () {
     const spyRouteChanged = spy();
 
     const wrapper = shallow(
-      <MainPage
+      <App
         location={ currentLocation }
         routeChanged={ spyRouteChanged }
       />
@@ -69,10 +69,11 @@ describe('MainPage component', function () {
     const spyRouteChanged = spy();
 
     const wrapper = shallow(
-      <MainPage
+      <App
         location={ currentLocation }
         routeChanged={ spyRouteChanged }
-      />
+      />,
+      { disableLifecycleMethods: true },
     );
 
     wrapper.instance().componentDidUpdate(prevProps);
@@ -80,8 +81,8 @@ describe('MainPage component', function () {
   });
 
   it('should render ToastContainer', function () {
-    const wrapper = mount(
-      <MainPage
+    const wrapper = shallow(
+      <App
         location={ { pathname: '/' } }
       />
     );
@@ -96,31 +97,23 @@ describe('MainPage component', function () {
 
   context('enablePinboardFeature is false', function () {
     beforeEach(function () {
-      this.enableFeaturePinboardStub = stub(config.enableFeatures, 'pinboard').value(false);
-    });
-
-    afterEach(function () {
-      this.enableFeaturePinboardStub.restore();
+      stub(config.enableFeatures, 'pinboard').value(false);
     });
 
     it('should add pinboard-disabled class name', function () {
-      const wrapper = shallow(<MainPage />);
-      wrapper.prop('className').should.containEql(styles.mainPage).and.containEql('pinboard-disabled');
+      const wrapper = shallow(<App />);
+      wrapper.prop('className').should.containEql(styles.app).and.containEql('pinboard-disabled');
     });
   });
 
   context('enablePinboardFeature is true', function () {
     beforeEach(function () {
-      this.enableFeaturePinboardStub = stub(config.enableFeatures, 'pinboard').value(true);
-    });
-
-    afterEach(function () {
-      this.enableFeaturePinboardStub.restore();
+      stub(config.enableFeatures, 'pinboard').value(true);
     });
 
     it('should add pinboard-disabled class name', function () {
-      const wrapper = shallow(<MainPage />);
-      wrapper.prop('className').should.containEql(styles.mainPage).and.not.containEql('pinboard-disabled');
+      const wrapper = shallow(<App />);
+      wrapper.prop('className').should.containEql(styles.app).and.not.containEql('pinboard-disabled');
     });
   });
 });

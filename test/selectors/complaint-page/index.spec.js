@@ -24,8 +24,10 @@ describe('complaint-page selectors', function () {
         },
       };
       const props = {
-        params: {
-          complaintId: '1',
+        match: {
+          params: {
+            complaintId: '1',
+          },
         },
       };
       should(complaintSelector(state, props)).be.null();
@@ -47,8 +49,10 @@ describe('complaint-page selectors', function () {
       };
 
       const props = {
-        params: {
-          complaintId: '111',
+        match: {
+          params: {
+            complaintId: '111',
+          },
         },
       };
 
@@ -135,8 +139,10 @@ describe('complaint-page selectors', function () {
       };
 
       const props = {
-        params: {
-          complaintId: '111',
+        match: {
+          params: {
+            complaintId: '111',
+          },
         },
       };
 
@@ -224,8 +230,10 @@ describe('complaint-page selectors', function () {
       };
 
       const props = {
-        params: {
-          complaintId: '123',
+        match: {
+          params: {
+            complaintId: '123',
+          },
         },
       };
 
@@ -238,7 +246,7 @@ describe('complaint-page selectors', function () {
   it('should prioritize officers user visited', function () {
     const state = {
       breadcrumb: {
-        breadcrumbs: [
+        breadcrumbItems: [
           {
             url: '/officer/1/',
             params: {
@@ -264,8 +272,10 @@ describe('complaint-page selectors', function () {
     };
 
     const props = {
-      params: {
-        complaintId: '123',
+      match: {
+        params: {
+          complaintId: '123',
+        },
       },
     };
 
@@ -291,8 +301,10 @@ describe('complaint-page selectors', function () {
     };
 
     const props = {
-      params: {
-        complaintId: '123',
+      match: {
+        params: {
+          complaintId: '123',
+        },
       },
     };
 
@@ -318,8 +330,10 @@ describe('complaint-page selectors', function () {
     };
 
     const props = {
-      params: {
-        complaintId: '123',
+      match: {
+        params: {
+          complaintId: '123',
+        },
       },
     };
 
@@ -383,10 +397,6 @@ describe('complaint-page selectors', function () {
   describe('requestDocumentButtonMessage selector', function () {
     beforeEach(function () {
       stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
-    });
-
-    afterEach(function () {
-      draftjsUtils.convertContentStateToEditorState.restore();
     });
 
     it('should return document request instruction message', function () {

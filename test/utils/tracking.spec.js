@@ -9,11 +9,6 @@ describe('tracking utils', function () {
     stub(window.clicky, 'log');
   });
 
-  afterEach(function () {
-    window.ga.restore();
-    window.clicky.log.restore();
-  });
-
   describe('trackSwipeLandingPageCarousel', function () {
     it('should send event analytic', function () {
       tracking.trackSwipeLandingPageCarousel('left', 'type');
@@ -103,8 +98,6 @@ describe('tracking utils', function () {
       clock.tick(550);
 
       global.ga.callCount.should.equal(4);
-
-      clock.restore();
     });
   });
 
@@ -132,8 +125,6 @@ describe('tracking utils', function () {
 
       window.ga.should.be.calledTwice();
       window.clicky.log.should.be.calledTwice();
-
-      clock.restore();
     });
   });
 

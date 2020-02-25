@@ -21,6 +21,6 @@ describe('<TypeOfForce />', function () {
 
   it('should render nothing if forceTypes is undefined', function () {
     const wrapper = shallow(<TypeOfForce />);
-    should(wrapper.getNode()).be.null();
+    should(wrapper.getElement()).be.null();
   });
 });

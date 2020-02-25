@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { map, find, isEqual } from 'lodash';
 import { Muuri } from 'utils/muuri';
 
@@ -20,20 +21,15 @@ export default class PinnedGrid extends Component {
     super(props);
 
     this.rendered = false;
-    this.updateOrder = this.updateOrder.bind(this);
-    this.removeItemInPinboardPage = this.removeItemInPinboardPage.bind(this);
   }
 
   componentDidMount() {
     this.initGrid();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.bottomOffset = this.rendered ? getPageYBottomOffset() : null;
-    this.rendered = true;
-  }
-
   componentDidUpdate(prevProps) {
+    const bottomOffset = this.rendered ? getPageYBottomOffset() : null;
+    this.rendered = true;
     const { items } = this.props;
     items.forEach(item => {
       if (!find(prevProps.items, { id: item.id })) {
@@ -41,7 +37,7 @@ export default class PinnedGrid extends Component {
       }
     });
 
-    this.bottomOffset && scrollByBottomOffset(this.bottomOffset);
+    bottomOffset && scrollByBottomOffset(bottomOffset);
   }
 
   componentWillUnmount() {
@@ -57,7 +53,7 @@ export default class PinnedGrid extends Component {
     this.gridMuuri.on('dragEnd', this.updateOrder);
   }
 
-  updateOrder() {
+  updateOrder = () => {
     const { orderPinboard, type, items } = this.props;
     const newIds = this.gridMuuri.getItems().map(item => item.getElement().getAttribute('data-id'));
     const currentIds = map(items, item => item.id);
@@ -65,16 +61,16 @@ export default class PinnedGrid extends Component {
     if (!isEqual(newIds, currentIds)) {
       orderPinboard({ type, ids: newIds });
     }
-  }
+  };
 
-  removeItemInPinboardPage(item) {
+  removeItemInPinboardPage = item => {
     this.gridMuuri.remove(this.itemElements[item.id]);
 
     setTimeout(
       () => this.props.removeItemInPinboardPage(item),
       200
     );
-  }
+  };
 
   render() {
     const { type, items } = this.props;

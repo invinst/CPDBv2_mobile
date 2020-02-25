@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { isEmpty } from 'lodash';
 
 import SocialGraph from './social-graph';
@@ -15,10 +16,6 @@ export default class AnimatedSocialGraph extends Component {
       timelineIdx: 0,
       refreshIntervalId: null,
     };
-
-    this.startTimelineFromBeginning = this.startTimelineFromBeginning.bind(this);
-    this.stopTimeline = this.stopTimeline.bind(this);
-    this.intervalTickTimeline = this.intervalTickTimeline.bind(this);
   }
 
   componentWillUnmount() {
@@ -29,28 +26,28 @@ export default class AnimatedSocialGraph extends Component {
     this.setState({ refreshIntervalId: setInterval(this.intervalTickTimeline, AMINATE_SPEED) });
   }
 
-  stopTimeline() {
+  stopTimeline = () => {
     const { refreshIntervalId } = this.state;
     if (refreshIntervalId) {
       clearInterval(refreshIntervalId);
       this.setState({ refreshIntervalId: null });
     }
-  }
+  };
 
-  startTimelineFromBeginning() {
+  startTimelineFromBeginning = () => {
     this.stopTimeline();
     this.setState({ timelineIdx: 0 });
     this.startTimeline();
-  }
+  };
 
-  intervalTickTimeline() {
+  intervalTickTimeline = () => {
     const { timelineIdx } = this.state;
     if (timelineIdx < this.props.listEvent.length - 1) {
       this.setState({ timelineIdx: timelineIdx + 1 });
     } else {
       this.stopTimeline();
     }
-  }
+  };
 
   render() {
     const { officers, coaccusedData, listEvent } = this.props;
