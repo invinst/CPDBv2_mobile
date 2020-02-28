@@ -3,6 +3,7 @@ import { startCase, get, map, last, compact, toLower, capitalize, isEmpty, isNil
 
 import { extractPercentile } from 'selectors/common/percentile';
 import { getCareerDuration, getCurrentAge } from 'utils/date';
+import { pinboardItemsSelector, isItemPinned } from 'selectors/pinboard-page/pinboard';
 
 
 const getOfficer = (state, props) => (
@@ -84,4 +85,8 @@ export const officerMetricsSelector = createSelector(
       civilianComplimentCount: formatValue(officer.civilian_compliment_count),
     };
   }
+);
+
+export const getIsOfficerPinned = (state, officerId) => (
+  isItemPinned('OFFICER', officerId, pinboardItemsSelector(state))
 );

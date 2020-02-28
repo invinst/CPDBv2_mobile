@@ -4,6 +4,7 @@ import {
   officerSummarySelector,
   officerMetricsSelector,
   officerYearlyPercentileSelector,
+  getIsOfficerPinned,
 } from 'selectors/officer-page';
 
 
@@ -342,6 +343,30 @@ describe('officer-page selectors', function () {
       };
 
       should(officerMetricsSelector(state, notFoundProps)).be.null();
+    });
+  });
+
+  describe('getIsCrPinned', function () {
+    it('should return true if officerId is in pinboard', function () {
+      const state = {
+        pinboardPage: {
+          pinboard: {
+            'officer_ids': [123, 124, 125],
+          },
+        },
+      };
+      getIsOfficerPinned(state, 123).should.be.true();
+    });
+
+    it('should return false if officerId is not in pinboard', function () {
+      const state = {
+        pinboardPage: {
+          pinboard: {
+            'officer_ids': [123, 124, 125],
+          },
+        },
+      };
+      getIsOfficerPinned(state, 126).should.be.false();
     });
   });
 });

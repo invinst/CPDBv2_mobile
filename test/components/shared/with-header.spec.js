@@ -20,7 +20,7 @@ describe('<WithHeader />', function () {
     const wrapper = mount(
       <Provider store={ store }>
         <MemoryRouter>
-          <WithHeader className='test--with-header-custom-class'>
+          <WithHeader className='test--with-header-custom-class' customButtons={ <div className='test-button-123' /> }>
             <div className='test--with-header-content'/>
           </WithHeader>
         </MemoryRouter>
@@ -30,6 +30,7 @@ describe('<WithHeader />', function () {
     const container = wrapper.find(WithHeader);
     container.prop('className').should.equal('test--with-header-custom-class');
 
+    container.find('.test-button-123').exists().should.be.true();
     container.find(IOSPeek).exists().should.be.true();
 
     container.find(BreadcrumbContainer).exists().should.be.true();

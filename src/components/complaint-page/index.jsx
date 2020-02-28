@@ -18,6 +18,8 @@ import Location from './location';
 import style from './complaint-page.sass';
 import Footer from 'components/footer';
 import WithHeader from 'components/shared/with-header';
+import ItemPinButton from 'components/common/item-pin-button';
+import constants from 'constants';
 
 
 export default class ComplaintPage extends Component {
@@ -33,6 +35,7 @@ export default class ComplaintPage extends Component {
     const {
       complaint, complaintId, pathname,
       onTrackingAttachment, noAttachmentMessage, addOrRemoveItemInPinboard,
+      isPinned,
     } = this.props;
 
     if (isEmpty(complaint)) {
@@ -44,7 +47,17 @@ export default class ComplaintPage extends Component {
         <Helmet>
           <title>{ `CR ${complaintId}` }</title>
         </Helmet>
-        <WithHeader className={ style.complaintPage }>
+        <WithHeader className={ style.complaintPage } customButtons={
+          <ItemPinButton
+            addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+            showHint={ false }
+            item={ {
+              type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+              id: complaintId,
+              isPinned,
+            } }
+          />
+        }>
           <div className='complaint-page-body'>
             <ComplaintCategory
               category={ complaint.category }
@@ -96,6 +109,7 @@ ComplaintPage.propTypes = {
   requestCMS: PropTypes.func,
   cmsRequested: PropTypes.bool,
   noAttachmentMessage: PropTypes.object,
+  isPinned: PropTypes.bool,
 };
 
 ComplaintPage.defaultProps = {
