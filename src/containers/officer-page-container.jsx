@@ -9,7 +9,9 @@ import {
   officerSummarySelector,
   officerMetricsSelector,
   officerYearlyPercentileSelector,
+  getIsOfficerPinned,
 } from 'selectors/officer-page';
+import { addOrRemoveItemInPinboard } from 'actions/pinboard';
 import { cmsSelector, hasCMS } from 'selectors/common/cms';
 import { hasCoaccusalSelector, isCoaccusalSuccess } from 'selectors/officer-page/coaccusals';
 import { isTimelineSuccess } from 'selectors/officer-page/timeline';
@@ -47,6 +49,7 @@ function mapStateToProps(state, ownProps) {
     isCoaccusalSuccess: isCoaccusalSuccess(state, pk),
     isTimelineSuccess: isTimelineSuccess(state, pk),
     numAttachments: numAttachmentsSelector(state, pk),
+    isPinned: getIsOfficerPinned(state, pk),
   };
 }
 
@@ -56,6 +59,7 @@ const mapDispatchToProps = {
   getOfficerTimeline,
   getOfficerCoaccusals,
   resetTimelineFilter,
+  addOrRemoveItemInPinboard,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OfficerPage));

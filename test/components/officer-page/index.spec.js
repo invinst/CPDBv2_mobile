@@ -313,16 +313,28 @@ describe('<OfficerPage />', function () {
   });
 
   it('should render Header and Footer', function () {
+    const addOrRemoveItemInPinboardSpy = spy();
     const wrapper = shallow(
       <OfficerPage
         loading={ false }
         found={ true }
+        isPinned={ false }
         summary={ this.summary }
         metrics={ this.metrics }
+        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }
       />
     );
 
     const withHeader = wrapper.find(WithHeader);
+    const customButtons = withHeader.prop('customButtons');
+    customButtons.props.item.should.eql({
+      id: 123,
+      fullName: 'Officer 11',
+      isPinned: false,
+      type: 'OFFICER',
+    });
+    customButtons.props.addOrRemoveItemInPinboard.should.eql(addOrRemoveItemInPinboardSpy);
+    customButtons.props.showHint.should.be.false();
     withHeader.find(AnimatedRadarChart).exists().should.be.true();
     withHeader.find(Footer).exists().should.be.true();
   });

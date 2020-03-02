@@ -8,6 +8,7 @@ import {
   getCMSRequested,
   buttonText,
   requestDocumentButtonMessage,
+  getIsCrPinned,
 } from 'selectors/complaint-page';
 import { CoaccusedFactory } from 'utils/tests/factories/complaint';
 
@@ -458,6 +459,30 @@ describe('complaint-page selectors', function () {
         crid: '123',
       };
       requestDocumentButtonMessage(state, props).should.eql('This is new document notification instruction message');
+    });
+  });
+
+  describe('getIsCrPinned', function () {
+    it('should return true if crid is in pinboard', function () {
+      const state = {
+        pinboardPage: {
+          pinboard: {
+            crids: ['123', '124', '125'],
+          },
+        },
+      };
+      getIsCrPinned(state, '123').should.be.true();
+    });
+
+    it('should return false if crid is not in pinboard', function () {
+      const state = {
+        pinboardPage: {
+          pinboard: {
+            crids: ['123', '124', '125'],
+          },
+        },
+      };
+      getIsCrPinned(state, '126').should.be.false();
     });
   });
 });

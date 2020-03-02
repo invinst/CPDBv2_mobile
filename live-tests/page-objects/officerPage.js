@@ -114,6 +114,10 @@ module.exports = {
   elements: {
     body: 'body',
     officerName: '.officer-name',
+    pinButton: {
+      selector: '//div[contains(@class, "with-header__header")]//div[contains(@class, "item-pin-button")]',
+      locateStrategy: 'xpath',
+    },
     timelineTabButton: {
       selector: '(//span[contains(@class, "tabbed-pane-tab-name")])[1]',
       locateStrategy: 'xpath',
@@ -302,7 +306,7 @@ module.exports = {
       elements: {
         firstCoaccusalCard: '.test--officer-card',
         firstPinButton: {
-          selector: '//div[contains(@class, "item-pin-button__item-pin-button")]',
+          selector: '//div[@class="coaccusals-group-items"]//div[contains(@class, "item-pin-button")]',
           locateStrategy: 'xpath',
         },
       },

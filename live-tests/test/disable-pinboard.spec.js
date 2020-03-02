@@ -713,6 +713,11 @@ describe('Disable pinboard feature', function () {
       done();
     });
 
+    it('should not show pinned button on header', function () {
+      this.officerPage.waitForElementPresent('@pinButton');
+      this.officerPage.expect.element('@pinButton').to.not.be.visible;
+    });
+
     it('should not show pinned button on coaccusals cards', function () {
       this.officerPage.waitForElementVisible('@coaccusalsTabButton');
       this.officerPage.click('@coaccusalsTabButton');
@@ -728,6 +733,11 @@ describe('Disable pinboard feature', function () {
       this.complaintPage = client.page.complaintPage();
       this.complaintPage.navigate(this.complaintPage.url('1053667'));
       done();
+    });
+
+    it('should not show pinned button on header', function () {
+      this.complaintPage.waitForElementPresent('@pinButton');
+      this.complaintPage.expect.element('@pinButton').to.not.be.visible;
     });
 
     it('should not show pinned button on accused officer cards', function () {
