@@ -13,10 +13,10 @@ const WithHeader = ({ children, className, customButtons }) => {
     <React.Fragment>
       <IOSPeek className={ styles.breadcrumbsIosPeek }/>
       <div className={ cx(styles.header) }>
+        <BreadcrumbContainer />
         <div className='right-buttons'>
           { customButtons }
         </div>
-        <BreadcrumbContainer />
       </div>
       <div className={ cx(styles.content, className) }>
         { children }
