@@ -81,8 +81,6 @@ describe('landing page selectors', function () {
 
       stubShuffle.should.be.calledWith(lodash.range(0, 12));
       stubShuffle.should.be.calledWith(lodash.range(12, 40));
-
-      stubShuffle.restore();
     });
   });
 
@@ -138,8 +136,6 @@ describe('landing page selectors', function () {
 
       stubShuffle.should.be.calledWith(lodash.range(0, 12));
       stubShuffle.should.be.calledWith(lodash.range(12, 40));
-
-      stubShuffle.restore();
     });
   });
 
@@ -185,8 +181,6 @@ describe('landing page selectors', function () {
 
       stubShuffle.should.be.calledWith(lodash.range(0, 12));
       stubShuffle.should.be.calledWith(lodash.range(12, 40));
-
-      stubShuffle.restore();
     });
   });
 

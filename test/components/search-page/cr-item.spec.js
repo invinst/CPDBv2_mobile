@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
-import { mount } from 'enzyme';
+import { Link } from 'react-router-dom';
 import { spy } from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import CrItem from 'components/search-page/cr-item';
 import SearchItem from 'components/search-page/search-item';
 
@@ -29,7 +29,7 @@ describe('<CrItem />', function () {
       itemRank: 2,
     };
 
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <CrItem
         query='Ke'
         item={ cr }

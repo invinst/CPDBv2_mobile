@@ -1,10 +1,11 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 import pluralize from 'pluralize';
 import { get, identity, filter, keys } from 'lodash';
 import cx from 'classnames';
 import ReactMarkdown from 'react-markdown';
 
+import browserHistory from 'utils/history';
+import { PINBOARD_PATH } from 'constants/paths';
 import { Toastify } from 'utils/toastify';
 import toastStyles from './toast.sass';
 import { generatePinboardUrl } from 'utils/pinboard';
@@ -138,7 +139,7 @@ export function showAddOrRemoveItemToast(store, payload) {
 
   const state = store.getState();
   const pinboard = state.pinboardPage.pinboard;
-  const url = generatePinboardUrl(pinboard) || '/pinboard/';
+  const url = generatePinboardUrl(pinboard) || PINBOARD_PATH;
   const toasts = getToasts(state);
   const toastTemplate = getToastTemplate(toasts, type);
   const toastMessage = buildToastMessage(toastTemplate, payload);

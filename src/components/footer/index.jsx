@@ -14,23 +14,19 @@ class Footer extends Component {
     this.state = {
       legalModalIsOpen: false,
     };
-
-    this.closeModal = this.closeModal.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.openContact = this.openContact.bind(this);
   }
 
-  openModal() {
+  openModal = () => {
     this.setState({ legalModalIsOpen: true });
-  }
+  };
 
-  closeModal() {
+  closeModal = () => {
     this.setState({ legalModalIsOpen: false });
-  }
+  };
 
-  openContact() {
+  openContact = () => {
     showIntercomMessages(true);
-  }
+  };
 
   render() {
     Modal.setAppElement('body');

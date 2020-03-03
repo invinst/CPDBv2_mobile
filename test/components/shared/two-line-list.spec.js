@@ -1,8 +1,9 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { spy } from 'sinon';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
+import { mountWithRouter } from 'utils/tests';
 import TwoLineList from 'components/shared/two-line-list';
 
 describe('<TwoLineList />', function () {
@@ -48,7 +49,7 @@ describe('<TwoLineList />', function () {
         onClick: onClick2,
       },
     ];
-    const wrapper = mount(<TwoLineList rows={ rows } />);
+    const wrapper = mountWithRouter(<TwoLineList rows={ rows } />);
 
     const links = wrapper.find(Link);
     links.should.have.length(2);
@@ -80,7 +81,7 @@ describe('<TwoLineList />', function () {
     ];
     const wrapper = shallow(<TwoLineList rows={ rows } />);
 
-    const divs = wrapper.find('div.--test-two-line-item');
+    const divs = wrapper.find('div.test--two-line-item');
     divs.should.have.length(2);
     divs.at(0).prop('onClick').should.equal(onClick1);
     divs.at(0).text().should.eql('JohnBadge #1');
@@ -103,7 +104,7 @@ describe('<TwoLineList />', function () {
     ];
     const wrapper = shallow(<TwoLineList rows={ rows } />);
 
-    const items = wrapper.find('.--test-two-line-item');
+    const items = wrapper.find('.test--two-line-item');
     items.should.have.length(2);
     items.at(0).text().should.eql('JohnBadge #1');
     items.at(0).find('.icon').prop('style').backgroundColor.should.eql('red');

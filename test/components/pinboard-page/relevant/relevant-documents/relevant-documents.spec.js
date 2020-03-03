@@ -1,7 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import { stub } from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/relevant-infinite-carousel';
 import RelevantDocuments from 'components/pinboard-page/relevant/relevant-documents';
 import RelevantDocumentCard, { RelevantDocumentCardWithUndo }
@@ -87,7 +87,7 @@ describe('<RelevantDocuments />', function () {
     const addItemInPinboardPageStub = stub();
     const fetchPinboardRelevantDocumentsStub = stub();
 
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <RelevantDocuments
         requesting={ false }
         addItemInPinboardPage={ addItemInPinboardPageStub }

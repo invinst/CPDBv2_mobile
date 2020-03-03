@@ -1,6 +1,5 @@
-import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { get } from 'lodash';
 
 import TimeLine from 'components/officer-page/tabbed-pane-section/timeline';

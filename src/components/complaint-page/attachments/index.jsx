@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import CRRequestDocumentButtonContainer from 'containers/common/cr-request-document-container';
@@ -9,16 +10,11 @@ import CMSContent from 'components/common/cms-content';
 
 
 class Attachments extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(url, id) {
+  handleClick = (url, id) => {
     const { pathname, onTrackingAttachment } = this.props;
     tracking.trackAttachmentClick(pathname, url);
     onTrackingAttachment({ attachmentId: id, sourcePage: 'CR Page', app: 'Mobile' });
-  }
+  };
 
   render() {
     const { attachments, complaintId, noAttachmentMessage } = this.props;

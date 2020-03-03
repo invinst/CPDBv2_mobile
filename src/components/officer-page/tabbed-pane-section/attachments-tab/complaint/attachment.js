@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import ClampLines from 'react-clamp-lines';
 import cx from 'classnames';
 
@@ -7,17 +8,12 @@ import { thumbnailStyle } from 'components/complaint-page/attachments/attachment
 
 
 class Attachment extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
+  handleClick = () => {
     const { onTrackingAttachment, attachment } = this.props;
     onTrackingAttachment(
       { attachmentId: attachment['id'], sourcePage: 'Officer Page - Attachments Tab', app: 'Mobile' }
     );
-  }
+  };
 
   render() {
     const { title, url, previewImageUrl, fileType } = this.props.attachment;

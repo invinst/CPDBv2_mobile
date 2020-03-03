@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import CRLocationMap from './cr-location-map';
 import style from './location.sass';

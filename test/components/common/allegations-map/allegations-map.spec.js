@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { times, cloneDeep } from 'lodash';
-import { stub, spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import ReactDOMServer from 'react-dom/server';
 import should from 'should';
 
@@ -100,7 +100,10 @@ describe('Map component', function () {
         trrs: [],
       };
 
-      const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+      const wrapper = shallow(
+        <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+        { disableLifecycleMethods: true },
+      );
 
       const instance = wrapper.instance();
       instance.shouldComponentUpdate({ legend: newLegend, markerGroups }).should.be.true();
@@ -109,7 +112,10 @@ describe('Map component', function () {
     });
 
     it('should return false if props are unchanged', function () {
-      const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+      const wrapper = shallow(
+        <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+        { disableLifecycleMethods: true },
+      );
 
       const instance = wrapper.instance();
       instance.shouldComponentUpdate(
@@ -118,19 +124,31 @@ describe('Map component', function () {
     });
   });
 
-  describe('componentWillReceiveProps', function () {
+  describe('componentDidUpdate', function () {
     it('should call resetMap and addMapLayersOnStyleLoaded if next props clearAllMarkers is true', function () {
       const resetMapStub = stub(AllegationsMap.prototype, 'resetMap');
       const addMapLayersOnStyleLoadedStub = stub(AllegationsMap.prototype, 'addMapLayersOnStyleLoaded');
+      const newMarkers = {
+        crs: [],
+        trrs: [
+          {
+            point: {
+              lat: 42.212567,
+              lon: -87.280291,
+            },
+            kind: 'FORCE',
+            id: '1234',
+            category: 'Use of Force Report',
+          },
+        ],
+      };
 
       const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
-      wrapper.setProps({ legend, markerGroups, clearAllMarkers: true });
+      wrapper.setProps({ legend, markerGroups: newMarkers, clearAllMarkers: true });
 
       resetMapStub.should.be.called();
-      addMapLayersOnStyleLoadedStub.should.be.calledWith(markerGroups);
-      AllegationsMap.prototype.resetMap.restore();
-      AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
+      addMapLayersOnStyleLoadedStub.should.be.calledWith(newMarkers);
     });
 
     it('should only call addMapLayersOnStyleLoaded if next props clearAllMarkers is false', function () {
@@ -155,7 +173,6 @@ describe('Map component', function () {
       wrapper.setProps({ legend, markerGroups: newMarkerGroups, clearAllMarkers: false });
 
       addMapLayersOnStyleLoadedStub.should.be.calledWith(newMarkerGroups);
-      AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
     });
   });
 
@@ -207,7 +224,6 @@ describe('Map component', function () {
     mount(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
 
     addMapLayersOnStyleLoadedStub.should.be.calledWith(markerGroups);
-    AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
   });
 
   describe('addMapLayer', function () {
@@ -299,9 +315,6 @@ describe('Map component', function () {
       mouseClickArgs[0].should.eql('click');
       mouseClickArgs[1].should.eql('layer-0');
       mouseClickArgs[2].should.eql(instance.openTooltip);
-
-      mapOnStub.restore();
-      AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
     });
 
     it('should not add new layer if markers data is empty', function () {
@@ -314,8 +327,6 @@ describe('Map component', function () {
 
       instance.map.addSource.should.not.be.called();
       instance.map.addLayer.should.not.be.called();
-
-      AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
     });
 
     it('should addLayer with correct aboveLayerName', function () {
@@ -390,8 +401,6 @@ describe('Map component', function () {
       instance.map.addLayer.resetHistory();
       instance.addMapLayer('crs', crMarkers3);
       instance.map.addLayer.getCall(0).args[1].should.equal('layer-2');
-
-      AllegationsMap.prototype.addMapLayersOnStyleLoaded.restore();
     });
   });
 
@@ -407,7 +416,10 @@ describe('Map component', function () {
       category: 'Use of Force',
     };
 
-    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+    const wrapper = shallow(
+      <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+      { disableLifecycleMethods: true },
+    );
 
     const instance = wrapper.instance();
     instance.getUrl(crMarker).should.equal('/complaint/C123456/');
@@ -421,7 +433,10 @@ describe('Map component', function () {
       category: 'False Arrest',
     };
 
-    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+    const wrapper = shallow(
+      <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+      { disableLifecycleMethods: true },
+    );
 
     const instance = wrapper.instance();
     instance.markerUid(crMarker).should.equal('CR-C123456');
@@ -456,7 +471,10 @@ describe('Map component', function () {
   });
 
   it('should return initial data when calling initMapData', function () {
-    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+    const wrapper = shallow(
+      <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+      { disableLifecycleMethods: true },
+    );
 
     const instance = wrapper.instance();
     instance.initMapData();
@@ -481,7 +499,6 @@ describe('Map component', function () {
     initMapDataSpy.should.be.calledOnce();
     instance.map.removeLayer.should.be.calledWith('layer-0');
     instance.map.removeSource.should.be.calledWith('layer-0');
-    AllegationsMap.prototype.initMapData.restore();
   });
 
   it('should return correct data when calling mapMarkersData', function () {
@@ -510,7 +527,10 @@ describe('Map component', function () {
         date: '2008-12-05',
       },
     ];
-    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+    const wrapper = shallow(
+      <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+      { disableLifecycleMethods: true },
+    );
 
     const instance = wrapper.instance();
     instance.mapMarkersData(crMarkers).should.eql([
@@ -551,13 +571,15 @@ describe('Map component', function () {
 
   it('should call addMapLayer when calling addMapLayers', function () {
     const addMapLayerStub = stub(AllegationsMap.prototype, 'addMapLayer');
-    const wrapper = shallow(<AllegationsMap legend={ legend } markerGroups={ markerGroups } />);
+    const wrapper = shallow(
+      <AllegationsMap legend={ legend } markerGroups={ markerGroups } />,
+      { disableLifecycleMethods: true },
+    );
     const instance = wrapper.instance();
     addMapLayerStub.resetHistory();
 
     instance.addMapLayers(markerGroups);
     addMapLayerStub.should.be.calledTwice();
-    AllegationsMap.prototype.addMapLayer.restore();
   });
 
   it('should add map layer when calling addMapLayersOnStyleLoaded', function () {
@@ -569,7 +591,6 @@ describe('Map component', function () {
     instance.map.isStyleLoaded.returns(true);
     instance.addMapLayersOnStyleLoaded(markerGroups);
     addMapLayersStub.should.be.calledOnce();
-    addMapLayersStub.restore();
   });
 
   it('should call addControl when component render', function () {

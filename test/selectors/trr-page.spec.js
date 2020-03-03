@@ -14,8 +14,10 @@ describe('trr-page selectors', function () {
         },
       };
       const props = {
-        params: {
-          trrId: '1',
+        match: {
+          params: {
+            trrId: '1',
+          },
         },
       };
       should(trrSelector(state, props)).be.null();
@@ -66,8 +68,10 @@ describe('trr-page selectors', function () {
       };
 
       const props = {
-        params: {
-          trrId: 781,
+        match: {
+          params: {
+            trrId: 781,
+          },
         },
       };
 
@@ -133,8 +137,10 @@ describe('trr-page selectors', function () {
       };
 
       const props = {
-        params: {
-          trrId: 781,
+        match: {
+          params: {
+            trrId: 781,
+          },
         },
       };
 
@@ -186,7 +192,6 @@ describe('trr-page selectors', function () {
       };
 
       requestDocumentButtonMessage(state).should.eql('This is document request instruction message');
-      draftjsUtils.convertContentStateToEditorState.restore();
     });
   });
 });

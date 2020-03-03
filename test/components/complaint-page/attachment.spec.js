@@ -80,7 +80,6 @@ describe('Attachments component', function () {
       '/complaint/123456/',
       'https://www.documentcloud.org/documents/4769822-CRID-1002813-CR.html'
     );
-    stubTrackAttachmentClick.restore();
   });
 
   it('should track click on attachment event', function () {

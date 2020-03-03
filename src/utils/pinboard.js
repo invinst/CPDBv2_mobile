@@ -15,6 +15,7 @@ import {
   fetchPinboardTRRs,
 } from 'actions/pinboard';
 import loadPaginatedData from 'utils/load-paginated-data';
+import { PINBOARD_PATH } from 'constants/paths';
 
 
 export const generatePinboardUrl = pinboard => {
@@ -23,7 +24,7 @@ export const generatePinboardUrl = pinboard => {
   }
 
   const title = isEmpty(pinboard['title']) ? 'Untitled Pinboard' : pinboard['title'];
-  return `/pinboard/${pinboard.id}/${kebabCase(title)}/`;
+  return `${PINBOARD_PATH}${pinboard.id}/${kebabCase(title)}/`;
 };
 
 export const dispatchFetchPinboardPageData = (store, pinboardId) => {

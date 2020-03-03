@@ -1,44 +1,20 @@
 @import 'variables'
 
 \:local(.header)
-  height: 40px
+  height: $header-height
   background-color: $wild-sand
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.13)
+  position: fixed
+  width: 100%
+  top: 0
+  z-index: 1
   display: flex
 
-  .breadcrumbs
-    display: flex
-    align-items: center
-    max-width: 100%
-    overflow: scroll
+  .right-buttons
+    padding: 4px
 
-    .breadcrumb-item-wrapper
-      color: $thunder
-      font-size: 14px
-      font-weight: 400
-      padding: 0 8px
-      line-height: 14px
-      flex: 0 0 auto
-      -webkit-flex: 0 0 auto
-      white-space: nowrap
-
-      &.auto-width
-        flex: 1 1 auto
-        -webkit-flex: 1 1 auto
-        overflow: hidden
-        text-overflow: ellipsis
-        min-width: 72px
-
-      a
-        text-decoration: none
-        color: $boulder
-
-    .separator
-      height: 14px
-      width: 8px
-      line-height: 14px
-      flex: 0
-      -webkit-flex: 0
+\:local(.content)
+  padding-top: $header-height
 
 \:local(.breadcrumbs-ios-peek)
   background-color: $wild-sand

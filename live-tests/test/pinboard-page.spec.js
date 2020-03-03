@@ -97,14 +97,13 @@ describe('Pinboard Page', function () {
     client.assert.urlContains('/officer/123/richard-sullivan/');
 
     const breadcrumbs = officerPage.section.breadcrumbs;
-    client.assertCount('.breadcrumbs > .breadcrumb-item-wrapper', 3);
-
+    client.assertCount('.breadcrumb-item', 3);
     breadcrumbs.expect.element('@firstBreadcrumb').text.to.equal('cpdp');
     breadcrumbs.expect.element('@secondBreadcrumb').text.to.equal('Pinboard - Pinboard Title');
     breadcrumbs.expect.element('@thirdBreadcrumb').text.to.equal('Richard Sullivan');
 
-    breadcrumbs.expect.element('@thirdBreadcrumb').to.have.attribute(
-      'class', 'breadcrumb-item-wrapper auto-width'
+    breadcrumbs.expect.element('@secondBreadcrumb').to.have.attribute(
+      'class', 'breadcrumb-item auto-width'
     );
 
     breadcrumbs.click('@secondBreadcrumb');
@@ -381,7 +380,7 @@ describe('Pinboard Page', function () {
       pinboardPage.click('@pinboardDescription');
       pinboardPage.clearValue('@pinboardDescription');
       pinboardPage.setValue('@pinboardDescription', 'Updated Description');
-      pinboardPage.click('@coaccusalsThresholdText');
+      pinboardPage.click('@visualizationTitle');
 
       pinboardPage.getValue('@pinboardTitle', function (result) {
         assert.equal(result.value, 'Updated Title');
@@ -420,9 +419,11 @@ describe('Pinboard Page', function () {
         ` .swiper-slide:nth-child(${n}) > div:first-child`;
 
       _.times(3, idx => client.dragAndDrop(nthCardSelector(idx + 2), -200, 0));
+      this.pinboardPage.waitForElementPresent(nthCardSelector(8));
       client.assertCount(documentCard.selector, 8);
 
       _.times(4, idx => client.dragAndDrop(nthCardSelector(idx + 5), -200, 0));
+      this.pinboardPage.waitForElementPresent(nthCardSelector(10));
       client.assertCount(documentCard.selector, 10);
     });
 
@@ -797,9 +798,11 @@ describe('Pinboard Page', function () {
         ` .swiper-slide:nth-child(${n}) > div:first-child`;
 
       _.times(3, idx => client.dragAndDrop(nthCardSelector(idx + 2), -200, 0));
+      this.pinboardPage.waitForElementPresent(nthCardSelector(8));
       client.assertCount(cardSelector, 8);
 
       _.times(4, idx => client.dragAndDrop(nthCardSelector(idx + 5), -200, 0));
+      this.pinboardPage.waitForElementPresent(nthCardSelector(10));
       client.assertCount(cardSelector, 10);
     });
 
@@ -862,9 +865,11 @@ describe('Pinboard Page', function () {
         ` .swiper-slide:nth-child(${n}) > *:first-child`;
 
       _.times(1, idx => client.dragAndDrop(nthCardSelector(idx + 2), -148, 0));
+      this.pinboardPage.waitForElementPresent(nthCardSelector(8));
       client.assertCount(cardSelector, 8);
 
       _.times(6, idx => client.dragAndDrop(nthCardSelector(idx + 3), -148, 0));
+      this.pinboardPage.waitForElementPresent(nthCardSelector(10));
       client.assertCount(cardSelector, 10);
     });
 

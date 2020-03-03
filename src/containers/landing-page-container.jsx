@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { push as pushBreadcrumbs } from 'redux-breadcrumb-trail';
 
 import LandingPage from 'components/landing-page';
 import { requestCMS } from 'actions/landing-page';
@@ -14,7 +13,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   requestCMS,
-  pushBreadcrumbs,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

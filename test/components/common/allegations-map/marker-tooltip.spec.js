@@ -22,6 +22,6 @@ describe('MarkerTooltip component', function () {
 
   it('should go to CR detail page when clicking on', function () {
     wrapper = mount(<MarkerTooltip url='/complaint/123456/' />);
-    wrapper.find('a').at(0).node.href.should.containEql('/complaint/123456/');
+    wrapper.find('a').prop('href').should.containEql('/complaint/123456/');
   });
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { spy } from 'sinon';
 
 import MiniVisualToken from 'components/pinboard-page/relevant/common/mini-officer-visual-token';

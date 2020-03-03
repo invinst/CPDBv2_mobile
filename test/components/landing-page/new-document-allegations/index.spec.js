@@ -1,7 +1,8 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import NewDocumentAllegations from 'components/landing-page/new-document-allegations';
 import { EditorState } from 'draft-js';
 import CarouselWrapper from 'components/landing-page/carousel-wrapper';
@@ -41,7 +42,7 @@ describe('<NewDocumentAllegations />', function () {
 
   it('should call requestNewDocumentAllegations', function () {
     const requestNewDocumentAllegationsSpy = spy();
-    mount(
+    mountWithRouter(
       <NewDocumentAllegations
         requestNewDocumentAllegations={ requestNewDocumentAllegationsSpy }
         newDocumentAllegations={ [1] }
@@ -50,7 +51,7 @@ describe('<NewDocumentAllegations />', function () {
     requestNewDocumentAllegationsSpy.called.should.be.false();
 
     requestNewDocumentAllegationsSpy.resetHistory();
-    mount(
+    mountWithRouter(
       <NewDocumentAllegations
         requestNewDocumentAllegations={ requestNewDocumentAllegationsSpy }
       />

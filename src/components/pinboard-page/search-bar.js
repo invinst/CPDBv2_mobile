@@ -1,21 +1,19 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import constants from 'constants';
+import { SEARCH_PATH } from 'constants/paths';
 import style from './search-bar.sass';
 
 
-export default class SearchBar extends Component {
-  render() {
-    return (
-      <Link
-        to={ constants.SEARCH_PATH }
-        className={ style.wrapper }>
-        <div className='search-icon' />
-        <div className='search-term'>
-          Search
-        </div>
-      </Link>
-    );
-  }
+export default function SearchBar(props) {
+  return (
+    <Link
+      to={ SEARCH_PATH }
+      className={ style.wrapper }>
+      <div className='search-icon' />
+      <div className='search-term'>
+        Search
+      </div>
+    </Link>
+  );
 }

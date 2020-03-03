@@ -1,9 +1,10 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import should from 'should';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { stub, useFakeTimers } from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import RelevantComplaintCard, { RelevantComplaintCardWithUndo }
   from 'components/pinboard-page/relevant/relevant-complaints/relevant-complaint-card';
 import BaseComplaintCard from 'components/pinboard-page/relevant/common/base-complaint-card';
@@ -59,7 +60,7 @@ describe('<RelevantComplaintCard />', function () {
   it('should render enough content correctly', function () {
     const addItemInPinboardPageStub = stub();
 
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <RelevantComplaintCard
         crid='123'
         incidentDate='Feb 1, 2018'
@@ -121,13 +122,9 @@ describe('<RelevantComplaintCard />', function () {
       clock = useFakeTimers();
     });
 
-    afterEach(function () {
-      clock.restore();
-    });
-
     it('should render remove text correctly', function () {
       const addItemInPinboardPageStub = stub();
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <RelevantComplaintCardWithUndo
           crid='123'
           incidentDate='Feb 1, 2018'
@@ -146,7 +143,7 @@ describe('<RelevantComplaintCard />', function () {
 
     it('should not be reversed after the undo card disappears', function () {
       const addItemInPinboardPageStub = stub();
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <RelevantComplaintCardWithUndo
           crid='123'
           incidentDate='Feb 1, 2018'
@@ -161,6 +158,7 @@ describe('<RelevantComplaintCard />', function () {
       plusButton.simulate('click');
 
       clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME + 50);
+      wrapper.update();
 
       wrapper.isEmptyRender().should.be.true();
     });

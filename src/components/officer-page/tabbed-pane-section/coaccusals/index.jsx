@@ -1,37 +1,36 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import OfficerCard from './officer-card';
 import style from './coaccusals.sass';
 
 
-export default class Coaccusals extends Component {
-  render() {
-    const { coaccusalGroups, addOrRemoveItemInPinboard } = this.props;
-    return (
-      <div className={ cx(style.officerCoaccusals, 'test--officer-coaccusals') }>
-        {
-          coaccusalGroups.map((group) => (
-            <div key={ group.name } className='coaccusals-group'>
-              <div className='coaccusals-group-name'>{ group.name }</div>
-              <div className='coaccusals-group-items'>
-                {
-                  group.coaccusals.map((coaccusal, cardIndex) => (
-                    <OfficerCard
-                      { ...coaccusal }
-                      key={ cardIndex }
-                      customStyle={ style.inlineOfficerCard }
-                      addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
-                    />
-                  ))
-                }
-              </div>
+export default function Coaccusals(props) {
+  const { coaccusalGroups, addOrRemoveItemInPinboard } = props;
+  return (
+    <div className={ cx(style.officerCoaccusals, 'test--officer-coaccusals') }>
+      {
+        coaccusalGroups.map((group) => (
+          <div key={ group.name } className='coaccusals-group'>
+            <div className='coaccusals-group-name'>{ group.name }</div>
+            <div className='coaccusals-group-items'>
+              {
+                group.coaccusals.map((coaccusal, cardIndex) => (
+                  <OfficerCard
+                    { ...coaccusal }
+                    key={ cardIndex }
+                    customStyle={ style.inlineOfficerCard }
+                    addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+                  />
+                ))
+              }
             </div>
-          ))
-        }
-      </div>
-    );
-  }
+          </div>
+        ))
+      }
+    </div>
+  );
 }
 
 Coaccusals.propTypes = {

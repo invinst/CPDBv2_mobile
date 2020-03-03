@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import twoLineListStyle from './two-line-list.sass';
 
@@ -22,7 +23,7 @@ class TwoLineList extends Component {
         <Link
           to={ url }
           onClick={ onClick }
-          className={ '--test-two-line-item ' + twoLineListStyle.itemStyle }
+          className={ 'test--two-line-item ' + twoLineListStyle.itemStyle }
           key={ index }
         >
           { contents }
@@ -32,7 +33,7 @@ class TwoLineList extends Component {
       return (
         <div
           onClick={ onClick }
-          className={ '--test-two-line-item ' + twoLineListStyle.itemStyle }
+          className={ 'test--two-line-item ' + twoLineListStyle.itemStyle }
           key={ index }
         >
           { contents }

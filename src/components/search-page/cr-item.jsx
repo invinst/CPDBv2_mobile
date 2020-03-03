@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import SearchItem from './search-item';
 import searchItemStyle from './search-item.sass';
@@ -39,7 +40,7 @@ CrItem.propTypes = {
   }),
   saveToRecent: PropTypes.func,
   addOrRemoveItemInPinboard: PropTypes.func,
-  query: PropTypes.func,
+  query: PropTypes.string,
 };
 
 CrItem.defaultProps = {

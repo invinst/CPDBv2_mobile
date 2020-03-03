@@ -5,7 +5,8 @@ import { spy, stub } from 'sinon';
 import { cloneDeep } from 'lodash';
 import configureStore from 'redux-mock-store';
 import should from 'should';
-import DocumentMeta from 'react-document-meta';
+import { MemoryRouter, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 
 import WithHeader from 'components/shared/with-header';
 import OfficerPage from 'components/officer-page';
@@ -95,27 +96,6 @@ describe('<OfficerPage />', function () {
     resetTimelineFilter.should.be.calledOnce();
   });
 
-  it('should set to the correct officer if there is officer alias', function () {
-    const pushBreadcrumbSpy = spy();
-    const wrapper = shallow(
-      <OfficerPage
-        loading={ false }
-        found={ false }
-        pushBreadcrumbs={ pushBreadcrumbSpy }
-      />
-    );
-
-    wrapper.setProps({
-      requestOfficerId: 456,
-      summary: { id: 123 },
-      routes: [],
-      location: {},
-      params: {},
-    });
-
-    pushBreadcrumbSpy.calledWith({ routes: [], location: { pathname: 'officer/123/' }, params: { id: 123 } });
-  });
-
   it('should not fetch officer data if summary is already available', function () {
     const spyfetchOfficer = spy();
 
@@ -176,10 +156,6 @@ describe('<OfficerPage />', function () {
       spy(window.history, 'replaceState');
     });
 
-    afterEach(function () {
-      window.history.replaceState.restore();
-    });
-
     it('should be replaced with correct one', function () {
       const wrapper = shallow(
         <OfficerPage
@@ -187,8 +163,7 @@ describe('<OfficerPage />', function () {
           loading={ false }
           found={ true }
           metrics={ this.metrics }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
 
       wrapper.setProps({ summary: null });
@@ -208,8 +183,7 @@ describe('<OfficerPage />', function () {
           requestOfficerId={ 456 }
           loading={ false }
           found={ true }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
 
       wrapper.setProps({ summary: this.summary });
@@ -227,8 +201,7 @@ describe('<OfficerPage />', function () {
           found={ true }
           metrics={ this.metrics }
           params={ { firstParam: '3213', secondParam: 'documents' } }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
       wrapper.setProps({ summary: this.summary });
 
@@ -248,8 +221,7 @@ describe('<OfficerPage />', function () {
           found={ true }
           metrics={ this.metrics }
           params={ { firstParam: '', secondParam: 'document' } }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
       wrapper.setProps({ summary: this.summary });
 
@@ -269,8 +241,7 @@ describe('<OfficerPage />', function () {
           found={ true }
           metrics={ this.metrics }
           params={ { firstParam: 'documents', secondParam: '' } }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
       wrapper.setProps({ summary: this.summary });
 
@@ -290,8 +261,7 @@ describe('<OfficerPage />', function () {
           found={ true }
           metrics={ this.metrics }
           params={ { firstParam: 'document', secondParam: '' } }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
       wrapper.setProps({ summary: this.summary });
 
@@ -311,8 +281,7 @@ describe('<OfficerPage />', function () {
           found={ true }
           metrics={ this.metrics }
           params={ { firstParam: 'document', secondParam: '' } }
-        />,
-        { lifecycleExperimental: true }
+        />
       );
       wrapper.setProps({ summary: this.summary });
 
@@ -344,16 +313,28 @@ describe('<OfficerPage />', function () {
   });
 
   it('should render Header and Footer', function () {
+    const addOrRemoveItemInPinboardSpy = spy();
     const wrapper = shallow(
       <OfficerPage
         loading={ false }
         found={ true }
+        isPinned={ false }
         summary={ this.summary }
         metrics={ this.metrics }
+        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }
       />
     );
 
     const withHeader = wrapper.find(WithHeader);
+    const customButtons = withHeader.prop('customButtons');
+    customButtons.props.item.should.eql({
+      id: 123,
+      fullName: 'Officer 11',
+      isPinned: false,
+      type: 'OFFICER',
+    });
+    customButtons.props.addOrRemoveItemInPinboard.should.eql(addOrRemoveItemInPinboardSpy);
+    customButtons.props.showHint.should.be.false();
     withHeader.find(AnimatedRadarChart).exists().should.be.true();
     withHeader.find(Footer).exists().should.be.true();
   });
@@ -679,7 +660,11 @@ describe('<OfficerPage />', function () {
       const requestingSummaryStore = mockStore(requestingSummary);
       const wrapper = mount(
         <Provider store={ requestingSummaryStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -693,7 +678,9 @@ describe('<OfficerPage />', function () {
 
       const wrapper = mount(
         <Provider store={ requestingOfficerStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+            <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+          </MemoryRouter>
         </Provider>
       );
       wrapper.find(NotMatchedOfficerPage).exists().should.be.true();
@@ -703,7 +690,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -744,7 +735,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -772,7 +767,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(emptyBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -786,7 +785,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(emptyHistoricBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -800,7 +803,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(emptyBadgeAndHistoricBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -814,7 +821,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -916,7 +927,11 @@ describe('<OfficerPage />', function () {
 
       const wrapper = mount(
         <Provider store={ mockStore(data) }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -982,7 +997,11 @@ describe('<OfficerPage />', function () {
 
       const wrapper = mount(
         <Provider store={ mockStore(data) }>
-          <OfficerPageContainer params={ { id: 11 } }/>
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
 
@@ -1018,7 +1037,11 @@ describe('<OfficerPage />', function () {
       const workingStore = mockStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
-          <OfficerPageContainer params={ { id: 11, firstParam: 'coaccusals' } } />
+          <HelmetProvider>
+            <MemoryRouter initialEntries={ [{ pathname: '/officer/11/coaccusals/' }] }>
+              <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
+            </MemoryRouter>
+          </HelmetProvider>
         </Provider>
       );
       const tabbedPaneSection = wrapper.find(TabbedPaneSection);
@@ -1086,9 +1109,8 @@ describe('<OfficerPage />', function () {
         />
       );
 
-      const documentMeta = wrapper.find(DocumentMeta);
-      documentMeta.prop('title').should.equal('Police Officer Officer 11');
-      documentMeta.prop('description').should.equal(
+      wrapper.find('title').text().should.equal('Police Officer Officer 11');
+      wrapper.find('meta[name="description"]').prop('content').should.equal(
         'Officer Officer 11 of the Chicago Police Department with Badge Number badge has 1 complaint, ' +
         '7 use of force reports, and 3 original documents available.'
       );
@@ -1113,8 +1135,7 @@ describe('<OfficerPage />', function () {
           />
         );
 
-        const documentMeta = wrapper.find(DocumentMeta);
-        documentMeta.prop('description').should.equal(
+        wrapper.find('meta[name="description"]').prop('content').should.equal(
           'Officer Jerome Finnigan of the Chicago Police Department with Badge Number 1424 has 1 complaint, ' +
           '7 use of force reports, and 3 original documents available.'
         );
@@ -1140,8 +1161,7 @@ describe('<OfficerPage />', function () {
           />
         );
 
-        const documentMeta = wrapper.find(DocumentMeta);
-        documentMeta.prop('description').should.equal(
+        wrapper.find('meta[name="description"]').prop('content').should.equal(
           'Officer Jerome Finnigan of the Chicago Police Department has 1 complaint, 7 use of force reports, ' +
           'and 3 original documents available.'
         );

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import OfficerItem from './officer-item';
@@ -39,7 +40,7 @@ const SearchResult = (
       {
         items.map(item => (
           <Item
-            key={ item.id }
+            key={ `${itemType}-${item.id}` }
             item={ item }
             query={ query }
             saveToRecent={ saveToRecent }

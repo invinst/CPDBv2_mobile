@@ -1,4 +1,4 @@
-import { LOCATION_CHANGE } from 'react-router-redux';
+import { LOCATION_CHANGE } from 'connected-react-router';
 
 import chosenCategory from 'reducers/suggestion-app/chosen-category';
 import { UPDATE_CHOSEN_CATEGORY, SEARCH_INPUT_CHANGED } from 'actions/suggestion';
@@ -34,8 +34,8 @@ describe('chosenCategory reducer', function () {
     chosenCategory('', {
       type: LOCATION_CHANGE,
       payload: {
-        query: {
-          terms: 'officer:123',
+        location: {
+          search: 'terms=officer:123',
         },
       },
     }).should.eql('officers');
@@ -45,8 +45,8 @@ describe('chosenCategory reducer', function () {
     chosenCategory('', {
       type: LOCATION_CHANGE,
       payload: {
-        query: {
-          terms: 'abc:123',
+        location: {
+          search: 'terms=abc:123',
         },
       },
     }).should.eql('');

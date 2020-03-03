@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { spy, useFakeTimers, stub } from 'sinon';
+import { spy, stub, useFakeTimers } from 'sinon';
 import should from 'should';
 
 import AnimatedSocialGraph, { AnimatedSocialGraphWithSpinner } from 'components/common/animated-social-graph';
@@ -107,7 +107,6 @@ describe('AnimatedSocialGraph component', function () {
     wrapper.state('timelineIdx').should.equal(0);
     wrapper.state('refreshIntervalId').should.not.be.null();
     wrapper.state('refreshIntervalId').should.not.eql(oldRefreshInterval);
-    clock.restore();
   });
 
   it('should update refreshIntervalId value when stop timeline', function () {
@@ -128,7 +127,6 @@ describe('AnimatedSocialGraph component', function () {
     socialGraph.props().stopTimeline();
     should(wrapper.state('refreshIntervalId')).be.null();
     wrapper.state('timelineIdx').should.equal(1);
-    clock.restore();
   });
 
   it('should call stopTimeline when componentWillUnmount', function () {
@@ -147,7 +145,6 @@ describe('AnimatedSocialGraph component', function () {
   });
 
   it('should call startTimelineFromBeginning when clicking on refresh button', function () {
-    const startTimelineFromBeginningStub = stub(AnimatedSocialGraph.prototype, 'startTimelineFromBeginning');
     wrapper = mount(
       <AnimatedSocialGraph
         officers={ officers }
@@ -156,10 +153,13 @@ describe('AnimatedSocialGraph component', function () {
       />
     );
 
+    const instance = wrapper.instance();
+    const startTimelineFromBeginningStub = stub(instance, 'startTimelineFromBeginning');
+    instance.forceUpdate();
+
     const refreshButton = wrapper.find('.refresh-button');
     refreshButton.simulate('click');
 
     startTimelineFromBeginningStub.should.be.called();
-    startTimelineFromBeginningStub.restore();
   });
 });

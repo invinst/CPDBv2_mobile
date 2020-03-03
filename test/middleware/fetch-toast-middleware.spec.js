@@ -1,6 +1,7 @@
 import { Promise } from 'es6-promise';
 import { stub } from 'sinon';
 import { CancelToken } from 'axios';
+import { LOCATION_CHANGE } from 'connected-react-router';
 
 import fetchToastMiddleware from 'middleware/fetch-toast-middleware';
 import { fetchToast } from 'actions/toast';
@@ -17,14 +18,10 @@ describe('fetchToastMiddleware', function () {
   });
 
   beforeEach(function () {
-    this.cancelTokenSource = stub(CancelToken, 'source');
+    stub(CancelToken, 'source');
   });
 
-  afterEach(function () {
-    this.cancelTokenSource.restore();
-  });
-
-  describe('handling @@router/LOCATION_CHANGE', function () {
+  describe('handling LOCATION_CHANGE', function () {
     it('should not dispatch fetchToast when toasts have already been fetched', function () {
       const store = createStore([
         {
@@ -41,7 +38,7 @@ describe('fetchToastMiddleware', function () {
         },
       ]);
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           pathname: '/pinboard/',
         },
@@ -56,7 +53,7 @@ describe('fetchToastMiddleware', function () {
     it('should dispatch fetchToast when toasts have not been fetched', function () {
       const store = createStore();
       const action = {
-        type: '@@router/LOCATION_CHANGE',
+        type: LOCATION_CHANGE,
         payload: {
           pathname: '/pinboard/',
         },

@@ -1,15 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import withUndoCard from './with-undo-card';
 import LocationCard from './location-card.js';
 
 
-export default class TRRCard extends Component {
-  render() {
-    return (
-      <LocationCard { ...this.props } dateKey='trrDate' url={ `/trr/${this.props.item.id}/` }/>
-    );
-  }
+export default function TRRCard(props) {
+  return <LocationCard { ...props } dateKey='trrDate' url={ `/trr/${props.item.id}/` }/>;
 }
 
 TRRCard.propTypes = {

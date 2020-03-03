@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { noop } from 'lodash';
-import DocumentMeta from 'react-document-meta';
+import { Helmet } from 'react-helmet-async';
 
 import style from './trr-page.sass';
 import BottomPadding from 'components/shared/bottom-padding';
@@ -28,7 +29,10 @@ export default class TRRPage extends Component {
     }
 
     return (
-      <DocumentMeta title={ `TRR ${trrId}` }>
+      <React.Fragment>
+        <Helmet>
+          <title>{ `TRR ${trrId}` }</title>
+        </Helmet>
         <WithHeader className={ style.trrPage }>
           <h4 className='trr-header'>{ trr.category }</h4>
           <div className='trr-page-body'>
@@ -38,7 +42,7 @@ export default class TRRPage extends Component {
           <BottomPadding />
           <Footer />
         </WithHeader>
-      </DocumentMeta>
+      </React.Fragment>
     );
   }
 }

@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { map, filter } from 'lodash';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { map, filter, kebabCase } from 'lodash';
 
 import style from './investigation-timeline.sass';
 
@@ -52,7 +53,7 @@ export default class InvestigationTimeline extends Component {
           map(timeline, ({ events }, index) => {
             return map(events, event => {
               const props = timelineCircleDisplayProps.shift();
-              return <circle { ...props } cy={ 9 + index * milestoneDistance } />;
+              return <circle key={ `circle-${index}` } { ...props } cy={ 9 + index * milestoneDistance } />;
             });
           })
         }
@@ -69,12 +70,13 @@ export default class InvestigationTimeline extends Component {
           map(timeline, ({ date, events }, index) => {
             const currentY = 14 + index * milestoneDistance;
             const dateText = !date ? null : (
-              <text x='26' y={ currentY } className='date' fill={ boulderColor }>
+              <text key={ 'event-date' } x='26' y={ currentY } className='date' fill={ boulderColor }>
                 { date }
               </text>
             );
             const eventTexts = map(events, (event, ind) => (
               <text
+                key={ `event-${kebabCase(event)}` }
                 className='event'
                 x='26' y={ currentY + 16 * (ind + (date ? 1 : 0)) }
                 fill={ hardBlackColor }>
