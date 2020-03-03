@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { stub, spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import ReactHeight from 'react-height';
 import { noop } from 'lodash';
 import { Promise } from 'es6-promise';
-import { browserHistory } from 'react-router';
 
+import browserHistory from 'utils/history';
 import * as NavigationUtil from 'utils/navigation-util';
 import * as IntercomUtils from 'utils/intercom';
 import SearchPage from 'components/search-page';
@@ -18,13 +18,10 @@ describe('<SearchPage />', function () {
     stub(IntercomUtils, 'showIntercomLauncher');
   });
 
-  afterEach(function () {
-    IntercomUtils.showIntercomLauncher.restore();
-  });
-
   it('should be renderable', function () {
     const wrapper = shallow(
-      <SearchPage />
+      <SearchPage />,
+      { disableLifecycleMethods: true },
     );
     wrapper.should.be.ok();
   });
@@ -33,37 +30,22 @@ describe('<SearchPage />', function () {
     const browserHistoryPush = stub(browserHistory, 'push');
 
     const wrapper = shallow(
-      <SearchPage cancelPathname='/pinboard/123abc/'/>
+      <SearchPage cancelPathname='/pinboard/123abc/'/>,
+      { disableLifecycleMethods: true },
     );
 
     wrapper.find('.bt-cancel').simulate('click', { preventDefault: noop });
 
     browserHistoryPush.should.be.calledOnce();
     browserHistoryPush.should.be.calledWith('/pinboard/123abc/');
-
-    browserHistoryPush.restore();
   });
 
   describe('componentDidMount', function () {
-    it('should call pushBreadcrumb when mounted', function () {
-      const pushBreadcrumbsSpy = spy();
-      mount(
-        <SearchPage
-          pushBreadcrumbs={ pushBreadcrumbsSpy }
-          location='location'
-          routes='routes'
-          params='params'
-        />
-      );
-      pushBreadcrumbsSpy.calledWith({
-        location: 'location',
-        routes: 'routes',
-        params: 'params',
-      }).should.be.true();
-    });
-
     it('should focus the input element when mounted', function () {
-      const wrapper = shallow(<SearchPage />);
+      const wrapper = shallow(
+        <SearchPage />,
+        { disableLifecycleMethods: true },
+      );
       const instance = wrapper.instance();
       const spyFocus = spy();
 
@@ -151,9 +133,8 @@ describe('<SearchPage />', function () {
       const dummyEvent = { currentTarget: { value: 'foo' } };
       const spyInputChanged = spy();
       const wrapper = shallow(
-        <SearchPage
-          inputChanged={ spyInputChanged }
-        />
+        <SearchPage inputChanged={ spyInputChanged }/>,
+        { disableLifecycleMethods: true },
       );
       const instance = wrapper.instance();
 
@@ -199,10 +180,6 @@ describe('<SearchPage />', function () {
       this.stubOnInputChange = stub(SearchPage.prototype, 'onInputChange');
     });
 
-    afterEach(function () {
-      this.stubOnInputChange.restore();
-    });
-
     it('should render query input component', function () {
       const spyInputChanged = spy();
 
@@ -210,7 +187,8 @@ describe('<SearchPage />', function () {
         <SearchPage
           query={ 'meh' }
           inputChanged={ spyInputChanged }
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
 
       const queryInput = wrapper.find('.query-input');
@@ -236,7 +214,8 @@ describe('<SearchPage />', function () {
             items: ['data'],
             showAllButton: false,
           }] }
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
 
       const searchCategory = wrapper.find('SearchCategory');
@@ -258,7 +237,8 @@ describe('<SearchPage />', function () {
         <SearchPage
           query={ 'jerome' }
           queryPrefix='officer'
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
       const clearableInput = wrapper.find('.query-input');
       clearableInput.prop('value').should.eql('officer:jerome');
@@ -268,7 +248,8 @@ describe('<SearchPage />', function () {
   describe('updateLastCategoryHeight', function () {
     it('should run correctly', function () {
       const wrapper = shallow(
-        <SearchPage />
+        <SearchPage />,
+        { disableLifecycleMethods: true },
       );
       const instance = wrapper.instance();
       const spyForceUpdate = spy(instance, 'forceUpdate');
@@ -277,21 +258,10 @@ describe('<SearchPage />', function () {
 
       instance.lastCategoryHeight.should.eql(1);
       spyForceUpdate.called.should.be.true();
-
-      spyForceUpdate.restore();
     });
   });
 
   describe('renderCategories()', function () {
-    beforeEach(function () {
-      stub(SearchPage.prototype.updateLastCategoryHeight, 'bind');
-      SearchPage.prototype.updateLastCategoryHeight.bind.returns(SearchPage.prototype.updateLastCategoryHeight);
-    });
-
-    afterEach(function () {
-      SearchPage.prototype.updateLastCategoryHeight.bind.restore();
-    });
-
     it('should render SearchCategory components', function () {
       const cr1 = {
         category: 'Use Of Force',
@@ -366,7 +336,8 @@ describe('<SearchPage />', function () {
       }];
 
       const wrapper = shallow(
-        <SearchPage query='qa' categories={ categories }/>
+        <SearchPage query='qa' categories={ categories }/>,
+        { disableLifecycleMethods: true },
       );
 
       const categoryDetails = wrapper.find('.category-details-container').children();
@@ -377,7 +348,7 @@ describe('<SearchPage />', function () {
       // Last component should be wrapped inside ReactHeight:
       const lastCategory = categoryDetails.at(1);
       lastCategory.type().should.be.eql(ReactHeight);
-      lastCategory.prop('onHeightReady').should.be.eql(SearchPage.prototype.updateLastCategoryHeight);
+      lastCategory.prop('onHeightReady').should.be.eql(wrapper.instance().updateLastCategoryHeight);
     });
 
     it('should pass correct props to SearchCategory', function () {
@@ -430,7 +401,8 @@ describe('<SearchPage />', function () {
             term: '123',
           } }
           hasMore={ true }
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
 
       const searchCategory = wrapper.find(SearchCategory).at(0);
@@ -453,8 +425,6 @@ describe('<SearchPage />', function () {
         term: '123',
       });
       searchCategory.prop('hasMore').should.be.true();
-
-      stubBoundCallback.restore();
     });
   });
 
@@ -466,7 +436,8 @@ describe('<SearchPage />', function () {
         <SearchPage
           query='wa'
           updateChosenCategory={ updateChosenCategory }
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
 
       wrapper.instance().chooseCategory({
@@ -534,7 +505,8 @@ describe('<SearchPage />', function () {
           query='qa'
           categories={ categories }
           chosenCategory='crs'
-        />
+        />,
+        { disableLifecycleMethods: true },
       );
 
       const searchCategories = wrapper.find('SearchCategory');
@@ -563,10 +535,6 @@ describe('<SearchPage />', function () {
         stub(IntercomTracking, 'trackSearchPage');
       });
 
-      afterEach(function () {
-        IntercomTracking.trackSearchPage.restore();
-      });
-
       it('should track Intercom with search page', function () {
         mount(<SearchPage />);
         IntercomTracking.trackSearchPage.called.should.be.true();
@@ -577,10 +545,6 @@ describe('<SearchPage />', function () {
   describe('render back to search link', function () {
     beforeEach(function () {
       this.stubInstantScrollToTop = stub(NavigationUtil, 'instantScrollToTop');
-    });
-
-    afterEach(function () {
-      this.stubInstantScrollToTop.restore();
     });
 
     it('should call clearChosenCategory and scroll to top on click', function () {
@@ -623,7 +587,6 @@ describe('<SearchPage />', function () {
     createPinboard.calledWith({ officerIds: [], trrIds: [], crids: [] }).should.be.true();
     setTimeout(() => {
       browserHistoryPush.called.should.be.true();
-      browserHistoryPush.restore();
       done();
     }, 50);
   });

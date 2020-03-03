@@ -5,7 +5,7 @@ import { extractPercentile } from 'selectors/common/percentile';
 import { cmsSelector } from 'selectors/common/cms';
 
 
-const getTRR = (state, props) => state.trrPage.trrs[props.params.trrId];
+const getTRR = (state, props) => state.trrPage.trrs[props.match.params.trrId];
 
 const officerSelector = (trr) => {
   const assignedBeat = get(trr, 'officer_assigned_beat');

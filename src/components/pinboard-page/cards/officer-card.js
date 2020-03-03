@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import pluralize from 'pluralize';
 import cx from 'classnames';
 import { get } from 'lodash';
@@ -11,19 +12,13 @@ import withUndoCard from './with-undo-card';
 
 
 export default class OfficerCard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.removeItem = this.removeItem.bind(this);
-  }
-
-  removeItem(e) {
+  removeItem = e => {
     e.preventDefault();
     const { item, removeItemInPinboardPage } = this.props;
     const { type, id } = item;
 
     removeItemInPinboardPage({ type, id });
-  }
+  };
 
   render() {
     const { item } = this.props;

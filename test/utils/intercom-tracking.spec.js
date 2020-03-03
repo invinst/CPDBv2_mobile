@@ -8,10 +8,6 @@ describe('IntercomTracking', function () {
     spy(window, 'Intercom');
   });
 
-  afterEach(function () {
-    window.Intercom.restore();
-  });
-
   describe('trackOpenExplainer', function () {
     it('should call Intercom correctly', function () {
       IntercomTracking.trackOpenExplainer(123);

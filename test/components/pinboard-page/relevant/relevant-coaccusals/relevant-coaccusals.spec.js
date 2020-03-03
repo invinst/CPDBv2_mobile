@@ -1,7 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import { stub } from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import RelevantInfiniteCarousel from 'components/pinboard-page/relevant/common/relevant-infinite-carousel';
 import RelevantCoaccusals from 'components/pinboard-page/relevant/relevant-coaccusals';
 import RelevantCoaccusalCard, { RelevantCoaccusalCardWithUndo }
@@ -26,7 +26,7 @@ describe('<RelevantCoaccusals />', function () {
     const addItemInPinboardPageStub = stub();
     const fetchPinboardRelevantCoaccusalsStub = stub();
 
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <RelevantCoaccusals
         requesting={ false }
         addItemInPinboardPage={ addItemInPinboardPageStub }

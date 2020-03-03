@@ -1,5 +1,6 @@
-import React, { PropTypes, Component } from 'react';
-import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import pluralize from 'pluralize';
 import { kebabCase, get } from 'lodash';
 
@@ -11,12 +12,7 @@ import constants from 'constants';
 
 
 export default class RelevantCoaccusalCard extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(e) {
+  handleClick = e => {
     e.preventDefault();
 
     const {
@@ -35,7 +31,7 @@ export default class RelevantCoaccusalCard extends Component {
       complaintCount,
       rank,
     });
-  }
+  };
 
   render() {
     const {

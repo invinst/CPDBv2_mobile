@@ -4,6 +4,7 @@ import {
   officerSummarySelector,
   officerMetricsSelector,
   officerYearlyPercentileSelector,
+  getIsOfficerPinned,
 } from 'selectors/officer-page';
 
 
@@ -11,8 +12,10 @@ describe('officer-page selectors', function () {
   describe('officerYearlyPercentileSelector', function () {
     it('should return percentile data and mapped color', function () {
       const props = {
-        params: {
-          id: 11,
+        match: {
+          params: {
+            id: 11,
+          },
         },
       };
       const state = {
@@ -86,8 +89,10 @@ describe('officer-page selectors', function () {
 
   describe('officerSummarySelector', function () {
     const props = {
-      params: {
-        id: 11,
+      match: {
+        params: {
+          id: 11,
+        },
       },
     };
     const state = {
@@ -270,8 +275,10 @@ describe('officer-page selectors', function () {
 
     it('should return null if officer with matching ID does not exist', function () {
       const notFoundProps = {
-        params: {
-          id: 12,
+        match: {
+          params: {
+            id: 12,
+          },
         },
       };
 
@@ -281,8 +288,10 @@ describe('officer-page selectors', function () {
 
   describe('officerMetricsSelector', function () {
     const props = {
-      params: {
-        id: 11,
+      match: {
+        params: {
+          id: 11,
+        },
       },
     };
     const state = {
@@ -326,12 +335,38 @@ describe('officer-page selectors', function () {
 
     it('should return null if officer with matching ID does not exist', function () {
       const notFoundProps = {
-        params: {
-          id: 12,
+        match: {
+          params: {
+            id: 12,
+          },
         },
       };
 
       should(officerMetricsSelector(state, notFoundProps)).be.null();
+    });
+  });
+
+  describe('getIsCrPinned', function () {
+    it('should return true if officerId is in pinboard', function () {
+      const state = {
+        pinboardPage: {
+          pinboard: {
+            'officer_ids': [123, 124, 125],
+          },
+        },
+      };
+      getIsOfficerPinned(state, 123).should.be.true();
+    });
+
+    it('should return false if officerId is not in pinboard', function () {
+      const state = {
+        pinboardPage: {
+          pinboard: {
+            'officer_ids': [123, 124, 125],
+          },
+        },
+      };
+      getIsOfficerPinned(state, 126).should.be.false();
     });
   });
 });

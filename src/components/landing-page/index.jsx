@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import DocumentMeta from 'react-document-meta';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
-import constants from 'constants';
+import { SEARCH_PATH } from 'constants/paths';
 import CMSContent from 'components/common/cms-content';
 import BottomPadding from 'components/shared/bottom-padding';
 import TopOfficersByAllegation from 'containers/landing-page/top-officers-by-allegation';
@@ -16,30 +17,25 @@ import Footer from 'components/footer';
 export default class LandingPage extends Component {
   componentDidMount() {
     const {
-      requestCMS, pushBreadcrumbs, location, routes, params, cmsRequested,
+      requestCMS, cmsRequested,
     } = this.props;
-    pushBreadcrumbs({ location, routes, params });
 
     cmsRequested || requestCMS();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { location, params, routes, pushBreadcrumbs } = nextProps;
-    if (location !== this.props.location) {
-      pushBreadcrumbs({ location, params, routes });
-    }
   }
 
   render() {
     const { title, description } = this.props;
 
     return (
-      <DocumentMeta title='CPDP'>
+      <React.Fragment>
+        <Helmet>
+          <title>CPDP</title>
+        </Helmet>
         <div className={ style.landingPage }>
           <div className='full-height-wrapper'>
             <CMSContent className='site-title' content={ title } />
             <CMSContent className='site-desc' content={ description } />
-            <Link className='search-bar' to={ constants.SEARCH_PATH }>
+            <Link className='search-bar' to={ SEARCH_PATH }>
               <img src='/img/ic-magnifying-glass.svg' />Officer name, badge number or date
             </Link>
           </div>
@@ -50,7 +46,7 @@ export default class LandingPage extends Component {
           <BottomPadding />
           <Footer />
         </div>
-      </DocumentMeta>
+      </React.Fragment>
     );
   }
 }
@@ -61,12 +57,8 @@ LandingPage.defaultProps = {
 };
 
 LandingPage.propTypes = {
-  pushBreadcrumbs: PropTypes.func,
   requestCMS: PropTypes.func,
   cmsRequested: PropTypes.bool,
   title: PropTypes.object,
   description: PropTypes.object,
-  location: PropTypes.object,
-  params: PropTypes.object,
-  routes: PropTypes.array,
 };

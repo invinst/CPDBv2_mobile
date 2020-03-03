@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { push as pushBreadcrumbs } from 'redux-breadcrumb-trail';
+import { withRouter } from 'react-router-dom';
 
 import SearchPage from 'components/search-page';
 import {
@@ -55,7 +54,6 @@ const mapDispatchToProps = {
   saveToRecent,
   updateActiveCategory,
   updateChosenCategory,
-  pushBreadcrumbs,
   addOrRemoveItemInPinboard,
   createPinboard,
   getSuggestionWithContentType,

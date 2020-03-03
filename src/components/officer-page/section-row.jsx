@@ -1,20 +1,19 @@
-import React, { PropTypes, Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import style from './section-row.sass';
 
-class SectionRow extends Component {
-  render() {
-    const { label, value, children } = this.props;
-    return (
-      <div className={ style.sectionRow }>
-        <div className='label'>{ label }</div>
-        <div className='value'>
-          { value }
-          { children }
-        </div>
+function SectionRow(props) {
+  const { label, value, children } = props;
+  return (
+    <div className={ style.sectionRow }>
+      <div className='label'>{ label }</div>
+      <div className='value'>
+        { value }
+        { children }
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 SectionRow.propTypes = {

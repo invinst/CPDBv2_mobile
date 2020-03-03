@@ -56,6 +56,5 @@ describe('<Footer />', function () {
     const wrapper = shallow(<Footer />);
     wrapper.find('.contact-item').simulate('click');
     intercomUtils.showIntercomMessages.calledWith(true).should.be.true();
-    intercomUtils.showIntercomMessages.restore();
   });
 });

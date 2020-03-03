@@ -3,9 +3,10 @@ import { shallow, mount } from 'enzyme';
 import { spy } from 'sinon';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import DocumentMeta from 'react-document-meta';
+import { MemoryRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 
-import constants from 'constants';
+import { SEARCH_PATH } from 'constants/paths';
 import LandingPage from 'components/landing-page';
 import Footer from 'components/footer';
 
@@ -19,18 +20,17 @@ describe('<LandingPage />', function () {
   it('should render main title', function () {
     const wrapper = shallow(<LandingPage />);
 
-    const documentMeta = wrapper.find(DocumentMeta).at(0);
-    documentMeta.prop('title').should.equal('CPDP');
+    wrapper.find('title').text().should.equal('CPDP');
   });
 
   it('should render fake search input box that links to search page', function () {
     const wrapper = shallow(<LandingPage />);
     const searchBar = wrapper.find('Link.search-bar');
     searchBar.prop('children').should.containEql('Officer name, badge number or date');
-    searchBar.prop('to').should.eql(constants.SEARCH_PATH);
+    searchBar.prop('to').should.eql(SEARCH_PATH);
   });
 
-  it('should request landing page data and pushBreadcrumb on mount', function () {
+  it('should request landing page data', function () {
     const store = configureStore()({
       landingPage: {
         topOfficersByAllegation: [1],
@@ -42,43 +42,21 @@ describe('<LandingPage />', function () {
     });
 
     const spyRequestCMS = spy();
-    const pushBreadcrumbsSpy = spy();
     mount(
       <Provider store={ store }>
-        <LandingPage
-          cmsRequested={ false }
-          requestCMS={ spyRequestCMS }
-          pushBreadcrumbs={ pushBreadcrumbsSpy }
-          location='location'
-          routes='routes'
-          params='params'
-        />
+        <HelmetProvider>
+          <MemoryRouter>
+            <LandingPage
+              cmsRequested={ false }
+              requestCMS={ spyRequestCMS }
+              location='location'
+              routes='routes'
+              params='params'
+            />
+          </MemoryRouter>
+        </HelmetProvider>
       </Provider>
     );
     spyRequestCMS.calledWith().should.be.true();
-    pushBreadcrumbsSpy.calledWith({
-      location: 'location',
-      routes: 'routes',
-      params: 'params',
-    }).should.be.true();
-  });
-
-  it('should call pushBreadcrumb when updating', function () {
-    const pushBreadcrumbsSpy = spy();
-    const wrapper = shallow(
-      <LandingPage
-        pushBreadcrumbs={ pushBreadcrumbsSpy }
-        location='location'
-        routes='routes'
-        params='params'
-      />
-    );
-
-    wrapper.setProps({ location: 'changed' });
-    pushBreadcrumbsSpy.calledWith({
-      location: 'changed',
-      routes: 'routes',
-      params: 'params',
-    }).should.be.true();
   });
 });

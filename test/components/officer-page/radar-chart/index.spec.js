@@ -2,11 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import should from 'should';
-import { mount, shallow, ReactWrapper } from 'enzyme';
-import { stub, useFakeTimers, spy } from 'sinon';
-import Modal from 'react-modal';
+import { mount, shallow } from 'enzyme';
+import { spy, stub, useFakeTimers } from 'sinon';
 import { EditorState } from 'draft-js';
 
+import { mountWithRouter } from 'utils/tests';
 import AnimatedRadarChart from 'components/officer-page/radar-chart';
 import StaticRadarChart from 'components/common/radar-chart';
 import RadarExplainer from 'components/officer-page/radar-chart/explainer';
@@ -115,13 +115,8 @@ describe('AnimatedRadarChart component', function () {
       stub(tracking, 'trackOpenExplainer');
     });
 
-    afterEach(function () {
-      tracking.trackOpenExplainer.restore();
-      IntercomTracking.trackOpenExplainer.restore();
-    });
-
     it('should open the explainer clicking on the radar chart and track this event', function () {
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <Provider store={ store }>
           <AnimatedRadarChart officerId={ 123 } percentileData={ data }/>
         </Provider>
@@ -136,7 +131,7 @@ describe('AnimatedRadarChart component', function () {
     });
 
     it('should open explainer when click on radar chart', function () {
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <Provider store={ store }>
           <AnimatedRadarChart officerId={ 123 } percentileData={ data }/>
         </Provider>
@@ -146,9 +141,7 @@ describe('AnimatedRadarChart component', function () {
       wrapper.find('.radar-chart-container').exists().should.be.true();
       wrapper.find('.radar-chart-container').simulate('click');
 
-      const modalWrapper = new ReactWrapper(wrapper.find(Modal).node.portal, true);
-
-      const explainer = modalWrapper.find(RadarExplainer);
+      const explainer = wrapper.find(RadarExplainer);
       explainer.exists().should.be.true();
       explainer.prop('percentileData').should.equal(data);
     });
@@ -159,10 +152,6 @@ describe('AnimatedRadarChart component', function () {
     let clock;
     beforeEach(function () {
       clock = useFakeTimers();
-    });
-
-    afterEach(function () {
-      clock.restore();
     });
 
     it('should not animate if data length is 1', function () {
@@ -206,7 +195,7 @@ describe('AnimatedRadarChart component', function () {
     it('should start to animate after closing explainer', function () {
       let animatedRadarChart = null;
 
-      const wrapper = mount(
+      const wrapper = mountWithRouter(
         <Provider store={ store }>
           <AnimatedRadarChart officerId={ 123 } ref={ (c) => {animatedRadarChart = c;} } percentileData={ data }/>
         </Provider>
@@ -215,12 +204,11 @@ describe('AnimatedRadarChart component', function () {
 
       wrapper.find('.radar-chart-container').simulate('click');
 
-      const modalWrapper = new ReactWrapper(wrapper.find(Modal).node.portal, true);
-      modalWrapper.find(RadarExplainer).exists().should.be.true();
+      wrapper.find(RadarExplainer).exists().should.be.true();
 
-      modalWrapper.find('.explainer-close-button').simulate('click');
+      wrapper.find('.explainer-close-button').simulate('click');
 
-      modalWrapper.find(RadarExplainer).exists().should.be.false();
+      wrapper.find(RadarExplainer).exists().should.be.false();
       startAnimation.calledOnce.should.be.true();
     });
 
@@ -276,9 +264,10 @@ describe('AnimatedRadarChart component', function () {
       const instance = wrapper.instance();
 
       instance.state.transitionValue.should.eql(0);
-      instance.animatedData.should.have.length(2);
-      instance.animatedData[0].year.should.equal(2014);
-      instance.animatedData[1].year.should.equal(2016);
+      const animatedData = instance.animatedData();
+      animatedData.should.have.length(2);
+      animatedData[0].year.should.equal(2014);
+      animatedData[1].year.should.equal(2016);
 
       clock.tick(250);
       instance.state.transitionValue.should.eql(1);

@@ -8,6 +8,7 @@ import {
   getCMSRequested,
   buttonText,
   requestDocumentButtonMessage,
+  getIsCrPinned,
 } from 'selectors/complaint-page';
 import { CoaccusedFactory } from 'utils/tests/factories/complaint';
 
@@ -24,8 +25,10 @@ describe('complaint-page selectors', function () {
         },
       };
       const props = {
-        params: {
-          complaintId: '1',
+        match: {
+          params: {
+            complaintId: '1',
+          },
         },
       };
       should(complaintSelector(state, props)).be.null();
@@ -47,8 +50,10 @@ describe('complaint-page selectors', function () {
       };
 
       const props = {
-        params: {
-          complaintId: '111',
+        match: {
+          params: {
+            complaintId: '111',
+          },
         },
       };
 
@@ -135,8 +140,10 @@ describe('complaint-page selectors', function () {
       };
 
       const props = {
-        params: {
-          complaintId: '111',
+        match: {
+          params: {
+            complaintId: '111',
+          },
         },
       };
 
@@ -224,8 +231,10 @@ describe('complaint-page selectors', function () {
       };
 
       const props = {
-        params: {
-          complaintId: '123',
+        match: {
+          params: {
+            complaintId: '123',
+          },
         },
       };
 
@@ -238,7 +247,7 @@ describe('complaint-page selectors', function () {
   it('should prioritize officers user visited', function () {
     const state = {
       breadcrumb: {
-        breadcrumbs: [
+        breadcrumbItems: [
           {
             url: '/officer/1/',
             params: {
@@ -264,8 +273,10 @@ describe('complaint-page selectors', function () {
     };
 
     const props = {
-      params: {
-        complaintId: '123',
+      match: {
+        params: {
+          complaintId: '123',
+        },
       },
     };
 
@@ -291,8 +302,10 @@ describe('complaint-page selectors', function () {
     };
 
     const props = {
-      params: {
-        complaintId: '123',
+      match: {
+        params: {
+          complaintId: '123',
+        },
       },
     };
 
@@ -318,8 +331,10 @@ describe('complaint-page selectors', function () {
     };
 
     const props = {
-      params: {
-        complaintId: '123',
+      match: {
+        params: {
+          complaintId: '123',
+        },
       },
     };
 
@@ -385,10 +400,6 @@ describe('complaint-page selectors', function () {
       stub(draftjsUtils, 'convertContentStateToEditorState').callsFake((args) => args);
     });
 
-    afterEach(function () {
-      draftjsUtils.convertContentStateToEditorState.restore();
-    });
-
     it('should return document request instruction message', function () {
       const state = {
         complaintPage: {
@@ -448,6 +459,30 @@ describe('complaint-page selectors', function () {
         crid: '123',
       };
       requestDocumentButtonMessage(state, props).should.eql('This is new document notification instruction message');
+    });
+  });
+
+  describe('getIsCrPinned', function () {
+    it('should return true if crid is in pinboard', function () {
+      const state = {
+        pinboardPage: {
+          pinboard: {
+            crids: ['123', '124', '125'],
+          },
+        },
+      };
+      getIsCrPinned(state, '123').should.be.true();
+    });
+
+    it('should return false if crid is not in pinboard', function () {
+      const state = {
+        pinboardPage: {
+          pinboard: {
+            crids: ['123', '124', '125'],
+          },
+        },
+      };
+      getIsCrPinned(state, '126').should.be.false();
     });
   });
 });

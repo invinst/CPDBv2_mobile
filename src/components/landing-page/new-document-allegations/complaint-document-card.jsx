@@ -1,8 +1,10 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 
 import constants from 'constants';
+import { COMPLAINT_PATH } from 'constants/paths';
 import style from './complaint-document-card.sass';
 import ItemPinButton from 'components/common/item-pin-button';
 import pinButtonStyles from 'components/common/item-pin-button.sass';
@@ -10,18 +12,13 @@ import * as tracking from 'utils/tracking';
 
 
 class ComplaintDocumentCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
+  handleClick = () => {
     const { allegation, pathname, onTrackingAttachment } = this.props;
     const document = get(allegation, 'document', {});
-    const url = `${constants.COMPLAINT_PATH}${allegation.crid}/`;
+    const url = `${COMPLAINT_PATH}${allegation.crid}/`;
     tracking.trackAttachmentClick(pathname, url);
     onTrackingAttachment({ attachmentId: document['id'], sourcePage: 'Landing Page', app: 'Mobile' });
-  }
+  };
 
   render() {
     const { allegation, addOrRemoveItemInPinboard } = this.props;
@@ -29,7 +26,7 @@ class ComplaintDocumentCard extends React.Component {
     const { incidentDate, category } = allegation;
     return (
       <Link
-        to={ `${constants.COMPLAINT_PATH}${allegation.crid}/` }
+        to={ `${COMPLAINT_PATH}${allegation.crid}/` }
         className={ style.complaintDocumentCard }
         onClick={ this.handleClick }
       >

@@ -1,15 +1,16 @@
-import React, { Component, PropTypes } from 'react';
-import AppHistory from 'utils/history';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import browserHistory from 'utils/history';
 
 import styles from './pinboard-info.sass';
 import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-textarea-input';
 
 
 export default class PinboardInfo extends Component {
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { pinboard } = this.props;
-    if (pinboard.url !== nextProps.pinboard.url) {
-      AppHistory.replace(nextProps.pinboard.url);
+    if (prevProps.pinboard.url !== pinboard.url) {
+      browserHistory.replace(pinboard.url);
     }
   }
 

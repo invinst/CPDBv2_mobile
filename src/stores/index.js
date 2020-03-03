@@ -1,17 +1,52 @@
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import persistState from 'redux-localstorage';
+import { routerMiddleware } from 'connected-react-router';
+
 import config from 'config';
-import configureProd from './configure-store.prod';
-import configureDev from './configure-store.dev';
-import configureTest from './configure-store.test';
+import configuredAxiosMiddleware from 'middleware/configured-axios-middleware';
+import rootReducer from 'reducers/root-reducer';
+import localStorageConfig from './local-storage-config';
+import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
+import trackingMiddleware from 'middleware/tracking-middleware';
+import restoreCreateOrUpdatePinboardMiddleware from 'middleware/restore-create-or-update-pinboard-middleware';
+import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pinboard-middleware';
+import browserHistory from 'utils/history';
+import fetchToastMiddleware from 'middleware/fetch-toast-middleware';
 
-let configureStore;
 
-/* istanbul ignore next */
-if (['staging', 'beta', 'production'].includes(config.appEnv)) {
-  configureStore = configureProd;
-} else if (config.appEnv === 'test') {
-  configureStore = configureTest;
-} else {
-  configureStore = configureDev;
+const { pinboard: enablePinboardFeature } = config.enableFeatures;
+
+function configureStore(initialState) {
+  /* istanbul ignore next */
+  let middleware = [
+    routerMiddleware(browserHistory),
+    thunk,
+    configuredAxiosMiddleware,
+    scrollPositionMiddleware,
+    trackingMiddleware,
+    fetchAndRedirectPinboardMiddleware,
+    fetchToastMiddleware,
+  ];
+  if (enablePinboardFeature) {
+    middleware = [...middleware, restoreCreateOrUpdatePinboardMiddleware];
+  }
+
+  const composeArgs = [
+    applyMiddleware(...middleware),
+    persistState(()=>{}, localStorageConfig),
+  ];
+
+  /* istanbul ignore next */
+  if (config.appEnv === 'dev') {
+    composeArgs.push(window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f);
+  }
+
+  return createStore(
+    rootReducer(browserHistory),
+    initialState,
+    compose(...composeArgs)
+  );
 }
 
 let store;

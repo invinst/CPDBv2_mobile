@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router';
-import { shallow, mount } from 'enzyme';
+import { Link } from 'react-router-dom';
+import { shallow } from 'enzyme';
 import should from 'should';
 import { random } from 'faker';
 import { spy } from 'sinon';
 
+import { mountWithRouter } from 'utils/tests';
 import BaseOfficerCard from 'components/common/base-officer-card';
 import RadarChart from 'components/common/radar-chart';
 import ItemPinButton from 'components/common/item-pin-button';
@@ -84,7 +85,7 @@ describe('<BaseOfficerCard />', function () {
     const isPinned = random.boolean();
     const fullName ='Jerome Finnigan';
 
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <BaseOfficerCard
         officerId={ id }
         isPinned={ isPinned }
@@ -107,7 +108,7 @@ describe('<BaseOfficerCard />', function () {
   });
 
   it('should not render pin button if not pinnable', function () {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <BaseOfficerCard
         pinnable={ false }
       />,
@@ -116,7 +117,7 @@ describe('<BaseOfficerCard />', function () {
   });
 
   it('should render top content and skip pin button', function () {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <BaseOfficerCard
         topContent={ <div className={ 'top-content' } /> }
       />,

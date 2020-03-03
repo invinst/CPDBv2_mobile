@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { noop, isEmpty } from 'lodash';
-import DocumentMeta from 'react-document-meta';
+import { Helmet } from 'react-helmet-async';
 
 import BottomPadding from 'components/shared/bottom-padding';
 import Victim from './victim';
@@ -17,6 +18,8 @@ import Location from './location';
 import style from './complaint-page.sass';
 import Footer from 'components/footer';
 import WithHeader from 'components/shared/with-header';
+import ItemPinButton from 'components/common/item-pin-button';
+import constants from 'constants';
 
 
 export default class ComplaintPage extends Component {
@@ -32,6 +35,7 @@ export default class ComplaintPage extends Component {
     const {
       complaint, complaintId, pathname,
       onTrackingAttachment, noAttachmentMessage, addOrRemoveItemInPinboard,
+      isPinned,
     } = this.props;
 
     if (isEmpty(complaint)) {
@@ -39,8 +43,21 @@ export default class ComplaintPage extends Component {
     }
 
     return (
-      <DocumentMeta title={ `CR ${complaintId}` }>
-        <WithHeader className={ style.complaintPage }>
+      <React.Fragment>
+        <Helmet>
+          <title>{ `CR ${complaintId}` }</title>
+        </Helmet>
+        <WithHeader className={ style.complaintPage } customButtons={
+          <ItemPinButton
+            addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+            showHint={ false }
+            item={ {
+              type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+              id: complaintId,
+              isPinned,
+            } }
+          />
+        }>
           <div className='complaint-page-body'>
             <ComplaintCategory
               category={ complaint.category }
@@ -77,7 +94,7 @@ export default class ComplaintPage extends Component {
           <BottomPadding />
           <Footer />
         </WithHeader>
-      </DocumentMeta>
+      </React.Fragment>
     );
   }
 }
@@ -92,6 +109,7 @@ ComplaintPage.propTypes = {
   requestCMS: PropTypes.func,
   cmsRequested: PropTypes.bool,
   noAttachmentMessage: PropTypes.object,
+  isPinned: PropTypes.bool,
 };
 
 ComplaintPage.defaultProps = {

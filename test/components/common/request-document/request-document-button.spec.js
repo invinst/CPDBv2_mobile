@@ -1,7 +1,6 @@
 import React from 'react';
-import { shallow, mount, ReactWrapper } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { spy } from 'sinon';
-import Modal from 'react-modal';
 
 import RequestDocumentButton from 'components/common/request-document/request-document-button';
 import RequestDocumentContent from 'components/common/request-document/request-document-content';
@@ -32,11 +31,10 @@ describe('RequestDocumentButton component', function () {
       />
     );
 
-    const modalWrapper = new ReactWrapper(wrapper.find(Modal).node.portal, true);
-    modalWrapper.find(RequestDocumentContent).exists().should.be.false();
+    wrapper.find(RequestDocumentContent).exists().should.be.false();
 
     wrapper.find('.request-button').simulate('click');
-    const requestForm = modalWrapper.find(RequestDocumentContent);
+    const requestForm = wrapper.find(RequestDocumentContent);
     requestForm.prop('id').should.equal('some id');
     requestForm.prop('requestDocument').should.equal(requestDocumentSpy);
     requestForm.prop('isRequested').should.equal(false);
@@ -56,14 +54,14 @@ describe('RequestDocumentButton component', function () {
       />
     );
 
-    const modalWrapper = new ReactWrapper(wrapper.find(Modal).node.portal, true);
-    modalWrapper.find(RequestDocumentContent).exists().should.be.false();
+    wrapper.find(RequestDocumentContent).exists().should.be.false();
 
     wrapper.find('.request-button').simulate('click');
-    modalWrapper.find(RequestDocumentContent).exists().should.be.true();
+    wrapper.find(RequestDocumentContent).exists().should.be.true();
 
     wrapper.instance().closeRequestForm();
+    wrapper.update();
 
-    modalWrapper.find(RequestDocumentContent).exists().should.be.false();
+    wrapper.find(RequestDocumentContent).exists().should.be.false();
   });
 });

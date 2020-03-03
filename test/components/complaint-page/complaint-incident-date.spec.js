@@ -6,7 +6,7 @@ import ComplaintIncidentDate from 'components/complaint-page/complaint-incident-
 describe('ComplaintIncidentDate component', function () {
   it('should render correctly', function () {
     const wrapper = shallow(
-      <ComplaintIncidentDate incidentDate='2012-12-05' />
+      <ComplaintIncidentDate incidentDate='Dec 5, 2012' />
     );
     const incidentDate = wrapper.find('.incident-date-value');
 

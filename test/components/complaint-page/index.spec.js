@@ -8,16 +8,28 @@ import configureStore from 'redux-mock-store';
 import ComplaintPage from 'components/complaint-page';
 import Footer from 'components/footer';
 import WithHeader from 'components/shared/with-header';
-import DocumentMeta from 'react-document-meta';
 
 describe('ComplaintPage component', function () {
   it('should render if there is complaint', function () {
+    const addOrRemoveItemInPinboardSpy = spy();
     const wrapper = shallow(
-      <ComplaintPage complaint={ { category: 'Use of force' } }/>
+      <ComplaintPage
+        complaint={ { category: 'Use of force' } }
+        isPinned={ false }
+        complaintId={ 123 }
+        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }/>
     );
     wrapper.should.be.ok();
 
     const withHeader = wrapper.find(WithHeader);
+    const customButtons = withHeader.prop('customButtons');
+    customButtons.props.item.should.eql({
+      id: 123,
+      isPinned: false,
+      type: 'CR',
+    });
+    customButtons.props.addOrRemoveItemInPinboard.should.eql(addOrRemoveItemInPinboardSpy);
+    customButtons.props.showHint.should.be.false();
     withHeader.find('.complaint-page-body').exists().should.be.true();
     withHeader.find(Footer).exists().should.be.true();
   });
@@ -72,7 +84,6 @@ describe('ComplaintPage component', function () {
       <ComplaintPage complaint={ { category: 'Use of force' } } complaintId={ 'C123456' }/>
     );
 
-    const documentMeta = wrapper.find(DocumentMeta);
-    documentMeta.prop('title').should.equal('CR C123456');
+    wrapper.find('title').text().should.equal('CR C123456');
   });
 });

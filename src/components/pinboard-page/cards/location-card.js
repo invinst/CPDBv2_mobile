@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 
 import { mapStyle } from 'components/common/complaint-card.style';
@@ -8,19 +9,13 @@ import styles from './location-card.sass';
 
 
 export default class LocationCard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.removeItem = this.removeItem.bind(this);
-  }
-
-  removeItem(e) {
+  removeItem = e => {
     e.preventDefault();
     const { item, removeItemInPinboardPage } = this.props;
     const { type, id } = item;
 
     removeItemInPinboardPage({ type, id });
-  }
+  };
 
   render() {
     const { item, dateKey, url } = this.props;

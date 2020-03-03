@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { stub, spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
 import PinboardInfo from 'components/pinboard-page/pinboard-info';
 import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-textarea-input';
@@ -35,14 +35,14 @@ describe('<PinboardInfo />', function () {
     pinboardDescription.prop('className').should.eql('pinboard-description');
     pinboardDescription.prop('value').should.eql('This is pinboard description');
     pinboardDescription.prop('placeholder').should.eql(
-      'When you\\u2019re ready, add a description for your pinboard here'
+      'When you’re ready, add a description for your pinboard here'
     );
     pinboardDescription.prop('fieldType').should.eql('description');
     pinboardDescription.prop('save').should.eql(updatePinboardInfoStub);
     pinboardDescription.prop('textareaLineHeight').should.eql(16);
 
-    const title = wrapper.find('.pinboard-title');
-    const description = wrapper.find('.pinboard-description');
+    const title = wrapper.find('.pinboard-title').first();
+    const description = wrapper.find('.pinboard-description').first();
     title.text().should.eql('This is pinboard title');
     description.text().should.eql('This is pinboard description');
   });
@@ -86,7 +86,5 @@ describe('<PinboardInfo />', function () {
     wrapper.setProps({ pinboard: newDescriptionPinboard, updatePinboardInfo: updatePinboardInfoStub });
 
     window.history.replaceState.should.not.be.called();
-
-    window.history.replaceState.restore();
   });
 });

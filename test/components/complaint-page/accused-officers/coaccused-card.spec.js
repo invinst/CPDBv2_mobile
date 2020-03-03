@@ -1,9 +1,9 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { spy } from 'sinon';
 import { random } from 'faker';
 
+import { mountWithRouter } from 'utils/tests';
 import ItemPinButton from 'components/common/item-pin-button';
 import pinButtonStyles from 'components/common/item-pin-button.sass';
 import constants from 'constants';
@@ -32,7 +32,7 @@ describe('CoaccusedCard component', function () {
   };
 
   it('should render footer correctly', function () {
-    const wrapper = mount(<CoaccusedCard officer={ officer } />);
+    const wrapper = mountWithRouter(<CoaccusedCard officer={ officer } />);
 
     const baseCard = wrapper.find(BaseOfficerCard);
     const link = baseCard.find(Link);
@@ -43,7 +43,7 @@ describe('CoaccusedCard component', function () {
   it('should render ItemPinButton with correct props', function () {
     const addOrRemoveItemInPinboard = spy();
 
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <CoaccusedCard
         officer={ officer }
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }

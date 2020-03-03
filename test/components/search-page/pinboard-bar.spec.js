@@ -1,9 +1,9 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 import { shallow } from 'enzyme';
 import should from 'should';
 import { spy, stub } from 'sinon';
 
+import browserHistory from 'utils/history';
 import PinboardBar from 'components/search-page/pinboard-bar';
 
 
@@ -15,7 +15,7 @@ describe('<PinboardBar />', function () {
       } } />
     );
 
-    should(wrapper.getNode()).be.null();
+    should(wrapper.getElement()).be.null();
   });
 
   it('should render "Your pinboard is empty" if pinboard is empty', function () {
@@ -67,8 +67,6 @@ describe('<PinboardBar />', function () {
 
     wrapper.simulate('click');
     browserHistoryPush.should.be.calledWith('/pinboard/1/title/');
-
-    browserHistoryPush.restore();
   });
 
   it('should go to /pinboard/ if pinboard is empty and hasPendingChanges is true', function () {
@@ -85,7 +83,5 @@ describe('<PinboardBar />', function () {
 
     wrapper.simulate('click');
     browserHistoryPush.should.be.calledWith('/pinboard/');
-
-    browserHistoryPush.restore();
   });
 });

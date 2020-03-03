@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { stub, spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
 import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-textarea-input';
 
@@ -18,7 +18,6 @@ describe('AutosaveTextareaInput component', function () {
     const instance = wrapper.instance();
     adjustTextareaHeightSpy.should.be.calledWith(instance.textarea);
     addEventListenerStub.should.be.calledWith('resize', instance.handleResize);
-    addEventListenerStub.restore();
   });
 
   it('should trigger onBlur on blur', function () {
@@ -29,9 +28,10 @@ describe('AutosaveTextareaInput component', function () {
         fieldType='description'
         save={ saveStub }
         value='value'
-      />
+      />,
+      { disableLifecycleMethods: true },
     );
-    const textarea = wrapper.find('textarea');
+    const textarea = wrapper.find('textarea').first();
     textarea.simulate('focus');
     textarea.simulate('change', { target: { value: 'New Description' } });
     textarea.simulate('blur');
@@ -45,7 +45,8 @@ describe('AutosaveTextareaInput component', function () {
         textareaLineHeight={ 16 }
         fieldType='description'
         value='value'
-      />
+      />,
+      { disableLifecycleMethods: true },
     );
     const textarea = wrapper.find('textarea');
     textarea.simulate('focus');
@@ -64,9 +65,8 @@ describe('AutosaveTextareaInput component', function () {
     );
     const instance = wrapper.instance();
 
-    const textareaStub = stub(instance, 'textarea').value({ scrollHeight: 50 });
+    stub(instance, 'textarea').value({ scrollHeight: 50 });
     instance.handleResize();
     instance.textarea.rows.should.equal(3);
-    textareaStub.restore();
   });
 });

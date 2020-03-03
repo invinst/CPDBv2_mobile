@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { invert } from 'lodash';
-import { LOCATION_CHANGE } from 'react-router-redux';
+import { LOCATION_CHANGE } from 'connected-react-router';
+import queryString from 'query-string';
 
 import constants from 'constants';
 import { UPDATE_CHOSEN_CATEGORY, SEARCH_INPUT_CHANGED } from 'actions/suggestion';
@@ -16,5 +17,8 @@ const SEARCH_CATEGORY_PREFIXES_INVERT = invert(constants.SEARCH_CATEGORY_PREFIXE
 export default handleActions({
   [UPDATE_CHOSEN_CATEGORY]: (state, action) => action.payload,
   [SEARCH_INPUT_CHANGED]: (state, action) => getChosenCategory(action.payload),
-  [LOCATION_CHANGE]: (state, action) => getChosenCategory(action.payload.query.terms),
+  [LOCATION_CHANGE]: (state, action) => {
+    const { terms } = queryString.parse(action.payload.location.search);
+    return getChosenCategory(terms);
+  },
 }, '');
