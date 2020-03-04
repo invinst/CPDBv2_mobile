@@ -106,6 +106,7 @@ describe('ComplaintPageTest', function () {
 
   it('should show proper header with CR title', function (client) {
     const comlaintCategory = this.complaintPage.section.complaintCategory;
+    comlaintCategory.waitForElementVisible('@category', TIMEOUT);
     comlaintCategory.expect.element('@category').text.to.contain('Operation/Personnel Violations');
     comlaintCategory.expect.element('@subcategory').text.to.contain('Inventory Procedures');
   });
