@@ -5,11 +5,13 @@ import cx from 'classnames';
 
 import style from './attachment.sass';
 import { thumbnailStyle } from 'components/complaint-page/attachments/attachments.style';
+import * as tracking from 'utils/tracking';
 
 
 class Attachment extends Component {
   handleClick = () => {
-    const { onTrackingAttachment, attachment } = this.props;
+    const { onTrackingAttachment, attachment, pathname } = this.props;
+    tracking.trackAttachmentClick(pathname, attachment.url);
     onTrackingAttachment(
       { attachmentId: attachment['id'], sourcePage: 'Officer Page - Attachments Tab', app: 'Mobile' }
     );
@@ -42,6 +44,7 @@ class Attachment extends Component {
 Attachment.propTypes = {
   attachment: PropTypes.object,
   onTrackingAttachment: PropTypes.func,
+  pathname: PropTypes.string,
 };
 
 Attachment.defaultProps = {
