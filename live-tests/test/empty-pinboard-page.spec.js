@@ -77,11 +77,14 @@ const emptyPinboard = {
   'crids': [],
   'trr_ids': [],
   'example_pinboards': [{
-    'description': 'Officers with at least 10 complaints against them generate 64% of all complaints.',
+    'description': '**It will be a election** and we are going to do the best '
+        + '**Lorem Ipsum is simply dummy text of the printing and typesetting industry.**'
+        + 'Lorem Ipsum has been the industry standard dummy text ever since the 1500s.'
+        + 'Contrary to popular belief, Lorem Ipsum is not simply random text.',
     'id': 'b20c2c36',
     'title': 'Watts Crew',
   }, {
-    'description': 'It is a nickname given to a group of five Chicago Police officers in a...',
+    'description': 'It is a nickname given to a group of five Chicago Police officers in a.',
     'id': '22e66085',
     'title': 'Skullcap Crew',
   }],
@@ -162,16 +165,33 @@ describe('Empty Pinboard Page', function () {
     done();
   });
 
-  it('should go to Watts Crew Pinboard when clicking on Repeaters row ', function (client) {
+  it('should render correctly', function (client) {
     this.emptyPinboardPage.expect.element('@title').text.to.equal('Get started');
-    this.emptyPinboardPage.expect.element('@description').text.to.equal(
-      'Use search to find officers and individual complaint records ' +
-      'and press the plus button to add cards to your pinboard.\n\n' +
-      'Come back to the pinboard to give it a title and see a network map or discover relevant documents.'
-    );
-    this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Watts Crew');
-    this.emptyPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Officers with at');
 
+    this.emptyPinboardPage.expect.element('@firstExampleTitle').text.to.equal('Watts Crew');
+    this.emptyPinboardPage.expect.element('@firstExampleDescription').text.to.endsWith('...');
+    this.emptyPinboardPage.expect.element('@firstExampleDescription').text.to.not.contain(
+      'Contrary to popular belief, Lorem Ipsum is not simply random text.'
+    );
+    client.getElementProperty(
+      this.emptyPinboardPage.elements.firstExampleDescription.locateStrategy,
+      this.emptyPinboardPage.elements.firstExampleDescription.selector,
+      'innerHTML',
+      function (result) {
+        assert.ok(
+          /.*<p><strong>It will be a election<\/strong> and we are going to do the best <strong>Lorem.*<\/strong>.*/
+            .test(result.value)
+        );
+      },
+    );
+
+    this.emptyPinboardPage.expect.element('@secondExampleTitle').text.to.equal('Skullcap Crew');
+    this.emptyPinboardPage.expect.element('@secondExampleDescription').text.to.equal(
+      'It is a nickname given to a group of five Chicago Police officers in a.'
+    );
+  });
+
+  it('should go to Watts Crew Pinboard when clicking on Repeaters row ', function (client) {
     this.emptyPinboardPage.click('@firstExamplePinboardRow');
 
     client.assert.urlContains('/pinboard/11613bb2/watts-crew/');
@@ -193,7 +213,6 @@ describe('Empty Pinboard Page', function () {
       'Come back to the pinboard to give it a title and see a network map or discover relevant documents.'
     );
     this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('Skullcap Crew');
-    this.emptyPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('It is a nickname');
 
     this.emptyPinboardPage.click('@secondExamplePinboardRow');
 
@@ -235,10 +254,8 @@ describe('No Id Pinboard Page', function () {
       'and press the plus button to add cards to your pinboard.\n\n' +
       'Come back to the pinboard to give it a title and see a network map or discover relevant documents.'
     );
-    this.noIdPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Watts Crew');
-    this.noIdPinboardPage.expect.element('@firstExamplePinboardRow').text.to.contain('Officers with at');
-    this.noIdPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('Skullcap Crew');
-    this.noIdPinboardPage.expect.element('@secondExamplePinboardRow').text.to.contain('It is a nickname');
+    this.noIdPinboardPage.expect.element('@firstExampleTitle').text.to.equal('Watts Crew');
+    this.noIdPinboardPage.expect.element('@secondExampleTitle').text.to.contain('Skullcap Crew');
   });
 
   it('should open a pinboard page if it is lasted pinboard', function (client) {
