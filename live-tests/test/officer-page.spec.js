@@ -914,25 +914,6 @@ describe('OfficerPage test', function () {
     describe('Pinboard function', function () {
       beforeEach(function (client, done) {
         api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-
-        api.mockPost(
-          '/api/v2/mobile/pinboards/',
-          201,
-          {
-            'officer_ids': [27778],
-            crids: [],
-            'trr_ids': [],
-          },
-          {
-            id: '5cd06f2b',
-            'officer_ids': [27778],
-            crids: [],
-            'trr_ids': [],
-            title: '',
-            description: '',
-          },
-        );
-
         api.mockPut(
           '/api/v2/mobile/pinboards/5cd06f2b/',
           200,
@@ -952,13 +933,30 @@ describe('OfficerPage test', function () {
             description: '',
           },
         );
-
         this.main = client.page.main();
         this.search = client.page.search();
         done();
       });
 
       it('should display toast when pinning a coaccusal', function (client) {
+        api.mockPost(
+          '/api/v2/mobile/pinboards/',
+          201,
+          {
+            'officer_ids': [27778],
+            crids: [],
+            'trr_ids': [],
+          },
+          {
+            id: '5cd06f2b',
+            'officer_ids': [27778],
+            crids: [],
+            'trr_ids': [],
+            title: '',
+            description: '',
+          },
+        );
+
         this.officerPage.waitForElementVisible('@coaccusalsTabButton', TIMEOUT);
         this.officerPage.click('@coaccusalsTabButton');
 
@@ -980,6 +978,49 @@ describe('OfficerPage test', function () {
         this.officerPage.waitForElementVisible('@lastToast');
         this.officerPage.expect.element('@lastToast').text.to.equal(
           'Carl Suchocki removed from pinboard'
+        ).before(TIMEOUT);
+
+        this.officerPage.click('@landingPageBreadCrumb');
+        this.main.waitForElementVisible('@searchLink');
+        this.main.click('@searchLink');
+        this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
+      });
+
+      it('should display toast when pinning current officer', function (client) {
+        api.mockPost(
+          '/api/v2/mobile/pinboards/',
+          201,
+          {
+            'officer_ids': [2235],
+            crids: [],
+            'trr_ids': [],
+          },
+          {
+            id: '5cd06f2b',
+            'officer_ids': [2235],
+            crids: [],
+            'trr_ids': [],
+            title: '',
+            description: '',
+          },
+        );
+
+        this.officerPage.click('@pinButton');
+        this.officerPage.expect.element('@lastToast').text.to.equal(
+          'Kevin Osborn added to pinboard'
+        ).before(TIMEOUT);
+
+        this.officerPage.click('@landingPageBreadCrumb');
+        this.main.waitForElementVisible('@searchLink');
+        this.main.click('@searchLink');
+        this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (1)').before(TIMEOUT);
+        client.back();
+        client.back();
+
+        this.officerPage.click('@pinButton');
+        this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal(
+          'Kevin Osborn removed from pinboard'
         ).before(TIMEOUT);
 
         this.officerPage.click('@landingPageBreadCrumb');

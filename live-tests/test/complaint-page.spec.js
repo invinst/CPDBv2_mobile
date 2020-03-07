@@ -106,6 +106,7 @@ describe('ComplaintPageTest', function () {
 
   it('should show proper header with CR title', function (client) {
     const comlaintCategory = this.complaintPage.section.complaintCategory;
+    comlaintCategory.waitForElementVisible('@category', TIMEOUT);
     comlaintCategory.expect.element('@category').text.to.contain('Operation/Personnel Violations');
     comlaintCategory.expect.element('@subcategory').text.to.contain('Inventory Procedures');
   });
@@ -197,24 +198,6 @@ describe('ComplaintPageTest', function () {
     beforeEach(function (client, done) {
       api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
 
-      api.mockPost(
-        '/api/v2/mobile/pinboards/',
-        201,
-        {
-          'officer_ids': [6493],
-          crids: [],
-          'trr_ids': [],
-        },
-        {
-          id: '5cd06f2b',
-          'officer_ids': [6493],
-          crids: [],
-          'trr_ids': [],
-          title: '',
-          description: '',
-        },
-      );
-
       api.mockPut(
         '/api/v2/mobile/pinboards/5cd06f2b/',
         200,
@@ -241,6 +224,24 @@ describe('ComplaintPageTest', function () {
     });
 
     it('should display toast when pinning a coaccusal', function (client) {
+      api.mockPost(
+        '/api/v2/mobile/pinboards/',
+        201,
+        {
+          'officer_ids': [6493],
+          crids: [],
+          'trr_ids': [],
+        },
+        {
+          id: '5cd06f2b',
+          'officer_ids': [6493],
+          crids: [],
+          'trr_ids': [],
+          title: '',
+          description: '',
+        },
+      );
+
       this.complaintPage.section.firstCoaccusal.click('@pinButton');
       this.complaintPage.waitForElementVisible('@lastToast');
       this.complaintPage.expect.element('@lastToast').text.to.equal(
@@ -258,6 +259,49 @@ describe('ComplaintPageTest', function () {
       this.complaintPage.waitForElementVisible('@lastToast');
       this.complaintPage.expect.element('@lastToast').text.to.equal(
         'Donovan Markiewicz removed from pinboard'
+      ).before(TIMEOUT);
+
+      this.complaintPage.click('@landingPageBreadCrumb');
+      this.main.waitForElementVisible('@searchLink');
+      this.main.click('@searchLink');
+      this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
+    });
+
+    it('should display toast when pinning current complaint', function (client) {
+      api.mockPost(
+        '/api/v2/mobile/pinboards/',
+        201,
+        {
+          'officer_ids': [],
+          crids: ['1053667'],
+          'trr_ids': [],
+        },
+        {
+          id: '5cd06f2b',
+          'officer_ids': [],
+          crids: ['1053667'],
+          'trr_ids': [],
+          title: '',
+          description: '',
+        },
+      );
+
+      this.complaintPage.click('@pinButton');
+      this.complaintPage.expect.element('@lastToast').text.to.equal(
+        'CR #1053667 added to pinboard'
+      ).before(TIMEOUT);
+
+      this.complaintPage.click('@landingPageBreadCrumb');
+      this.main.waitForElementVisible('@searchLink');
+      this.main.click('@searchLink');
+      this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (1)').before(TIMEOUT);
+      client.back();
+      client.back();
+
+      this.complaintPage.click('@pinButton');
+      this.complaintPage.waitForElementVisible('@lastToast');
+      this.complaintPage.expect.element('@lastToast').text.to.equal(
+        'CR #1053667 removed from pinboard'
       ).before(TIMEOUT);
 
       this.complaintPage.click('@landingPageBreadCrumb');

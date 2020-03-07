@@ -8,6 +8,7 @@ import { extractPercentile } from 'selectors/common/percentile';
 import { cmsSelector } from 'selectors/common/cms';
 import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
 import { getBreadcrumbItems } from 'selectors/breadcrumb';
+import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 
 
 const getComplaint = (state, props) => state.complaintPage.complaints[props.match.params.complaintId];
@@ -155,4 +156,8 @@ export const requestDocumentButtonMessage = (state, props) => (
 
 export const buttonText = (state, props) => (
   hasAttachmentSelector(state, props) ? 'New Document Notifications': 'Request Documents'
+);
+
+export const getIsCrPinned = (state, crid) => (
+  isItemPinned('CR', crid, pinboardItemsSelector(state))
 );

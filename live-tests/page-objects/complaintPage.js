@@ -5,6 +5,10 @@ module.exports = {
 
   elements: {
     body: 'body',
+    pinButton: {
+      selector: '//div[contains(@class, "with-header__header")]//div[contains(@class, "item-pin-button")]',
+      locateStrategy: 'xpath',
+    },
     victims: '.victim-list',
     complainants: '.complainant-list',
     summary: {
@@ -62,7 +66,7 @@ module.exports = {
         category: '.category',
         findingOutcome: '.finding-outcome',
         pinButton: {
-          selector: '//div[contains(@class, "item-pin-button__item-pin-button")]',
+          selector: '//div[@class="coaccusals"]//div[contains(@class, "item-pin-button__item-pin-button")]',
           locateStrategy: 'xpath',
         },
       },
