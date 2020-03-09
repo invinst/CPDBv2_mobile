@@ -357,9 +357,7 @@ describe('Pinboard Page', function () {
       pinboardPage.getValue('@pinboardTitle', function (result) {
         assert.equal(result.value, 'Pinboard Title');
       });
-      pinboardPage.getValue('@pinboardDescription', function (result) {
-        assert.equal(result.value, 'Pinboard Description');
-      });
+      pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description');
     });
 
     it('should update title and description after editing and out focusing them', function (client) {
@@ -369,24 +367,24 @@ describe('Pinboard Page', function () {
       pinboardPage.getValue('@pinboardTitle', function (result) {
         assert.equal(result.value, 'Pinboard Title');
       });
-      pinboardPage.getValue('@pinboardDescription', function (result) {
-        assert.equal(result.value, 'Pinboard Description');
-      });
+      pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description');
       client.assert.urlContains('/pinboard-title/');
 
       pinboardPage.click('@pinboardTitle');
       pinboardPage.clearValue('@pinboardTitle');
       pinboardPage.setValue('@pinboardTitle', 'Updated Title');
+      pinboardPage.click('@visualizationTitle');
+
       pinboardPage.click('@pinboardDescription');
-      pinboardPage.clearValue('@pinboardDescription');
-      pinboardPage.setValue('@pinboardDescription', 'Updated Description');
+      pinboardPage.setValue('@pinboardDescription', ' **Updated**');
       pinboardPage.click('@visualizationTitle');
 
       pinboardPage.getValue('@pinboardTitle', function (result) {
         assert.equal(result.value, 'Updated Title');
       });
-      pinboardPage.getValue('@pinboardDescription', function (result) {
-        assert.equal(result.value, 'Updated Description');
+      pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description Updated');
+      client.getElementProperty(pinboardPage.elements.pinboardDescription.selector, 'innerHTML', function (result) {
+        assert.equal(result.value, '<p>Pinboard Description <strong>Updated</strong></p>');
       });
       client.assert.urlContains('/updated-title/');
     });
