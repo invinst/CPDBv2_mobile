@@ -73,7 +73,7 @@ describe('EmbedOfficerPage', function () {
     this.embedOfficersPage.waitForElementVisible('@firstCard', TIMEOUT);
     this.embedOfficersPage.click('@firstCard');
     client.switchToRecentTab();
-    this.embedOfficersPage.assert.urlContains('/officer/13788/');
+    client.assert.urlContains('/officer/13788/');
   });
 
   it('should have clicky installed ', function (client) {
