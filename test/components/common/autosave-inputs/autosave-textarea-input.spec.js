@@ -22,11 +22,13 @@ describe('AutosaveTextareaInput component', function () {
 
   it('should trigger onBlur on blur', function () {
     const saveStub = stub();
+    const onBlurStub = stub();
     const wrapper = shallow(
       <AutosaveTextareaInput
         textareaLineHeight={ 16 }
         fieldType='description'
         save={ saveStub }
+        onBlur={ onBlurStub }
         value='value'
       />,
       { disableLifecycleMethods: true },
@@ -37,6 +39,7 @@ describe('AutosaveTextareaInput component', function () {
     textarea.simulate('blur');
 
     saveStub.should.be.calledWith({ attr: 'description', value: 'New Description' });
+    onBlurStub.should.be.called();
   });
 
   it('should trigger onChange on input change', function () {
@@ -68,5 +71,23 @@ describe('AutosaveTextareaInput component', function () {
     stub(instance, 'textarea').value({ scrollHeight: 50 });
     instance.handleResize();
     instance.textarea.rows.should.equal(3);
+  });
+
+  describe('autoFocus is true', function () {
+    it('should call textarea.focus() on componentDidMount', function () {
+      const componentDidMountStub = stub(AutosaveTextareaInput.prototype, 'componentDidMount');
+      const wrapper = mount(
+        <AutosaveTextareaInput
+          autoFocus={ true }
+          textareaLineHeight={ 16 }
+          value={ '' }
+          fieldType='description'
+        />
+      );
+      const textAreaFocusSpy = spy(wrapper.instance().textarea, 'focus');
+      componentDidMountStub.restore();
+      wrapper.instance().componentDidMount();
+      textAreaFocusSpy.should.be.calledOnce();
+    });
   });
 });

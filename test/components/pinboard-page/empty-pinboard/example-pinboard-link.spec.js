@@ -1,5 +1,5 @@
 import React from 'react';
-import Truncate from 'react-truncate';
+import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 import { mount } from 'enzyme';
 import { stub } from 'sinon';
 
@@ -14,7 +14,7 @@ describe('ExamplePinboardLink component', function () {
       <ExamplePinboardLink
         id='66ef1561'
         title='Pinboard 1'
-        description='Description 1'
+        description='**Description 1**'
         currentPinboardId='abcd1234'
         updatePinboardFromSource={ updatePinboardFromSourceStub }
       />
@@ -25,10 +25,10 @@ describe('ExamplePinboardLink component', function () {
     link.prop('className').should.equal(styles.examplePinboardLink);
     link.find('.title').text().should.equal('Pinboard 1');
 
-    const description = wrapper.find(Truncate);
+    const description = wrapper.find(HTMLEllipsis);
     description.prop('className').should.equal('description');
-    description.prop('lines').should.equal(3);
-    description.prop('children').should.equal('Description 1');
+    description.prop('maxLine').should.equal('3');
+    description.prop('unsafeHTML').trim().should.equal('<p><strong>Description 1</strong></p>');
 
     link.find('.arrow').exists().should.be.true();
 

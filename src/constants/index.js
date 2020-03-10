@@ -156,4 +156,9 @@ export default {
   BREADCRUMB_DEFAULT_MAPPING: {
     [SEARCH_PATH]: 'Search',
   },
+  ELLIPSIS_CONFIG: {
+    basedOn: 'words',
+    ellipsis: '...',
+    maxLine: '3',
+  },
 };
