@@ -4,6 +4,7 @@ import browserHistory from 'utils/history';
 
 import styles from './pinboard-info.sass';
 import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-textarea-input';
+import AutosaveMarkdownTextareaInput from 'components/common/autosave-inputs/autosave-markdown-textarea-input';
 
 
 export default class PinboardInfo extends Component {
@@ -26,7 +27,7 @@ export default class PinboardInfo extends Component {
           save={ updatePinboardInfo }
           textareaLineHeight={ 31 }
         />
-        <AutosaveTextareaInput
+        <AutosaveMarkdownTextareaInput
           className='pinboard-description'
           value={ pinboard.description }
           placeholder='When you’re ready, add a description for your pinboard here'
