@@ -699,23 +699,23 @@ describe('OfficerPage test', function () {
         secondRankChange.expect.element('@date').text.to.equal('APR 28');
       });
 
-      it('should go to cr page when clicking on an cr timeline item', function () {
+      it('should go to cr page when clicking on an cr timeline item', function (client) {
         this.timeline.waitForElementVisible('@crItem', TIMEOUT);
         this.timeline.click('@crItem');
-        this.timeline.assert.urlContains('/complaint/294088/');
+        client.assert.urlContains('/complaint/294088/');
       });
 
       it('should go to attachment source page when clicking on the attachment thumbnail', function (client) {
         this.timeline.waitForElementVisible('@attachmentThumbnail', TIMEOUT);
         this.timeline.click('@attachmentThumbnail');
         client.switchToRecentTab();
-        this.timeline.assert.urlEquals('https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf');
+        client.assert.urlEquals('https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf');
       });
 
-      it('should go to trr page when clicking on an trr timeline item', function () {
+      it('should go to trr page when clicking on an trr timeline item', function (client) {
         this.timeline.waitForElementVisible('@crItem', TIMEOUT);
         this.timeline.click('@trrItem');
-        this.timeline.assert.urlContains('/trr/1/');
+        client.assert.urlContains('/trr/1/');
       });
 
       describe('Timeline filter', function () {
@@ -815,13 +815,13 @@ describe('OfficerPage test', function () {
           this.timeline.waitForElementVisible('@yearItem');
         });
 
-        it('should keep selected filter when changing tab', function () {
+        it('should keep selected filter when changing tab', function (client) {
           this.timeline.section.filter.click('@changes');
           checkTimelineShowChangesOnly(this.timeline);
 
           this.officerPage.click('@coaccusalsTabButton');
           this.coaccusals = this.officerPage.section.coaccusals;
-          this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
+          client.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
           this.officerPage.click('@timelineTabButton');
 
           checkTimelineShowChangesOnly(this.timeline);
@@ -833,9 +833,9 @@ describe('OfficerPage test', function () {
 
           this.officerPage.click('@coaccusalsTabButton');
           this.coaccusals = this.officerPage.section.coaccusals;
-          this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
+          client.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
           this.coaccusals.click('@firstCoaccusalCard');
-          this.coaccusals.assert.urlContains('/officer/27778/carl-suchocki/');
+          client.assert.urlContains('/officer/27778/carl-suchocki/');
 
           this.officerPage.click('@timelineTabButton');
           checkTimelineShowAllItems(this.timeline);
@@ -852,17 +852,17 @@ describe('OfficerPage test', function () {
       it('should navigate to officer page when clicking on coaccusals card', function (client) {
         this.officerPage.waitForElementVisible('@coaccusalsTabButton', TIMEOUT);
         this.officerPage.click('@coaccusalsTabButton');
-        this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
+        client.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
 
         this.coaccusals.waitForElementVisible('@firstCoaccusalCard', TIMEOUT);
         this.coaccusals.click('@firstCoaccusalCard');
 
-        this.coaccusals.assert.urlContains('/officer/27778/carl-suchocki/');
+        client.assert.urlContains('/officer/27778/carl-suchocki/');
       });
 
-      it('should be able to be accessed directly via url', function () {
+      it('should be able to be accessed directly via url', function (client) {
         this.officerPage.navigate(this.officerPage.url(2235, 'coaccusals'));
-        this.coaccusals.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
+        client.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
       });
     });
 
@@ -872,19 +872,19 @@ describe('OfficerPage test', function () {
         done();
       });
 
-      it('should navigate to officer complaint when clicking on complaint header', function () {
+      it('should navigate to officer complaint when clicking on complaint header', function (client) {
         this.officerPage.waitForElementVisible('@attachmentsTabButton', TIMEOUT);
         this.officerPage.click('@attachmentsTabButton');
-        this.attachments.assert.urlContains('/officer/2235/kevin-osborn/documents/');
+        client.assert.urlContains('/officer/2235/kevin-osborn/documents/');
         this.attachments.section.firstComplaint.waitForElementVisible('@heading', TIMEOUT);
         this.attachments.section.firstComplaint.click('@heading');
-        this.attachments.assert.urlContains('/complaint/294088/');
+        client.assert.urlContains('/complaint/294088/');
       });
 
       it('should go to attachment source page when clicking on the attachment', function (client) {
         this.officerPage.waitForElementVisible('@attachmentsTabButton', TIMEOUT);
         this.officerPage.click('@attachmentsTabButton');
-        this.attachments.assert.urlContains('/officer/2235/kevin-osborn/documents/');
+        client.assert.urlContains('/officer/2235/kevin-osborn/documents/');
         this.attachments.section.firstComplaint.click('@firstAttachment');
         client.switchToRecentTab();
         client.assert.urlEquals(
@@ -892,9 +892,9 @@ describe('OfficerPage test', function () {
         );
       });
 
-      it('should be able to be accessed directly via url', function () {
+      it('should be able to be accessed directly via url', function (client) {
         this.officerPage.navigate(this.officerPage.url(2235, 'documents'));
-        this.attachments.assert.urlContains('/officer/2235/kevin-osborn/documents/');
+        client.assert.urlContains('/officer/2235/kevin-osborn/documents/');
       });
     });
 
@@ -904,10 +904,10 @@ describe('OfficerPage test', function () {
         done();
       });
 
-      it('should add map suffix when click on map tab', function () {
+      it('should add map suffix when click on map tab', function (client) {
         this.officerPage.waitForElementVisible('@mapTabButton', TIMEOUT);
         this.officerPage.click('@mapTabButton');
-        this.map.assert.urlContains('/officer/2235/kevin-osborn/map/');
+        client.assert.urlContains('/officer/2235/kevin-osborn/map/');
       });
     });
 

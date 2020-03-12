@@ -48,6 +48,10 @@ module.exports = {
       selector: '(//a[starts-with(@class, "search-bar")])',
     },
     socialGraphTitle: '.sidenav-title',
+    socialGraph: {
+      locateStrategy: 'xpath',
+      selector: '//div[contains(@class, "animated-social-graph")]',
+    },
     visualizationTitle: '.visualization-title',
     pinboardTitle: '.pinboard-title',
     pinboardDescription: '.pinboard-description',

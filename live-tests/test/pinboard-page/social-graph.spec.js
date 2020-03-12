@@ -3,11 +3,13 @@
 const _ = require('lodash');
 const api = require(__dirname + '/../../mock-api');
 const assert = require('assert');
+const { TIMEOUT } = require(__dirname + '/../../constants');
 
 const mockData = require(__dirname + '/../../mock-data/pinboard-page');
 
 
 function waitForGraphAnimationEnd(pinboardPage, client) {
+  pinboardPage.waitForElementVisible('@socialGraph', TIMEOUT);
   const graphLinks = pinboardPage.section.graphLinks;
   let graphLinksLength;
   const checkGraphLinksLength = () => {
