@@ -173,7 +173,7 @@
     "mocha/no-async-describe": 2
   },
   "overrides": [{
-    "files": [ "live-tests/**/*.spec.js" ],
+    "files": [ "integration-test/**/*.spec.js" ],
     "rules": {
       // mocha eslint has a bug when working with nightwatch
       // waiting for this issue https://github.com/lo1tuma/eslint-plugin-mocha/issues/205 to be handled
