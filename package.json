@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "dist": "WEBPACK_ENV=${WEBPACK_ENV:-production} SASS_PATH=./src/styles webpack --env=dist --bail",
-    "lint": "eslint ./src ./test ./live-tests --ext .jsx --ext .js",
+    "lint": "eslint ./src ./test ./integration-test --ext .jsx --ext .js",
     "posttest": "npm run lint",
     "release:major": "npm version major && npm publish && git push --follow-tags",
     "release:minor": "npm version minor && npm publish && git push --follow-tags",
@@ -16,7 +16,8 @@
     "serve:dist": "node server.js --env=dist",
     "start": "SASS_PATH=./src/styles node server.js --env=dev",
     "test": "SASS_PATH=./src/styles karma start --env=test",
-    "live-test": "WEBPACK_ENV=live-test SASS_PATH=./src/styles node nightwatch.js",
+    "integration-test": "WEBPACK_ENV=integration-test SASS_PATH=./src/styles node nightwatch.js",
+    "itest": "yarn integration-test",
     "ci-test": "SASS_PATH=./src/styles karma start --reporters mocha,coverage,coveralls --env=test",
     "mocha-watch": "SASS_PATH=./src/styles karma start --no-single-run --reporters mocha --env=test",
     "test:watch": "SASS_PATH=./src/styles karma start --autoWatch=true --singleRun=false --env=test",

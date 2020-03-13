@@ -3,7 +3,7 @@ import config from 'config';
 
 
 const getThisYear = () => {
-  if (config.appEnv === 'test' || config.appEnv === 'live-test') {
+  if (config.appEnv === 'test' || config.appEnv === 'integration-test') {
     return 2017;
   }
   /* istanbul ignore next */

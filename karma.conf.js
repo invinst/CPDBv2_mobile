@@ -1,4 +1,4 @@
-var webpackCfg = require('./webpack.config');
+var webpackConfig = require('./webpack.config');
 
 module.exports = function (config) {
   config.set({
@@ -18,7 +18,7 @@ module.exports = function (config) {
     preprocessors: {
       'test/load_srcs_and_tests.js': ['webpack', 'sourcemap']
     },
-    webpack: webpackCfg,
+    webpack: webpackConfig,
     webpackServer: {
       noInfo: true
     },

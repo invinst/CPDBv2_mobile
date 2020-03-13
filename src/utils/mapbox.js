@@ -11,7 +11,7 @@ const MARKER_URL = 'https://cpdbv21777.blob.core.windows.net/assets/map-marker.p
 
 _mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 
-if (config.appEnv === 'test' || config.appEnv === 'live-test') {
+if (config.appEnv === 'test' || config.appEnv === 'integration-test') {
   const addSourceSpy = spy();
   const getSourceSpy = stub().returns(undefined);
   const addLayerSpy = spy();

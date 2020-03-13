@@ -4,13 +4,13 @@ const path = require('path');
 const args = require('minimist')(process.argv.slice(2));
 
 // List of allowed environments
-const allowedEnvs = ['dev', 'dist', 'test', 'live-test'];
+const allowedEnvs = ['dev', 'dist', 'test', 'integration-test'];
 
 // Set the correct environment
 let env = args.env || 'dev';
 
-if (process.env.WEBPACK_ENV == 'live-test') {
-  env = 'live-test';
+if (process.env.WEBPACK_ENV == 'integration-test') {
+  env = 'integration-test';
 }
 
 if (!['production', 'beta', 'staging'].includes(process.env.WEBPACK_ENV)) {
@@ -25,7 +25,7 @@ if (!['production', 'beta', 'staging'].includes(process.env.WEBPACK_ENV)) {
 function buildConfig(wantedEnv) {
   let isValid = wantedEnv && wantedEnv.length > 0 && allowedEnvs.indexOf(wantedEnv) !== -1;
   let validEnv = isValid ? wantedEnv : 'dev';
-  let config = require(path.join(__dirname, 'cfg/' + validEnv));
+  let config = require(path.join(__dirname, 'webpack-config/' + validEnv));
   return config;
 }
 
