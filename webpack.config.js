@@ -25,7 +25,7 @@ if (!['production', 'beta', 'staging'].includes(process.env.WEBPACK_ENV)) {
 function buildConfig(wantedEnv) {
   let isValid = wantedEnv && wantedEnv.length > 0 && allowedEnvs.indexOf(wantedEnv) !== -1;
   let validEnv = isValid ? wantedEnv : 'dev';
-  let config = require(path.join(__dirname, 'cfg/' + validEnv));
+  let config = require(path.join(__dirname, 'webpack-config/' + validEnv));
   return config;
 }
 
