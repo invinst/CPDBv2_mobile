@@ -245,7 +245,7 @@ describe('ComplaintPageTest', function () {
       this.complaintPage.section.firstCoaccusal.click('@pinButton');
       this.complaintPage.waitForElementVisible('@lastToast');
       this.complaintPage.expect.element('@lastToast').text.to.equal(
-        'Donovan Markiewicz added to pinboard'
+        'Donovan Markiewicz added to pinboard\nGo to pinboard'
       ).before(TIMEOUT);
 
       this.complaintPage.click('@landingPageBreadCrumb');
@@ -258,7 +258,7 @@ describe('ComplaintPageTest', function () {
       this.complaintPage.section.firstCoaccusal.click('@pinButton');
       this.complaintPage.waitForElementVisible('@lastToast');
       this.complaintPage.expect.element('@lastToast').text.to.equal(
-        'Donovan Markiewicz removed from pinboard'
+        'Donovan Markiewicz removed from pinboard\nGo to pinboard'
       ).before(TIMEOUT);
 
       this.complaintPage.click('@landingPageBreadCrumb');
@@ -288,7 +288,7 @@ describe('ComplaintPageTest', function () {
 
       this.complaintPage.click('@pinButton');
       this.complaintPage.expect.element('@lastToast').text.to.equal(
-        'CR #1053667 added to pinboard'
+        'CR #1053667 added to pinboard\nGo to pinboard'
       ).before(TIMEOUT);
 
       this.complaintPage.click('@landingPageBreadCrumb');
@@ -301,7 +301,7 @@ describe('ComplaintPageTest', function () {
       this.complaintPage.click('@pinButton');
       this.complaintPage.waitForElementVisible('@lastToast');
       this.complaintPage.expect.element('@lastToast').text.to.equal(
-        'CR #1053667 removed from pinboard'
+        'CR #1053667 removed from pinboard\nGo to pinboard'
       ).before(TIMEOUT);
 
       this.complaintPage.click('@landingPageBreadCrumb');

@@ -158,7 +158,7 @@ describe('MainPageTest', function () {
         //Check toast
         this.mainPage.waitForElementVisible('@lastToast');
         this.mainPage.expect.element('@lastToast').text.to.equal(
-          `${messagePrefix} added to pinboard`
+          `${messagePrefix} added to pinboard\nGo to pinboard`
         ).before(TIMEOUT);
 
         //Go to Search Page and check for pinboard item counts
@@ -175,7 +175,7 @@ describe('MainPageTest', function () {
         //Check toast
         this.mainPage.waitForElementVisible('@lastToast');
         this.mainPage.expect.element('@lastToast').text.to.equal(
-          `${messagePrefix} removed from pinboard`
+          `${messagePrefix} removed from pinboard\nGo to pinboard`
         ).before(TIMEOUT);
 
         //Go to Search Page and check for pinboard item counts
