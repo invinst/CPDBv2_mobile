@@ -3,7 +3,7 @@
 
 %card
   box-sizing: border-box
-  border: 1px solid $alto
+  border: 1px solid $alto-dark-color
   border-radius: 2px
   font-size: 14px
   font-weight: 300
@@ -33,8 +33,8 @@
 \:local(.undo-card-light)
   @extend %card
   animation: fadeOut 1s ease-in-out forwards
-  background-color: $wild-sand
-  border-color: $alto-solid
+  background-color: $wild-sand-color
+  border-color: $alto-color
 
   .undo-card-text
     @extend %base-undo-card-text
@@ -42,32 +42,32 @@
 
   .undo-button
     @extend %undo-card-button
-    border: solid 1px $alto
+    border: solid 1px $alto-dark-color
     background-color: transparent
-    color: $thunder
+    color: $thunder-color
 
     &:hover
       background-color: white
-      color: $cash-green-color
+      color: $vida-loca-color
 
 \:local(.undo-card-dark)
   @extend %card
   animation: fadeOut 1s ease-in-out forwards
-  background-color: $thunder
+  background-color: $thunder-color
   border-color: $mine-shaft-color
 
   .undo-card-text
     @extend %base-undo-card-text
-    color: $alto-solid
+    color: $alto-color
 
   .undo-button
     @extend %undo-card-button
     background-color: $mine-shaft-color
     border: none
-    color: $alto-solid
+    color: $alto-color
 
     &:hover
-      background-color: $boulder
+      background-color: $boulder-color
       color: white
 
 \:local(.wrapper)
