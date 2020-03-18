@@ -115,6 +115,11 @@ pipenv run ansible-playbook -i ansible/production ansible/deploy.yml -e rollback
 ```
 with "20180702101602" is the version that you want to rollback to.
 
+
+## Development Guides
+
+- [CSS development guide](docs/css-development-guide.md)
+
 # Misc
 
 You should also `yarn run lint` before pushing. We strongly recommend setting up
