@@ -11,6 +11,7 @@ import {
   showInvalidParamToasts,
   showAlertToast,
 } from 'utils/toast';
+import pinboardToastStyles from 'components/common/toast/pinboard-toast.sass';
 
 describe('Toast utils', function () {
   beforeEach(function () {
@@ -91,8 +92,8 @@ describe('Toast utils', function () {
       showAddOrRemoveItemToast(store, payload);
 
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].props.source.should.equal('CR #C123456 added to pinboard');
-      Toastify.toast.getCall(0).args[1]['className'].should.equal(`${toastStyles.toastWrapper} added`);
+      Toastify.toast.getCall(0).args[0].props.toastMessage.should.equal('CR #C123456 added to pinboard');
+      Toastify.toast.getCall(0).args[1]['className'].should.equal(`${pinboardToastStyles.pinboardToast} added`);
       Toastify.toast.getCall(0).args[1]['transition'].should.eql(cssTransition);
       Toastify.toast.getCall(0).args[1]['onClick']();
       browserHistoryPush.should.be.calledWith('/pinboard/123abc/untitled-pinboard/');
@@ -130,27 +131,27 @@ describe('Toast utils', function () {
 
       showAddOrRemoveItemToast(store, dateCrPayload);
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].props.source.should.equal('CR #C123456 removed from pinboard');
+      Toastify.toast.getCall(0).args[0].props.toastMessage.should.equal('CR #C123456 removed from pinboard');
 
       Toastify.toast.resetHistory();
       showAddOrRemoveItemToast(store, investigatorCrPayload);
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].props.source.should.equal('CR #C123456 removed from pinboard');
+      Toastify.toast.getCall(0).args[0].props.toastMessage.should.equal('CR #C123456 removed from pinboard');
 
       Toastify.toast.resetHistory();
       showAddOrRemoveItemToast(store, unitOfficerPayload);
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].props.source.should.equal('Jerome Finnigan removed from pinboard');
+      Toastify.toast.getCall(0).args[0].props.toastMessage.should.equal('Jerome Finnigan removed from pinboard');
 
       Toastify.toast.resetHistory();
       showAddOrRemoveItemToast(store, trrPayload);
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].props.source.should.equal('TRR #123456 removed from pinboard');
+      Toastify.toast.getCall(0).args[0].props.toastMessage.should.equal('TRR #123456 removed from pinboard');
 
       Toastify.toast.resetHistory();
       showAddOrRemoveItemToast(store, dateTrrPayload);
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].props.source.should.equal('TRR #123456 removed from pinboard');
+      Toastify.toast.getCall(0).args[0].props.toastMessage.should.equal('TRR #123456 removed from pinboard');
     });
 
     it('should show toasts with correct type message', function () {
@@ -165,8 +166,8 @@ describe('Toast utils', function () {
       showAddOrRemoveItemToast(store, officerPayload);
 
       Toastify.toast.should.be.calledOnce();
-      Toastify.toast.getCall(0).args[0].props.source.should.equal('Jerome Finnigan removed from pinboard');
-      Toastify.toast.getCall(0).args[1]['className'].should.equal(`${toastStyles.toastWrapper} removed`);
+      Toastify.toast.getCall(0).args[0].props.toastMessage.should.equal('Jerome Finnigan removed from pinboard');
+      Toastify.toast.getCall(0).args[1]['className'].should.equal(`${pinboardToastStyles.pinboardToast} removed`);
       Toastify.toast.getCall(0).args[1]['transition'].should.eql(cssTransition);
     });
   });

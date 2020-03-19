@@ -815,12 +815,12 @@ describe('SearchPageTest', function () {
       const investigatorCRs = this.searchPage.section.investigatorCRs;
       investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
 
       this.searchPage.waitForElementNotVisible('@toast', TIMEOUT);
       investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 removed from pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 removed from pinboard\nGo to pinboard');
     });
   });
 
@@ -845,7 +845,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
@@ -871,7 +871,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
@@ -894,7 +894,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
@@ -924,7 +924,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
@@ -956,7 +956,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
@@ -984,7 +984,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
