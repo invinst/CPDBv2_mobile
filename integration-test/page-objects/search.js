@@ -1,9 +1,9 @@
 const resultsSection = (name) => ({
   selector: `.results.${name}`,
   sections: {
-    firstRow: nthRow(1),
-    secondRow: nthRow(2),
-    thirdRow: nthRow(3),
+    firstRow: nthRow(name, 1),
+    secondRow: nthRow(name, 2),
+    thirdRow: nthRow(name, 3),
     rows: {
       selector: `.results.${name} div a`,
     },
@@ -13,13 +13,18 @@ const resultsSection = (name) => ({
   },
 });
 
-const nthRow = (n) => ({
-  selector: `a:nth-child(${n})`,
+const nthRow = (name, index) => ({
+  selector: `a:nth-child(${index})`,
   elements: {
     itemTitle: '.item-title',
     itemSubtitle: '.item-subtitle',
     pinButton: {
-      selector: `(//div[contains(@class, "item-pin-button__item-pin-button")])[${n}]`,
+      selector: `(//div[contains(@class, "item-pin-button__item-pin-button")])[${index}]`,
+      locateStrategy: 'xpath',
+    },
+    pinButtonIntroduction: {
+      selector: `(//div[@class="results ${name}"]//a[contains(@class, "search-item__wrapper")])[${index}]`
+        + '//div[@class="pin-button-introduction"]',
       locateStrategy: 'xpath',
     },
   },
@@ -49,6 +54,10 @@ module.exports = {
     pinboardBar: '.test--pinboard-bar',
     toast: '.Toastify__toast-body',
     searchBreadcrumb: '.breadcrumb-item:nth-child(3)',
+    pinButtonIntroduction: {
+      selector: '//div[@class="pin-button-introduction"]',
+      locateStrategy: 'xpath',
+    },
   },
 
   sections: {
@@ -63,6 +72,11 @@ module.exports = {
             pinButton: {
               selector: '(//div[contains(@class, "recent-items__recent-items")]' +
                 '//div[contains(@class, "item-pin-button__item-pin-button")])[1]',
+              locateStrategy: 'xpath',
+            },
+            pinButtonIntroduction: {
+              selector: '(//div[@class="results recent"]//a[contains(@class, "search-item__wrapper")])[1]'
+                + '//div[@class="pin-button-introduction"]',
               locateStrategy: 'xpath',
             },
           },
@@ -100,12 +114,21 @@ module.exports = {
       ...resultsSection('officers'),
       commands: [{
         getRowSelector: function (index) {
-          return nthRow(index);
+          return nthRow('officers', index);
         },
       }],
     },
     crs: resultsSection('crs'),
     investigatorCRs: resultsSection('investigatorCRs'),
     trrs: resultsSection('trrs'),
+    pinboardIntroduction: {
+      selector: '//div[contains(@class, "pinboard-introduction")]',
+      locateStrategy: 'xpath',
+      elements: {
+        content: '.introduction-content',
+        closeButton: '.introduction-close-btn',
+        getStartedButton: '.get-started-btn',
+      },
+    },
   },
 };

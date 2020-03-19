@@ -376,6 +376,39 @@ const mockPinboardComplaints = [
   },
 ];
 
+const mockSearchQueryLongResponse = {
+  'OFFICER': [
+    {
+      id: 9876,
+      name: 'John Wang',
+      badge: '9999',
+    },
+    officer8562,
+  ],
+  'TRR': [
+    { id: '767' },
+    { id: '773' },
+  ],
+  'CR': [
+    cr1002144,
+    trr14487,
+  ],
+};
+
+const expectResultCount = (client, rowsElement, count) => {
+  client.elements(rowsElement.locateStrategy, rowsElement.selector, function (result) {
+    assert.equal(result.value.length, count);
+  });
+};
+
+const performSearch = (searchPage, term) => {
+  searchPage.setValue('@queryInput', term);
+};
+
+const clickOnFirstSearchResultType = (searchPage, index) => {
+  searchPage.click('xpath', `(//a[contains(@class, "search-item__wrapper")])[${index}]`);
+};
+
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
@@ -624,12 +657,6 @@ describe('SearchPageTest', function () {
         mockDateOfficerSearchQueryResponse
       );
 
-      const expectResultCount = (rowsElement, count) => {
-        client.elements(rowsElement.locateStrategy, rowsElement.selector, function (result) {
-          assert.equal(result.value.length, count);
-        });
-      };
-
       this.searchPage.setValue('@queryInput', '2004-04-23 ke');
 
       this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
@@ -640,7 +667,7 @@ describe('SearchPageTest', function () {
       this.searchPage.expect.element('@officersHeader').to.be.present;
 
       const officersRows = this.searchPage.section.officers.section.rows;
-      expectResultCount(officersRows, 1);
+      expectResultCount(client, officersRows, 1);
 
       this.searchPage.section.officers.click('@allLink');
 
@@ -653,7 +680,7 @@ describe('SearchPageTest', function () {
 
       this.searchPage.expect.element('@queryInput').value.to.equal('officer:2004-04-23 ke');
 
-      expectResultCount(officersRows, 2);
+      expectResultCount(client, officersRows, 2);
 
       this.searchPage.click('@backToFullSearchLink');
       this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
@@ -678,7 +705,7 @@ describe('SearchPageTest', function () {
 
       const dateOfficersRows = this.searchPage.section.dateOfficers.section.rows;
 
-      expectResultCount(dateOfficersRows, 3);
+      expectResultCount(client, dateOfficersRows, 3);
     });
 
     it('should able to load more when scrolling down', function (client) {
@@ -723,7 +750,7 @@ describe('SearchPageTest', function () {
 
       client.execute('scrollTo(0, 3000)');
       const newItemSelector = this.searchPage.section.officers.getRowSelector(35);
-      this.searchPage.waitForElementVisible(newItemSelector);
+      this.searchPage.waitForElementVisible(newItemSelector, TIMEOUT);
       client.assertCount(officersRows.selector, 35, officersRows.locateStrategy);
     });
 
@@ -999,5 +1026,101 @@ describe('SearchPageTest', function () {
     page.waitForElementPresent('@clickyScript');
     page.waitForElementPresent('@clickySiteIdsScript');
     page.waitForElementPresent('@clickyNoJavascriptGIF');
+  });
+
+  context('Pinboard introduction', function () {
+    beforeEach(function (client, done) {
+      client.execute('localStorage.removeItem(\'PINBOARD_INTRODUCTION\')');
+      client.refresh();
+      this.searchPage.waitForElementPresent('@body');
+      done();
+    });
+
+    it('should display pinboard introduction on first visited', function () {
+      this.searchPage.section.pinboardIntroduction.waitForElementVisible('@content');
+    });
+
+    it('should close pinboard introduction after click close', function (client) {
+      this.searchPage.section.pinboardIntroduction.waitForElementVisible('@content', 1000);
+      this.searchPage.section.pinboardIntroduction.click('@closeButton');
+      this.searchPage.section.pinboardIntroduction.waitForElementNotPresent('@content', 1000);
+      client.refresh();
+      this.searchPage.waitForElementVisible('@body');
+      this.searchPage.section.pinboardIntroduction.waitForElementNotPresent('@content', 1000);
+    });
+
+    it('should close pinboard introduction and redirect to pinboard page after click Get Started', function (client) {
+      this.searchPage.section.pinboardIntroduction.waitForElementVisible('@content', 1000);
+      this.searchPage.section.pinboardIntroduction.click('@getStartedButton');
+      this.pinboardPage.waitForElementPresent('@searchBar');
+      this.searchPage.navigate();
+      this.searchPage.waitForElementPresent('@body');
+      this.searchPage.section.pinboardIntroduction.waitForElementNotPresent('@content', 1000);
+    });
+  });
+
+  context('PinButton introduction', function () {
+    beforeEach(function (client, done) {
+      api.mock('GET', '/api/v2/search-mobile/?term=intr', 200, mockSearchQueryLongResponse);
+      client.execute('localStorage.removeItem(\'PIN_BUTTON_INTRODUCTION\')');
+      client.refresh();
+      this.searchPage.waitForElementPresent('@body');
+      done();
+    });
+
+    it('should display PinButtonIntroduction in first pinnable search result', function (client) {
+      this.searchPage.setValue('@queryInput', 'intr');
+      const officersRows = this.searchPage.section.officers.section.rows;
+      expectResultCount(client, officersRows, 2);
+      const crsRows = this.searchPage.section.crs.section.rows;
+      expectResultCount(client, crsRows, 2);
+      const trrsRows = this.searchPage.section.crs.section.rows;
+      expectResultCount(client, trrsRows, 2);
+      this.searchPage.section.officers.section.firstRow.waitForElementVisible('@pinButtonIntroduction');
+      const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
+      client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
+        assert.equal(result.value.length, 1);
+      });
+    });
+
+    it('should display PinButtonIntroduction in first pinnable recent item', function (client) {
+      performSearch(this.searchPage, 'intr');
+      clickOnFirstSearchResultType(this.searchPage, 2);
+      this.searchPage.navigate();
+      this.searchPage.waitForElementVisible('@body');
+
+      performSearch(this.searchPage, 'intr');
+      clickOnFirstSearchResultType(this.searchPage, 3);
+      this.searchPage.navigate();
+      this.searchPage.waitForElementVisible('@body');
+
+      performSearch(this.searchPage, 'intr');
+      clickOnFirstSearchResultType(this.searchPage, 4);
+      this.searchPage.navigate();
+      this.searchPage.waitForElementVisible('@body');
+
+      performSearch(this.searchPage, 'intr');
+      clickOnFirstSearchResultType(this.searchPage, 5);
+      this.searchPage.navigate();
+      this.searchPage.waitForElementVisible('@body');
+
+      this.searchPage.section.recent.section.firstRecentItem.waitForElementVisible('@pinButtonIntroduction');
+      const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
+      client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
+        assert.equal(result.value.length, 1);
+      });
+    });
+
+    it('should not display PinButtonIntroduction after click on PinButton', function (client) {
+      this.searchPage.setValue('@queryInput', 'intr');
+      this.searchPage.section.officers.section.firstRow.waitForElementVisible('@pinButtonIntroduction');
+      this.searchPage.section.officers.section.firstRow.click('@pinButton');
+      this.searchPage.section.officers.section.firstRow.waitForElementNotPresent('@pinButtonIntroduction');
+
+      client.refresh();
+      this.searchPage.setValue('@queryInput', 'intr');
+      this.searchPage.section.officers.section.firstRow.waitForElementVisible('@pinButton');
+      this.searchPage.section.officers.section.firstRow.waitForElementNotPresent('@pinButtonIntroduction');
+    });
   });
 });

@@ -12,6 +12,7 @@ import style from './search-page.sass';
 import * as IntercomTracking from 'utils/intercom-tracking';
 import { generatePinboardUrl } from 'utils/pinboard';
 import PinboardBar from './pinboard-bar';
+import PinboardIntroduction from 'components/search-page/pinboard-introduction';
 
 
 export default class SearchPage extends Component {
@@ -162,11 +163,7 @@ export default class SearchPage extends Component {
 
     return (
       <div className={ style.searchPage }>
-        <div
-          className={ style.sticky }
-          id='search-page-header'
-        >
-
+        <div className='search-page-header'>
           <div className='input-container'>
             <input
               ref={ (instance) => { this.searchInput = instance; } }
@@ -193,6 +190,7 @@ export default class SearchPage extends Component {
         </div>
 
         <div className='category-details-container'>
+          <PinboardIntroduction />
           { this.renderCategories() }
         </div>
         {

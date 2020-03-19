@@ -115,10 +115,16 @@ export const recentSuggestionsSelector = createSelector(
   pinboardItemsSelector,
   (recent, pinboardItems) => {
     const recentData = [];
+    let hasFirstIntroduction = false;
     recent.forEach((recentItem) => {
+      const showIntroduction = !hasFirstIntroduction
+        && !isUndefined(constants.PINBOARD_PAGE.PINNED_ITEM_TYPES[recentItem.type]);
+      if (showIntroduction) {
+        hasFirstIntroduction = true;
+      }
       const itemFormatter = recentItemFormatterMapping[recentItem.type];
       if (!isUndefined(itemFormatter) && !isUndefined(recentItem.data)) {
-        recentData.push(itemFormatter(recentItem.data, pinboardItems));
+        recentData.push({ ...itemFormatter(recentItem.data, pinboardItems), showIntroduction });
       }
     });
     return recentData;
@@ -197,6 +203,24 @@ const suggestionGroupsSelector = createSelector(
   })
 );
 
+const showIntroductionTransform = (categories) => {
+  let hasFirstIntroduction = false;
+  return map(categories, ({ items, ...remain }) => {
+    const showIntroduction = !hasFirstIntroduction
+      && (!isUndefined(constants.PINBOARD_PAGE.PINNED_ITEM_TYPES[remain.path]) || remain.name === 'RECENT');
+    if (showIntroduction) {
+      hasFirstIntroduction = true;
+    }
+    return {
+      ...remain,
+      items: map(items, (item, index) => ({
+        ...item,
+        showIntroduction: index === 0 && showIntroduction,
+      })),
+    };
+  });
+};
+
 export const categoriesSelector = createSelector(
   getQuery,
   getChosenCategory,
@@ -231,6 +255,6 @@ export const categoriesSelector = createSelector(
 
     let itemRankCounter = 1;
     forEach(categories, category => forEach(category.items, item => item.itemRank = itemRankCounter++));
-    return categories;
+    return showIntroductionTransform(categories);
   }
 );

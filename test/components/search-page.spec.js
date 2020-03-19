@@ -26,6 +26,14 @@ describe('<SearchPage />', function () {
     wrapper.should.be.ok();
   });
 
+  it('should render PInboardIntroduction', function () {
+    const wrapper = shallow(
+      <SearchPage />,
+      { disableLifecycleMethods: true },
+    );
+    wrapper.find('PinboardIntroduction').exists().should.be.true();
+  });
+
   it('should call browserHistory.push when user click on back button', function () {
     const browserHistoryPush = stub(browserHistory, 'push');
 
@@ -342,11 +350,11 @@ describe('<SearchPage />', function () {
 
       const categoryDetails = wrapper.find('.category-details-container').children();
 
-      categoryDetails.length.should.eql(2);
-      categoryDetails.at(0).childAt(0).type().should.be.eql(SearchCategory);
+      categoryDetails.length.should.eql(3);
+      categoryDetails.at(1).childAt(0).type().should.be.eql(SearchCategory);
 
       // Last component should be wrapped inside ReactHeight:
-      const lastCategory = categoryDetails.at(1);
+      const lastCategory = categoryDetails.at(2);
       lastCategory.type().should.be.eql(ReactHeight);
       lastCategory.prop('onHeightReady').should.be.eql(wrapper.instance().updateLastCategoryHeight);
     });

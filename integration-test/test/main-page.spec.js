@@ -24,6 +24,7 @@ describe('MainPageTest', function () {
 
     this.mainPage = client.page.main();
     this.search = client.page.search();
+    this.pinboardPage = client.page.pinboardPage();
     this.mainPage.navigate();
     this.mainPage.expect.element('@body').to.be.present;
     done();
@@ -197,5 +198,42 @@ describe('MainPageTest', function () {
     page.waitForElementPresent('@clickyScript');
     page.waitForElementPresent('@clickySiteIdsScript');
     page.waitForElementPresent('@clickyNoJavascriptGIF');
+  });
+
+  describe('Pinboard Introduction', function () {
+    beforeEach(function (client, done) {
+      client.execute('localStorage.removeItem(\'PINBOARD_BUTTON_INTRODUCTION\')');
+      client.refresh();
+      this.mainPage.section.pinboardIntroduction.waitForElementPresent('@content');
+      done();
+    });
+
+    it('should display Pinboard introduction on first visited', function (client) {
+      this.mainPage.section.pinboardIntroduction.waitForElementPresent('@content');
+    });
+
+    it('should not display Pinboard introduction after click dismiss', function (client) {
+      this.mainPage.section.pinboardIntroduction.click('@dismissButton');
+      this.mainPage.section.pinboardIntroduction.waitForElementNotPresent('@content');
+      client.refresh();
+      this.mainPage.waitForElementPresent('@body');
+      this.mainPage.section.pinboardIntroduction.waitForElementNotPresent('@content');
+    });
+
+    it('should not display Pinboard introduction after click try it', function (client) {
+      this.mainPage.section.pinboardIntroduction.click('@tryItButton');
+      this.pinboardPage.waitForElementPresent('@searchBar');
+      this.mainPage.navigate();
+      this.mainPage.waitForElementPresent('@body');
+      this.mainPage.section.pinboardIntroduction.waitForElementNotPresent('@content');
+    });
+
+    it('should not display Pinboard introduction after click Pinboard button', function (client) {
+      this.mainPage.section.pinboardIntroduction.click('@pinboardButton');
+      this.pinboardPage.waitForElementPresent('@searchBar');
+      this.mainPage.navigate();
+      this.mainPage.waitForElementPresent('@body');
+      this.mainPage.section.pinboardIntroduction.waitForElementNotPresent('@content');
+    });
   });
 });
