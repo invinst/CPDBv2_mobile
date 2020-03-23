@@ -628,6 +628,13 @@ describe('Disable pinboard feature', function () {
       newDocumentAllegationsCards.waitForElementVisible('@firstCard');
       newDocumentAllegationsCards.expect.element('@pinButton').to.not.be.visible;
     });
+
+    it('should not display pinboard button introduction', function (client) {
+      client.execute('localStorage.removeItem(\'PINBOARD_BUTTON_INTRODUCTION\')');
+      client.refresh();
+      this.mainPage.section.pinboardIntroduction.waitForElementPresent('@content');
+      this.mainPage.section.pinboardIntroduction.expect.element('@content').to.not.be.visible;
+    });
   });
 
   describe('Search page', function () {
@@ -698,6 +705,22 @@ describe('Disable pinboard feature', function () {
       recentItems.section.firstRecentItem.expect.element('@pinButton').to.not.be.visible;
       recentItems.section.secondRecentItem.expect.element('@pinButton').to.not.be.visible;
       recentItems.section.thirdRecentItem.expect.element('@pinButton').to.not.be.visible;
+    });
+
+    it('should not display pinboard introduction', function (client) {
+      client.execute('localStorage.removeItem(\'PINBOARD_INTRODUCTION\')');
+      client.refresh();
+      this.searchPage.section.pinboardIntroduction.waitForElementPresent('@content');
+      this.searchPage.section.pinboardIntroduction.expect.element('@content').to.not.be.visible;
+    });
+
+    it('should not display PinButton introduction', function (client) {
+      client.execute('localStorage.removeItem(\'PIN_BUTTON_INTRODUCTION\')');
+      client.refresh();
+      this.searchPage.waitForElementVisible('@queryInput');
+      this.searchPage.setValue('@queryInput', '123');
+      this.searchPage.section.officers.section.firstRow.waitForElementPresent('@pinButtonIntroduction');
+      this.searchPage.section.officers.section.firstRow.expect.element('@pinButtonIntroduction').to.not.be.visible;
     });
   });
 
