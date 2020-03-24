@@ -21,7 +21,7 @@ jobs:
 
       - run: yarn run lint
       - run: yarn run ci-test
-      - run: yarn run live-test
+      - run: yarn run integration-test
 
   build:
     docker:

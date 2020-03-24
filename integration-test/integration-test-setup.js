@@ -7,13 +7,13 @@ var _ = require('lodash');
 var args = yargs(process.argv);
 var files;
 if (args.file) {
-  if (_.startsWith(args.file, 'live-tests/test/')) {
+  if (_.startsWith(args.file, 'integration-test/test/')) {
     files = [args.file];
   } else {
-    files = [`live-tests/test/${args.file}.spec.js`];
+    files = [`integration-test/test/${args.file}.spec.js`];
   }
 } else {
-  files = recursiveReadSync('./live-tests/test');
+  files = recursiveReadSync('./integration-test/test');
 }
 
 function importTest(name, path) {

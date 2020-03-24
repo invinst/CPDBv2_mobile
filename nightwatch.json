@@ -1,8 +1,8 @@
 {
-  "src_folders" : ["live-tests/live-test-setup.js"],
+  "src_folders" : ["integration-test/integration-test-setup.js"],
   "output_folder" : "",
-  "page_objects_path" : "./live-tests/page-objects",
-  "custom_commands_path": ["./live-tests/utils"],
+  "page_objects_path" : "./integration-test/page-objects",
+  "custom_commands_path": ["./integration-test/utils"],
 
   "webdriver": {
     "start_process": true,

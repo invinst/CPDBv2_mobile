@@ -46,7 +46,7 @@ User either `yarn run test:watch` or `yarn run mocha-watch` to start karma
 server that reruns unit tests automatically on file save. The latter excludes
 coverage report so you can see failed tests more easily.
 
-Run `yarn run live-test` for end-to-end tests. Make sure you have java 8 and the
+Run `yarn run integration-test` for end-to-end tests. Make sure you have java 8 and the
 latest chromedriver. If on mac:
 
 ```bash
@@ -57,12 +57,12 @@ brew cask install chromedriver  # or `brew cask upgrade chromedriver`
 
 (we're using Chrome 59 with chromedriver 2.31 at the time of writing)
 
-To run single live-test file:
+To run single integration-test file:
 
 ```bash
-yarn run live-test -- --file live-tests/test/complaint-page.spec.js  
+yarn run integration-test -- --file integration-test/test/complaint-page.spec.js  
 # or
-yarn run live-test -- --file complaint-page
+yarn run integration-test -- --file complaint-page
 ```
 
 ### Building & pushing the docker image for CI:
@@ -114,6 +114,11 @@ Or you can specify the release version:
 pipenv run ansible-playbook -i ansible/production ansible/deploy.yml -e rollback_to="20180702101602"
 ```
 with "20180702101602" is the version that you want to rollback to.
+
+
+## Development Guides
+
+- [CSS development guide](docs/css-development-guide.md)
 
 # Misc
 
