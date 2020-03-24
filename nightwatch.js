@@ -2,7 +2,7 @@
 'use strict';
 require('core-js/fn/object/assign');
 
-process.env.NODE_ENV = 'live-test';
+process.env.NODE_ENV = 'integration-test';
 
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');

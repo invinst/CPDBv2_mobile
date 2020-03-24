@@ -6,7 +6,7 @@ import style from './attachments-tab.sass';
 
 
 export default function AttachmentsTab(props) {
-  const { complaints, onTrackingAttachment } = props;
+  const { complaints, onTrackingAttachment, location: { pathname } } = props;
   return (
     <div className={ style.officerAttachmentsTab }>
       {
@@ -16,6 +16,7 @@ export default function AttachmentsTab(props) {
               complaint={ complaint }
               key={ index }
               onTrackingAttachment={ onTrackingAttachment }
+              pathname={ pathname }
             />
           );
         })
@@ -32,4 +33,7 @@ AttachmentsTab.propTypes = {
   complaints: PropTypes.array,
   officerId: PropTypes.number,
   onTrackingAttachment: PropTypes.func,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }),
 };

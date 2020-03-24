@@ -4,6 +4,7 @@ import ClampLines from 'react-clamp-lines';
 import { stub } from 'sinon';
 
 import Attachment from 'components/officer-page/tabbed-pane-section/attachments-tab/complaint/attachment';
+import * as tracking from 'utils/tracking';
 
 
 describe('Attachment component', function () {
@@ -71,6 +72,7 @@ describe('Attachment component', function () {
 
   it('should track click on attachment event', function () {
     const stubOnTrackingAttachment = stub();
+    const stubTrackAttachmentClick = stub(tracking, 'trackAttachmentClick');
     const attachment = {
       title: 'CRID 1071970 OCIR 2 of 3',
       url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-3-of-3.html',
@@ -79,12 +81,23 @@ describe('Attachment component', function () {
       id: '123456',
     };
 
-    const wrapper = mount(<Attachment attachment={ attachment } onTrackingAttachment={ stubOnTrackingAttachment }/>);
+    const wrapper = mount(
+      <Attachment
+        attachment={ attachment }
+        onTrackingAttachment={ stubOnTrackingAttachment }
+        pathname='/complaint/123456/'
+      />
+    );
     wrapper.find('.attachment-thumbnail').simulate('click');
     stubOnTrackingAttachment.should.be.calledWith({
       attachmentId: '123456',
       sourcePage: 'Officer Page - Attachments Tab',
       app: 'Mobile',
     });
+
+    stubTrackAttachmentClick.should.be.calledWith(
+      '/complaint/123456/',
+      'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-3-of-3.html'
+    );
   });
 });
