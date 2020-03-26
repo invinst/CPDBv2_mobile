@@ -545,7 +545,6 @@ describe('search-page selectors', function () {
           url: '/officer/8562/jerome-finnigan/',
           isPinned: true,
           type: 'OFFICER',
-          showIntroduction: true,
           recentItemData: {
             id: 8562,
             name: 'Jerome Finnigan',
@@ -561,7 +560,6 @@ describe('search-page selectors', function () {
           isPinned: false,
           category: 'Use Of Force',
           type: 'CR',
-          showIntroduction: false,
           recentItemData: {
             id: '271235',
             crid: '271235',
@@ -575,7 +573,6 @@ describe('search-page selectors', function () {
           url: '/trr/123456/',
           isPinned: true,
           type: 'TRR',
-          showIntroduction: false,
           recentItemData: {
             type: 'TRR',
             id: 123456,

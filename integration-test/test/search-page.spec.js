@@ -401,14 +401,6 @@ const expectResultCount = (client, rowsElement, count) => {
   });
 };
 
-const performSearch = (searchPage, term) => {
-  searchPage.setValue('@queryInput', term);
-};
-
-const clickOnFirstSearchResultType = (searchPage, index) => {
-  searchPage.click('xpath', `(//a[contains(@class, "search-item__wrapper")])[${index}]`);
-};
-
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
@@ -1077,34 +1069,6 @@ describe('SearchPageTest', function () {
       const trrsRows = this.searchPage.section.crs.section.rows;
       expectResultCount(client, trrsRows, 2);
       this.searchPage.section.officers.section.firstRow.waitForElementVisible('@pinButtonIntroduction');
-      const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
-      client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
-        assert.equal(result.value.length, 1);
-      });
-    });
-
-    it('should display PinButtonIntroduction in first pinnable recent item', function (client) {
-      performSearch(this.searchPage, 'intr');
-      clickOnFirstSearchResultType(this.searchPage, 2);
-      this.searchPage.navigate();
-      this.searchPage.waitForElementVisible('@body');
-
-      performSearch(this.searchPage, 'intr');
-      clickOnFirstSearchResultType(this.searchPage, 3);
-      this.searchPage.navigate();
-      this.searchPage.waitForElementVisible('@body');
-
-      performSearch(this.searchPage, 'intr');
-      clickOnFirstSearchResultType(this.searchPage, 4);
-      this.searchPage.navigate();
-      this.searchPage.waitForElementVisible('@body');
-
-      performSearch(this.searchPage, 'intr');
-      clickOnFirstSearchResultType(this.searchPage, 5);
-      this.searchPage.navigate();
-      this.searchPage.waitForElementVisible('@body');
-
-      this.searchPage.section.recent.section.firstRecentItem.waitForElementVisible('@pinButtonIntroduction');
       const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
       client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
         assert.equal(result.value.length, 1);
