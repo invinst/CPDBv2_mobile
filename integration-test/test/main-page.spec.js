@@ -182,7 +182,9 @@ describe('MainPageTest', function () {
         //Go to Search Page and check for pinboard item counts
         this.mainPage.waitForElementNotVisible('@lastToast', TIMEOUT);
         this.mainPage.click('@searchLink');
-        this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
+
+        this.search.waitForElementPresent('@queryInput');
+        this.search.waitForElementNotPresent('@pinboardBar', TIMEOUT);
         client.back();
       };
 

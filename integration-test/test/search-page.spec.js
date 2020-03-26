@@ -452,7 +452,7 @@ describe('SearchPageTest', function () {
     recentItems.section.thirdRecentItem.expect.element('@itemTitle').text.to.equal('Jerome Finnigan');
     recentItems.section.thirdRecentItem.expect.element('@itemSubtitle').text.to.equal('Badge #5167');
 
-    this.searchPage.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty');
+    this.searchPage.waitForElementNotPresent('@pinboardBar');
     recentItems.section.firstRecentItem.click('@pinButton');
     recentItems.section.secondRecentItem.click('@pinButton');
     recentItems.section.thirdRecentItem.click('@pinButton');
@@ -461,7 +461,7 @@ describe('SearchPageTest', function () {
     recentItems.section.firstRecentItem.click('@pinButton');
     recentItems.section.secondRecentItem.click('@pinButton');
     recentItems.section.thirdRecentItem.click('@pinButton');
-    this.searchPage.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty');
+    this.searchPage.waitForElementNotPresent('@pinboardBar');
 
     this.searchPage.navigate();
     recentItems.section.firstRecentItem.expect.element('@itemTitle').text.to.equal('TRR');
@@ -798,16 +798,17 @@ describe('SearchPageTest', function () {
 
     it('should display pinboard button with correct text when items are added/removed', function (client) {
       this.searchPage.setValue('@queryInput', 'Kelvin');
-      this.searchPage.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty');
 
       const investigatorCRs = this.searchPage.section.investigatorCRs;
+      investigatorCRs.section.firstRow.waitForElementPresent('@pinButton');
+      this.searchPage.waitForElementNotPresent('@pinboardBar');
 
       investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@pinboardBar', TIMEOUT);
       this.searchPage.expect.element('@pinboardBar').text.to.equal('Pinboard (1)');
 
       investigatorCRs.section.firstRow.click('@pinButton');
-      this.searchPage.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty');
+      this.searchPage.waitForElementNotPresent('@pinboardBar');
     });
 
     it('should display pinboard button that links to pinboard page when pinboard is not empty', function (client) {

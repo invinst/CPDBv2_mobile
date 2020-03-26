@@ -3,7 +3,6 @@ import { shallow, mount } from 'enzyme';
 import { spy, stub } from 'sinon';
 import ReactHeight from 'react-height';
 import { noop } from 'lodash';
-import { Promise } from 'es6-promise';
 
 import browserHistory from 'utils/history';
 import * as NavigationUtil from 'utils/navigation-util';
@@ -577,25 +576,17 @@ describe('<SearchPage />', function () {
     });
   });
 
-  it('should handle when click on pinboard button if pinboard does not exist', function (done) {
-    const createPinboard = stub().usingPromise(Promise).resolves({
-      payload: {
-        id: '5cd06f2b',
-        url: '/pinboard/5cd06f2b/',
-      },
+  context('pinboard is empty', function () {
+    it('should not render PinboardBar', function () {
+      const wrapper = mount(<SearchPage pinboard={ { itemsCount: 0 } } />);
+      wrapper.find('PinboardBar').exists().should.be.false();
     });
+  });
 
-    const wrapper = mount(
-      <SearchPage createPinboard={ createPinboard }/>
-    );
-
-    const browserHistoryPush = stub(browserHistory, 'push');
-    const pinboardButton = wrapper.find('.test--pinboard-bar');
-    pinboardButton.simulate('click');
-    createPinboard.calledWith({ officerIds: [], trrIds: [], crids: [] }).should.be.true();
-    setTimeout(() => {
-      browserHistoryPush.called.should.be.true();
-      done();
-    }, 50);
+  context('pinboard is not empty', function () {
+    it('should render PinboardBar', function () {
+      const wrapper = mount(<SearchPage pinboard={ { itemsCount: 1 } } />);
+      wrapper.find('PinboardBar').exists().should.be.true();
+    });
   });
 });

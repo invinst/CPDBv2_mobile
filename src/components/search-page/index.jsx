@@ -157,12 +157,12 @@ export default class SearchPage extends Component {
   };
 
   render() {
-    const { query, queryPrefix, chosenCategory, pinboard } = this.props;
-
+    const { query, queryPrefix, chosenCategory, pinboard, pinboardFeatureUsed } = this.props;
+    const isEmptyPinboard = pinboard.itemsCount === 0;
     const searchText = `${queryPrefix ? `${queryPrefix}:` : ''}${query}`;
 
     return (
-      <div className={ style.searchPage }>
+      <div className={ cx(style.searchPage, { 'hide-pinboard-bar': isEmptyPinboard }) }>
         <div className='search-page-header'>
           <div className='input-container'>
             <input
@@ -184,13 +184,16 @@ export default class SearchPage extends Component {
             </button>
           </div>
 
-          <PinboardBar
-            pinboard={ pinboard }
-            onEmptyPinboardButtonClick={ this.handleEmptyPinboardButtonClick } />
+          {
+            !isEmptyPinboard &&
+              <PinboardBar
+                pinboard={ pinboard }
+                onEmptyPinboardButtonClick={ this.handleEmptyPinboardButtonClick } />
+          }
         </div>
 
         <div className='category-details-container'>
-          <PinboardIntroduction />
+          <PinboardIntroduction pinboardFeatureUsed={ pinboardFeatureUsed } />
           { this.renderCategories() }
         </div>
         {
@@ -231,6 +234,7 @@ SearchPage.propTypes = {
   hasMore: PropTypes.bool,
   cancelPathname: PropTypes.string,
   categories: PropTypes.array,
+  pinboardFeatureUsed: PropTypes.bool,
 };
 
 SearchPage.defaultProps = {
@@ -248,4 +252,6 @@ SearchPage.defaultProps = {
   fetchedEmptyRecentSearchItems: noop,
   cancelPathname: '/',
   categories: [],
+  pinboard: {},
+  pinboardFeatureUsed: false,
 };

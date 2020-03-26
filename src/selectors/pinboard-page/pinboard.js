@@ -14,8 +14,10 @@ const countPinnedItems = pinboard => {
     get(pinboard, 'trr_ids', []).length;
 };
 
+const getRawPinboard = (state) => get(state, 'pinboardPage.pinboard', {});
+
 export const getPinboard = createSelector(
-  state => get(state, 'pinboardPage.pinboard', {}),
+  getRawPinboard,
   pinboard => ({
     id: get(pinboard, 'id', null) !== null ? pinboard['id'].toString() : null,
     title: get(pinboard, 'title', ''),
@@ -73,4 +75,9 @@ export const isEmptyPinboardSelector = createSelector(
 export const examplePinboardsSelector = createSelector(
   state => state.pinboardPage.pinboard,
   pinboard => get(pinboard, 'example_pinboards', []),
+);
+
+export const pinboardFeatureUsedSelector = createSelector(
+  getRawPinboard,
+  pinboard => pinboard.isPinboardRestored && (countPinnedItems(pinboard) > 0),
 );

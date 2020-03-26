@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import cx from 'classnames';
+import PropTypes from 'prop-types';
 
 import styles from './pinboard-introduction.sass';
 import { isPinboardIntroductionVisited, setPinboardIntroductionVisited } from 'utils/pinboard';
@@ -17,7 +18,9 @@ export default class PinboardIntroduction extends Component {
   };
 
   render() {
-    return !isPinboardIntroductionVisited() && (
+    const { pinboardFeatureUsed } = this.props;
+    const showIntroduction = !pinboardFeatureUsed && !isPinboardIntroductionVisited();
+    return showIntroduction && (
       <div className={ cx(styles.pinboardIntroduction, 'pinboard-feature') }>
         <div className='introduction-title'>Introducing Pinboards</div>
         <div className='introduction-close-btn' onClick={ this.onCloseButtonClick } />
@@ -33,3 +36,11 @@ export default class PinboardIntroduction extends Component {
     );
   }
 }
+
+PinboardIntroduction.propTypes = {
+  pinboardFeatureUsed: PropTypes.bool,
+};
+
+PinboardIntroduction.defaultProps = {
+  pinboardFeatureUsed: false,
+};

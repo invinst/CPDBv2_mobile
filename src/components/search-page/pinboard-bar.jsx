@@ -30,11 +30,9 @@ export default class PinboardBar extends Component {
       return null;
     }
 
-    const text = pinboard.itemsCount === 0 ? 'Your pinboard is empty' : `Pinboard (${pinboard.itemsCount})`;
-
     return (
       <span className={ cx('pinboard-feature', 'test--pinboard-bar', style.pinboardBar) } onClick={ this.handleClick }>
-        { text }
+        { `Pinboard (${pinboard.itemsCount})` }
         <span className='pinboard-bar-indicator' />
       </span>
     );
