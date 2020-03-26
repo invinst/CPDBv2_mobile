@@ -983,8 +983,8 @@ describe('OfficerPage test', function () {
         this.officerPage.click('@landingPageBreadCrumb');
         this.main.waitForElementVisible('@searchLink');
         this.main.click('@searchLink');
-        this.searchPage.waitForElementPresent('@queryInput');
-        this.searchPage.waitForElementNotPresent('@pinboardBar');
+        this.search.waitForElementPresent('@queryInput');
+        this.search.waitForElementNotPresent('@pinboardBar');
       });
 
       it('should display toast when pinning current officer', function (client) {
@@ -1027,8 +1027,8 @@ describe('OfficerPage test', function () {
         this.officerPage.click('@landingPageBreadCrumb');
         this.main.waitForElementVisible('@searchLink');
         this.main.click('@searchLink');
-        this.searchPage.waitForElementPresent('@queryInput');
-        this.searchPage.waitForElementNotPresent('@pinboardBar');
+        this.search.waitForElementPresent('@queryInput');
+        this.search.waitForElementNotPresent('@pinboardBar');
       });
     });
 

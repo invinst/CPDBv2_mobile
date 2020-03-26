@@ -32,6 +32,11 @@ describe('CPDBv2_mobile', function () {
     });
   });
 
+  afterEach(function (client, done) {
+    client.execute('localStorage.clear()');
+    done();
+  });
+
   files.forEach(function (file) {
     importTest(file, path.resolve(file));
   });

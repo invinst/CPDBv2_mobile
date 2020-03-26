@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactHeight from 'react-height';
 import { isEmpty, noop } from 'lodash';
 import cx from 'classnames';
 
@@ -107,40 +106,26 @@ export default class SearchPage extends Component {
       nextParams,
       hasMore,
     } = this.props;
-    const lastIndex = categories.length - 1;
 
-    return categories.map((cat, index) => {
-      const searchCategory = (
-        <SearchCategory
-          categoryId={ cat.id }
-          categoryPath={ cat.path }
-          allButtonClickHandler={ this.chooseCategory.bind(this, cat) }
-          showAllButton={ cat.showAllButton }
-          title={ cat.longName || cat.name }
-          items={ cat.items }
-          saveToRecent={ saveToRecent }
-          updateActiveCategory={ updateActiveCategory }
-          activeCategory={ activeCategory }
-          addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
-          getSuggestionWithContentType={ getSuggestionWithContentType }
-          query={ query }
-          nextParams={ nextParams }
-          hasMore={ hasMore }
-        />
-      );
-
-      if (index === lastIndex) {
-        // Track last category's DOM element height to use in dynamic bottom padding height calculation
-        return (
-          <ReactHeight key={ cat.id } onHeightReady={ this.updateLastCategoryHeight }>
-            { searchCategory }
-          </ReactHeight>
-        );
-
-      } else {
-        return <div key={ cat.id }>{ searchCategory }</div>;
-      }
-    });
+    return categories.map(cat => (
+      <SearchCategory
+        key={ cat.id }
+        categoryId={ cat.id }
+        categoryPath={ cat.path }
+        allButtonClickHandler={ this.chooseCategory.bind(this, cat) }
+        showAllButton={ cat.showAllButton }
+        title={ cat.longName || cat.name }
+        items={ cat.items }
+        saveToRecent={ saveToRecent }
+        updateActiveCategory={ updateActiveCategory }
+        activeCategory={ activeCategory }
+        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+        getSuggestionWithContentType={ getSuggestionWithContentType }
+        query={ query }
+        nextParams={ nextParams }
+        hasMore={ hasMore }
+      />
+    ));
   }
 
   handleEmptyPinboardButtonClick = () => {
@@ -192,9 +177,11 @@ export default class SearchPage extends Component {
           }
         </div>
 
-        <div className='category-details-container'>
+        <div className='content-container'>
           <PinboardIntroduction pinboardFeatureUsed={ pinboardFeatureUsed } />
-          { this.renderCategories() }
+          <div className='category-details-container'>
+            { this.renderCategories() }
+          </div>
         </div>
         {
           !isEmpty(chosenCategory) &&

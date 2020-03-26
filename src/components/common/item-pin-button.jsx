@@ -9,17 +9,45 @@ import { isPinButtonIntroductionVisited, setPinButtonIntroductionVisited } from 
 
 
 class ItemPinButton extends Component {
-  onIntroductionClick = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    setPinButtonIntroductionVisited();
-    this.forceUpdate();
+  componentDidMount() {
+    if (this.shouldShowIntroduction()) {
+      this.addEventClickOutside();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.shouldShowIntroduction()) {
+      this.removeEventClickOutside();
+    }
+  }
+
+  handleClickOutside = ({ target }) => {
+    if (target.closest('.category-details-container') && !target.closest('.pin-button-introduction')) {
+      setPinButtonIntroductionVisited();
+      this.forceUpdate();
+      this.removeEventClickOutside();
+    }
   };
 
+  shouldShowIntroduction() {
+    const { showIntroduction } = this.props;
+
+    return showIntroduction && !isPinButtonIntroductionVisited();
+  }
+
+  addEventClickOutside() {
+    window.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  removeEventClickOutside() {
+    window.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+
   render() {
-    const { className, item, items, showIntroduction } = this.props;
+    const { className, item, items } = this.props;
     const isPinned = every(isEmpty(items) ? [item] : items, item => item.isPinned);
-    const shouldShowIntroduction = showIntroduction && !isPinButtonIntroductionVisited();
+    const shouldShowIntroduction = this.shouldShowIntroduction();
 
     return (
       <div className={ cx(
@@ -29,10 +57,8 @@ class ItemPinButton extends Component {
         className
       ) }>
         {
-          shouldShowIntroduction
-          && <div className='pin-button-introduction' onClick={ this.onIntroductionClick }>
-            Tap this button to add to your pinboard
-          </div>
+          shouldShowIntroduction &&
+            <div className='pin-button-introduction'>Tap this button to add to your pinboard</div>
         }
       </div>
     );

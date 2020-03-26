@@ -10,6 +10,7 @@ const {
   mockComplaintSummaries,
 } = require(__dirname + '/../mock-data/main-page');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
+const { enablePinboardButtonIntroduction } = require(__dirname + '/../utils');
 
 
 describe('MainPageTest', function () {
@@ -204,8 +205,7 @@ describe('MainPageTest', function () {
 
   describe('Pinboard Introduction', function () {
     beforeEach(function (client, done) {
-      client.execute('localStorage.removeItem(\'PINBOARD_BUTTON_INTRODUCTION\')');
-      client.refresh();
+      enablePinboardButtonIntroduction(client);
       this.mainPage.section.pinboardIntroduction.waitForElementPresent('@content');
       done();
     });

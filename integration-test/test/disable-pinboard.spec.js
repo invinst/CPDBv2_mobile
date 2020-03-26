@@ -8,6 +8,11 @@ const {
   mockNewDocuments,
   mockComplaintSummaries,
 } = require(__dirname + '/../mock-data/main-page');
+const {
+  enablePinboardButtonIntroduction,
+  enablePinboardIntroduction,
+  enablePinButtonIntroduction,
+} = require(__dirname + '/../utils');
 
 const officer2235 = {
   'officer_id': 2235,
@@ -630,8 +635,7 @@ describe('Disable pinboard feature', function () {
     });
 
     it('should not display pinboard button introduction', function (client) {
-      client.execute('localStorage.removeItem(\'PINBOARD_BUTTON_INTRODUCTION\')');
-      client.refresh();
+      enablePinboardButtonIntroduction(client);
       this.mainPage.section.pinboardIntroduction.waitForElementPresent('@content');
       this.mainPage.section.pinboardIntroduction.expect.element('@content').to.not.be.visible;
     });
@@ -708,15 +712,13 @@ describe('Disable pinboard feature', function () {
     });
 
     it('should not display pinboard introduction', function (client) {
-      client.execute('localStorage.removeItem(\'PINBOARD_INTRODUCTION\')');
-      client.refresh();
+      enablePinboardIntroduction(client);
       this.searchPage.section.pinboardIntroduction.waitForElementPresent('@content');
       this.searchPage.section.pinboardIntroduction.expect.element('@content').to.not.be.visible;
     });
 
     it('should not display PinButton introduction', function (client) {
-      client.execute('localStorage.removeItem(\'PIN_BUTTON_INTRODUCTION\')');
-      client.refresh();
+      enablePinButtonIntroduction(client);
       this.searchPage.waitForElementVisible('@queryInput');
       this.searchPage.setValue('@queryInput', '123');
       this.searchPage.section.officers.section.firstRow.waitForElementPresent('@pinButtonIntroduction');

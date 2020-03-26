@@ -264,8 +264,8 @@ describe('ComplaintPageTest', function () {
       this.complaintPage.click('@landingPageBreadCrumb');
       this.main.waitForElementVisible('@searchLink');
       this.main.click('@searchLink');
-      this.searchPage.waitForElementPresent('@queryInput');
-      this.searchPage.waitForElementNotPresent('@pinboardBar', TIMEOUT);
+      this.search.waitForElementPresent('@queryInput');
+      this.search.waitForElementNotPresent('@pinboardBar', TIMEOUT);
     });
 
     it('should display toast when pinning current complaint', function (client) {
@@ -308,8 +308,8 @@ describe('ComplaintPageTest', function () {
       this.complaintPage.click('@landingPageBreadCrumb');
       this.main.waitForElementVisible('@searchLink');
       this.main.click('@searchLink');
-      this.searchPage.waitForElementPresent('@queryInput');
-      this.searchPage.waitForElementNotPresent('@pinboardBar');
+      this.search.waitForElementPresent('@queryInput');
+      this.search.waitForElementNotPresent('@pinboardBar');
     });
   });
 

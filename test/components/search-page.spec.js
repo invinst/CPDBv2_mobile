@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { spy, stub } from 'sinon';
-import ReactHeight from 'react-height';
 import { noop } from 'lodash';
 
 import browserHistory from 'utils/history';
@@ -349,13 +348,8 @@ describe('<SearchPage />', function () {
 
       const categoryDetails = wrapper.find('.category-details-container').children();
 
-      categoryDetails.length.should.eql(3);
-      categoryDetails.at(1).childAt(0).type().should.be.eql(SearchCategory);
-
-      // Last component should be wrapped inside ReactHeight:
-      const lastCategory = categoryDetails.at(2);
-      lastCategory.type().should.be.eql(ReactHeight);
-      lastCategory.prop('onHeightReady').should.be.eql(wrapper.instance().updateLastCategoryHeight);
+      categoryDetails.length.should.eql(2);
+      categoryDetails.at(0).type().should.be.eql(SearchCategory);
     });
 
     it('should pass correct props to SearchCategory', function () {

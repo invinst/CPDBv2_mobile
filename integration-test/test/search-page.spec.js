@@ -6,6 +6,11 @@ const { TIMEOUT } = require(__dirname + '/../constants');
 const { range } = require('lodash');
 const pinboardMockData = require(__dirname + '/../mock-data/pinboard-page');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
+const {
+  dismissPinButtonIntroduction,
+  enablePinButtonIntroduction,
+  enablePinboardIntroduction,
+} = require(__dirname + '/../utils');
 
 const mockSearchQueryResponse = {
   'OFFICER': [
@@ -411,6 +416,8 @@ describe('SearchPageTest', function () {
     this.officerPage = client.page.officerPage();
     this.pinboardPage = client.page.pinboardPage();
     this.searchPage.navigate();
+    // Disable PinButton introduction so that it won't intercept other events
+    dismissPinButtonIntroduction(client);
     this.searchPage.expect.element('@body').to.be.present;
     done();
   });
@@ -420,7 +427,7 @@ describe('SearchPageTest', function () {
     done();
   });
 
-  it('should show recent items', function () {
+  it('should show recent items', function (client) {
     api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
     api.mock(
       'GET', '/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487',
@@ -822,13 +829,6 @@ describe('SearchPageTest', function () {
       this.pinboardPage.waitForElementVisible('@pinboardTitle', TIMEOUT);
     });
 
-    it('should create empty pinboard and redirect to pinboard page when \
-      click on pinboard button if pinboard is empty', function (client) {
-      this.searchPage.click('@pinboardBar');
-      this.searchPage.waitForElementNotPresent('@pinboardBar', TIMEOUT);
-      client.assert.urlContains('/pinboard/1/untitled-pinboard/');
-    });
-
     it('should display toast in few seconds when items are added/removed', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
 
@@ -1023,8 +1023,7 @@ describe('SearchPageTest', function () {
 
   context('Pinboard introduction', function () {
     beforeEach(function (client, done) {
-      client.execute('localStorage.removeItem(\'PINBOARD_INTRODUCTION\')');
-      client.refresh();
+      enablePinboardIntroduction(client);
       this.searchPage.waitForElementPresent('@body');
       done();
     });
@@ -1055,8 +1054,7 @@ describe('SearchPageTest', function () {
   context('PinButton introduction', function () {
     beforeEach(function (client, done) {
       api.mock('GET', '/api/v2/search-mobile/?term=intr', 200, mockSearchQueryLongResponse);
-      client.execute('localStorage.removeItem(\'PIN_BUTTON_INTRODUCTION\')');
-      client.refresh();
+      enablePinButtonIntroduction(client);
       this.searchPage.waitForElementPresent('@body');
       done();
     });
@@ -1076,13 +1074,13 @@ describe('SearchPageTest', function () {
       });
     });
 
-    it('should not display PinButtonIntroduction after click on PinButton', function (client) {
+    it('should not display PinButtonIntroduction after click outside', function (client) {
       this.searchPage.setValue('@queryInput', 'intr');
       this.searchPage.section.officers.section.firstRow.waitForElementVisible('@pinButtonIntroduction');
-      this.searchPage.section.officers.section.firstRow.click('@pinButton');
-      this.searchPage.section.officers.section.firstRow.waitForElementNotPresent('@pinButtonIntroduction');
+      this.searchPage.section.crs.section.firstRow.click('@itemTitle');
 
-      client.refresh();
+      this.searchPage.navigate();
+      this.searchPage.waitForElementPresent('@queryInput');
       this.searchPage.setValue('@queryInput', 'intr');
       this.searchPage.section.officers.section.firstRow.waitForElementVisible('@pinButton');
       this.searchPage.section.officers.section.firstRow.waitForElementNotPresent('@pinButtonIntroduction');
