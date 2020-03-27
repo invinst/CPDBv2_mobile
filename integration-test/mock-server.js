@@ -10,7 +10,7 @@ const port = process.env.MOCK_SERVER_PORT || 9002;
 const api = require(__dirname + '/mock-api');
 api.port = port;
 
-console.log(`API Server has been started at port ${port}`);
+console.info(`API Server has been started at port ${port}`);
 
 const server = http.createServer(app);
 
