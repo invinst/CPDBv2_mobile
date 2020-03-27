@@ -8,7 +8,7 @@ const config = require('./webpack.config');
 new WebpackDevServer(webpack(config), config.devServer)
   .listen(config.devServer.port, '0.0.0.0', (err) => {
     if (err) {
-      console.log(err);
+      console.error(err);
     }
-    console.log('Listening at localhost:' + config.devServer.port);
+    console.info('Listening at localhost:' + config.devServer.port);
   });
