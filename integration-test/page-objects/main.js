@@ -53,10 +53,10 @@ module.exports = {
         understandButton: '.confirm-button',
       },
     },
-    pinboardIntroduction: {
+    pinboardButtonIntroduction: {
       selector: '.pinboard-button-introduction',
       elements: {
-        content: '.pinboard-button-introduction-content',
+        introductionContent: '.pinboard-button-introduction-content',
         dismissButton: '.dismiss-btn',
         tryItButton: '.try-it-btn',
         pinboardButton: {

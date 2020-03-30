@@ -13,9 +13,8 @@ import restoreCreateOrUpdatePinboardMiddleware from 'middleware/restore-create-o
 import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pinboard-middleware';
 import browserHistory from 'utils/history';
 import fetchToastMiddleware from 'middleware/fetch-toast-middleware';
+import { isPinboardFeatureEnabled } from 'utils/pinboard';
 
-
-const { pinboard: enablePinboardFeature } = config.enableFeatures;
 
 function configureStore(initialState) {
   /* istanbul ignore next */
@@ -28,7 +27,7 @@ function configureStore(initialState) {
     fetchAndRedirectPinboardMiddleware,
     fetchToastMiddleware,
   ];
-  if (enablePinboardFeature) {
+  if (isPinboardFeatureEnabled()) {
     middleware = [...middleware, restoreCreateOrUpdatePinboardMiddleware];
   }
 

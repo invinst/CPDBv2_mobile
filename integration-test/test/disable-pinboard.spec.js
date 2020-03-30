@@ -636,8 +636,8 @@ describe('Disable pinboard feature', function () {
 
     it('should not display pinboard button introduction', function (client) {
       enablePinboardButtonIntroduction(client);
-      this.mainPage.section.pinboardIntroduction.waitForElementPresent('@content');
-      this.mainPage.section.pinboardIntroduction.expect.element('@content').to.not.be.visible;
+      this.mainPage.waitForElementVisible('@searchLink');
+      this.mainPage.section.pinboardButtonIntroduction.expect.element('@introductionContent').to.not.be.present;
     });
   });
 
@@ -713,16 +713,17 @@ describe('Disable pinboard feature', function () {
 
     it('should not display pinboard introduction', function (client) {
       enablePinboardIntroduction(client);
-      this.searchPage.section.pinboardIntroduction.waitForElementPresent('@content');
-      this.searchPage.section.pinboardIntroduction.expect.element('@content').to.not.be.visible;
+      this.searchPage.waitForElementVisible('@queryInput');
+      this.searchPage.section.pinboardIntroduction.expect.element('@content').to.not.be.present;
     });
 
     it('should not display PinButton introduction', function (client) {
       enablePinButtonIntroduction(client);
       this.searchPage.waitForElementVisible('@queryInput');
       this.searchPage.setValue('@queryInput', '123');
-      this.searchPage.section.officers.section.firstRow.waitForElementPresent('@pinButtonIntroduction');
-      this.searchPage.section.officers.section.firstRow.expect.element('@pinButtonIntroduction').to.not.be.visible;
+      const firstOfficerRow = this.searchPage.section.officers.section.firstRow;
+      firstOfficerRow.waitForElementVisible('@itemTitle');
+      firstOfficerRow.expect.element('@pinButtonIntroduction').to.not.be.present;
     });
   });
 
