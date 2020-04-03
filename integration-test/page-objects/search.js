@@ -35,7 +35,7 @@ module.exports = {
 
   elements: {
     body: 'body',
-    cancelButton: 'button.bt-cancel',
+    closeButton: 'button.bt-close',
     queryInput: '.query-input',
     backToFullSearchLink: '.back-to-full-search-link',
     recentHeader: '#search-category-recent',

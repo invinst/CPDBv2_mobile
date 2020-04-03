@@ -451,8 +451,8 @@ describe('SearchPageTest', function () {
     it('should go back to landing page', function (client) {
       const mainPage = client.page.main();
 
-      this.searchPage.waitForElementVisible('@cancelButton');
-      this.searchPage.click('@cancelButton');
+      this.searchPage.waitForElementVisible('@closeButton');
+      this.searchPage.click('@closeButton');
 
       client.assert.urlEquals(mainPage.url());
     });
@@ -466,8 +466,8 @@ describe('SearchPageTest', function () {
       pinboardPage.waitForElementVisible('@searchBar');
       pinboardPage.click('@searchBar');
 
-      this.searchPage.waitForElementVisible('@cancelButton');
-      this.searchPage.click('@cancelButton');
+      this.searchPage.waitForElementVisible('@closeButton');
+      this.searchPage.click('@closeButton');
 
       client.assert.urlEquals(pinboardUrl);
     });
@@ -483,9 +483,9 @@ describe('SearchPageTest', function () {
       client.assert.urlContains('/officer/8562/jerome-finnigan/');
       officerPage.click('@searchBreadcrumb');
 
-      this.searchPage.waitForElementVisible('@cancelButton');
+      this.searchPage.waitForElementVisible('@closeButton');
       client.assert.urlContains('/search/');
-      this.searchPage.click('@cancelButton');
+      this.searchPage.click('@closeButton');
 
       client.assert.urlContains('/officer/8562/jerome-finnigan/');
     });
