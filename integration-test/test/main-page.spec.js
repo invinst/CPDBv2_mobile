@@ -1,7 +1,7 @@
 'use strict';
 
 var api = require(__dirname + '/../mock-api');
-const { TIMEOUT } = require(__dirname + '/../constants');
+const { TIMEOUT, PINBOARD_INTRODUCTION_DELAY } = require(__dirname + '/../constants');
 const {
   mockLandingPageCms,
   mockTopOfficersByAllegation,
@@ -206,35 +206,54 @@ describe('MainPageTest', function () {
   describe('Pinboard Introduction', function () {
     beforeEach(function (client, done) {
       enablePinboardButtonIntroduction(client);
-      this.mainPage.section.pinboardButtonIntroduction.waitForElementPresent('@introductionContent');
+      this.mainPage.waitForElementVisible('@body');
       done();
     });
 
     it('should display Pinboard introduction on first visited', function (client) {
-      this.mainPage.section.pinboardButtonIntroduction.waitForElementPresent('@introductionContent');
+      this.mainPage.section.pinboardButtonIntroduction.waitForElementPresent(
+        '@introductionContent',
+        PINBOARD_INTRODUCTION_DELAY
+      );
     });
 
     it('should not display Pinboard introduction after click dismiss', function (client) {
+      this.mainPage.section.pinboardButtonIntroduction.waitForElementPresent(
+        '@introductionContent',
+        PINBOARD_INTRODUCTION_DELAY
+      );
       this.mainPage.section.pinboardButtonIntroduction.click('@dismissButton');
+      client.pause(PINBOARD_INTRODUCTION_DELAY);
       this.mainPage.section.pinboardButtonIntroduction.waitForElementNotPresent('@introductionContent');
       client.refresh();
       this.mainPage.waitForElementPresent('@body');
-      this.mainPage.section.pinboardButtonIntroduction.waitForElementNotPresent('@introductionContent');
+      client.pause(PINBOARD_INTRODUCTION_DELAY);
+      this.mainPage.section.pinboardButtonIntroduction.waitForElementNotPresent('@introductionContent',);
     });
 
     it('should not display Pinboard introduction after click try it', function (client) {
+      this.mainPage.section.pinboardButtonIntroduction.waitForElementPresent(
+        '@introductionContent',
+        PINBOARD_INTRODUCTION_DELAY
+      );
       this.mainPage.section.pinboardButtonIntroduction.click('@tryItButton');
       this.pinboardPage.waitForElementPresent('@searchBar');
       this.mainPage.navigate();
       this.mainPage.waitForElementPresent('@body');
+      client.pause(PINBOARD_INTRODUCTION_DELAY);
       this.mainPage.section.pinboardButtonIntroduction.waitForElementNotPresent('@introductionContent');
     });
 
     it('should not display Pinboard introduction after click Pinboard button', function (client) {
+      this.mainPage.section.pinboardButtonIntroduction.waitForElementPresent(
+        '@introductionContent',
+        PINBOARD_INTRODUCTION_DELAY
+      );
       this.mainPage.section.pinboardButtonIntroduction.click('@pinboardButton');
       this.pinboardPage.waitForElementPresent('@searchBar');
       this.mainPage.navigate();
       this.mainPage.waitForElementPresent('@body');
+      client.pause(PINBOARD_INTRODUCTION_DELAY);
       this.mainPage.section.pinboardButtonIntroduction.waitForElementNotPresent('@introductionContent');
     });
   });

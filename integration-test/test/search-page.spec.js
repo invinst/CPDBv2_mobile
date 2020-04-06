@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 const api = require(__dirname + '/../mock-api');
-const { TIMEOUT } = require(__dirname + '/../constants');
+const { TIMEOUT, PINBOARD_INTRODUCTION_DELAY } = require(__dirname + '/../constants');
 const { range } = require('lodash');
 const pinboardMockData = require(__dirname + '/../mock-data/pinboard-page');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
@@ -1067,7 +1067,10 @@ describe('SearchPageTest', function () {
       expectResultCount(client, crsRows, 2);
       const trrsRows = this.searchPage.section.crs.section.rows;
       expectResultCount(client, trrsRows, 2);
-      this.searchPage.section.officers.section.firstRow.waitForElementVisible('@pinButtonIntroduction');
+      this.searchPage.section.officers.section.firstRow.waitForElementVisible(
+        '@pinButtonIntroduction',
+        PINBOARD_INTRODUCTION_DELAY
+      );
       const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
       client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
         assert.equal(result.value.length, 1);
@@ -1083,6 +1086,7 @@ describe('SearchPageTest', function () {
       this.searchPage.waitForElementPresent('@queryInput');
       this.searchPage.setValue('@queryInput', 'intr');
       this.searchPage.section.officers.section.firstRow.waitForElementVisible('@pinButton');
+      client.pause(PINBOARD_INTRODUCTION_DELAY);
       this.searchPage.section.officers.section.firstRow.waitForElementNotPresent('@pinButtonIntroduction');
     });
   });
