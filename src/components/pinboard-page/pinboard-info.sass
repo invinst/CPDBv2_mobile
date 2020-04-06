@@ -20,6 +20,7 @@
 
   .pinboard-description
     resize: none
+    font-weight: 300
     width: 100%
     font-size: 14px
     margin-bottom: 40px
@@ -30,5 +31,13 @@
     word-wrap: break-word
     white-space: pre-line
 
-    p
-      font-family: system-ui
+  .pinboard-description-placeholder
+    &::after
+      position: absolute
+      top: 0
+      font-size: 14px
+      line-height: 16px
+      font-weight: 300
+      color: $boulder-color
+      content: attr(data-placeholder)
+      z-index: -1
