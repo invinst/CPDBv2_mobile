@@ -14,10 +14,10 @@ const server = new WebpackDevServer(webpack(config), config.devServer);
 
 server.listen(config.devServer.port, 'localhost', (err) => {
   if (err) {
-    console.log(err);
+    console.error(err);
   }
-  console.log('Listening at localhost:' + config.devServer.port);
-  console.log('Opening your system browser...');
+  console.info('Listening at localhost:' + config.devServer.port);
+  console.info('Opening your system browser...');
 });
 
 var opts = process.argv.slice(2);
@@ -34,7 +34,7 @@ runner.on('exit', function (code) {
 });
 
 runner.on('error', function (err) {
-  console.log(err);
+  console.error(err);
   server.close();
   throw err
 });

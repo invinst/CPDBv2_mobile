@@ -39,7 +39,7 @@ const filesFromFolder = (dir, ext) => {
 const assetsFileWithExtension = ext => filesFromFolder(distPath('assets'), ext);
 
 const uploadFile = (container, path, localPath, contentType, cacheControl, contentEncoding) => {
-  console.log(`Uploading file ${path}`);
+  console.info(`Uploading file ${path}`);
   return blobService.createBlockBlobFromLocalFileAsync(
     container,
     path,
@@ -52,7 +52,7 @@ const uploadFile = (container, path, localPath, contentType, cacheControl, conte
       }
     }
   ).then(() => {
-    console.log(`.. Done uploading file ${path}`);
+    console.info(`.. Done uploading file ${path}`);
   });
 };
 
