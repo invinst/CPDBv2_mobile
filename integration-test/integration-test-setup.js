@@ -17,7 +17,7 @@ if (args.file) {
 }
 
 function importTest(name, path) {
-  console.log('>> importing test:', name);
+  console.info('>> importing test:', name);
   describe(name, function () {
     require(path);
   });
