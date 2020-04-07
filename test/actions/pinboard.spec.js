@@ -30,6 +30,7 @@ import {
   duplicatePinboard,
   createNewEmptyPinboard,
   hideShowPinboardsList,
+  fetchHeaderPinboards,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -103,6 +104,9 @@ import {
   PINBOARDS_FETCH_REQUEST_SUCCESS,
   PINBOARDS_FETCH_REQUEST_FAILURE,
   HIDE_SHOW_PINBOARDS_LIST,
+  HEADER_PINBOARDS_REQUEST_START,
+  HEADER_PINBOARDS_REQUEST_FAILURE,
+  HEADER_PINBOARDS_REQUEST_SUCCESS,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -786,6 +790,27 @@ describe('pinboard actions', function () {
       hideShowPinboardsList(true).should.deepEqual({
         type: HIDE_SHOW_PINBOARDS_LIST,
         payload: true,
+      });
+    });
+  });
+
+  describe('fetchHeaderPinboards', function () {
+    it('should return correct action', function () {
+      fetchHeaderPinboards().should.deepEqual({
+        types: [
+          HEADER_PINBOARDS_REQUEST_START,
+          HEADER_PINBOARDS_REQUEST_SUCCESS,
+          HEADER_PINBOARDS_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: v2Url(constants.PINBOARDS_API_ENDPOINT),
+            adapter: undefined,
+            params: {
+              detail: true,
+            },
+          },
+        },
       });
     });
   });

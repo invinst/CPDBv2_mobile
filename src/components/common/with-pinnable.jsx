@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { noop, every, isEmpty } from 'lodash';
 
 
+import styles from './with-pinnable.sass';
+
+
 export default function withPinnable(WrappedComponent) {
   class _Base extends Component {
     handlePinButtonClick = e => {
@@ -30,9 +33,9 @@ export default function withPinnable(WrappedComponent) {
 
     render() {
       return (
-        <span onClick={ this.handlePinButtonClick }>
+        <div className={ styles.withPinnable } onClick={ this.handlePinButtonClick }>
           <WrappedComponent { ...this.props } />
-        </span>
+        </div>
       );
     }
   }
