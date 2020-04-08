@@ -6,7 +6,7 @@ import AutosaveTextareaInput from 'components/common/autosave-inputs/autosave-te
 
 
 describe('AutosaveTextareaInput component', function () {
-  it('should add resize event listener when componentDidMount', function () {
+  it('should add resize event listener and adjustTextareaHeight when componentDidMount', function () {
     const addEventListenerStub = stub(window, 'addEventListener');
     const adjustTextareaHeightSpy = spy(AutosaveTextareaInput.prototype, 'adjustTextareaHeight');
     const wrapper = mount(
@@ -16,6 +16,7 @@ describe('AutosaveTextareaInput component', function () {
       />
     );
     const instance = wrapper.instance();
+
     adjustTextareaHeightSpy.should.be.calledWith(instance.textarea);
     addEventListenerStub.should.be.calledWith('resize', instance.handleResize);
   });
@@ -27,36 +28,35 @@ describe('AutosaveTextareaInput component', function () {
       <AutosaveTextareaInput
         textareaLineHeight={ 16 }
         fieldType='description'
-        save={ saveStub }
         onBlur={ onBlurStub }
+        save={ saveStub }
         value='value'
       />,
       { disableLifecycleMethods: true },
     );
-    const textarea = wrapper.find('textarea').first();
-    textarea.simulate('focus');
-    textarea.simulate('change', { target: { value: 'New Description' } });
-    textarea.simulate('blur');
+    const inputElement = wrapper.find('textarea');
+    inputElement.simulate('change', { target: { value: 'New Description' } });
+    inputElement.simulate('blur');
 
+    saveStub.should.be.calledOnce();
     saveStub.should.be.calledWith({ attr: 'description', value: 'New Description' });
     onBlurStub.should.be.called();
   });
 
   it('should trigger onChange on input change', function () {
+    const onChangeSpy = spy();
     const wrapper = shallow(
       <AutosaveTextareaInput
         textareaLineHeight={ 16 }
+        onChange={ onChangeSpy }
         fieldType='description'
-        value='value'
       />,
       { disableLifecycleMethods: true },
     );
-    const textarea = wrapper.find('textarea');
-    textarea.simulate('focus');
-    textarea.simulate('change', { target: { value: 'New value' } });
-
-    const instance = wrapper.instance();
-    instance.state.currentValue.should.equal('New value');
+    const inputElement = wrapper.find('textarea');
+    inputElement.simulate('change', { target: { value: 'value' } });
+    wrapper.state('currentValue').should.equal('value');
+    onChangeSpy.should.be.calledOnce();
   });
 
   it('should update number of rows when resize', function () {

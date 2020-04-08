@@ -964,7 +964,7 @@ describe('OfficerPage test', function () {
         this.officerPage.section.coaccusals.click('@firstPinButton');
         this.officerPage.waitForElementVisible('@lastToast');
         this.officerPage.expect.element('@lastToast').text.to.equal(
-          'Carl Suchocki added to pinboard'
+          'Carl Suchocki added to pinboard\nGo to pinboard'
         ).before(TIMEOUT);
 
         this.officerPage.click('@landingPageBreadCrumb');
@@ -977,7 +977,7 @@ describe('OfficerPage test', function () {
         this.officerPage.section.coaccusals.click('@firstPinButton');
         this.officerPage.waitForElementVisible('@lastToast');
         this.officerPage.expect.element('@lastToast').text.to.equal(
-          'Carl Suchocki removed from pinboard'
+          'Carl Suchocki removed from pinboard\nGo to pinboard'
         ).before(TIMEOUT);
 
         this.officerPage.click('@landingPageBreadCrumb');
@@ -1008,7 +1008,7 @@ describe('OfficerPage test', function () {
 
         this.officerPage.click('@pinButton');
         this.officerPage.expect.element('@lastToast').text.to.equal(
-          'Kevin Osborn added to pinboard'
+          'Kevin Osborn added to pinboard\nGo to pinboard'
         ).before(TIMEOUT);
 
         this.officerPage.click('@landingPageBreadCrumb');
@@ -1021,7 +1021,7 @@ describe('OfficerPage test', function () {
         this.officerPage.click('@pinButton');
         this.officerPage.waitForElementVisible('@lastToast');
         this.officerPage.expect.element('@lastToast').text.to.equal(
-          'Kevin Osborn removed from pinboard'
+          'Kevin Osborn removed from pinboard\nGo to pinboard'
         ).before(TIMEOUT);
 
         this.officerPage.click('@landingPageBreadCrumb');
