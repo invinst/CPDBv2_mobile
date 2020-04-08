@@ -10,6 +10,7 @@ const {
   mockComplaintSummaries,
 } = require(__dirname + '/../mock-data/main-page');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
+const { enablePinboardButtonIntroduction } = require(__dirname + '/../utils');
 
 
 describe('MainPageTest', function () {
@@ -24,6 +25,7 @@ describe('MainPageTest', function () {
 
     this.mainPage = client.page.main();
     this.search = client.page.search();
+    this.pinboardPage = client.page.pinboardPage();
     this.mainPage.navigate();
     this.mainPage.expect.element('@body').to.be.present;
     done();
@@ -181,7 +183,9 @@ describe('MainPageTest', function () {
         //Go to Search Page and check for pinboard item counts
         this.mainPage.waitForElementNotVisible('@lastToast', TIMEOUT);
         this.mainPage.click('@searchLink');
-        this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
+
+        this.search.waitForElementPresent('@queryInput');
+        this.search.waitForElementNotPresent('@pinboardBar', TIMEOUT);
         client.back();
       };
 
@@ -197,5 +201,41 @@ describe('MainPageTest', function () {
     page.waitForElementPresent('@clickyScript');
     page.waitForElementPresent('@clickySiteIdsScript');
     page.waitForElementPresent('@clickyNoJavascriptGIF');
+  });
+
+  describe('Pinboard Introduction', function () {
+    beforeEach(function (client, done) {
+      enablePinboardButtonIntroduction(client);
+      this.mainPage.section.pinboardButtonIntroduction.waitForElementPresent('@introductionContent');
+      done();
+    });
+
+    it('should display Pinboard introduction on first visited', function (client) {
+      this.mainPage.section.pinboardButtonIntroduction.waitForElementPresent('@introductionContent');
+    });
+
+    it('should not display Pinboard introduction after click dismiss', function (client) {
+      this.mainPage.section.pinboardButtonIntroduction.click('@dismissButton');
+      this.mainPage.section.pinboardButtonIntroduction.waitForElementNotPresent('@introductionContent');
+      client.refresh();
+      this.mainPage.waitForElementPresent('@body');
+      this.mainPage.section.pinboardButtonIntroduction.waitForElementNotPresent('@introductionContent');
+    });
+
+    it('should not display Pinboard introduction after click try it', function (client) {
+      this.mainPage.section.pinboardButtonIntroduction.click('@tryItButton');
+      this.pinboardPage.waitForElementPresent('@searchBar');
+      this.mainPage.navigate();
+      this.mainPage.waitForElementPresent('@body');
+      this.mainPage.section.pinboardButtonIntroduction.waitForElementNotPresent('@introductionContent');
+    });
+
+    it('should not display Pinboard introduction after click Pinboard button', function (client) {
+      this.mainPage.section.pinboardButtonIntroduction.click('@pinboardButton');
+      this.pinboardPage.waitForElementPresent('@searchBar');
+      this.mainPage.navigate();
+      this.mainPage.waitForElementPresent('@body');
+      this.mainPage.section.pinboardButtonIntroduction.waitForElementNotPresent('@introductionContent');
+    });
   });
 });

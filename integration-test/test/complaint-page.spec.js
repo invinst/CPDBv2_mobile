@@ -264,7 +264,8 @@ describe('ComplaintPageTest', function () {
       this.complaintPage.click('@landingPageBreadCrumb');
       this.main.waitForElementVisible('@searchLink');
       this.main.click('@searchLink');
-      this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
+      this.search.waitForElementPresent('@queryInput');
+      this.search.waitForElementNotPresent('@pinboardBar', TIMEOUT);
     });
 
     it('should display toast when pinning current complaint', function (client) {
@@ -307,7 +308,8 @@ describe('ComplaintPageTest', function () {
       this.complaintPage.click('@landingPageBreadCrumb');
       this.main.waitForElementVisible('@searchLink');
       this.main.click('@searchLink');
-      this.search.expect.element('@pinboardBar').text.to.equal('Your pinboard is empty').before(TIMEOUT);
+      this.search.waitForElementPresent('@queryInput');
+      this.search.waitForElementNotPresent('@pinboardBar');
     });
   });
 
