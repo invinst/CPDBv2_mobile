@@ -40,7 +40,9 @@ describe('<SearchPage />', function () {
       { disableLifecycleMethods: true },
     );
 
-    wrapper.find('.bt-cancel').simulate('click', { preventDefault: noop });
+    const closeButton = wrapper.find('.bt-close');
+    closeButton.text().should.eql('Close');
+    closeButton.simulate('click', { preventDefault: noop });
 
     browserHistoryPush.should.be.calledOnce();
     browserHistoryPush.should.be.calledWith('/pinboard/123abc/');

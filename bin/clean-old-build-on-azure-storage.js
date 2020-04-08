@@ -38,7 +38,7 @@ const getListBlobs = () => {
 
 getListBlobs().then((blobs) => {
   if (!blobs) {
-    console.log('No blob found.');
+    console.info('No blob found.');
   }
 
   const filteredBlobs = _.filter(
@@ -66,12 +66,12 @@ getListBlobs().then((blobs) => {
   );
 
   for (let blob of oldBuiltBlobs) {
-    console.log(`Deleting blob: ${blob.name}`);
+    console.info(`Deleting blob: ${blob.name}`);
     blobService.deleteBlobIfExistsAsync(container, blob.name).then((isSuccess) => {
       if (isSuccess) {
-        console.log(`..Done deleting: ${blob.name}`);
+        console.info(`..Done deleting: ${blob.name}`);
       } else {
-        console.log(`..ERROR on deleting: ${blob.name}`);
+        console.error(`..ERROR on deleting: ${blob.name}`);
       }
     });
   }

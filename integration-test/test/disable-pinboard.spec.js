@@ -658,7 +658,7 @@ describe('Disable pinboard feature', function () {
 
       this.searchPage = client.page.search();
       this.searchPage.navigate(this.searchPage.url());
-      this.searchPage.waitForElementVisible('@cancelButton');
+      this.searchPage.waitForElementVisible('@closeButton');
       done();
     });
 

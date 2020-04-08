@@ -8,6 +8,7 @@
     color: $thunder-color
     border: none
     outline: none
+    padding: 0
 
   .pinboard-title
     resize: none
@@ -19,6 +20,7 @@
 
   .pinboard-description
     resize: none
+    font-weight: 300
     width: 100%
     font-size: 14px
     margin-bottom: 40px
@@ -28,7 +30,14 @@
     overflow: auto
     word-wrap: break-word
     white-space: pre-line
-    padding: 2px
 
-    p
-      font-family: system-ui
+  .pinboard-description-placeholder
+    &::after
+      position: absolute
+      top: 0
+      font-size: 14px
+      line-height: 16px
+      font-weight: 300
+      color: $boulder-color
+      content: attr(data-placeholder)
+      z-index: -1

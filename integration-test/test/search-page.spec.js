@@ -483,8 +483,8 @@ describe('SearchPageTest', function () {
     it('should go back to landing page', function (client) {
       const mainPage = client.page.main();
 
-      this.searchPage.waitForElementVisible('@cancelButton');
-      this.searchPage.click('@cancelButton');
+      this.searchPage.waitForElementVisible('@closeButton');
+      this.searchPage.click('@closeButton');
 
       client.assert.urlEquals(mainPage.url());
     });
@@ -498,8 +498,8 @@ describe('SearchPageTest', function () {
       pinboardPage.waitForElementVisible('@searchBar');
       pinboardPage.click('@searchBar');
 
-      this.searchPage.waitForElementVisible('@cancelButton');
-      this.searchPage.click('@cancelButton');
+      this.searchPage.waitForElementVisible('@closeButton');
+      this.searchPage.click('@closeButton');
 
       client.assert.urlEquals(pinboardUrl);
     });
@@ -515,9 +515,9 @@ describe('SearchPageTest', function () {
       client.assert.urlContains('/officer/8562/jerome-finnigan/');
       officerPage.click('@searchBreadcrumb');
 
-      this.searchPage.waitForElementVisible('@cancelButton');
+      this.searchPage.waitForElementVisible('@closeButton');
       client.assert.urlContains('/search/');
-      this.searchPage.click('@cancelButton');
+      this.searchPage.click('@closeButton');
 
       client.assert.urlContains('/officer/8562/jerome-finnigan/');
     });
@@ -835,12 +835,12 @@ describe('SearchPageTest', function () {
       const investigatorCRs = this.searchPage.section.investigatorCRs;
       investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
 
       this.searchPage.waitForElementNotVisible('@toast', TIMEOUT);
       investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 removed from pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 removed from pinboard\nGo to pinboard');
     });
   });
 
@@ -865,7 +865,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
@@ -891,7 +891,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
@@ -914,7 +914,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
@@ -944,7 +944,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
@@ -976,7 +976,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
@@ -1004,7 +1004,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
       this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
-      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard');
+      this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard\nGo to pinboard');
 
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');

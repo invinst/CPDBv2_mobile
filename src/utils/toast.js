@@ -2,7 +2,6 @@ import React from 'react';
 import pluralize from 'pluralize';
 import { get, identity, filter, keys } from 'lodash';
 import cx from 'classnames';
-import ReactMarkdown from 'react-markdown';
 
 import browserHistory from 'utils/history';
 import { PINBOARD_PATH } from 'constants/paths';
@@ -10,7 +9,9 @@ import { Toastify } from 'utils/toastify';
 import toastStyles from './toast.sass';
 import { generatePinboardUrl } from 'utils/pinboard';
 import { getToasts } from 'selectors/toast';
-import MarkdownLink from 'components/common/markdown-renderers/markdown-link';
+import PinboardToast from 'components/common/toast/pinboard-toast';
+import pinboardToastStyles from 'components/common/toast/pinboard-toast.sass';
+
 
 function formatMessage(foundIds, notFoundIds, itemType) {
   let message = '';
@@ -144,9 +145,8 @@ export function showAddOrRemoveItemToast(store, payload) {
   const toastTemplate = getToastTemplate(toasts, type);
   const toastMessage = buildToastMessage(toastTemplate, payload);
 
-  Toastify.toast(<ReactMarkdown source={ toastMessage } renderers={ { link: MarkdownLink } } />, {
-    className: cx(toastStyles.toastWrapper, isPinned ? 'removed' : 'added'),
-    bodyClassName: 'toast-body',
+  Toastify.toast(<PinboardToast toastMessage={ toastMessage } />, {
+    className: cx(pinboardToastStyles.pinboardToast, isPinned ? 'removed' : 'added'),
     transition: TopRightTransition,
     onClick: () => browserHistory.push(url),
   });

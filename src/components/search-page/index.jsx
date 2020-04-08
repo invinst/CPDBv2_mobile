@@ -163,9 +163,9 @@ export default class SearchPage extends Component {
             />
 
             <button
-              className={ cx('bt-cancel', { 'active': query !== '' } ) }
+              className={ cx('bt-close', { 'active': query !== '' } ) }
               onClick={ this.handleGoBack }>
-              Cancel
+              Close
             </button>
           </div>
 
