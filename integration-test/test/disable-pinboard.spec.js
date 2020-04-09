@@ -8,6 +8,11 @@ const {
   mockNewDocuments,
   mockComplaintSummaries,
 } = require(__dirname + '/../mock-data/main-page');
+const {
+  enablePinboardButtonIntroduction,
+  enablePinboardIntroduction,
+  enablePinButtonIntroduction,
+} = require(__dirname + '/../utils');
 
 const officer2235 = {
   'officer_id': 2235,
@@ -628,6 +633,12 @@ describe('Disable pinboard feature', function () {
       newDocumentAllegationsCards.waitForElementVisible('@firstCard');
       newDocumentAllegationsCards.expect.element('@pinButton').to.not.be.visible;
     });
+
+    it('should not display pinboard button introduction', function (client) {
+      enablePinboardButtonIntroduction(client);
+      this.mainPage.waitForElementVisible('@searchLink');
+      this.mainPage.section.pinboardButtonIntroduction.expect.element('@introductionContent').to.not.be.present;
+    });
   });
 
   describe('Search page', function () {
@@ -698,6 +709,21 @@ describe('Disable pinboard feature', function () {
       recentItems.section.firstRecentItem.expect.element('@pinButton').to.not.be.visible;
       recentItems.section.secondRecentItem.expect.element('@pinButton').to.not.be.visible;
       recentItems.section.thirdRecentItem.expect.element('@pinButton').to.not.be.visible;
+    });
+
+    it('should not display pinboard introduction', function (client) {
+      enablePinboardIntroduction(client);
+      this.searchPage.waitForElementVisible('@queryInput');
+      this.searchPage.section.pinboardIntroduction.expect.element('@content').to.not.be.present;
+    });
+
+    it('should not display PinButton introduction', function (client) {
+      enablePinButtonIntroduction(client);
+      this.searchPage.waitForElementVisible('@queryInput');
+      this.searchPage.setValue('@queryInput', '123');
+      const firstOfficerRow = this.searchPage.section.officers.section.firstRow;
+      firstOfficerRow.waitForElementVisible('@itemTitle');
+      firstOfficerRow.expect.element('@pinButtonIntroduction').to.not.be.present;
     });
   });
 

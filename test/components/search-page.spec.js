@@ -1,9 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { spy, stub } from 'sinon';
-import ReactHeight from 'react-height';
 import { noop } from 'lodash';
-import { Promise } from 'es6-promise';
 
 import browserHistory from 'utils/history';
 import * as NavigationUtil from 'utils/navigation-util';
@@ -24,6 +22,14 @@ describe('<SearchPage />', function () {
       { disableLifecycleMethods: true },
     );
     wrapper.should.be.ok();
+  });
+
+  it('should render PInboardIntroduction', function () {
+    const wrapper = shallow(
+      <SearchPage />,
+      { disableLifecycleMethods: true },
+    );
+    wrapper.find('PinboardIntroduction').exists().should.be.true();
   });
 
   it('should call browserHistory.push when user click on back button', function () {
@@ -345,12 +351,7 @@ describe('<SearchPage />', function () {
       const categoryDetails = wrapper.find('.category-details-container').children();
 
       categoryDetails.length.should.eql(2);
-      categoryDetails.at(0).childAt(0).type().should.be.eql(SearchCategory);
-
-      // Last component should be wrapped inside ReactHeight:
-      const lastCategory = categoryDetails.at(1);
-      lastCategory.type().should.be.eql(ReactHeight);
-      lastCategory.prop('onHeightReady').should.be.eql(wrapper.instance().updateLastCategoryHeight);
+      categoryDetails.at(0).type().should.be.eql(SearchCategory);
     });
 
     it('should pass correct props to SearchCategory', function () {
@@ -571,25 +572,17 @@ describe('<SearchPage />', function () {
     });
   });
 
-  it('should handle when click on pinboard button if pinboard does not exist', function (done) {
-    const createPinboard = stub().usingPromise(Promise).resolves({
-      payload: {
-        id: '5cd06f2b',
-        url: '/pinboard/5cd06f2b/',
-      },
+  context('pinboard is empty', function () {
+    it('should not render PinboardBar', function () {
+      const wrapper = mount(<SearchPage pinboard={ { itemsCount: 0 } } />);
+      wrapper.find('PinboardBar').exists().should.be.false();
     });
+  });
 
-    const wrapper = mount(
-      <SearchPage createPinboard={ createPinboard }/>
-    );
-
-    const browserHistoryPush = stub(browserHistory, 'push');
-    const pinboardButton = wrapper.find('.test--pinboard-bar');
-    pinboardButton.simulate('click');
-    createPinboard.calledWith({ officerIds: [], trrIds: [], crids: [] }).should.be.true();
-    setTimeout(() => {
-      browserHistoryPush.called.should.be.true();
-      done();
-    }, 50);
+  context('pinboard is not empty', function () {
+    it('should render PinboardBar', function () {
+      const wrapper = mount(<SearchPage pinboard={ { itemsCount: 1 } } />);
+      wrapper.find('PinboardBar').exists().should.be.true();
+    });
   });
 });

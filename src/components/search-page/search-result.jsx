@@ -43,6 +43,7 @@ const SearchResult = (
             key={ `${itemType}-${item.id}` }
             item={ item }
             query={ query }
+            showIntroduction={ item.showIntroduction }
             saveToRecent={ saveToRecent }
             addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
           />

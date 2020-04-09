@@ -11,6 +11,7 @@ const CrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
       url={ item.url }
       hasPinButton={ true }
       addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+      showIntroduction={ item.showIntroduction }
       id={ item.crid }
       itemRank={ item.itemRank }
       query={ query }
@@ -37,10 +38,12 @@ CrItem.propTypes = {
     isPinned: PropTypes.bool,
     type: PropTypes.string,
     recentItemData: PropTypes.object,
+    showIntroduction: PropTypes.bool,
   }),
   saveToRecent: PropTypes.func,
   addOrRemoveItemInPinboard: PropTypes.func,
   query: PropTypes.string,
+  showIntroduction: PropTypes.bool,
 };
 
 CrItem.defaultProps = {
