@@ -4,9 +4,22 @@ import cx from 'classnames';
 import browserHistory from 'utils/history';
 import { isPinboardButtonIntroductionVisited, setPinboardButtonIntroductionVisited } from 'utils/pinboard';
 import styles from './pinboard-button.sass';
+import { PINBOARD_INTRODUCTION_DELAY } from 'constants';
 
 
 export default class PinboardButton extends Component {
+  state = { displayIntroduction: false };
+
+  componentDidMount() {
+    this.displayIntroductionTimeout = setTimeout(() => {
+      this.setState({ displayIntroduction: true });
+    }, PINBOARD_INTRODUCTION_DELAY);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.displayIntroductionTimeout);
+  }
+
   onClick = (e) => {
     e && e.stopPropagation();
     setPinboardButtonIntroductionVisited();
@@ -19,7 +32,8 @@ export default class PinboardButton extends Component {
   };
 
   render() {
-    const showIntroduction = !isPinboardButtonIntroductionVisited();
+    const { displayIntroduction } = this.state;
+    const showIntroduction = !isPinboardButtonIntroductionVisited() && displayIntroduction;
     return (
       <div className={ cx(styles.pinboardButton, 'pinboard-feature' ) }>
         <div
