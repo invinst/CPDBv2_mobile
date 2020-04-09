@@ -19,16 +19,4 @@ describe('<PlusButton />', function () {
     wrapper.simulate('click', { preventDefault: () => {} });
     onClickStub.should.be.calledOnce();
   });
-
-  it('should have dark mode', function () {
-    const onClickStub = spy();
-    const wrapper = shallow(
-      <PlusButton
-        className='custom-class-name'
-        onClick={ onClickStub }
-        darkMode={ true }
-      />
-    );
-    wrapper.prop('className').should.containEql('dark-mode');
-  });
 });
