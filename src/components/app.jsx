@@ -5,11 +5,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
 import 'react-toastify/dist/ReactToastify.css';
 
-import config from 'config';
 import style from './app.sass';
 import 'styles/toast.sass';
 import { getPageRoot } from 'utils/url-util';
 import RouterRoot from 'components/router-root';
+import { isPinboardFeatureEnabled } from 'utils/pinboard';
 
 toast.configure();
 Modal.setAppElement('body');
@@ -29,10 +29,9 @@ class App extends Component {
 
   render() {
     const { location } = this.props;
-    const { pinboard: enablePinboardFeature } = config.enableFeatures;
 
     return (
-      <div className={ cx('content', style.app, { 'pinboard-disabled': !enablePinboardFeature }) }>
+      <div className={ cx('content', style.app, { 'pinboard-disabled': !isPinboardFeatureEnabled() }) }>
         <RouterRoot location={ location }/>
         <ToastContainer
           pauseOnFocusLoss={ false }

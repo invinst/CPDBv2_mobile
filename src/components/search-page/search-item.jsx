@@ -23,6 +23,7 @@ export default class SearchItem extends Component {
     const {
       url, hasPinButton, addOrRemoveItemInPinboard,
       id, isPinned, type, className, children, extraInfo,
+      showIntroduction,
     } = this.props;
 
     return (
@@ -35,6 +36,7 @@ export default class SearchItem extends Component {
           hasPinButton &&
           <ItemPinButton
             addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+            showIntroduction={ showIntroduction }
             id={ id }
             isPinned={ isPinned }
             type={ type }
@@ -68,6 +70,7 @@ SearchItem.propTypes = {
   query: PropTypes.string,
   itemRank: PropTypes.number,
   extraInfo: PropTypes.object,
+  showIntroduction: PropTypes.bool,
 };
 
 SearchItem.defaultProps = {

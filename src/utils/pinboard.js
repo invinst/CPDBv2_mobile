@@ -16,6 +16,8 @@ import {
 } from 'actions/pinboard';
 import loadPaginatedData from 'utils/load-paginated-data';
 import { PINBOARD_PATH } from 'constants/paths';
+import config from 'config';
+import { PINBOARD_INTRODUCTION } from 'constants';
 
 
 export const generatePinboardUrl = pinboard => {
@@ -66,3 +68,18 @@ export const getRequestPinboard = pinboard => ({
   trrIds: map(get(pinboard, 'trr_ids', []), id => (id.toString())),
   description: get(pinboard, 'description', ''),
 });
+
+export const isPinboardFeatureEnabled = () => get(config, 'enableFeatures.pinboard', true);
+
+const getIsVisited = (key) => isPinboardFeatureEnabled() ? localStorage.getItem(key) === '1' : true;
+const setIsVisited = (key) => isPinboardFeatureEnabled() && localStorage.setItem(key, '1');
+export const isPinboardButtonIntroductionVisited = () => getIsVisited(
+  PINBOARD_INTRODUCTION.PINBOARD_BUTTON_INTRODUCTION
+);
+export const setPinboardButtonIntroductionVisited = () => setIsVisited(
+  PINBOARD_INTRODUCTION.PINBOARD_BUTTON_INTRODUCTION
+);
+export const isPinboardIntroductionVisited = () => getIsVisited(PINBOARD_INTRODUCTION.PINBOARD_INTRODUCTION);
+export const setPinboardIntroductionVisited = () => setIsVisited(PINBOARD_INTRODUCTION.PINBOARD_INTRODUCTION);
+export const isPinButtonIntroductionVisited = () => getIsVisited(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
+export const setPinButtonIntroductionVisited = () => setIsVisited(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);

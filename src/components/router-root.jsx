@@ -9,7 +9,6 @@ import 'styles/fonts.sass';
 import 'styles/style.sass';
 import 'styles/helper.sass';
 
-import config from 'config';
 import SearchPageContainer from 'containers/search-page-container';
 import OfficerPageContainer from 'containers/officer-page-container';
 import ComplaintPageContainer from 'containers/complaint-page-container';
@@ -30,10 +29,11 @@ import {
   EMBED_TOP_OFFICER_ROUTER_PATH,
   EMBED_OFFICERS_ROUTER_PATH,
 } from 'constants/paths';
+import { isPinboardFeatureEnabled } from 'utils/pinboard';
 
 
 export default function RouterRoot(props) {
-  const { pinboard: enablePinboardFeature } = config.enableFeatures;
+  const enablePinboardFeature = isPinboardFeatureEnabled();
   const { location } = props;
 
   return (

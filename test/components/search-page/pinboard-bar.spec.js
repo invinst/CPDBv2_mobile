@@ -18,15 +18,6 @@ describe('<PinboardBar />', function () {
     should(wrapper.getElement()).be.null();
   });
 
-  it('should render "Your pinboard is empty" if pinboard is empty', function () {
-    const wrapper = shallow(
-      <PinboardBar />
-    );
-
-    wrapper.prop('className').should.containEql('pinboard-feature');
-    wrapper.text().should.equal('Your pinboard is empty');
-  });
-
   it('should render Pinboard ($count) if pinboard is not empty', function () {
     const wrapper = shallow(
       <PinboardBar pinboard={ {
