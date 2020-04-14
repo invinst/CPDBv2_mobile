@@ -11,11 +11,11 @@ import TrrItem from 'components/search-page/trr-item';
 
 
 describe('SearchResult />', function () {
-  it('should render InfiniteScroll with correct props', function () {
+  it('should render correctly', function () {
     const spyGetSuggestionWithContentType = spy();
     const wrapper = mountWithRouter(
       <SearchResult
-        items={ [{ id: 1 }] }
+        items={ [{ id: 1, showIntroduction: true }, { id: 2, showIntroduction: false }] }
         itemType='officers'
         query='qa'
         getSuggestionWithContentType={ spyGetSuggestionWithContentType }
@@ -28,6 +28,11 @@ describe('SearchResult />', function () {
         hasMore={ true }
       />
     );
+    const itemPinButton = wrapper.find('ItemPinButton');
+    itemPinButton.length.should.equal(2);
+    itemPinButton.at(0).prop('showIntroduction').should.be.true();
+    itemPinButton.at(1).prop('showIntroduction').should.be.false();
+
     const infiniteScroll = wrapper.find(InfiniteScroll);
     infiniteScroll.prop('initialLoad').should.be.true();
     infiniteScroll.prop('hasMore').should.be.true();

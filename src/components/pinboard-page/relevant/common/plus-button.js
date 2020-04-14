@@ -12,9 +12,9 @@ export class PlusButton extends Component {
   };
 
   render() {
-    const { className, darkMode } = this.props;
+    const { className } = this.props;
     return (
-      <div className={ cx(styles.plusButton, className, { 'dark-mode': darkMode }) } onClick={ this.handleClick } />
+      <div className={ cx(styles.plusButton, className) } onClick={ this.handleClick } />
     );
   }
 }
@@ -22,11 +22,6 @@ export class PlusButton extends Component {
 PlusButton.propTypes = {
   onClick: PropTypes.func,
   className: PropTypes.string,
-  darkMode: PropTypes.bool,
-};
-
-PlusButton.defaultProps = {
-  darkMode: false,
 };
 
 export default PlusButton;

@@ -53,6 +53,18 @@ module.exports = {
         understandButton: '.confirm-button',
       },
     },
+    pinboardButtonIntroduction: {
+      selector: '.pinboard-button-introduction',
+      elements: {
+        introductionContent: '.pinboard-button-introduction-content',
+        dismissButton: '.dismiss-btn',
+        tryItButton: '.try-it-btn',
+        pinboardButton: {
+          selector: '//div[contains(@class, "header-links")]//div[contains(@class, "pinboard-button")]',
+          locateStrategy: 'xpath',
+        },
+      },
+    },
     topOfficersByAllegation: baseCarouselSection(
       '//div[contains(@class, "carousel-wrapper__carousel-wrapper") ' +
         'and contains(.//a/@class, "base-officer-card__base-officer-card")][1]',

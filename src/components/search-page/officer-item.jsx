@@ -14,6 +14,7 @@ const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) =
       url={ item.url }
       hasPinButton={ true }
       addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
+      showIntroduction={ item.showIntroduction }
       id={ item.id }
       query={ query }
       itemRank={ item.itemRank }
@@ -41,10 +42,12 @@ OfficerItem.propTypes = {
     isPinned: PropTypes.bool,
     type: PropTypes.string,
     recentItemData: PropTypes.object,
+    showIntroduction: PropTypes.bool,
   }),
   saveToRecent: PropTypes.func,
   addOrRemoveItemInPinboard: PropTypes.func,
   query: PropTypes.string,
+  showIntroduction: PropTypes.bool,
 };
 
 OfficerItem.defaultProps = {

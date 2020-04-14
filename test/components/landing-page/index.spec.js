@@ -30,6 +30,11 @@ describe('<LandingPage />', function () {
     searchBar.prop('to').should.eql(SEARCH_PATH);
   });
 
+  it('should render HeaderLinks', function () {
+    const wrapper = shallow(<LandingPage />);
+    wrapper.find('HeaderLinks').exists().should.be.true();
+  });
+
   it('should request landing page data', function () {
     const store = configureStore()({
       landingPage: {

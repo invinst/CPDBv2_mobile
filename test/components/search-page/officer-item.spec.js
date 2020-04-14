@@ -25,6 +25,7 @@ describe('<OfficerItem />', function () {
       url: '/officer/123456/jerome-finnigan/',
       recentItemData: recentItemData,
       itemRank: 3,
+      showIntroduction: true,
     };
 
     const wrapper = mountWithRouter(
@@ -49,6 +50,7 @@ describe('<OfficerItem />', function () {
     searchItem.prop('type').should.equal('OFFICER');
     searchItem.prop('itemRank').should.equal(3);
     searchItem.prop('query').should.equal('Le');
+    searchItem.prop('showIntroduction').should.be.true();
     searchItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
     searchItem.prop('recentItemData').should.eql(recentItemData);
     searchItem.prop('saveToRecent').should.eql(saveToRecentSpy);

@@ -27,6 +27,7 @@ describe('<CrItem />', function () {
       type: 'CR',
       recentItemData: recentItemData,
       itemRank: 2,
+      showIntroduction: true,
     };
 
     const wrapper = mountWithRouter(
@@ -50,6 +51,7 @@ describe('<CrItem />', function () {
     searchItem.prop('query').should.equal('Ke');
     searchItem.prop('type').should.equal('CR');
     searchItem.prop('itemRank').should.equal(2);
+    searchItem.prop('showIntroduction').should.be.true();
     searchItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
     searchItem.prop('recentItemData').should.eql(recentItemData);
     searchItem.prop('saveToRecent').should.eql(saveToRecentSpy);

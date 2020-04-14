@@ -12,6 +12,7 @@ import NewDocumentAllegations from 'containers/landing-page/new-document-allegat
 import ComplaintSummaries from 'containers/landing-page/complaint-summaries';
 import style from './landing-page.sass';
 import Footer from 'components/footer';
+import HeaderLinks from './header-links';
 
 
 export default class LandingPage extends Component {
@@ -38,6 +39,7 @@ export default class LandingPage extends Component {
             <Link className='search-bar' to={ SEARCH_PATH }>
               <img src='/img/ic-magnifying-glass.svg' />Officer name, badge number or date
             </Link>
+            <HeaderLinks />
           </div>
           <TopOfficersByAllegation />
           <RecentActivities />

@@ -23,6 +23,7 @@ describe('<SearchItem />', function () {
         type='OFFICER'
         hasPinButton={ true }
         isPinned={ true }
+        showIntroduction={ true }
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
       />
     );
@@ -31,6 +32,7 @@ describe('<SearchItem />', function () {
     itemPinButton.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboard);
     itemPinButton.prop('id').should.equal('213');
     itemPinButton.prop('isPinned').should.be.true();
+    itemPinButton.prop('showIntroduction').should.be.true();
     itemPinButton.prop('type').should.equal('OFFICER');
     itemPinButton.prop('item').should.eql({
       type: 'OFFICER',

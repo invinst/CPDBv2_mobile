@@ -21,6 +21,7 @@ describe('<TrrItem />', function () {
       url: '/trr/123456/',
       recentItemData: recentItemData,
       itemRank: 3,
+      showIntroduction: true,
     };
     const wrapper = mountWithRouter(
       <TrrItem
@@ -44,6 +45,7 @@ describe('<TrrItem />', function () {
     searchItem.prop('type').should.equal('TRR');
     searchItem.prop('itemRank').should.equal(3);
     searchItem.prop('query').should.equal('Ke');
+    searchItem.prop('showIntroduction').should.be.true();
     searchItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
     searchItem.prop('recentItemData').should.eql(recentItemData);
     searchItem.prop('saveToRecent').should.eql(saveToRecentSpy);
