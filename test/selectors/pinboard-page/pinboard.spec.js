@@ -9,7 +9,6 @@ import {
   hasPendingChangesSelector,
   pinboardPinnedItemsMapping,
   pinboardPinnedItemsTransform,
-  hasPendingChangesSelector,
 } from 'selectors/pinboard-page/pinboard';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 import constants from 'constants';

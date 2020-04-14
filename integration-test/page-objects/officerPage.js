@@ -105,6 +105,19 @@ const nthRankChangeSection = (n) => {
 
 const nthBreadcrumb = n => `//*[contains(@class, "breadcrumb-item")][${n}]`;
 
+const nthMenuItemTitle = (n) => ({
+  selector: `(//div[@class="pinboard-title"])[${n}]`,
+  locateStrategy: 'xpath',
+});
+const nthMenuItemCreatedAt = (n) => ({
+  selector: `(//div[@class="pinboard-created-at"])[${n}]`,
+  locateStrategy: 'xpath',
+});
+const nthPinButton = (n) => ({
+  selector: `(//div[@class="pin-button"])[${n}]`,
+  locateStrategy: 'xpath',
+});
+
 module.exports = {
   url: function (id, tab = '') {
     const tabSuffix = tab ? `${tab}/` : '';
@@ -116,6 +129,10 @@ module.exports = {
     officerName: '.officer-name',
     pinButton: {
       selector: '//div[contains(@class, "with-header__header")]//div[contains(@class, "item-pin-button")]',
+      locateStrategy: 'xpath',
+    },
+    addToPinboardButton: {
+      selector: '//div[contains(@class, "right-buttons")]//div',
       locateStrategy: 'xpath',
     },
     timelineTabButton: {
@@ -332,6 +349,26 @@ module.exports = {
             },
           },
         },
+      },
+    },
+    pinboardsMenu: {
+      selector: '//div[contains(@class, "pinboards-menu")]',
+      locateStrategy: 'xpath',
+      elements: {
+        items: {
+          selector: '//div[contains(@class, "pinboard-item")]',
+          locateStrategy: 'xpath',
+        },
+        firstItemTitle: nthMenuItemTitle(1),
+        firstItemCreatedAt: nthMenuItemCreatedAt(1),
+        firstItemPinButton: nthPinButton(1),
+        secondItemTitle: nthMenuItemTitle(2),
+        secondItemCreatedAt: nthMenuItemCreatedAt(2),
+        secondItemPinButton: nthPinButton(2),
+        thirdItemTitle: nthMenuItemTitle(3),
+        thirdItemCreatedAt: nthMenuItemCreatedAt(3),
+        thirdItemPinButton: nthPinButton(3),
+        createPinboardWithSelectionButton: '.add-to-new-pinboard',
       },
     },
   },
