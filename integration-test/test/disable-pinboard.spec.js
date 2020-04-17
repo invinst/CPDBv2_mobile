@@ -695,14 +695,15 @@ describe('Disable pinboard feature', function () {
       this.searchPage.section.officers.section.firstRow.click('@itemTitle');
 
       this.searchPage.click('@searchBreadcrumb');
-      this.searchPage.setValue('@queryInput', '123');
       this.searchPage.section.crs.section.firstRow.click('@itemTitle');
 
       this.searchPage.click('@searchBreadcrumb');
-      this.searchPage.setValue('@queryInput', '123');
       this.searchPage.section.trrs.section.firstRow.click('@itemTitle');
 
       this.searchPage.click('@searchBreadcrumb');
+      this.searchPage.clearValue('@queryInput');
+      // Empty value doesn't trigger change -> Set short query to show recent
+      this.searchPage.setValue('@queryInput', '1');
       this.searchPage.expect.element('@recentHeader').to.be.present;
       let recentItems = this.searchPage.section.recent;
 

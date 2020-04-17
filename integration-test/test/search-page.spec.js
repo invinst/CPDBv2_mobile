@@ -441,14 +441,16 @@ describe('SearchPageTest', function () {
     this.searchPage.section.officers.section.firstRow.click('@itemTitle');
 
     this.searchPage.click('@searchBreadcrumb');
-    this.searchPage.setValue('@queryInput', '123');
     this.searchPage.section.crs.section.firstRow.click('@itemTitle');
 
     this.searchPage.click('@searchBreadcrumb');
-    this.searchPage.setValue('@queryInput', '123');
     this.searchPage.section.trrs.section.firstRow.click('@itemTitle');
 
     this.searchPage.click('@searchBreadcrumb');
+    this.searchPage.clearValue('@queryInput');
+    // Empty value doesn't trigger change -> Set short query to show recent
+    this.searchPage.setValue('@queryInput', '1');
+
     this.searchPage.expect.element('@recentHeader').to.be.present;
     let recentItems = this.searchPage.section.recent;
 
@@ -477,6 +479,38 @@ describe('SearchPageTest', function () {
     recentItems.section.secondRecentItem.expect.element('@itemSubtitle').text.to.equal('CRID 1002144 • 05/29/2010');
     recentItems.section.thirdRecentItem.expect.element('@itemTitle').text.to.equal('Jerome Finnigan');
     recentItems.section.thirdRecentItem.expect.element('@itemSubtitle').text.to.equal('Badge #123456');
+  });
+
+  it('should keep search results after coming back from other page', function () {
+    api.mock('GET', '/api/v2/mobile/officers/8562/', 200, officer8562);
+    const firstOfficerRow = this.searchPage.section.officers.section.firstRow;
+
+    this.searchPage.setValue('@queryInput', '123');
+
+    firstOfficerRow.waitForElementVisible('@itemTitle');
+    firstOfficerRow.expect.element('@itemTitle').text.to.equal('Jerome Finnigan');
+
+    this.searchPage.section.officers.section.firstRow.click('@itemTitle');
+    this.searchPage.click('@searchBreadcrumb');
+
+    this.searchPage.getValue('@queryInput', function (result) {
+      assert.equal(result.value, '123');
+    });
+    firstOfficerRow.waitForElementVisible('@itemTitle');
+    firstOfficerRow.expect.element('@itemTitle').text.to.equal('Jerome Finnigan');
+  });
+
+  it('should clear search results after coming back from landing page', function (client) {
+    const mainPage = client.page.main();
+
+    this.searchPage.setValue('@queryInput', '123');
+    this.searchPage.click('@closeButton');
+
+    mainPage.waitForElementVisible('@title');
+    mainPage.click('@searchLink');
+
+    this.searchPage.waitForElementVisible('@queryInput');
+    this.searchPage.expect.element('@queryInput').text.to.equal('');
   });
 
   describe('Cancel button', function () {
