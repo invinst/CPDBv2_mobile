@@ -2,7 +2,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: cpdbdev/cpdbv2_mobile:0.0.1
+      - image: cpdbdev/cpdbv2_mobile:0.0.2
 
     steps:
       - checkout
@@ -25,7 +25,7 @@ jobs:
 
   build:
     docker:
-      - image: cpdbdev/cpdbv2_mobile:0.0.1
+      - image: cpdbdev/cpdbv2_mobile:0.0.2
 
     steps:
       - checkout
@@ -70,7 +70,7 @@ jobs:
             sed -e "s/{{DESKTOP_SERVER_NAME}}/$DESKTOP_SERVER_NAME/" nginx.conf.template > nginx.conf
             docker build -t cpdbdev/mobile-frontend:latest .
             docker run --rm -d --name mobile-frontend cpdbdev/mobile-frontend:latest
-            docker run --rm -v $(pwd):/app -w /app --link mobile-frontend -e "MOBILE_DOMAIN=mobile-frontend" -e "DESKTOP_SERVER_NAME=$DESKTOP_SERVER_NAME" cpdbdev/cpdbv2_mobile:0.0.1 yarn test-nginx
+            docker run --rm -v $(pwd):/app -w /app --link mobile-frontend -e "MOBILE_DOMAIN=mobile-frontend" -e "DESKTOP_SERVER_NAME=$DESKTOP_SERVER_NAME" cpdbdev/cpdbv2_mobile:0.0.2 yarn test-nginx
 
   push_image:
     docker:
