@@ -1,6 +1,6 @@
 /*eslint no-console:0 */
 'use strict';
-require('core-js/fn/object/assign');
+require('core-js/stable');
 
 process.env.NODE_ENV = 'integration-test';
 
