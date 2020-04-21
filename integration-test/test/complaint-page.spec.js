@@ -265,7 +265,7 @@ describe('ComplaintPageTest', function () {
       this.main.waitForElementVisible('@searchLink');
       this.main.click('@searchLink');
       this.search.waitForElementPresent('@queryInput');
-      this.search.waitForElementNotPresent('@pinboardBar', TIMEOUT);
+      this.search.waitForElementNotVisible('@pinboardBar', TIMEOUT);
     });
 
     it('should display toast when pinning current complaint', function (client) {
@@ -309,7 +309,7 @@ describe('ComplaintPageTest', function () {
       this.main.waitForElementVisible('@searchLink');
       this.main.click('@searchLink');
       this.search.waitForElementPresent('@queryInput');
-      this.search.waitForElementNotPresent('@pinboardBar');
+      this.search.waitForElementNotVisible('@pinboardBar');
     });
   });
 

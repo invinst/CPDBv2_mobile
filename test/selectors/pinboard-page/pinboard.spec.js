@@ -6,7 +6,6 @@ import {
   examplePinboardsSelector,
   isItemPinned,
   pinboardPageLoadingSelector,
-  pinboardFeatureUsedSelector,
 } from 'selectors/pinboard-page/pinboard';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 
@@ -343,56 +342,6 @@ describe('Pinboard selectors', function () {
           pinnedItemsRequested: true,
         };
         pinboardPageLoadingSelector(state).should.be.false();
-      });
-    });
-  });
-
-  describe('pinboardFeatureUsedSelector', function () {
-    context('isPinboardRestored is false', function () {
-      context('PinnedItems.length = 0', function () {
-        it('shoud return false', function () {
-          const state = {
-            pinboardPage: {
-              pinboard: PinboardFactory.build({
-                id: '1234fds',
-                'officer_ids': [],
-                crids: [],
-                'trr_ids': [],
-                isPinboardRestored: false,
-              }),
-            },
-          };
-          pinboardFeatureUsedSelector(state).should.be.false();
-        });
-      });
-    });
-
-    context('isPinboardRestored is true', function () {
-      let state;
-      beforeEach(function () {
-        state = {
-          pinboardPage: {
-            pinboard: PinboardFactory.build({
-              id: '12379',
-              'officer_ids': [],
-              crids: [],
-              'trr_ids': [],
-              isPinboardRestored: true,
-            }),
-          },
-        };
-      });
-
-      context('PinnedItems.length > 0', function () {
-        it('should return true', function () {
-          state.pinboardPage.pinboard.crids = ['123'];
-          pinboardFeatureUsedSelector(state).should.be.true();
-        });
-      });
-      context('PinnedItems.length = 0', function () {
-        it('should return false', function () {
-          pinboardFeatureUsedSelector(state).should.be.false();
-        });
       });
     });
   });

@@ -1,12 +1,14 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Router, Route, Link } from 'react-router-dom';
-import { spy, stub } from 'sinon';
+import { spy, stub, useFakeTimers } from 'sinon';
 import { createBrowserHistory } from 'history';
 
 import SearchItem from 'components/search-page/search-item';
 import ItemPinButton from 'components/common/item-pin-button';
 import * as tracking from 'utils/tracking';
+import { PINBOARD_INTRODUCTION, PINBOARD_INTRODUCTION_DELAY } from 'constants';
+import * as pinboardUtils from 'utils/pinboard';
 
 
 describe('<SearchItem />', function () {
@@ -16,6 +18,8 @@ describe('<SearchItem />', function () {
   });
 
   it('should render ItemPinButton if hasPinButton is true', function () {
+    localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
+    const timer = useFakeTimers();
     const addOrRemoveItemInPinboard = spy();
     const wrapper = shallow(
       <SearchItem
@@ -28,11 +32,11 @@ describe('<SearchItem />', function () {
       />
     );
 
-    const itemPinButton = wrapper.find(ItemPinButton);
+    let itemPinButton = wrapper.find(ItemPinButton);
     itemPinButton.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboard);
     itemPinButton.prop('id').should.equal('213');
     itemPinButton.prop('isPinned').should.be.true();
-    itemPinButton.prop('showIntroduction').should.be.true();
+    itemPinButton.prop('showIntroduction').should.be.false();
     itemPinButton.prop('type').should.equal('OFFICER');
     itemPinButton.prop('item').should.eql({
       type: 'OFFICER',
@@ -40,6 +44,11 @@ describe('<SearchItem />', function () {
       isPinned: true,
     });
     itemPinButton.prop('className').should.equal('item-pin-button');
+
+    timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
+    wrapper.update();
+    itemPinButton = wrapper.find(ItemPinButton);
+    itemPinButton.prop('showIntroduction').should.be.true();
   });
 
   it('should assign className to Link component', function () {
@@ -86,5 +95,136 @@ describe('<SearchItem />', function () {
 
     tracking.trackSearchFocusedItem.should.be.calledOnce();
     tracking.trackSearchFocusedItem.should.be.calledWith('OFFICER', 'Ke', '8562', 3);
+  });
+
+  describe('componentDidMount', function () {
+    context('isPinButtonIntroductionVisited() return true', function () {
+      beforeEach(function () {
+        localStorage.setItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION, '1');
+      });
+      context('showIntroduction is true', function () {
+        it('should set displayIntroduction to true after timeout', function () {
+          const timer = useFakeTimers();
+          const wrapper = shallow(<SearchItem showIntroduction={ true } />);
+          wrapper.state('displayIntroduction').should.be.false();
+          timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
+          wrapper.state('displayIntroduction').should.be.false();
+        });
+      });
+
+      context('showIntroduction is false', function () {
+        it('should not set displayIntroduction to true after timeout', function () {
+          const timer = useFakeTimers();
+          const wrapper = shallow(<SearchItem showIntroduction={ false } />);
+          wrapper.state('displayIntroduction').should.be.false();
+          timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
+          wrapper.state('displayIntroduction').should.be.false();
+        });
+      });
+    });
+
+    context('isPinButtonIntroductionVisited() return false', function () {
+      beforeEach(function () {
+        localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
+      });
+      context('showIntroduction is true', function () {
+        it('should not set displayIntroduction to true after timeout', function () {
+          const timer = useFakeTimers();
+          const wrapper = shallow(<SearchItem showIntroduction={ true } />);
+          wrapper.state('displayIntroduction').should.be.false();
+          timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
+          wrapper.state('displayIntroduction').should.be.true();
+        });
+      });
+
+      context('showIntroduction is false', function () {
+        it('should not set displayIntroduction to true after timeout', function () {
+          const timer = useFakeTimers();
+          const wrapper = shallow(<SearchItem showIntroduction={ false } />);
+          wrapper.state('displayIntroduction').should.be.false();
+          timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
+          wrapper.state('displayIntroduction').should.be.false();
+        });
+      });
+    });
+  });
+
+  describe('componentWillUnmount', function () {
+    context('this.displayIntroductionTimeout is not null', function () {
+      it('should call clearTimeout', function () {
+        localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
+        const clearTimeoutSpy = spy(window, 'clearTimeout');
+        const wrapper = mount(
+          <Router history={ createBrowserHistory() }>
+            <SearchItem showIntroduction={ true } />
+          </Router>
+        );
+        const displayIntroductionTimeout = wrapper.find('SearchItem').instance().displayIntroductionTimeout;
+        wrapper.unmount();
+        clearTimeoutSpy.should.be.calledWith(displayIntroductionTimeout);
+      });
+    });
+  });
+
+  context('after display introduction', function () {
+    let trackSearchFocusedItemStub;
+    beforeEach(function () {
+      trackSearchFocusedItemStub = stub(tracking, 'trackSearchFocusedItem');
+    });
+
+    context('click on item', function () {
+      it('should call preventDefault and setPinButtonIntroductionVisited', function () {
+        localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
+        const timer = useFakeTimers();
+        const preventDefaultSpy = spy();
+        const setPinButtonIntroductionVisitedSpy = spy(pinboardUtils, 'setPinButtonIntroductionVisited');
+        const wrapper = mount(
+          <Router history={ createBrowserHistory() }>
+            <SearchItem showIntroduction={ true } />
+          </Router>
+        );
+        timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
+        wrapper.update();
+        wrapper.find('.pin-button-introduction').exists().should.be.true();
+        wrapper.find(SearchItem).childAt(0).simulate(
+          'click',
+          { target: wrapper.find('.item-indicator').getDOMNode(), preventDefault: preventDefaultSpy }
+        );
+        preventDefaultSpy.should.be.calledOnce();
+        trackSearchFocusedItemStub.should.be.calledOnce();
+        setPinButtonIntroductionVisitedSpy.should.be.calledOnce();
+
+        wrapper.update();
+        wrapper.find('.pin-button-introduction').exists().should.be.false();
+      });
+    });
+
+    context('click on introduction', function () {
+      it('should not call preventDefault and setPinButtonIntroductionVisited', function () {
+        localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
+        const timer = useFakeTimers();
+        const preventDefaultSpy = spy();
+        const setPinButtonIntroductionVisitedSpy = spy(pinboardUtils, 'setPinButtonIntroductionVisited');
+        const wrapper = mount(
+          <Router history={ createBrowserHistory() }>
+            <SearchItem showIntroduction={ true } />
+          </Router>
+        );
+
+        timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
+        wrapper.update();
+        wrapper.find('.pin-button-introduction').exists().should.be.true();
+        wrapper.find(SearchItem).childAt(0).simulate(
+          'click',
+          { target: wrapper.find('.pin-button-introduction').getDOMNode(), preventDefault: preventDefaultSpy }
+        );
+        preventDefaultSpy.should.not.be.called();
+        trackSearchFocusedItemStub.should.be.calledOnce();
+        setPinButtonIntroductionVisitedSpy.should.not.be.called();
+
+        wrapper.update();
+        wrapper.find('.pin-button-introduction').exists().should.be.true();
+      });
+    });
   });
 });

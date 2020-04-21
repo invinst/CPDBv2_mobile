@@ -5,6 +5,10 @@ const api = require(__dirname + '/../mock-api');
 const { TIMEOUT, PINBOARD_INTRODUCTION_DELAY } = require(__dirname + '/../constants');
 const { range } = require('lodash');
 const pinboardMockData = require(__dirname + '/../mock-data/pinboard-page');
+const {
+  createPinboardWithRecentItemsParams,
+  createPinboardWithRecentItemsResponse,
+} = require(__dirname + '/../mock-data/search');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
 const {
   dismissPinButtonIntroduction,
@@ -461,16 +465,17 @@ describe('SearchPageTest', function () {
     recentItems.section.thirdRecentItem.expect.element('@itemTitle').text.to.equal('Jerome Finnigan');
     recentItems.section.thirdRecentItem.expect.element('@itemSubtitle').text.to.equal('Badge #5167');
 
-    this.searchPage.waitForElementNotPresent('@pinboardBar');
+    this.searchPage.waitForElementNotVisible('@pinboardBar');
     recentItems.section.firstRecentItem.click('@pinButton');
     recentItems.section.secondRecentItem.click('@pinButton');
     recentItems.section.thirdRecentItem.click('@pinButton');
+    this.searchPage.waitForElementVisible('@pinboardBar');
     this.searchPage.expect.element('@pinboardBar').text.to.equal('Pinboard (3)');
 
     recentItems.section.firstRecentItem.click('@pinButton');
     recentItems.section.secondRecentItem.click('@pinButton');
     recentItems.section.thirdRecentItem.click('@pinButton');
-    this.searchPage.waitForElementNotPresent('@pinboardBar');
+    this.searchPage.waitForElementNotVisible('@pinboardBar');
 
     this.searchPage.navigate();
     recentItems.section.firstRecentItem.expect.element('@itemTitle').text.to.equal('TRR');
@@ -842,14 +847,14 @@ describe('SearchPageTest', function () {
 
       const investigatorCRs = this.searchPage.section.investigatorCRs;
       investigatorCRs.section.firstRow.waitForElementPresent('@pinButton');
-      this.searchPage.waitForElementNotPresent('@pinboardBar');
+      this.searchPage.waitForElementNotVisible('@pinboardBar');
 
       investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@pinboardBar', TIMEOUT);
       this.searchPage.expect.element('@pinboardBar').text.to.equal('Pinboard (1)');
 
       investigatorCRs.section.firstRow.click('@pinButton');
-      this.searchPage.waitForElementNotPresent('@pinboardBar');
+      this.searchPage.waitForElementNotVisible('@pinboardBar');
     });
 
     it('should display pinboard button that links to pinboard page when pinboard is not empty', function (client) {
@@ -857,6 +862,7 @@ describe('SearchPageTest', function () {
 
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@pinboardBar', TIMEOUT);
+      client.waitForAnimationEnd(this.searchPage.elements.pinboardBar.selector);
       this.searchPage.click('@pinboardBar');
       client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
 
@@ -1066,6 +1072,41 @@ describe('SearchPageTest', function () {
       this.searchPage.section.pinboardIntroduction.waitForElementVisible('@content');
     });
 
+    it('should not display pinboard introduction if search query is long enough', function () {
+      this.searchPage.section.pinboardIntroduction.waitForElementVisible('@content');
+      this.searchPage.setValue('@queryInput', 'long');
+      this.searchPage.section.pinboardIntroduction.waitForElementNotPresent('@content');
+      this.searchPage.clearValue('@queryInput');
+      this.searchPage.setValue('@queryInput', '1');
+      this.searchPage.section.pinboardIntroduction.waitForElementVisible('@content');
+    });
+
+    it('should display again after user remove all pinned items', function (client) {
+      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
+      api.mockPost(
+        '/api/v2/mobile/pinboards/',
+        201,
+        createPinboardWithRecentItemsParams,
+        createPinboardWithRecentItemsResponse);
+      api.mock('GET', '/api/v2/mobile/officers/8562/', 200, officer8562);
+      this.searchPage.setValue('@queryInput', '123');
+      this.searchPage.section.officers.section.firstRow.click('@itemTitle');
+
+      this.searchPage.click('@searchBreadcrumb');
+      this.searchPage.clearValue('@queryInput');
+      // Empty value doesn't trigger change -> Set short query to show recent
+      this.searchPage.setValue('@queryInput', '1');
+
+      this.searchPage.expect.element('@recentHeader').to.be.present;
+      let recentItems = this.searchPage.section.recent;
+
+      recentItems.section.firstRecentItem.click('@pinButton');
+      this.searchPage.section.pinboardIntroduction.waitForElementNotPresent('@content', 1000);
+
+      recentItems.section.firstRecentItem.click('@pinButton');
+      this.searchPage.section.pinboardIntroduction.waitForElementVisible('@content', 1000);
+    });
+
     it('should close pinboard introduction after click close', function (client) {
       this.searchPage.section.pinboardIntroduction.waitForElementVisible('@content', 1000);
       this.searchPage.section.pinboardIntroduction.click('@closeButton');
@@ -1088,40 +1129,114 @@ describe('SearchPageTest', function () {
   context('PinButton introduction', function () {
     beforeEach(function (client, done) {
       api.mock('GET', '/api/v2/search-mobile/?term=intr', 200, mockSearchQueryLongResponse);
+      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+      api.mock(
+        'GET',
+        '/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER',
+        200,
+        mockFirstOfficersSearchQueryResponse
+      );
       enablePinButtonIntroduction(client);
       this.searchPage.waitForElementPresent('@body');
       done();
     });
 
-    it('should display PinButtonIntroduction in first pinnable search result', function (client) {
-      this.searchPage.setValue('@queryInput', 'intr');
-      const officersRows = this.searchPage.section.officers.section.rows;
-      expectResultCount(client, officersRows, 2);
-      const crsRows = this.searchPage.section.crs.section.rows;
-      expectResultCount(client, crsRows, 2);
-      const trrsRows = this.searchPage.section.crs.section.rows;
-      expectResultCount(client, trrsRows, 2);
-      this.searchPage.section.officers.section.firstRow.waitForElementVisible(
-        '@pinButtonIntroduction',
-        PINBOARD_INTRODUCTION_DELAY
-      );
-      const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
-      client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
-        assert.equal(result.value.length, 1);
+    context('search result have less than 3 results', function () {
+      it('should display PinButtonIntroduction last pinnable search result', function (client) {
+        const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
+        this.searchPage.setValue('@queryInput', 'intr');
+        const officersRows = this.searchPage.section.officers.section.rows;
+        expectResultCount(client, officersRows, 2);
+        const crsRows = this.searchPage.section.crs.section.rows;
+        expectResultCount(client, crsRows, 2);
+        const trrsRows = this.searchPage.section.crs.section.rows;
+        expectResultCount(client, trrsRows, 2);
+        this.searchPage.section.officers.section.secondRow.waitForElementVisible(
+          '@pinButtonIntroduction',
+          PINBOARD_INTRODUCTION_DELAY
+        );
+
+        client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
+          assert.equal(result.value.length, 1);
+        });
       });
     });
 
-    it('should not display PinButtonIntroduction after click outside', function (client) {
+    context('search result have more than 3 results', function () {
+      it('should display PinButtonIntroduction third search result', function (client) {
+        const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
+        this.searchPage.clearValue('@queryInput');
+        this.searchPage.setValue('@queryInput', '2004-04-23 ke');
+        this.searchPage.section.officers.waitForElementVisible('@allLink');
+        this.searchPage.section.officers.click('@allLink');
+
+        const thirdOfficerRow = this.searchPage.section.officers.section.thirdRow;
+        thirdOfficerRow.waitForElementVisible('@pinButtonIntroduction');
+        client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
+          assert.equal(result.value.length, 1);
+        });
+      });
+    });
+
+    it('should not display PinButtonIntroduction after click on that result item', function (client) {
       this.searchPage.setValue('@queryInput', 'intr');
-      this.searchPage.section.officers.section.firstRow.waitForElementVisible('@pinButtonIntroduction');
-      this.searchPage.section.crs.section.firstRow.click('@itemTitle');
+      const secondOfficerRow = this.searchPage.section.officers.section.secondRow;
+      secondOfficerRow.waitForElementVisible('@pinButtonIntroduction');
+      secondOfficerRow.click('@itemIndicator');
 
       this.searchPage.navigate();
       this.searchPage.waitForElementPresent('@queryInput');
       this.searchPage.setValue('@queryInput', 'intr');
-      this.searchPage.section.officers.section.firstRow.waitForElementVisible('@pinButton');
+      secondOfficerRow.waitForElementVisible('@pinButton');
       client.pause(PINBOARD_INTRODUCTION_DELAY);
-      this.searchPage.section.officers.section.firstRow.waitForElementNotPresent('@pinButtonIntroduction');
+      secondOfficerRow.waitForElementNotPresent('@pinButtonIntroduction');
+    });
+
+    it('should not display PinButtonIntroduction after click current PinButton', function (client) {
+      const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
+
+      this.searchPage.setValue('@queryInput', 'intr');
+      const secondOfficerRow = this.searchPage.section.officers.section.secondRow;
+      secondOfficerRow.waitForElementVisible('@pinButtonIntroduction');
+      secondOfficerRow.click('@pinButton');
+      secondOfficerRow.waitForElementNotPresent('@pinButtonIntroduction');
+      client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
+        assert.equal(result.value.length, 0);
+      });
+
+      this.searchPage.navigate();
+      this.searchPage.waitForElementPresent('@queryInput');
+      this.searchPage.setValue('@queryInput', 'intr');
+      secondOfficerRow.waitForElementVisible('@pinButton');
+      client.pause(PINBOARD_INTRODUCTION_DELAY);
+      secondOfficerRow.waitForElementNotPresent('@pinButtonIntroduction');
+      client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
+        assert.equal(result.value.length, 0);
+      });
+    });
+
+    it('should not display PinButtonIntroduction after click other PinButton', function (client) {
+      const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
+
+      this.searchPage.setValue('@queryInput', 'intr');
+      const firstOfficerRow = this.searchPage.section.officers.section.firstRow;
+      const secondOfficerRow = this.searchPage.section.officers.section.secondRow;
+      secondOfficerRow.waitForElementVisible('@pinButtonIntroduction');
+      firstOfficerRow.click('@pinButton');
+      secondOfficerRow.waitForElementNotPresent('@pinButtonIntroduction');
+      client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
+        assert.equal(result.value.length, 0);
+      });
+
+      this.searchPage.navigate();
+      this.searchPage.waitForElementPresent('@queryInput');
+      this.searchPage.setValue('@queryInput', 'intr');
+      secondOfficerRow.waitForElementVisible('@pinButton');
+      client.pause(PINBOARD_INTRODUCTION_DELAY);
+      secondOfficerRow.waitForElementNotPresent('@pinButtonIntroduction');
+      client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
+        assert.equal(result.value.length, 0);
+      });
     });
   });
 });

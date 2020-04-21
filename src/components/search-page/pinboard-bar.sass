@@ -12,9 +12,19 @@
 
 \:local(.pinboard-bar)
   @extend %pinboard-bar-common
+  position: relative
   color: $japanese-laurel-color
   background-color: $willow-brook-color
   text-decoration: none
+  z-index: -1
+  transform: translateY(-100%)
+  visibility: hidden
+  transition: transform $medium-animation-duration ease-in, visibility $medium-animation-duration
+
+  &.slide-in
+    visibility: visible
+    transform: translateY(0)
+    transition: transform $medium-animation-duration ease-in
 
   .pinboard-bar-indicator
     display: block

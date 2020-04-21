@@ -142,7 +142,7 @@ export default class SearchPage extends Component {
   };
 
   render() {
-    const { query, queryPrefix, chosenCategory, pinboard, pinboardFeatureUsed } = this.props;
+    const { query, queryPrefix, chosenCategory, pinboard } = this.props;
     const isEmptyPinboard = pinboard.itemsCount === 0;
     const searchText = `${queryPrefix ? `${queryPrefix}:` : ''}${query}`;
 
@@ -161,24 +161,17 @@ export default class SearchPage extends Component {
               placeholder='Officer name, badge number or date'
               onChange={ (e) => { this.onInputChange(e); } }
             />
-
             <button
               className={ cx('bt-close', { 'active': query !== '' } ) }
               onClick={ this.handleGoBack }>
               Close
             </button>
           </div>
-
-          {
-            !isEmptyPinboard &&
-              <PinboardBar
-                pinboard={ pinboard }
-                onEmptyPinboardButtonClick={ this.handleEmptyPinboardButtonClick } />
-          }
+          <PinboardBar pinboard={ pinboard } onEmptyPinboardButtonClick={ this.handleEmptyPinboardButtonClick } />
         </div>
 
         <div className='content-container'>
-          <PinboardIntroduction pinboardFeatureUsed={ pinboardFeatureUsed } />
+          { isEmptyPinboard && !this.isLongEnoughQuery(query) && <PinboardIntroduction /> }
           <div className='category-details-container'>
             { this.renderCategories() }
           </div>
@@ -221,7 +214,6 @@ SearchPage.propTypes = {
   hasMore: PropTypes.bool,
   cancelPathname: PropTypes.string,
   categories: PropTypes.array,
-  pinboardFeatureUsed: PropTypes.bool,
 };
 
 SearchPage.defaultProps = {
@@ -240,5 +232,4 @@ SearchPage.defaultProps = {
   cancelPathname: '/',
   categories: [],
   pinboard: {},
-  pinboardFeatureUsed: false,
 };
