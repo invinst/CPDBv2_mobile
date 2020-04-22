@@ -33,12 +33,9 @@ export default class SearchItem extends Component {
     const { displayIntroduction } = this.state;
 
     if (this.shouldShowIntroduction() && displayIntroduction) {
-      const { target } = e;
-      if (!target.closest('.pin-button-introduction')) {
-        e.preventDefault();
-        setPinButtonIntroductionVisited();
-        this.forceUpdate();
-      }
+      e.preventDefault();
+      setPinButtonIntroductionVisited();
+      this.forceUpdate();
     }
 
     tracking.trackSearchFocusedItem(type, query, id, itemRank);

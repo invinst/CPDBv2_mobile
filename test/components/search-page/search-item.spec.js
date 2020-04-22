@@ -200,7 +200,7 @@ describe('<SearchItem />', function () {
     });
 
     context('click on introduction', function () {
-      it('should not call preventDefault and setPinButtonIntroductionVisited', function () {
+      it('should dismiss PinButton introduction', function () {
         localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
         const timer = useFakeTimers();
         const preventDefaultSpy = spy();
@@ -218,12 +218,12 @@ describe('<SearchItem />', function () {
           'click',
           { target: wrapper.find('.pin-button-introduction').getDOMNode(), preventDefault: preventDefaultSpy }
         );
-        preventDefaultSpy.should.not.be.called();
+        preventDefaultSpy.should.be.calledOnce();
         trackSearchFocusedItemStub.should.be.calledOnce();
-        setPinButtonIntroductionVisitedSpy.should.not.be.called();
+        setPinButtonIntroductionVisitedSpy.should.be.calledOnce();
 
         wrapper.update();
-        wrapper.find('.pin-button-introduction').exists().should.be.true();
+        wrapper.find('.pin-button-introduction').exists().should.be.false();
       });
     });
   });

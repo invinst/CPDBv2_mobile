@@ -1192,6 +1192,23 @@ describe('SearchPageTest', function () {
       secondOfficerRow.waitForElementNotPresent('@pinButtonIntroduction');
     });
 
+    it('should dismiss PinButtonIntroduction after click on introduction', function (client) {
+      this.searchPage.setValue('@queryInput', '123');
+      const firstOfficerRow = this.searchPage.section.officers.section.firstRow;
+      firstOfficerRow.waitForElementVisible('@pinButtonIntroduction');
+      firstOfficerRow.click('@pinButtonIntroduction');
+      client.pause(PINBOARD_INTRODUCTION_DELAY);
+      client.assert.urlContains('/search/');
+      firstOfficerRow.waitForElementNotPresent('@pinButtonIntroduction', 1000);
+
+      this.searchPage.navigate();
+      this.searchPage.waitForElementPresent('@queryInput');
+      this.searchPage.setValue('@queryInput', '123');
+      firstOfficerRow.waitForElementVisible('@pinButton');
+      client.pause(PINBOARD_INTRODUCTION_DELAY);
+      firstOfficerRow.waitForElementNotPresent('@pinButtonIntroduction', 1000);
+    });
+
     it('should not display PinButtonIntroduction after click current PinButton', function (client) {
       const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
 
