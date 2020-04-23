@@ -34,7 +34,7 @@ const analyticTracking = ({ clickyData, gaData }) => {
   }
 
   if (!isEmpty(serverSideTrackingData)) {
-    axiosClient.post(v2Url(constants.TRACKING_API_ENGPOINT), analyticTrackingParams(serverSideTrackingData));
+    axiosClient.post(v2Url(constants.TRACKING_API_ENDPOINT), analyticTrackingParams(serverSideTrackingData));
   }
 
   if (global.clicky && !clickyData.defaultTracking) {

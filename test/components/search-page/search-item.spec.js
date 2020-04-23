@@ -1,17 +1,26 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { Router, Route, Link } from 'react-router-dom';
-import { spy, stub, useFakeTimers } from 'sinon';
+import { spy, stub, match, useFakeTimers } from 'sinon';
 import { createBrowserHistory } from 'history';
 
 import SearchItem from 'components/search-page/search-item';
 import ItemPinButton from 'components/common/item-pin-button';
 import * as tracking from 'utils/tracking';
-import { PINBOARD_INTRODUCTION, PINBOARD_INTRODUCTION_DELAY } from 'constants';
+import { APP_CONFIG_KEYS, PINBOARD_INTRODUCTION } from 'constants';
 import * as pinboardUtils from 'utils/pinboard';
+import * as appConfig from 'utils/app-config';
 
+
+const PINBOARD_INTRODUCTION_DELAY = 1000;
 
 describe('<SearchItem />', function () {
+  beforeEach(function () {
+    appConfig.default.set({
+      [APP_CONFIG_KEYS.PINBOARD_INTRODUCTION_DELAY]: PINBOARD_INTRODUCTION_DELAY,
+    });
+  });
+
   it('should not render ItemPinButton if hasPinButton is false', function () {
     const wrapper = shallow(<SearchItem hasPinButton={ false } />);
     wrapper.find(ItemPinButton).should.have.length(0);
@@ -103,7 +112,7 @@ describe('<SearchItem />', function () {
         localStorage.setItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION, '1');
       });
       context('showIntroduction is true', function () {
-        it('should set displayIntroduction to true after timeout', function () {
+        it('should not set displayIntroduction to true after timeout', function () {
           const timer = useFakeTimers();
           const wrapper = shallow(<SearchItem showIntroduction={ true } />);
           wrapper.state('displayIntroduction').should.be.false();
@@ -128,12 +137,26 @@ describe('<SearchItem />', function () {
         localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
       });
       context('showIntroduction is true', function () {
-        it('should not set displayIntroduction to true after timeout', function () {
+        it('should set displayIntroduction to true after timeout', function () {
           const timer = useFakeTimers();
           const wrapper = shallow(<SearchItem showIntroduction={ true } />);
           wrapper.state('displayIntroduction').should.be.false();
           timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
           wrapper.state('displayIntroduction').should.be.true();
+        });
+
+        it('should get timeout value from appConfig', function () {
+          const pinboardIntroductionDelay = 12;
+          const appConfigGetStub = stub(appConfig.default, 'get')
+            .withArgs(APP_CONFIG_KEYS.PINBOARD_INTRODUCTION_DELAY)
+            .returns(pinboardIntroductionDelay);
+          const setTimeoutSpy = spy(window, 'setTimeout');
+          shallow(<SearchItem showIntroduction={ true } />);
+
+          appConfigGetStub.should.be.calledOnce();
+          appConfigGetStub.should.be.calledWith(APP_CONFIG_KEYS.PINBOARD_INTRODUCTION_DELAY);
+          setTimeoutSpy.should.be.calledOnce();
+          setTimeoutSpy.should.be.calledWith(match.any, pinboardIntroductionDelay);
         });
       });
 

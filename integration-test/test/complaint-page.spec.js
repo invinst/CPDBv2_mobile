@@ -3,6 +3,7 @@
 const api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
+const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 
 const mockComplaint = {
   'most_common_category': {
@@ -86,6 +87,7 @@ describe('ComplaintPageTest', function () {
     api.cleanMock();
     api.mock('GET', '/api/v2/mobile/cr/1053667/', 200, mockComplaint);
     api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
+    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
     api.mockPost(
       '/api/v2/mobile/cr/1053667/request-document/',
       200,

@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { ToastContainer } from 'react-toastify';
 import { spy, stub } from 'sinon';
+import should from 'should';
 
 import config from 'config';
 import App from 'components/app';
@@ -9,11 +10,6 @@ import styles from 'components/app.sass';
 
 
 describe('App component', function () {
-  it('should render', function () {
-    let wrapper = shallow(<App />);
-    wrapper.should.be.ok();
-  });
-
   it('should dispatch routeChanged action on mount', function () {
     const spyRouteChanged = spy();
     const wrapper = shallow(
@@ -84,6 +80,7 @@ describe('App component', function () {
     const wrapper = shallow(
       <App
         location={ { pathname: '/' } }
+        appConfigRequesting={ false }
       />
     );
 
@@ -101,7 +98,7 @@ describe('App component', function () {
     });
 
     it('should add pinboard-disabled class name', function () {
-      const wrapper = shallow(<App />);
+      const wrapper = shallow(<App appConfigRequesting={ false } />);
       wrapper.prop('className').should.containEql(styles.app).and.containEql('pinboard-disabled');
     });
   });
@@ -112,8 +109,23 @@ describe('App component', function () {
     });
 
     it('should add pinboard-disabled class name', function () {
-      const wrapper = shallow(<App />);
+      const wrapper = shallow(<App appConfigRequesting={ false } />);
       wrapper.prop('className').should.containEql(styles.app).and.not.containEql('pinboard-disabled');
+    });
+  });
+
+  context('appConfigRequesting is true', function () {
+    it('should render nothing', function () {
+      const wrapper = shallow(<App location={ { pathname: '/' } } appConfigRequesting={ true } />);
+      should(wrapper.html()).be.null();
+    });
+  });
+
+  context('appConfigRequesting is false', function () {
+    it('should render correctly', function () {
+      const wrapper = shallow(<App location={ { pathname: '/' } } appConfigRequesting={ false } />);
+      wrapper.find('RouterRoot').exists().should.be.true();
+      wrapper.find('ToastContainer').exists().should.be.true();
     });
   });
 });

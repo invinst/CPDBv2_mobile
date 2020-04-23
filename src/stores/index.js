@@ -13,6 +13,7 @@ import restoreCreateOrUpdatePinboardMiddleware from 'middleware/restore-create-o
 import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pinboard-middleware';
 import browserHistory from 'utils/history';
 import fetchToastMiddleware from 'middleware/fetch-toast-middleware';
+import appConfigMiddleware from 'middleware/app-config-middleware';
 import { isPinboardFeatureEnabled } from 'utils/pinboard';
 
 
@@ -26,6 +27,7 @@ function configureStore(initialState) {
     trackingMiddleware,
     fetchAndRedirectPinboardMiddleware,
     fetchToastMiddleware,
+    appConfigMiddleware,
   ];
   if (isPinboardFeatureEnabled()) {
     middleware = [...middleware, restoreCreateOrUpdatePinboardMiddleware];

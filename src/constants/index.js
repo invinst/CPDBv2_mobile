@@ -95,7 +95,8 @@ export default {
   SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT: '/mobile/social-graph/geographic-crs/',
   SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT: '/mobile/social-graph/geographic-trrs/',
   TOAST_API_ENDPOINT: '/mobile/toast/',
-  TRACKING_API_ENGPOINT: '/tracking/',
+  TRACKING_API_ENDPOINT: '/tracking/',
+  APP_CONFIG_API_ENDPOINT: '/app-config/',
 
   //Time format
   SIMPLE_DATE_FORMAT: 'MMM DD, YYYY',
@@ -170,6 +171,7 @@ export const PINBOARD_INTRODUCTION = {
   PINBOARD_BUTTON_INTRODUCTION: 'PINBOARD_BUTTON_INTRODUCTION',
 };
 
-export const PINBOARD_INTRODUCTION_DELAY = 2000;
-
 export const PIN_BUTTON_INTRODUCTION_INDEX = 3;
+export const APP_CONFIG_KEYS = {
+  PINBOARD_INTRODUCTION_DELAY: 'PINBOARD_INTRODUCTION_DELAY',
+};
