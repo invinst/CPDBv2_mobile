@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { spy } from 'sinon';
+import { spy, useFakeTimers } from 'sinon';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import { mountWithRouter } from 'utils/tests';
@@ -8,14 +8,17 @@ import SearchResult from 'components/search-page/search-result';
 import OfficerItem from 'components/search-page/officer-item';
 import CrItem from 'components/search-page/cr-item';
 import TrrItem from 'components/search-page/trr-item';
+import { PINBOARD_INTRODUCTION, PINBOARD_INTRODUCTION_DELAY } from 'constants';
 
 
-describe('SearchResult />', function () {
+describe('<SearchResult />', function () {
   it('should render correctly', function () {
+    localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
+    const timer = useFakeTimers();
     const spyGetSuggestionWithContentType = spy();
     const wrapper = mountWithRouter(
       <SearchResult
-        items={ [{ id: 1, showIntroduction: true }, { id: 2, showIntroduction: false }] }
+        items={ [{ id: 1, showIntroduction: false }, { id: 2, showIntroduction: true }] }
         itemType='officers'
         query='qa'
         getSuggestionWithContentType={ spyGetSuggestionWithContentType }
@@ -28,9 +31,9 @@ describe('SearchResult />', function () {
         hasMore={ true }
       />
     );
-    const itemPinButton = wrapper.find('ItemPinButton');
+    let itemPinButton = wrapper.find('ItemPinButton');
     itemPinButton.length.should.equal(2);
-    itemPinButton.at(0).prop('showIntroduction').should.be.true();
+    itemPinButton.at(0).prop('showIntroduction').should.be.false();
     itemPinButton.at(1).prop('showIntroduction').should.be.false();
 
     const infiniteScroll = wrapper.find(InfiniteScroll);
@@ -49,6 +52,11 @@ describe('SearchResult />', function () {
         term: '123',
       }
     );
+    timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
+    wrapper.update();
+    itemPinButton = wrapper.find('ItemPinButton');
+    itemPinButton.at(0).prop('showIntroduction').should.be.false();
+    itemPinButton.at(1).prop('showIntroduction').should.be.true();
   });
 
   it('should render correct items based on item type', function () {

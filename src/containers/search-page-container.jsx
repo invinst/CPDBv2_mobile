@@ -25,7 +25,7 @@ import {
   getCancelPathname,
   categoriesSelector,
 } from 'selectors/search-page';
-import { getPinboard, pinboardFeatureUsedSelector } from 'selectors/pinboard-page/pinboard';
+import { getPinboard } from 'selectors/pinboard-page/pinboard';
 import { addOrRemoveItemInPinboard, createPinboard } from 'actions/pinboard';
 
 
@@ -42,7 +42,6 @@ function mapStateToProps(state, ownProps) {
     nextParams: nextParamsSelector(state),
     hasMore: hasMoreSelector(state),
     cancelPathname: getCancelPathname(state),
-    pinboardFeatureUsed: pinboardFeatureUsedSelector(state),
   };
 }
 

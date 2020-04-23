@@ -185,7 +185,7 @@ describe('MainPageTest', function () {
         this.mainPage.click('@searchLink');
 
         this.search.waitForElementPresent('@queryInput');
-        this.search.waitForElementNotPresent('@pinboardBar', TIMEOUT);
+        this.search.waitForElementNotVisible('@pinboardBar', TIMEOUT);
         client.back();
       };
 

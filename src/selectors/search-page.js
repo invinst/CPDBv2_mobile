@@ -4,6 +4,7 @@ import { get, map, filter, isUndefined, isEmpty, forEach } from 'lodash';
 
 import constants from 'constants';
 import { COMPLAINT_PATH, TRR_PATH } from 'constants/paths';
+import { PIN_BUTTON_INTRODUCTION_INDEX } from 'constants';
 import { extractPercentile } from 'selectors/common/percentile';
 import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
@@ -201,15 +202,16 @@ const showIntroductionTransform = (categories) => {
   let hasFirstIntroduction = false;
   return map(categories, ({ items, ...remain }) => {
     const showIntroduction = !hasFirstIntroduction
-      && (!isUndefined(constants.PINBOARD_PAGE.PINNED_ITEM_TYPES[remain.path]) || remain.name === 'RECENT');
+      && !isUndefined(constants.PINBOARD_PAGE.PINNED_ITEM_TYPES[remain.path]);
     if (showIntroduction) {
       hasFirstIntroduction = true;
     }
+    const pinButtonIntroductionIndex = Math.min(items.length, PIN_BUTTON_INTRODUCTION_INDEX) - 1;
     return {
       ...remain,
       items: map(items, (item, index) => ({
         ...item,
-        showIntroduction: index === 0 && showIntroduction,
+        showIntroduction: showIntroduction && (index === pinButtonIntroductionIndex),
       })),
     };
   });
