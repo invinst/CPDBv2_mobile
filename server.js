@@ -1,6 +1,6 @@
 /*eslint no-console:0 */
 'use strict';
-require('core-js/fn/object/assign');
+require('core-js/stable');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const config = require('./webpack.config');
