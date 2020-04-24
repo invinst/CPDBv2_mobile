@@ -75,4 +75,19 @@ describe('<PinboardBar />', function () {
     wrapper.simulate('click');
     browserHistoryPush.should.be.calledWith('/pinboard/');
   });
+
+  it('should have class slide-in if current pinboard is not empty', function () {
+    const wrapper = shallow(<PinboardBar pinboard={ { isPinboardRestored: true, itemsCount: 1 } }/>);
+    wrapper.prop('className').should.containEql('slide-in');
+  });
+
+  it('should have class slide-in if current pinboard is empty', function () {
+    const wrapper = shallow(<PinboardBar pinboard={ { isPinboardRestored: true, itemsCount: 0 } }/>);
+    wrapper.prop('className').should.not.containEql('slide-in');
+  });
+
+  it('should still display Pinboard(1) if current pinboard is empty', function () {
+    const wrapper = shallow(<PinboardBar pinboard={ { isPinboardRestored: true, itemsCount: 0 } }/>);
+    wrapper.text().should.containEql('Pinboard (1)');
+  });
 });

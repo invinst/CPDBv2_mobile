@@ -22,6 +22,7 @@ const nthRow = (name, index) => ({
       selector: `(//div[contains(@class, "item-pin-button__item-pin-button")])[${index}]`,
       locateStrategy: 'xpath',
     },
+    itemIndicator: '.item-indicator',
     pinButtonIntroduction: {
       selector: `(//div[@class="results ${name}"]//a[contains(@class, "search-item__wrapper")])[${index}]`
         + '//div[@class="pin-button-introduction"]',

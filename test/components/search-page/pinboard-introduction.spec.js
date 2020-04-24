@@ -13,41 +13,30 @@ import { PINBOARD_INTRODUCTION } from 'constants';
 describe('PinboardIntroduction component', function () {
   let wrapper;
   context('isPinboardIntroductionVisited() return false', function () {
+    let setPinboardIntroductionVisitedSpy;
+    let browserHistoryPushSpy;
+
     beforeEach(function () {
       localStorage.removeItem(PINBOARD_INTRODUCTION.PINBOARD_INTRODUCTION);
+      wrapper = mount(<PinboardIntroduction pinboard={ { itemsCount: 0 } } />);
+      setPinboardIntroductionVisitedSpy = spy(pinboardUtils, 'setPinboardIntroductionVisited');
+      browserHistoryPushSpy = spy(browserHistory, 'push');
     });
 
-    context('pinboardFeatureUsed is true', function () {
-      it('should render nothing', function () {
-        const wrapper = mount(<PinboardIntroduction pinboardFeatureUsed={ true } />);
-        should(wrapper.html()).be.null();
-      });
+    it('should render pinboard introduction', function () {
+      wrapper.find(`.${styles.pinboardIntroduction}`).exists().should.be.true();
     });
 
-    context('pinboardFeatureUsed is false', function () {
-      let setPinboardIntroductionVisitedSpy;
-      let browserHistoryPushSpy;
-      beforeEach(function () {
-        wrapper = mount(<PinboardIntroduction pinboardFeatureUsed={ false } />);
-        setPinboardIntroductionVisitedSpy = spy(pinboardUtils, 'setPinboardIntroductionVisited');
-        browserHistoryPushSpy = spy(browserHistory, 'push');
-      });
+    it('should call setPinboardIntroductionVisited and forceUpdate on close button clicked', function () {
+      wrapper.find('.introduction-close-btn').simulate('click');
+      setPinboardIntroductionVisitedSpy.should.be.calledOnce();
+      should(wrapper.html()).be.null();
+    });
 
-      it('should render pinboard introduction', function () {
-        wrapper.find(`.${styles.pinboardIntroduction}`).exists().should.be.true();
-      });
-
-      it('should call setPinboardIntroductionVisited and forceUpdate on close button clicked', function () {
-        wrapper.find('.introduction-close-btn').simulate('click');
-        setPinboardIntroductionVisitedSpy.should.be.calledOnce();
-        should(wrapper.html()).be.null();
-      });
-
-      it('should call setPinboardIntroductionVisited and redirect to /pinboard/ on Get Started clicked', function () {
-        wrapper.find('.get-started-btn').simulate('click');
-        setPinboardIntroductionVisitedSpy.should.be.calledOnce();
-        browserHistoryPushSpy.should.be.calledWith('/pinboard/');
-      });
+    it('should call setPinboardIntroductionVisited and redirect to /pinboard/ on Get Started clicked', function () {
+      wrapper.find('.get-started-btn').simulate('click');
+      setPinboardIntroductionVisitedSpy.should.be.calledOnce();
+      browserHistoryPushSpy.should.be.calledWith('/pinboard/');
     });
   });
 
