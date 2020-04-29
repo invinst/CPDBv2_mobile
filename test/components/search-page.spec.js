@@ -349,9 +349,7 @@ describe('<SearchPage />', function () {
     it('should pass correct props to SearchCategory', function () {
       const stubBoundCallback = stub(SearchPage.prototype.chooseCategory, 'bind');
       stubBoundCallback.returns(SearchPage.prototype.chooseCategory);
-      const spySaveToRecent = spy();
       const spyUpdateActiveCategory = spy();
-      const spyAddOrRemoveItemInPinboard = spy();
       const spyGetSuggestionWithContentType = spy();
 
       const categories = [{
@@ -385,9 +383,7 @@ describe('<SearchPage />', function () {
           categories={ categories }
           chosenCategory='officers'
           activeCategory='officers'
-          saveToRecent={ spySaveToRecent }
           updateActiveCategory={ spyUpdateActiveCategory }
-          addOrRemoveItemInPinboard={ spyAddOrRemoveItemInPinboard }
           getSuggestionWithContentType={ spyGetSuggestionWithContentType }
           nextParams={ {
             contentType: 'OFFICER',
@@ -407,10 +403,8 @@ describe('<SearchPage />', function () {
       searchCategory.prop('showAllButton').should.be.true();
       searchCategory.prop('title').should.equal('OFFICERS');
       searchCategory.prop('items').should.eql(categories[0].items);
-      searchCategory.prop('saveToRecent').should.eql(spySaveToRecent);
       searchCategory.prop('updateActiveCategory').should.eql(spyUpdateActiveCategory);
       searchCategory.prop('activeCategory').should.equal('officers');
-      searchCategory.prop('addOrRemoveItemInPinboard').should.eql(spyAddOrRemoveItemInPinboard);
       searchCategory.prop('getSuggestionWithContentType').should.eql(spyGetSuggestionWithContentType);
       searchCategory.prop('query').should.equal('qa');
       searchCategory.prop('nextParams').should.eql({

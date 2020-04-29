@@ -31,6 +31,24 @@ const nthRow = (name, index) => ({
   },
 });
 
+const nthRecentItem = (index) => ({
+  selector: `a:nth-child(${index})`,
+  elements: {
+    itemTitle: '.item-title',
+    itemSubtitle: '.item-subtitle',
+    pinButton: {
+      selector: '(//div[contains(@class, "recent-items__recent-items")]' +
+        `//div[contains(@class, "item-pin-button__item-pin-button")])[${index}]`,
+      locateStrategy: 'xpath',
+    },
+    pinButtonIntroduction: {
+      selector: `(//div[@class="results recent"]//a[contains(@class, "search-item__wrapper")])[${index}]`
+        + '//div[@class="pin-button-introduction"]',
+      locateStrategy: 'xpath',
+    },
+  },
+});
+
 module.exports = {
   url: function (query = '') {
     let result = `${this.api.globals.clientUrl}/search/`;
@@ -65,47 +83,9 @@ module.exports = {
     recent: {
       selector: '.results.recent',
       sections: {
-        firstRecentItem: {
-          selector: 'a:nth-child(1)',
-          elements: {
-            itemTitle: '.item-title',
-            itemSubtitle: '.item-subtitle',
-            pinButton: {
-              selector: '(//div[contains(@class, "recent-items__recent-items")]' +
-                '//div[contains(@class, "item-pin-button__item-pin-button")])[1]',
-              locateStrategy: 'xpath',
-            },
-            pinButtonIntroduction: {
-              selector: '(//div[@class="results recent"]//a[contains(@class, "search-item__wrapper")])[1]'
-                + '//div[@class="pin-button-introduction"]',
-              locateStrategy: 'xpath',
-            },
-          },
-        },
-        secondRecentItem: {
-          selector: 'a:nth-child(2)',
-          elements: {
-            itemTitle: '.item-title',
-            itemSubtitle: '.item-subtitle',
-            pinButton: {
-              selector: '(//div[contains(@class, "recent-items__recent-items")]' +
-                '//div[contains(@class, "item-pin-button__item-pin-button")])[2]',
-              locateStrategy: 'xpath',
-            },
-          },
-        },
-        thirdRecentItem: {
-          selector: 'a:nth-child(3)',
-          elements: {
-            itemTitle: '.item-title',
-            itemSubtitle: '.item-subtitle',
-            pinButton: {
-              selector: '(//div[contains(@class, "recent-items__recent-items")]' +
-                '//div[contains(@class, "item-pin-button__item-pin-button")])[3]',
-              locateStrategy: 'xpath',
-            },
-          },
-        },
+        firstRecentItem: nthRecentItem(1),
+        secondRecentItem: nthRecentItem(2),
+        thirdRecentItem: nthRecentItem(3),
       },
     },
     dateCRs: resultsSection('dateCRs'),

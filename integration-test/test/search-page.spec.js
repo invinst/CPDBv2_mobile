@@ -10,11 +10,7 @@ const {
   createPinboardWithRecentItemsResponse,
 } = require(__dirname + '/../mock-data/search');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
-const {
-  dismissPinButtonIntroduction,
-  enablePinButtonIntroduction,
-  enablePinboardIntroduction,
-} = require(__dirname + '/../utils');
+const { clearReduxStore } = require(__dirname + '/../utils');
 
 const mockSearchQueryResponse = {
   'OFFICER': [
@@ -420,8 +416,6 @@ describe('SearchPageTest', function () {
     this.officerPage = client.page.officerPage();
     this.pinboardPage = client.page.pinboardPage();
     this.searchPage.navigate();
-    // Disable PinButton introduction so that it won't intercept other events
-    dismissPinButtonIntroduction(client);
     this.searchPage.expect.element('@body').to.be.present;
     done();
   });
@@ -464,6 +458,9 @@ describe('SearchPageTest', function () {
     recentItems.section.secondRecentItem.expect.element('@itemSubtitle').text.to.equal('CRID 1002144 • 05/29/2006');
     recentItems.section.thirdRecentItem.expect.element('@itemTitle').text.to.equal('Jerome Finnigan');
     recentItems.section.thirdRecentItem.expect.element('@itemSubtitle').text.to.equal('Badge #5167');
+    recentItems.section.thirdRecentItem.expect.element('@pinButtonIntroduction').to.be.present.after(
+      PINBOARD_INTRODUCTION_DELAY + 500
+    );
 
     this.searchPage.waitForElementNotVisible('@pinboardBar');
     recentItems.section.firstRecentItem.click('@pinButton');
@@ -1063,7 +1060,7 @@ describe('SearchPageTest', function () {
 
   context('Pinboard introduction', function () {
     beforeEach(function (client, done) {
-      enablePinboardIntroduction(client);
+      clearReduxStore(client);
       this.searchPage.waitForElementPresent('@body');
       done();
     });
@@ -1136,7 +1133,7 @@ describe('SearchPageTest', function () {
         200,
         mockFirstOfficersSearchQueryResponse
       );
-      enablePinButtonIntroduction(client);
+      clearReduxStore(client);
       this.searchPage.waitForElementPresent('@body');
       done();
     });
@@ -1254,6 +1251,38 @@ describe('SearchPageTest', function () {
       client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
         assert.equal(result.value.length, 0);
       });
+    });
+
+    it('should display PinButtonIntroduction on recent', function () {
+      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
+      api.mock(
+        'GET', '/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487',
+        200,
+        mockNewRecentSearchItemsResponse,
+      );
+      api.mock('GET', '/api/v2/mobile/officers/8562/', 200, officer8562);
+      api.mock('GET', '/api/v2/mobile/cr/1002144/', 200, cr1002144);
+      api.mock('GET', '/api/v2/mobile/trr/14487/', 200, trr14487);
+      this.searchPage.setValue('@queryInput', '123');
+      this.searchPage.section.officers.section.firstRow.click('@itemTitle');
+
+      this.searchPage.click('@searchBreadcrumb');
+      this.searchPage.section.crs.section.firstRow.click('@itemTitle');
+
+      this.searchPage.click('@searchBreadcrumb');
+      this.searchPage.section.trrs.section.firstRow.click('@itemTitle');
+
+      this.searchPage.click('@searchBreadcrumb');
+      this.searchPage.clearValue('@queryInput');
+      // Empty value doesn't trigger change -> Set short query to show recent
+      this.searchPage.setValue('@queryInput', '1');
+
+      this.searchPage.expect.element('@recentHeader').to.be.present;
+      let recentItems = this.searchPage.section.recent;
+
+      recentItems.section.thirdRecentItem.expect.element('@pinButtonIntroduction').to.be.present.after(
+        PINBOARD_INTRODUCTION_DELAY + 500
+      );
     });
   });
 });

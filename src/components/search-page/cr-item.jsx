@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SearchItem from './search-item';
+import SearchItemContainer from 'containers/search-page/search-item-container';
 import searchItemStyle from './search-item.sass';
 
 
-const CrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
+const CrItem = ({ item, query }) => {
   return (
-    <SearchItem
+    <SearchItemContainer
       url={ item.url }
       hasPinButton={ true }
-      addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
       showIntroduction={ item.showIntroduction }
       id={ item.crid }
       itemRank={ item.itemRank }
@@ -18,13 +17,12 @@ const CrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
       isPinned={ item.isPinned }
       type={ item.type }
       recentItemData={ item.recentItemData }
-      saveToRecent={ saveToRecent }
     >
       <div className={ searchItemStyle.itemInfo }>
         <div className='item-title'>{ item.category }</div>
         <div className='item-subtitle'>CRID { item.crid } • { item.incidentDate }</div>
       </div>
-    </SearchItem>
+    </SearchItemContainer>
   );
 };
 
@@ -40,8 +38,6 @@ CrItem.propTypes = {
     recentItemData: PropTypes.object,
     showIntroduction: PropTypes.bool,
   }),
-  saveToRecent: PropTypes.func,
-  addOrRemoveItemInPinboard: PropTypes.func,
   query: PropTypes.string,
   showIntroduction: PropTypes.bool,
 };

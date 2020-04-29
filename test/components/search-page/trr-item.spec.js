@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { spy } from 'sinon';
+import { Provider } from 'react-redux';
+import MockStore from 'redux-mock-store';
 
 import { mountWithRouter } from 'utils/tests';
 import TrrItem from 'components/search-page/trr-item';
@@ -9,8 +10,6 @@ import SearchItem from 'components/search-page/search-item';
 
 describe('<TrrItem />', function () {
   it('should render trr correctly', function () {
-    const saveToRecentSpy = spy();
-    const addOrRemoveItemInPinboardSpy = spy();
     const recentItemData = {
       id: '123456',
       type: 'TRR',
@@ -23,13 +22,18 @@ describe('<TrrItem />', function () {
       itemRank: 3,
       showIntroduction: true,
     };
+    const store = MockStore()({
+      pinboardIntroduction: {
+        isPinButtonIntroductionVisited: true,
+      },
+    });
     const wrapper = mountWithRouter(
-      <TrrItem
-        query='Ke'
-        item={ trr }
-        saveToRecent={ saveToRecentSpy }
-        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }
-      />
+      <Provider store={ store }>
+        <TrrItem
+          query='Ke'
+          item={ trr }
+        />
+      </Provider>
     );
 
     wrapper.should.be.ok();
@@ -46,8 +50,6 @@ describe('<TrrItem />', function () {
     searchItem.prop('itemRank').should.equal(3);
     searchItem.prop('query').should.equal('Ke');
     searchItem.prop('showIntroduction').should.be.true();
-    searchItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
-    searchItem.prop('recentItemData').should.eql(recentItemData);
-    searchItem.prop('saveToRecent').should.eql(saveToRecentSpy);
+    searchItem.prop('isPinButtonIntroductionVisited').should.be.true();
   });
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { spy } from 'sinon';
+import { Provider } from 'react-redux';
+import MockStore from 'redux-mock-store';
 
 import { mountWithRouter } from 'utils/tests';
 import CrItem from 'components/search-page/cr-item';
@@ -9,8 +10,6 @@ import SearchItem from 'components/search-page/search-item';
 
 describe('<CrItem />', function () {
   it('should render cr correctly', function () {
-    const saveToRecentSpy = spy();
-    const addOrRemoveItemInPinboardSpy = spy();
     const recentItemData = {
       crid: '1027271',
       url: '/complaint/1027271/',
@@ -30,13 +29,19 @@ describe('<CrItem />', function () {
       showIntroduction: true,
     };
 
+    const store = MockStore()({
+      pinboardIntroduction: {
+        isPinButtonIntroductionVisited: true,
+      },
+    });
+
     const wrapper = mountWithRouter(
-      <CrItem
-        query='Ke'
-        item={ cr }
-        saveToRecent={ saveToRecentSpy }
-        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }
-      />
+      <Provider store={ store }>
+        <CrItem
+          query='Ke'
+          item={ cr }
+        />
+      </Provider>
     );
 
     const link = wrapper.find(Link);
@@ -52,8 +57,6 @@ describe('<CrItem />', function () {
     searchItem.prop('type').should.equal('CR');
     searchItem.prop('itemRank').should.equal(2);
     searchItem.prop('showIntroduction').should.be.true();
-    searchItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
     searchItem.prop('recentItemData').should.eql(recentItemData);
-    searchItem.prop('saveToRecent').should.eql(saveToRecentSpy);
   });
 });

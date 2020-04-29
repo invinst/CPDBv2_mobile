@@ -4,22 +4,25 @@ import { spy } from 'sinon';
 import should from 'should';
 
 import PinboardIntroduction from 'components/search-page/pinboard-introduction';
-import * as pinboardUtils from 'utils/pinboard';
 import browserHistory from 'utils/history';
 import styles from 'components/search-page/pinboard-introduction.sass';
-import { PINBOARD_INTRODUCTION } from 'constants';
 
 
 describe('PinboardIntroduction component', function () {
   let wrapper;
-  context('isPinboardIntroductionVisited() return false', function () {
-    let setPinboardIntroductionVisitedSpy;
+  context('isPinboardIntroductionVisited is false', function () {
+    let visitPinboardIntroductionSpy;
     let browserHistoryPushSpy;
 
     beforeEach(function () {
-      localStorage.removeItem(PINBOARD_INTRODUCTION.PINBOARD_INTRODUCTION);
-      wrapper = mount(<PinboardIntroduction pinboard={ { itemsCount: 0 } } />);
-      setPinboardIntroductionVisitedSpy = spy(pinboardUtils, 'setPinboardIntroductionVisited');
+      visitPinboardIntroductionSpy = spy();
+      wrapper = mount(
+        <PinboardIntroduction
+          pinboard={ { itemsCount: 0 } }
+          isPinboardIntroductionVisited={ false }
+          visitPinboardIntroduction={ visitPinboardIntroductionSpy }
+        />
+      );
       browserHistoryPushSpy = spy(browserHistory, 'push');
     });
 
@@ -27,23 +30,24 @@ describe('PinboardIntroduction component', function () {
       wrapper.find(`.${styles.pinboardIntroduction}`).exists().should.be.true();
     });
 
-    it('should call setPinboardIntroductionVisited and forceUpdate on close button clicked', function () {
+    it('should call visitPinboardIntroduction', function () {
       wrapper.find('.introduction-close-btn').simulate('click');
-      setPinboardIntroductionVisitedSpy.should.be.calledOnce();
+      visitPinboardIntroductionSpy.should.be.calledOnce();
+
+      wrapper.setProps({ isPinboardIntroductionVisited: true });
       should(wrapper.html()).be.null();
     });
 
-    it('should call setPinboardIntroductionVisited and redirect to /pinboard/ on Get Started clicked', function () {
+    it('should call visitPinboardIntroduction and redirect to /pinboard/ on Get Started clicked', function () {
       wrapper.find('.get-started-btn').simulate('click');
-      setPinboardIntroductionVisitedSpy.should.be.calledOnce();
+      visitPinboardIntroductionSpy.should.be.calledOnce();
       browserHistoryPushSpy.should.be.calledWith('/pinboard/');
     });
   });
 
-  context('isPinboardIntroductionVisited() return true', function () {
+  context('isPinboardIntroductionVisited is true', function () {
     it('should render nothing', function () {
-      localStorage.setItem(PINBOARD_INTRODUCTION.PINBOARD_INTRODUCTION, '1');
-      const wrapper = mount(<PinboardIntroduction />);
+      const wrapper = mount(<PinboardIntroduction isPinboardIntroductionVisited={ true } />);
       should(wrapper.html()).be.null();
     });
   });
