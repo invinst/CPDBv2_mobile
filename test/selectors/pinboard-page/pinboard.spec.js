@@ -6,6 +6,7 @@ import {
   examplePinboardsSelector,
   isItemPinned,
   pinboardPageLoadingSelector,
+  hasPendingChangesSelector,
 } from 'selectors/pinboard-page/pinboard';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 
@@ -343,6 +344,21 @@ describe('Pinboard selectors', function () {
         };
         pinboardPageLoadingSelector(state).should.be.false();
       });
+    });
+  });
+
+  describe('hasPendingChangesSelector', function () {
+    it('should return correct values', function () {
+      hasPendingChangesSelector({
+        pinboardPage: {
+          pinboard: { hasPendingChanges: true },
+        },
+      }).should.be.true();
+      hasPendingChangesSelector({
+        pinboardPage: {
+          pinboard: { hasPendingChanges: false },
+        },
+      }).should.be.false();
     });
   });
 });

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { removeItemInPinboardPage, orderPinboard } from 'actions/pinboard';
 import PinnedType from 'components/pinboard-page/pinned-type';
 import { pinnedTRRsSelector, getPinnedTRRsRequesting } from 'selectors/pinboard-page/items';
+import { getPinboardId } from 'selectors/pinboard-page/pinboard';
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -11,6 +12,7 @@ function mapStateToProps(state, ownProps) {
     title: 'TACTICAL RESPONSE REPORTS',
     items: pinnedTRRsSelector(state),
     requesting: getPinnedTRRsRequesting(state),
+    pinboardId: getPinboardId(state),
   };
 }
 

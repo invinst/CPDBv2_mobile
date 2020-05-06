@@ -8,6 +8,7 @@ import {
   isEmptyPinboard,
   getRequestPinboard,
   isPinboardFeatureEnabled,
+  redirectToCreatedPinboard,
 } from 'utils/pinboard';
 import {
   fetchPinboardSocialGraph,
@@ -22,6 +23,7 @@ import {
   fetchPinboardTRRs,
 } from 'actions/pinboard';
 import config from 'config';
+import browserHistory from 'utils/history';
 
 
 describe('pinboard utils', function () {
@@ -161,6 +163,38 @@ describe('pinboard utils', function () {
         stub(config.enableFeatures, 'pinboard').value(true);
         isPinboardFeatureEnabled().should.be.true();
       });
+    });
+  });
+
+  describe('redirectToCreatedPinboard', function () {
+    beforeEach(function () {
+      this.browserHistoryPush = stub(browserHistory, 'push');
+    });
+
+    it('should redirect to pinboard url', function () {
+      redirectToCreatedPinboard({
+        payload: {
+          id: '5cd06f2b',
+          title: 'Pinboard title',
+        },
+      });
+      this.browserHistoryPush.should.be.calledWith('/pinboard/5cd06f2b/pinboard-title/');
+    });
+
+    it('should not redirect if pinboard null', function () {
+      redirectToCreatedPinboard({
+        payload: null,
+      });
+      this.browserHistoryPush.should.not.be.called();
+    });
+
+    it('should not redirect if pinboard id is null', function () {
+      redirectToCreatedPinboard({
+        payload: {
+          title: 'Pinboard title',
+        },
+      });
+      this.browserHistoryPush.should.not.be.called();
     });
   });
 });

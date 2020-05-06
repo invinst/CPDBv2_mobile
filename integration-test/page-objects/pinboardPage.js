@@ -28,6 +28,16 @@ const baseRelevantComplaints = (type) => ({
   },
 });
 
+const nthPinboardItemTitle = (index) => ({
+  selector: `//div[contains(@class, "pinboard-item")][${index}]//div[@class="pinboard-title"]`,
+  locateStrategy: 'xpath',
+});
+
+const nthPinboardItemCreatedAt = (index) => ({
+  selector: `//div[contains(@class, "pinboard-item")][${index}]//div[@class="pinboard-created-at"]`,
+  locateStrategy: 'xpath',
+});
+
 
 module.exports = {
   url: function (pinboardId, queryString) {
@@ -43,10 +53,8 @@ module.exports = {
     body: 'body',
     header: '.header-parent',
     highlightedMenuItem: '.menu-item.highlight',
-    searchBar: {
-      locateStrategy: 'xpath',
-      selector: '(//a[starts-with(@class, "search-bar")])',
-    },
+    searchBar: '.search-box',
+    pinboardsListButton: '.pinboards-list-btn',
     socialGraphTitle: '.sidenav-title',
     socialGraph: {
       locateStrategy: 'xpath',
@@ -251,6 +259,25 @@ module.exports = {
             undoButton: '.undo-button',
           },
         },
+      },
+    },
+    pinboardsListSection: {
+      selector: '//div[contains(@class, "pinboards__pinboards")]',
+      locateStrategy: 'xpath',
+      elements: {
+        pinboardsTitle: '.pinboards-title',
+        createNewPinboardButton: '.new-pinboard-btn',
+        firstDuplicatePinboardButton: {
+          selector: '(//a[contains(@class, "duplicate-pinboard-btn")])[1]',
+          locateStrategy: 'xpath',
+        },
+        firstPinboardItemTitle: nthPinboardItemTitle(1),
+        firstPinboardItemCreatedAt: nthPinboardItemCreatedAt(1),
+        secondPinboardItemTitle: nthPinboardItemTitle(2),
+        secondPinboardItemCreatedAt: nthPinboardItemCreatedAt(2),
+        thirdPinboardItemTitle: nthPinboardItemTitle(3),
+        thirdPinboardItemCreatedAt: nthPinboardItemCreatedAt(3),
+        pinboardItems: '.pinboard-item',
       },
     },
   },
