@@ -6,7 +6,7 @@ import constants from 'constants';
 import { v2Url } from 'utils/url-util';
 
 
-const TRACKING_API_URL = v2Url(constants.TRACKING_API_ENGPOINT);
+const TRACKING_API_URL = v2Url(constants.TRACKING_API_ENDPOINT);
 
 describe('tracking utils', function () {
   describe('ga and clicky script is loaded', function () {

@@ -10,6 +10,7 @@ const {
   createPinboardWithRecentItemsResponse,
 } = require(__dirname + '/../mock-data/search');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
+const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 const {
   dismissPinButtonIntroduction,
   enablePinButtonIntroduction,
@@ -415,6 +416,7 @@ describe('SearchPageTest', function () {
     api.cleanMock();
     api.mock('GET', '/api/v2/search-mobile/?term=123', 200, mockSearchQueryResponseForRecentItems);
     api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
+    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
     this.searchPage = client.page.search();
     this.pinboardPage = client.page.pinboardPage();
     this.officerPage = client.page.officerPage();

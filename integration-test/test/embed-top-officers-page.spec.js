@@ -2,6 +2,7 @@
 
 const assert = require('assert');
 const api = require(__dirname + '/../mock-api');
+const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 
 const mockLandingPageCms = {
   fields: [
@@ -85,8 +86,10 @@ const mockTopByAllegation = [
 
 describe('EmbedTopOfficerPage', function () {
   beforeEach(function (client, done) {
+    api.cleanMock();
     api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
     api.mock('GET', '/api/v2/officers/top-by-allegation/', 200, mockTopByAllegation);
+    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
     this.embedTopOfficersPage = client.page.embedTopOfficersPage();
     this.embedTopOfficersPage.navigate();
     this.embedTopOfficersPage.expect.element('@body').to.be.present;

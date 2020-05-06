@@ -5,6 +5,7 @@ const assert = require('assert');
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
+const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 
 const officer2235 = {
   'officer_id': 2235,
@@ -380,6 +381,7 @@ describe('OfficerPage test', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
     api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
+    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
     done();
   });
 

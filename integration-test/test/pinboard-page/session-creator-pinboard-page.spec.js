@@ -2,13 +2,13 @@
 
 var api = require(__dirname + '/../../mock-api');
 const { TIMEOUT } = require(__dirname + '/../../constants');
-
+const { mockGetAppConfig } = require(__dirname + '/../../mock-data/app-config');
 var mockData = require(__dirname + '/../../mock-data/pinboard-page');
 
 describe('Session Creator Pinboard Page', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
-
+    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
     api.mockPost(
       '/api/v2/mobile/pinboards/',
       200,
