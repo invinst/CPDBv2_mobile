@@ -3,6 +3,7 @@
 var assert = require('assert');
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
+const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 
 const mockOfficers = [
   {
@@ -45,7 +46,9 @@ const mockOfficers = [
 
 describe('EmbedOfficerPage', function () {
   beforeEach(function (client, done) {
+    api.cleanMock();
     api.mock('GET', '/api/v2/mobile/officers/?ids=13788,8658', 200, mockOfficers);
+    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
     this.embedOfficersPage = client.page.embedOfficersPage();
     this.embedOfficersPage.navigate(
       this.embedOfficersPage.url('?ids=13788,8658&title=Some%20title&description=Some%20description')

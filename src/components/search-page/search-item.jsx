@@ -7,7 +7,8 @@ import { noop } from 'lodash';
 import ItemPinButton from 'components/common/item-pin-button';
 import style from './search-item.sass';
 import * as tracking from 'utils/tracking';
-import { PINBOARD_INTRODUCTION_DELAY } from 'constants';
+import { APP_CONFIG_KEYS } from 'constants';
+import appConfig from 'utils/app-config';
 
 
 export default class SearchItem extends Component {
@@ -20,7 +21,7 @@ export default class SearchItem extends Component {
       this.displayIntroductionTimeout = setTimeout (() => {
         this.setState({ displayIntroduction: true });
         this.displayIntroductionTimeout = null;
-      }, PINBOARD_INTRODUCTION_DELAY);
+      }, appConfig.get(APP_CONFIG_KEYS.PINBOARD_INTRODUCTION_DELAY));
     }
   }
 

@@ -1,14 +1,23 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { spy, useFakeTimers } from 'sinon';
+import { spy, match, stub, useFakeTimers } from 'sinon';
 
 import PinboardButton from 'components/landing-page/header-links/pinboard-button';
 import browserHistory from 'utils/history';
-import { PINBOARD_INTRODUCTION_DELAY } from 'constants';
+import { APP_CONFIG_KEYS } from 'constants';
+import * as appConfig from 'utils/app-config';
 
+
+const PINBOARD_INTRODUCTION_DELAY = 2000;
 
 describe('PinboardButton component', function () {
   let wrapper;
+  beforeEach(function () {
+    appConfig.default.set({
+      [APP_CONFIG_KEYS.PINBOARD_INTRODUCTION_DELAY]: PINBOARD_INTRODUCTION_DELAY,
+    });
+  });
+
   describe('componentDidMount', function () {
     it('should set displayIntroduction to true after delay', function () {
       const clock = useFakeTimers();
@@ -16,6 +25,20 @@ describe('PinboardButton component', function () {
       wrapper.state('displayIntroduction').should.be.false();
       clock.tick(PINBOARD_INTRODUCTION_DELAY + 100);
       wrapper.state('displayIntroduction').should.be.true();
+    });
+
+    it('should get timeout value from appConfig', function () {
+      const pinboardIntroductionDelay = 12;
+      const appConfigGetStub = stub(appConfig.default, 'get')
+        .withArgs(APP_CONFIG_KEYS.PINBOARD_INTRODUCTION_DELAY)
+        .returns(pinboardIntroductionDelay);
+      const setTimeoutSpy = spy(window, 'setTimeout');
+      mount(<PinboardButton />);
+
+      appConfigGetStub.should.be.calledOnce();
+      appConfigGetStub.should.be.calledWith(APP_CONFIG_KEYS.PINBOARD_INTRODUCTION_DELAY);
+      setTimeoutSpy.should.be.calledOnce();
+      setTimeoutSpy.should.be.calledWith(match.any, pinboardIntroductionDelay);
     });
   });
 

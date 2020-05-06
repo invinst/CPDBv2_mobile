@@ -10,11 +10,17 @@ import SearchResult from 'components/search-page/search-result';
 import OfficerItem from 'components/search-page/officer-item';
 import CrItem from 'components/search-page/cr-item';
 import TrrItem from 'components/search-page/trr-item';
-import { PINBOARD_INTRODUCTION_DELAY } from 'constants';
+import { APP_CONFIG_KEYS } from 'constants';
+import appConfig from 'utils/app-config';
 
+
+const PINBOARD_INTRODUCTION_DELAY = 1000;
 
 describe('<SearchResult />', function () {
   it('should render correctly', function () {
+    appConfig.set({
+      [APP_CONFIG_KEYS.PINBOARD_INTRODUCTION_DELAY]: PINBOARD_INTRODUCTION_DELAY,
+    });
     const timer = useFakeTimers();
     const spyGetSuggestionWithContentType = spy();
     const store = MockStore()({

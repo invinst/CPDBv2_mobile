@@ -9,6 +9,7 @@ function mapStateToProps(state, ownProps) {
   return {
     query: state.suggestionApp.query,
     isSearchFocused: state.suggestionApp.isSearchFocused,
+    appConfigRequesting: state.appConfigRequesting,
   };
 }
 
