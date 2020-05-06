@@ -1,63 +1,37 @@
-CPDBv2_mobile
---
 
-# Local dev setup
 
-## Backend
 
-Pull backend repo, initialize & provision vagrant box:
+# CPDB v2 Mobile
 
-```bash
-git clone git@github.com:EastAgile/CPDBv2_backend.git
-cd CPDBv2_backend
-vagrant up --provision
-# enter vault password when provisioning starts
-```
+## Table of contents
+* [Development](#development)
+* [Deployment](#deployment)
+* [Browser supports](#browser-supports)
+* [Development Guides](#development-guides)
 
-SSH into the provisioned box and do whatever extra steps mentioned in backend
-repo's README. As of now this means:
+## Development
 
-- Create initial data with `./cpdb/manage.py cms_create_initial_data`
-- Import v2 actual data from csv dumps. Consult backend docs for details
-- Disable supervisor application: `sudo supervisorctl stop cpdb`
-- Start django devserver manually: `./cpdb/manage.py runserver 0.0.0.0:8000`
+### Getting Started
 
-You should now have a backend server running at localhost:8000 .
-
-## Mobile frontend
-
-Unlike backend, we run the frontend devserver directly from host machine.
-
-- Install `npm` v6 and latest `yarn` (0.27.5 as of now)
-- Run `yarn install`
-- Run `yarn run start` to start devserver at localhost:9967
+- Install `yarn`
+- `yarn start` to run development server.
+- visit `localhost:9967` to see live changes.
 
 If you want to access the dev site from another device through LAN, remember
 to define your host machine's LAN IP as the API hostname. For example:
 
 ```bash
-CPDB_API_HOST=192.168.13.37:8000 yarn run start
-# replace 192.168.13.37 with your actual IP
+CPDB_API_HOST=[IP_ADDRESS]:8000 yarn run start
 ```
 
-# Testing:
+### Run Unit Tests
 
-User either `yarn run test:watch` or `yarn run mocha-watch` to start karma
-server that reruns unit tests automatically on file save. The latter excludes
-coverage report so you can see failed tests more easily.
+- `yarn test` to run tests.
 
-Run `yarn run integration-test` for end-to-end tests. Make sure you have java 8 and the
-latest chromedriver. If on mac:
+### Run Integration Tests
 
-```bash
-brew update
-brew cask install java
-brew cask install chromedriver  # or `brew cask upgrade chromedriver`
-```
-
-(we're using Chrome 59 with chromedriver 2.31 at the time of writing)
-
-To run single integration-test file:
+- `yarn integration-test` to run selenium tests.
+- To run specific test
 
 ```bash
 yarn run integration-test -- --file integration-test/test/complaint-page.spec.js  
@@ -65,7 +39,16 @@ yarn run integration-test -- --file integration-test/test/complaint-page.spec.js
 yarn run integration-test -- --file complaint-page
 ```
 
-### Building & pushing the docker image for CI:
+## Deployment
+
+Deployment should be almost automatic depending on which branch you pushed. 
+- `master` branch push will trigger production deploy
+- `beta` branch push will trigger beta deploy
+- `staging` branch push will trigger staging deploy
+
+If you want to see each step, look at `.circleci/config.yml`.
+
+### Building & pushing the docker image
 
 **Important: Current version of Docker image is 0.0.1. Please update this when you make changes to it.**
 
@@ -77,55 +60,10 @@ docker push cpdbdev/cpdbv2_mobile:0.0.1
 
 Remember to bump the version of course.
 
-# Deployment
-## Ansible
-We are using Ansible as a configuration manager and deploy tool. You can install it through your OS package manager or pip, but [pipenv](https://github.com/pypa/pipenv) is encouraged.  After the installation steps (`brew install pipenv`, then `pipenv install`), you can run Ansible:
-```bash
-pipenv run ansible --version
-```
+## Browser supports
 
-## Setup the server
-Any changes made to the server would go through Ansible scripts, making changes manually must be considered carefully. 
-
-For spawning a new server instance, just run the Ansible setup task (which helps to ensure that we have nginx and nvm on the server):
-```bash
-pipenv run ansible-playbook -i ansible/staging ansible/setup.yml
-```
-Please make sure that you have an ssh-key which has enough permission to access the servers.
-
-## Deploy 
-Every change merged to staging branch will be automatically deployed to staging server if they do pass the tests. The production still needs to be deployed manually with these below steps:
-```bash
-pipenv run ansible-playbook -i ansible/production ansible/deploy.yml
-```
-For security reasons, we are using SSH forward agent instead of storing the ssh keys in the server, so make sure your ssh key (at least has `read` permission to the repositories, and accessible to the servers) is added to ssh-agent:
-```bash
-eval $(ssh-agent -c)
-ssh-add ~/.ssh/<your-key-here>
-```
-
-## Rollback
-If there are any issues with the deployment, we can quickly rollback to the latest previous version:
-```bash
-pipenv run ansible-playbook -i ansible/production ansible/deploy.yml
-```
-Or you can specify the release version:
-```bash
-pipenv run ansible-playbook -i ansible/production ansible/deploy.yml -e rollback_to="20180702101602"
-```
-with "20180702101602" is the version that you want to rollback to.
-
+Chrome 45+, Firefox 45+, IE 11, Safari 9+ and iOS 8+ Safari.
 
 ## Development Guides
 
 - [CSS development guide](docs/css-development-guide.md)
-
-# Misc
-
-You should also `yarn run lint` before pushing. We strongly recommend setting up
-eslint integration for your IDE or text editor.
-
-
-
-
-
