@@ -711,7 +711,7 @@ describe('Disable pinboard feature', function () {
     it('should not display pinboard introduction', function (client) {
       clearReduxStore(client);
       this.searchPage.waitForElementVisible('@queryInput');
-      this.searchPage.section.pinboardIntroduction.expect.element('@content').to.not.be.visible;
+      this.searchPage.section.pinboardIntroduction.expect.element('@content').to.not.be.present;
     });
 
     it('should not display PinButton introduction', function (client) {
