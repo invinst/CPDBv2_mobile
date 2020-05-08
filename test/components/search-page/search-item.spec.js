@@ -7,8 +7,7 @@ import { createBrowserHistory } from 'history';
 import SearchItem from 'components/search-page/search-item';
 import ItemPinButton from 'components/common/item-pin-button';
 import * as tracking from 'utils/tracking';
-import { APP_CONFIG_KEYS, PINBOARD_INTRODUCTION } from 'constants';
-import * as pinboardUtils from 'utils/pinboard';
+import { APP_CONFIG_KEYS } from 'constants';
 import * as appConfig from 'utils/app-config';
 
 
@@ -27,7 +26,6 @@ describe('<SearchItem />', function () {
   });
 
   it('should render ItemPinButton if hasPinButton is true', function () {
-    localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
     const timer = useFakeTimers();
     const addOrRemoveItemInPinboard = spy();
     const wrapper = shallow(
@@ -107,14 +105,16 @@ describe('<SearchItem />', function () {
   });
 
   describe('componentDidMount', function () {
-    context('isPinButtonIntroductionVisited() return true', function () {
-      beforeEach(function () {
-        localStorage.setItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION, '1');
-      });
+    context('isPinButtonIntroductionVisited is true', function () {
       context('showIntroduction is true', function () {
         it('should not set displayIntroduction to true after timeout', function () {
           const timer = useFakeTimers();
-          const wrapper = shallow(<SearchItem showIntroduction={ true } />);
+          const wrapper = shallow(
+            <SearchItem
+              showIntroduction={ true }
+              isPinButtonIntroductionVisited={ true }
+            />
+          );
           wrapper.state('displayIntroduction').should.be.false();
           timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
           wrapper.state('displayIntroduction').should.be.false();
@@ -124,7 +124,12 @@ describe('<SearchItem />', function () {
       context('showIntroduction is false', function () {
         it('should not set displayIntroduction to true after timeout', function () {
           const timer = useFakeTimers();
-          const wrapper = shallow(<SearchItem showIntroduction={ false } />);
+          const wrapper = shallow(
+            <SearchItem
+              showIntroduction={ false }
+              isPinButtonIntroductionVisited={ true }
+            />
+          );
           wrapper.state('displayIntroduction').should.be.false();
           timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
           wrapper.state('displayIntroduction').should.be.false();
@@ -132,10 +137,7 @@ describe('<SearchItem />', function () {
       });
     });
 
-    context('isPinButtonIntroductionVisited() return false', function () {
-      beforeEach(function () {
-        localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
-      });
+    context('isPinButtonIntroductionVisited is false', function () {
       context('showIntroduction is true', function () {
         it('should set displayIntroduction to true after timeout', function () {
           const timer = useFakeTimers();
@@ -175,7 +177,6 @@ describe('<SearchItem />', function () {
   describe('componentWillUnmount', function () {
     context('this.displayIntroductionTimeout is not null', function () {
       it('should call clearTimeout', function () {
-        localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
         const clearTimeoutSpy = spy(window, 'clearTimeout');
         const wrapper = mount(
           <Router history={ createBrowserHistory() }>
@@ -197,13 +198,15 @@ describe('<SearchItem />', function () {
 
     context('click on item', function () {
       it('should call preventDefault and setPinButtonIntroductionVisited', function () {
-        localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
         const timer = useFakeTimers();
         const preventDefaultSpy = spy();
-        const setPinButtonIntroductionVisitedSpy = spy(pinboardUtils, 'setPinButtonIntroductionVisited');
+        const visitPinButtonIntroductionSpy = spy();
         const wrapper = mount(
           <Router history={ createBrowserHistory() }>
-            <SearchItem showIntroduction={ true } />
+            <SearchItem
+              showIntroduction={ true }
+              visitPinButtonIntroduction={ visitPinButtonIntroductionSpy }
+            />
           </Router>
         );
         timer.tick(PINBOARD_INTRODUCTION_DELAY + 50);
@@ -215,22 +218,21 @@ describe('<SearchItem />', function () {
         );
         preventDefaultSpy.should.be.calledOnce();
         trackSearchFocusedItemStub.should.be.calledOnce();
-        setPinButtonIntroductionVisitedSpy.should.be.calledOnce();
-
-        wrapper.update();
-        wrapper.find('.pin-button-introduction').exists().should.be.false();
+        visitPinButtonIntroductionSpy.should.be.calledOnce();
       });
     });
 
     context('click on introduction', function () {
       it('should dismiss PinButton introduction', function () {
-        localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
         const timer = useFakeTimers();
         const preventDefaultSpy = spy();
-        const setPinButtonIntroductionVisitedSpy = spy(pinboardUtils, 'setPinButtonIntroductionVisited');
+        const visitPinButtonIntroductionSpy = spy();
         const wrapper = mount(
           <Router history={ createBrowserHistory() }>
-            <SearchItem showIntroduction={ true } />
+            <SearchItem
+              showIntroduction={ true }
+              visitPinButtonIntroduction={ visitPinButtonIntroductionSpy }
+            />
           </Router>
         );
 
@@ -243,10 +245,7 @@ describe('<SearchItem />', function () {
         );
         preventDefaultSpy.should.be.calledOnce();
         trackSearchFocusedItemStub.should.be.calledOnce();
-        setPinButtonIntroductionVisitedSpy.should.be.calledOnce();
-
-        wrapper.update();
-        wrapper.find('.pin-button-introduction').exists().should.be.false();
+        visitPinButtonIntroductionSpy.should.be.calledOnce();
       });
     });
   });

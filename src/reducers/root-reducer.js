@@ -10,6 +10,7 @@ import breadcrumb from './breadcrumb';
 import embed from './embed';
 import pinboardPage from './pinboard-page';
 import toasts from './toasts';
+import pinboardIntroduction from './pinboard-introduction';
 import appConfigRequesting from './common/app-config-requesting';
 
 
@@ -24,5 +25,6 @@ export default (history) => combineReducers({
   embed,
   pinboardPage,
   toasts,
+  pinboardIntroduction,
   appConfigRequesting,
 });

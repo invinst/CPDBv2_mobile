@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import styles from './pinboard-introduction.sass';
-import { isPinboardIntroductionVisited, setPinboardIntroductionVisited } from 'utils/pinboard';
 import browserHistory from 'utils/history';
 
 export default class PinboardIntroduction extends Component {
   onCloseButtonClick = () => {
-    setPinboardIntroductionVisited();
-    this.forceUpdate();
+    this.props.visitPinboardIntroduction();
   };
 
   onGetStartedButtonClick = () => {
-    setPinboardIntroductionVisited();
+    this.props.visitPinboardIntroduction();
     browserHistory.push('/pinboard/');
   };
 
   render() {
-    return !isPinboardIntroductionVisited() && (
+    return !this.props.isPinboardIntroductionVisited && (
       <div className={ cx(styles.pinboardIntroduction, 'pinboard-feature') }>
         <div className='introduction-title'>Introducing Pinboards</div>
         <div className='introduction-close-btn' onClick={ this.onCloseButtonClick } />
@@ -33,3 +32,8 @@ export default class PinboardIntroduction extends Component {
     );
   }
 }
+
+PinboardIntroduction.propTypes = {
+  visitPinboardIntroduction: PropTypes.func,
+  isPinboardIntroductionVisited: PropTypes.bool,
+};

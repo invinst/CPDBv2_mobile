@@ -36,6 +36,8 @@ ItemPinButton.propTypes = {
   className: PropTypes.string,
   showHint: PropTypes.bool,
   showIntroduction: PropTypes.bool,
+  visitPinButtonIntroduction: PropTypes.func,
+  isPinButtonIntroductionVisited: PropTypes.bool,
 };
 
 ItemPinButton.defaultProps = {

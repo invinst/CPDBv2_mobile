@@ -5,6 +5,7 @@ export default {
       suggestionApp: {
         recentSuggestions: state.suggestionApp.recentSuggestions,
       },
+      pinboardIntroduction: state.pinboardIntroduction,
     });
   },
 };

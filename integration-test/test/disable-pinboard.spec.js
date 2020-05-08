@@ -8,11 +8,7 @@ const {
   mockNewDocuments,
   mockComplaintSummaries,
 } = require(__dirname + '/../mock-data/main-page');
-const {
-  enablePinboardButtonIntroduction,
-  enablePinboardIntroduction,
-  enablePinButtonIntroduction,
-} = require(__dirname + '/../utils');
+const { clearReduxStore } = require(__dirname + '/../utils');
 
 const officer2235 = {
   'officer_id': 2235,
@@ -635,7 +631,7 @@ describe('Disable pinboard feature', function () {
     });
 
     it('should not display pinboard button introduction', function (client) {
-      enablePinboardButtonIntroduction(client);
+      clearReduxStore(client);
       this.mainPage.waitForElementVisible('@searchLink');
       this.mainPage.section.pinboardButtonIntroduction.expect.element('@introductionContent').to.not.be.present;
     });
@@ -713,13 +709,13 @@ describe('Disable pinboard feature', function () {
     });
 
     it('should not display pinboard introduction', function (client) {
-      enablePinboardIntroduction(client);
+      clearReduxStore(client);
       this.searchPage.waitForElementVisible('@queryInput');
       this.searchPage.section.pinboardIntroduction.expect.element('@content').to.not.be.present;
     });
 
     it('should not display PinButton introduction', function (client) {
-      enablePinButtonIntroduction(client);
+      clearReduxStore(client);
       this.searchPage.waitForElementVisible('@queryInput');
       this.searchPage.setValue('@queryInput', '123');
       const firstOfficerRow = this.searchPage.section.officers.section.firstRow;

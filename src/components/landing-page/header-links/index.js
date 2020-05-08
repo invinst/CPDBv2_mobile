@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import constants from 'constants/index';
-import PinboardButton from 'components/landing-page/header-links/pinboard-button';
+import PinboardButtonContainer from 'containers/landing-page/header-links/pinboard-button-container';
 import styles from './header-links.sass';
 
 
@@ -10,7 +10,7 @@ export default function HeaderLinks() {
   return (
     <div className={ styles.headerLinks }>
       <a href={ constants.QA_URL } className='header-link'>Q&A</a>
-      <PinboardButton />
+      <PinboardButtonContainer />
     </div>
   );
 }

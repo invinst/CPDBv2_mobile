@@ -21,8 +21,6 @@ const SearchResult = (
   {
     itemType,
     items,
-    saveToRecent,
-    addOrRemoveItemInPinboard,
     getSuggestionWithContentType,
     query,
     nextParams,
@@ -44,8 +42,6 @@ const SearchResult = (
             item={ item }
             query={ query }
             showIntroduction={ item.showIntroduction }
-            saveToRecent={ saveToRecent }
-            addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
           />
         ))
       }
@@ -57,7 +53,6 @@ SearchResult.propTypes = {
   itemType: PropTypes.string,
   saveToRecent: PropTypes.func,
   items: PropTypes.array,
-  addOrRemoveItemInPinboard: PropTypes.func,
   getSuggestionWithContentType: PropTypes.func,
   nextParams: PropTypes.object,
   hasMore: PropTypes.bool,

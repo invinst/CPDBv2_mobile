@@ -830,7 +830,7 @@ describe('search-page selectors', function () {
             isPinned: true,
             itemRank: 3,
             recentItemData: { id: 123456, type: 'TRR' },
-            showIntroduction: false,
+            showIntroduction: true,
             type: 'TRR',
             url: '/trr/123456/',
           },

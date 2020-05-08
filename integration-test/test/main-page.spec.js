@@ -10,8 +10,8 @@ const {
   mockComplaintSummaries,
 } = require(__dirname + '/../mock-data/main-page');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
+const { clearReduxStore } = require(__dirname + '/../utils');
 const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
-const { enablePinboardButtonIntroduction } = require(__dirname + '/../utils');
 
 
 describe('MainPageTest', function () {
@@ -207,7 +207,7 @@ describe('MainPageTest', function () {
 
   describe('Pinboard Introduction', function () {
     beforeEach(function (client, done) {
-      enablePinboardButtonIntroduction(client);
+      clearReduxStore(client);
       this.mainPage.waitForElementVisible('@body');
       done();
     });

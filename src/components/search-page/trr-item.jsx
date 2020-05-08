@@ -2,16 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import SearchItem from './search-item';
+import SearchItemContainer from 'containers/search-page/search-item-container';
 import searchItemStyle from './search-item.sass';
 
 
-const TrrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
+const TrrItem = ({ item, query }) => {
   return (
-    <SearchItem
+    <SearchItemContainer
       url={ item.url }
       hasPinButton={ true }
-      addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
       showIntroduction={ item.showIntroduction }
       id={ item.id }
       query={ query }
@@ -19,13 +18,12 @@ const TrrItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
       isPinned={ item.isPinned }
       type={ item.type }
       recentItemData={ item.recentItemData }
-      saveToRecent={ saveToRecent }
     >
       <div className={ cx(searchItemStyle.itemInfo, 'inline') }>
         <div className='item-title'>TRR</div>
         <div className='item-subtitle'>{ item.id }</div>
       </div>
-    </SearchItem>
+    </SearchItemContainer>
   );
 };
 
@@ -39,8 +37,6 @@ TrrItem.propTypes = {
     itemRank: PropTypes.number,
     showIntroduction: PropTypes.bool,
   }),
-  saveToRecent: PropTypes.func,
-  addOrRemoveItemInPinboard: PropTypes.func,
   query: PropTypes.string,
   showIntroduction: PropTypes.bool,
 };

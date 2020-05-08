@@ -202,7 +202,7 @@ const showIntroductionTransform = (categories) => {
   let hasFirstIntroduction = false;
   return map(categories, ({ items, ...remain }) => {
     const showIntroduction = !hasFirstIntroduction
-      && !isUndefined(constants.PINBOARD_PAGE.PINNED_ITEM_TYPES[remain.path]);
+      && (!isUndefined(constants.PINBOARD_PAGE.PINNED_ITEM_TYPES[remain.path]) || remain.name === 'RECENT');
     if (showIntroduction) {
       hasFirstIntroduction = true;
     }

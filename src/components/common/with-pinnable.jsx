@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { noop, every, isEmpty } from 'lodash';
 
-import { isPinButtonIntroductionVisited, setPinButtonIntroductionVisited } from 'utils/pinboard';
-
 
 export default function withPinnable(WrappedComponent) {
   class _Base extends Component {
@@ -11,11 +9,17 @@ export default function withPinnable(WrappedComponent) {
       e.preventDefault();
       e.stopPropagation();
 
-      const { addOrRemoveItemInPinboard, items, item } = this.props;
+      const {
+        addOrRemoveItemInPinboard,
+        items,
+        item,
+        isPinButtonIntroductionVisited,
+        visitPinButtonIntroduction,
+      } = this.props;
       const addOrRemoveItems = isEmpty(items) ? [item] : items;
       const allIsPinned = every(addOrRemoveItems, item => item.isPinned);
-      if (!isPinButtonIntroductionVisited()) {
-        setPinButtonIntroductionVisited();
+      if (!isPinButtonIntroductionVisited) {
+        visitPinButtonIntroduction();
       }
 
       addOrRemoveItems.forEach(addOrRemoveItem => {
@@ -37,6 +41,8 @@ export default function withPinnable(WrappedComponent) {
     addOrRemoveItemInPinboard: PropTypes.func,
     item: PropTypes.object,
     items: PropTypes.array,
+    isPinButtonIntroductionVisited: PropTypes.bool,
+    visitPinButtonIntroduction: PropTypes.func,
   };
 
   _Base.defaultProps = {
@@ -47,6 +53,7 @@ export default function withPinnable(WrappedComponent) {
       isPinned: false,
     },
     items: [],
+    visitPinButtonIntroduction: noop,
   };
 
   return _Base;
