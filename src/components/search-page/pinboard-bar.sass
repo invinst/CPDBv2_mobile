@@ -3,18 +3,29 @@
 %pinboard-bar-common
   display: block
   width: 100%
-  height: $pinboard-bar-height
   box-sizing: border-box
-  padding-top: 19px
   text-align: center
   font-size: 14px
   font-weight: 300
+  line-height: $pinboard-bar-height
 
 \:local(.pinboard-bar)
   @extend %pinboard-bar-common
+  position: relative
   color: $japanese-laurel-color
   background-color: $willow-brook-color
   text-decoration: none
+  z-index: -1
+  transform: translateY(-100%)
+  visibility: hidden
+  height: 0
+  transition: transform $medium-animation-duration ease-in, visibility $medium-animation-duration, height 0ms linear $medium-animation-duration
+
+  &.slide-in
+    height: $pinboard-bar-height
+    visibility: visible
+    transform: translateY(0)
+    transition: transform $medium-animation-duration ease-in
 
   .pinboard-bar-indicator
     display: block

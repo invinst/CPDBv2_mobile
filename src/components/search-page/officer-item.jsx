@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SearchItem from './search-item';
+import SearchItemContainer from 'containers/search-page/search-item-container';
 import searchItemStyle from './search-item.sass';
 
 
-const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) => {
+const OfficerItem = ({ item, query }) => {
   const extraInfo = {
     fullName: item.name,
   };
   return (
-    <SearchItem
+    <SearchItemContainer
       url={ item.url }
       hasPinButton={ true }
-      addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
       showIntroduction={ item.showIntroduction }
       id={ item.id }
       query={ query }
@@ -22,13 +21,12 @@ const OfficerItem = ({ item, saveToRecent, addOrRemoveItemInPinboard, query }) =
       type={ item.type }
       recentItemData={ item.recentItemData }
       extraInfo={ extraInfo }
-      saveToRecent={ saveToRecent }
     >
       <div className={ searchItemStyle.itemInfo }>
         <div className='item-title'>{ item.name }</div>
         <div className='item-subtitle'>{ item.badge }</div>
       </div>
-    </SearchItem>
+    </SearchItemContainer>
   );
 };
 
@@ -44,8 +42,6 @@ OfficerItem.propTypes = {
     recentItemData: PropTypes.object,
     showIntroduction: PropTypes.bool,
   }),
-  saveToRecent: PropTypes.func,
-  addOrRemoveItemInPinboard: PropTypes.func,
   query: PropTypes.string,
   showIntroduction: PropTypes.bool,
 };

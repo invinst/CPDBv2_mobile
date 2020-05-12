@@ -24,14 +24,6 @@ describe('<SearchPage />', function () {
     wrapper.should.be.ok();
   });
 
-  it('should render PInboardIntroduction', function () {
-    const wrapper = shallow(
-      <SearchPage />,
-      { disableLifecycleMethods: true },
-    );
-    wrapper.find('PinboardIntroduction').exists().should.be.true();
-  });
-
   it('should call browserHistory.push when user click on back button', function () {
     const browserHistoryPush = stub(browserHistory, 'push');
 
@@ -357,9 +349,7 @@ describe('<SearchPage />', function () {
     it('should pass correct props to SearchCategory', function () {
       const stubBoundCallback = stub(SearchPage.prototype.chooseCategory, 'bind');
       stubBoundCallback.returns(SearchPage.prototype.chooseCategory);
-      const spySaveToRecent = spy();
       const spyUpdateActiveCategory = spy();
-      const spyAddOrRemoveItemInPinboard = spy();
       const spyGetSuggestionWithContentType = spy();
 
       const categories = [{
@@ -393,9 +383,7 @@ describe('<SearchPage />', function () {
           categories={ categories }
           chosenCategory='officers'
           activeCategory='officers'
-          saveToRecent={ spySaveToRecent }
           updateActiveCategory={ spyUpdateActiveCategory }
-          addOrRemoveItemInPinboard={ spyAddOrRemoveItemInPinboard }
           getSuggestionWithContentType={ spyGetSuggestionWithContentType }
           nextParams={ {
             contentType: 'OFFICER',
@@ -415,10 +403,8 @@ describe('<SearchPage />', function () {
       searchCategory.prop('showAllButton').should.be.true();
       searchCategory.prop('title').should.equal('OFFICERS');
       searchCategory.prop('items').should.eql(categories[0].items);
-      searchCategory.prop('saveToRecent').should.eql(spySaveToRecent);
       searchCategory.prop('updateActiveCategory').should.eql(spyUpdateActiveCategory);
       searchCategory.prop('activeCategory').should.equal('officers');
-      searchCategory.prop('addOrRemoveItemInPinboard').should.eql(spyAddOrRemoveItemInPinboard);
       searchCategory.prop('getSuggestionWithContentType').should.eql(spyGetSuggestionWithContentType);
       searchCategory.prop('query').should.equal('qa');
       searchCategory.prop('nextParams').should.eql({
@@ -573,16 +559,61 @@ describe('<SearchPage />', function () {
   });
 
   context('pinboard is empty', function () {
-    it('should not render PinboardBar', function () {
-      const wrapper = mount(<SearchPage pinboard={ { itemsCount: 0 } } />);
-      wrapper.find('PinboardBar').exists().should.be.false();
+    it('should not display PinboardBar', function () {
+      const wrapper = mount(<SearchPage pinboard={ { isPinboardRestored: true, itemsCount: 0 } } />);
+      wrapper.find('PinboardBar').childAt(0).prop('className').should.not.containEql('slide-in');
+    });
+
+    context('query is not long enough', function () {
+      it('should render PinboardIntroduction', function () {
+        const wrapper = mount(
+          <SearchPage
+            pinboard={ { itemsCount: 0 } }
+            query=''
+          />
+        );
+        wrapper.find('PinboardIntroduction').exists().should.be.true();
+      });
+    });
+
+    context('query is long enough', function () {
+      it('should not render PinboardIntroduction', function () {
+        const wrapper = mount(
+          <SearchPage
+            pinboard={ { itemsCount: 0 } }
+            query='1234'
+          />
+        );
+        wrapper.find('PinboardIntroduction').exists().should.be.false();
+      });
     });
   });
 
   context('pinboard is not empty', function () {
-    it('should render PinboardBar', function () {
-      const wrapper = mount(<SearchPage pinboard={ { itemsCount: 1 } } />);
-      wrapper.find('PinboardBar').exists().should.be.true();
+    it('should display PinboardBar', function () {
+      const wrapper = mount(<SearchPage pinboard={ { isPinboardRestored: true, itemsCount: 1 } } />);
+      wrapper.find('PinboardBar').childAt(0).prop('className').should.containEql('slide-in');
+    });
+
+    context('query is not long enough', function () {
+      it('should not render PinboardIntroduction', function () {
+        const wrapper = mount(
+          <SearchPage
+            pinboard={ { itemsCount: 2 } }
+            query=''
+          />
+        );
+        wrapper.find('PinboardIntroduction').exists().should.be.false();
+      });
+    });
+
+    context('query is long enough', function () {
+      it('should render PinboardIntroduction', function () {
+        const wrapper = mount(<SearchPage
+          query='1234'
+          pinboard={ { itemsCount: 2 } } />);
+        wrapper.find('PinboardIntroduction').exists().should.be.false();
+      });
     });
   });
 });

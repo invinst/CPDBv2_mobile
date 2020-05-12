@@ -1,7 +1,7 @@
 'use strict';
 
-require('babel-polyfill');
-require('core-js/fn/object/assign');
+require('core-js/stable');
+import 'regenerator-runtime/runtime';
 require('./setup');
 
 // Add support for all files in the test directory

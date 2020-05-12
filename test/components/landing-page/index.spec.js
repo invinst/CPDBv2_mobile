@@ -44,6 +44,7 @@ describe('<LandingPage />', function () {
         complaintSummaries: [1],
         cmsRequested: true,
       },
+      pinboardIntroduction: {},
     });
 
     const spyRequestCMS = spy();

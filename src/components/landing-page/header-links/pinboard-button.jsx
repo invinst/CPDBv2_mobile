@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
+import { noop } from 'lodash';
 import cx from 'classnames';
+import PropTypes from 'prop-types';
 
 import browserHistory from 'utils/history';
-import { isPinboardButtonIntroductionVisited, setPinboardButtonIntroductionVisited } from 'utils/pinboard';
 import styles from './pinboard-button.sass';
-import { PINBOARD_INTRODUCTION_DELAY } from 'constants';
+import { APP_CONFIG_KEYS } from 'constants';
+import appConfig from 'utils/app-config';
 
 
 export default class PinboardButton extends Component {
   state = { displayIntroduction: false };
 
   componentDidMount() {
-    this.displayIntroductionTimeout = setTimeout(() => {
-      this.setState({ displayIntroduction: true });
-    }, PINBOARD_INTRODUCTION_DELAY);
+    if (!this.props.isPinboardButtonIntroductionVisited) {
+      this.displayIntroductionTimeout = setTimeout(() => {
+        this.setState({ displayIntroduction: true });
+      }, appConfig.get(APP_CONFIG_KEYS.PINBOARD_INTRODUCTION_DELAY));
+    }
   }
 
   componentWillUnmount() {
@@ -22,18 +26,18 @@ export default class PinboardButton extends Component {
 
   onClick = (e) => {
     e && e.stopPropagation();
-    setPinboardButtonIntroductionVisited();
+    this.props.visitPinboardButtonIntroduction();
     browserHistory.push('/pinboard/');
   };
 
   onDismissClick = () => {
-    setPinboardButtonIntroductionVisited();
-    this.forceUpdate();
+    this.props.visitPinboardButtonIntroduction();
   };
 
   render() {
     const { displayIntroduction } = this.state;
-    const showIntroduction = !isPinboardButtonIntroductionVisited() && displayIntroduction;
+    const { isPinboardButtonIntroductionVisited } = this.props;
+    const showIntroduction = !isPinboardButtonIntroductionVisited && displayIntroduction;
     return (
       <div className={ cx(styles.pinboardButton, 'pinboard-feature' ) }>
         <div
@@ -59,3 +63,13 @@ export default class PinboardButton extends Component {
     );
   }
 }
+
+PinboardButton.propTypes = {
+  isPinboardButtonIntroductionVisited: PropTypes.bool,
+  visitPinboardButtonIntroduction: PropTypes.func,
+};
+
+PinboardButton.defaultTypes = {
+  isPinboardButtonIntroductionVisited: false,
+  visitPinboardButtonIntroduction: noop,
+};

@@ -4,7 +4,6 @@ import { stub, spy } from 'sinon';
 import { lorem, random } from 'faker';
 
 import withPinnable from 'components/common/with-pinnable';
-import * as pinboardUtils from 'utils/pinboard';
 import constants from 'constants';
 
 
@@ -31,12 +30,13 @@ describe('ItemPinButton component', function () {
 
   it('should handle on pin button click', function () {
     const addOrRemoveItemInPinboardStub = stub();
-    const setPinboardIntroductionVisitedSpy = spy(pinboardUtils, 'setPinboardIntroductionVisited');
+    const setPinButtonIntroductionVisitedSpy = spy();
 
     const wrapper = mount(
       <TestComponentWithPinnable
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardStub }
         item={ { type: 'OFFICER', id: officerID, isPinned: false } }
+        visitPinButtonIntroduction={ setPinButtonIntroductionVisitedSpy }
       />
     );
 
@@ -48,7 +48,12 @@ describe('ItemPinButton component', function () {
       id: officerID,
       isPinned: false,
     }).should.be.true();
-    setPinboardIntroductionVisitedSpy.should.be.calledOnce();
+
+    setPinButtonIntroductionVisitedSpy.should.be.calledOnce();
+    setPinButtonIntroductionVisitedSpy.resetHistory();
+    wrapper.setProps({ isPinButtonIntroductionVisited: true });
+    childComponent.simulate('click');
+    setPinButtonIntroductionVisitedSpy.should.not.be.called();
   });
 
   it('should handle on pin button with all items are pinned', function () {

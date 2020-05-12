@@ -1,4 +1,4 @@
-import { stub, spy } from 'sinon';
+import { stub } from 'sinon';
 
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
 import {
@@ -7,12 +7,6 @@ import {
   dispatchFetchPinboardPinnedItems,
   isEmptyPinboard,
   getRequestPinboard,
-  isPinboardIntroductionVisited,
-  setPinboardIntroductionVisited,
-  isPinButtonIntroductionVisited,
-  setPinButtonIntroductionVisited,
-  isPinboardButtonIntroductionVisited,
-  setPinboardButtonIntroductionVisited,
   isPinboardFeatureEnabled,
 } from 'utils/pinboard';
 import {
@@ -27,7 +21,6 @@ import {
   fetchPinboardOfficers,
   fetchPinboardTRRs,
 } from 'actions/pinboard';
-import { PINBOARD_INTRODUCTION } from 'constants';
 import config from 'config';
 
 
@@ -151,129 +144,6 @@ describe('pinboard utils', function () {
         crids: ['123456'],
         trrIds: ['4', '5', '6'],
         description: 'Pinboard Description',
-      });
-    });
-  });
-
-  describe('isPinboardButtonIntroductionVisited', function () {
-    context('pinboard feature is enabled', function () {
-      it('should return correct value', function () {
-        stub(config.enableFeatures, 'pinboard').value(true);
-        localStorage.removeItem(PINBOARD_INTRODUCTION.PINBOARD_BUTTON_INTRODUCTION);
-        isPinboardButtonIntroductionVisited().should.be.false();
-        localStorage.setItem(PINBOARD_INTRODUCTION.PINBOARD_BUTTON_INTRODUCTION, '1');
-        isPinboardButtonIntroductionVisited().should.be.true();
-      });
-    });
-
-    context('pinboard feature is disabled', function () {
-      it('should always return true', function () {
-        stub(config.enableFeatures, 'pinboard').value(false);
-        localStorage.removeItem(PINBOARD_INTRODUCTION.PINBOARD_BUTTON_INTRODUCTION);
-        isPinboardButtonIntroductionVisited().should.be.true();
-      });
-    });
-  });
-
-  describe('setPinboardButtonIntroductionVisited', function () {
-    context('pinboard feature is enabled', function () {
-      it('should set localStorage', function () {
-        stub(config.enableFeatures, 'pinboard').value(true);
-        const localStorageSetSpy = spy(localStorage, 'setItem');
-        setPinboardButtonIntroductionVisited();
-        localStorageSetSpy.should.be.calledOnce();
-        localStorage.getItem(PINBOARD_INTRODUCTION.PINBOARD_BUTTON_INTRODUCTION).should.equal('1');
-      });
-    });
-
-    context('pinboard feature is disabled', function () {
-      it('should not set localStorage', function () {
-        stub(config.enableFeatures, 'pinboard').value(false);
-        const localStorageSetSpy = spy(localStorage, 'setItem');
-        setPinboardButtonIntroductionVisited();
-        localStorageSetSpy.should.not.be.called();
-      });
-    });
-  });
-
-  describe('isPinboardIntroductionVisited', function () {
-    context('pinboard feature is enabled', function () {
-      it('should return correct value', function () {
-        stub(config.enableFeatures, 'pinboard').value(true);
-        localStorage.removeItem(PINBOARD_INTRODUCTION.PINBOARD_INTRODUCTION);
-        isPinboardIntroductionVisited().should.be.false();
-        localStorage.setItem(PINBOARD_INTRODUCTION.PINBOARD_INTRODUCTION, '1');
-        isPinboardIntroductionVisited().should.be.true();
-      });
-    });
-
-    context('pinboard feature is disabled', function () {
-      it('should always return true', function () {
-        stub(config.enableFeatures, 'pinboard').value(false);
-        localStorage.removeItem(PINBOARD_INTRODUCTION.PINBOARD_INTRODUCTION);
-        isPinboardIntroductionVisited().should.be.true();
-      });
-    });
-  });
-
-  describe('setPinboardIntroductionVisited', function () {
-    context('pinboard feature is enabled', function () {
-      it('should set localStorage', function () {
-        stub(config.enableFeatures, 'pinboard').value(true);
-        const localStorageSetSpy = spy(localStorage, 'setItem');
-        setPinboardIntroductionVisited();
-        localStorageSetSpy.should.be.calledOnce();
-        localStorage.getItem(PINBOARD_INTRODUCTION.PINBOARD_INTRODUCTION).should.equal('1');
-      });
-    });
-
-    context('pinboard feature is disabled', function () {
-      it('should not set localStorage', function () {
-        stub(config.enableFeatures, 'pinboard').value(false);
-        const localStorageSetSpy = spy(localStorage, 'setItem');
-        setPinboardIntroductionVisited();
-        localStorageSetSpy.should.not.be.called();
-      });
-    });
-  });
-
-  describe('isPinButtonIntroductionVisited', function () {
-    context('pinboard feature is enabled', function () {
-      it('should return correct value', function () {
-        stub(config.enableFeatures, 'pinboard').value(true);
-        localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
-        isPinButtonIntroductionVisited().should.be.false();
-        localStorage.setItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION, '1');
-        isPinButtonIntroductionVisited().should.be.true();
-      });
-    });
-
-    context('pinboard feature is disabled', function () {
-      it('should always return true', function () {
-        stub(config.enableFeatures, 'pinboard').value(false);
-        localStorage.removeItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION);
-        isPinButtonIntroductionVisited().should.be.true();
-      });
-    });
-  });
-
-  describe('setPinButtonIntroductionVisited', function () {
-    context('pinboard feature is enabled', function () {
-      it('should set localStorage', function () {
-        stub(config.enableFeatures, 'pinboard').value(true);
-        const localStorageSetSpy = spy(localStorage, 'setItem');
-        setPinButtonIntroductionVisited();
-        localStorageSetSpy.should.be.calledOnce();
-        localStorage.getItem(PINBOARD_INTRODUCTION.PIN_BUTTON_INTRODUCTION).should.equal('1');
-      });
-    });
-
-    context('pinboard feature is disabled', function () {
-      it('should not set localStorage', function () {
-        stub(config.enableFeatures, 'pinboard').value(false);
-        const localStorageSetSpy = spy(localStorage, 'setItem');
-        setPinButtonIntroductionVisited();
-        localStorageSetSpy.should.not.be.called();
       });
     });
   });

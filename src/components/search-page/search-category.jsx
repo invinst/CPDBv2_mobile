@@ -67,9 +67,7 @@ export default class SearchCategory extends Component {
 
   renderResults() {
     const {
-      saveToRecent,
       categoryId,
-      addOrRemoveItemInPinboard,
       getSuggestionWithContentType,
       query,
       nextParams,
@@ -86,8 +84,6 @@ export default class SearchCategory extends Component {
       <ResultComponent
         itemType={ categoryId }
         items={ items }
-        saveToRecent={ saveToRecent }
-        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
         getSuggestionWithContentType={ getSuggestionWithContentType }
         query={ query }
         nextParams={ nextParams }
@@ -122,11 +118,9 @@ SearchCategory.propTypes = {
   categoryId: PropTypes.string,
   showAllButton: PropTypes.bool,
   allButtonClickHandler: PropTypes.func,
-  saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
   updateActiveCategory: PropTypes.func,
   fixedHeaderHeight: PropTypes.number,
-  addOrRemoveItemInPinboard: PropTypes.func,
   getSuggestionWithContentType: PropTypes.func,
   nextParams: PropTypes.object,
   hasMore: PropTypes.bool,

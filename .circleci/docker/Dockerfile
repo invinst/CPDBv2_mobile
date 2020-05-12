@@ -1,4 +1,4 @@
-FROM circleci/node:8-browsers-legacy
+FROM circleci/node:10-browsers
 
 USER root
 USER circleci

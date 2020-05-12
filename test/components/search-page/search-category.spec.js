@@ -3,6 +3,8 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { spy, stub } from 'sinon';
 import * as NavigationUtil from 'utils/navigation-util';
+import { Provider } from 'react-redux';
+import MockStore from 'redux-mock-store';
 
 import { mountWithRouter } from 'utils/tests';
 import constants from 'constants';
@@ -100,7 +102,6 @@ describe('<SearchCategory />', function () {
 
   describe('render recent', function () {
     it('should render item correctly', function () {
-      const spySaveToRecent = spy();
       const items = [{
         url: 'localhost',
         type: 'recent',
@@ -111,14 +112,12 @@ describe('<SearchCategory />', function () {
         <SearchCategory
           items={ items }
           categoryId='recent'
-          saveToRecent={ spySaveToRecent }
         />
       );
       const itemLink = wrapper.find(RecentItems);
 
       itemLink.exists().should.be.true();
       itemLink.prop('items').should.be.eql(items);
-      itemLink.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
   });
 
@@ -170,19 +169,24 @@ describe('<SearchCategory />', function () {
   });
 
   describe('renderResults', function () {
+    let store;
+    beforeEach(function () {
+      store = MockStore()({
+        pinboardIntroduction: {
+          isPinButtonIntroductionVisited: true,
+        },
+      });
+    });
+
     it('should render ResultComponent with correct props', function () {
-      const spyAddOrRemoveItemInPinboard = spy();
       const spyGetSuggestionWithContentType = spy();
-      const spySaveToRecent = spy();
 
       const wrapper = shallow(
         <SearchCategory
           title='OFFICERS'
           items={ [{ id: '1234' }, { id: '5678' }] }
           categoryId='officers'
-          addOrRemoveItemInPinboard={ spyAddOrRemoveItemInPinboard }
           getSuggestionWithContentType={ spyGetSuggestionWithContentType }
-          saveToRecent={ spySaveToRecent }
           query={ 'qa' }
           nextParams={ {
             contentType: 'OFFICER',
@@ -195,8 +199,6 @@ describe('<SearchCategory />', function () {
       );
       const searchResult = wrapper.find(SearchResult);
       searchResult.prop('items').should.eql([{ id: '1234' }, { id: '5678' }]);
-      searchResult.prop('saveToRecent').should.eql(spySaveToRecent);
-      searchResult.prop('addOrRemoveItemInPinboard').should.eql(spyAddOrRemoveItemInPinboard);
       searchResult.prop('getSuggestionWithContentType').should.eql(spyGetSuggestionWithContentType);
       searchResult.prop('query').should.equal('qa');
       searchResult.prop('nextParams').should.eql({
@@ -222,7 +224,6 @@ describe('<SearchCategory />', function () {
     });
 
     it('should render officer correctly', function () {
-      const spySaveToRecent = spy();
       const officers = [
         {
           name: 'John',
@@ -239,22 +240,21 @@ describe('<SearchCategory />', function () {
       ];
 
       const wrapper = mountWithRouter(
-        <SearchCategory
-          items={ officers }
-          categoryId='officers'
-          saveToRecent={ spySaveToRecent }
-        />
+        <Provider store={ store }>
+          <SearchCategory
+            items={ officers }
+            categoryId='officers'
+          />
+        </Provider>
       );
 
       const searchElement = wrapper.find(SearchResult);
       searchElement.exists().should.be.true();
       searchElement.prop('items').should.be.eql(officers);
-      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
 
     });
 
     it('should render crs with cr component', function () {
-      const spySaveToRecent = spy();
       const crs = [
         {
           crid: '1',
@@ -267,21 +267,20 @@ describe('<SearchCategory />', function () {
       ];
 
       const wrapper = mountWithRouter(
-        <SearchCategory
-          items={ crs }
-          categoryId='crs'
-          saveToRecent={ spySaveToRecent }
-        />
+        <Provider store={ store }>
+          <SearchCategory
+            items={ crs }
+            categoryId='crs'
+          />
+        </Provider>
       );
 
       const searchElement = wrapper.find(SearchResult);
       searchElement.exists().should.be.true();
       searchElement.prop('items').should.be.eql(crs);
-      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render trrs with trr component', function () {
-      const spySaveToRecent = spy();
       const trrs = [
         {
           id: '1',
@@ -294,21 +293,20 @@ describe('<SearchCategory />', function () {
       ];
 
       const wrapper = mountWithRouter(
-        <SearchCategory
-          items={ trrs }
-          categoryId='trrs'
-          saveToRecent={ spySaveToRecent }
-        />
+        <Provider store={ store }>
+          <SearchCategory
+            items={ trrs }
+            categoryId='trrs'
+          />
+        </Provider>
       );
 
       const searchElement = wrapper.find(SearchResult);
       searchElement.exists().should.be.true();
       searchElement.prop('items').should.be.eql(trrs);
-      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render dateCRs with cr component', function () {
-      const spySaveToRecent = spy();
       const dateCRs = [
         {
           crid: '1',
@@ -321,21 +319,20 @@ describe('<SearchCategory />', function () {
       ];
 
       const wrapper = mountWithRouter(
-        <SearchCategory
-          items={ dateCRs }
-          categoryId='dateCRs'
-          saveToRecent={ spySaveToRecent }
-        />
+        <Provider store={ store }>
+          <SearchCategory
+            items={ dateCRs }
+            categoryId='dateCRs'
+          />
+        </Provider>
       );
 
       const searchElement = wrapper.find(SearchResult);
       searchElement.exists().should.be.true();
       searchElement.prop('items').should.be.eql(dateCRs);
-      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render dateTRRs with trr component', function () {
-      const spySaveToRecent = spy();
       const dateTRRs = [
         {
           id: '1',
@@ -348,21 +345,20 @@ describe('<SearchCategory />', function () {
       ];
 
       const wrapper = mountWithRouter(
-        <SearchCategory
-          items={ dateTRRs }
-          categoryId='dateTRRs'
-          saveToRecent={ spySaveToRecent }
-        />
+        <Provider store={ store }>
+          <SearchCategory
+            items={ dateTRRs }
+            categoryId='dateTRRs'
+          />
+        </Provider>
       );
 
       const searchElement = wrapper.find(SearchResult);
       searchElement.exists().should.be.true();
       searchElement.prop('items').should.be.eql(dateTRRs);
-      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
 
     it('should render dateOfficers with officer component', function () {
-      const spySaveToRecent = spy();
       const officers = [
         {
           name: 'Jerome Finnigan',
@@ -379,17 +375,17 @@ describe('<SearchCategory />', function () {
       ];
 
       const wrapper = mountWithRouter(
-        <SearchCategory
-          items={ officers }
-          categoryId='dateOfficers'
-          saveToRecent={ spySaveToRecent }
-        />
+        <Provider store={ store }>
+          <SearchCategory
+            items={ officers }
+            categoryId='dateOfficers'
+          />
+        </Provider>
       );
 
       const searchElement = wrapper.find(SearchResult);
       searchElement.exists().should.be.true();
       searchElement.prop('items').should.be.eql(officers);
-      searchElement.prop('saveToRecent').should.be.eql(spySaveToRecent);
     });
   });
 

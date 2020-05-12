@@ -25,14 +25,20 @@ export default class PinboardBar extends Component {
 
   render() {
     const { pinboard } = this.props;
+    const isEmptyPinboard = pinboard.itemsCount === 0;
+    // Display 1 in case current pinboard is empty to slide up and slide down pinboard bar
+    const pinboardBarText = `Pinboard (${isEmptyPinboard ? 1 : pinboard.itemsCount})`;
 
     if (!pinboard.isPinboardRestored) {
       return null;
     }
 
     return (
-      <span className={ cx('pinboard-feature', 'test--pinboard-bar', style.pinboardBar) } onClick={ this.handleClick }>
-        { `Pinboard (${pinboard.itemsCount})` }
+      <span
+        className={ cx('pinboard-feature', 'test--pinboard-bar', style.pinboardBar, { 'slide-in': !isEmptyPinboard }) }
+        onClick={ this.handleClick }
+      >
+        { pinboardBarText }
         <span className='pinboard-bar-indicator' />
       </span>
     );

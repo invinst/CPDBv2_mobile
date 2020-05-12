@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { spy } from 'sinon';
+import { Provider } from 'react-redux';
+import MockStore from 'redux-mock-store';
 
 import { mountWithRouter } from 'utils/tests';
 import OfficerItem from 'components/search-page/officer-item';
@@ -9,8 +10,6 @@ import SearchItem from 'components/search-page/search-item';
 
 describe('<OfficerItem />', function () {
   it('should render officer correctly', function () {
-    const saveToRecentSpy = spy();
-    const addOrRemoveItemInPinboardSpy = spy();
     const recentItemData = {
       id: '8562',
       type: 'OFFICER',
@@ -28,13 +27,19 @@ describe('<OfficerItem />', function () {
       showIntroduction: true,
     };
 
+    const store = MockStore()({
+      pinboardIntroduction: {
+        isPinButtonIntroductionVisited: true,
+      },
+    });
+
     const wrapper = mountWithRouter(
-      <OfficerItem
-        item={ officer }
-        query='Le'
-        saveToRecent={ saveToRecentSpy }
-        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }
-      />
+      <Provider store={ store }>
+        <OfficerItem
+          item={ officer }
+          query='Le'
+        />
+      </Provider>
     );
 
     wrapper.should.be.ok();
@@ -51,8 +56,6 @@ describe('<OfficerItem />', function () {
     searchItem.prop('itemRank').should.equal(3);
     searchItem.prop('query').should.equal('Le');
     searchItem.prop('showIntroduction').should.be.true();
-    searchItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
     searchItem.prop('recentItemData').should.eql(recentItemData);
-    searchItem.prop('saveToRecent').should.eql(saveToRecentSpy);
   });
 });

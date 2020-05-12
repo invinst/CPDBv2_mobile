@@ -49,6 +49,28 @@ describe('query reducer', function () {
     }).should.eql('123');
   });
 
+  it('should handle LOCATION_CHANGE with pathname is /', function () {
+    query('query', {
+      type: LOCATION_CHANGE,
+      payload: {
+        location: {
+          pathname: '/',
+        },
+      },
+    }).should.eql('');
+  });
+
+  it('should handle LOCATION_CHANGE with pathname is not / and terms is empty', function () {
+    query('query', {
+      type: LOCATION_CHANGE,
+      payload: {
+        location: {
+          pathname: '/officer/123/',
+        },
+      },
+    }).should.eql('query');
+  });
+
   it('should handle SEARCH_CLEAR', function () {
     query('query', {
       type: SEARCH_CLEAR,
