@@ -11,6 +11,7 @@ import { getPageRoot } from 'utils/url-util';
 import RouterRoot from 'components/router-root';
 import { isPinboardFeatureEnabled } from 'utils/pinboard';
 
+
 toast.configure();
 Modal.setAppElement('body');
 
@@ -28,7 +29,10 @@ class App extends Component {
   }
 
   render() {
-    const { location } = this.props;
+    const { location, appConfigRequesting } = this.props;
+    if (appConfigRequesting) {
+      return null;
+    }
 
     return (
       <div className={ cx('content', style.app, { 'pinboard-disabled': !isPinboardFeatureEnabled() }) }>
@@ -50,6 +54,7 @@ App.propTypes = {
   children: PropTypes.object,
   location: PropTypes.object,
   routeChanged: PropTypes.func,
+  appConfigRequesting: PropTypes.bool,
 };
 
 App.defaultProps = {
@@ -58,6 +63,7 @@ App.defaultProps = {
     pathname: '',
   },
   routeChanged: () => {},
+  appConfigRequesting: true,
 };
 
 export default App;

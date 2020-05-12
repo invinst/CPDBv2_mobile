@@ -1,6 +1,7 @@
 'use strict';
 
 const api = require(__dirname + '/../mock-api');
+const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 const { TIMEOUT } = require(__dirname + '/../constants');
 
 
@@ -35,6 +36,8 @@ const mockTRR = {
 
 describe('TRRPageTest', function () {
   beforeEach(function (client, done) {
+    api.cleanMock();
+    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
     api.mock('GET', '/api/v2/mobile/trr/781/', 200, mockTRR);
     api.mockPost(
       '/api/v2/mobile/trr/781/request-document/',

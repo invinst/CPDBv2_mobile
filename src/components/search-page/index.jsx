@@ -97,10 +97,8 @@ export default class SearchPage extends Component {
   renderCategories() {
     const {
       categories,
-      saveToRecent,
       updateActiveCategory,
       activeCategory,
-      addOrRemoveItemInPinboard,
       getSuggestionWithContentType,
       query,
       nextParams,
@@ -116,10 +114,8 @@ export default class SearchPage extends Component {
         showAllButton={ cat.showAllButton }
         title={ cat.longName || cat.name }
         items={ cat.items }
-        saveToRecent={ saveToRecent }
         updateActiveCategory={ updateActiveCategory }
         activeCategory={ activeCategory }
-        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
         getSuggestionWithContentType={ getSuggestionWithContentType }
         query={ query }
         nextParams={ nextParams }
@@ -142,7 +138,14 @@ export default class SearchPage extends Component {
   };
 
   render() {
-    const { query, queryPrefix, chosenCategory, pinboard, pinboardFeatureUsed } = this.props;
+    const {
+      query,
+      queryPrefix,
+      chosenCategory,
+      pinboard,
+      visitPinboardIntroduction,
+      isPinboardIntroductionVisited,
+    } = this.props;
     const isEmptyPinboard = pinboard.itemsCount === 0;
     const searchText = `${queryPrefix ? `${queryPrefix}:` : ''}${query}`;
 
@@ -161,24 +164,23 @@ export default class SearchPage extends Component {
               placeholder='Officer name, badge number or date'
               onChange={ (e) => { this.onInputChange(e); } }
             />
-
             <button
               className={ cx('bt-close', { 'active': query !== '' } ) }
               onClick={ this.handleGoBack }>
               Close
             </button>
           </div>
-
-          {
-            !isEmptyPinboard &&
-              <PinboardBar
-                pinboard={ pinboard }
-                onEmptyPinboardButtonClick={ this.handleEmptyPinboardButtonClick } />
-          }
+          <PinboardBar pinboard={ pinboard } onEmptyPinboardButtonClick={ this.handleEmptyPinboardButtonClick } />
         </div>
 
         <div className='content-container'>
-          <PinboardIntroduction pinboardFeatureUsed={ pinboardFeatureUsed } />
+          {
+            isEmptyPinboard && !this.isLongEnoughQuery(query) &&
+              <PinboardIntroduction
+                visitPinboardIntroduction={ visitPinboardIntroduction }
+                isPinboardIntroductionVisited={ isPinboardIntroductionVisited }
+              />
+          }
           <div className='category-details-container'>
             { this.renderCategories() }
           </div>
@@ -204,14 +206,12 @@ SearchPage.propTypes = {
   queryChanged: PropTypes.func,
   suggestTerm: PropTypes.func,
   fetchRecentSearchItems: PropTypes.func,
-  saveToRecent: PropTypes.func,
   activeCategory: PropTypes.string,
   chosenCategory: PropTypes.string,
   updateActiveCategory: PropTypes.func,
   updateChosenCategory: PropTypes.func,
   router: PropTypes.object,
   pinboard: PropTypes.object,
-  addOrRemoveItemInPinboard: PropTypes.func,
   createPinboard: PropTypes.func,
   recentSuggestionIds: PropTypes.object,
   recentSuggestionsRequested: PropTypes.bool,
@@ -221,7 +221,8 @@ SearchPage.propTypes = {
   hasMore: PropTypes.bool,
   cancelPathname: PropTypes.string,
   categories: PropTypes.array,
-  pinboardFeatureUsed: PropTypes.bool,
+  isPinboardIntroductionVisited: PropTypes.bool,
+  visitPinboardIntroduction: PropTypes.func,
 };
 
 SearchPage.defaultProps = {
@@ -232,7 +233,6 @@ SearchPage.defaultProps = {
   createPinboard: noop,
   suggestTerm: noop,
   queryChanged: noop,
-  saveToRecent: noop,
   fetchRecentSearchItems: noop,
   recentSuggestionIds: {},
   recentSuggestionsRequested: false,
@@ -240,5 +240,5 @@ SearchPage.defaultProps = {
   cancelPathname: '/',
   categories: [],
   pinboard: {},
-  pinboardFeatureUsed: false,
+  visitPinboardIntroduction: noop,
 };

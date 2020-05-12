@@ -76,8 +76,3 @@ export const examplePinboardsSelector = createSelector(
   state => state.pinboardPage.pinboard,
   pinboard => get(pinboard, 'example_pinboards', []),
 );
-
-export const pinboardFeatureUsedSelector = createSelector(
-  getRawPinboard,
-  pinboard => pinboard.isPinboardRestored && (countPinnedItems(pinboard) > 0),
-);

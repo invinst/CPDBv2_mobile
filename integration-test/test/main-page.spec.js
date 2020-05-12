@@ -10,7 +10,8 @@ const {
   mockComplaintSummaries,
 } = require(__dirname + '/../mock-data/main-page');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
-const { enablePinboardButtonIntroduction } = require(__dirname + '/../utils');
+const { clearReduxStore } = require(__dirname + '/../utils');
+const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 
 
 describe('MainPageTest', function () {
@@ -22,6 +23,7 @@ describe('MainPageTest', function () {
     api.mock('GET', '/api/v2/cr/list-by-new-document/', 200, mockNewDocuments);
     api.mock('GET', '/api/v2/cr/complaint-summaries/', 200, mockComplaintSummaries);
     api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
+    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
 
     this.mainPage = client.page.main();
     this.search = client.page.search();
@@ -185,7 +187,7 @@ describe('MainPageTest', function () {
         this.mainPage.click('@searchLink');
 
         this.search.waitForElementPresent('@queryInput');
-        this.search.waitForElementNotPresent('@pinboardBar', TIMEOUT);
+        this.search.waitForElementNotVisible('@pinboardBar', TIMEOUT);
         client.back();
       };
 
@@ -205,7 +207,7 @@ describe('MainPageTest', function () {
 
   describe('Pinboard Introduction', function () {
     beforeEach(function (client, done) {
-      enablePinboardButtonIntroduction(client);
+      clearReduxStore(client);
       this.mainPage.waitForElementVisible('@body');
       done();
     });

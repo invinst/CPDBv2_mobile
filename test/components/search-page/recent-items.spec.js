@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { spy } from 'sinon';
 
 import RecentItems from 'components/search-page/recent-items';
 import OfficerItem from 'components/search-page/officer-item';
@@ -10,7 +9,6 @@ import TrrItem from 'components/search-page/trr-item';
 
 describe('<RecentItems />', function () {
   it('should render items correctly', function () {
-    const addOrRemoveItemInPinboardSpy = spy();
     const cr = {
       crid: '1027271',
       url: '/complaint/1027271/',
@@ -56,23 +54,19 @@ describe('<RecentItems />', function () {
       <RecentItems
         query='Ke'
         items={ [cr, officer, trr] }
-        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }
       />
     );
 
     const crItem = wrapper.find(CrItem);
     crItem.prop('query').should.equal('Ke');
     crItem.prop('item').should.eql(cr);
-    crItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
 
     const officerItem = wrapper.find(OfficerItem);
     officerItem.prop('query').should.equal('Ke');
     officerItem.prop('item').should.eql(officer);
-    officerItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
 
     const trrItem = wrapper.find(TrrItem);
     trrItem.prop('query').should.equal('Ke');
     trrItem.prop('item').should.eql(trr);
-    trrItem.prop('addOrRemoveItemInPinboard').should.eql(addOrRemoveItemInPinboardSpy);
   });
 });
