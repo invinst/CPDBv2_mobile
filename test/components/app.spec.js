@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { ToastContainer } from 'react-toastify';
 import { spy, stub } from 'sinon';
-import should from 'should';
 
 import config from 'config';
 import App from 'components/app';
@@ -115,9 +114,10 @@ describe('App component', function () {
   });
 
   context('appConfigRequesting is true', function () {
-    it('should render nothing', function () {
+    it('should not render router root', function () {
       const wrapper = shallow(<App location={ { pathname: '/' } } appConfigRequesting={ true } />);
-      should(wrapper.html()).be.null();
+      wrapper.find('RouterRoot').exists().should.be.false();
+      wrapper.find('ToastContainer').exists().should.be.true();
     });
   });
 
