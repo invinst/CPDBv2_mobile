@@ -506,6 +506,40 @@ const updatedPinboardTitle = {
   'description': 'Pinboard Description',
 };
 
+const updatePinboardCrsRequest = {
+  'officer_ids': ['1234'],
+  crids: [],
+  'trr_ids': ['1234'],
+  title: 'Pinboard Title',
+  description: 'Pinboard Description',
+};
+
+const updatePinboardCrsResponse = {
+  id: '5cd06f2b',
+  'officer_ids': ['1234'],
+  crids: [],
+  'trr_ids': ['1234'],
+  title: 'Pinboard Title',
+  description: 'Pinboard Description',
+};
+
+const updatePinboardCoaccusalsRequest = {
+  'officer_ids': ['1234', '123'],
+  crids: ['1234567'],
+  'trr_ids': ['1234'],
+  title: 'Pinboard Title',
+  description: 'Pinboard Description',
+};
+
+const updatePinboardCoaccusalsResponse = {
+  id: '5cd06f2b',
+  'officer_ids': ['1234', '123'],
+  crids: ['1234567'],
+  'trr_ids': ['1234'],
+  title: 'Pinboard Title',
+  description: 'Pinboard Description',
+};
+
 const updatePinboardDescriptionParams = {
   'title': 'Updated Title',
   'officer_ids': ['1234'],
@@ -813,6 +847,72 @@ const pinboardeeee7777CRsData = pinboardffff6666CRsData;
 const pinboardeeee7777OfficersData = pinboardffff6666OfficersData;
 const pinboardeeee7777TRRsData = [];
 
+const pinboardsList = {
+  list: [
+    { 'id': '23ffd689', 'title': 'Watts Crew', 'created_at': '2020-05-06' },
+    { 'id': '7e1e3c88', 'title': '', 'created_at': '2020-08-07' },
+    { 'id': '3a160339', 'title': '', 'created_at': '2020-12-20' },
+  ],
+  pinboards: [
+    {
+      'id': '23ffd689',
+      'title': 'Watts Crew',
+      'officer_ids': ['1234'],
+      'crids': ['1234567'],
+      'trr_ids': ['1234'],
+      'description': 'This is Watts Crew',
+    },
+    {
+      'id': '7e1e3c88',
+      'title': '',
+      'officer_ids': ['1234'],
+      'crids': [],
+      'trr_ids': [],
+      'description': 'Pinboard Description',
+    },
+    {
+      'id': '3a160339',
+      'title': '',
+      'officer_ids': ['1234'],
+      'crids': [],
+      'trr_ids': [],
+      'description': 'Pinboard Description',
+    },
+    {
+      'id': '823f123e',
+      'title': '',
+      'officer_ids': [''],
+      'crids': [],
+      'trr_ids': [],
+      'description': '',
+      'example_pinboards':
+        [
+          {
+            'id': 'b20c2c36',
+            'title': 'Watts Crew',
+            'description': '',
+          },
+          {
+            'id': '22e66085',
+            'title': 'Skullcap Crew',
+            'description': '',
+          },
+        ],
+    },
+  ],
+  duplicatePinboardRequest: {
+    'source_pinboard_id': '23ffd689',
+  },
+  duplicatePinboardResponse: {
+    'id': '283fea1f',
+    'title': 'Watts Crew',
+    'officer_ids': ['1234'],
+    'crids': ['1234567'],
+    'trr_ids': ['1234'],
+    'description': 'This is Watts Crew',
+  },
+};
+
 module.exports = {
   pinboardData,
   pinboardCRsData,
@@ -857,4 +957,9 @@ module.exports = {
   pinboardeeee7777OfficersData,
   pinboardeeee7777TRRsData,
   emptyPaginationResponse,
+  pinboardsList,
+  updatePinboardCrsRequest,
+  updatePinboardCrsResponse,
+  updatePinboardCoaccusalsRequest,
+  updatePinboardCoaccusalsResponse,
 };

@@ -60,12 +60,16 @@ export default class PinboardPage extends Component {
   }
 
   render() {
-    const { isEmptyPinboard } = this.props;
+    const { isEmptyPinboard, isShownPinboardsList, hideShowPinboardsList } = this.props;
 
     return (
-      <div className={ cx(styles.pinboardPage, 'pinboard-page', { 'empty': isEmptyPinboard }) }>
+      <div className={ cx(
+        styles.pinboardPage,
+        'pinboard-page',
+        { 'empty': isEmptyPinboard, 'display-pinboards-list': isShownPinboardsList }
+      ) }>
         <Header />
-        <SearchBar />
+        <SearchBar hideShowPinboardsList={ hideShowPinboardsList } isShownPinboardsList={ isShownPinboardsList } />
         { this.renderContent() }
         <Footer />
       </div>
@@ -82,6 +86,8 @@ PinboardPage.propTypes = {
   isEmptyPinboard: PropTypes.bool,
   hasCMS: PropTypes.bool,
   requestCMS: PropTypes.func,
+  isShownPinboardsList: PropTypes.bool,
+  hideShowPinboardsList: PropTypes.func,
 };
 
 PinboardPage.defaultProps = {

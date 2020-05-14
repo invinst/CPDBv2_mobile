@@ -25,6 +25,11 @@ import {
   addItemInPinboardPage,
   fetchLatestRetrievedPinboard,
   updatePinboardFromSource,
+  createNewPinboard,
+  fetchPinboards,
+  duplicatePinboard,
+  createNewEmptyPinboard,
+  hideShowPinboardsList,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -91,6 +96,13 @@ import {
   PINBOARD_UPDATE_FROM_SOURCE_REQUEST_START,
   PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS,
   PINBOARD_UPDATE_FROM_SOURCE_REQUEST_FAILURE,
+  PINBOARD_CREATE_NEW_REQUEST_START,
+  PINBOARD_CREATE_NEW_REQUEST_SUCCESS,
+  PINBOARD_CREATE_NEW_REQUEST_FAILURE,
+  PINBOARDS_FETCH_REQUEST_START,
+  PINBOARDS_FETCH_REQUEST_SUCCESS,
+  PINBOARDS_FETCH_REQUEST_FAILURE,
+  HIDE_SHOW_PINBOARDS_LIST,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -656,6 +668,124 @@ describe('pinboard actions', function () {
             },
           },
         },
+      });
+    });
+  });
+
+  describe('createNewPinboard', function () {
+    it('should return correct action', function () {
+      createNewPinboard({ officerIds: [], crids: ['abc'], trrIds: [1] }).should.deepEqual({
+        types: [
+          PINBOARD_CREATE_NEW_REQUEST_START,
+          PINBOARD_CREATE_NEW_REQUEST_SUCCESS,
+          PINBOARD_CREATE_NEW_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: v2Url(constants.PINBOARDS_API_ENDPOINT),
+            method: 'POST',
+            adapter: undefined,
+            data: {
+              'officer_ids': [],
+              crids: ['abc'],
+              'trr_ids': [1],
+              'source_pinboard_id': undefined,
+            },
+            cancelToken: 'token',
+          },
+        },
+      });
+    });
+  });
+
+  describe('fetchPinboards', function () {
+    it('should return correct action', function () {
+      fetchPinboards().should.eql({
+        types: [
+          PINBOARDS_FETCH_REQUEST_START,
+          PINBOARDS_FETCH_REQUEST_SUCCESS,
+          PINBOARDS_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: v2Url(constants.PINBOARDS_API_ENDPOINT),
+            params: undefined,
+            adapter: undefined,
+          },
+        },
+      });
+    });
+  });
+
+  describe('duplicatePinboard', function () {
+    it('should return correct action', function () {
+      duplicatePinboard('adg234r6').should.deepEqual({
+        types: [
+          PINBOARD_CREATE_NEW_REQUEST_START,
+          PINBOARD_CREATE_NEW_REQUEST_SUCCESS,
+          PINBOARD_CREATE_NEW_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: v2Url(constants.PINBOARDS_API_ENDPOINT),
+            method: 'POST',
+            adapter: undefined,
+            data: {
+              'officer_ids': undefined,
+              crids: undefined,
+              'trr_ids': undefined,
+              'source_pinboard_id': 'adg234r6',
+            },
+            cancelToken: 'token',
+          },
+        },
+      });
+    });
+
+    it('should cancel old fetch requests if new request is called', function () {
+      duplicatePinboard('adg234r6');
+      duplicatePinboard('adg234r6');
+      cancel.called.should.be.true();
+    });
+  });
+
+  describe('createNewEmptyPinboard', function () {
+    it('should return correct action', function () {
+      createNewEmptyPinboard().should.deepEqual({
+        types: [
+          PINBOARD_CREATE_NEW_REQUEST_START,
+          PINBOARD_CREATE_NEW_REQUEST_SUCCESS,
+          PINBOARD_CREATE_NEW_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: v2Url(constants.PINBOARDS_API_ENDPOINT),
+            method: 'POST',
+            adapter: undefined,
+            data: {
+              'officer_ids': [],
+              crids: [],
+              'trr_ids': [],
+              'source_pinboard_id': undefined,
+            },
+            cancelToken: 'token',
+          },
+        },
+      });
+    });
+
+    it('should cancel old fetch requests if new request is called', function () {
+      createNewEmptyPinboard();
+      createNewEmptyPinboard();
+      cancel.called.should.be.true();
+    });
+  });
+
+  describe('hideShowPinboardsList', function () {
+    it('should return correct action', function () {
+      hideShowPinboardsList(true).should.deepEqual({
+        type: HIDE_SHOW_PINBOARDS_LIST,
+        payload: true,
       });
     });
   });
