@@ -26,7 +26,47 @@ const mockComplaint = {
     {
       'involved_type': 'police_witness',
       'full_name': 'Patrick Boyle',
+      'percentile_allegation': 96.9967,
+      'percentile_trr': 67.9112,
+      'percentile_allegation_civilian': 99.9817,
+      'percentile_allegation_internal': 87.8280,
       'officer_id': 123,
+    },
+    {
+      'involved_type': 'police_witness',
+      'full_name': 'Corey Flagg',
+      'percentile_trr': 12.5612,
+      'percentile_allegation': 73.2128,
+      'percentile_allegation_civilian': 99.9696,
+      'percentile_allegation_internal': 99.6468,
+      'officer_id': 8658,
+    },
+    {
+      'involved_type': 'police_witness',
+      'full_name': 'Charles Toussas',
+      'percentile_trr': 15.3123,
+      'percentile_allegation': 59.7657,
+      'percentile_allegation_civilian': 99.9696,
+      'percentile_allegation_internal': 99.6468,
+      'officer_id': 1782,
+    },
+    {
+      'involved_type': 'police_witness',
+      'full_name': 'Kevin Osborn',
+      'percentile_trr': 85.2355,
+      'percentile_allegation': 33.2812,
+      'percentile_allegation_internal': 99.6468,
+      'percentile_allegation_civilian': 99.9696,
+      'officer_id': 2859,
+    },
+    {
+      'involved_type': 'police_witness',
+      'full_name': 'Joe Parker',
+      'percentile_trr': 54.12342,
+      'percentile_allegation': 12.9273,
+      'percentile_allegation_civilian': 99.9696,
+      'percentile_allegation_internal': 99.6468,
+      'officer_id': 8638,
     },
   ],
   'complainants': [
@@ -139,6 +179,20 @@ describe('ComplaintPageTest', function () {
     );
     this.complaintPage.expect.element('@firstInvestigator').text.to.contain('Peter Parker');
     this.complaintPage.expect.element('@incidentDate').text.to.equal('APR 30, 2012');
+  });
+
+  it('should show proper investigator which is an officer', function (client) {
+    const policeWitnessSection = this.complaintPage.section.policeWitnesses;
+    policeWitnessSection.expect.element('@firstRadarChart').to.have.css('background-color')
+      .which.equal('rgba(245, 37, 36, 1)');
+    policeWitnessSection.expect.element('@secondRadarChart').to.have.css('background-color')
+      .which.equal('rgba(255, 65, 44, 1)');
+    policeWitnessSection.expect.element('@thirdRadarChart').to.have.css('background-color')
+      .which.equal('rgba(255, 100, 83, 1)');
+    policeWitnessSection.expect.element('@forthRadarChart').to.have.css('background-color')
+      .which.equal('rgba(244, 162, 152, 1)');
+    policeWitnessSection.expect.element('@fifthRadarChart').to.have.css('background-color')
+      .which.equal('rgba(249, 211, 195, 1)');
   });
 
   it('should go to officer page when click on investigator which is an officer', function (client) {

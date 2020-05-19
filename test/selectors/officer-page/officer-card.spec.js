@@ -8,6 +8,7 @@ describe('officerCardTransform', function () {
       'full_name': 'Michel Foo',
       'rank': 'Po As Detective',
       'percentile': {
+        'percentile_allegation': '98.3',
         'percentile_allegation_civilian': '97.0',
         'percentile_allegation_internal': '82.0',
         'percentile_trr': '92.3',
@@ -29,7 +30,7 @@ describe('officerCardTransform', function () {
           'value': 97,
         }],
         textColor: '#DFDFDF',
-        visualTokenBackground: '#f52524',
+        visualTokenBackground: '#F52524',
         year: undefined,
       },
     });

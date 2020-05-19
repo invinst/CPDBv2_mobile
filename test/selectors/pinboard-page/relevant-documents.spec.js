@@ -96,7 +96,7 @@ describe('RelevantDocuments selectors', function () {
                 { axis: 'Internal Allegations', value: 88.3297 },
                 { axis: 'Civilian Allegations', value: 99.1379 },
               ],
-              visualTokenBackground: '#f0201e',
+              visualTokenBackground: '#F52524',
               textColor: '#DFDFDF',
             },
           }, {
@@ -110,7 +110,7 @@ describe('RelevantDocuments selectors', function () {
                 { axis: 'Internal Allegations', value: 61.1521 },
                 { axis: 'Civilian Allegations', value: 97.8772 },
               ],
-              visualTokenBackground: '#f0201e',
+              visualTokenBackground: '#F52524',
               textColor: '#DFDFDF',
             },
           }],

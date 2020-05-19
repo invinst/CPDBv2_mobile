@@ -14,6 +14,10 @@ module.exports = {
       locateStrategy: 'xpath',
       elements: {
         officerRow: '.officer-row',
+        radarChart: {
+          selector: '//*[name()="svg" and contains(@class, "radar-chart__radar-chart")]',
+          locateStrategy: 'xpath',
+        },
       },
     },
     info: {

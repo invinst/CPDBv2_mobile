@@ -44,7 +44,7 @@ describe('<RelevantComplaints />', function () {
       shortName: 'J. Mcclain',
       percentile: {
         textColor: '#DFDFDF',
-        visualTokenBackground: '#f52524',
+        visualTokenBackground: '#F52524',
         year: 2016,
         items: [
           { axis: 'Use of Force Reports', value: 84.1654 },

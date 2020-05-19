@@ -23,6 +23,10 @@ const baseRelevantComplaints = (type) => ({
         remainingOfficers: '.remaining-officers',
         undoText: '.undo-card-text',
         undoButton: '.undo-button',
+        firstRadarChart: {
+          locateStrategy: 'xpath',
+          selector: '//*[name()="svg" and contains(@class, "radar-chart__radar-chart")]',
+        },
       },
     },
   },
@@ -207,6 +211,12 @@ module.exports = {
     animatedSocialGraphSection: {
       locateStrategy: 'xpath',
       selector: '(//div[contains(@class, "visualization-item")])[1]',
+      elements: {
+        firstGraphNode: {
+          locateStrategy: 'xpath',
+          selector: '(//*[name()="circle" and contains(@class, "node")])[1]',
+        },
+      },
     },
     geographicSection: {
       locateStrategy: 'xpath',
@@ -250,13 +260,16 @@ module.exports = {
               selector: '//div[contains(@class, "relevant-coaccusals")]//div[contains(@class, "plus-button")]',
               locateStrategy: 'xpath',
             },
-            radarChart: '.radar-chart-wrapper',
             officerRank: '.officer-card-rank',
             officerName: '.officer-card-name',
             coaccusalCount: '.coaccusal-count',
             nameWrapper: '.officer-card-name-wrapper',
             undoText: '.undo-card-text',
             undoButton: '.undo-button',
+            radarChart: {
+              selector: '//*[name()="svg" and contains(@class, "radar-chart__radar-chart")]',
+              locateStrategy: 'xpath',
+            },
           },
         },
       },

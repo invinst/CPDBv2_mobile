@@ -63,7 +63,7 @@ describe('RelevantCoaccusals selectors', function () {
             { axis: 'Internal Allegations', value: 85.8654 },
             { axis: 'Civilian Allegations', value: 49.4652 },
           ],
-          visualTokenBackground: '#f9946b',
+          visualTokenBackground: '#FF412C',
           textColor: '#231F20',
         },
       }, {
@@ -79,7 +79,7 @@ describe('RelevantCoaccusals selectors', function () {
             { axis: 'Internal Allegations', value: 88.3297 },
             { axis: 'Civilian Allegations', value: 81.8766 },
           ],
-          visualTokenBackground: '#f64016',
+          visualTokenBackground: '#FF412C',
           textColor: '#231F20',
         },
       }]);

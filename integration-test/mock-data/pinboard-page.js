@@ -566,6 +566,13 @@ const firstRelevantDocumentOfficer = {
   rank: 'Detective',
   'full_name': 'Richard Sullivan',
   'coaccusal_count': 53,
+  'percentile': {
+    'percentile_allegation': '66.5049',
+    'percentile_trr': '91.8189',
+    'percentile_allegation_civilian': '71.4022',
+    'percentile_allegation_internal': '0.0000',
+    'year': 2016,
+  },
 };
 const generateRelevantDocumentOfficer = (index) => ({
   'id': index,
@@ -657,6 +664,12 @@ const firstRelevantComplaint = {
       'rank': 'Sergeant',
       'full_name': 'Carl Suchocki',
       'coaccusal_count': 53,
+      'percentile': {
+        'percentile_allegation': '33.2812',
+        'percentile_trr': '0.0000',
+        'percentile_allegation_civilian': '99.9696',
+        'percentile_allegation_internal': '99.6468',
+      },
     },
     ..._.times(8, index => ({
       'id': index,

@@ -1,3 +1,8 @@
+const nthPoliceWitnessRadarChart = (index) => ({
+  locateStrategy: 'xpath',
+  selector: `//a[contains(@class, "police-witness-row")][${index}]//*[name()="svg"]`
+});
+
 module.exports = {
   url: function (crid) {
     return `${this.api.globals.clientUrl}/complaint/${crid}/`;
@@ -95,6 +100,17 @@ module.exports = {
         requestButton: '.request-button',
         cancelButton: '.cancel-button',
         messageBox: '.message-box',
+      },
+    },
+    policeWitnesses: {
+      selector: '//div[contains(@class, "police-witness__police-witness")]',
+      locateStrategy: 'xpath',
+      elements: {
+        firstRadarChart: nthPoliceWitnessRadarChart(1),
+        secondRadarChart: nthPoliceWitnessRadarChart(2),
+        thirdRadarChart: nthPoliceWitnessRadarChart(3),
+        forthRadarChart: nthPoliceWitnessRadarChart(4),
+        fifthRadarChart: nthPoliceWitnessRadarChart(5),
       },
     },
   },
