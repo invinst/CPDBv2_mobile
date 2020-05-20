@@ -101,7 +101,7 @@ describe('<TopOfficersByAllegation />', function () {
       {
         'birth_year': 1971,
         'complaint_count': 104,
-        'complaint_percentile': 99.9911,
+        'percentile_allegation': 99.9911,
         'full_name': 'Broderick Jones',
         gender: 'Male',
         id: 13788,
@@ -113,7 +113,6 @@ describe('<TopOfficersByAllegation />', function () {
           ],
           textColor: '#231F20',
           visualTokenBackground: '#f95125',
-          year: 2005,
         },
         race: 'Black',
         'sustained_count': 11,

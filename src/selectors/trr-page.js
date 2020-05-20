@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { get, compact, startCase, toLower, upperFirst } from 'lodash';
 import { getCurrentAge, getCareerDuration, formatDate } from 'utils/date';
-import { extractPercentile } from 'selectors/common/percentile';
+import { extractLatestPercentile } from 'selectors/common/percentile';
 import { cmsSelector } from 'selectors/common/cms';
 
 
@@ -29,7 +29,7 @@ const officerTransform = (officer) => {
     unitDescription: get(officer.unit, 'description'),
     demographic: `${demographic}.`,
     careerDuration: getCareerDuration(officer['appointed_date'], officer['date_of_resignation']),
-    percentile: extractPercentile(officer),
+    percentile: extractLatestPercentile(officer),
   };
 };
 

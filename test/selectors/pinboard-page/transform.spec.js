@@ -22,25 +22,19 @@ describe('Pinboard Page transform selectors', function () {
             'rank': 'Sergeant of Police',
             'full_name': 'Eric Cato',
             'coaccusal_count': null,
-            'percentile': {
-              'year': 2016,
-              'percentile_trr': '72.1094',
-              'percentile_allegation': '99.4803',
-              'percentile_allegation_civilian': '99.1379',
-              'percentile_allegation_internal': '88.3297',
-            },
+            'percentile_trr': '72.1094',
+            'percentile_allegation': '99.4803',
+            'percentile_allegation_civilian': '99.1379',
+            'percentile_allegation_internal': '88.3297',
           }, {
             'id': 32020,
             'rank': 'Police Officer',
             'full_name': 'Scott Hall',
             'coaccusal_count': null,
-            'percentile': {
-              'year': 2016,
-              'percentile_trr': '78.2707',
-              'percentile_allegation': '98.7238',
-              'percentile_allegation_civilian': '97.8772',
-              'percentile_allegation_internal': '61.1521',
-            },
+            'percentile_trr': '78.2707',
+            'percentile_allegation': '98.7238',
+            'percentile_allegation_civilian': '97.8772',
+            'percentile_allegation_internal': '61.1521',
           }],
         },
       };
@@ -59,7 +53,6 @@ describe('Pinboard Page transform selectors', function () {
             fullName: 'Eric Cato',
             shortName: 'E. Cato',
             percentile: {
-              year: 2016,
               items: [
                 { axis: 'Use of Force Reports', value: 72.1094 },
                 { axis: 'Internal Allegations', value: 88.3297 },
@@ -73,7 +66,6 @@ describe('Pinboard Page transform selectors', function () {
             fullName: 'Scott Hall',
             shortName: 'S. Hall',
             percentile: {
-              year: 2016,
               items: [
                 { axis: 'Use of Force Reports', value: 78.2707 },
                 { axis: 'Internal Allegations', value: 61.1521 },
@@ -132,25 +124,21 @@ describe('Pinboard Page transform selectors', function () {
             'rank': 'Sergeant of Police',
             'full_name': 'Short Name',
             'coaccusal_count': null,
-            'percentile': {},
           }, {
             'id': 32020,
             'rank': 'Police Officer',
             'full_name': 'Short Three Names',
             'coaccusal_count': null,
-            'percentile': {},
           }, {
             'id': 32022,
             'rank': 'Police Officer',
             'full_name': 'Long Three Nameeeeeeee',
             'coaccusal_count': null,
-            'percentile': {},
           }, {
             'id': 32024,
             'rank': 'Police Officer',
             'full_name': 'Long LastNameeeeeeeeeeeeeee',
             'coaccusal_count': null,
-            'percentile': {},
           }],
         },
       };
@@ -199,13 +187,10 @@ describe('Pinboard Page transform selectors', function () {
         'full_name': 'Johnny Patterson',
         'coaccusal_count': 24,
         'allegation_count': 42,
-        'percentile': {
-          'year': 2006,
-          'percentile_trr': '0.0000',
-          'percentile_allegation': '88.9038',
-          'percentile_allegation_civilian': '49.4652',
-          'percentile_allegation_internal': '85.8654',
-        },
+        'percentile_trr': '0.0000',
+        'percentile_allegation': '88.9038',
+        'percentile_allegation_civilian': '49.4652',
+        'percentile_allegation_internal': '85.8654',
       };
 
       relevantCoaccusalTransform(coaccusal).should.eql({
@@ -215,7 +200,6 @@ describe('Pinboard Page transform selectors', function () {
         coaccusalCount: 24,
         complaintCount: 42,
         percentile: {
-          year: 2006,
           items: [
             { axis: 'Use of Force Reports', value: 0 },
             { axis: 'Internal Allegations', value: 85.8654 },
@@ -239,13 +223,10 @@ describe('Pinboard Page transform selectors', function () {
           'rank': 'Sergeant of Police',
           'full_name': 'Daniel O Toole',
           'coaccusal_count': null,
-          'percentile': {
-            'year': 2016,
-            'percentile_trr': '83.0024',
-            'percentile_allegation': '99.2282',
-            'percentile_allegation_civilian': '99.1579',
-            'percentile_allegation_internal': '70.0568',
-          },
+          'percentile_trr': '83.0024',
+          'percentile_allegation': '99.2282',
+          'percentile_allegation_civilian': '99.1579',
+          'percentile_allegation_internal': '70.0568',
         }],
         'point': { 'lon': -87.6427175, 'lat': 41.7756769 },
       };
@@ -260,7 +241,6 @@ describe('Pinboard Page transform selectors', function () {
           fullName: 'Daniel O Toole',
           shortName: 'D. O Toole',
           percentile: {
-            year: 2016,
             items: [
               { axis: 'Use of Force Reports', value: 83.0024 },
               { axis: 'Internal Allegations', value: 70.0568 },

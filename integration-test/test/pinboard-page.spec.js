@@ -842,7 +842,7 @@ describe('Pinboard Page', function () {
   });
 
   context('relevant coaccusals section', function () {
-    it.only('should render coaccusal cards', function (client) {
+    it('should render coaccusal cards', function (client) {
       const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
       relevantCoaccusalsSection.expect.element('@title').text.to.equal('COACCUSALS');
       relevantCoaccusalsSection.expect.element('@carouselTip').text.to.equal('<< Swipe for more');
@@ -893,7 +893,7 @@ describe('Pinboard Page', function () {
   });
 
   context('Pinboard visualization', function () {
-    it.only('should render animated social graph and geographic section', function (client) {
+    it('should render animated social graph and geographic section', function (client) {
       client.pause(9999999);
       const pinboardPage = this.pinboardPage;
       client.resizeWindow(500, 1000);

@@ -300,9 +300,10 @@ describe('officer-page selectors', function () {
           data: {
             11: {
               'allegation_count': 1,
-              'complaint_percentile': 4.000,
+              'percentile_allegation': '4.0000',
+              'percentile_trr': '9.0000',
               'honorable_mention_count': 3,
-              'honorable_mention_percentile': 3.000,
+              'honorable_mention_percentile': '3.0000',
               'sustained_count': 4,
               'discipline_count': 5,
               'trr_count': 7,
@@ -321,14 +322,14 @@ describe('officer-page selectors', function () {
     it('should return metrics', function () {
       officerMetricsSelector(state, props).should.eql({
         allegationCount: 1,
-        allegationPercentile: 4.000,
+        allegationPercentile: '4.0000',
         honorableMentionCount: 3,
-        honorableMentionPercentile: 3.000,
+        honorableMentionPercentile: '3.0000',
         sustainedCount: 4,
         disciplineCount: 5,
         trrCount: 7,
         majorAwardCount: 5,
-        trrPercentile: 9.0,
+        trrPercentile: '9.0000',
         civilianComplimentCount: 10,
       });
     });

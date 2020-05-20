@@ -17,22 +17,18 @@ describe('PinboardPage selectors', function () {
                 {
                   'full_name': 'Jerome Finnigan',
                   'id': 1,
-                  'percentile': {
-                    'percentile_allegation': '99.9',
-                    'percentile_trr': '78.2707',
-                    'percentile_allegation_civilian': '97.8772',
-                    'percentile_allegation_internal': '61.1521',
-                  },
+                  'percentile_allegation': '99.9',
+                  'percentile_trr': '78.2707',
+                  'percentile_allegation_civilian': '97.8772',
+                  'percentile_allegation_internal': '61.1521',
                 },
                 {
                   'full_name': 'Edward May',
                   'id': 2,
-                  'percentile': {
-                    'percentile_allegation': '89',
-                    'percentile_trr': '80',
-                    'percentile_allegation_civilian': '85',
-                    'percentile_allegation_internal': '90',
-                  },
+                  'percentile_allegation': '89',
+                  'percentile_trr': '80',
+                  'percentile_allegation_civilian': '85',
+                  'percentile_allegation_internal': '90',
                 },
               ],
               'coaccused_data': [
@@ -150,11 +146,9 @@ describe('PinboardPage selectors', function () {
                 {
                   'full_name': 'Jerome Finnigan',
                   'id': 1,
-                  'percentile': {
-                    'percentile_trr': '78.2707',
-                    'percentile_allegation_civilian': '97.8772',
-                    'percentile_allegation_internal': '61.1521',
-                  },
+                  'percentile_trr': '78.2707',
+                  'percentile_allegation_civilian': '97.8772',
+                  'percentile_allegation_internal': '61.1521',
                 },
               ],
               'coaccused_data': coaccusedData,

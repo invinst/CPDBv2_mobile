@@ -14,13 +14,10 @@ describe('RelevantCoaccusals selectors', function () {
         'full_name': 'Johnny Patterson',
         'coaccusal_count': 24,
         'allegation_count': 42,
-        'percentile': {
-          'year': 2006,
-          'percentile_trr': '0.0000',
-          'percentile_allegation': '88.9038',
-          'percentile_allegation_civilian': '49.4652',
-          'percentile_allegation_internal': '85.8654',
-        },
+        'percentile_trr': '0.0000',
+        'percentile_allegation': '88.9038',
+        'percentile_allegation_civilian': '49.4652',
+        'percentile_allegation_internal': '85.8654',
       },
       {
         'id': 2433,
@@ -28,13 +25,10 @@ describe('RelevantCoaccusals selectors', function () {
         'full_name': 'Darren Borum',
         'coaccusal_count': 18,
         'allegation_count': 81,
-        'percentile': {
-          'year': 2016,
-          'percentile_trr': '38.9028',
-          'percentile_allegation': '86.0456',
-          'percentile_allegation_civilian': '81.8766',
-          'percentile_allegation_internal': '88.3297',
-        },
+        'percentile_trr': '38.9028',
+        'percentile_allegation': '86.0456',
+        'percentile_allegation_civilian': '81.8766',
+        'percentile_allegation_internal': '88.3297',
       }];
       const state = {
         pinboardPage: {
@@ -57,7 +51,6 @@ describe('RelevantCoaccusals selectors', function () {
         coaccusalCount: 24,
         complaintCount: 42,
         percentile: {
-          year: 2006,
           items: [
             { axis: 'Use of Force Reports', value: 0 },
             { axis: 'Internal Allegations', value: 85.8654 },
@@ -73,7 +66,6 @@ describe('RelevantCoaccusals selectors', function () {
         coaccusalCount: 18,
         complaintCount: 81,
         percentile: {
-          year: 2016,
           items: [
             { axis: 'Use of Force Reports', value: 38.9028 },
             { axis: 'Internal Allegations', value: 88.3297 },
@@ -112,26 +104,20 @@ describe('RelevantCoaccusals selectors', function () {
         'rank': 'Police Officer',
         'full_name': 'Johnny Patterson',
         'coaccusal_count': 24,
-        'percentile': {
-          'year': 2006,
-          'percentile_trr': '0.0000',
-          'percentile_allegation': '88.9038',
-          'percentile_allegation_civilian': '49.4652',
-          'percentile_allegation_internal': '85.8654',
-        },
+        'percentile_trr': '0.0000',
+        'percentile_allegation': '88.9038',
+        'percentile_allegation_civilian': '49.4652',
+        'percentile_allegation_internal': '85.8654',
       },
       {
         'id': 2433,
         'rank': 'Police Officer',
         'full_name': 'Darren Borum',
         'coaccusal_count': 18,
-        'percentile': {
-          'year': 2016,
-          'percentile_trr': '38.9028',
-          'percentile_allegation': '86.0456',
-          'percentile_allegation_civilian': '81.8766',
-          'percentile_allegation_internal': '88.3297',
-        },
+        'percentile_trr': '38.9028',
+        'percentile_allegation': '86.0456',
+        'percentile_allegation_civilian': '81.8766',
+        'percentile_allegation_internal': '88.3297',
       }];
       const state = {
         pinboardPage: {
@@ -155,26 +141,20 @@ describe('RelevantCoaccusals selectors', function () {
         'rank': 'Police Officer',
         'full_name': 'Johnny Patterson',
         'coaccusal_count': 24,
-        'percentile': {
-          'year': 2006,
-          'percentile_trr': '0.0000',
-          'percentile_allegation': '88.9038',
-          'percentile_allegation_civilian': '49.4652',
-          'percentile_allegation_internal': '85.8654',
-        },
+        'percentile_trr': '0.0000',
+        'percentile_allegation': '88.9038',
+        'percentile_allegation_civilian': '49.4652',
+        'percentile_allegation_internal': '85.8654',
       },
       {
         'id': 2433,
         'rank': 'Police Officer',
         'full_name': 'Darren Borum',
         'coaccusal_count': 18,
-        'percentile': {
-          'year': 2016,
-          'percentile_trr': '38.9028',
-          'percentile_allegation': '86.0456',
-          'percentile_allegation_civilian': '81.8766',
-          'percentile_allegation_internal': '88.3297',
-        },
+        'percentile_trr': '38.9028',
+        'percentile_allegation': '86.0456',
+        'percentile_allegation_civilian': '81.8766',
+        'percentile_allegation_internal': '88.3297',
       }];
       const state = {
         pinboardPage: {

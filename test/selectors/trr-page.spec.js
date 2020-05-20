@@ -89,7 +89,6 @@ describe('trr-page selectors', function () {
           onDuty: 'Yes',
           inUniform: 'No',
           percentile: {
-            year: undefined,
             items: [
               { axis: 'Use of Force Reports', value: 99.9 },
               { axis: 'Internal Allegations', value: 11.1 },
