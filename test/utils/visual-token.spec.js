@@ -6,7 +6,7 @@ import { softBlackColor } from 'utils/styles';
 
 
 describe('VisualToken utils', function () {
-  describe('getVisualTokenOIGBackground', () => {
+  describe('getVisualTokenOIGBackground', function () {
     context('allegation percentile between 0 and 5', function () {
       it('should return correct background and text colors', function () {
         getVisualTokenOIGBackground(0).should.eql({

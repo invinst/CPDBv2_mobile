@@ -894,7 +894,6 @@ describe('Pinboard Page', function () {
 
   context('Pinboard visualization', function () {
     it('should render animated social graph and geographic section', function (client) {
-      client.pause(9999999);
       const pinboardPage = this.pinboardPage;
       client.resizeWindow(500, 1000);
       const animatedSocialGraphSection = pinboardPage.section.animatedSocialGraphSection;

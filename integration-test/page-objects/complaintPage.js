@@ -1,6 +1,6 @@
 const nthPoliceWitnessRadarChart = (index) => ({
   locateStrategy: 'xpath',
-  selector: `//a[contains(@class, "police-witness-row")][${index}]//*[name()="svg"]`
+  selector: `//a[contains(@class, "police-witness-row")][${index}]//*[name()="svg"]`,
 });
 
 module.exports = {
@@ -60,6 +60,10 @@ module.exports = {
         header: '.header',
         showAll: '.show-all',
         paddingBottom: '.padding-bottom',
+        firstRadarChart: {
+          selector: '(//*[name()="svg" and contains(@class, "radar-chart__radar-chart")])[1]',
+          locateStrategy: 'xpath',
+        },
       },
     },
     firstCoaccusal: {

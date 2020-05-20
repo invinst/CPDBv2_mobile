@@ -171,7 +171,7 @@ describe('complaint-page selectors', function () {
             'id': 2235,
             'rank': 'Police Officer',
             'findingOutcome': 'Sustained - Penalty Not Served',
-            'percentile': null,
+            'percentile': {},
             'disciplined': true,
             'isPinned': false,
           },
@@ -181,7 +181,7 @@ describe('complaint-page selectors', function () {
             'involved_type': 'investigator',
             'full_name': 'Peter Parker',
             'officer_id': 1,
-            'percentile': null,
+            'percentile': {},
           },
         ],
         'policeWitnesses': [
@@ -189,7 +189,7 @@ describe('complaint-page selectors', function () {
             'involved_type': 'police_witness',
             'full_name': 'Patrick Boyle',
             'officer_id': 2,
-            'percentile': null,
+            'percentile': {},
           },
         ],
         'attachments': [

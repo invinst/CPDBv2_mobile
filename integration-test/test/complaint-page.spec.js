@@ -98,6 +98,10 @@ const mockComplaint = {
       'rank': 'Police Officer',
       'full_name': 'Donovan Markiewicz',
       'allegation_count': 10,
+      'percentile_trr': 85.2355,
+      'percentile_allegation': 33.2812,
+      'percentile_allegation_internal': 99.6468,
+      'percentile_allegation_civilian': 99.9696,
     },
     {
       'category': 'Excessive Force',
@@ -107,6 +111,10 @@ const mockComplaint = {
       'rank': 'Police Officer',
       'full_name': 'John Foertsch',
       'allegation_count': 8,
+      'percentile_trr': 65.2355,
+      'percentile_allegation': 13.2812,
+      'percentile_allegation_internal': 69.6468,
+      'percentile_allegation_civilian': 59.9696,
     },
     {
       'category': 'Excessive Force',
@@ -116,6 +124,10 @@ const mockComplaint = {
       'rank': 'Police Officer',
       'full_name': 'Kenneth Wojtan',
       'allegation_count': 5,
+      'percentile_trr': 35.2355,
+      'percentile_allegation': 33.2812,
+      'percentile_allegation_internal': 29.6468,
+      'percentile_allegation_civilian': 39.9696,
     },
   ],
   'location': 'Building',
@@ -158,6 +170,8 @@ describe('ComplaintPageTest', function () {
     coaccusals.expect.element('@header').text.to.contain('3 ACCUSED OFFICERS');
     coaccusals.expect.element('@showAll').to.be.visible;
     coaccusals.expect.element('@paddingBottom').not.to.be.present;
+    coaccusals.expect.element('@firstRadarChart').to.have.css('background-color')
+      .which.equal('rgba(244, 162, 152, 1)');
 
     coaccusals.click('@showAll');
     coaccusals.expect.element('@showAll').not.to.be.present;

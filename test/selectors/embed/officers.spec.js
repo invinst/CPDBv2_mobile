@@ -45,7 +45,7 @@ describe('embed', function () {
         id: 13789,
         'full_name': 'Queen Jones',
         'complaint_count': 0,
-        percentile: null,
+        percentile: {},
       },
     ]);
   });

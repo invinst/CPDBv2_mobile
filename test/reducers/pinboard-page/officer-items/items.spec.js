@@ -94,7 +94,7 @@ describe('Pinboard officerItemsReducer', function () {
           id: '1',
           complaintCount: 3,
           fullName: 'Jerome Finnigan',
-          percentile: null,
+          percentile: {},
           rank: 'Officer',
         },
       }
@@ -126,7 +126,7 @@ describe('Pinboard officerItemsReducer', function () {
         'full_name': 'Jerome Finnigan',
         'rank': 'Officer',
         'complaint_count': 3,
-        'percentile': null,
+        'percentile': {},
       }, {
         'id': 3,
       }],
@@ -149,7 +149,7 @@ describe('Pinboard officerItemsReducer', function () {
         'full_name': 'Jerome Finnigan',
         'rank': 'Officer',
         'complaint_count': 3,
-        'percentile': null,
+        'percentile': {},
       }],
       {
         type: REMOVE_ITEM_IN_PINBOARD_PAGE,
@@ -165,7 +165,7 @@ describe('Pinboard officerItemsReducer', function () {
       'full_name': 'Jerome Finnigan',
       'rank': 'Officer',
       'complaint_count': 3,
-      'percentile': null,
+      'percentile': {},
     }]);
   });
 
@@ -178,7 +178,7 @@ describe('Pinboard officerItemsReducer', function () {
         'full_name': 'Jerome Finnigan',
         'rank': 'Officer',
         'complaint_count': 3,
-        'percentile': null,
+        'percentile': {},
       }],
       {
         type: REMOVE_ITEM_IN_PINBOARD_PAGE,
@@ -194,7 +194,7 @@ describe('Pinboard officerItemsReducer', function () {
       'full_name': 'Jerome Finnigan',
       'rank': 'Officer',
       'complaint_count': 3,
-      'percentile': null,
+      'percentile': {},
     }]);
   });
 
@@ -207,7 +207,7 @@ describe('Pinboard officerItemsReducer', function () {
         'full_name': 'Jerome Finnigan',
         'rank': 'Officer',
         'complaint_count': 3,
-        'percentile': null,
+        'percentile': {},
       }],
       {
         type: ORDER_PINBOARD,
@@ -221,7 +221,7 @@ describe('Pinboard officerItemsReducer', function () {
       'full_name': 'Jerome Finnigan',
       'rank': 'Officer',
       'complaint_count': 3,
-      'percentile': null,
+      'percentile': {},
     }, {
       'id': 1,
     }]);
@@ -236,7 +236,7 @@ describe('Pinboard officerItemsReducer', function () {
         'full_name': 'Jerome Finnigan',
         'rank': 'Officer',
         'complaint_count': 3,
-        'percentile': null,
+        'percentile': {},
       }],
       {
         type: ORDER_PINBOARD,
@@ -252,7 +252,7 @@ describe('Pinboard officerItemsReducer', function () {
       'full_name': 'Jerome Finnigan',
       'rank': 'Officer',
       'complaint_count': 3,
-      'percentile': null,
+      'percentile': {},
     }]);
   });
 });

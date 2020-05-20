@@ -1,8 +1,47 @@
 import should from 'should';
 
-import { extractPercentile, visualTokenBackground } from 'selectors/common/percentile';
+import { extractPercentile, extractLatestPercentile, visualTokenBackground } from 'selectors/common/percentile';
 import { softBlackColor } from 'utils/styles';
 
+
+describe('extractLatestPercentile', function () {
+  it('should call extractPercentile with correct data', function () {
+    extractLatestPercentile({
+      'percentile_allegation': '60.0000',
+      'percentile_allegation_civilian': '52.5000',
+      'percentile_allegation_internal': '10.1000',
+      'percentile_trr': '20.6000',
+      'id': 8064,
+      'full_name': 'Abraham Espinosa',
+      'year': '1989',
+    }).should.eql({
+      items: [
+        {
+          axis: 'Use of Force Reports',
+          value: 20.6,
+        },
+        {
+          axis: 'Internal Allegations',
+          value: 10.1,
+        },
+        {
+          axis: 'Civilian Allegations',
+          value: 52.5,
+        },
+      ],
+      visualTokenBackground: '#FF6453',
+      textColor: softBlackColor,
+    });
+
+    extractLatestPercentile(undefined).should.eql({});
+
+    extractLatestPercentile({
+      'id': 8064,
+      'full_name': 'Abraham Espinosa',
+      'year': '1989',
+    }).should.eql({});
+  });
+});
 
 describe('extractPercentile', function () {
   it('should return visualTokenBackground, textColor, items, and year', function () {
@@ -36,9 +75,9 @@ describe('extractPercentile', function () {
   });
 
   it('should return null if the given percentile is null or undefined', function () {
-    should(extractPercentile(undefined)).be.null();
-    should(extractPercentile(null)).be.null();
-    should(extractPercentile({})).be.null();
+    extractPercentile(undefined).should.eql({});
+    extractPercentile(null).should.eql({});
+    extractPercentile({}).should.eql({});
   });
 });
 

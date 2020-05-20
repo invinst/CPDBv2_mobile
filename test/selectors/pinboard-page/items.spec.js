@@ -29,7 +29,6 @@ describe('PinboardPage Items selectors', function () {
           'complaint_count': 0,
           'sustained_count': 0,
           'birth_year': 1975,
-          'percentile_allegation': 99.3450,
           race: 'White',
           gender: 'Male',
           rank: 'Police Officer',

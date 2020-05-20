@@ -211,12 +211,6 @@ module.exports = {
     animatedSocialGraphSection: {
       locateStrategy: 'xpath',
       selector: '(//div[contains(@class, "visualization-item")])[1]',
-      elements: {
-        firstGraphNode: {
-          locateStrategy: 'xpath',
-          selector: '(//*[name()="circle" and contains(@class, "node")])[1]',
-        },
-      },
     },
     geographicSection: {
       locateStrategy: 'xpath',

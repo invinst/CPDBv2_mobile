@@ -53,11 +53,11 @@ describe('landing page selectors', function () {
     it('should return correct result', function () {
       state.landingPage.topOfficersByAllegation = [{
         id: 123,
-        percentile: null,
+        percentile: {},
       }];
       topOfficersByAllegationSelector(state).should.deepEqual([{
         id: 123,
-        percentile: null,
+        percentile: {},
         isPinned: false,
       }]);
     });
@@ -150,19 +150,19 @@ describe('landing page selectors', function () {
         kind: 'single_officer',
       }, {
         id: 9,
-        percentile: null,
+        percentile: {},
         kind: 'single_officer',
       }];
       const expectation = {
         1: {
           id: 1,
-          percentile: null,
+          percentile: {},
           kind: 'single_officer',
           isPinned: true,
         },
         9: {
           id: 9,
-          percentile: null,
+          percentile: {},
           kind: 'single_officer',
           isPinned: false,
         },

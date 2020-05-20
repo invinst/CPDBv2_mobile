@@ -7,7 +7,7 @@ import { PERCENTILE_FIELDS } from 'constants';
 export const extractLatestPercentile = (obj) => extractPercentile(pick(obj || {}, PERCENTILE_FIELDS));
 
 export const extractPercentile = (percentile) => {
-  if (isEmpty(percentile)) return null;
+  if (isEmpty(percentile)) return {};
   const allegationPercentile = parseFloat(percentile['percentile_allegation']);
   const civilianAllegationPercentile = parseFloat(percentile['percentile_allegation_civilian']);
   const internalAllegationPercentile = parseFloat(percentile['percentile_allegation_internal']);
@@ -16,7 +16,6 @@ export const extractPercentile = (percentile) => {
     return null;
   const { backgroundColor, textColor } = getVisualTokenOIGBackground(allegationPercentile);
   const yearData = percentile['year'] ? { year: percentile['year'] } : {};
-
   return {
     ...yearData,
     items: [
