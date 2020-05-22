@@ -1,3 +1,9 @@
+const {
+  nthMenuItemTitle,
+  nthMenuItemCreatedAt,
+  nthPinButton,
+} = require(__dirname + '/../page-objects/shared').pinboardsMenu;
+
 module.exports = {
   url: function (crid) {
     return `${this.api.globals.clientUrl}/complaint/${crid}/`;
@@ -7,6 +13,10 @@ module.exports = {
     body: 'body',
     pinButton: {
       selector: '//div[contains(@class, "with-header__header")]//div[contains(@class, "item-pin-button")]',
+      locateStrategy: 'xpath',
+    },
+    addToPinboardButton: {
+      selector: '//div[contains(@class, "right-buttons")]//div',
       locateStrategy: 'xpath',
     },
     victims: '.victim-list',
@@ -95,6 +105,26 @@ module.exports = {
         requestButton: '.request-button',
         cancelButton: '.cancel-button',
         messageBox: '.message-box',
+      },
+    },
+    pinboardsMenu: {
+      selector: '//div[contains(@class, "pinboards-menu")]',
+      locateStrategy: 'xpath',
+      elements: {
+        items: {
+          selector: '//div[contains(@class, "pinboard-item")]',
+          locateStrategy: 'xpath',
+        },
+        firstItemTitle: nthMenuItemTitle(1),
+        firstItemCreatedAt: nthMenuItemCreatedAt(1),
+        firstItemPinButton: nthPinButton(1),
+        secondItemTitle: nthMenuItemTitle(2),
+        secondItemCreatedAt: nthMenuItemCreatedAt(2),
+        secondItemPinButton: nthPinButton(2),
+        thirdItemTitle: nthMenuItemTitle(3),
+        thirdItemCreatedAt: nthMenuItemCreatedAt(3),
+        thirdItemPinButton: nthPinButton(3),
+        createPinboardWithSelectionButton: '.add-to-new-pinboard',
       },
     },
   },

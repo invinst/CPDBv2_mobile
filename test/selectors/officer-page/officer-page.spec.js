@@ -5,7 +5,9 @@ import {
   officerMetricsSelector,
   officerYearlyPercentileSelector,
   getIsOfficerPinned,
+  pinnableOfficerSelector,
 } from 'selectors/officer-page';
+import constants from 'constants';
 
 
 describe('officer-page selectors', function () {
@@ -346,7 +348,7 @@ describe('officer-page selectors', function () {
     });
   });
 
-  describe('getIsCrPinned', function () {
+  describe('getIsOfficerPinned', function () {
     it('should return true if officerId is in pinboard', function () {
       const state = {
         pinboardPage: {
@@ -355,7 +357,16 @@ describe('officer-page selectors', function () {
           },
         },
       };
-      getIsOfficerPinned(state, 123).should.be.true();
+
+      const props = {
+        match: {
+          params: {
+            id: 123,
+          },
+        },
+      };
+
+      getIsOfficerPinned(state, props).should.be.true();
     });
 
     it('should return false if officerId is not in pinboard', function () {
@@ -366,7 +377,49 @@ describe('officer-page selectors', function () {
           },
         },
       };
-      getIsOfficerPinned(state, 126).should.be.false();
+
+      const props = {
+        match: {
+          params: {
+            id: 126,
+          },
+        },
+      };
+      getIsOfficerPinned(state, props).should.be.false();
+    });
+  });
+
+  describe('pinnableOfficerSelector', function () {
+    it('should return correct data', function () {
+      const state = {
+        officerPage: {
+          officers: {
+            data: {
+              739: {
+                'officer_id': 739,
+                'full_name': 'Officer 739',
+                unit: {
+                  'unit_name': '001',
+                  'description': 'description',
+                },
+                'date_of_appt': '2015-09-23',
+                badge: 'badge',
+                'historic_badges': ['1', '2'],
+                'birth_year': 1991,
+                'has_unique_name': true,
+              },
+            },
+          },
+        },
+      };
+
+      const props = { match: { params: { id: 739 } } };
+
+      pinnableOfficerSelector(state, props).should.eql({
+        fullName: 'Officer 739',
+        id: 739,
+        type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+      });
     });
   });
 });

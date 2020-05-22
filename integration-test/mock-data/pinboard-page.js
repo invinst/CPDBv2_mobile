@@ -843,6 +843,217 @@ const createPinboardeeee7777Data = {
   },
 };
 
+const pinboardsMenu = {
+  pinboards: [
+    {
+      'id': '8d2daffe',
+      'title': 'Skrull Cap',
+      'created_at': '2020-03-09',
+      'crids': [],
+      'officer_ids': [
+        13937,
+        83473,
+        81234,
+      ],
+      'trr_ids': [],
+    },
+    {
+      'id': '99a3ea5b',
+      'title': 'Watts Crew',
+      'created_at': '2020-03-09',
+      'crids': [],
+      'officer_ids': [2235],
+      'trr_ids': [],
+    },
+    {
+      'id': '8e8c623a',
+      'title': '',
+      'created_at': '2020-03-09',
+      'crids': [],
+      'officer_ids': [2235],
+      'trr_ids': [],
+    },
+    {
+      'id': '7a0d5648',
+      'title': 'Watts Crew 2',
+      'created_at': '2020-03-09',
+      'crids': [],
+      'officer_ids': [
+        2235,
+        29033,
+        13937,
+      ],
+      'trr_ids': [],
+    },
+    {
+      'id': 'eb912947',
+      'title': 'Title 5 edit 3',
+      'created_at': '2020-01-03',
+      'crids': [
+        '269123',
+        '1063957',
+      ],
+      'officer_ids': [
+        2235,
+        4137,
+        32265,
+        29033,
+        21468,
+        27778,
+        18206,
+      ],
+      'trr_ids': [],
+    },
+  ],
+  updateRequestParams: [
+    {
+      'title': 'Skrull Cap',
+      'description': '',
+      'officer_ids': [
+        '13937',
+        '83473',
+        '81234',
+        '2235',
+      ],
+      'crids': [],
+      'trr_ids': [],
+    },
+    {
+      'title': 'Skrull Cap',
+      'description': '',
+      'officer_ids': [
+        '13937',
+        '83473',
+        '81234',
+      ],
+      'crids': ['1053667'],
+      'trr_ids': [],
+    },
+  ],
+  updatedPinboards: [
+    {
+      'id': '8d2daffe',
+      'title': 'Skrull Cap',
+      'description': '',
+      'created_at': '2020-03-09',
+      'crids': [],
+      'officer_ids': [
+        13937,
+        83473,
+        81234,
+        2235,
+      ],
+      'trr_ids': [],
+    },
+    {
+      'id': '8d2daffe',
+      'title': 'Skrull Cap',
+      'description': '',
+      'created_at': '2020-03-09',
+      'officer_ids': [
+        13937,
+        83473,
+        81234,
+      ],
+      'crids': ['1053667'],
+      'trr_ids': [],
+    },
+  ],
+  createPinboardRequestParams: [
+    {
+      'officer_ids': [2235],
+      'trr_ids': [],
+    },
+    {
+      'officer_ids': [],
+      crids: ['1053667'],
+      'trr_ids': [],
+    },
+  ],
+  createdPinboards: [
+    {
+      'id': 'f7231a74',
+      'title': '',
+      'officer_ids': [2235],
+      'crids': [],
+      'trr_ids': [],
+      'description': '',
+    },
+    {
+      id: 'f7231a74',
+      'officer_ids': [],
+      crids: ['1053667'],
+      'trr_ids': [],
+      title: '',
+      description: '',
+    },
+  ],
+  createdPinboardsOfficersData: [
+    {
+      'id': 2235,
+      'full_name': 'Kevin Osborn',
+      'complaint_count': 104,
+      badge: '8548',
+      'historic_badges': ['8547', '8546'],
+      'birth_year': 1957,
+      'civilian_compliment_count': 4,
+      'complaint_percentile': 99.895,
+      'date_of_appt': '1993-12-13',
+      'date_of_resignation': '2017-01-15',
+      'discipline_count': 1,
+      gender: 'Male',
+      'honorable_mention_count': 55,
+      'honorable_mention_percentile': 85.87,
+      'major_award_count': 1,
+      race: 'White',
+      rank: 'Police Officer',
+      'sustained_count': 1,
+      'trr_count': 1,
+      unit: {
+        'unit_id': 6,
+        description: 'District 005',
+        'unit_name': '005',
+      },
+      percentiles: [
+        {
+          'officer_id': 2235,
+          year: 2005,
+          'percentile_allegation_civilian': '66.251',
+          'percentile_allegation_internal': '0.023',
+          'percentile_allegation': '41.001',
+        },
+        {
+          'officer_id': 2235,
+          year: 2006,
+          'percentile_allegation_civilian': '66.251',
+          'percentile_allegation_internal': '0.023',
+          'percentile_trr': '44.7',
+          'percentile_allegation': '41.001',
+        },
+        {
+          'officer_id': 2235,
+          year: 2007,
+          'percentile_allegation_civilian': '0.022',
+          'percentile_allegation_internal': '75.065',
+          'percentile_trr': '0.046',
+          'percentile_allegation': '31.201',
+        },
+      ],
+    },
+  ],
+  createdPinboardsComplaintsData: [
+    {
+      'crid': '1053667',
+      'incident_date': '2012-04-30',
+      'point': {
+        'lat': 41.846749,
+        'lon': -87.685141,
+      },
+      'most_common_category': 'Operation/Personnel Violations',
+    },
+  ],
+};
+
 const pinboardeeee7777CRsData = pinboardffff6666CRsData;
 const pinboardeeee7777OfficersData = pinboardffff6666OfficersData;
 const pinboardeeee7777TRRsData = [];
@@ -962,4 +1173,5 @@ module.exports = {
   updatePinboardCrsResponse,
   updatePinboardCoaccusalsRequest,
   updatePinboardCoaccusalsResponse,
+  pinboardsMenu,
 };

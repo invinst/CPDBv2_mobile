@@ -4,6 +4,15 @@ const api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
 const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
+const {
+  pinboards,
+  updatedPinboards,
+  updateRequestParams,
+  createdPinboards,
+  createPinboardRequestParams,
+  createdPinboardsComplaintsData,
+} = require(__dirname + '/../mock-data/pinboard-page').pinboardsMenu;
+
 
 const mockComplaint = {
   'most_common_category': {
@@ -101,103 +110,122 @@ describe('ComplaintPageTest', function () {
       { 'message': 'Sorry, we can not subscribe your email' }
     );
     this.complaintPage = client.page.complaintPage();
-    this.complaintPage.navigate(this.complaintPage.url('1053667'));
-    this.complaintPage.expect.element('@body').to.be.present;
     done();
   });
 
-  it('should show proper header with CR title', function (client) {
-    const comlaintCategory = this.complaintPage.section.complaintCategory;
-    comlaintCategory.waitForElementVisible('@category', TIMEOUT);
-    comlaintCategory.expect.element('@category').text.to.contain('Operation/Personnel Violations');
-    comlaintCategory.expect.element('@subcategory').text.to.contain('Inventory Procedures');
-  });
+  context('complaint page content', function () {
+    beforeEach(function (client, done) {
+      this.complaintPage.navigate(this.complaintPage.url('1053667'));
+      this.complaintPage.expect.element('@body').to.be.present;
+      done();
+    });
 
-  it('should show proper coaccusals', function (client) {
-    const coaccusals = this.complaintPage.section.coaccusals;
-    coaccusals.expect.element('@header').text.to.contain('3 ACCUSED OFFICERS');
-    coaccusals.expect.element('@showAll').to.be.visible;
-    coaccusals.expect.element('@paddingBottom').not.to.be.present;
+    it('should show proper header with CR title', function (client) {
+      const comlaintCategory = this.complaintPage.section.complaintCategory;
+      comlaintCategory.waitForElementVisible('@category', TIMEOUT);
+      comlaintCategory.expect.element('@category').text.to.contain('Operation/Personnel Violations');
+      comlaintCategory.expect.element('@subcategory').text.to.contain('Inventory Procedures');
+    });
 
-    coaccusals.click('@showAll');
-    coaccusals.expect.element('@showAll').not.to.be.present;
-    coaccusals.expect.element('@paddingBottom').to.be.visible;
+    it('should show proper coaccusals', function (client) {
+      const coaccusals = this.complaintPage.section.coaccusals;
+      coaccusals.expect.element('@header').text.to.contain('3 ACCUSED OFFICERS');
+      coaccusals.expect.element('@showAll').to.be.visible;
+      coaccusals.expect.element('@paddingBottom').not.to.be.present;
 
-    const firstCoaccusal = this.complaintPage.section.firstCoaccusal;
-    firstCoaccusal.expect.element('@rank').text.to.contain('Police Officer');
-    firstCoaccusal.expect.element('@name').text.to.contain('Donovan Markiewicz');
-    firstCoaccusal.expect.element('@category').text.to.contain('Excessive Force');
-    firstCoaccusal.expect.element('@findingOutcome').text.to.contain('Sustained');
-  });
+      coaccusals.click('@showAll');
+      coaccusals.expect.element('@showAll').not.to.be.present;
+      coaccusals.expect.element('@paddingBottom').to.be.visible;
 
-  it('should show proper cr info', function () {
-    this.complaintPage.expect.element('@victims').text.to.contain('Black, Male, Age 45');
-    this.complaintPage.expect.element('@complainants').text.to.contain('White, Male, Age 57');
-    this.complaintPage.expect.element('@summary').text.to.contain('summary');
-    this.complaintPage.expect.element('@investigatorTimeline').text.to.contain(
-      'Apr 30, 2012\nIncident Occurs\nInvestigation Begins\nInvestigation Closed'
-    );
-    this.complaintPage.expect.element('@firstInvestigator').text.to.contain('Peter Parker');
-    this.complaintPage.expect.element('@incidentDate').text.to.equal('APR 30, 2012');
-  });
+      const firstCoaccusal = this.complaintPage.section.firstCoaccusal;
+      firstCoaccusal.expect.element('@rank').text.to.contain('Police Officer');
+      firstCoaccusal.expect.element('@name').text.to.contain('Donovan Markiewicz');
+      firstCoaccusal.expect.element('@category').text.to.contain('Excessive Force');
+      firstCoaccusal.expect.element('@findingOutcome').text.to.contain('Sustained');
+    });
 
-  it('should go to officer page when click on investigator which is an officer', function (client) {
-    this.complaintPage.click('@firstInvestigator');
-    client.assert.urlContains('/officer/1/peter-parker');
-  });
+    it('should show proper cr info', function () {
+      this.complaintPage.expect.element('@victims').text.to.contain('Black, Male, Age 45');
+      this.complaintPage.expect.element('@complainants').text.to.contain('White, Male, Age 57');
+      this.complaintPage.expect.element('@summary').text.to.contain('summary');
+      this.complaintPage.expect.element('@investigatorTimeline').text.to.contain(
+        'Apr 30, 2012\nIncident Occurs\nInvestigation Begins\nInvestigation Closed'
+      );
+      this.complaintPage.expect.element('@firstInvestigator').text.to.contain('Peter Parker');
+      this.complaintPage.expect.element('@incidentDate').text.to.equal('APR 30, 2012');
+    });
 
-  it('should go to search page when click on investigator which is not an officer', function (client) {
-    this.complaintPage.click('@secondInvestigator');
-    client.assert.urlContains('/search/?terms=Edward%20May');
-  });
+    it('should go to officer page when click on investigator which is an officer', function (client) {
+      this.complaintPage.click('@firstInvestigator');
+      client.assert.urlContains('/officer/1/peter-parker');
+    });
 
-  it('should show proper cr location', function () {
-    const location = this.complaintPage.section.location;
-    location.expect.element('@address').text.to.contain('2459 WESTERN AVE, CHICAGO IL 60608');
-    location.expect.element('@type').text.to.contain('Building');
-    location.expect.element('@beat').text.to.contain('1034');
-  });
+    it('should go to search page when click on investigator which is not an officer', function (client) {
+      this.complaintPage.click('@secondInvestigator');
+      client.assert.urlContains('/search/?terms=Edward%20May');
+    });
 
-  it('should show request document modal when clicks on "Request Document"', function () {
-    this.complaintPage.expect.section('@requestDocumentForm').to.be.not.present;
+    it('should show proper cr location', function () {
+      const location = this.complaintPage.section.location;
+      location.expect.element('@address').text.to.contain('2459 WESTERN AVE, CHICAGO IL 60608');
+      location.expect.element('@type').text.to.contain('Building');
+      location.expect.element('@beat').text.to.contain('1034');
+    });
 
-    this.complaintPage.click('@requestDocumentButton');
-    this.complaintPage.expect.section('@requestDocumentForm').to.be.present;
+    it('should show request document modal when clicks on "Request Document"', function () {
+      this.complaintPage.expect.section('@requestDocumentForm').to.be.not.present;
 
-    this.complaintPage.section.requestDocumentForm.click('@cancelButton');
-    this.complaintPage.expect.section('@requestDocumentForm').to.be.not.present;
-  });
+      this.complaintPage.click('@requestDocumentButton');
+      this.complaintPage.expect.section('@requestDocumentForm').to.be.present;
 
-  it('should accept valid email, and close modal after 1.5s', function () {
-    this.complaintPage.expect.element('@requestDocumentButton').text.to.equal('Request Documents');
-    this.complaintPage.click('@requestDocumentButton');
-    this.complaintPage.expect.section('@requestDocumentForm').to.be.present;
+      this.complaintPage.section.requestDocumentForm.click('@cancelButton');
+      this.complaintPage.expect.section('@requestDocumentForm').to.be.not.present;
+    });
 
-    const requestDocumentForm = this.complaintPage.section.requestDocumentForm;
-    requestDocumentForm.setValue('@emailInput', 'valid@email.com');
-    requestDocumentForm.click('@requestButton');
-    requestDocumentForm.waitForElementVisible('@messageBox', TIMEOUT);
-    requestDocumentForm.expect.element('@messageBox').text.to.equal('Thanks for subscribing.');
+    it('should accept valid email, and close modal after 1.5s', function () {
+      this.complaintPage.expect.element('@requestDocumentButton').text.to.equal('Request Documents');
+      this.complaintPage.click('@requestDocumentButton');
+      this.complaintPage.expect.section('@requestDocumentForm').to.be.present;
 
-    this.complaintPage.expect.section('@requestDocumentForm').to.be.not.present.after(2000);
-    this.complaintPage.expect.element('@requestDocumentButton').text.to.equal('Documents Requested✔');
-  });
+      const requestDocumentForm = this.complaintPage.section.requestDocumentForm;
+      requestDocumentForm.setValue('@emailInput', 'valid@email.com');
+      requestDocumentForm.click('@requestButton');
+      requestDocumentForm.waitForElementVisible('@messageBox', TIMEOUT);
+      requestDocumentForm.expect.element('@messageBox').text.to.equal('Thanks for subscribing.');
 
-  it('should ignore invalid email', function () {
-    this.complaintPage.click('@requestDocumentButton');
-    this.complaintPage.expect.section('@requestDocumentForm').to.be.present;
+      this.complaintPage.expect.section('@requestDocumentForm').to.be.not.present.after(2000);
+      this.complaintPage.expect.element('@requestDocumentButton').text.to.equal('Documents Requested✔');
+    });
 
-    const requestDocumentForm = this.complaintPage.section.requestDocumentForm;
-    requestDocumentForm.setValue('@emailInput', 'invalid#email.com');
-    requestDocumentForm.click('@requestButton');
-    requestDocumentForm.waitForElementVisible('@messageBox', TIMEOUT);
-    requestDocumentForm.expect.element('@messageBox').text.to.equal(
-      'Sorry, we can not subscribe your email'
-    );
+    it('should ignore invalid email', function () {
+      this.complaintPage.click('@requestDocumentButton');
+      this.complaintPage.expect.section('@requestDocumentForm').to.be.present;
+
+      const requestDocumentForm = this.complaintPage.section.requestDocumentForm;
+      requestDocumentForm.setValue('@emailInput', 'invalid#email.com');
+      requestDocumentForm.click('@requestButton');
+      requestDocumentForm.waitForElementVisible('@messageBox', TIMEOUT);
+      requestDocumentForm.expect.element('@messageBox').text.to.equal(
+        'Sorry, we can not subscribe your email'
+      );
+    });
+
+    it('should have clicky installed', function (client) {
+      const page = client.page.common();
+      page.waitForElementPresent('@clickyScript');
+      page.waitForElementPresent('@clickySiteIdsScript');
+      page.waitForElementPresent('@clickyNoJavascriptGIF');
+    });
   });
 
   describe('Pinboard function', function () {
     beforeEach(function (client, done) {
+      this.main = client.page.main();
+      this.search = client.page.search();
+      done();
+    });
+
+    it('should display toast when pinning a coaccusal', function (client) {
       api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
 
       api.mockPut(
@@ -220,12 +248,6 @@ describe('ComplaintPageTest', function () {
         },
       );
 
-      this.main = client.page.main();
-      this.search = client.page.search();
-      done();
-    });
-
-    it('should display toast when pinning a coaccusal', function (client) {
       api.mockPost(
         '/api/v2/mobile/pinboards/',
         201,
@@ -243,6 +265,9 @@ describe('ComplaintPageTest', function () {
           description: '',
         },
       );
+
+      this.complaintPage.navigate(this.complaintPage.url('1053667'));
+      this.complaintPage.waitForElementVisible('@body');
 
       this.complaintPage.section.firstCoaccusal.click('@pinButton');
       this.complaintPage.waitForElementVisible('@lastToast');
@@ -270,55 +295,182 @@ describe('ComplaintPageTest', function () {
       this.search.waitForElementNotVisible('@pinboardBar', TIMEOUT);
     });
 
-    it('should display toast when pinning current complaint', function (client) {
-      api.mockPost(
-        '/api/v2/mobile/pinboards/',
-        201,
-        {
-          'officer_ids': [],
-          crids: ['1053667'],
-          'trr_ids': [],
-        },
-        {
-          id: '5cd06f2b',
-          'officer_ids': [],
-          crids: ['1053667'],
-          'trr_ids': [],
-          title: '',
-          description: '',
-        },
-      );
+    context('current complaint', function () {
+      beforeEach(function (client, done) {
+        api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/', 200, pinboards[0]);
+        api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/complaints/', 200, []);
+        api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/officers/', 200, []);
+        api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/trrs/', 200, []);
+        done();
+      });
 
-      this.complaintPage.click('@pinButton');
-      this.complaintPage.expect.element('@lastToast').text.to.equal(
-        'CR #1053667 added to pinboard\nGo to pinboard'
-      ).before(TIMEOUT);
+      context('when user has one active pinboard', function () {
+        beforeEach(function (client, done) {
+          api.mock('GET', '/api/v2/mobile/pinboards/?detail=true', 200, [pinboards[0]]);
+          api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, pinboards[0]);
+          api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, pinboards[0]);
+          api.mockPut('/api/v2/mobile/pinboards/8d2daffe/', 200, updateRequestParams[1], updatedPinboards[1]);
+          this.complaintPage.navigate(this.complaintPage.url('1053667'));
+          this.complaintPage.expect.element('@body').to.be.present;
+          done();
+        });
 
-      this.complaintPage.click('@landingPageBreadCrumb');
-      this.main.waitForElementVisible('@searchLink');
-      this.main.click('@searchLink');
-      this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (1)').before(TIMEOUT);
-      client.back();
-      client.back();
+        it('should display toast when pinning', function (client) {
+          this.complaintPage.click('@pinButton');
+          this.complaintPage.waitForElementVisible('@lastToast');
+          this.complaintPage.expect.element('@lastToast').text.to.equal(
+            'CR #1053667 added to pinboard\nGo to pinboard'
+          );
 
-      this.complaintPage.click('@pinButton');
-      this.complaintPage.waitForElementVisible('@lastToast');
-      this.complaintPage.expect.element('@lastToast').text.to.equal(
-        'CR #1053667 removed from pinboard\nGo to pinboard'
-      ).before(TIMEOUT);
+          this.complaintPage.click('@landingPageBreadCrumb');
+          this.main.waitForElementVisible('@searchLink');
+          this.main.click('@searchLink');
+          this.search.waitForElementVisible('@pinboardBar');
+          this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (4)');
+        });
 
-      this.complaintPage.click('@landingPageBreadCrumb');
-      this.main.waitForElementVisible('@searchLink');
-      this.main.click('@searchLink');
-      this.search.waitForElementPresent('@queryInput');
-      this.search.waitForElementNotVisible('@pinboardBar');
+        it('should display toast when unpinning', function (client) {
+          this.complaintPage.click('@pinButton');
+          this.complaintPage.waitForElementVisible('@lastToast');
+          this.complaintPage.expect.element('@lastToast').text.to.equal(
+            'CR #1053667 added to pinboard\nGo to pinboard'
+          );
+
+          this.complaintPage.click('@pinButton');
+          this.complaintPage.waitForElementVisible('@lastToast');
+          this.complaintPage.expect.element('@lastToast').text.to.equal(
+            'CR #1053667 removed from pinboard\nGo to pinboard'
+          );
+
+          this.complaintPage.click('@landingPageBreadCrumb');
+          this.main.waitForElementVisible('@searchLink');
+          this.main.click('@searchLink');
+          this.search.waitForElementVisible('@pinboardBar');
+          this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (3)');
+        });
+      });
+
+      context('when user has more than 1 pinboard', function () {
+        beforeEach(function (client, done) {
+          api.mock('GET', '/api/v2/mobile/pinboards/?detail=true', 200, pinboards);
+          api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
+          api.mock('GET', '/api/v2/mobile/pinboards/f7231a74', 200, createdPinboards[0]);
+          api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/complaints/', 200, createdPinboardsComplaintsData);
+          api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/officers/', 200, []);
+          api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/trrs/', 200, []);
+          api.mockPut('/api/v2/mobile/pinboards/8d2daffe/', 200, updateRequestParams[1], updatedPinboards[1]);
+          api.mockPost(
+            '/api/v2/mobile/pinboards/',
+            200,
+            createPinboardRequestParams[1],
+            createdPinboards[1],
+          );
+          this.complaintPage = client.page.complaintPage();
+          this.main = client.page.main();
+          this.search = client.page.search();
+          this.pinboardPage = client.page.pinboardPage();
+          this.complaintPage.navigate(this.complaintPage.url('1053667'));
+          this.complaintPage.expect.element('@body').to.be.present;
+          done();
+        });
+
+        it('should display pinboards menu', function (client) {
+          const pinboardsMenu = this.complaintPage.section.pinboardsMenu;
+          const pinboardsMenuItems = pinboardsMenu.elements.items;
+
+          this.complaintPage.click('@addToPinboardButton');
+          pinboardsMenu.waitForElementVisible('@firstItemTitle');
+
+          client.elements(pinboardsMenuItems.locateStrategy, pinboardsMenuItems.selector, function (menuItems) {
+            client.assert.equal(menuItems.value.length, 5);
+          });
+          pinboardsMenu.expect.element('@firstItemTitle').text.to.equal('Skrull Cap');
+          pinboardsMenu.expect.element('@firstItemCreatedAt').text.to.equal('Created Mar 09, 2020');
+          pinboardsMenu.expect.element('@secondItemTitle').text.to.equal('Watts Crew');
+          pinboardsMenu.expect.element('@secondItemCreatedAt').text.to.equal('Created Mar 09, 2020');
+          pinboardsMenu.expect.element('@thirdItemTitle').text.to.equal('');
+          pinboardsMenu.expect.element('@thirdItemCreatedAt').text.to.equal('Created Mar 09, 2020');
+        });
+
+        it('should close pinboards menu when click outside', function () {
+          const pinboardsMenu = this.complaintPage.section.pinboardsMenu;
+
+          this.complaintPage.click('@addToPinboardButton');
+          pinboardsMenu.waitForElementVisible('@firstItemTitle');
+          this.complaintPage.click('@summary');
+          pinboardsMenu.waitForElementNotPresent('@firstItemTitle');
+        });
+
+        it('should display toast and close pinboards menu when pinning', function (client) {
+          const pinboardsMenu = this.complaintPage.section.pinboardsMenu;
+
+          this.complaintPage.click('@addToPinboardButton');
+          pinboardsMenu.waitForElementVisible('@firstItemTitle');
+
+          pinboardsMenu.click('@firstItemPinButton');
+          this.complaintPage.waitForElementVisible('@lastToast');
+          this.complaintPage.expect.element('@lastToast').text.to.equal(
+            'CR #1053667 added to pinboard\nGo to pinboard'
+          );
+          pinboardsMenu.waitForElementNotPresent('@firstItemTitle');
+
+          this.complaintPage.click('@landingPageBreadCrumb');
+          this.main.waitForElementVisible('@searchLink');
+          this.main.click('@searchLink');
+          this.search.waitForElementVisible('@pinboardBar');
+          this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (4)');
+        });
+
+        it('should display toast when unpinning', function (client) {
+          const pinboardsMenu = this.complaintPage.section.pinboardsMenu;
+
+          this.complaintPage.click('@addToPinboardButton');
+          pinboardsMenu.waitForElementVisible('@firstItemTitle');
+
+          pinboardsMenu.click('@firstItemPinButton');
+          this.complaintPage.waitForElementVisible('@lastToast');
+          this.complaintPage.expect.element('@lastToast').text.to.equal(
+            'CR #1053667 added to pinboard\nGo to pinboard'
+          );
+          pinboardsMenu.waitForElementNotPresent('@firstItemTitle');
+
+
+          this.complaintPage.click('@addToPinboardButton');
+          pinboardsMenu.waitForElementVisible('@firstItemTitle');
+          pinboardsMenu.click('@firstItemPinButton');
+          this.complaintPage.waitForElementVisible('@lastToast');
+          this.complaintPage.expect.element('@lastToast').text.to.equal(
+            'CR #1053667 removed from pinboard\nGo to pinboard'
+          );
+          pinboardsMenu.waitForElementNotPresent('@firstItemTitle');
+
+          this.complaintPage.click('@landingPageBreadCrumb');
+          this.main.waitForElementVisible('@searchLink');
+          this.main.click('@searchLink');
+          this.search.waitForElementVisible('@pinboardBar');
+          this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (3)');
+        });
+
+        it('should create new pinboard with current complaint', function (client) {
+          const pinboardsMenu = this.complaintPage.section.pinboardsMenu;
+
+          this.complaintPage.click('@addToPinboardButton');
+          pinboardsMenu.waitForElementVisible('@createPinboardWithSelectionButton');
+          pinboardsMenu.click('@createPinboardWithSelectionButton');
+
+          this.pinboardPage.waitForElementVisible('@socialGraph');
+          client.assert.urlContains('/pinboard/f7231a74/untitled-pinboard/');
+
+          const crsPinnedSection = this.pinboardPage.section.pinnedSection.section.crs;
+          const crCards = crsPinnedSection.section.card;
+          client.elements(crCards.locateStrategy, crCards.selector, function (cards) {
+            client.assert.equal(cards.value.length, 1);
+          });
+          crsPinnedSection.section.firstCard.expect.element('@firstCardCategory').text.to.equal(
+            'Operation/Personnel Violations'
+          );
+        });
+      });
     });
-  });
-
-  it('should have clicky installed', function (client) {
-    const page = client.page.common();
-    page.waitForElementPresent('@clickyScript');
-    page.waitForElementPresent('@clickySiteIdsScript');
-    page.waitForElementPresent('@clickyNoJavascriptGIF');
   });
 });

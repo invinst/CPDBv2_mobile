@@ -7,8 +7,11 @@ import {
   isItemPinned,
   pinboardPageLoadingSelector,
   hasPendingChangesSelector,
+  pinboardPinnedItemsMapping,
+  pinboardPinnedItemsTransform,
 } from 'selectors/pinboard-page/pinboard';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
+import constants from 'constants';
 
 
 describe('Pinboard selectors', function () {
@@ -347,18 +350,65 @@ describe('Pinboard selectors', function () {
     });
   });
 
+  describe('pinboardPinnedItemsTransform', function () {
+    it('should transform pinboard correctly', function () {
+      const pinboard = {
+        title: 'Skrull cap',
+        'officer_ids': [1, 2, 3],
+        'crids': ['4', '5', '6'],
+        'trr_ids': ['12', '45', '98'],
+      };
+      pinboardPinnedItemsTransform(pinboard).should.eql({
+        officerIds: ['1', '2', '3'],
+        crids: ['4', '5', '6'],
+        trrIds: ['12', '45', '98'],
+      });
+    });
+  });
+
+  describe('pinboardPinnedItemsMapping', function () {
+    it('should map data correctly', function () {
+      const pinboard = {
+        title: 'Crew Watt',
+        officerIds: ['1', '2', '3'],
+        crids: ['4', '5', '6'],
+        trrIds: ['12', '45', '98'],
+      };
+      pinboardPinnedItemsMapping(pinboard).should.eql({
+        [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER]: ['1', '2', '3'],
+        [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR]: ['4', '5', '6'],
+        [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR]: ['12', '45', '98'],
+      });
+    });
+  });
+
+
   describe('hasPendingChangesSelector', function () {
-    it('should return correct values', function () {
-      hasPendingChangesSelector({
+    it('should return false of null pinboard', function () {
+      const state = { pinboardPage: { pinboard: null } };
+      hasPendingChangesSelector(state).should.be.false();
+    });
+
+    it('should return pinboard hasPendingChanges value', function () {
+      let state = {
         pinboardPage: {
-          pinboard: { hasPendingChanges: true },
+          pinboard: {
+            hasPendingChanges: true,
+          },
         },
-      }).should.be.true();
-      hasPendingChangesSelector({
+      };
+
+      hasPendingChangesSelector(state).should.be.true();
+
+      state = {
         pinboardPage: {
-          pinboard: { hasPendingChanges: false },
+          pinboard: {
+            hasPendingChanges: false,
+          },
         },
-      }).should.be.false();
+      };
+
+      hasPendingChangesSelector(state).should.be.false();
     });
   });
 });
