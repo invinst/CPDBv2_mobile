@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { noop, every, isEmpty } from 'lodash';
 
-
 import styles from './with-pinnable.sass';
 
 

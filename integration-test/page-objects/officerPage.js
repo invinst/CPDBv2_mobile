@@ -1,3 +1,9 @@
+const {
+  nthMenuItemTitle,
+  nthMenuItemCreatedAt,
+  nthPinButton,
+} = require(__dirname + '/../page-objects/shared').pinboardsMenu;
+
 const metricSection = (selector) => ({
   selector,
   locateStrategy: 'xpath',
@@ -104,19 +110,6 @@ const nthRankChangeSection = (n) => {
 };
 
 const nthBreadcrumb = n => `//*[contains(@class, "breadcrumb-item")][${n}]`;
-
-const nthMenuItemTitle = (n) => ({
-  selector: `(//div[@class="pinboard-title"])[${n}]`,
-  locateStrategy: 'xpath',
-});
-const nthMenuItemCreatedAt = (n) => ({
-  selector: `(//div[@class="pinboard-created-at"])[${n}]`,
-  locateStrategy: 'xpath',
-});
-const nthPinButton = (n) => ({
-  selector: `(//div[@class="pin-button"])[${n}]`,
-  locateStrategy: 'xpath',
-});
 
 module.exports = {
   url: function (id, tab = '') {

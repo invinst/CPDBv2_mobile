@@ -1,15 +1,8 @@
-const nthMenuItemTitle = (n) => ({
-  selector: `(//div[@class="pinboard-title"])[${n}]`,
-  locateStrategy: 'xpath',
-});
-const nthMenuItemCreatedAt = (n) => ({
-  selector: `(//div[@class="pinboard-created-at"])[${n}]`,
-  locateStrategy: 'xpath',
-});
-const nthPinButton = (n) => ({
-  selector: `(//div[@class="pin-button"])[${n}]`,
-  locateStrategy: 'xpath',
-});
+const {
+  nthMenuItemTitle,
+  nthMenuItemCreatedAt,
+  nthPinButton,
+} = require(__dirname + '/../page-objects/shared').pinboardsMenu;
 
 module.exports = {
   url: function (crid) {
