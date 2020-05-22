@@ -19,3 +19,13 @@ export const getPathNameKey = (pathname) => {
   }
   return pathnameKey;
 };
+
+export const PINBOARD_PAGE_PATTERN = /.*\/pinboard\/([a-fA-F0-9]+)\/.*/;
+export const OFFICER_PAGE_PATTERN = /^\/officer\/\d+\/.*/;
+export const CR_PAGE_PATTERN = /^\/complaint\/\d+\/.*/;
+
+export const onPinboardPage = pathname => PINBOARD_PAGE_PATTERN.test(pathname);
+
+export const onOfficerPage = pathname => OFFICER_PAGE_PATTERN.test(pathname);
+
+export const onCrPage = pathname => CR_PAGE_PATTERN.test(pathname);

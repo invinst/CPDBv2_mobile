@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { spy, stub } from 'sinon';
+import { spy } from 'sinon';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -15,7 +15,6 @@ import PinboardDataVisualization from 'components/pinboard-page/pinboard-data-vi
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
 import EmptyPinboardPage from 'components/pinboard-page/empty-pinboard';
 import LoadingSpinner from 'components/common/loading-spinner';
-import Pinboards from 'components/pinboard-page/pinboards';
 
 
 describe('<PinboardPage />', function () {
@@ -101,7 +100,6 @@ describe('<PinboardPage />', function () {
 
   it('should render SearchBar component', function () {
     const isShownPinboardsListSpy = spy();
-    stub(Pinboards.prototype, 'componentDidMount');
     const wrapper = mount(
       <Provider store={ store }>
         <MemoryRouter>
@@ -128,7 +126,6 @@ describe('<PinboardPage />', function () {
         'officer_ids': [8652, 123],
         crids: ['123456', '654321'],
       };
-      stub(Pinboards.prototype, 'componentDidMount');
 
       const wrapper = mount(
         <Provider store={ store }>

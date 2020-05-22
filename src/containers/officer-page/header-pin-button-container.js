@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import HeaderPinButton from 'components/common/pinboard/header-pin-button';
 import { getIsOfficerPinned, pinnableOfficerSelector } from 'selectors/officer-page';
-import { showSelectPinboardsSelector } from 'selectors/common/pinboard';
-import { fetchHeaderPinboards, fetchPinboard, createPinboard, addOrRemoveItemInPinboard } from 'actions/pinboard';
+import { showSelectPinboardsSelector } from 'selectors/common/pinboards';
+import { fetchPinboard, createPinboard, addOrRemoveItemInPinboard } from 'actions/pinboard';
 import { officerPinboardsMenuSelector } from 'selectors/officer-page/pinboards-menu';
 
 
@@ -19,7 +19,6 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  fetchHeaderPinboards,
   addOrRemoveItemInPinboard,
   createPinboard,
   fetchPinboard,

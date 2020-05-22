@@ -6,7 +6,6 @@ import { stub } from 'sinon';
 
 import { mountWithRouter } from 'utils/tests';
 import SearchBar from 'components/pinboard-page/search-bar';
-import Pinboards from 'components/pinboard-page/pinboards';
 import PinboardsContainer from 'containers/pinboard-page/pinboards-container';
 
 
@@ -15,7 +14,6 @@ describe('<SearchBar /> of PinboardPage', function () {
     let searchBar;
     let hideShowPinboardsListStub;
     beforeEach(function () {
-      stub(Pinboards.prototype, 'componentDidMount');
       const store = configureStore()({
         pinboardPage: { pinboards: [] },
       });
@@ -45,7 +43,6 @@ describe('<SearchBar /> of PinboardPage', function () {
     let searchBar;
     let hideShowPinboardsListStub;
     beforeEach(function () {
-      stub(Pinboards.prototype, 'componentDidMount');
       const store = configureStore()({
         pinboardPage: { pinboards: [] },
       });

@@ -344,14 +344,14 @@ export const fetchLatestRetrievedPinboard = get(
   ]
 );
 
-export const fetchPinboards = get(
+export const fetchPinboards = (params) => get(
   v2Url(constants.PINBOARDS_API_ENDPOINT),
   [
     PINBOARDS_FETCH_REQUEST_START,
     PINBOARDS_FETCH_REQUEST_SUCCESS,
     PINBOARDS_FETCH_REQUEST_FAILURE,
   ]
-);
+)(params);
 
 export const duplicatePinboard = (sourcePinboardId) => createNewPinboard({ sourcePinboardId });
 export const createNewEmptyPinboard = () => createNewPinboard({ 'officerIds': [], 'crids': [], 'trrIds': [] });
@@ -364,16 +364,3 @@ export const PINBOARD_PAGE_CMS_REQUEST_FAILURE = 'PINBOARD_PAGE_CMS_REQUEST_FAIL
 export const requestCMS = get(v2Url(constants.PINBOARD_PAGE_CMS_API_ENDPOINT), [
   PINBOARD_PAGE_CMS_REQUEST_START, PINBOARD_PAGE_CMS_REQUEST_SUCCESS, PINBOARD_PAGE_CMS_REQUEST_FAILURE,
 ]);
-
-export const HEADER_PINBOARDS_REQUEST_START = 'HEADER_PINBOARDS_REQUEST_START';
-export const HEADER_PINBOARDS_REQUEST_FAILURE = 'HEADER_PINBOARDS_REQUEST_FAILURE';
-export const HEADER_PINBOARDS_REQUEST_SUCCESS = 'HEADER_PINBOARDS_REQUEST_SUCCESS';
-
-export const fetchHeaderPinboards = () => get(
-  v2Url(constants.PINBOARDS_API_ENDPOINT),
-  [
-    HEADER_PINBOARDS_REQUEST_START,
-    HEADER_PINBOARDS_REQUEST_SUCCESS,
-    HEADER_PINBOARDS_REQUEST_FAILURE,
-  ]
-)({ detail: true });

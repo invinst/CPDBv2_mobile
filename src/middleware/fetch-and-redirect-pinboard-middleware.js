@@ -14,14 +14,14 @@ import {
   dispatchFetchPinboardPageData,
   generatePinboardUrl,
 } from 'utils/pinboard';
+import { onPinboardPage, PINBOARD_PAGE_PATTERN } from 'utils/paths';
 
-const pinboardPageUrlPattern = /.*\/pinboard\/([a-fA-F0-9]+)\/.*/;
 
 export function getPinboardID(url) {
-  if (url === undefined || !url.match(pinboardPageUrlPattern)) {
+  if (url === undefined || !url.match(PINBOARD_PAGE_PATTERN)) {
     return null;
   }
-  return url.replace(pinboardPageUrlPattern, '$1');
+  return url.replace(PINBOARD_PAGE_PATTERN, '$1');
 }
 
 function getPinboardData(store, pinboardId) {
@@ -58,9 +58,8 @@ export default store => next => action => {
     action.type === PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS
   ) {
     const pathname = browserHistory.location.pathname;
-    const onPinboardPage = pathname.match(pinboardPageUrlPattern) || pathname === '/pinboard/';
 
-    if (onPinboardPage) {
+    if (onPinboardPage(pathname) || pathname === '/pinboard/') {
       const rawPinboard = action.payload;
       const newPinboardId = rawPinboard.id;
       if (newPinboardId) {
