@@ -1,10 +1,13 @@
 import { createSelector } from 'reselect';
-import { extractPercentile } from 'selectors/common/percentile';
+import { omit } from 'lodash';
+
+import { extractLatestPercentile } from 'selectors/common/percentile';
+import { PERCENTILE_FIELDS } from 'constants';
 
 
 export const officerCardTransform = officer => ({
-  ...officer,
-  percentile: extractPercentile(officer.percentile),
+  ...omit(officer, PERCENTILE_FIELDS),
+  percentile: extractLatestPercentile(officer),
 });
 
 export const officersSelector = createSelector(

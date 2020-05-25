@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { get, compact, chain, shuffle } from 'lodash';
 
-import { extractPercentile } from 'selectors/common/percentile';
+import { extractLatestPercentile } from 'selectors/common/percentile';
 import { formatDate } from 'utils/date';
 import constants from 'constants';
 import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
@@ -9,7 +9,7 @@ import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
 
 const officerCardTransform = officer => ({
   ...officer,
-  percentile: extractPercentile(officer.percentile),
+  percentile: extractLatestPercentile(officer),
 });
 
 export const shuffled = (selector) => createSelector(

@@ -29,14 +29,12 @@ export const CoaccusedFactory = Factory.define('CoaccusedFactory')
   .attr('complaint_count', () => random.number())
   .attr('sustained_count', () => random.number())
   .attr('birth_year', () => random.number({ min: 1950, max: 1990 }))
-  .attr('complaint_percentile', percentileGenerator)
+  .attr('percentile_allegation', percentileGenerator)
   .attr('rank', lorem.word)
-  .attr('percentile', [{
-    'percentile_trr': String(percentileGenerator),
-    'percentile_allegation_civilian': String(percentileGenerator),
-    'percentile_allegation': String(percentileGenerator),
-    'percentile_allegation_internal': String(percentileGenerator),
-  }])
+  .attr('percentile_trr', String(percentileGenerator))
+  .attr('percentile_allegation_civilian', String(percentileGenerator))
+  .attr('percentile_allegation', String(percentileGenerator))
+  .attr('percentile_allegation_internal', String(percentileGenerator))
   .attr('final_outcome', lorem.word)
   .attr('final_finding', lorem.word)
   .attr('category', lorem.words)

@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { mount, shallow } from 'enzyme';
 import { spy, stub } from 'sinon';
 import { cloneDeep } from 'lodash';
-import configureStore from 'redux-mock-store';
+import { createTestStore } from 'utils/tests';
 import should from 'should';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
@@ -21,8 +21,6 @@ import TabbedPaneSection from 'components/officer-page/tabbed-pane-section';
 import { OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
 import Footer from 'components/footer';
 
-
-const mockStore = configureStore();
 
 describe('<OfficerPage />', function () {
   beforeEach(function () {
@@ -326,15 +324,7 @@ describe('<OfficerPage />', function () {
     );
 
     const withHeader = wrapper.find(WithHeader);
-    const customButtons = withHeader.prop('customButtons');
-    customButtons.props.item.should.eql({
-      id: 123,
-      fullName: 'Officer 11',
-      isPinned: false,
-      type: 'OFFICER',
-    });
-    customButtons.props.addOrRemoveItemInPinboard.should.eql(addOrRemoveItemInPinboardSpy);
-    customButtons.props.showHint.should.be.false();
+    withHeader.prop('customButtons').type.displayName.should.containEql('HeaderPinButton');
     withHeader.find(AnimatedRadarChart).exists().should.be.true();
     withHeader.find(Footer).exists().should.be.true();
   });
@@ -404,13 +394,14 @@ describe('<OfficerPage />', function () {
               'historic_badges': ['8547', '8546'],
               'birth_year': 1957,
               'civilian_compliment_count': 4,
-              'complaint_percentile': 99.895,
+              'percentile_allegation': '99.8950',
+              'percentile_trr': '0.0460',
               'date_of_appt': '1993-12-13',
               'date_of_resignation': '2017-01-15',
               'discipline_count': 1,
               gender: 'Male',
               'honorable_mention_count': 55,
-              'honorable_mention_percentile': 85.87,
+              'honorable_mention_percentile': '85.8700',
               'major_award_count': 0,
               race: 'White',
               rank: 'Police Officer',
@@ -451,6 +442,7 @@ describe('<OfficerPage />', function () {
           },
         ],
       },
+      pinboardPage: {},
     };
 
     const emptyBadgeStateData = {
@@ -471,13 +463,14 @@ describe('<OfficerPage />', function () {
               'historic_badges': ['8547', '8546'],
               'birth_year': 1957,
               'civilian_compliment_count': 4,
-              'complaint_percentile': 99.895,
+              'complaint_percentile': '99.8950',
+              'percentile_trr': '0.0460',
               'date_of_appt': '1993-12-13',
               'date_of_resignation': '2017-01-15',
               'discipline_count': 1,
               gender: 'Male',
               'honorable_mention_count': 55,
-              'honorable_mention_percentile': 85.87,
+              'honorable_mention_percentile': '85.8700',
               'major_award_count': 0,
               race: 'White',
               rank: 'Police Officer',
@@ -518,6 +511,7 @@ describe('<OfficerPage />', function () {
           },
         ],
       },
+      pinboardPage: {},
     };
 
     const emptyHistoricBadgeStateData = {
@@ -538,7 +532,8 @@ describe('<OfficerPage />', function () {
               'historic_badges': [],
               'birth_year': 1957,
               'civilian_compliment_count': 4,
-              'complaint_percentile': 99.895,
+              'percentile_allegation': '99.8950',
+              'percentile_trr': '0.0460',
               'date_of_appt': '1993-12-13',
               'date_of_resignation': '2017-01-15',
               'discipline_count': 1,
@@ -585,6 +580,7 @@ describe('<OfficerPage />', function () {
           },
         ],
       },
+      pinboardPage: {},
     };
 
     const emptyBadgeAndHistoricBadgeStateData = {
@@ -605,7 +601,7 @@ describe('<OfficerPage />', function () {
               'historic_badges': [],
               'birth_year': 1957,
               'civilian_compliment_count': 4,
-              'complaint_percentile': 99.895,
+              'percentile_allegation': 99.895,
               'date_of_appt': '1993-12-13',
               'date_of_resignation': '2017-01-15',
               'discipline_count': 1,
@@ -652,12 +648,13 @@ describe('<OfficerPage />', function () {
           },
         ],
       },
+      pinboardPage: {},
     };
 
     it('should return LoadingPage if request is not complete', function () {
       let requestingSummary = cloneDeep(stateData);
       requestingSummary.officerPage.officers.isRequesting = true;
-      const requestingSummaryStore = mockStore(requestingSummary);
+      const requestingSummaryStore = createTestStore(requestingSummary);
       const wrapper = mount(
         <Provider store={ requestingSummaryStore }>
           <HelmetProvider>
@@ -674,7 +671,7 @@ describe('<OfficerPage />', function () {
     it('should return NotMatchedOfficerPage if officer request is not success', function () {
       let requestingOfficer = cloneDeep(stateData);
       requestingOfficer.officerPage.officers.isSuccess = false;
-      const requestingOfficerStore = mockStore(requestingOfficer);
+      const requestingOfficerStore = createTestStore(requestingOfficer);
 
       const wrapper = mount(
         <Provider store={ requestingOfficerStore }>
@@ -687,7 +684,7 @@ describe('<OfficerPage />', function () {
     });
 
     it('should be able to render officer radar chart', function () {
-      const workingStore = mockStore(stateData);
+      const workingStore = createTestStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
           <HelmetProvider>
@@ -712,7 +709,7 @@ describe('<OfficerPage />', function () {
           value: 66.251,
         }],
         textColor: '#231F20',
-        visualTokenBackground: '#fc5d2c',
+        visualTokenBackground: '#F4A298',
         year: 2006,
       }, {
         items: [{
@@ -726,13 +723,13 @@ describe('<OfficerPage />', function () {
           value: 75.065,
         }],
         textColor: '#231F20',
-        visualTokenBackground: '#fc5d2c',
+        visualTokenBackground: '#F4A298',
         year: 2007,
       }]);
     });
 
     it('should render officer info', function () {
-      const workingStore = mockStore(stateData);
+      const workingStore = createTestStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
           <HelmetProvider>
@@ -764,7 +761,7 @@ describe('<OfficerPage />', function () {
     });
 
     it('should only render historic badge when badge is empty', function () {
-      const workingStore = mockStore(emptyBadgeStateData);
+      const workingStore = createTestStore(emptyBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
           <HelmetProvider>
@@ -782,7 +779,7 @@ describe('<OfficerPage />', function () {
     });
 
     it('should only render badge when historic badge is empty', function () {
-      const workingStore = mockStore(emptyHistoricBadgeStateData);
+      const workingStore = createTestStore(emptyHistoricBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
           <HelmetProvider>
@@ -800,7 +797,7 @@ describe('<OfficerPage />', function () {
     });
 
     it('should render Unknown when both badge and historic badge are empty', function () {
-      const workingStore = mockStore(emptyBadgeAndHistoricBadgeStateData);
+      const workingStore = createTestStore(emptyBadgeAndHistoricBadgeStateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
           <HelmetProvider>
@@ -818,7 +815,7 @@ describe('<OfficerPage />', function () {
     });
 
     it('should render officer metrics with correct props', function () {
-      const workingStore = mockStore(stateData);
+      const workingStore = createTestStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
           <HelmetProvider>
@@ -876,7 +873,7 @@ describe('<OfficerPage />', function () {
                 'historic_badges': ['8547', '8546'],
                 'birth_year': 1957,
                 'civilian_compliment_count': 1,
-                'complaint_percentile': 99.895,
+                'percentile_allegation': 99.895,
                 'date_of_appt': '1993-12-13',
                 'date_of_resignation': '2017-01-15',
                 'discipline_count': 1,
@@ -923,10 +920,11 @@ describe('<OfficerPage />', function () {
             },
           ],
         },
+        pinboardPage: {},
       };
 
       const wrapper = mount(
-        <Provider store={ mockStore(data) }>
+        <Provider store={ createTestStore(data) }>
           <HelmetProvider>
             <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
               <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
@@ -993,10 +991,11 @@ describe('<OfficerPage />', function () {
             },
           ],
         },
+        pinboardPage: {},
       };
 
       const wrapper = mount(
-        <Provider store={ mockStore(data) }>
+        <Provider store={ createTestStore(data) }>
           <HelmetProvider>
             <MemoryRouter initialEntries={ [{ pathname: '/officer/11/' }] }>
               <Route component={ OfficerPageContainer } path='/officer/:id/:firstParam?/:secondParam?' />
@@ -1034,7 +1033,7 @@ describe('<OfficerPage />', function () {
     });
 
     it('should render TabbedPaneSection component', function () {
-      const workingStore = mockStore(stateData);
+      const workingStore = createTestStore(stateData);
       const wrapper = mount(
         <Provider store={ workingStore }>
           <HelmetProvider>

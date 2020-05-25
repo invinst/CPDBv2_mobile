@@ -3,7 +3,7 @@ import { visualTokenBackground } from './percentile';
 export const officersTransform = officer => ({
   id: officer['id'],
   fullName: officer['full_name'],
-  visualTokenBackground: visualTokenBackground(officer['percentile']),
+  visualTokenBackground: visualTokenBackground(officer['percentile_allegation']),
 });
 
 export const coaccusedDataTransform = coaccusedDatum => ({

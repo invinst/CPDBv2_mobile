@@ -5,6 +5,14 @@ const assert = require('assert');
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
+const {
+  pinboards,
+  updatedPinboards,
+  updateRequestParams,
+  createdPinboards,
+  createPinboardRequestParams,
+  createdPinboardsOfficersData,
+} = require(__dirname + '/../mock-data/pinboard-page').pinboardsMenu;
 const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 
 const officer2235 = {
@@ -16,13 +24,14 @@ const officer2235 = {
   'historic_badges': ['8547', '8546'],
   'birth_year': 1957,
   'civilian_compliment_count': 4,
-  'complaint_percentile': 99.895,
+  'percentile_allegation': '99.8950',
+  'percentile_trr': '0.0431',
   'date_of_appt': '1993-12-13',
   'date_of_resignation': '2017-01-15',
   'discipline_count': 1,
   gender: 'Male',
   'honorable_mention_count': 55,
-  'honorable_mention_percentile': 85.87,
+  'honorable_mention_percentile': '85.8700',
   'major_award_count': 1,
   race: 'White',
   rank: 'Police Officer',
@@ -69,7 +78,7 @@ const officerNotEnoughPercentile = {
   'historic_badges': ['8547', '8546'],
   'birth_year': 1957,
   'civilian_compliment_count': 4,
-  'complaint_percentile': 99.895,
+  'percentile_allegation': 99.895,
   'date_of_appt': '1993-12-13',
   'date_of_resignation': '2017-01-15',
   'discipline_count': 1,
@@ -250,11 +259,10 @@ const mockCoaccusals = [
     race: 'White',
     gender: 'Male',
     rank: 'Police Officer',
-    percentile: {
-      'percentile_trr': '49.1036',
-      'percentile_allegation_civilian': '99.2525',
-      'percentile_allegation_internal': '79.9133',
-    },
+    'percentile_trr': '49.1036',
+    'percentile_allegation': '99.2525',
+    'percentile_allegation_civilian': '99.2525',
+    'percentile_allegation_internal': '79.9133',
     'coaccusal_count': 47,
   },
 ];
@@ -440,6 +448,9 @@ describe('OfficerPage test', function () {
       const radarChart = animatedRadarChart.section.radarChart;
 
       officerPage.expect.section('@animatedRadarChart').to.be.present;
+      animatedRadarChart.expect.section('@radarChart').to.have.css('background-color')
+        .which.equal('rgba(244, 162, 152, 1)');
+
       animatedRadarChart.expect.section('@radarChart').to.be.present;
       radarChart.expect.element('@radarArea').to.be.present;
       radarChart.expect.element('@radarAxis').to.be.present;
@@ -857,6 +868,9 @@ describe('OfficerPage test', function () {
         client.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
 
         this.coaccusals.waitForElementVisible('@firstCoaccusalCard', TIMEOUT);
+        this.coaccusals.waitForElementVisible('@firstRadarChart');
+        this.coaccusals.expect.element('@firstRadarChart').to.have.css('background-color')
+          .which.equal('rgba(245, 37, 36, 1)');
         this.coaccusals.click('@firstCoaccusalCard');
 
         client.assert.urlContains('/officer/27778/carl-suchocki/');
@@ -988,50 +1002,6 @@ describe('OfficerPage test', function () {
         this.search.waitForElementPresent('@queryInput');
         this.search.waitForElementNotVisible('@pinboardBar');
       });
-
-      it('should display toast when pinning current officer', function (client) {
-        api.mockPost(
-          '/api/v2/mobile/pinboards/',
-          201,
-          {
-            'officer_ids': [2235],
-            crids: [],
-            'trr_ids': [],
-          },
-          {
-            id: '5cd06f2b',
-            'officer_ids': [2235],
-            crids: [],
-            'trr_ids': [],
-            title: '',
-            description: '',
-          },
-        );
-
-        this.officerPage.click('@pinButton');
-        this.officerPage.expect.element('@lastToast').text.to.equal(
-          'Kevin Osborn added to pinboard\nGo to pinboard'
-        ).before(TIMEOUT);
-
-        this.officerPage.click('@landingPageBreadCrumb');
-        this.main.waitForElementVisible('@searchLink');
-        this.main.click('@searchLink');
-        this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (1)').before(TIMEOUT);
-        client.back();
-        client.back();
-
-        this.officerPage.click('@pinButton');
-        this.officerPage.waitForElementVisible('@lastToast');
-        this.officerPage.expect.element('@lastToast').text.to.equal(
-          'Kevin Osborn removed from pinboard\nGo to pinboard'
-        ).before(TIMEOUT);
-
-        this.officerPage.click('@landingPageBreadCrumb');
-        this.main.waitForElementVisible('@searchLink');
-        this.main.click('@searchLink');
-        this.search.waitForElementPresent('@queryInput');
-        this.search.waitForElementNotVisible('@pinboardBar');
-      });
     });
 
     it('should have clicky installed', function (client) {
@@ -1039,6 +1009,180 @@ describe('OfficerPage test', function () {
       page.waitForElementPresent('@clickyScript');
       page.waitForElementPresent('@clickySiteIdsScript');
       page.waitForElementPresent('@clickyNoJavascriptGIF');
+    });
+  });
+
+  context('current officer', function () {
+    beforeEach(function (client, done) {
+      api.mock('GET', '/api/v2/cms-pages/officer-page/', 200, mockOfficerPageCms);
+      api.mock('GET', '/api/v2/mobile/officers/2235/', 200, officer2235);
+      api.mock('GET', '/api/v2/mobile/officers/2235/new-timeline-items/', 200, mockTimeline);
+      api.mock('GET', '/api/v2/mobile/officers/2235/coaccusals/', 200, mockCoaccusals);
+      api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/', 200, pinboards[0]);
+      api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/complaints/', 200, []);
+      api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/officers/', 200, []);
+      api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/trrs/', 200, []);
+      api.mockPut('/api/v2/mobile/pinboards/8d2daffe/', 200, updateRequestParams[0], updatedPinboards[0]);
+      done();
+    });
+
+    context('when user has one active pinboard', function () {
+      beforeEach(function (client, done) {
+        api.mock('GET', '/api/v2/mobile/pinboards/?detail=true', 200, [pinboards[0]]);
+        api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, pinboards[0]);
+        this.officerPage = client.page.officerPage();
+        this.mainPage = client.page.main();
+        this.search = client.page.search();
+        this.officerPage.navigate(this.officerPage.url(2235));
+        this.officerPage.expect.element('@body').to.be.present;
+        done();
+      });
+
+      it('should display toast when pinning', function () {
+        this.officerPage.click('@pinButton');
+        this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal('Kevin Osborn added to pinboard\nGo to pinboard');
+
+        this.officerPage.click('@landingPageBreadCrumb');
+        this.mainPage.waitForElementVisible('@searchLink');
+        this.mainPage.click('@searchLink');
+        this.search.waitForElementVisible('@pinboardBar');
+        this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (4)');
+      });
+
+      it('should display toast when unpinning', function () {
+        this.officerPage.click('@pinButton');
+        this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal(
+          'Kevin Osborn added to pinboard\nGo to pinboard'
+        );
+
+        this.officerPage.click('@pinButton');
+        this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal(
+          'Kevin Osborn removed from pinboard\nGo to pinboard'
+        );
+
+        this.officerPage.click('@landingPageBreadCrumb');
+        this.mainPage.waitForElementVisible('@searchLink');
+        this.mainPage.click('@searchLink');
+        this.search.waitForElementVisible('@pinboardBar');
+        this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (3)');
+      });
+    });
+
+    context('when user has more than 1 pinboard', function () {
+      beforeEach(function (client, done) {
+        api.mock('GET', '/api/v2/mobile/pinboards/?detail=true', 200, pinboards);
+        api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
+        api.mock('GET', '/api/v2/mobile/pinboards/f7231a74', 200, createdPinboards[0]);
+        api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/complaints/', 200, []);
+        api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/officers/', 200, createdPinboardsOfficersData);
+        api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/trrs/', 200, []);
+        api.mockPost(
+          '/api/v2/mobile/pinboards/',
+          200,
+          createPinboardRequestParams[0],
+          createdPinboards[0],
+        );
+        this.officerPage = client.page.officerPage();
+        this.mainPage = client.page.main();
+        this.search = client.page.search();
+        this.pinboardPage = client.page.pinboardPage();
+        this.officerPage.navigate(this.officerPage.url(2235));
+        this.officerPage.expect.element('@body').to.be.present;
+        done();
+      });
+
+      it('should display pinboards menu', function (client) {
+        const pinboardsMenu = this.officerPage.section.pinboardsMenu;
+        const pinboardsMenuItems = pinboardsMenu.elements.items;
+
+        this.officerPage.click('@addToPinboardButton');
+        pinboardsMenu.waitForElementVisible('@firstItemTitle');
+
+        client.elements(pinboardsMenuItems.locateStrategy, pinboardsMenuItems.selector, function (menuItems) {
+          client.assert.equal(menuItems.value.length, 5);
+        });
+        pinboardsMenu.expect.element('@firstItemTitle').text.to.equal('Skrull Cap');
+        pinboardsMenu.expect.element('@firstItemCreatedAt').text.to.equal('Created Mar 09, 2020');
+        pinboardsMenu.expect.element('@secondItemTitle').text.to.equal('Watts Crew');
+        pinboardsMenu.expect.element('@secondItemCreatedAt').text.to.equal('Created Mar 09, 2020');
+        pinboardsMenu.expect.element('@thirdItemTitle').text.to.equal('');
+        pinboardsMenu.expect.element('@thirdItemCreatedAt').text.to.equal('Created Mar 09, 2020');
+      });
+
+      it('should close pinboards menu when click outside', function () {
+        const pinboardsMenu = this.officerPage.section.pinboardsMenu;
+
+        this.officerPage.click('@addToPinboardButton');
+        pinboardsMenu.waitForElementVisible('@firstItemTitle');
+        this.officerPage.click('@officerName');
+        pinboardsMenu.waitForElementNotPresent('@firstItemTitle');
+      });
+
+      it('should display toast and close pinboards menu when pinning', function (client) {
+        const pinboardsMenu = this.officerPage.section.pinboardsMenu;
+
+        this.officerPage.click('@addToPinboardButton');
+        pinboardsMenu.waitForElementVisible('@firstItemTitle');
+
+        pinboardsMenu.click('@firstItemPinButton');
+        this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal('Kevin Osborn added to pinboard\nGo to pinboard');
+        pinboardsMenu.waitForElementNotPresent('@firstItemTitle');
+
+        this.officerPage.click('@landingPageBreadCrumb');
+        this.mainPage.waitForElementVisible('@searchLink');
+        this.mainPage.click('@searchLink');
+        this.search.waitForElementVisible('@pinboardBar');
+        this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (4)');
+      });
+
+      it('should display toast when unpinning', function () {
+        const pinboardsMenu = this.officerPage.section.pinboardsMenu;
+
+        this.officerPage.click('@addToPinboardButton');
+        pinboardsMenu.waitForElementVisible('@firstItemTitle');
+
+        pinboardsMenu.click('@firstItemPinButton');
+        this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal('Kevin Osborn added to pinboard\nGo to pinboard');
+        pinboardsMenu.waitForElementNotPresent('@firstItemTitle');
+
+        this.officerPage.click('@addToPinboardButton');
+        pinboardsMenu.waitForElementVisible('@firstItemTitle');
+        pinboardsMenu.click('@firstItemPinButton');
+        this.officerPage.waitForElementVisible('@lastToast');
+        this.officerPage.expect.element('@lastToast').text.to.equal(
+          'Kevin Osborn removed from pinboard\nGo to pinboard'
+        );
+        pinboardsMenu.waitForElementNotPresent('@firstItemTitle');
+
+        this.officerPage.click('@landingPageBreadCrumb');
+        this.mainPage.waitForElementVisible('@searchLink');
+        this.mainPage.click('@searchLink');
+        this.search.waitForElementVisible('@pinboardBar');
+        this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (3)');
+      });
+
+      it('should create new pinboard with current officer', function (client) {
+        const pinboardsMenu = this.officerPage.section.pinboardsMenu;
+
+        this.officerPage.click('@addToPinboardButton');
+        pinboardsMenu.waitForElementVisible('@createPinboardWithSelectionButton');
+        pinboardsMenu.click('@createPinboardWithSelectionButton');
+
+        this.pinboardPage.waitForElementVisible('@socialGraph');
+        client.assert.urlContains('/pinboard/f7231a74/untitled-pinboard/');
+
+        const officersPinnedSection = this.pinboardPage.section.pinnedSection.section.officers;
+        const officerCards = officersPinnedSection.section.card;
+        client.elements(officerCards.locateStrategy, officerCards.selector, function (officerCards) {
+          client.assert.equal(officerCards.value.length, 1);
+        });
+        officersPinnedSection.section.firstCard.expect.element('@firstCardName').text.to.equal('Kevin Osborn');
+      });
     });
   });
 });

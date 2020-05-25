@@ -9,7 +9,6 @@ describe('<MiniVisualToken />', function () {
   it('should render enough content', function () {
     const percentile = {
       officerId: 1,
-      year: 2015,
       items: [
         { axis: 'Use of Force Reports', value: 20.6 },
         { axis: 'Internal Allegations', value: 10.1 },
