@@ -1,3 +1,5 @@
+import { PINBOARD_PAGE_PATTERN, OFFICER_PAGE_PATTERN, CR_PAGE_PATTERN } from 'constants/paths';
+
 /**
  * Return the same key for some paths identify the same page
  *
@@ -19,10 +21,6 @@ export const getPathNameKey = (pathname) => {
   }
   return pathnameKey;
 };
-
-export const PINBOARD_PAGE_PATTERN = /.*\/pinboard\/([a-fA-F0-9]+)\/.*/;
-export const OFFICER_PAGE_PATTERN = /^\/officer\/\d+\/.*/;
-export const CR_PAGE_PATTERN = /^\/complaint\/\d+\/.*/;
 
 export const onPinboardPage = pathname => PINBOARD_PAGE_PATTERN.test(pathname);
 

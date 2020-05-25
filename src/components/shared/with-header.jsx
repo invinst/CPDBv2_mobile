@@ -14,8 +14,10 @@ const WithHeader = ({ children, className, customButtons }) => {
       <IOSPeek className={ styles.breadcrumbsIosPeek }/>
       <div className={ cx(styles.header) }>
         <BreadcrumbContainer />
-        <div className='right-buttons'>
-          { customButtons }
+        <div className='right-buttons-container'>
+          <div className='right-buttons'>
+            { customButtons }
+          </div>
         </div>
       </div>
       <div className={ cx(styles.content, className) }>

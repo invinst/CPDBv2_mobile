@@ -14,7 +14,8 @@ import {
   dispatchFetchPinboardPageData,
   generatePinboardUrl,
 } from 'utils/pinboard';
-import { onPinboardPage, PINBOARD_PAGE_PATTERN } from 'utils/paths';
+import { onPinboardPage } from 'utils/paths';
+import { PINBOARD_PAGE_PATTERN } from 'constants/paths';
 
 
 export function getPinboardID(url) {
