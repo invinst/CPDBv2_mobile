@@ -9,8 +9,10 @@ import {
   buttonText,
   requestDocumentButtonMessage,
   getIsCrPinned,
+  pinnableCrSelector,
 } from 'selectors/complaint-page';
 import { CoaccusedFactory } from 'utils/tests/factories/complaint';
+import constants from 'constants';
 
 
 describe('complaint-page selectors', function () {
@@ -471,7 +473,15 @@ describe('complaint-page selectors', function () {
           },
         },
       };
-      getIsCrPinned(state, '123').should.be.true();
+
+      const props = {
+        match: {
+          params: {
+            complaintId: '123',
+          },
+        },
+      };
+      getIsCrPinned(state, props).should.be.true();
     });
 
     it('should return false if crid is not in pinboard', function () {
@@ -482,7 +492,44 @@ describe('complaint-page selectors', function () {
           },
         },
       };
-      getIsCrPinned(state, '126').should.be.false();
+
+      const props = {
+        match: {
+          params: {
+            complaintId: '126',
+          },
+        },
+      };
+      getIsCrPinned(state, props).should.be.false();
+    });
+  });
+
+  describe('pinnableCrSelector', function () {
+    it('should return correct data', function () {
+      const state = {
+        complaintPage: {
+          'crid': '2458',
+          complaints: {
+            '2458': {
+              'crid': '2458',
+            },
+          },
+        },
+
+      };
+
+      const props = {
+        match: {
+          params: {
+            complaintId: '2458',
+          },
+        },
+      };
+
+      pinnableCrSelector(state, props).should.eql({
+        type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+        id: '2458',
+      });
     });
   });
 });
