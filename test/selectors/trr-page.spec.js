@@ -42,6 +42,7 @@ describe('trr-page selectors', function () {
                   'unit_name': '253',
                   'description': 'Targeted Response Unit',
                 },
+                'percentile_allegation': 88.8,
                 'percentile_allegation_internal': 11.1,
                 'percentile_allegation_civilian': 22.2,
                 'percentile_trr': 99.9,
@@ -88,13 +89,12 @@ describe('trr-page selectors', function () {
           onDuty: 'Yes',
           inUniform: 'No',
           percentile: {
-            year: undefined,
             items: [
               { axis: 'Use of Force Reports', value: 99.9 },
               { axis: 'Internal Allegations', value: 11.1 },
               { axis: 'Civilian Allegations', value: 22.2 },
             ],
-            visualTokenBackground: '#e85050',
+            visualTokenBackground: '#FF412C',
             textColor: '#231F20',
           },
         },

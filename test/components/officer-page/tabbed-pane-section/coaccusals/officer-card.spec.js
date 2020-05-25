@@ -18,7 +18,6 @@ describe('CoaccusalCard', function () {
       ],
       textColor: '#231F20',
       visualTokenBackground: '#f95125',
-      year: undefined,
     },
     coaccusalCount: 11,
     rank: 'Police Officer',

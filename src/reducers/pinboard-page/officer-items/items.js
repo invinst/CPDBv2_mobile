@@ -23,9 +23,9 @@ const toRawOfficer = (item) => {
   return {
     'id': _.parseInt(id),
     'full_name': fullName,
-    'percentile': rawPercentile,
     rank,
     'complaint_count': complaintCount,
+    ...rawPercentile,
   };
 };
 

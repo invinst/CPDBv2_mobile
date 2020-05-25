@@ -4,6 +4,12 @@ const {
   nthPinButton,
 } = require(__dirname + '/../page-objects/shared').pinboardsMenu;
 
+const nthPoliceWitnessRadarChart = (index) => ({
+  locateStrategy: 'xpath',
+  selector: `//a[contains(@class, "police-witness-row")][${index}]//*[name()="svg"]`,
+});
+
+
 module.exports = {
   url: function (crid) {
     return `${this.api.globals.clientUrl}/complaint/${crid}/`;
@@ -65,6 +71,10 @@ module.exports = {
         header: '.header',
         showAll: '.show-all',
         paddingBottom: '.padding-bottom',
+        firstRadarChart: {
+          selector: '(//*[name()="svg" and contains(@class, "radar-chart__radar-chart")])[1]',
+          locateStrategy: 'xpath',
+        },
       },
     },
     firstCoaccusal: {
@@ -125,6 +135,17 @@ module.exports = {
         thirdItemCreatedAt: nthMenuItemCreatedAt(3),
         thirdItemPinButton: nthPinButton(3),
         createPinboardWithSelectionButton: '.add-to-new-pinboard',
+      },
+    },
+    policeWitnesses: {
+      selector: '//div[contains(@class, "police-witness__police-witness")]',
+      locateStrategy: 'xpath',
+      elements: {
+        firstRadarChart: nthPoliceWitnessRadarChart(1),
+        secondRadarChart: nthPoliceWitnessRadarChart(2),
+        thirdRadarChart: nthPoliceWitnessRadarChart(3),
+        forthRadarChart: nthPoliceWitnessRadarChart(4),
+        fifthRadarChart: nthPoliceWitnessRadarChart(5),
       },
     },
   },

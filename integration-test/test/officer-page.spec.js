@@ -24,13 +24,14 @@ const officer2235 = {
   'historic_badges': ['8547', '8546'],
   'birth_year': 1957,
   'civilian_compliment_count': 4,
-  'complaint_percentile': 99.895,
+  'percentile_allegation': '99.8950',
+  'percentile_trr': '0.0431',
   'date_of_appt': '1993-12-13',
   'date_of_resignation': '2017-01-15',
   'discipline_count': 1,
   gender: 'Male',
   'honorable_mention_count': 55,
-  'honorable_mention_percentile': 85.87,
+  'honorable_mention_percentile': '85.8700',
   'major_award_count': 1,
   race: 'White',
   rank: 'Police Officer',
@@ -77,7 +78,7 @@ const officerNotEnoughPercentile = {
   'historic_badges': ['8547', '8546'],
   'birth_year': 1957,
   'civilian_compliment_count': 4,
-  'complaint_percentile': 99.895,
+  'percentile_allegation': 99.895,
   'date_of_appt': '1993-12-13',
   'date_of_resignation': '2017-01-15',
   'discipline_count': 1,
@@ -258,11 +259,10 @@ const mockCoaccusals = [
     race: 'White',
     gender: 'Male',
     rank: 'Police Officer',
-    percentile: {
-      'percentile_trr': '49.1036',
-      'percentile_allegation_civilian': '99.2525',
-      'percentile_allegation_internal': '79.9133',
-    },
+    'percentile_trr': '49.1036',
+    'percentile_allegation': '99.2525',
+    'percentile_allegation_civilian': '99.2525',
+    'percentile_allegation_internal': '79.9133',
     'coaccusal_count': 47,
   },
 ];
@@ -448,6 +448,9 @@ describe('OfficerPage test', function () {
       const radarChart = animatedRadarChart.section.radarChart;
 
       officerPage.expect.section('@animatedRadarChart').to.be.present;
+      animatedRadarChart.expect.section('@radarChart').to.have.css('background-color')
+        .which.equal('rgba(244, 162, 152, 1)');
+
       animatedRadarChart.expect.section('@radarChart').to.be.present;
       radarChart.expect.element('@radarArea').to.be.present;
       radarChart.expect.element('@radarAxis').to.be.present;
@@ -865,6 +868,9 @@ describe('OfficerPage test', function () {
         client.assert.urlContains('/officer/2235/kevin-osborn/coaccusals/');
 
         this.coaccusals.waitForElementVisible('@firstCoaccusalCard', TIMEOUT);
+        this.coaccusals.waitForElementVisible('@firstRadarChart');
+        this.coaccusals.expect.element('@firstRadarChart').to.have.css('background-color')
+          .which.equal('rgba(245, 37, 36, 1)');
         this.coaccusals.click('@firstCoaccusalCard');
 
         client.assert.urlContains('/officer/27778/carl-suchocki/');

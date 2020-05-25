@@ -5,7 +5,7 @@ import { get, map, filter, isUndefined, isEmpty, forEach } from 'lodash';
 import constants from 'constants';
 import { COMPLAINT_PATH, TRR_PATH } from 'constants/paths';
 import { PIN_BUTTON_INTRODUCTION_INDEX } from 'constants';
-import { extractPercentile } from 'selectors/common/percentile';
+import { extractLatestPercentile } from 'selectors/common/percentile';
 import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
 import extractQuery from 'utils/extract-query';
@@ -26,7 +26,7 @@ export const officerFormatter = (officer, pinboardItems) => ({
   id: officer.id,
   name: officer.name,
   badge: officer.badge ? `Badge #${ officer.badge }` : '',
-  percentile: extractPercentile(officer.percentile),
+  percentile: extractLatestPercentile(officer),
   url: officerUrl(officer.id, officer.name),
   isPinned: isItemPinned('OFFICER', officer.id, pinboardItems),
   type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,

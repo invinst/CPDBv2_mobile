@@ -7,11 +7,13 @@ const { TIMEOUT } = require(__dirname + '/../constants');
 
 var mockData = require(__dirname + '/../mock-data/pinboard-page');
 const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationResponse');
+const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
+
 
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
-
+    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
     api.mock('GET', '/api/v2/mobile/officers/123/', 200, mockData.officer123);
     api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, mockData.pinboardData);
     api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
@@ -406,6 +408,8 @@ describe('Pinboard Page', function () {
       firstDocumentCard.expect.element('@firstTopOfficerName').text.to.equal('R. Sullivan');
       firstDocumentCard.expect.element('@secondTopOfficerName').text.to.equal('B. Lopez');
       firstDocumentCard.expect.element('@notShowingOfficerCount').text.to.equal('3+');
+      firstDocumentCard.expect.element('@firstRadarChart').to.have.css('background-color')
+        .which.equal('rgba(245, 37, 36, 1)');
     });
 
     it('should request more when sliding to the end', function (client) {
@@ -783,6 +787,8 @@ describe('Pinboard Page', function () {
       firstComplaintCard.expect.element('@firstTopOfficerName').text.to.equal('C. Suchocki');
       firstComplaintCard.expect.element('@secondTopOfficerName').text.to.equal('Q. Jones');
       firstComplaintCard.expect.element('@notShowingOfficerCount').text.to.equal('2+');
+      firstComplaintCard.expect.element('@firstRadarChart').to.have.css('background-color')
+        .which.equal('rgba(245, 37, 36, 1)');
     });
 
     it('should request more when sliding to the end', function (client) {
@@ -851,6 +857,8 @@ describe('Pinboard Page', function () {
       firstCoaccusalCard.expect.element('@officerRank').text.to.equal('Detective');
       firstCoaccusalCard.expect.element('@officerName').text.to.equal('Richard Sullivan');
       firstCoaccusalCard.expect.element('@coaccusalCount').text.to.equal('53 coaccusals');
+      firstCoaccusalCard.expect.element('@radarChart').to.have.css('background-color')
+        .which.equal('rgba(245, 37, 36, 1)');
     });
 
     it('should request more when sliding to the end', function (client) {

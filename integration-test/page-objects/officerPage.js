@@ -315,6 +315,10 @@ module.exports = {
       selector: '.test--officer-coaccusals',
       elements: {
         firstCoaccusalCard: '.test--officer-card',
+        firstRadarChart: {
+          selector: '(//div[contains(@class, "coaccusals-group-items")]//*[name()="svg"])[1]',
+          locateStrategy: 'xpath',
+        },
         firstPinButton: {
           selector: '//div[@class="coaccusals-group-items"]//div[contains(@class, "item-pin-button")]',
           locateStrategy: 'xpath',

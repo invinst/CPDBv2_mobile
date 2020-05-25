@@ -42,7 +42,7 @@ describe('search-page selectors', function () {
         'id': '1',
         'name': 'Name',
         'badge': null,
-        'percentile': null,
+        'percentile': {},
       };
       const state = {
         suggestionApp: {
@@ -60,7 +60,7 @@ describe('search-page selectors', function () {
           id: '1',
           name: 'Name',
           badge: '',
-          percentile: null,
+          percentile: {},
           url: `${OFFICER_PATH}1/name/`,
           isPinned: false,
           type: 'OFFICER',
@@ -74,7 +74,7 @@ describe('search-page selectors', function () {
         'id': '1',
         'name': 'Name',
         'badge': '12314',
-        'percentile': null,
+        'percentile': {},
       };
 
       const expectedOfficer = {
@@ -82,7 +82,7 @@ describe('search-page selectors', function () {
         name: 'Name',
         badge: 'Badge #12314',
         url: `${OFFICER_PATH}1/name/`,
-        percentile: null,
+        percentile: {},
         isPinned: true,
         type: 'OFFICER',
         recentItemData: officer,
@@ -463,7 +463,7 @@ describe('search-page selectors', function () {
         'id': 123,
         'name': 'Jerome Finnigan',
         'badge': '56789',
-        'percentile': null,
+        'percentile': {},
       };
       const state = {
         suggestionApp: {
@@ -481,7 +481,7 @@ describe('search-page selectors', function () {
           id: 123,
           name: 'Jerome Finnigan',
           badge: 'Badge #56789',
-          percentile: null,
+          percentile: {},
           url: `${OFFICER_PATH}123/jerome-finnigan/`,
           type: 'OFFICER',
           isPinned: false,
@@ -541,7 +541,7 @@ describe('search-page selectors', function () {
           id: 8562,
           name: 'Jerome Finnigan',
           badge: 'Badge #123456',
-          percentile: null,
+          percentile: {},
           url: '/officer/8562/jerome-finnigan/',
           isPinned: true,
           type: 'OFFICER',
@@ -796,7 +796,7 @@ describe('search-page selectors', function () {
             isPinned: true,
             itemRank: 1,
             name: 'Jerome Finnigan',
-            percentile: null,
+            percentile: {},
             recentItemData: {
               badge: '123456',
               id: 8562,
@@ -964,7 +964,7 @@ describe('search-page selectors', function () {
         id: '1',
         'name': 'Name',
         'badge': '12314',
-        'percentile': null,
+        'percentile': {},
       };
       const dateCR1 = {
         category: 'Use Of Force',
@@ -1009,7 +1009,7 @@ describe('search-page selectors', function () {
         id: 123,
         'name': 'Jerome Finnigan',
         'badge': '56789',
-        'percentile': null,
+        'percentile': {},
       };
       const trr = {
         id: '1',
@@ -1159,7 +1159,7 @@ describe('search-page selectors', function () {
           itemRank: 6,
           name: 'Jerome Finnigan',
           badge: 'Badge #56789',
-          percentile: null,
+          percentile: {},
           url: `${ OFFICER_PATH }123/jerome-finnigan/`,
           type: 'OFFICER',
           isPinned: false,
@@ -1179,7 +1179,7 @@ describe('search-page selectors', function () {
           name: 'Name',
           badge: 'Badge #12314',
           url: `${ OFFICER_PATH }1/name/`,
-          percentile: null,
+          percentile: {},
           isPinned: true,
           showIntroduction: false,
           type: 'OFFICER',
