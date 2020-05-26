@@ -13,7 +13,6 @@ import PercentileExplainer from 'components/officer-page/radar-chart/explainer/p
 
 describe('Explainer component', function () {
   const data = [{
-    year: 2015,
     items: [
       { axis: 'Use of Force Reports', value: 20 },
       { axis: 'Civilian Complaints', value: 0 },
@@ -22,7 +21,6 @@ describe('Explainer component', function () {
     textColor: 'black',
     visualTokenBackground: 'white',
   }, {
-    year: 2016,
     items: [
       { axis: 'Use of Force Reports', value: 40 },
       { axis: 'Civilian Complaints', value: 50 },
@@ -31,7 +29,6 @@ describe('Explainer component', function () {
     textColor: 'black',
     visualTokenBackground: 'white',
   }, {
-    year: 2017,
     items: [
       { axis: 'Use of Force Reports', value: 80 },
       { axis: 'Civilian Complaints', value: 70 },
@@ -68,7 +65,6 @@ describe('Explainer component', function () {
     triangleExplainer.exists().should.be.true();
 
     triangleExplainer.prop('radarChartData').should.deepEqual({
-      year: 2017,
       items: [
         { axis: 'Use of Force Reports', value: 80 },
         { axis: 'Civilian Complaints', value: 70 },

@@ -1,12 +1,13 @@
 @import 'variables'
 
 \:local(.wrapper)
-  height: 48px
+  height: $pinboard-page-header-height
   background-color: $alto-color
   color: $boulder-color
   font-size: 14px
   padding-top: 8px
   display: block
+  box-shadow: 0 1px 2px $black-10-color
 
   .header-parent
     background-color: $wild-sand-color
@@ -42,17 +43,6 @@
   .highlight
     color: $thunder-color
     position: relative
-
-    &:after
-      content: ""
-      position: absolute
-      width: 8px
-      height: 8px
-      border-radius: 50%
-      background-color: $mine-shaft-color
-      display: inline-block
-      bottom: -3px
-      left: calc(50% - 4px)
 
   .pinboard-ios-peek
     background-color: $mine-shaft-color

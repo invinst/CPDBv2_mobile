@@ -1,0 +1,101 @@
+@import 'variables'
+
+
+$pinboards-list-top: $pinboard-page-header-height + $pinboard-page-search-bar-height
+
+\:local(.pinboards)
+  position: fixed
+  top: $pinboards-list-top
+  left: 0
+  width: calc(100% - 8px)
+  height: calc(100% - #{$pinboards-list-top} - 4px)
+  margin: 0 4px
+  border: 1px solid $silver-chalice-color
+  overflow: auto
+  background-color: $wild-sand-color
+  border-radius: 2px
+  z-index: 2
+
+  &:before
+    box-sizing: border-box
+    content: ""
+    height: 8px
+    width: 8px
+    right: 28px
+    background-color: white
+    position: fixed
+    margin-top: -5px
+    border-top-left-radius: 4px
+    border-left: 1px solid $silver-chalice-color
+    border-top: 1px solid $silver-chalice-color
+    transform: rotate(45deg)
+    z-index: -1
+
+  .pinboards-title
+    background-color: white
+    padding: 48px 8px 17px 8px
+    line-height: 31px
+    font-size: 26px
+
+    .new-pinboard-btn
+      width: 48px
+      height: 32px
+      display: inline-block
+      border: 1px solid $alto-color
+      box-sizing: border-box
+      background: url('/img/ic-add-blue.svg') no-repeat center
+      border-radius: 2px
+      float: right
+
+  .pinboard-item
+    display: block
+    height: 64px
+    box-sizing: border-box
+    background-color: white
+    padding: 16px 15px 16px 8px
+
+    .pinboard-info
+      width: calc(100% - 23px)
+      padding-right: 16px
+      box-sizing: border-box
+      display: inline-block
+      vertical-align: top
+
+      .pinboard-title
+        color: $blue-ribbon-color
+        font-weight: 300
+        line-height: 16px
+        margin-bottom: 2px
+        text-overflow: ellipsis
+        white-space: nowrap
+        overflow: hidden
+
+      .pinboard-created-at
+        color: $boulder-color
+        font-size: 12px
+        line-height: 14px
+
+    .duplicate-pinboard-btn
+      display: inline-block
+      width: 32px
+      height: 32px
+      margin-right: -9px
+      background: url('/img/ic-copy.svg') no-repeat center
+
+    &.untitled-pinboard
+      .pinboard-created-at
+        color: $blue-ribbon-color
+        font-size: 14px
+        line-height: 32px
+
+      &.is-current
+        .pinboard-created-at
+          color: $thunder-color
+
+    &.is-current
+      background: $gin-fizz-color
+      .pinboard-created-at
+        color: $thunder-color
+
+      .pinboard-title
+        color: $thunder-color

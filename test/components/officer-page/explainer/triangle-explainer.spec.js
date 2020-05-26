@@ -10,7 +10,6 @@ import { EditorState } from 'draft-js';
 
 describe('TriangleExplainer component', function () {
   const data = {
-    year: 2017,
     items: [
       { axis: 'Use of Force Reports', value: 80 },
       { axis: 'Civilian Complaints', value: 70 },

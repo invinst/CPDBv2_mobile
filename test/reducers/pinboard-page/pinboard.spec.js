@@ -5,6 +5,7 @@ import {
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_FAILURE,
   PINBOARD_CREATE_REQUEST_SUCCESS,
+  PINBOARD_CREATE_NEW_REQUEST_SUCCESS,
   PINBOARD_UPDATE_REQUEST_START,
   PINBOARD_UPDATE_REQUEST_FAILURE,
   PINBOARD_UPDATE_REQUEST_SUCCESS,
@@ -174,6 +175,61 @@ describe('Pinboard reducer', function () {
       isPinboardRestored: true,
       hasPendingChanges: false,
       'example_pinboards': undefined,
+    });
+  });
+
+  it('should handle PINBOARD_CREATE_NEW_REQUEST_SUCCESS', function () {
+    pinboardReducer(
+      {
+        id: '12f890',
+        title: 'Title 2',
+        description: 'Description 2',
+        'officer_ids': [2],
+        crids: [],
+        'trr_ids': [],
+        saving: true,
+        hasPendingChanges: false,
+      },
+      {
+        type: PINBOARD_CREATE_NEW_REQUEST_SUCCESS,
+        payload: {
+          id: '66ef1560',
+          title: 'Title',
+          description: 'Description',
+          'officer_ids': [1],
+          crids: ['abc'],
+          'trr_ids': [1],
+          'example_pinboards': [{
+            'description': 'Officers with at least 10 complaints against them generate 64% of all complaints.',
+            'id': 'b20c2c36',
+            'title': 'Watts Crew',
+          }, {
+            'description': 'It is a nickname given to a group of five Chicago Police officers in a...',
+            'id': '22e66085',
+            'title': 'Skullcap Crew',
+          }],
+        },
+      }
+    ).should.deepEqual({
+      id: '66ef1560',
+      title: 'Title',
+      description: 'Description',
+      'officer_ids': [1],
+      crids: ['abc'],
+      'trr_ids': [1],
+      hasPendingChanges: false,
+      isPinboardRestored: true,
+      needRefreshData: false,
+      saving: false,
+      'example_pinboards': [{
+        'description': 'Officers with at least 10 complaints against them generate 64% of all complaints.',
+        'id': 'b20c2c36',
+        'title': 'Watts Crew',
+      }, {
+        'description': 'It is a nickname given to a group of five Chicago Police officers in a...',
+        'id': '22e66085',
+        'title': 'Skullcap Crew',
+      }],
     });
   });
 

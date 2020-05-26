@@ -22,14 +22,7 @@ describe('ComplaintPage component', function () {
     wrapper.should.be.ok();
 
     const withHeader = wrapper.find(WithHeader);
-    const customButtons = withHeader.prop('customButtons');
-    customButtons.props.item.should.eql({
-      id: 123,
-      isPinned: false,
-      type: 'CR',
-    });
-    customButtons.props.addOrRemoveItemInPinboard.should.eql(addOrRemoveItemInPinboardSpy);
-    customButtons.props.showHint.should.be.false();
+    withHeader.prop('customButtons').type.displayName.should.containEql('HeaderPinButton');
     withHeader.find('.complaint-page-body').exists().should.be.true();
     withHeader.find(Footer).exists().should.be.true();
   });

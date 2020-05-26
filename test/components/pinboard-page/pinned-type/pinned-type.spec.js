@@ -32,29 +32,6 @@ describe('<PinnedType />', function () {
     should(pinnedGrid.prop('title')).be.undefined();
   });
 
-  it('should still render PinnedGrid when requesting but items is not empty', function () {
-    const removeItemInPinboardPage = spy();
-    const orderPinboard = spy();
-    const items = [{ 'id': '1' }, { 'id': '2' }];
-    const pinnedType = shallow(
-      <PinnedType
-        type='TRR'
-        items={ items }
-        requesting={ true }
-        title='Complaints'
-        removeItemInPinboardPage={ removeItemInPinboardPage }
-        orderPinboard={ orderPinboard }
-      />
-    );
-
-    const pinnedGrid = pinnedType.find(PinnedGrid);
-    pinnedGrid.prop('type').should.eql('TRR');
-    pinnedGrid.prop('removeItemInPinboardPage').should.eql(removeItemInPinboardPage);
-    pinnedGrid.prop('orderPinboard').should.eql(orderPinboard);
-    should(pinnedGrid.prop('requesting')).be.undefined();
-    should(pinnedGrid.prop('title')).be.undefined();
-  });
-
   it('should render LoadingSpinner if requesting', function () {
     const wrapper = shallow(<PinnedType type='CR' items={ [] } requesting={ true }/>);
 

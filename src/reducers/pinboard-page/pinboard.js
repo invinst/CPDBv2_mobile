@@ -18,6 +18,7 @@ import {
   ORDER_PINBOARD_STATE,
   PERFORM_FETCH_PINBOARD_RELATED_DATA,
   UPDATE_PINBOARD_INFO_STATE,
+  PINBOARD_CREATE_NEW_REQUEST_SUCCESS,
 } from 'actions/pinboard';
 import { getRequestPinboard } from 'utils/pinboard';
 
@@ -98,6 +99,13 @@ export default handleActions({
 
     pinboard.hasPendingChanges = hasPendingChanges(pinboard, action.payload);
     return pinboard;
+  },
+  [PINBOARD_CREATE_NEW_REQUEST_SUCCESS]: (state, action) => {
+    return {
+      ...DEFAULT_PINBOARD_STATUSES,
+      ...action.payload,
+      isPinboardRestored: true,
+    };
   },
   [PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS]: (state, action) => {
     return {

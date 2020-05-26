@@ -9,7 +9,7 @@ import PinnedGrid from './pinned-grid';
 
 
 export default function PinnedType(props) {
-  const { type, title, items, requesting } = props;
+  const { type, title, items, requesting, pinboardId } = props;
   const noItems = items.length < 1;
 
   if (!requesting && noItems) {
@@ -22,10 +22,10 @@ export default function PinnedType(props) {
         { title }
       </div>
       {
-        (requesting && noItems) ?
+        (requesting) ?
           <LoadingSpinner className='type-cards-loading' />
           :
-          <PinnedGrid { ...omit(props, ['requesting', 'title']) }/>
+          <PinnedGrid key={ `${pinboardId}-pinned-${title}` } { ...omit(props, ['requesting', 'title']) }/>
       }
     </div>
   );
@@ -38,6 +38,7 @@ PinnedType.propTypes = {
   removeItemInPinboardPage: PropTypes.func,
   orderPinboard: PropTypes.func,
   requesting: PropTypes.bool,
+  pinboardId: PropTypes.string,
 };
 
 PinnedType.defaultProps = {

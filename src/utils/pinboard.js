@@ -17,6 +17,7 @@ import {
 import loadPaginatedData from 'utils/load-paginated-data';
 import { PINBOARD_PATH } from 'constants/paths';
 import config from 'config';
+import browserHistory from 'utils/history';
 
 
 export const generatePinboardUrl = pinboard => {
@@ -69,3 +70,12 @@ export const getRequestPinboard = pinboard => ({
 });
 
 export const isPinboardFeatureEnabled = () => get(config, 'enableFeatures.pinboard', true);
+
+export const redirectToCreatedPinboard = (response) => {
+  const pinboard = response.payload;
+  const url = generatePinboardUrl(pinboard);
+
+  if (!isEmpty(url)) {
+    browserHistory.push(url);
+  }
+};

@@ -19,6 +19,10 @@ const mockTRR = {
       'unit_name': '253',
       'description': 'Targeted Response Unit',
     },
+    'percentile_allegation': 55.6188,
+    'percentile_allegation_civilian': 47.638,
+    'percentile_allegation_internal': 61.1521,
+    'percentile_trr': 56.6663,
   },
   'officer_in_uniform': false,
   'officer_assigned_beat': '4682E',
@@ -67,6 +71,8 @@ describe('TRRPageTest', function () {
 
   it('should go to officer page when clicking on the officer row', function (client) {
     this.trrPage.section.officer.expect.element('@officerRow').text.to.contain('Donovan Markiewicz');
+    this.trrPage.section.officer.expect.element('@radarChart').to.have.css('background-color')
+      .which.equal('rgba(255, 100, 83, 1)');
     this.trrPage.section.officer.click('@officerRow');
     client.assert.urlContains('/officer/583/donovan-markiewicz/');
   });

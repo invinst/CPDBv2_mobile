@@ -30,13 +30,10 @@ class App extends Component {
 
   render() {
     const { location, appConfigRequesting } = this.props;
-    if (appConfigRequesting) {
-      return null;
-    }
 
     return (
       <div className={ cx('content', style.app, { 'pinboard-disabled': !isPinboardFeatureEnabled() }) }>
-        <RouterRoot location={ location }/>
+        { !appConfigRequesting && <RouterRoot location={ location }/> }
         <ToastContainer
           pauseOnFocusLoss={ false }
           closeButton={ false }
