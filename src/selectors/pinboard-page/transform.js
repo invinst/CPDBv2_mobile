@@ -1,6 +1,6 @@
 import { first, last, includes } from 'lodash';
 
-import { extractPercentile } from 'selectors/common/percentile';
+import { extractLatestPercentile } from 'selectors/common/percentile';
 import { formatDate } from 'utils/date';
 
 
@@ -23,7 +23,7 @@ const officerTransform = officer => {
     id: officer.id,
     fullName: officer['full_name'],
     shortName,
-    percentile: extractPercentile(officer.percentile),
+    percentile: extractLatestPercentile(officer),
   };
 };
 
@@ -49,5 +49,5 @@ export const relevantCoaccusalTransform = coaccusal => ({
   fullName: coaccusal['full_name'],
   coaccusalCount: coaccusal['coaccusal_count'],
   complaintCount: coaccusal['allegation_count'],
-  percentile: extractPercentile(coaccusal.percentile),
+  percentile: extractLatestPercentile(coaccusal),
 });

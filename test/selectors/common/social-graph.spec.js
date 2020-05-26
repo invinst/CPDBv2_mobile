@@ -7,16 +7,15 @@ describe('Social Graph page selectors', function () {
       const officer = {
         'full_name': 'Jerome Finnigan',
         'id': 111,
-        'percentile': {
-          'percentile_trr': '78.2707',
-          'percentile_allegation_civilian': '97.8772',
-          'percentile_allegation_internal': '61.1521',
-        },
+        'percentile_trr': '78.2707',
+        'percentile_allegation': '99.8772',
+        'percentile_allegation_civilian': '97.8772',
+        'percentile_allegation_internal': '61.1521',
       };
       officersTransform(officer).should.eql({
         fullName: 'Jerome Finnigan',
         id: 111,
-        visualTokenBackground: '#f0201e',
+        visualTokenBackground: '#F52524',
       });
     });
   });

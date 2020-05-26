@@ -108,9 +108,19 @@ export const REMOVE_ITEM_FROM_PINBOARD_STATE = 'REMOVE_ITEM_FROM_PINBOARD_STATE'
 export const ORDER_PINBOARD_STATE = 'ORDER_PINBOARD_STATE';
 export const SAVE_PINBOARD = 'SAVE_PINBOARD';
 
+export const PINBOARDS_FETCH_REQUEST_START = 'PINBOARDS_FETCH_REQUEST_START';
+export const PINBOARDS_FETCH_REQUEST_SUCCESS = 'PINBOARDS_FETCH_REQUEST_SUCCESS';
+export const PINBOARDS_FETCH_REQUEST_FAILURE = 'PINBOARDS_FETCH_REQUEST_FAILURE';
+
 export const PERFORM_FETCH_PINBOARD_RELATED_DATA = 'PERFORM_FETCH_PINBOARD_RELATED_DATA';
 
 export const UPDATE_PINBOARD_INFO_STATE = 'UPDATE_PINBOARD_INFO_STATE';
+
+export const HIDE_SHOW_PINBOARDS_LIST = 'HIDE_SHOW_PINBOARDS_LIST';
+
+export const PINBOARD_CREATE_NEW_REQUEST_START = 'PINBOARD_CREATE_NEW_REQUEST_START';
+export const PINBOARD_CREATE_NEW_REQUEST_SUCCESS = 'PINBOARD_CREATE_NEW_REQUEST_SUCCESS';
+export const PINBOARD_CREATE_NEW_REQUEST_FAILURE = 'PINBOARD_CREATE_NEW_REQUEST_FAILURE';
 
 export const addOrRemoveItemInPinboard = createAction(ADD_OR_REMOVE_ITEM_IN_PINBOARD);
 
@@ -150,6 +160,18 @@ export const createPinboard = cancelFetchRequests(
     ],
     pinboardSource && pinboardSource.token,
   )({ 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds })
+);
+
+export const createNewPinboard = cancelFetchRequests(
+  ({ officerIds, crids, trrIds, sourcePinboardId }) => post(
+    v2Url(constants.PINBOARDS_API_ENDPOINT),
+    [
+      PINBOARD_CREATE_NEW_REQUEST_START,
+      PINBOARD_CREATE_NEW_REQUEST_SUCCESS,
+      PINBOARD_CREATE_NEW_REQUEST_FAILURE,
+    ],
+    pinboardSource && pinboardSource.token,
+  )({ 'officer_ids': officerIds, crids, 'trr_ids': trrIds, 'source_pinboard_id': sourcePinboardId })
 );
 
 export const updatePinboard = cancelFetchRequests(
@@ -322,6 +344,19 @@ export const fetchLatestRetrievedPinboard = get(
   ]
 );
 
+export const fetchPinboards = get(
+  v2Url(constants.PINBOARDS_API_ENDPOINT),
+  [
+    PINBOARDS_FETCH_REQUEST_START,
+    PINBOARDS_FETCH_REQUEST_SUCCESS,
+    PINBOARDS_FETCH_REQUEST_FAILURE,
+  ]
+);
+
+export const duplicatePinboard = (sourcePinboardId) => createNewPinboard({ sourcePinboardId });
+export const createNewEmptyPinboard = () => createNewPinboard({ 'officerIds': [], 'crids': [], 'trrIds': [] });
+export const hideShowPinboardsList = createAction(HIDE_SHOW_PINBOARDS_LIST);
+
 export const PINBOARD_PAGE_CMS_REQUEST_START = 'PINBOARD_PAGE_CMS_REQUEST_START';
 export const PINBOARD_PAGE_CMS_REQUEST_SUCCESS = 'PINBOARD_PAGE_CMS_REQUEST_SUCCESS';
 export const PINBOARD_PAGE_CMS_REQUEST_FAILURE = 'PINBOARD_PAGE_CMS_REQUEST_FAILURE';
@@ -329,3 +364,16 @@ export const PINBOARD_PAGE_CMS_REQUEST_FAILURE = 'PINBOARD_PAGE_CMS_REQUEST_FAIL
 export const requestCMS = get(v2Url(constants.PINBOARD_PAGE_CMS_API_ENDPOINT), [
   PINBOARD_PAGE_CMS_REQUEST_START, PINBOARD_PAGE_CMS_REQUEST_SUCCESS, PINBOARD_PAGE_CMS_REQUEST_FAILURE,
 ]);
+
+export const HEADER_PINBOARDS_REQUEST_START = 'HEADER_PINBOARDS_REQUEST_START';
+export const HEADER_PINBOARDS_REQUEST_FAILURE = 'HEADER_PINBOARDS_REQUEST_FAILURE';
+export const HEADER_PINBOARDS_REQUEST_SUCCESS = 'HEADER_PINBOARDS_REQUEST_SUCCESS';
+
+export const fetchHeaderPinboards = () => get(
+  v2Url(constants.PINBOARDS_API_ENDPOINT),
+  [
+    HEADER_PINBOARDS_REQUEST_START,
+    HEADER_PINBOARDS_REQUEST_SUCCESS,
+    HEADER_PINBOARDS_REQUEST_FAILURE,
+  ]
+)({ detail: true });

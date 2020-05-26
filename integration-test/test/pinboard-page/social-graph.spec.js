@@ -4,8 +4,8 @@ const _ = require('lodash');
 const api = require(__dirname + '/../../mock-api');
 const assert = require('assert');
 const { TIMEOUT } = require(__dirname + '/../../constants');
-
 const mockData = require(__dirname + '/../../mock-data/pinboard-page');
+const { mockGetAppConfig } = require(__dirname + '/../../mock-data/app-config');
 
 
 function waitForGraphAnimationEnd(pinboardPage, client) {
@@ -44,6 +44,7 @@ describe('Pinboard Social Graph', function () {
 
   context('animatedSocialgraph section', function () {
     beforeEach(function (client, done) {
+      api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
       api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, mockData.pinboardData);
       api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
       api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, mockData.pinboardOfficersData);
@@ -92,12 +93,12 @@ describe('Pinboard Social Graph', function () {
       const graphNodes = pinboardPage.section.graphNodes;
 
       checkGraphGroupColors(client, graphNodes, {
-        'rgb(253, 94, 76)': 6,
-        'rgb(244, 162, 152)': 6,
-        'rgb(249, 211, 195)': 5,
-        'rgb(243, 42, 41)': 1,
-        'rgb(255, 80, 80)': 1,
-        'rgb(243, 173, 173)': 1,
+        'rgb(245, 37, 36)': 6,
+        'rgb(255, 65, 44)': 6,
+        'rgb(255, 100, 83)': 5,
+        'rgb(244, 162, 152)': 1,
+        'rgb(249, 211, 195)': 1,
+        'rgb(245, 244, 244)': 1,
       });
       const graphLinks = pinboardPage.section.graphLinks;
       client.elements(graphLinks.locateStrategy, graphLinks.selector, function (graphLinks) {

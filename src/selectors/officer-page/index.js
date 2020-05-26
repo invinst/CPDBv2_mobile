@@ -1,13 +1,16 @@
 import { createSelector } from 'reselect';
-import { startCase, get, map, last, compact, toLower, capitalize, isEmpty, isNil } from 'lodash';
+import { startCase, get, map, compact, toLower, capitalize, isEmpty, isNil } from 'lodash';
 
 import { extractPercentile } from 'selectors/common/percentile';
 import { getCareerDuration, getCurrentAge } from 'utils/date';
 import { pinboardItemsSelector, isItemPinned } from 'selectors/pinboard-page/pinboard';
+import constants from 'constants';
 
+
+export const getOfficerId = (props) => props.match.params.id;
 
 const getOfficer = (state, props) => (
-  state.officerPage.officers.data[props.match.params.id] || null
+  state.officerPage.officers.data[getOfficerId(props)] || null
 );
 
 export const getOfficerInfo = (state, officerId) => get(state.officerPage.officers.data, String(officerId), []);
@@ -71,22 +74,30 @@ export const officerMetricsSelector = createSelector(
 
     const formatValue = (value) => isNil(value) ? DATA_NOT_AVAILABLE : value;
 
-    const percentiles = get(officer, 'percentiles', []);
     return {
       allegationCount: formatValue(officer.allegation_count),
-      allegationPercentile: formatValue(officer.complaint_percentile),
+      allegationPercentile: formatValue(officer.percentile_allegation),
       honorableMentionCount: formatValue(officer.honorable_mention_count),
       sustainedCount: formatValue(officer.sustained_count),
       disciplineCount: formatValue(officer.discipline_count),
       honorableMentionPercentile: formatValue(officer.honorable_mention_percentile),
       trrCount: formatValue(officer.trr_count),
       majorAwardCount: formatValue(officer.major_award_count),
-      trrPercentile: formatValue(get(last(percentiles), 'percentile_trr')),
+      trrPercentile: formatValue(officer.percentile_trr),
       civilianComplimentCount: formatValue(officer.civilian_compliment_count),
     };
   }
 );
 
-export const getIsOfficerPinned = (state, officerId) => (
-  isItemPinned('OFFICER', officerId, pinboardItemsSelector(state))
+export const getIsOfficerPinned = (state, props) => (
+  isItemPinned('OFFICER', getOfficerId(props), pinboardItemsSelector(state))
+);
+
+export const pinnableOfficerSelector = createSelector(
+  getOfficer,
+  (officer) => ({
+    type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+    id: officer['officer_id'],
+    fullName: officer['full_name'],
+  })
 );

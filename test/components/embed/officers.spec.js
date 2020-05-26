@@ -102,7 +102,6 @@ describe('<Officers />', function () {
           ],
           textColor: '#231F20',
           visualTokenBackground: '#f95125',
-          year: 2005,
         },
       },
     ];
@@ -128,13 +127,10 @@ describe('<Officers />', function () {
               id: 13788,
               'complaint_count': 104,
               'full_name': 'Broderick Jones',
-              percentile: {
-                'officer_id': 13788,
-                'year': 2016,
-                'percentile_trr': '0',
-                'percentile_allegation_internal': '87.828',
-                'percentile_allegation_civilian': '99.9817',
-              },
+              'percentile_trr': '0',
+              'percentile_allegation': '97.8280',
+              'percentile_allegation_internal': '87.8280',
+              'percentile_allegation_civilian': '99.98170',
             },
             {
               id: 13789,
@@ -162,21 +158,20 @@ describe('<Officers />', function () {
           'complaint_count': 104,
           'full_name': 'Broderick Jones',
           percentile: {
-            year: 2016,
             items: [
               { axis: 'Use of Force Reports', value: 0 },
               { axis: 'Internal Allegations', value: 87.828 },
               { axis: 'Civilian Allegations', value: 99.9817 },
             ],
-            visualTokenBackground: '#f95125',
-            textColor: '#231F20',
+            visualTokenBackground: '#F52524',
+            textColor: '#DFDFDF',
           },
         },
         {
           id: 13789,
           'full_name': 'Queen Jones',
           'complaint_count': 0,
-          percentile: null,
+          percentile: {},
         },
       ]);
       officers.prop('description').should.equal('description');

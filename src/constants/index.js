@@ -169,4 +169,12 @@ export const PIN_BUTTON_INTRODUCTION_INDEX = 3;
 
 export const APP_CONFIG_KEYS = {
   PINBOARD_INTRODUCTION_DELAY: 'PINBOARD_INTRODUCTION_DELAY',
+  VISUAL_TOKEN_COLORS: 'VISUAL_TOKEN_COLORS',
 };
+
+export const PERCENTILE_FIELDS = [
+  'percentile_allegation',
+  'percentile_allegation_internal',
+  'percentile_allegation_civilian',
+  'percentile_trr',
+];

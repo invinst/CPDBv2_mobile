@@ -8,7 +8,6 @@ import { scrollToTop } from 'utils/navigation-util';
 import LoadingPage from 'components/shared/loading-page';
 import BottomPadding from 'components/shared/bottom-padding';
 import NotMatchedOfficerPage from './not-matched-officer-page';
-import ItemPinButton from 'components/common/item-pin-button';
 import SectionRow from './section-row';
 import style from './officer-page.sass';
 import AnimatedRadarChart from './radar-chart';
@@ -21,7 +20,7 @@ import { TAB_MAP, OFFICER_PAGE_TAB_NAMES } from 'constants/officer-page';
 import browserHistory from 'utils/history';
 import Footer from 'components/footer';
 import WithHeader from 'components/shared/with-header';
-import constants from 'constants';
+import HeaderPinButtonContainer from 'containers/officer-page/header-pin-button-container';
 
 
 class OfficerPage extends Component {
@@ -174,8 +173,6 @@ class OfficerPage extends Component {
       hasAttachment,
       numAttachments,
       hasMapMarker,
-      addOrRemoveItemInPinboard,
-      isPinned,
     } = this.props;
 
 
@@ -215,18 +212,7 @@ class OfficerPage extends Component {
           <title>{ pageTitle }</title>
           <meta name='description' content={ pageDescription }/>
         </Helmet>
-        <WithHeader className={ style.officerSummary } customButtons={
-          <ItemPinButton
-            addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
-            showHint={ false }
-            item={ {
-              type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
-              id,
-              isPinned,
-              fullName: name,
-            } }
-          />
-        }>
+        <WithHeader className={ style.officerSummary } customButtons={ <HeaderPinButtonContainer /> }>
           <AnimatedRadarChart
             officerId={ id }
             percentileData={ threeCornerPercentile }
@@ -282,8 +268,6 @@ OfficerPage.propTypes = {
   isCoaccusalSuccess: PropTypes.bool,
   resetTimelineFilter: PropTypes.func,
   numAttachments: PropTypes.number,
-  addOrRemoveItemInPinboard: PropTypes.func,
-  isPinned: PropTypes.bool,
 };
 
 OfficerPage.defaultProps = {

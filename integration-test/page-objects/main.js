@@ -1,3 +1,7 @@
+const radarChartSelector = (officerName) => (
+  `//div[contains(@class, "officer-name") and text()="${officerName}"]/../..//*[name()="svg"]`
+);
+
 const baseCarouselSection = (mainElementSelector, cardSelector, cardNameSelector) => ({
   locateStrategy: 'xpath',
   selector: mainElementSelector,
@@ -14,6 +18,26 @@ const baseCarouselSection = (mainElementSelector, cardSelector, cardNameSelector
           locateStrategy: 'xpath',
           selector: `${mainElementSelector}${ cardSelector }${ cardNameSelector }` +
             '//div[contains(@class, "item-pin-button__item-pin-button")]',
+        },
+        firstRadarChart: {
+          locateStrategy: 'xpath',
+          selector: `${mainElementSelector}${ cardSelector }${radarChartSelector('Broderick Jones')}`,
+        },
+        secondRadarChart: {
+          locateStrategy: 'xpath',
+          selector: `${mainElementSelector}${ cardSelector }${radarChartSelector('Corey Flagg')}`,
+        },
+        thirdRadarChart: {
+          locateStrategy: 'xpath',
+          selector: `${mainElementSelector}${ cardSelector }${radarChartSelector('Charles Toussas')}`,
+        },
+        forthRadarChart: {
+          locateStrategy: 'xpath',
+          selector: `${mainElementSelector}${ cardSelector }${radarChartSelector('Kevin Osborn')}`,
+        },
+        fifthRadarChart: {
+          locateStrategy: 'xpath',
+          selector: `${mainElementSelector}${ cardSelector }${radarChartSelector('Joe Parker')}`,
         },
       },
     },

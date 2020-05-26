@@ -7,11 +7,13 @@ const { TIMEOUT } = require(__dirname + '/../constants');
 
 var mockData = require(__dirname + '/../mock-data/pinboard-page');
 const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationResponse');
+const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
+
 
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
     api.cleanMock();
-
+    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
     api.mock('GET', '/api/v2/mobile/officers/123/', 200, mockData.officer123);
     api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, mockData.pinboardData);
     api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
@@ -406,6 +408,8 @@ describe('Pinboard Page', function () {
       firstDocumentCard.expect.element('@firstTopOfficerName').text.to.equal('R. Sullivan');
       firstDocumentCard.expect.element('@secondTopOfficerName').text.to.equal('B. Lopez');
       firstDocumentCard.expect.element('@notShowingOfficerCount').text.to.equal('3+');
+      firstDocumentCard.expect.element('@firstRadarChart').to.have.css('background-color')
+        .which.equal('rgba(245, 37, 36, 1)');
     });
 
     it('should request more when sliding to the end', function (client) {
@@ -783,6 +787,8 @@ describe('Pinboard Page', function () {
       firstComplaintCard.expect.element('@firstTopOfficerName').text.to.equal('C. Suchocki');
       firstComplaintCard.expect.element('@secondTopOfficerName').text.to.equal('Q. Jones');
       firstComplaintCard.expect.element('@notShowingOfficerCount').text.to.equal('2+');
+      firstComplaintCard.expect.element('@firstRadarChart').to.have.css('background-color')
+        .which.equal('rgba(245, 37, 36, 1)');
     });
 
     it('should request more when sliding to the end', function (client) {
@@ -851,6 +857,8 @@ describe('Pinboard Page', function () {
       firstCoaccusalCard.expect.element('@officerRank').text.to.equal('Detective');
       firstCoaccusalCard.expect.element('@officerName').text.to.equal('Richard Sullivan');
       firstCoaccusalCard.expect.element('@coaccusalCount').text.to.equal('53 coaccusals');
+      firstCoaccusalCard.expect.element('@radarChart').to.have.css('background-color')
+        .which.equal('rgba(245, 37, 36, 1)');
     });
 
     it('should request more when sliding to the end', function (client) {
@@ -914,6 +922,399 @@ describe('Pinboard Page', function () {
       client.waitForAnimationEnd(animatedSocialGraphSection.selector, animatedSocialGraphSection.locateStrategy);
       client.assertInViewport(animatedSocialGraphSection.selector, animatedSocialGraphSection.locateStrategy);
       client.assertInViewport(geographicSection.selector, geographicSection.locateStrategy, false);
+    });
+  });
+
+  context('manage pinboards', function () {
+    beforeEach(function (client, done) {
+      api.mock('GET', '/api/v2/mobile/pinboards/', 200, mockData.pinboardsList.list);
+      api.mock('GET', '/api/v2/mobile/pinboards/23ffd689/', 200, mockData.pinboardsList.pinboards[0]);
+      api.mock('GET', '/api/v2/mobile/pinboards/7e1e3c88/', 200, mockData.pinboardsList.pinboards[1]);
+      done();
+    });
+
+    it('should render the pinboards list', function (client) {
+      const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+      this.pinboardPage.click('@pinboardsListButton');
+
+      pinboardsListSection.waitForElementVisible('@pinboardsTitle');
+      const pinboardItems = pinboardsListSection.elements.pinboardItems;
+      client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
+        assert.equal(result.value.length, 3);
+      });
+
+      pinboardsListSection.expect.element('@firstPinboardItemTitle').text.to.equal('Watts Crew');
+      pinboardsListSection.expect.element('@firstPinboardItemCreatedAt').text.to.equal('Created May 06, 2020');
+
+      pinboardsListSection.expect.element('@secondPinboardItemTitle').text.to.equal('');
+      pinboardsListSection.expect.element('@secondPinboardItemCreatedAt').text.to.equal('Created Aug 07, 2020');
+
+      pinboardsListSection.expect.element('@thirdPinboardItemTitle').text.to.equal('');
+      pinboardsListSection.expect.element('@thirdPinboardItemCreatedAt').text.to.equal('Created Dec 20, 2020');
+    });
+
+    context('clicking on pinboard item', function () {
+      it('should go to pinboard detail page', function (client) {
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        this.pinboardPage.click('@pinboardsListButton');
+        client.assert.urlContains('pinboard/5cd06f2b/');
+
+        pinboardsListSection.click('@firstPinboardItemTitle');
+        client.pause(100);
+        client.assert.urlContains('pinboard/23ffd689/');
+
+        this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
+        this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+      });
+
+      context('users remove pinned item from current pinboard and current pinboard is saved', function () {
+        it('should go to target pinboard detail page', function (client) {
+          api.mockPut(
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+            mockData.updatePinboardCrsRequest,
+            mockData.updatePinboardCrsResponse
+          );
+          const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+          this.pinboardPage.section.pinnedSection.section.crs.section.firstCard.click('@firstCardUnpinBtn');
+          client.pause(4500);
+
+          this.pinboardPage.click('@pinboardsListButton');
+          pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
+          pinboardsListSection.click('@firstPinboardItemTitle');
+          client.pause(100);
+          client.assert.urlContains('pinboard/23ffd689/');
+
+          this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
+          this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+        });
+      });
+
+      context('users add relevant item to current pinboard and current pinboard is saved', function () {
+        it('should go to target pinboard detail page', function (client) {
+          api.mockPut(
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+            mockData.updatePinboardCoaccusalsRequest,
+            mockData.updatePinboardCoaccusalsResponse
+          );
+          const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+          this.pinboardPage.section.relevantCoaccusals.sections.coaccusalCard.click('@plusButton');
+          client.pause(4500);
+
+          this.pinboardPage.click('@pinboardsListButton');
+          pinboardsListSection.click('@firstPinboardItemTitle');
+          client.pause(100);
+          client.assert.urlContains('pinboard/23ffd689/');
+
+          this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
+          this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+        });
+      });
+
+      context('pinboard is saving', function () {
+        context('pinboard is saving with long api call', function () {
+          context('users confirm yes', function () {
+            it('should go to pinboard detail page', function (client) {
+              api.mockPut(
+                '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+                mockData.updatePinboardCrsRequest,
+                mockData.updatePinboardCrsResponse,
+                10000
+              );
+              const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+              this.pinboardPage.section.pinnedSection.section.crs.section.firstCard.click('@firstCardUnpinBtn');
+              client.pause(2000);
+              this.pinboardPage.click('@pinboardsListButton');
+              pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
+              pinboardsListSection.click('@firstPinboardItemTitle');
+
+              client.waitForAlertText(function (value) {
+                assert.ok(typeof (value) === 'string');
+                assert.ok(value.includes('Pinboard is saving'));
+              }, 5000);
+
+              client.acceptAlert(function () {
+                client.pause(500);
+                client.assert.urlContains('pinboard/23ffd689/watts-crew/');
+              });
+
+              this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
+              this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+            });
+          });
+        });
+
+        context('users remove pinned items and pinboard saving errors', function () {
+          context('users confirm yes', function () {
+            it('should go to pinboard detail page', function (client) {
+              const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+              this.pinboardPage.section.pinnedSection.section.crs.section.firstCard.click('@firstCardUnpinBtn');
+              client.pause(2000);
+              this.pinboardPage.click('@pinboardsListButton');
+              pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
+              pinboardsListSection.click('@firstPinboardItemTitle');
+
+              client.waitForAlertText(function (value) {
+                assert.ok(typeof (value) === 'string');
+                assert.ok(value.includes('Pinboard is saving'));
+              }, 5000);
+
+              client.acceptAlert(function () {
+                client.pause(500);
+                client.assert.urlContains('pinboard/23ffd689/watts-crew/');
+              });
+
+              this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
+              this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+            });
+          });
+        });
+
+        context('users add relevant item and pinboard saving errors', function () {
+          context('users confirm yes', function () {
+            it('should go to pinboard detail page', function (client) {
+              api.mockPut(
+                '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+                mockData.updatePinboardCoaccusalsRequest,
+                mockData.updatePinboardCoaccusalsResponse,
+                10000
+              );
+              const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+              this.pinboardPage.section.relevantCoaccusals.sections.coaccusalCard.click('@plusButton');
+              client.pause(4500);
+
+              this.pinboardPage.click('@pinboardsListButton');
+              pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
+              pinboardsListSection.click('@firstPinboardItemTitle');
+
+              client.waitForAlertText(function (value) {
+                assert.ok(typeof (value) === 'string');
+                assert.ok(value.includes('Pinboard is saving'));
+              }, 5000);
+
+              client.acceptAlert(function () {
+                client.pause(500);
+                client.assert.urlContains('pinboard/23ffd689/watts-crew/');
+              });
+
+              this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
+              this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+            });
+          });
+        });
+
+        context('users confirm yes', function () {
+          it('should go to pinboard detail page and will not show alert again', function (client) {
+            api.mockPut(
+              '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+              mockData.updatePinboardCrsRequest,
+              mockData.updatePinboardCrsResponse,
+              10000
+            );
+            const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+            this.pinboardPage.section.pinnedSection.section.crs.section.firstCard.click('@firstCardUnpinBtn');
+            client.pause(2000);
+            this.pinboardPage.click('@pinboardsListButton');
+            pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
+            pinboardsListSection.click('@firstPinboardItemTitle');
+
+            client.waitForAlertText(function (value) {
+              assert.ok(typeof (value) === 'string');
+              assert.ok(value.includes('Pinboard is saving'));
+            }, 5000);
+
+            client.acceptAlert(function () {
+              client.pause(500);
+              client.assert.urlContains('pinboard/23ffd689/watts-crew/');
+            });
+
+            this.pinboardPage.click('@pinboardsListButton');
+            pinboardsListSection.waitForElementVisible('@secondPinboardItemCreatedAt');
+            pinboardsListSection.click('@secondPinboardItemCreatedAt');
+
+            client.pause(500);
+            client.assert.urlContains('pinboard/7e1e3c88/untitled-pinboard/');
+            this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('').before(500);
+            this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description').before(500);
+          });
+        });
+
+        context('user confirm no', function () {
+          it('should still in current page', function (client) {
+            api.mockPut(
+              '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+              mockData.updatePinboardCrsRequest,
+              mockData.updatePinboardCrsResponse,
+              10000
+            );
+            const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+            this.pinboardPage.section.pinnedSection.section.crs.section.firstCard.click('@firstCardUnpinBtn');
+            client.pause(2000);
+            this.pinboardPage.click('@pinboardsListButton');
+            pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
+            pinboardsListSection.click('@firstPinboardItemTitle');
+
+            client.waitForAlertText(function (value) {
+              assert.ok(typeof (value) === 'string');
+              assert.ok(value.includes('Pinboard is saving'));
+            }, 5000);
+
+            client.dismissAlert(function () {
+              client.pause(500);
+              client.assert.urlContains('pinboard/5cd06f2b/');
+            });
+          });
+        });
+      });
+    });
+
+    context('clicking on create new pinboard button in menu', function () {
+      it('should create an empty pinboard', function (client) {
+        api.mockPost(
+          '/api/v2/mobile/pinboards/',
+          201,
+          undefined,
+          mockData.pinboardsList.pinboards[3]
+        );
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        this.pinboardPage.click('@pinboardsListButton');
+        pinboardsListSection.waitForElementVisible('@createNewPinboardButton');
+        pinboardsListSection.click('@createNewPinboardButton');
+
+        client.pause(100);
+        client.assert.urlContains('pinboard/823f123e/');
+      });
+
+      it('should create an empty pinboard if pinboard is saving and user confirm yes', function (client) {
+        api.mockPost(
+          '/api/v2/mobile/pinboards/',
+          201,
+          undefined,
+          mockData.pinboardsList.pinboards[3]
+        );
+        api.mockPut(
+          '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+          mockData.updatePinboardCrsRequest,
+          mockData.updatePinboardCrsResponse,
+          10000
+        );
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        this.pinboardPage.section.pinnedSection.section.crs.section.firstCard.click('@firstCardUnpinBtn');
+        client.pause(2000);
+        this.pinboardPage.click('@pinboardsListButton');
+        pinboardsListSection.waitForElementVisible('@createNewPinboardButton');
+        pinboardsListSection.click('@createNewPinboardButton');
+
+        client.waitForAlertText(function (value) {
+          assert.ok(typeof (value) === 'string');
+          assert.ok(value.includes('Pinboard is saving'));
+        }, 5000);
+
+        client.acceptAlert(function () {
+          client.pause(500);
+          client.assert.urlContains('pinboard/823f123e/');
+        });
+      });
+
+      it('should still in current page if pinboard is saving and user confirm no', function (client) {
+        api.mockPut(
+          '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+          mockData.updatePinboardCrsRequest,
+          mockData.updatePinboardCrsResponse,
+          10000
+        );
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        const crsPinnedSection = this.pinboardPage.section.pinnedSection.section.crs;
+        const firstCrPinnedCard = crsPinnedSection.section.firstCard;
+        firstCrPinnedCard.click('@firstCardUnpinBtn');
+        client.pause(2000);
+        this.pinboardPage.click('@pinboardsListButton');
+        pinboardsListSection.waitForElementVisible('@createNewPinboardButton');
+        pinboardsListSection.click('@createNewPinboardButton');
+
+        client.waitForAlertText(function (value) {
+          assert.ok(typeof (value) === 'string');
+          assert.ok(value.includes('Pinboard is saving'));
+        }, 5000);
+
+        client.dismissAlert(function () {
+          client.pause(500);
+          client.assert.urlContains('pinboard/5cd06f2b/');
+        });
+      });
+    });
+
+    context('clicking on Duplicate this pinboard button', function () {
+      it('should duplicate current pinboard', function (client) {
+        api.mockPost(
+          '/api/v2/mobile/pinboards/', 200,
+          mockData.pinboardsList.duplicatePinboardRequest,
+          mockData.pinboardsList.duplicatePinboardResponse
+        );
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        this.pinboardPage.click('@pinboardsListButton');
+        pinboardsListSection.waitForElementVisible('@firstDuplicatePinboardButton');
+        pinboardsListSection.click('@firstDuplicatePinboardButton');
+
+        client.pause(1000);
+        client.assert.urlContains('pinboard/283fea1f/');
+      });
+
+      it('should duplicate current pinboard if pinboard is saving and user confirm yes', function (client) {
+        api.mockPost(
+          '/api/v2/mobile/pinboards/', 200,
+          mockData.pinboardsList.duplicatePinboardRequest,
+          mockData.pinboardsList.duplicatePinboardResponse
+        );
+        api.mockPut(
+          '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+          mockData.updatePinboardCrsRequest,
+          mockData.updatePinboardCrsResponse,
+          10000
+        );
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        const crsPinnedSection = this.pinboardPage.section.pinnedSection.section.crs;
+        const firstCrPinnedCard = crsPinnedSection.section.firstCard;
+        firstCrPinnedCard.click('@firstCardUnpinBtn');
+        client.pause(2000);
+        this.pinboardPage.click('@pinboardsListButton');
+        pinboardsListSection.click('@firstDuplicatePinboardButton');
+
+        client.waitForAlertText(function (value) {
+          assert.ok(typeof (value) === 'string');
+          assert.ok(value.includes('Pinboard is saving'));
+        }, 5000);
+
+        client.acceptAlert(function () {
+          client.pause(500);
+          client.assert.urlContains('pinboard/283fea1f/');
+        });
+      });
+
+      it('should still in current page if pinboard is saving and user confirm no', function (client) {
+        api.mockPut(
+          '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+          mockData.updatePinboardCrsRequest,
+          mockData.updatePinboardCrsResponse,
+          10000
+        );
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        const crsPinnedSection = this.pinboardPage.section.pinnedSection.section.crs;
+        const firstCrPinnedCard = crsPinnedSection.section.firstCard;
+        firstCrPinnedCard.click('@firstCardUnpinBtn');
+        client.pause(2000);
+        this.pinboardPage.click('@pinboardsListButton');
+        pinboardsListSection.click('@firstDuplicatePinboardButton');
+
+        client.waitForAlertText(function (value) {
+          assert.ok(typeof (value) === 'string');
+          assert.ok(value.includes('Pinboard is saving'));
+        }, 5000);
+
+        client.dismissAlert(function () {
+          client.pause(500);
+          client.assert.urlContains('pinboard/5cd06f2b/');
+        });
+      });
     });
   });
 });

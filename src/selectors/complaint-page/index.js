@@ -4,14 +4,16 @@ import { get, compact, sortBy, isEmpty, each } from 'lodash';
 
 import constants from 'constants';
 import { getFindingOutcomeMix } from './finding-outcome-mix';
-import { extractPercentile } from 'selectors/common/percentile';
+import { extractLatestPercentile } from 'selectors/common/percentile';
 import { cmsSelector } from 'selectors/common/cms';
 import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
 import { getBreadcrumbItems } from 'selectors/breadcrumb';
 import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 
 
-const getComplaint = (state, props) => state.complaintPage.complaints[props.match.params.complaintId];
+const getComplaint = (state, props) => state.complaintPage.complaints[getComplaintID(props)];
+
+export const getComplaintID = (props) => props.match.params.complaintId;
 
 const formatDate = (date) => {
   if (!date) {
@@ -34,7 +36,7 @@ const coaccusedTransform = coaccused => {
     id: coaccused.id,
     rank: coaccused.rank,
     findingOutcome: getFindingOutcomeMix(coaccused['final_finding'], coaccused['final_outcome']),
-    percentile: extractPercentile(coaccused),
+    percentile: extractLatestPercentile(coaccused),
   };
 };
 
@@ -116,7 +118,7 @@ export const complaintSelector = createSelector(
     const involvements = get(complaint, 'involvements', []).map(
       involvement => ({
         ...involvement,
-        percentile: involvement['officer_id'] && extractPercentile(involvement),
+        percentile: involvement['officer_id'] && extractLatestPercentile(involvement),
       })
     );
 
@@ -158,6 +160,14 @@ export const buttonText = (state, props) => (
   hasAttachmentSelector(state, props) ? 'New Document Notifications': 'Request Documents'
 );
 
-export const getIsCrPinned = (state, crid) => (
-  isItemPinned('CR', crid, pinboardItemsSelector(state))
+export const getIsCrPinned = (state, props) => (
+  isItemPinned('CR', getComplaintID(props), pinboardItemsSelector(state))
+);
+
+export const pinnableCrSelector = createSelector(
+  getComplaint,
+  (complaint) => ({
+    type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+    id: complaint.crid,
+  })
 );

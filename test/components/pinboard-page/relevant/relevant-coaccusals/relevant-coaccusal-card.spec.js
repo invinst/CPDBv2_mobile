@@ -26,7 +26,6 @@ describe('<RelevantCoaccusalCard />', function () {
         complaintCount={ 22 }
         percentile={ {
           officerId: 123,
-          year: 2015,
           items: [
             { axis: 'Use of Force Reports', value: 20.6 },
             { axis: 'Internal Allegations', value: 10.1 },
@@ -75,7 +74,6 @@ describe('<RelevantCoaccusalCard />', function () {
         ],
         officerId: 123,
         visualTokenBackground: '#ed7467',
-        year: 2015,
       },
     });
   });

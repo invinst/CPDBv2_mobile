@@ -20,7 +20,6 @@ describe('<RelevantComplaintCard />', function () {
     percentile: {
       textColor: '#DFDFDF',
       visualTokenBackground: '#f0201e',
-      year: 2016,
       items: [
         { axis: 'Use of Force Reports', value: 63.0035 },
         { axis: 'Internal Allegations', value: 88.3297 },
@@ -34,7 +33,6 @@ describe('<RelevantComplaintCard />', function () {
     percentile: {
       textColor: '#DFDFDF',
       visualTokenBackground: '#f0201e',
-      year: 2016,
       items: [
         { axis: 'Use of Force Reports', value: 78.2707 },
         { axis: 'Internal Allegations', value: 0 },
@@ -47,8 +45,7 @@ describe('<RelevantComplaintCard />', function () {
     shortName: 'J. Mcclain',
     percentile: {
       textColor: '#DFDFDF',
-      visualTokenBackground: '#f52524',
-      year: 2016,
+      visualTokenBackground: '#F52524',
       items: [
         { axis: 'Use of Force Reports', value: 84.1654 },
         { axis: 'Internal Allegations', value: 0 },

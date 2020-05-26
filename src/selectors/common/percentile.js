@@ -1,23 +1,23 @@
-import { getVisualTokenOIGBackground } from 'utils/visual-token';
+import { pick, isEmpty } from 'lodash';
 
+import { getVisualTokenOIGBackground } from 'utils/visual-token';
+import { PERCENTILE_FIELDS } from 'constants';
+
+
+export const extractLatestPercentile = (obj) => extractPercentile(pick(obj || {}, PERCENTILE_FIELDS));
 
 export const extractPercentile = (percentile) => {
-  if (!percentile)
-    return null;
+  if (isEmpty(percentile)) return {};
+  const allegationPercentile = parseFloat(percentile['percentile_allegation']);
   const civilianAllegationPercentile = parseFloat(percentile['percentile_allegation_civilian']);
   const internalAllegationPercentile = parseFloat(percentile['percentile_allegation_internal']);
   const trrPercentile = parseFloat(percentile['percentile_trr']);
-
   if (isNaN(civilianAllegationPercentile) && isNaN(internalAllegationPercentile) && isNaN(trrPercentile))
     return null;
-
-  const { backgroundColor, textColor } = getVisualTokenOIGBackground(
-    civilianAllegationPercentile,
-    internalAllegationPercentile,
-    trrPercentile
-  );
+  const { backgroundColor, textColor } = getVisualTokenOIGBackground(allegationPercentile);
+  const yearData = percentile['year'] ? { year: percentile['year'] } : {};
   return {
-    year: percentile['year'],
+    ...yearData,
     items: [
       { axis: 'Use of Force Reports', value: trrPercentile },
       { axis: 'Internal Allegations', value: internalAllegationPercentile },
@@ -28,18 +28,7 @@ export const extractPercentile = (percentile) => {
   };
 };
 
-export const visualTokenBackground = (percentile) => {
-  if (!percentile) return null;
-
-  const internalPercentile = parseFloat(percentile['percentile_allegation_internal']);
-  const civilianPercentile = parseFloat(percentile['percentile_allegation_civilian']);
-  const trrPercentile = parseFloat(percentile['percentile_trr']);
-
-  const { backgroundColor } = getVisualTokenOIGBackground(
-    civilianPercentile,
-    internalPercentile,
-    trrPercentile
-  );
-
+export const visualTokenBackground = (percentileAllegation) => {
+  const { backgroundColor } = getVisualTokenOIGBackground(percentileAllegation);
   return backgroundColor;
 };

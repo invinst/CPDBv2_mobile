@@ -88,6 +88,20 @@ describe('MainPageTest', function () {
   });
 
   describe('Recent Activity carousel', function () {
+    it('should render correct colors for radar chart', function (client) {
+      const officersByAllegationCards = this.mainPage.section.topOfficersByAllegation.section.cards;
+      officersByAllegationCards.expect.element('@firstRadarChart').to.have.css('background-color')
+        .which.equal('rgba(245, 37, 36, 1)');
+      officersByAllegationCards.expect.element('@secondRadarChart').to.have.css('background-color')
+        .which.equal('rgba(255, 65, 44, 1)');
+      officersByAllegationCards.expect.element('@thirdRadarChart').to.have.css('background-color')
+        .which.equal('rgba(255, 100, 83, 1)');
+      officersByAllegationCards.expect.element('@forthRadarChart').to.have.css('background-color')
+        .which.equal('rgba(244, 162, 152, 1)');
+      officersByAllegationCards.expect.element('@fifthRadarChart').to.have.css('background-color')
+        .which.equal('rgba(249, 211, 195, 1)');
+    });
+
     it('should go to officer summary page when clicking on officer card', function (client) {
       const cards = this.mainPage.section.recentActivities.section.cards;
       client.assertCount(cards.selector, 2, cards.locateStrategy);
@@ -99,7 +113,7 @@ describe('MainPageTest', function () {
   describe('Officers By Allegation carousel', function () {
     it('should go to officer summary page when click to card', function (client) {
       const cards = this.mainPage.section.topOfficersByAllegation.section.cards;
-      client.assertCount(cards.selector, 2, cards.locateStrategy);
+      client.assertCount(cards.selector, 5, cards.locateStrategy);
       cards.click('@firstCard');
       client.expect.url().to.match(/\/officer\/\d+\/[-a-z]+\/?$/);
     });

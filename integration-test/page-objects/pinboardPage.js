@@ -23,9 +23,23 @@ const baseRelevantComplaints = (type) => ({
         remainingOfficers: '.remaining-officers',
         undoText: '.undo-card-text',
         undoButton: '.undo-button',
+        firstRadarChart: {
+          locateStrategy: 'xpath',
+          selector: '//*[name()="svg" and contains(@class, "radar-chart__radar-chart")]',
+        },
       },
     },
   },
+});
+
+const nthPinboardItemTitle = (index) => ({
+  selector: `//div[contains(@class, "pinboard-item")][${index}]//div[@class="pinboard-title"]`,
+  locateStrategy: 'xpath',
+});
+
+const nthPinboardItemCreatedAt = (index) => ({
+  selector: `//div[contains(@class, "pinboard-item")][${index}]//div[@class="pinboard-created-at"]`,
+  locateStrategy: 'xpath',
 });
 
 
@@ -43,10 +57,8 @@ module.exports = {
     body: 'body',
     header: '.header-parent',
     highlightedMenuItem: '.menu-item.highlight',
-    searchBar: {
-      locateStrategy: 'xpath',
-      selector: '(//a[starts-with(@class, "search-bar")])',
-    },
+    searchBar: '.search-box',
+    pinboardsListButton: '.pinboards-list-btn',
     socialGraphTitle: '.sidenav-title',
     socialGraph: {
       locateStrategy: 'xpath',
@@ -242,15 +254,37 @@ module.exports = {
               selector: '//div[contains(@class, "relevant-coaccusals")]//div[contains(@class, "plus-button")]',
               locateStrategy: 'xpath',
             },
-            radarChart: '.radar-chart-wrapper',
             officerRank: '.officer-card-rank',
             officerName: '.officer-card-name',
             coaccusalCount: '.coaccusal-count',
             nameWrapper: '.officer-card-name-wrapper',
             undoText: '.undo-card-text',
             undoButton: '.undo-button',
+            radarChart: {
+              selector: '//*[name()="svg" and contains(@class, "radar-chart__radar-chart")]',
+              locateStrategy: 'xpath',
+            },
           },
         },
+      },
+    },
+    pinboardsListSection: {
+      selector: '//div[contains(@class, "pinboards__pinboards")]',
+      locateStrategy: 'xpath',
+      elements: {
+        pinboardsTitle: '.pinboards-title',
+        createNewPinboardButton: '.new-pinboard-btn',
+        firstDuplicatePinboardButton: {
+          selector: '(//a[contains(@class, "duplicate-pinboard-btn")])[1]',
+          locateStrategy: 'xpath',
+        },
+        firstPinboardItemTitle: nthPinboardItemTitle(1),
+        firstPinboardItemCreatedAt: nthPinboardItemCreatedAt(1),
+        secondPinboardItemTitle: nthPinboardItemTitle(2),
+        secondPinboardItemCreatedAt: nthPinboardItemCreatedAt(2),
+        thirdPinboardItemTitle: nthPinboardItemTitle(3),
+        thirdPinboardItemCreatedAt: nthPinboardItemCreatedAt(3),
+        pinboardItems: '.pinboard-item',
       },
     },
   },

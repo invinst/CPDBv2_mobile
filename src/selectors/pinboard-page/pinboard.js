@@ -2,6 +2,7 @@ import { get, map, isEmpty } from 'lodash';
 import { createSelector } from 'reselect';
 
 import { generatePinboardUrl, isEmptyPinboard } from 'utils/pinboard';
+import constants from 'constants';
 
 export const getInitialRequested = state => get(state, 'pinboardPage.initialRequested', false);
 
@@ -21,9 +22,7 @@ export const getPinboard = createSelector(
   pinboard => ({
     id: get(pinboard, 'id', null) !== null ? pinboard['id'].toString() : null,
     title: get(pinboard, 'title', ''),
-    officerIds: map(get(pinboard, 'officer_ids', []), (id) => (id.toString())),
-    crids: get(pinboard, 'crids', []),
-    trrIds: map(get(pinboard, 'trr_ids', []), (id) => (id.toString())),
+    ...pinboardPinnedItemsTransform(pinboard),
     description: get(pinboard, 'description', ''),
     url: generatePinboardUrl(pinboard),
     itemsCount: countPinnedItems(pinboard),
@@ -38,13 +37,15 @@ export const getPinboard = createSelector(
 
 export const getPinboardId = state => get(state, 'pinboardPage.pinboard.id');
 
+export const pinboardPinnedItemsMapping = ({ officerIds, crids, trrIds }) => ({
+  [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER]: officerIds,
+  [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR]: crids,
+  [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR]: trrIds,
+});
+
 export const pinboardItemsSelector = createSelector(
   getPinboard,
-  ({ officerIds, crids, trrIds }) => ({
-    'OFFICER': officerIds,
-    'CR': crids,
-    'TRR': trrIds,
-  })
+  pinboardPinnedItemsMapping
 );
 
 export const isItemPinned = (pinnedItemType, id, pinboardItems) => {
@@ -76,3 +77,14 @@ export const examplePinboardsSelector = createSelector(
   state => state.pinboardPage.pinboard,
   pinboard => get(pinboard, 'example_pinboards', []),
 );
+
+export const hasPendingChangesSelector = createSelector(
+  state => get(state, 'pinboardPage.pinboard', {}),
+  pinboard => get(pinboard, 'hasPendingChanges', false),
+);
+
+export const pinboardPinnedItemsTransform = (pinboard) => ({
+  officerIds: map(get(pinboard, 'officer_ids', []), (id) => (id.toString())),
+  crids: get(pinboard, 'crids', []),
+  trrIds: map(get(pinboard, 'trr_ids', []), (id) => (id.toString())),
+});

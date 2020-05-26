@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -15,6 +15,7 @@ import PinboardDataVisualization from 'components/pinboard-page/pinboard-data-vi
 import RelevantSectionContainer from 'containers/pinboard-page/relevant-section';
 import EmptyPinboardPage from 'components/pinboard-page/empty-pinboard';
 import LoadingSpinner from 'components/common/loading-spinner';
+import Pinboards from 'components/pinboard-page/pinboards';
 
 
 describe('<PinboardPage />', function () {
@@ -43,6 +44,7 @@ describe('<PinboardPage />', function () {
       officerItems: { requesting: false, items: [] },
       trrItems: { requesting: false, items: [] },
       initialRequested: true,
+      pinboards: [],
     },
   });
 
@@ -98,40 +100,76 @@ describe('<PinboardPage />', function () {
   });
 
   it('should render SearchBar component', function () {
+    const isShownPinboardsListSpy = spy();
+    stub(Pinboards.prototype, 'componentDidMount');
     const wrapper = mount(
       <Provider store={ store }>
         <MemoryRouter>
           <PinboardPage
+            hideShowPinboardsList={ true }
+            isShownPinboardsList={ isShownPinboardsListSpy }
             params={ { pinboardId: '5cd06f2b' } }
             pinboard={ { id: '5cd06f2b', 'crids': ['123'] } }
           />
         </MemoryRouter>
       </Provider>
     );
-
-    wrapper.exists(SearchBar).should.be.true();
+    const searchBar = wrapper.find(SearchBar);
+    searchBar.exists().should.be.true();
+    searchBar.prop('hideShowPinboardsList').should.be.true();
+    searchBar.prop('isShownPinboardsList').should.equal(isShownPinboardsListSpy);
   });
 
-  it('should render pinboard page correctly', function () {
-    const pinboard = {
-      title: 'This is pinboard title',
-      description: 'This is pinboard description',
-      'officer_ids': [8652, 123],
-      crids: ['123456', '654321'],
-    };
+  context('isShownPinboardsList is true', function () {
+    it('should render pinboard page correctly', function () {
+      const pinboard = {
+        title: 'This is pinboard title',
+        description: 'This is pinboard description',
+        'officer_ids': [8652, 123],
+        crids: ['123456', '654321'],
+      };
+      stub(Pinboards.prototype, 'componentDidMount');
 
-    const wrapper = mount(
-      <Provider store={ store }>
-        <MemoryRouter>
-          <PinboardPage
-            params={ { pinboardId: '5cd06f2b' } }
-            pinboard={ pinboard }
-          />
-        </MemoryRouter>
-      </Provider>
-    );
+      const wrapper = mount(
+        <Provider store={ store }>
+          <MemoryRouter>
+            <PinboardPage
+              isShownPinboardsList={ true }
+              params={ { pinboardId: '5cd06f2b' } }
+              pinboard={ pinboard }
+            />
+          </MemoryRouter>
+        </Provider>
+      );
 
-    wrapper.find(PinboardDataVisualization).should.have.length(1);
+      wrapper.find(PinboardDataVisualization).should.have.length(1);
+      wrapper.find('.pinboard-page').prop('className').should.containEql('display-pinboards-list');
+    });
+  });
+
+  context('isShownPinboardsList is false', function () {
+    it('should render pinboard page correctly', function () {
+      const pinboard = {
+        title: 'This is pinboard title',
+        description: 'This is pinboard description',
+        'officer_ids': [8652, 123],
+        crids: ['123456', '654321'],
+      };
+
+      const wrapper = mount(
+        <Provider store={ store }>
+          <MemoryRouter>
+            <PinboardPage
+              isShownPinboardsList={ false }
+              params={ { pinboardId: '5cd06f2b' } }
+              pinboard={ pinboard }
+            />
+          </MemoryRouter>
+        </Provider>
+      );
+
+      wrapper.find('.pinboard-page').prop('className').should.not.containEql('display-pinboards-list');
+    });
   });
 
   it('should render EmptyPinboard instead of pinboard contents if pinboard is empty', function () {
