@@ -233,12 +233,12 @@ describe('MainPageTest', function () {
       );
     });
 
-    it('should not display Pinboard introduction after click dismiss', function (client) {
+    it('should not display Pinboard introduction after click close button', function (client) {
       this.mainPage.section.pinboardButtonIntroduction.waitForElementPresent(
         '@introductionContent',
         PINBOARD_INTRODUCTION_DELAY
       );
-      this.mainPage.section.pinboardButtonIntroduction.click('@dismissButton');
+      this.mainPage.section.pinboardButtonIntroduction.click('@closeButton');
       client.pause(PINBOARD_INTRODUCTION_DELAY);
       this.mainPage.section.pinboardButtonIntroduction.waitForElementNotPresent('@introductionContent');
       client.refresh();

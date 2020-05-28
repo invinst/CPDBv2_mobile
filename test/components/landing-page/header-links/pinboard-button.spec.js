@@ -100,19 +100,19 @@ describe('PinboardButton component', function () {
       browserHistoryPushSpy.should.be.calledWith('/pinboard/');
     });
 
+    it('should call visitPinboardButtonIntroduction on user click close button', function () {
+      clock.tick(PINBOARD_INTRODUCTION_DELAY + 50);
+      wrapper.update();
+      wrapper.find('.pinboard-button-introduction-close-btn').simulate('click');
+      visitPinboardButtonIntroductionSpy.should.be.calledOnce();
+    });
+
     it('should call visitPinboardButtonIntroduction and redirect to pinboard on user click Try it', function () {
       clock.tick(PINBOARD_INTRODUCTION_DELAY + 50);
       wrapper.update();
       wrapper.find('.try-it-btn').simulate('click');
       visitPinboardButtonIntroductionSpy.should.be.calledOnce();
       browserHistoryPushSpy.should.be.calledWith('/pinboard/');
-    });
-
-    it('should call visitPinboardButtonIntroduction on user click Dismiss', function () {
-      clock.tick(PINBOARD_INTRODUCTION_DELAY + 50);
-      wrapper.update();
-      wrapper.find('.dismiss-btn').simulate('click');
-      visitPinboardButtonIntroductionSpy.should.be.calledOnce();
     });
   });
 });
