@@ -30,13 +30,9 @@ export default class PinboardButton extends Component {
     browserHistory.push('/pinboard/');
   };
 
-  onDismissClick = () => {
-    this.props.visitPinboardButtonIntroduction();
-  };
-
   render() {
     const { displayIntroduction } = this.state;
-    const { isPinboardButtonIntroductionVisited } = this.props;
+    const { isPinboardButtonIntroductionVisited, visitPinboardButtonIntroduction } = this.props;
     const showIntroduction = !isPinboardButtonIntroductionVisited && displayIntroduction;
     return (
       <div className={ cx(styles.pinboardButton, 'pinboard-feature' ) }>
@@ -49,13 +45,13 @@ export default class PinboardButton extends Component {
         {
           showIntroduction && <div className='pinboard-button-introduction'>
             <div className='pinboard-button-introduction-title'>Introducing Pinboards</div>
+            <div className='pinboard-button-introduction-close-btn' onClick={ visitPinboardButtonIntroduction } />
             <div className='pinboard-button-introduction-content'>
               Create and share collections of officers, complaint records,
               and tactical response reports using CPDP Pinboards
             </div>
             <div className='pinboard-button-introduction-btns'>
               <a className='try-it-btn' onClick={ this.onClick }>Try it</a>
-              <a className='dismiss-btn' onClick={ this.onDismissClick }>Dismiss</a>
             </div>
           </div>
         }
