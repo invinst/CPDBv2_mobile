@@ -10,8 +10,12 @@
   z-index: $header-z-index
   display: flex
 
-  .right-buttons
+  .right-buttons-container
     padding: 4px
+    flex-grow: 1
+
+    .right-buttons
+      float: right
 
 \:local(.content)
   padding-top: $header-height

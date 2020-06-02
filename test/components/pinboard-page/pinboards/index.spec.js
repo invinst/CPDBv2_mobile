@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { stub, spy } from 'sinon';
+import { stub } from 'sinon';
 import MockStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 
@@ -24,12 +24,14 @@ describe('Pinboards component', function () {
       title: 'Pinboard Title',
       createdAt: 'Sep 12, 2019',
       url: '/pinboard/1/pinboard-title/',
+      isCurrent: false,
     },
     {
       id: '2',
       title: '',
       createdAt: 'Oct 15, 2019',
       url: '/pinboard/2/untitled-pinboard/',
+      isCurrent: true,
     },
   ];
 
@@ -70,17 +72,5 @@ describe('Pinboards component', function () {
       redirectToCreatedPinboardStub.should.be.calledWith({ id: '123f12' });
       done();
     }, 50);
-  });
-
-  describe('componentDidMount', function () {
-    it('should call fetchPinboards', function () {
-      const fetchPinboards = spy();
-      mount(
-        <Provider store={ store }>
-          <Pinboards pinboards={ pinboards } fetchPinboards={ fetchPinboards } />
-        </Provider>
-      );
-      fetchPinboards.should.be.calledOnce();
-    });
   });
 });

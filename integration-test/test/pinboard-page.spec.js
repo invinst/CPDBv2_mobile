@@ -933,24 +933,63 @@ describe('Pinboard Page', function () {
       done();
     });
 
-    it('should render the pinboards list', function (client) {
-      const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
-      this.pinboardPage.click('@pinboardsListButton');
+    context('on pinboard page', function () {
+      it('should render the pinboards list', function (client) {
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        this.pinboardPage.click('@pinboardsListButton');
 
-      pinboardsListSection.waitForElementVisible('@pinboardsTitle');
-      const pinboardItems = pinboardsListSection.elements.pinboardItems;
-      client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
-        assert.equal(result.value.length, 3);
+        pinboardsListSection.waitForElementVisible('@pinboardsTitle');
+        const pinboardItems = pinboardsListSection.elements.pinboardItems;
+        client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
+          assert.equal(result.value.length, 3);
+        });
+
+        pinboardsListSection.expect.element('@firstPinboardItemTitle').text.to.equal('Watts Crew');
+        pinboardsListSection.expect.element('@firstPinboardItemCreatedAt').text.to.equal('Created May 06, 2020');
+
+        pinboardsListSection.expect.element('@secondPinboardItemTitle').text.to.equal('');
+        pinboardsListSection.expect.element('@secondPinboardItemCreatedAt').text.to.equal('Created Aug 07, 2020');
+
+        pinboardsListSection.expect.element('@thirdPinboardItemTitle').text.to.equal('');
+        pinboardsListSection.expect.element('@thirdPinboardItemCreatedAt').text.to.equal('Created Dec 20, 2020');
       });
+    });
 
-      pinboardsListSection.expect.element('@firstPinboardItemTitle').text.to.equal('Watts Crew');
-      pinboardsListSection.expect.element('@firstPinboardItemCreatedAt').text.to.equal('Created May 06, 2020');
+    context('go from home page to pinboard page', function () {
+      it('should render the pinboards list', function (client) {
+        api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, mockData.pinboardData);
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        const mainPage = client.page.main();
+        mainPage.navigate();
+        mainPage.section.pinboardButtonIntroduction.click('@pinboardButton');
+        this.pinboardPage.waitForElementVisible('@pinboardsListButton');
+        this.pinboardPage.click('@pinboardsListButton');
+        pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
 
-      pinboardsListSection.expect.element('@secondPinboardItemTitle').text.to.equal('');
-      pinboardsListSection.expect.element('@secondPinboardItemCreatedAt').text.to.equal('Created Aug 07, 2020');
+        const pinboardItems = pinboardsListSection.elements.pinboardItems;
+        client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
+          assert.equal(result.value.length, 3);
+        });
+      });
+    });
 
-      pinboardsListSection.expect.element('@thirdPinboardItemTitle').text.to.equal('');
-      pinboardsListSection.expect.element('@thirdPinboardItemCreatedAt').text.to.equal('Created Dec 20, 2020');
+    context('go from search page to pinboard page', function () {
+      it('should render the pinboards list', function (client) {
+        api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, mockData.pinboardData);
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        const searchPage = client.page.search();
+        searchPage.navigate();
+        searchPage.waitForElementVisible('@pinboardBar');
+        searchPage.click('@pinboardBar');
+        this.pinboardPage.waitForElementVisible('@pinboardsListButton');
+        this.pinboardPage.click('@pinboardsListButton');
+        pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
+
+        const pinboardItems = pinboardsListSection.elements.pinboardItems;
+        client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
+          assert.equal(result.value.length, 3);
+        });
+      });
     });
 
     context('clicking on pinboard item', function () {

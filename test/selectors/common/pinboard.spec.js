@@ -1,4 +1,4 @@
-import { createWithIsPinnedSelector, showSelectPinboardsSelector } from 'selectors/common/pinboard';
+import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
 import constants from 'constants';
 
 
@@ -73,42 +73,6 @@ describe('pinboard common selectors', function () {
         { crid: '2', isPinned: true, finding: 'Sustained' },
         { crid: '99', isPinned: false, finding: 'Not Sustained' },
       ]);
-    });
-  });
-
-  describe('showSelectPinboardsSelector', function () {
-    it('should return true if pinboards length is greater than one', function () {
-      const storeState = {
-        headers: {
-          pinboards: [
-            {
-              'id': '1234abcd',
-              'title': 'Pinboard 1',
-            },
-            {
-              'id': '5678asdf',
-              'title': 'Pinboard 2',
-            },
-          ],
-        },
-      };
-
-      showSelectPinboardsSelector(storeState).should.be.true();
-    });
-
-    it('should return false if pinboards length is less than or equal to one', function () {
-      const storeState = {
-        headers: {
-          pinboards: [
-            {
-              'id': '1234abcd',
-              'title': 'Pinboard 1',
-            },
-          ],
-        },
-      };
-
-      showSelectPinboardsSelector(storeState).should.be.false();
     });
   });
 });
