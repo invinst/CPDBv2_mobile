@@ -15,7 +15,7 @@ class SearchBar extends Component {
   };
 
   render() {
-    const { isShownPinboardsList } = this.props;
+    const { isShownPinboardsList, hideShowPinboardsList } = this.props;
     return (
       <div className={ style.wrapper }>
         <Link
@@ -30,7 +30,10 @@ class SearchBar extends Component {
           className={ cx('pinboards-list-btn', { 'display-pinboards-list': isShownPinboardsList }) }
           onClick={ this.handleHideShowPinboardsList }
         />
-        { isShownPinboardsList && <PinboardsContainer /> }
+        <PinboardsContainer
+          isShownPinboardsList={ isShownPinboardsList }
+          hideShowPinboardsList={ hideShowPinboardsList }
+        />
         <div className='clearfix'/>
       </div>
     );

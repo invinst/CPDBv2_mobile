@@ -955,6 +955,20 @@ describe('Pinboard Page', function () {
       });
     });
 
+    it('should hide pinboards list when click on overlay', function (client) {
+      const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+      this.pinboardPage.click('@pinboardsListButton');
+
+      pinboardsListSection.waitForElementVisible('@pinboardsTitle');
+      const pinboardItems = pinboardsListSection.elements.pinboardItems;
+      client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
+        assert.equal(result.value.length, 3);
+      });
+      this.pinboardPage.moveToElement('@header', 20, 20);
+      client.mouseButtonClick();
+      pinboardsListSection.waitForElementNotPresent('@pinboardsTitle');
+    });
+
     context('go from home page to pinboard page', function () {
       it('should render the pinboards list', function (client) {
         api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, mockData.pinboardData);

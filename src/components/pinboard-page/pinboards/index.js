@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
+import Modal from 'react-modal';
 
 import { redirectToCreatedPinboard } from 'utils/pinboard';
 import PinboardLinkContainer from 'containers/pinboard-page/pinboard-link-container';
@@ -17,10 +18,15 @@ class Pinboards extends Component {
   };
 
   render() {
-    const { pinboards, duplicatePinboard } = this.props;
+    const { pinboards, duplicatePinboard, isShownPinboardsList, hideShowPinboardsList } = this.props;
 
     return (
-      <div className={ styles.pinboards }>
+      <Modal
+        isOpen={ isShownPinboardsList }
+        onRequestClose={ () => hideShowPinboardsList(false) }
+        className={ styles.pinboards }
+        overlayClassName={ styles.pinboardsOverlay }
+      >
         <div className='pinboards-title'>
           Pinboards
           <PinboardLinkContainer
@@ -36,7 +42,7 @@ class Pinboards extends Component {
             />
           ))
         }
-      </div>
+      </Modal>
     );
   }
 }
@@ -45,10 +51,14 @@ Pinboards.propTypes = {
   createNewEmptyPinboard: PropTypes.func,
   duplicatePinboard: PropTypes.func,
   pinboards: PropTypes.array,
+  isShownPinboardsList: PropTypes.bool,
+  hideShowPinboardsList: PropTypes.func,
 };
 
 Pinboards.defaultProps = {
   duplicatePinboard: noop,
+  isShownPinboardsList: false,
+  hideShowPinboardsList: noop,
 };
 
 export default Pinboards;

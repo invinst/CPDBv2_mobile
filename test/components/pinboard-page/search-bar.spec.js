@@ -55,11 +55,13 @@ describe('<SearchBar /> of PinboardPage', function () {
     });
 
     it('should render correctly', function () {
-      const searchBar = mountWithRouter(<SearchBar isShownPinboardsList={ false } />);
       searchBar.find(Link).props().to.should.eql('/search/');
       searchBar.find('.search-term').text().should.equal('Search');
       searchBar.find('.pinboards-list-btn').prop('className').should.not.containEql('display-pinboards-list');
-      searchBar.find(PinboardsContainer).exists().should.be.false();
+      const pinboardsContainer = searchBar.find(PinboardsContainer);
+      pinboardsContainer.exists().should.be.true();
+      pinboardsContainer.prop('isShownPinboardsList').should.be.false();
+      pinboardsContainer.prop('hideShowPinboardsList').should.equal(hideShowPinboardsListStub);
     });
 
     it('should call handleHideShowPinboardsList with correct params', function () {
