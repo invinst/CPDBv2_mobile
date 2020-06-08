@@ -2,7 +2,7 @@ import { createAction } from 'redux-actions';
 import { CancelToken } from 'axios';
 import { map, entries } from 'lodash';
 
-import { get, post, put } from 'actions/common/async-action';
+import { get, post, put, deleteRequest } from 'actions/common/async-action';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
 import { REQUEST_CANCEL_MESSAGE } from 'utils/axios-client';
@@ -121,6 +121,10 @@ export const HIDE_SHOW_PINBOARDS_LIST = 'HIDE_SHOW_PINBOARDS_LIST';
 export const PINBOARD_CREATE_NEW_REQUEST_START = 'PINBOARD_CREATE_NEW_REQUEST_START';
 export const PINBOARD_CREATE_NEW_REQUEST_SUCCESS = 'PINBOARD_CREATE_NEW_REQUEST_SUCCESS';
 export const PINBOARD_CREATE_NEW_REQUEST_FAILURE = 'PINBOARD_CREATE_NEW_REQUEST_FAILURE';
+
+export const REMOVE_PINBOARD_REQUEST_START = 'REMOVE_PINBOARD_REQUEST_START';
+export const REMOVE_PINBOARD_REQUEST_SUCCESS = 'REMOVE_PINBOARD_REQUEST_SUCCESS';
+export const REMOVE_PINBOARD_REQUEST_FAILURE = 'REMOVE_PINBOARD_REQUEST_FAILURE';
 
 export const addOrRemoveItemInPinboard = createAction(ADD_OR_REMOVE_ITEM_IN_PINBOARD);
 
@@ -352,6 +356,15 @@ export const fetchPinboards = (params) => get(
     PINBOARDS_FETCH_REQUEST_FAILURE,
   ]
 )(params);
+
+export const removePinboard = (id) => deleteRequest(
+  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/`,
+  [
+    REMOVE_PINBOARD_REQUEST_START,
+    REMOVE_PINBOARD_REQUEST_SUCCESS,
+    REMOVE_PINBOARD_REQUEST_FAILURE,
+  ]
+)();
 
 export const duplicatePinboard = (sourcePinboardId) => createNewPinboard({ sourcePinboardId });
 export const createNewEmptyPinboard = () => createNewPinboard({ 'officerIds': [], 'crids': [], 'trrIds': [] });

@@ -17,6 +17,11 @@ export default class PinboardItem extends Component {
     });
   };
 
+  handleRemovePinboard = e => {
+    const { pinboard: { id }, removePinboard } = this.props;
+    removePinboard(id);
+  };
+
   handlePinboardItemClick = () => {
     const { pinboard } = this.props;
     if (!pinboard.isCurrent) {
@@ -24,24 +29,41 @@ export default class PinboardItem extends Component {
     }
   };
 
+  handleActionsBtnClick = (e) => {
+    const { handleSetShowActionsPinboardId, shouldShowActions, pinboard: { id } } = this.props;
+    handleSetShowActionsPinboardId(shouldShowActions ? null : id);
+  };
+
   render() {
-    const { pinboard: { title, createdAt, isCurrent } } = this.props;
+    const { pinboard: { title, createdAt, isCurrent }, shouldShowActions } = this.props;
 
     return (
-      <PinboardLinkContainer
-        customComponent='div'
-        className={ cx('pinboard-item', { 'untitled-pinboard': isEmpty(title), 'is-current': isCurrent }) }
-        onClick={ this.handlePinboardItemClick }
-      >
-        <div className='pinboard-info'>
+      <div className={ cx('pinboard-item', { 'untitled-pinboard': isEmpty(title), 'is-current': isCurrent }) }>
+        <PinboardLinkContainer className='pinboard-info' customComponent='div' onClick={ this.handlePinboardItemClick }>
           <div className='pinboard-title'>{ title }</div>
           <div className='pinboard-created-at'>Created { createdAt }</div>
+        </PinboardLinkContainer>
+        <div className='pinboard-item-actions-container'>
+          <div
+            className={ cx('pinboard-item-actions-btn', { 'focused': shouldShowActions }) }
+            onClick={ this.handleActionsBtnClick }
+          />
+          {
+            shouldShowActions && (
+              <div className='pinboard-item-actions'>
+                <PinboardLinkContainer
+                  customComponent='div'
+                  className='duplicate-pinboard-btn'
+                  onClick={ this.handleDuplicatePinboard }
+                >
+                  Duplicate
+                </PinboardLinkContainer>
+                <div className='remove-pinboard-btn' onClick={ this.handleRemovePinboard }>Remove</div>
+              </div>
+            )
+          }
         </div>
-        <PinboardLinkContainer
-          className='duplicate-pinboard-btn'
-          title='Duplicate'
-          onClick={ this.handleDuplicatePinboard } />
-      </PinboardLinkContainer>
+      </div>
     );
   }
 }
@@ -50,9 +72,16 @@ PinboardItem.propTypes = {
   pinboard: PropTypes.object,
   handleClose: PropTypes.func,
   duplicatePinboard: PropTypes.func,
+  removePinboard: PropTypes.func,
+  handleSetShowActionsPinboardId: PropTypes.func,
+  shouldShowActions: PropTypes.bool,
 };
 
 PinboardItem.defaultProps = {
+  pinboard: {},
   handleClose: noop,
   duplicatePinboard: noop,
+  removePinboard: noop,
+  handleSetShowActionsPinboardId: noop,
+  shouldShowActions: false,
 };

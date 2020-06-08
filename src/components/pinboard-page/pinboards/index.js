@@ -10,6 +10,15 @@ import styles from './pinboards.sass';
 
 
 class Pinboards extends Component {
+  state = { showActionsPinboardId: null };
+
+  static getDerivedStateFromProps(props, state) {
+    if (!props.isShownPinboardsList) {
+      return { showActionsPinboardId: null };
+    }
+    return null;
+  }
+
   handleCreateNewEmptyPinboard = () => {
     const { createNewEmptyPinboard } = this.props;
     createNewEmptyPinboard().then((response) => {
@@ -17,8 +26,13 @@ class Pinboards extends Component {
     });
   };
 
+  handleSetShowActionsPinboardId = pinboardId => {
+    this.setState({ showActionsPinboardId: pinboardId });
+  };
+
   render() {
-    const { pinboards, duplicatePinboard, isShownPinboardsList, hideShowPinboardsList } = this.props;
+    const { pinboards, duplicatePinboard, isShownPinboardsList, hideShowPinboardsList, removePinboard } = this.props;
+    const { showActionsPinboardId } = this.state;
 
     return (
       <Modal
@@ -39,6 +53,9 @@ class Pinboards extends Component {
               key={ pinboard.id }
               pinboard={ pinboard }
               duplicatePinboard={ duplicatePinboard }
+              removePinboard={ removePinboard }
+              shouldShowActions={ pinboard.id === showActionsPinboardId }
+              handleSetShowActionsPinboardId={ this.handleSetShowActionsPinboardId }
             />
           ))
         }
@@ -50,6 +67,7 @@ class Pinboards extends Component {
 Pinboards.propTypes = {
   createNewEmptyPinboard: PropTypes.func,
   duplicatePinboard: PropTypes.func,
+  removePinboard: PropTypes.func,
   pinboards: PropTypes.array,
   isShownPinboardsList: PropTypes.bool,
   hideShowPinboardsList: PropTypes.func,
@@ -57,6 +75,7 @@ Pinboards.propTypes = {
 
 Pinboards.defaultProps = {
   duplicatePinboard: noop,
+  removePinboard: noop,
   isShownPinboardsList: false,
   hideShowPinboardsList: noop,
 };
