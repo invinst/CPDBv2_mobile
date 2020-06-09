@@ -7,41 +7,8 @@ import PinboardsMenu from 'components/common/pinboard/pinboards-menu';
 
 
 describe('HeaderPinButton component', function () {
-  it('should fetchHeadersPinboard on componentDidMount', function () {
-    const fetchHeaderPinboardsSpy = spy();
-    const addOrRemoveItemInPinboardSpy = spy();
-    const fetchPinboardSpy = spy();
-    const createPinboardSpy = spy();
-    const pinboards = [
-      {
-        id: 1,
-        title: 'Pinboard 1',
-        isPinned: false,
-      },
-      {
-        id: 2,
-        title: 'Pinboard 2',
-        isPinned: true,
-      },
-    ];
-    const item = { 'id': 8562, fullName: 'Jerome Finnigan' };
-    mount(
-      <HeaderPinButton
-        showSelectPinboards={ true }
-        isPinned={ false }
-        item={ item }
-        pinboards={ pinboards }
-        addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }
-        fetchHeaderPinboards={ fetchHeaderPinboardsSpy }
-        fetchPinboard={ fetchPinboardSpy }
-        createPinboard={ createPinboardSpy }
-      />
-    );
-    fetchHeaderPinboardsSpy.should.be.calledOnce();
-  });
 
   it('should render HeaderButton component if showSelectPinboards is true', function () {
-    const fetchHeaderPinboardsSpy = spy();
     const addOrRemoveItemInPinboardSpy = spy();
     const fetchPinboardSpy = spy();
     const createPinboardSpy = spy();
@@ -65,7 +32,6 @@ describe('HeaderPinButton component', function () {
         item={ item }
         pinboards={ pinboards }
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardSpy }
-        fetchHeaderPinboards={ fetchHeaderPinboardsSpy }
         fetchPinboard={ fetchPinboardSpy }
         createPinboard={ createPinboardSpy }
       />
@@ -82,7 +48,6 @@ describe('HeaderPinButton component', function () {
     headerButton.prop('menuProps').should.eql({
       pinboards,
       item,
-      fetchHeaderPinboards: fetchHeaderPinboardsSpy,
       addOrRemoveItemInPinboard: addOrRemoveItemInPinboardSpy,
       fetchPinboard: fetchPinboardSpy,
       createPinboard: createPinboardSpy,

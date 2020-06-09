@@ -9,10 +9,6 @@ import styles from './pinboards.sass';
 
 
 class Pinboards extends Component {
-  componentDidMount() {
-    this.props.fetchPinboards();
-  }
-
   handleCreateNewEmptyPinboard = () => {
     const { createNewEmptyPinboard } = this.props;
     createNewEmptyPinboard().then((response) => {
@@ -21,7 +17,7 @@ class Pinboards extends Component {
   };
 
   render() {
-    const { pinboards, duplicatePinboard, pinboard: currentPinboard } = this.props;
+    const { pinboards, duplicatePinboard } = this.props;
 
     return (
       <div className={ styles.pinboards }>
@@ -36,7 +32,6 @@ class Pinboards extends Component {
             <PinboardItem
               key={ pinboard.id }
               pinboard={ pinboard }
-              isCurrent={ pinboard.id === currentPinboard.id }
               duplicatePinboard={ duplicatePinboard }
             />
           ))
@@ -50,14 +45,10 @@ Pinboards.propTypes = {
   createNewEmptyPinboard: PropTypes.func,
   duplicatePinboard: PropTypes.func,
   pinboards: PropTypes.array,
-  fetchPinboards: Pinboards.func,
-  pinboard: PropTypes.object,
 };
 
 Pinboards.defaultProps = {
   duplicatePinboard: noop,
-  fetchPinboards: noop,
-  pinboard: {},
 };
 
 export default Pinboards;

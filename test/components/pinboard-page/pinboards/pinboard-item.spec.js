@@ -8,7 +8,6 @@ import { stub } from 'sinon';
 
 import browserHistory from 'utils/history';
 import PinboardItem from 'components/pinboard-page/pinboards/pinboard-item';
-import * as pinboardUtils from 'utils/pinboard';
 
 
 describe('PinboardItem component', function () {
@@ -17,6 +16,7 @@ describe('PinboardItem component', function () {
     title: 'Pinboard Title',
     createdAt: 'Sep 12, 2019',
     url: '/pinboard/1/pinboard-title/',
+    isCurrent: false,
   };
 
   it('should render correctly', function () {
@@ -29,7 +29,6 @@ describe('PinboardItem component', function () {
   });
 
   it('should render duplicate-pinboard-btn', function (done) {
-    const redirectToCreatedPinboardStub = stub(pinboardUtils, 'redirectToCreatedPinboard');
     const duplicatePinboardStub = stub().usingPromise(Promise).resolves({
       payload: {
         id: '5cd06f2b',
@@ -55,62 +54,57 @@ describe('PinboardItem component', function () {
       </Provider>
     );
 
-    const duplicatePinboardBtn = wrapper.find('.duplicate-pinboard-btn').hostNodes().first();
+    const duplicatePinboardBtn = wrapper.find('.duplicate-pinboard-btn').first();
     duplicatePinboardBtn.simulate('click');
     duplicatePinboardStub.should.be.called();
 
     setTimeout(() => {
-      redirectToCreatedPinboardStub.should.be.calledOnce();
-      redirectToCreatedPinboardStub.should.be.calledWith({
-        payload: {
-          id: '5cd06f2b',
-          title: 'Pinboard title',
-        },
-      });
+      browserHistory.location.pathname.should.equal('/pinboard/5cd06f2b/pinboard-title/');
       done();
     }, 50);
   });
 
   context('isCurrent is true', function () {
-    it('should render is-current class', function () {
-      const wrapper = shallow(
-        <PinboardItem pinboard={ pinboard } isCurrent={ true } />
+    let wrapper;
+    beforeEach(function () {
+      wrapper = shallow(
+        <PinboardItem pinboard={ { ...pinboard, isCurrent: true } } />,
       );
+    });
+
+    it('should render is-current class', function () {
       wrapper.find('.is-current').exists().should.be.true();
+    });
+
+    context('click on item', function () {
+      it('should close preview pane and not navigate', function () {
+        const browserHistoryPush = stub(browserHistory, 'push');
+        wrapper.simulate('click');
+        browserHistoryPush.should.not.be.called();
+      });
     });
   });
 
   context('isCurrent is false', function () {
-    it('should not render is-current class', function () {
-      const wrapper = shallow(
-        <PinboardItem pinboard={ pinboard } isCurrent={ false } />
+    let wrapper;
+    beforeEach(function () {
+      wrapper = shallow(
+        <PinboardItem pinboard={ pinboard } />,
       );
+    });
+
+    it('should not render is-current class', function () {
       wrapper.find('.is-current').exists().should.be.false();
     });
-  });
 
-  it('should handle click on pinboard-item', function () {
-    const browserHistoryPushStub = stub(browserHistory, 'push');
-    const store = MockStore()({
-      pinboardPage: {
-        pinboard: {
-          saving: false,
-        },
-      },
+    context('click on item', function () {
+      it('should close preview pane and navigate', function () {
+        const browserHistoryPush = stub(browserHistory, 'push');
+        wrapper.simulate('click');
+
+        browserHistoryPush.should.be.calledOnce();
+        browserHistoryPush.should.be.calledWith('/pinboard/1/pinboard-title/');
+      });
     });
-
-    const wrapper = mount(
-      <Provider store={ store }>
-        <MemoryRouter>
-          <PinboardItem
-            pinboard={ pinboard }
-          />
-        </MemoryRouter>
-      </Provider>
-    );
-
-    wrapper.find('.pinboard-item').hostNodes().first().simulate('click');
-    browserHistoryPushStub.should.be.calledOnce();
-    browserHistoryPushStub.should.be.calledWith('/pinboard/1/pinboard-title/');
   });
 });

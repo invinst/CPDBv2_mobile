@@ -17,6 +17,7 @@ const appConfigTransform = config => ({
 });
 
 const appConfigMiddleware = store => next => action => {
+  const result = next(action);
   if (action.type === LOCATION_CHANGE) {
     if (appConfig.isEmpty()) {
       store.dispatch(fetchAppConfig());
@@ -26,7 +27,7 @@ const appConfigMiddleware = store => next => action => {
     appConfig.set(appConfigTransform(action.payload));
   }
 
-  return next(action);
+  return result;
 };
 
 export default appConfigMiddleware;
