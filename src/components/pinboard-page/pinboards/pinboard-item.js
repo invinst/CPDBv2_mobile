@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import cx from 'classnames';
-import { isEmpty, noop } from 'lodash';
+import { noop } from 'lodash';
 
 import browserHistory from 'utils/history';
 import { redirectToCreatedPinboard } from 'utils/pinboard';
@@ -35,13 +35,13 @@ export default class PinboardItem extends Component {
   };
 
   render() {
-    const { pinboard: { title, createdAt, isCurrent }, shouldShowActions } = this.props;
+    const { pinboard: { title, createdAt, isCurrent, lastViewedAt }, shouldShowActions } = this.props;
 
     return (
-      <div className={ cx('pinboard-item', { 'untitled-pinboard': isEmpty(title), 'is-current': isCurrent }) }>
+      <div className={ cx('pinboard-item', { 'is-current': isCurrent }) }>
         <PinboardLinkContainer className='pinboard-info' customComponent='div' onClick={ this.handlePinboardItemClick }>
-          <div className='pinboard-title'>{ title }</div>
-          <div className='pinboard-created-at'>Created { createdAt }</div>
+          <div className='pinboard-title'>{ title || `Created ${createdAt}` }</div>
+          <div className='pinboard-viewed-at'>Viewed { lastViewedAt }</div>
         </PinboardLinkContainer>
         <div className='pinboard-item-actions-container'>
           <div

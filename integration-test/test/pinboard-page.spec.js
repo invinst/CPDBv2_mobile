@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var moment = require('moment');
 var assert = require('assert');
 var api = require(__dirname + '/../mock-api');
 const { TIMEOUT } = require(__dirname + '/../constants');
@@ -944,14 +945,21 @@ describe('Pinboard Page', function () {
           assert.equal(result.value.length, 3);
         });
 
-        pinboardsListSection.expect.element('@firstPinboardItemTitle').text.to.equal('Watts Crew');
-        pinboardsListSection.expect.element('@firstPinboardItemCreatedAt').text.to.equal('Created May 06, 2020');
+        const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
+        const secondPinboardItem = pinboardsListSection.section.secondPinboardItem;
+        const thirdPinboardItem = pinboardsListSection.section.thirdPinboardItem;
 
-        pinboardsListSection.expect.element('@secondPinboardItemTitle').text.to.equal('');
-        pinboardsListSection.expect.element('@secondPinboardItemCreatedAt').text.to.equal('Created Aug 07, 2020');
+        const todayPatternString = moment().format('[^Viewed] DD/MM/YYYY [at] [\\d\\d:\\d\\d] A$');
+        const todayPattern = new RegExp(todayPatternString);
 
-        pinboardsListSection.expect.element('@thirdPinboardItemTitle').text.to.equal('');
-        pinboardsListSection.expect.element('@thirdPinboardItemCreatedAt').text.to.equal('Created Dec 20, 2020');
+        firstPinboardItem.expect.element('@title').text.to.equal('Pinboard Title');
+        firstPinboardItem.expect.element('@viewedAt').text.to.match(todayPattern);
+
+        secondPinboardItem.expect.element('@title').text.to.equal('Created 07/08/2020');
+        secondPinboardItem.expect.element('@viewedAt').text.to.equal('Viewed 08/06/2020 at 01:15 PM');
+
+        thirdPinboardItem.expect.element('@title').text.to.equal('Created 20/12/2020');
+        thirdPinboardItem.expect.element('@viewedAt').text.to.equal('Viewed 08/06/2020 at 09:30 AM');
       });
     });
 
@@ -973,12 +981,13 @@ describe('Pinboard Page', function () {
       it('should render the pinboards list', function (client) {
         api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, mockData.pinboardData);
         const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
         const mainPage = client.page.main();
         mainPage.navigate();
         mainPage.section.pinboardButtonIntroduction.click('@pinboardButton');
         this.pinboardPage.waitForElementVisible('@pinboardsListButton');
         this.pinboardPage.click('@pinboardsListButton');
-        pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
+        firstPinboardItem.waitForElementVisible('@title');
 
         const pinboardItems = pinboardsListSection.elements.pinboardItems;
         client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
@@ -991,13 +1000,14 @@ describe('Pinboard Page', function () {
       it('should render the pinboards list', function (client) {
         api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, mockData.pinboardData);
         const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
         const searchPage = client.page.search();
         searchPage.navigate();
         searchPage.waitForElementVisible('@pinboardBar');
         searchPage.click('@pinboardBar');
         this.pinboardPage.waitForElementVisible('@pinboardsListButton');
         this.pinboardPage.click('@pinboardsListButton');
-        pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
+        firstPinboardItem.waitForElementVisible('@title');
 
         const pinboardItems = pinboardsListSection.elements.pinboardItems;
         client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
@@ -1007,17 +1017,37 @@ describe('Pinboard Page', function () {
     });
 
     context('clicking on pinboard item', function () {
-      it('should go to pinboard detail page', function (client) {
-        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
-        this.pinboardPage.click('@pinboardsListButton');
-        client.assert.urlContains('pinboard/5cd06f2b/');
+      context('click on not current pinboard', function () {
+        it('should go to pinboard detail page', function (client) {
+          const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+          const secondPinboardItem = pinboardsListSection.section.secondPinboardItem;
+          this.pinboardPage.click('@pinboardsListButton');
+          client.assert.urlContains('pinboard/5cd06f2b/');
 
-        pinboardsListSection.click('@firstPinboardItemTitle');
-        client.pause(100);
-        client.assert.urlContains('pinboard/23ffd689/');
+          secondPinboardItem.click('@title');
+          client.pause(100);
+          client.assert.urlContains('pinboard/7e1e3c88/');
 
-        this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
-        this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+          this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('').before(500);
+          this.pinboardPage.expect.element('@pinboardDescription').text.to.equal(
+            'Pinboard Description'
+          ).before(500);
+        });
+      });
+
+      context('click on current pinboard', function (client) {
+        it('should do nothing', function (client) {
+          const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+          const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
+          this.pinboardPage.click('@pinboardsListButton');
+          client.assert.urlContains('pinboard/5cd06f2b/');
+
+          firstPinboardItem.waitForElementVisible('@title');
+          firstPinboardItem.click('@title');
+          client.pause(1000);
+          client.assert.urlContains('pinboard/5cd06f2b/');
+          firstPinboardItem.waitForElementVisible('@title');
+        });
       });
 
       context('users remove pinned item from current pinboard and current pinboard is saved', function () {
@@ -1028,17 +1058,20 @@ describe('Pinboard Page', function () {
             mockData.updatePinboardCrsResponse
           );
           const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+          const secondPinboardItem = pinboardsListSection.section.secondPinboardItem;
           this.pinboardPage.section.pinnedSection.section.crs.section.firstCard.click('@firstCardUnpinBtn');
           client.pause(4500);
 
           this.pinboardPage.click('@pinboardsListButton');
-          pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
-          pinboardsListSection.click('@firstPinboardItemTitle');
+          secondPinboardItem.waitForElementVisible('@title');
+          secondPinboardItem.click('@title');
           client.pause(100);
-          client.assert.urlContains('pinboard/23ffd689/');
+          client.assert.urlContains('pinboard/7e1e3c88/');
 
-          this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
-          this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+          this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('').before(500);
+          this.pinboardPage.expect.element('@pinboardDescription').text.to.equal(
+            'Pinboard Description'
+          ).before(500);
         });
       });
 
@@ -1050,16 +1083,19 @@ describe('Pinboard Page', function () {
             mockData.updatePinboardCoaccusalsResponse
           );
           const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+          const secondPinboardItem = pinboardsListSection.section.secondPinboardItem;
           this.pinboardPage.section.relevantCoaccusals.sections.coaccusalCard.click('@plusButton');
           client.pause(4500);
 
           this.pinboardPage.click('@pinboardsListButton');
-          pinboardsListSection.click('@firstPinboardItemTitle');
+          secondPinboardItem.click('@title');
           client.pause(100);
-          client.assert.urlContains('pinboard/23ffd689/');
+          client.assert.urlContains('pinboard/7e1e3c88/');
 
-          this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
-          this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+          this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('').before(500);
+          this.pinboardPage.expect.element('@pinboardDescription').text.to.equal(
+            'Pinboard Description'
+          ).before(500);
         });
       });
 
@@ -1074,11 +1110,12 @@ describe('Pinboard Page', function () {
                 10000
               );
               const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+              const secondPinboardItem = pinboardsListSection.section.secondPinboardItem;
               this.pinboardPage.section.pinnedSection.section.crs.section.firstCard.click('@firstCardUnpinBtn');
               client.pause(2000);
               this.pinboardPage.click('@pinboardsListButton');
-              pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
-              pinboardsListSection.click('@firstPinboardItemTitle');
+              secondPinboardItem.waitForElementVisible('@title');
+              secondPinboardItem.click('@title');
 
               client.waitForAlertText(function (value) {
                 assert.ok(typeof (value) === 'string');
@@ -1087,11 +1124,13 @@ describe('Pinboard Page', function () {
 
               client.acceptAlert(function () {
                 client.pause(500);
-                client.assert.urlContains('pinboard/23ffd689/watts-crew/');
+                client.assert.urlContains('pinboard/7e1e3c88/untitled-pinboard/');
               });
 
-              this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
-              this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+              this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('').before(500);
+              this.pinboardPage.expect.element('@pinboardDescription').text.to.equal(
+                'Pinboard Description'
+              ).before(500);
             });
           });
         });
@@ -1100,11 +1139,12 @@ describe('Pinboard Page', function () {
           context('users confirm yes', function () {
             it('should go to pinboard detail page', function (client) {
               const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+              const secondPinboardItem = pinboardsListSection.section.secondPinboardItem;
               this.pinboardPage.section.pinnedSection.section.crs.section.firstCard.click('@firstCardUnpinBtn');
               client.pause(2000);
               this.pinboardPage.click('@pinboardsListButton');
-              pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
-              pinboardsListSection.click('@firstPinboardItemTitle');
+              secondPinboardItem.waitForElementVisible('@title');
+              secondPinboardItem.click('@title');
 
               client.waitForAlertText(function (value) {
                 assert.ok(typeof (value) === 'string');
@@ -1113,11 +1153,13 @@ describe('Pinboard Page', function () {
 
               client.acceptAlert(function () {
                 client.pause(500);
-                client.assert.urlContains('pinboard/23ffd689/watts-crew/');
+                client.assert.urlContains('pinboard/7e1e3c88/untitled-pinboard/');
               });
 
-              this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
-              this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+              this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('').before(500);
+              this.pinboardPage.expect.element('@pinboardDescription').text.to.equal(
+                'Pinboard Description'
+              ).before(500);
             });
           });
         });
@@ -1132,12 +1174,13 @@ describe('Pinboard Page', function () {
                 10000
               );
               const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+              const secondPinboardItem = pinboardsListSection.section.secondPinboardItem;
               this.pinboardPage.section.relevantCoaccusals.sections.coaccusalCard.click('@plusButton');
               client.pause(4500);
 
               this.pinboardPage.click('@pinboardsListButton');
-              pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
-              pinboardsListSection.click('@firstPinboardItemTitle');
+              secondPinboardItem.waitForElementVisible('@title');
+              secondPinboardItem.click('@title');
 
               client.waitForAlertText(function (value) {
                 assert.ok(typeof (value) === 'string');
@@ -1146,11 +1189,13 @@ describe('Pinboard Page', function () {
 
               client.acceptAlert(function () {
                 client.pause(500);
-                client.assert.urlContains('pinboard/23ffd689/watts-crew/');
+                client.assert.urlContains('pinboard/7e1e3c88/untitled-pinboard/');
               });
 
-              this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('Watts Crew').before(500);
-              this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('This is Watts Crew').before(500);
+              this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('').before(500);
+              this.pinboardPage.expect.element('@pinboardDescription').text.to.equal(
+                'Pinboard Description'
+              ).before(500);
             });
           });
         });
@@ -1164,11 +1209,13 @@ describe('Pinboard Page', function () {
               10000
             );
             const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+            const secondPinboardItem = pinboardsListSection.section.secondPinboardItem;
+            const thirdPinboardItem = pinboardsListSection.section.thirdPinboardItem;
             this.pinboardPage.section.pinnedSection.section.crs.section.firstCard.click('@firstCardUnpinBtn');
             client.pause(2000);
             this.pinboardPage.click('@pinboardsListButton');
-            pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
-            pinboardsListSection.click('@firstPinboardItemTitle');
+            secondPinboardItem.waitForElementVisible('@title');
+            secondPinboardItem.click('@title');
 
             client.waitForAlertText(function (value) {
               assert.ok(typeof (value) === 'string');
@@ -1177,15 +1224,15 @@ describe('Pinboard Page', function () {
 
             client.acceptAlert(function () {
               client.pause(500);
-              client.assert.urlContains('pinboard/23ffd689/watts-crew/');
+              client.assert.urlContains('pinboard/7e1e3c88/untitled-pinboard/');
             });
 
             this.pinboardPage.click('@pinboardsListButton');
-            pinboardsListSection.waitForElementVisible('@secondPinboardItemCreatedAt');
-            pinboardsListSection.click('@secondPinboardItemCreatedAt');
+            thirdPinboardItem.waitForElementVisible('@viewedAt');
+            thirdPinboardItem.click('@viewedAt');
 
             client.pause(500);
-            client.assert.urlContains('pinboard/7e1e3c88/untitled-pinboard/');
+            client.assert.urlContains('pinboard/3a160339/untitled-pinboard/');
             this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('').before(500);
             this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description').before(500);
           });
@@ -1200,11 +1247,12 @@ describe('Pinboard Page', function () {
               10000
             );
             const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+            const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
             this.pinboardPage.section.pinnedSection.section.crs.section.firstCard.click('@firstCardUnpinBtn');
             client.pause(2000);
             this.pinboardPage.click('@pinboardsListButton');
-            pinboardsListSection.waitForElementVisible('@firstPinboardItemTitle');
-            pinboardsListSection.click('@firstPinboardItemTitle');
+            firstPinboardItem.waitForElementVisible('@title');
+            firstPinboardItem.click('@title');
 
             client.waitForAlertText(function (value) {
               assert.ok(typeof (value) === 'string');
@@ -1296,76 +1344,228 @@ describe('Pinboard Page', function () {
       });
     });
 
-    context('clicking on Duplicate this pinboard button', function () {
-      it('should duplicate current pinboard', function (client) {
-        api.mockPost(
-          '/api/v2/mobile/pinboards/', 200,
-          mockData.pinboardsList.duplicatePinboardRequest,
-          mockData.pinboardsList.duplicatePinboardResponse
-        );
+    describe('click on pinboard item actions button', function () {
+      it('should display actions pane', function () {
         const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
         this.pinboardPage.click('@pinboardsListButton');
-        pinboardsListSection.waitForElementVisible('@firstDuplicatePinboardButton');
-        pinboardsListSection.click('@firstDuplicatePinboardButton');
+        const firstPinboardItemSection = pinboardsListSection.section.firstPinboardItem;
+        const thirdPinboardItemSection = pinboardsListSection.section.thirdPinboardItem;
+        pinboardsListSection.waitForElementVisible('@createNewPinboardButton');
+        pinboardsListSection.expect.element('@pinboardActionsPane').to.not.be.present;
+        pinboardsListSection.expect.element('@duplicatePinboardButton').to.not.be.present;
+        pinboardsListSection.expect.element('@removePinboardButton').to.not.be.present;
 
-        client.pause(1000);
-        client.assert.urlContains('pinboard/283fea1f/');
+        firstPinboardItemSection.click('@actionsButton');
+        firstPinboardItemSection.waitForElementVisible('@actionsPane');
+        firstPinboardItemSection.expect.element('@duplicateButton').to.be.visible;
+        firstPinboardItemSection.expect.element('@removeButton').to.be.visible;
+
+        thirdPinboardItemSection.click('@actionsButton');
+        thirdPinboardItemSection.waitForElementVisible('@actionsPane');
+        thirdPinboardItemSection.expect.element('@duplicateButton').to.be.visible;
+        thirdPinboardItemSection.expect.element('@removeButton').to.be.visible;
+
+        firstPinboardItemSection.waitForElementNotPresent('@actionsPane');
+        firstPinboardItemSection.expect.element('@duplicateButton').to.not.be.present;
+        firstPinboardItemSection.expect.element('@removeButton').to.not.be.present;
       });
 
-      it('should duplicate current pinboard if pinboard is saving and user confirm yes', function (client) {
-        api.mockPost(
-          '/api/v2/mobile/pinboards/', 200,
-          mockData.pinboardsList.duplicatePinboardRequest,
-          mockData.pinboardsList.duplicatePinboardResponse
-        );
-        api.mockPut(
-          '/api/v2/mobile/pinboards/5cd06f2b/', 200,
-          mockData.updatePinboardCrsRequest,
-          mockData.updatePinboardCrsResponse,
-          10000
-        );
-        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
-        const crsPinnedSection = this.pinboardPage.section.pinnedSection.section.crs;
-        const firstCrPinnedCard = crsPinnedSection.section.firstCard;
-        firstCrPinnedCard.click('@firstCardUnpinBtn');
-        client.pause(2000);
-        this.pinboardPage.click('@pinboardsListButton');
-        pinboardsListSection.click('@firstDuplicatePinboardButton');
+      context('clicking on Duplicate this pinboard button', function () {
+        it('should duplicate pinboard', function (client) {
+          api.mockPost(
+            '/api/v2/mobile/pinboards/', 200,
+            mockData.pinboardsList.duplicatePinboardRequest,
+            mockData.pinboardsList.duplicatePinboardResponse
+          );
+          const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+          const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
+          this.pinboardPage.click('@pinboardsListButton');
+          firstPinboardItem.waitForElementVisible('@actionsButton');
+          firstPinboardItem.click('@actionsButton');
+          firstPinboardItem.waitForElementVisible('@duplicateButton');
+          firstPinboardItem.click('@duplicateButton');
 
-        client.waitForAlertText(function (value) {
-          assert.ok(typeof (value) === 'string');
-          assert.ok(value.includes('Pinboard is saving'));
-        }, 5000);
-
-        client.acceptAlert(function () {
-          client.pause(500);
+          client.pause(1000);
           client.assert.urlContains('pinboard/283fea1f/');
+        });
+
+        it('should duplicate pinboard if pinboard is saving and user confirm yes', function (client) {
+          api.mockPost(
+            '/api/v2/mobile/pinboards/', 200,
+            mockData.pinboardsList.duplicatePinboardRequest,
+            mockData.pinboardsList.duplicatePinboardResponse
+          );
+          api.mockPut(
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+            mockData.updatePinboardCrsRequest,
+            mockData.updatePinboardCrsResponse,
+            10000
+          );
+          const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+          const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
+          const crsPinnedSection = this.pinboardPage.section.pinnedSection.section.crs;
+          const firstCrPinnedCard = crsPinnedSection.section.firstCard;
+          firstCrPinnedCard.click('@firstCardUnpinBtn');
+          client.pause(2000);
+          this.pinboardPage.click('@pinboardsListButton');
+          firstPinboardItem.waitForElementVisible('@actionsButton');
+          firstPinboardItem.click('@actionsButton');
+          firstPinboardItem.waitForElementVisible('@duplicateButton');
+          firstPinboardItem.click('@duplicateButton');
+
+          client.waitForAlertText(function (value) {
+            assert.ok(typeof (value) === 'string');
+            assert.ok(value.includes('Pinboard is saving'));
+          }, 5000);
+
+          client.acceptAlert(function () {
+            client.pause(500);
+            client.assert.urlContains('pinboard/283fea1f/');
+          });
+        });
+
+        it('should still in current page if pinboard is saving and user confirm no', function (client) {
+          api.mockPut(
+            '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+            mockData.updatePinboardCrsRequest,
+            mockData.updatePinboardCrsResponse,
+            10000
+          );
+          const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+          const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
+          const crsPinnedSection = this.pinboardPage.section.pinnedSection.section.crs;
+          const firstCrPinnedCard = crsPinnedSection.section.firstCard;
+          firstCrPinnedCard.click('@firstCardUnpinBtn');
+          client.pause(2000);
+          this.pinboardPage.click('@pinboardsListButton');
+          firstPinboardItem.waitForElementVisible('@actionsButton');
+          firstPinboardItem.click('@actionsButton');
+          firstPinboardItem.waitForElementVisible('@duplicateButton');
+          firstPinboardItem.click('@duplicateButton');
+
+          client.waitForAlertText(function (value) {
+            assert.ok(typeof (value) === 'string');
+            assert.ok(value.includes('Pinboard is saving'));
+          }, 5000);
+
+          client.dismissAlert(function () {
+            client.pause(500);
+            client.assert.urlContains('pinboard/5cd06f2b/');
+          });
         });
       });
 
-      it('should still in current page if pinboard is saving and user confirm no', function (client) {
-        api.mockPut(
-          '/api/v2/mobile/pinboards/5cd06f2b/', 200,
-          mockData.updatePinboardCrsRequest,
-          mockData.updatePinboardCrsResponse,
-          10000
-        );
-        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
-        const crsPinnedSection = this.pinboardPage.section.pinnedSection.section.crs;
-        const firstCrPinnedCard = crsPinnedSection.section.firstCard;
-        firstCrPinnedCard.click('@firstCardUnpinBtn');
-        client.pause(2000);
-        this.pinboardPage.click('@pinboardsListButton');
-        pinboardsListSection.click('@firstDuplicatePinboardButton');
+      context('clicking on remove pinboard button', function () {
+        context('remove not current pinboard', function () {
+          it('should remove item from pinboards list', function (client) {
+            api.mock(
+              'DELETE',
+              '/api/v2/mobile/pinboards/7e1e3c88/',
+              200,
+              null,
+            );
+            const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+            const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
+            const secondPinboardItem = pinboardsListSection.section.secondPinboardItem;
+            const thirdPinboardItem = pinboardsListSection.section.thirdPinboardItem;
+            const pinboardItems = pinboardsListSection.elements.pinboardItems;
 
-        client.waitForAlertText(function (value) {
-          assert.ok(typeof (value) === 'string');
-          assert.ok(value.includes('Pinboard is saving'));
-        }, 5000);
+            this.pinboardPage.click('@pinboardsListButton');
+            secondPinboardItem.waitForElementVisible('@actionsButton');
 
-        client.dismissAlert(function () {
-          client.pause(500);
-          client.assert.urlContains('pinboard/5cd06f2b/');
+            firstPinboardItem.expect.element('@title').text.to.equal('Pinboard Title');
+            secondPinboardItem.expect.element('@title').text.to.equal('Created 07/08/2020');
+            thirdPinboardItem.expect.element('@title').text.to.equal('Created 20/12/2020');
+            client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
+              assert.equal(result.value.length, 3);
+            });
+
+            secondPinboardItem.click('@actionsButton');
+            secondPinboardItem.waitForElementVisible('@removeButton');
+            secondPinboardItem.click('@removeButton');
+
+            firstPinboardItem.expect.element('@title').text.to.equal('Pinboard Title');
+            secondPinboardItem.expect.element('@title').text.to.equal('Created 20/12/2020');
+            client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
+              assert.equal(result.value.length, 2);
+            });
+          });
+        });
+
+        context('remove current pinboard', function () {
+          it('should remove item from pinboards list and redirect to most recent viewed pinboard', function (client) {
+            api.mock(
+              'DELETE',
+              '/api/v2/mobile/pinboards/5cd06f2b/',
+              200,
+              null,
+            );
+            const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+            const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
+
+            this.pinboardPage.click('@pinboardsListButton');
+            firstPinboardItem.waitForElementVisible('@actionsButton');
+            firstPinboardItem.click('@actionsButton');
+            firstPinboardItem.waitForElementVisible('@removeButton');
+            firstPinboardItem.click('@removeButton');
+
+            pinboardsListSection.waitForElementNotPresent('@pinboardsTitle');
+            client.pause(2000);
+            client.expect.url().to.contain('/pinboard/7e1e3c88/');
+          });
+        });
+
+        context('remove last pinboard', function () {
+          it('should create new pinboard', function (client) {
+            api.mock(
+              'DELETE',
+              '/api/v2/mobile/pinboards/5cd06f2b/',
+              200,
+              null,
+            );
+            api.mock(
+              'DELETE',
+              '/api/v2/mobile/pinboards/7e1e3c88/',
+              200,
+              null,
+            );
+            api.mock(
+              'DELETE',
+              '/api/v2/mobile/pinboards/3a160339/',
+              200,
+              null,
+            );
+
+            api.mock(
+              'GET',
+              '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true',
+              200,
+              mockData.pinboardsList.createdPinboard
+            );
+
+            const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+            const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
+            const secondPinboardItem = pinboardsListSection.section.secondPinboardItem;
+            const thirdPinboardItem = pinboardsListSection.section.thirdPinboardItem;
+
+            this.pinboardPage.click('@pinboardsListButton');
+            firstPinboardItem.waitForElementVisible('@title');
+
+            thirdPinboardItem.click('@actionsButton');
+            thirdPinboardItem.waitForElementVisible('@removeButton');
+            thirdPinboardItem.click('@removeButton');
+
+            secondPinboardItem.click('@actionsButton');
+            secondPinboardItem.waitForElementVisible('@removeButton');
+            secondPinboardItem.click('@removeButton');
+
+            firstPinboardItem.click('@actionsButton');
+            firstPinboardItem.waitForElementVisible('@removeButton');
+            firstPinboardItem.click('@removeButton');
+
+            client.pause(1000);
+            client.assert.urlContains('/pinboard/273f2a/');
+          });
         });
       });
     });

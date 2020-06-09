@@ -11,6 +11,7 @@ const pinboardItemTransform = pinboard => ({
   id: pinboard['id'].toString(),
   title: get(pinboard, 'title', ''),
   createdAt: moment(pinboard['created_at']).format(constants.SIMPLE_DATE_FORMAT),
+  lastViewedAt: moment(pinboard['last_viewed_at']).format(constants.PINBOARD_VIEWED_DATE_TIME_FORMAT),
   url: generatePinboardUrl(pinboard),
   isCurrent: get(pinboard, 'is_current', false),
 });

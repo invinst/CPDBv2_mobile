@@ -74,12 +74,12 @@ $pinboards-list-top: $pinboard-page-header-height + $pinboard-page-search-bar-he
         color: $blue-ribbon-color
         font-weight: 300
         line-height: 17px
-        margin-bottom: 2px
+        margin-bottom: 1px
         text-overflow: ellipsis
         white-space: nowrap
         overflow: hidden
 
-      .pinboard-created-at
+      .pinboard-viewed-at
         color: $boulder-color
         font-size: 12px
         line-height: 14px
@@ -121,20 +121,7 @@ $pinboards-list-top: $pinboard-page-header-height + $pinboard-page-search-bar-he
         .duplicate-pinboard-btn, .remove-pinboard-btn
           padding: 0 16px
 
-    &.untitled-pinboard
-      .pinboard-created-at
-        color: $blue-ribbon-color
-        font-size: 14px
-        line-height: 32px
-
-      &.is-current
-        .pinboard-created-at
-          color: $thunder-color
-
     &.is-current
       background: $gin-fizz-color
-      .pinboard-created-at
-        color: $thunder-color
-
       .pinboard-title
         color: $thunder-color
