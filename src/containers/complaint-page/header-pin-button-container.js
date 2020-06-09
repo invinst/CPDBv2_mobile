@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import HeaderPinButton from 'components/common/pinboard/header-pin-button';
 import { pinnableCrSelector, getIsCrPinned } from 'selectors/complaint-page';
-import { showSelectPinboardsSelector } from 'selectors/common/pinboard';
-import { fetchHeaderPinboards, fetchPinboard, createPinboard, addOrRemoveItemInPinboard } from 'actions/pinboard';
+import { showSelectPinboardsSelector } from 'selectors/common/pinboards';
+import { fetchPinboard, createNewPinboard, addOrRemoveItemInPinboard } from 'actions/pinboard';
 import { crPinboardsMenuSelector } from 'selectors/complaint-page/pinboards-menu';
 
 
@@ -19,9 +19,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  fetchHeaderPinboards,
   addOrRemoveItemInPinboard,
-  createPinboard,
+  createPinboard: createNewPinboard,
   fetchPinboard,
 };
 

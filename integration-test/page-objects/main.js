@@ -81,7 +81,7 @@ module.exports = {
       selector: '.pinboard-button-introduction',
       elements: {
         introductionContent: '.pinboard-button-introduction-content',
-        dismissButton: '.dismiss-btn',
+        closeButton: '.pinboard-button-introduction-close-btn',
         tryItButton: '.try-it-btn',
         pinboardButton: {
           selector: '//div[contains(@class, "header-links")]//div[contains(@class, "pinboard-button")]',

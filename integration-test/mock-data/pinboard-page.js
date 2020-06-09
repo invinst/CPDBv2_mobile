@@ -935,12 +935,9 @@ const pinboardsMenu = {
   createPinboardRequestParams: [
     {
       'officer_ids': [2235],
-      'trr_ids': [],
     },
     {
-      'officer_ids': [],
       crids: ['1053667'],
-      'trr_ids': [],
     },
   ],
   createdPinboards: [

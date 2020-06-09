@@ -19,11 +19,13 @@ export default class PinboardItem extends Component {
 
   handlePinboardItemClick = () => {
     const { pinboard } = this.props;
-    browserHistory.push(pinboard.url);
+    if (!pinboard.isCurrent) {
+      browserHistory.push(pinboard.url);
+    }
   };
 
   render() {
-    const { pinboard: { title, createdAt }, isCurrent } = this.props;
+    const { pinboard: { title, createdAt, isCurrent } } = this.props;
 
     return (
       <PinboardLinkContainer
@@ -48,7 +50,6 @@ PinboardItem.propTypes = {
   pinboard: PropTypes.object,
   handleClose: PropTypes.func,
   duplicatePinboard: PropTypes.func,
-  isCurrent: PropTypes.bool,
 };
 
 PinboardItem.defaultProps = {

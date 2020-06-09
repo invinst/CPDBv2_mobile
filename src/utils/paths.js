@@ -1,3 +1,5 @@
+import { PINBOARD_PAGE_PATTERN, OFFICER_PAGE_PATTERN, CR_PAGE_PATTERN } from 'constants/paths';
+
 /**
  * Return the same key for some paths identify the same page
  *
@@ -19,3 +21,9 @@ export const getPathNameKey = (pathname) => {
   }
   return pathnameKey;
 };
+
+export const onPinboardPage = pathname => PINBOARD_PAGE_PATTERN.test(pathname);
+
+export const onOfficerPage = pathname => OFFICER_PAGE_PATTERN.test(pathname);
+
+export const onCrPage = pathname => CR_PAGE_PATTERN.test(pathname);

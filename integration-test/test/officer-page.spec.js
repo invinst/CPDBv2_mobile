@@ -1075,7 +1075,7 @@ describe('OfficerPage test', function () {
       beforeEach(function (client, done) {
         api.mock('GET', '/api/v2/mobile/pinboards/?detail=true', 200, pinboards);
         api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-        api.mock('GET', '/api/v2/mobile/pinboards/f7231a74', 200, createdPinboards[0]);
+        api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/', 200, createdPinboards[0]);
         api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/complaints/', 200, []);
         api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/officers/', 200, createdPinboardsOfficersData);
         api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/trrs/', 200, []);
