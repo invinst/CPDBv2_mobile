@@ -33,7 +33,7 @@ const baseRelevantComplaints = (type) => ({
 });
 
 const nthPinboardItem = (index) => {
-  const parentSelector = `(//div[contains(@class, "Modal")]/div[contains(@class, "pinboard-item")])[${index}]`;
+  const parentSelector = `(//div[contains(@class, "Modal")]/div/div[contains(@class, "pinboard-item")])[${index}]`;
   return {
     selector: parentSelector,
     locateStrategy: 'xpath',
@@ -47,11 +47,11 @@ const nthPinboardItem = (index) => {
         locateStrategy: 'xpath',
       },
       actionsButton: {
-        selector: `${parentSelector}//div[@class="pinboard-item-actions-btn"]`,
+        selector: `${parentSelector}//div[contains(@class, "pinboard-item-actions-btn")]`,
         locateStrategy: 'xpath',
       },
       actionsPane: {
-        selector: `${parentSelector}//div[@class="pinboard-item-actions"]`,
+        selector: `${parentSelector}//div[contains(@class, "pinboard-item-actions-menu")]`,
         locateStrategy: 'xpath',
       },
       duplicateButton: {
@@ -302,7 +302,7 @@ module.exports = {
         pinboardsTitle: '.pinboards-title',
         createNewPinboardButton: '.new-pinboard-btn',
         pinboardActionsPane: {
-          selector: '//div[@class="pinboard-item-actions"]',
+          selector: '//div[@class="pinboard-item-actions-menu"]',
           locateStrategy: 'xpath',
         },
         duplicatePinboardButton: {

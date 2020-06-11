@@ -6,11 +6,12 @@ import Modal from 'react-modal';
 import { redirectToCreatedPinboard } from 'utils/pinboard';
 import PinboardLinkContainer from 'containers/pinboard-page/pinboard-link-container';
 import PinboardItem from './pinboard-item';
+import { PINBOARD_ACTIONS_PANE_SPACE } from 'constants';
 import styles from './pinboards.sass';
 
 
 class Pinboards extends Component {
-  state = { showActionsPinboardId: null };
+  state = { showActionsPinboardId: null, actionsPanePosition: 'bottom' };
 
   static getDerivedStateFromProps(props, state) {
     if (!props.isShownPinboardsList) {
@@ -26,39 +27,51 @@ class Pinboards extends Component {
     });
   };
 
-  handleSetShowActionsPinboardId = pinboardId => {
-    this.setState({ showActionsPinboardId: pinboardId });
+  handleSetShowActionsPinboardId = (pinboardId, actionsButtonBottom) => {
+    if (pinboardId) {
+      const { bottom: modalBottom } = this.modal.getBoundingClientRect();
+      const actionsPaneSpace = modalBottom - actionsButtonBottom;
+      this.setState({
+        showActionsPinboardId: pinboardId,
+        actionsPanePosition: actionsPaneSpace > PINBOARD_ACTIONS_PANE_SPACE ? 'bottom' : 'top',
+      });
+    } else {
+      this.setState({ showActionsPinboardId: null });
+    }
   };
 
   render() {
     const { pinboards, duplicatePinboard, isShownPinboardsList, hideShowPinboardsList, removePinboard } = this.props;
-    const { showActionsPinboardId } = this.state;
+    const { showActionsPinboardId, actionsPanePosition } = this.state;
 
     return (
       <Modal
         isOpen={ isShownPinboardsList }
         onRequestClose={ () => hideShowPinboardsList(false) }
-        className={ styles.pinboards }
+        className={ styles.pinboardsWrapper }
         overlayClassName={ styles.pinboardsOverlay }
       >
-        <div className='pinboards-title'>
-          Pinboards
-          <PinboardLinkContainer
-            className='new-pinboard-btn'
-            onClick={ this.handleCreateNewEmptyPinboard } />
+        <div className='pinboards' ref={ el => this.modal = el }>
+          <div className='pinboards-title'>
+            Pinboards
+            <PinboardLinkContainer
+              className='new-pinboard-btn'
+              onClick={ this.handleCreateNewEmptyPinboard } />
+          </div>
+          {
+            pinboards.map((pinboard) => (
+              <PinboardItem
+                key={ pinboard.key }
+                pinboard={ pinboard }
+                actionsPanePosition={ actionsPanePosition }
+                duplicatePinboard={ duplicatePinboard }
+                removePinboard={ removePinboard }
+                shouldShowActions={ pinboard.id === showActionsPinboardId }
+                handleSetShowActionsPinboardId={ this.handleSetShowActionsPinboardId }
+              />
+            ))
+          }
         </div>
-        {
-          pinboards.map((pinboard) => (
-            <PinboardItem
-              key={ pinboard.key }
-              pinboard={ pinboard }
-              duplicatePinboard={ duplicatePinboard }
-              removePinboard={ removePinboard }
-              shouldShowActions={ pinboard.id === showActionsPinboardId }
-              handleSetShowActionsPinboardId={ this.handleSetShowActionsPinboardId }
-            />
-          ))
-        }
       </Modal>
     );
   }

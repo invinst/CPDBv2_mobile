@@ -180,3 +180,5 @@ export const PERCENTILE_FIELDS = [
   'percentile_allegation_civilian',
   'percentile_trr',
 ];
+
+export const PINBOARD_ACTIONS_PANE_SPACE = 78;

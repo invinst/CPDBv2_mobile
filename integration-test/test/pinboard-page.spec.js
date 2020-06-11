@@ -990,17 +990,20 @@ describe('Pinboard Page', function () {
         const secondPinboardItem = pinboardsListSection.section.secondPinboardItem;
         const thirdPinboardItem = pinboardsListSection.section.thirdPinboardItem;
 
-        const todayPatternString = moment().format('[^Viewed] DD/MM/YYYY [at] [\\d\\d:\\d\\d] A$');
-        const todayPattern = new RegExp(todayPatternString);
+        const expectedFormat = '[Viewed] DD/MM/YYYY [at] hh:mm A';
+        const currentHourString = moment().format('[^Viewed] DD/MM/YYYY [at] hh[:\\d\\d] A$');
+        const currentHour = new RegExp(currentHourString);
+        const secondPinboardItemViewedAt = moment('2020-06-08T06:15:00.967Z').format(expectedFormat);
+        const thirdPinboardItemViewedAt = moment('2020-06-08T02:30:30.967Z').format(expectedFormat);
 
         firstPinboardItem.expect.element('@title').text.to.equal('Pinboard Title');
-        firstPinboardItem.expect.element('@viewedAt').text.to.match(todayPattern);
+        firstPinboardItem.expect.element('@viewedAt').text.to.match(currentHour);
 
         secondPinboardItem.expect.element('@title').text.to.equal('Created 07/08/2020');
-        secondPinboardItem.expect.element('@viewedAt').text.to.equal('Viewed 08/06/2020 at 01:15 PM');
+        secondPinboardItem.expect.element('@viewedAt').text.to.equal(secondPinboardItemViewedAt);
 
         thirdPinboardItem.expect.element('@title').text.to.equal('Created 20/12/2020');
-        thirdPinboardItem.expect.element('@viewedAt').text.to.equal('Viewed 08/06/2020 at 09:30 AM');
+        thirdPinboardItem.expect.element('@viewedAt').text.to.equal(thirdPinboardItemViewedAt);
       });
     });
 
@@ -1432,6 +1435,34 @@ describe('Pinboard Page', function () {
         firstPinboardItemSection.waitForElementNotPresent('@actionsPane');
         firstPinboardItemSection.expect.element('@duplicateButton').to.not.be.present;
         firstPinboardItemSection.expect.element('@removeButton').to.not.be.present;
+      });
+
+      it('should display actions pane in correct position', function () {
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        this.pinboardPage.click('@pinboardsListButton');
+        const firstPinboardItemSection = pinboardsListSection.section.firstPinboardItem;
+        const secondPinboardItemSection = pinboardsListSection.section.secondPinboardItem;
+        const thirdPinboardItemSection = pinboardsListSection.section.thirdPinboardItem;
+        pinboardsListSection.waitForElementVisible('@createNewPinboardButton');
+        pinboardsListSection.expect.element('@pinboardActionsPane').to.not.be.present;
+        pinboardsListSection.expect.element('@duplicatePinboardButton').to.not.be.present;
+        pinboardsListSection.expect.element('@removePinboardButton').to.not.be.present;
+
+        firstPinboardItemSection.click('@actionsButton');
+        firstPinboardItemSection.waitForElementVisible('@actionsPane');
+        firstPinboardItemSection.expect.element('@actionsPane').to.have.attribute('class').contain('bottom');
+        firstPinboardItemSection.click('@actionsButton');
+        firstPinboardItemSection.waitForElementNotPresent('@actionsPane');
+
+        secondPinboardItemSection.click('@actionsButton');
+        secondPinboardItemSection.waitForElementVisible('@actionsPane');
+        secondPinboardItemSection.expect.element('@actionsPane').to.have.attribute('class').contain('bottom');
+        secondPinboardItemSection.click('@actionsButton');
+        secondPinboardItemSection.waitForElementNotPresent('@actionsPane');
+
+        thirdPinboardItemSection.click('@actionsButton');
+        thirdPinboardItemSection.waitForElementVisible('@actionsPane');
+        thirdPinboardItemSection.expect.element('@actionsPane').to.have.attribute('class').contain('top');
       });
 
       context('clicking on Duplicate this pinboard button', function () {

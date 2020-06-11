@@ -82,6 +82,60 @@ describe('Pinboards component', function () {
         done();
       }, 50);
     });
+
+    describe('handleSetShowActionsPinboardId', function () {
+      context('pinboardId is not null', function () {
+        context('current actionsPaneSpace larger than PINBOARD_ACTIONS_PANE_SPACE', function () {
+          it('should set actionsPanePosition to bottom', function () {
+            let instance = wrapper.find(Pinboards).instance();
+            stub(instance.modal, 'getBoundingClientRect').returns({ bottom: 250 });
+            instance.handleSetShowActionsPinboardId('1', 150);
+            instance.state.should.eql({
+              showActionsPinboardId: '1',
+              actionsPanePosition: 'bottom',
+            });
+
+            wrapper.update();
+            const pinboardItems = wrapper.find('PinboardItem');
+            pinboardItems.at(0).prop('shouldShowActions').should.be.true();
+            pinboardItems.at(0).prop('actionsPanePosition').should.equal('bottom');
+
+            pinboardItems.at(1).prop('shouldShowActions').should.be.false();
+            pinboardItems.at(1).prop('actionsPanePosition').should.equal('bottom');
+          });
+        });
+
+        context('current actionsPaneSpace smaller than PINBOARD_ACTIONS_PANE_SPACE', function () {
+          it('should set actionsPanePosition to top', function () {
+            let instance = wrapper.find(Pinboards).instance();
+            stub(instance.modal, 'getBoundingClientRect').returns({ bottom: 250 });
+            instance.handleSetShowActionsPinboardId('2', 200);
+            instance.state.should.eql({
+              showActionsPinboardId: '2',
+              actionsPanePosition: 'top',
+            });
+            wrapper.update();
+            const pinboardItems = wrapper.find('PinboardItem');
+            pinboardItems.at(0).prop('shouldShowActions').should.be.false();
+            pinboardItems.at(0).prop('actionsPanePosition').should.equal('top');
+
+            pinboardItems.at(1).prop('shouldShowActions').should.be.true();
+            pinboardItems.at(1).prop('actionsPanePosition').should.equal('top');
+          });
+        });
+      });
+
+      context('pinboardId is null', function () {
+        context('current actionsPaneSpace smaller than PINBOARD_ACTIONS_PANE_SPACE', function () {
+          it('should set showActionsPinboardId to null', function () {
+            wrapper.find(Pinboards).setState({ showActionsPinboardId: '1' });
+            const instance = wrapper.find(Pinboards).instance();
+            instance.handleSetShowActionsPinboardId(null);
+            should(instance.state.showActionsPinboardId).be.null();
+          });
+        });
+      });
+    });
   });
 
   context('isShownPinboardsList is false', function () {

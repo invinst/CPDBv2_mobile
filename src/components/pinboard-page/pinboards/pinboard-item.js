@@ -31,7 +31,14 @@ export default class PinboardItem extends Component {
 
   handleActionsBtnClick = (e) => {
     const { handleSetShowActionsPinboardId, shouldShowActions, pinboard: { id } } = this.props;
-    id && handleSetShowActionsPinboardId(shouldShowActions ? null : id);
+    if (id) {
+      if (shouldShowActions) {
+        handleSetShowActionsPinboardId(null);
+      } else {
+        const { bottom } = this.actionsBtn.getBoundingClientRect();
+        handleSetShowActionsPinboardId(id, bottom);
+      }
+    }
   };
 
   getTitle() {
@@ -45,6 +52,7 @@ export default class PinboardItem extends Component {
     const {
       pinboard: { lastViewedAt, isCurrent, hasPendingChanges, hasTitlePendingChange },
       shouldShowActions,
+      actionsPanePosition,
     } = this.props;
 
     return (
@@ -66,10 +74,11 @@ export default class PinboardItem extends Component {
           <div
             className={ cx('pinboard-item-actions-btn', { 'focused': shouldShowActions }) }
             onClick={ this.handleActionsBtnClick }
+            ref={ el => this.actionsBtn = el }
           />
           {
             shouldShowActions && (
-              <div className='pinboard-item-actions'>
+              <div className={ cx('pinboard-item-actions-menu', actionsPanePosition) }>
                 <PinboardLinkContainer
                   customComponent='div'
                   className='duplicate-pinboard-btn'
@@ -95,6 +104,7 @@ PinboardItem.propTypes = {
   handleSetShowActionsPinboardId: PropTypes.func,
   shouldShowActions: PropTypes.bool,
   hasTitlePendingChange: PropTypes.bool,
+  actionsPanePosition: PropTypes.string,
 };
 
 PinboardItem.defaultProps = {
@@ -105,4 +115,5 @@ PinboardItem.defaultProps = {
   handleSetShowActionsPinboardId: noop,
   shouldShowActions: false,
   hasTitlePendingChange: false,
+  actionsPanePosition: 'bottom',
 };

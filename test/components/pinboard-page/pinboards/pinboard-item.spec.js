@@ -142,10 +142,11 @@ describe('PinboardItem component', function () {
     context('has pinboard id and click on actions button', function () {
       it('should call handleSetShowActionsPinboard with correct pinboard id', function () {
         const pinboardItemActionsBtn = wrapper.find('.pinboard-item-actions-btn').first();
+        stub(wrapper.find(PinboardItem).instance().actionsBtn, 'getBoundingClientRect').returns({ bottom: 169 });
         pinboardItemActionsBtn.prop('className').should.not.containEql('focused');
         pinboardItemActionsBtn.simulate('click');
         handleSetShowActionsPinboardId.should.be.calledOnce();
-        handleSetShowActionsPinboardId.should.be.calledWith('1');
+        handleSetShowActionsPinboardId.should.be.calledWith('1', 169);
       });
     });
 
