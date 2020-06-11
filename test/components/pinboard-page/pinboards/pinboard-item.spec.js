@@ -89,7 +89,7 @@ describe('PinboardItem component', function () {
       wrapper.find('.remove-pinboard-btn').exists().should.be.true();
     });
 
-    it('should redirect on click on duplicate', function (done) {
+    it('should close actions pane and redirect on click on duplicate', function (done) {
       const duplicateButton = wrapper.find('.duplicate-pinboard-btn').first();
       duplicateButton.simulate('click');
       duplicatePinboard.should.be.calledOnce();
@@ -97,6 +97,8 @@ describe('PinboardItem component', function () {
         browserHistory.location.pathname.should.equal('/pinboard/5cd06f2b/pinboard-title/');
         done();
       }, 50);
+      handleSetShowActionsPinboardId.should.be.calledOnce();
+      handleSetShowActionsPinboardId.should.be.calledWith(null);
     });
 
     it('should call removePinboard on click on remove', function () {
@@ -137,12 +139,36 @@ describe('PinboardItem component', function () {
       );
     });
 
-    it('should render actions button and call handleSetShowActionsPinboard with correct pinboard id', function () {
-      const pinboardItemActionsBtn = wrapper.find('.pinboard-item-actions-btn').first();
-      pinboardItemActionsBtn.prop('className').should.not.containEql('focused');
-      pinboardItemActionsBtn.simulate('click');
-      handleSetShowActionsPinboardId.should.be.calledOnce();
-      handleSetShowActionsPinboardId.should.be.calledWith('1');
+    context('has pinboard id and click on actions button', function () {
+      it('should call handleSetShowActionsPinboard with correct pinboard id', function () {
+        const pinboardItemActionsBtn = wrapper.find('.pinboard-item-actions-btn').first();
+        pinboardItemActionsBtn.prop('className').should.not.containEql('focused');
+        pinboardItemActionsBtn.simulate('click');
+        handleSetShowActionsPinboardId.should.be.calledOnce();
+        handleSetShowActionsPinboardId.should.be.calledWith('1');
+      });
+    });
+
+    context('pinboard id is null and click on actions buttons', function () {
+      it('should not call handleSetShowActionsPinboard', function () {
+        const wrapper = mount(
+          <Provider store={ store }>
+            <MemoryRouter>
+              <PinboardItem
+                pinboard={ { ...pinboard, id: null } }
+                duplicatePinboard={ duplicatePinboard }
+                removePinboard={ removePinboard }
+                handleSetShowActionsPinboardId={ handleSetShowActionsPinboardId }
+                shouldShowActions={ false }
+              />
+            </MemoryRouter>
+          </Provider>
+        );
+        const pinboardItemActionsBtn = wrapper.find('.pinboard-item-actions-btn').first();
+        pinboardItemActionsBtn.exists().should.be.true();
+        pinboardItemActionsBtn.simulate('click');
+        handleSetShowActionsPinboardId.should.not.be.called();
+      });
     });
 
     it('should not display actions', function () {
@@ -191,6 +217,64 @@ describe('PinboardItem component', function () {
         browserHistoryPush.should.be.calledOnce();
         browserHistoryPush.should.be.calledWith('/pinboard/1/pinboard-title/');
       });
+    });
+  });
+
+  context('hasPendingChanges is true', function () {
+    context('hasTitlePendingChange is true', function () {
+      it('should render spinner with updating title and not render last viewed at', function () {
+        const wrapper = mount(
+          <Provider store={ store }>
+            <MemoryRouter>
+              <PinboardItem
+                pinboard={ { ...pinboard, hasTitlePendingChange: true, hasPendingChanges: true } }
+                shouldShowActions={ false }
+              />
+            </MemoryRouter>
+          </Provider>
+        );
+        wrapper.find('.pinboard-title').text().should.equal('Updating pinboard title...');
+        wrapper.find('.spinner').exists().should.be.true();
+        wrapper.find('.pinboard-viewed-at').exists().should.be.false();
+      });
+    });
+
+    context('hasTitlePendingChange is false', function () {
+      it('should render spinner', function () {
+        const wrapper = mount(
+          <Provider store={ store }>
+            <MemoryRouter>
+              <PinboardItem
+                pinboard={ { ...pinboard, hasTitlePendingChange: false, hasPendingChanges: true } }
+                shouldShowActions={ false }
+              />
+            </MemoryRouter>
+          </Provider>
+        );
+        wrapper.find('.pinboard-title').text().should.equal('Pinboard Title');
+        wrapper.find('.spinner').exists().should.be.true();
+        wrapper.find('.pinboard-viewed-at').exists().should.be.true();
+        wrapper.find('.pinboard-viewed-at').text().should.equal('Viewed 10/12/2019 at 10:20 AM');
+      });
+    });
+  });
+
+  context('hasPendingChanges is false', function () {
+    it('should not render spinner', function () {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <MemoryRouter>
+            <PinboardItem
+              pinboard={ { ...pinboard, hasTitlePendingChange: false, hasPendingChanges: false } }
+              shouldShowActions={ false }
+            />
+          </MemoryRouter>
+        </Provider>
+      );
+      wrapper.find('.pinboard-title').text().should.equal('Pinboard Title');
+      wrapper.find('.spinner').exists().should.be.false();
+      wrapper.find('.pinboard-viewed-at').exists().should.be.true();
+      wrapper.find('.pinboard-viewed-at').text().should.equal('Viewed 10/12/2019 at 10:20 AM');
     });
   });
 });

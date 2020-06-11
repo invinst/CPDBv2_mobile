@@ -10,11 +10,11 @@ import PinboardLinkContainer from 'containers/pinboard-page/pinboard-link-contai
 
 export default class PinboardItem extends Component {
   handleDuplicatePinboard = e => {
-    const { pinboard, duplicatePinboard } = this.props;
-
+    const { pinboard, duplicatePinboard, handleSetShowActionsPinboardId } = this.props;
     duplicatePinboard(pinboard.id).then((response) => {
       redirectToCreatedPinboard(response);
     });
+    handleSetShowActionsPinboardId(null);
   };
 
   handleRemovePinboard = e => {
@@ -31,17 +31,36 @@ export default class PinboardItem extends Component {
 
   handleActionsBtnClick = (e) => {
     const { handleSetShowActionsPinboardId, shouldShowActions, pinboard: { id } } = this.props;
-    handleSetShowActionsPinboardId(shouldShowActions ? null : id);
+    id && handleSetShowActionsPinboardId(shouldShowActions ? null : id);
   };
 
+  getTitle() {
+    const {
+      pinboard: { title, createdAt, hasTitlePendingChange },
+    } = this.props;
+    return hasTitlePendingChange ? 'Updating pinboard title...' : (title || `Created ${createdAt}`);
+  }
+
   render() {
-    const { pinboard: { title, createdAt, isCurrent, lastViewedAt }, shouldShowActions } = this.props;
+    const {
+      pinboard: { lastViewedAt, isCurrent, hasPendingChanges, hasTitlePendingChange },
+      shouldShowActions,
+    } = this.props;
 
     return (
       <div className={ cx('pinboard-item', { 'is-current': isCurrent }) }>
-        <PinboardLinkContainer className='pinboard-info' customComponent='div' onClick={ this.handlePinboardItemClick }>
-          <div className='pinboard-title'>{ title || `Created ${createdAt}` }</div>
-          <div className='pinboard-viewed-at'>Viewed { lastViewedAt }</div>
+        {
+          hasPendingChanges &&
+            <img src='/img/pinboard-loading-spinner.svg' className='spinner' alt='spinner' />
+        }
+        <PinboardLinkContainer
+          className={ cx('pinboard-info', { 'has-loading-spinner': hasPendingChanges }) }
+          customComponent='div' onClick={ this.handlePinboardItemClick }
+        >
+          <div className='pinboard-title'>{ this.getTitle() }</div>
+          {
+            lastViewedAt && !hasTitlePendingChange && <div className='pinboard-viewed-at'>Viewed { lastViewedAt }</div>
+          }
         </PinboardLinkContainer>
         <div className='pinboard-item-actions-container'>
           <div
@@ -75,6 +94,7 @@ PinboardItem.propTypes = {
   removePinboard: PropTypes.func,
   handleSetShowActionsPinboardId: PropTypes.func,
   shouldShowActions: PropTypes.bool,
+  hasTitlePendingChange: PropTypes.bool,
 };
 
 PinboardItem.defaultProps = {
@@ -84,4 +104,5 @@ PinboardItem.defaultProps = {
   removePinboard: noop,
   handleSetShowActionsPinboardId: noop,
   shouldShowActions: false,
+  hasTitlePendingChange: false,
 };

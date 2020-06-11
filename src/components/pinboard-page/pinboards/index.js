@@ -50,7 +50,7 @@ class Pinboards extends Component {
         {
           pinboards.map((pinboard) => (
             <PinboardItem
-              key={ pinboard.id }
+              key={ pinboard.key }
               pinboard={ pinboard }
               duplicatePinboard={ duplicatePinboard }
               removePinboard={ removePinboard }

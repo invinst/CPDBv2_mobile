@@ -62,6 +62,10 @@ const nthPinboardItem = (index) => {
         selector: `${parentSelector}//div[@class="remove-pinboard-btn"]`,
         locateStrategy: 'xpath',
       },
+      spinner: {
+        selector: `${parentSelector}//img[@class="spinner"]`,
+        locateStrategy: 'xpath',
+      },
     },
   };
 };

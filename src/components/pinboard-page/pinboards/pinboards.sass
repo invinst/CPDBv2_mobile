@@ -57,6 +57,13 @@ $pinboards-list-top: $pinboard-page-header-height + $pinboard-page-search-bar-he
       border-radius: 2px
       float: right
 
+  .spinner
+    display: inline-block
+    vertical-align: top
+    margin: 24px 7px 0 8px
+    width: 17px
+    height: 17px
+
   .pinboard-item
     display: block
     height: 64px
@@ -74,6 +81,7 @@ $pinboards-list-top: $pinboard-page-header-height + $pinboard-page-search-bar-he
         color: $blue-ribbon-color
         font-weight: 300
         line-height: 17px
+        font-size: 14px
         margin-bottom: 1px
         text-overflow: ellipsis
         white-space: nowrap
@@ -83,6 +91,13 @@ $pinboards-list-top: $pinboard-page-header-height + $pinboard-page-search-bar-he
         color: $boulder-color
         font-size: 12px
         line-height: 14px
+
+      &.has-loading-spinner
+        width: calc(100% - 96px)
+        font-size: 14px
+        line-height: 17px
+        font-weight: 300
+        padding: 24px 0 23px 0
 
     .pinboard-item-actions-container
       padding: 16px 8px

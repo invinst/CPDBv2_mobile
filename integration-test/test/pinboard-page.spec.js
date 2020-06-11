@@ -54,11 +54,6 @@ describe('Pinboard Page', function () {
 
     api.mockPut(
       '/api/v2/mobile/pinboards/5cd06f2b/', 200,
-      mockData.updatePinboardTitleParams,
-      mockData.updatedPinboardTitle
-    );
-    api.mockPut(
-      '/api/v2/mobile/pinboards/5cd06f2b/', 200,
       mockData.updatePinboardDescriptionParams,
       mockData.updatedPinboardDescription
     );
@@ -363,7 +358,53 @@ describe('Pinboard Page', function () {
       pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description');
     });
 
+    it('should display spinner after update title', function (client) {
+      api.mockPut(
+        '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+        mockData.updatePinboardTitleParams,
+        mockData.updatedPinboardTitle,
+        3000,
+      );
+
+      api.mock('GET', '/api/v2/mobile/pinboards/', 200, mockData.pinboardsList.list);
+
+      const pinboardPage = this.pinboardPage;
+      const firstPinboardItem = pinboardPage.section.pinboardsListSection.section.firstPinboardItem;
+      this.pinboardPage.click('@pinboardsListButton');
+      firstPinboardItem.waitForElementNotPresent('@spinner');
+      firstPinboardItem.expect.element('@title').text.to.equal('Pinboard Title');
+
+      this.pinboardPage.moveToElement('@header', 20, 20);
+      client.mouseButtonClick();
+
+      firstPinboardItem.waitForElementNotPresent('@title');
+
+      pinboardPage.expect.element('@pinboardTitle').to.be.visible;
+      pinboardPage.expect.element('@pinboardDescription').to.be.visible;
+      pinboardPage.getValue('@pinboardTitle', function (result) {
+        assert.equal(result.value, 'Pinboard Title');
+      });
+      pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description');
+      client.assert.urlContains('/pinboard-title/');
+
+      pinboardPage.click('@pinboardTitle');
+      pinboardPage.clearValue('@pinboardTitle');
+      pinboardPage.setValue('@pinboardTitle', 'Updated Title');
+      pinboardPage.click('@visualizationTitle');
+
+      this.pinboardPage.click('@pinboardsListButton');
+      firstPinboardItem.waitForElementPresent('@spinner');
+      firstPinboardItem.expect.element('@title').text.to.equal('Updating pinboard title...');
+      firstPinboardItem.waitForElementNotPresent('@spinner', 5000);
+      firstPinboardItem.expect.element('@title').text.to.equal('Updated Title');
+    });
+
     it('should update title and description after editing and out focusing them', function (client) {
+      api.mockPut(
+        '/api/v2/mobile/pinboards/5cd06f2b/', 200,
+        mockData.updatePinboardTitleParams,
+        mockData.updatedPinboardTitle
+      );
       const pinboardPage = this.pinboardPage;
       pinboardPage.expect.element('@pinboardTitle').to.be.visible;
       pinboardPage.expect.element('@pinboardDescription').to.be.visible;
@@ -1280,6 +1321,29 @@ describe('Pinboard Page', function () {
         this.pinboardPage.click('@pinboardsListButton');
         pinboardsListSection.waitForElementVisible('@createNewPinboardButton');
         pinboardsListSection.click('@createNewPinboardButton');
+
+        client.pause(100);
+        client.assert.urlContains('pinboard/823f123e/');
+      });
+
+      it('should display spinner on creating new pinboard', function (client) {
+        api.mockPost(
+          '/api/v2/mobile/pinboards/',
+          201,
+          undefined,
+          mockData.pinboardsList.pinboards[3],
+          3000,
+        );
+        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
+        const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
+        this.pinboardPage.click('@pinboardsListButton');
+
+        pinboardsListSection.waitForElementPresent('@createNewPinboardButton');
+        pinboardsListSection.click('@createNewPinboardButton');
+
+        firstPinboardItem.waitForElementPresent('@spinner');
+        firstPinboardItem.expect.element('@title').text.to.equal('Adding pinboard...');
+        firstPinboardItem.waitForElementNotPresent('@spinner', 5000);
 
         client.pause(100);
         client.assert.urlContains('pinboard/823f123e/');
