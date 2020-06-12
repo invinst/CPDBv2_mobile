@@ -230,7 +230,7 @@ describe('ComplaintPageTest', function () {
 
     it('should go to search page when click on investigator which is not an officer', function (client) {
       this.complaintPage.click('@secondInvestigator');
-      client.assert.urlContains('/search/?terms=Edward%20May');
+      client.assert.urlContains('/search/?q=Edward%20May');
     });
 
     it('should show proper cr location', function () {
