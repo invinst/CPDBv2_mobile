@@ -15,7 +15,7 @@ import {
   fetchPinboardTRRs,
 } from 'actions/pinboard';
 import loadPaginatedData from 'utils/load-paginated-data';
-import { PINBOARD_PATH } from 'constants/paths';
+import { PINBOARD_PATH, PINBOARD_REQUEST_PATTERN } from 'constants/paths';
 import config from 'config';
 import browserHistory from 'utils/history';
 
@@ -27,6 +27,14 @@ export const generatePinboardUrl = pinboard => {
 
   const title = isEmpty(pinboard['title']) ? 'Untitled Pinboard' : pinboard['title'];
   return `${PINBOARD_PATH}${pinboard.id}/${kebabCase(title)}/`;
+};
+
+export const getPinboardIdFromRequestUrl = url => {
+  if (url === undefined) {
+    return url;
+  }
+  const matchUrl = url.match(PINBOARD_REQUEST_PATTERN);
+  return matchUrl ? matchUrl[1] : null;
 };
 
 export const dispatchFetchPinboardPageData = (store, pinboardId) => {

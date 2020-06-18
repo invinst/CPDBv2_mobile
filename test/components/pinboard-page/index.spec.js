@@ -49,11 +49,13 @@ describe('<PinboardPage />', function () {
 
   it('should not render the pinboard if initialRequested is false', function () {
     const wrapper = mountWithRouter(
-      <PinboardPage
-        params={ { pinboardId: '5cd06f2b' } }
-        pinboard={ { id: '5cd06f2b' } }
-        initialRequested={ false }
-      />
+      <Provider store={ store }>
+        <PinboardPage
+          params={ { pinboardId: '5cd06f2b' } }
+          pinboard={ { id: '5cd06f2b' } }
+          initialRequested={ false }
+        />
+      </Provider>
     );
 
     wrapper.find('pinboard-content').exists().should.be.false();
@@ -61,12 +63,14 @@ describe('<PinboardPage />', function () {
 
   it('should render LoadingSpiner component if pinboardPageLoading is true', function () {
     const wrapper = mountWithRouter(
-      <PinboardPage
-        params={ { pinboardId: '5cd06f2b' } }
-        pinboard={ { id: '5cd06f2b' } }
-        initialRequested={ true }
-        pinboardPageLoading={ true }
-      />
+      <Provider store={ store }>
+        <PinboardPage
+          params={ { pinboardId: '5cd06f2b' } }
+          pinboard={ { id: '5cd06f2b' } }
+          initialRequested={ true }
+          pinboardPageLoading={ true }
+        />
+      </Provider>
     );
 
     wrapper.find(LoadingSpinner).exists().should.be.true();
@@ -231,13 +235,15 @@ describe('<PinboardPage />', function () {
     const requestCMSSpy = spy();
 
     mountWithRouter(
-      <PinboardPage
-        params={ { pinboardId: '5cd06f2b' } }
-        pinboard={ { id: '5cd06f2b' } }
-        initialRequested={ false }
-        hasCMS={ false }
-        requestCMS={ requestCMSSpy }
-      />
+      <Provider store={ store }>
+        <PinboardPage
+          params={ { pinboardId: '5cd06f2b' } }
+          pinboard={ { id: '5cd06f2b' } }
+          initialRequested={ false }
+          hasCMS={ false }
+          requestCMS={ requestCMSSpy }
+        />
+      </Provider>
     );
 
     requestCMSSpy.should.be.calledOnce();
@@ -247,13 +253,15 @@ describe('<PinboardPage />', function () {
     const requestCMSSpy = spy();
 
     mountWithRouter(
-      <PinboardPage
-        params={ { pinboardId: '5cd06f2b' } }
-        pinboard={ { id: '5cd06f2b' } }
-        initialRequested={ false }
-        hasCMS={ true }
-        requestCMS={ requestCMSSpy }
-      />
+      <Provider store={ store }>
+        <PinboardPage
+          params={ { pinboardId: '5cd06f2b' } }
+          pinboard={ { id: '5cd06f2b' } }
+          initialRequested={ false }
+          hasCMS={ true }
+          requestCMS={ requestCMSSpy }
+        />
+      </Provider>
     );
 
     requestCMSSpy.should.not.be.calledOnce();

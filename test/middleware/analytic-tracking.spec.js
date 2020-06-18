@@ -1,6 +1,6 @@
 import { stub } from 'sinon';
 
-import trackingMiddleware from 'middleware/tracking-middleware';
+import analyticTrackingMiddleware from 'middleware/analytic-tracking-middleware';
 import { ROUTE_CHANGED } from 'actions/navigation';
 import {
   SEARCH_QUERY_CHANGED,
@@ -23,7 +23,7 @@ describe('trackingMiddleware', function () {
       },
     };
 
-    trackingMiddleware({})(action => dispatched = action)(dispatchAction);
+    analyticTrackingMiddleware({})(action => dispatched = action)(dispatchAction);
 
     dispatched.should.eql(dispatchAction);
     tracking.trackPageView.should.be.calledWith('abc');
@@ -38,7 +38,7 @@ describe('trackingMiddleware', function () {
       payload: 'abc',
     };
 
-    trackingMiddleware({})(action => dispatched = action)(dispatchAction);
+    analyticTrackingMiddleware({})(action => dispatched = action)(dispatchAction);
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSearchQuery.should.be.calledWith('abc');
@@ -53,7 +53,7 @@ describe('trackingMiddleware', function () {
       payload: { 'CR': [{ id: 1 }] },
     };
 
-    trackingMiddleware({})(action => dispatched = action)(dispatchAction);
+    analyticTrackingMiddleware({})(action => dispatched = action)(dispatchAction);
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSearchResultsCount.should.be.calledWith(1);
@@ -71,7 +71,7 @@ describe('trackingMiddleware', function () {
       },
     };
 
-    trackingMiddleware({})(action => dispatched = action)(dispatchAction);
+    analyticTrackingMiddleware({})(action => dispatched = action)(dispatchAction);
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSearchResultsCount.should.be.calledWith(3);
@@ -90,7 +90,7 @@ describe('trackingMiddleware', function () {
       request: { params: { contentType: 'OFFICER', term: '123' } },
     };
 
-    trackingMiddleware({})(action => dispatched = action)(dispatchAction);
+    analyticTrackingMiddleware({})(action => dispatched = action)(dispatchAction);
 
     dispatched.should.eql(dispatchAction);
     tracking.trackSingleSearchResults.should.be.calledWith('OFFICER', '123', 2);

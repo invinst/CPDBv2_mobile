@@ -10,7 +10,6 @@ export const CONFIRM_MESSAGE = `
 export default class PinboardLink extends Component {
   handleClick = e => {
     const { hasPendingChanges, onClick } = this.props;
-    e.stopPropagation();
     if (!hasPendingChanges || window.confirm(CONFIRM_MESSAGE)) {
       onClick(e);
     }
