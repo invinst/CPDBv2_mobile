@@ -17,6 +17,8 @@ export const PINBOARD_GEOGRAPHIC_REDIRECT_ROUTER_PATH = '/geographic/pinboard/:p
 export const EMBED_TOP_OFFICER_ROUTER_PATH = '/embed/top-officers-page';
 export const EMBED_OFFICERS_ROUTER_PATH = '/embed/officers/';
 
+export const PINBOARD_REQUEST_PATTERN = /.*\/pinboards\/([a-fA-F0-9]+)\/.*/;
+
 export const PINBOARD_PAGE_PATTERN = /.*\/pinboard\/([a-fA-F0-9]+)\/.*/;
 export const OFFICER_PAGE_PATTERN = /^\/officer\/\d+\/.*/;
 export const CR_PAGE_PATTERN = /^\/complaint\/\d+\/.*/;

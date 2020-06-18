@@ -1030,9 +1030,24 @@ const pinboardeeee7777TRRsData = [];
 
 const pinboardsList = {
   list: [
-    { 'id': '23ffd689', 'title': 'Watts Crew', 'created_at': '2020-05-06' },
-    { 'id': '7e1e3c88', 'title': '', 'created_at': '2020-08-07' },
-    { 'id': '3a160339', 'title': '', 'created_at': '2020-12-20' },
+    {
+      'id': '5cd06f2b',
+      'title': 'Pinboard Title',
+      'created_at': '2020-05-06',
+      'last_viewed_at': '2020-06-10T05:45:00.967Z',
+    },
+    {
+      'id': '7e1e3c88',
+      'title': '',
+      'created_at': '2020-08-07',
+      'last_viewed_at': '2020-06-08T06:15:00.967Z',
+    },
+    {
+      'id': '3a160339',
+      'title': '',
+      'created_at': '2020-12-20',
+      'last_viewed_at': '2020-06-08T02:30:30.967Z',
+    },
   ],
   pinboards: [
     {
@@ -1082,15 +1097,35 @@ const pinboardsList = {
     },
   ],
   duplicatePinboardRequest: {
-    'source_pinboard_id': '23ffd689',
+    'source_pinboard_id': '5cd06f2b',
   },
   duplicatePinboardResponse: {
     'id': '283fea1f',
-    'title': 'Watts Crew',
+    'title': 'Pinboard Title copy',
     'officer_ids': ['1234'],
     'crids': ['1234567'],
     'trr_ids': ['1234'],
     'description': 'This is Watts Crew',
+  },
+  createdPinboard: {
+    'id': '273f2a',
+    'title': '',
+    'officer_ids': [],
+    'crids': [],
+    'trr_ids': [],
+    'description': '',
+    'example_pinboards': [
+      {
+        'id': 'b20c2c36',
+        'title': 'Watts Crew',
+        'description': '',
+      },
+      {
+        'id': '22e66085',
+        'title': 'Skullcap Crew',
+        'description': '',
+      },
+    ],
   },
 };
 

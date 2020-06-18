@@ -37,6 +37,7 @@ const DEFAULT_PINBOARD_STATUSES = {
   saving: false,
   needRefreshData: false,
   hasPendingChanges: false,
+  hasTitlePendingChange: false,
 };
 
 const defaultState = {
@@ -56,6 +57,10 @@ const getFormatId = (attr) => {
 
 const hasPendingChanges = (currentPinboard, pinboard) => (
   _.isEmpty(pinboard) || !_.isEqual(getRequestPinboard(currentPinboard), getRequestPinboard(pinboard))
+);
+
+const hasTitlePendingChange = (currentPinboard, pinboard) => (
+  _.get(currentPinboard, 'title') !== _.get(pinboard, 'title')
 );
 
 export default handleActions({
@@ -117,6 +122,7 @@ export default handleActions({
       ...state,
       saving: false,
       hasPendingChanges: hasPendingChanges(state, action.payload),
+      hasTitlePendingChange: hasTitlePendingChange(state, action.payload),
       'example_pinboards': action.payload['example_pinboards'],
     };
   },
@@ -145,6 +151,7 @@ export default handleActions({
       ...state,
       [action.payload.attr]: action.payload.value,
       hasPendingChanges: true,
+      hasTitlePendingChange: action.payload.attr === 'title',
     };
   },
   [ADD_ITEM_TO_PINBOARD_STATE]: (state, action) => {

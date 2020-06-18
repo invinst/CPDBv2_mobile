@@ -1,3 +1,6 @@
+import moment from 'moment';
+import { useFakeTimers } from 'sinon';
+
 import {
   showSelectPinboardsSelector,
   rawPinboardsSelector,
@@ -95,6 +98,8 @@ describe('pinboards common selectors', function () {
 
     context('current pinboard is on pinboards list', function () {
       it('should select correct value', function () {
+        useFakeTimers();
+        const currentTimeISOString = moment().toISOString();
         rawPinboardsSelector({
           pinboardPage: {
             pinboards: [
@@ -131,6 +136,7 @@ describe('pinboards common selectors', function () {
             'id': '65fbab53',
             'title': 'New title',
             'created_at': '2020-05-21',
+            'last_viewed_at': currentTimeISOString,
             'crids': [],
             'officer_ids': [123],
             'trr_ids': [],

@@ -64,3 +64,20 @@ export const put = (url, types) => ((data, adapter, cancelToken) => {
     },
   };
 });
+
+
+export const deleteRequest = (url, types) => ((data, adapter, cancelToken) => {
+  const cancelTokenParam = isUndefined(cancelToken) ? {} : { cancelToken };
+  return {
+    types,
+    payload: {
+      request: {
+        method: 'DELETE',
+        url,
+        data,
+        adapter,
+        ...cancelTokenParam,
+      },
+    },
+  };
+});
