@@ -288,6 +288,7 @@ module.exports = {
       selector: summarySectionSelectorByTitle('GEOGRAPHIC MAP'),
     },
     complaintSummaryWidget: summaryWidgetSection('COMPLAINT SUMMARY'),
+    trrSummaryWidget: summaryWidgetSection('TACTICAL RESPONSE REPORT SUMMARY'),
     graphNodes: {
       selector: '.node',
     },

@@ -9,7 +9,7 @@ const { TIMEOUT } = require(__dirname + '/../constants');
 var mockData = require(__dirname + '/../mock-data/pinboard-page');
 const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationResponse');
 const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
-const { complaintSummary } = require(__dirname + '/../mock-data/widgets');
+const { complaintSummary, trrSummary } = require(__dirname + '/../mock-data/widgets');
 
 
 describe('Pinboard Page', function () {
@@ -1697,6 +1697,36 @@ describe('Pinboard Page', function () {
         complaintSummaryWidget.expect.element('@firstSummaryItemCount').text.to.equal('10');
         complaintSummaryWidget.expect.element('@secondSummaryItemTitle').text.to.equal('Unknown');
         complaintSummaryWidget.expect.element('@secondSummaryItemCount').text.to.equal('8');
+      });
+    });
+
+    context('TRR Summary section', function () {
+      it('should render TRR summary section', function (client) {
+        api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trr-summary/', 200, trrSummary, 3000);
+        client.resizeWindow(500, 1000);
+        const trrSummaryWidget = this.pinboardPage.section.trrSummaryWidget;
+
+        client.assertInViewport(trrSummaryWidget.selector, trrSummaryWidget.locateStrategy, false);
+
+        this.pinboardPage.waitForElementVisible('@navigationNextButton');
+        this.pinboardPage.click('@navigationNextButton');
+        this.pinboardPage.waitForElementVisible('@navigationNextButton');
+        this.pinboardPage.click('@navigationNextButton');
+        client.waitForAnimationEnd(trrSummaryWidget.selector, trrSummaryWidget.locateStrategy);
+        client.assertInViewport(trrSummaryWidget.selector, trrSummaryWidget.locateStrategy);
+
+        trrSummaryWidget.expect.element('@spinner').to.be.visible;
+        trrSummaryWidget.expect.element('@spinner').to.not.be.present.before(5000);
+
+        trrSummaryWidget.expect.element('@widgetTitle').text.to.equal('TACTICAL RESPONSE REPORT SUMMARY');
+        const summaryItems = trrSummaryWidget.elements.summaryItems;
+        client.elements(summaryItems.locateStrategy, summaryItems.selector, function (summaryItems) {
+          client.assert.equal(summaryItems.value.length, 9);
+        });
+        trrSummaryWidget.expect.element('@firstSummaryItemTitle').text.to.equal('Unknown');
+        trrSummaryWidget.expect.element('@firstSummaryItemCount').text.to.equal('141');
+        trrSummaryWidget.expect.element('@secondSummaryItemTitle').text.to.equal('Physical Force - Holding');
+        trrSummaryWidget.expect.element('@secondSummaryItemCount').text.to.equal('56');
       });
     });
   });

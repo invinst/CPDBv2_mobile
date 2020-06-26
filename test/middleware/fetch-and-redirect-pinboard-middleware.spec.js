@@ -16,6 +16,7 @@ import {
   fetchFirstPagePinboardGeographicCrs,
   fetchFirstPagePinboardGeographicTrrs,
   fetchComplaintSummary,
+  fetchTRRSummary,
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
@@ -28,12 +29,13 @@ import {
 
 describe('fetchAndRedirectPinboardMiddleware', function () {
   const checkFetchPinboardData = (dispatch, pinboardId) => {
-    dispatch.callCount.should.equal(11);
+    dispatch.callCount.should.equal(12);
     dispatch.should.be.calledWith(fetchPinboardComplaints(pinboardId));
     dispatch.should.be.calledWith(fetchPinboardOfficers(pinboardId));
     dispatch.should.be.calledWith(fetchPinboardTRRs(pinboardId));
     dispatch.should.be.calledWith(fetchPinboardSocialGraph(pinboardId));
     dispatch.should.be.calledWith(fetchComplaintSummary(pinboardId));
+    dispatch.should.be.calledWith(fetchTRRSummary(pinboardId));
     dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicCrs({ 'pinboard_id': pinboardId }));
     dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicTrrs({ 'pinboard_id': pinboardId }));
     dispatch.should.be.calledWith(fetchPinboardRelevantDocuments(pinboardId));

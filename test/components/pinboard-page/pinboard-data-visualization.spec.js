@@ -45,6 +45,10 @@ describe('PinboardDataVisualization component', function () {
           { category: 'Operation/Personnel Violations', count: 10 },
           { category: 'Illegal Search', count: 4 },
         ],
+        trrSummary: [
+          { 'force_type': 'Unknown', count: 141 },
+          { 'force_type': 'Taser', count: 13 },
+        ],
       },
     },
   });
@@ -146,6 +150,52 @@ describe('PinboardDataVisualization component', function () {
             <PinboardDataVisualization
               pinboard={ { id: '1234abcd' } }
               hasComplaintSummary={ false }
+            />
+          </MemoryRouter>
+        </Provider>
+      );
+
+      const horizontalScrolling = wrapper.find('HorizontalScrolling');
+      horizontalScrolling.exists().should.be.true();
+
+      horizontalScrolling.find('SummaryWidget').exists().should.be.false();
+    });
+  });
+
+  context('hasTRRSummary is true', function () {
+    it('should render TRRSummaryContainer', function () {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <MemoryRouter>
+            <PinboardDataVisualization
+              pinboard={ { id: '1234abcd' } }
+              hasTRRSummary={ true }
+            />
+          </MemoryRouter>
+        </Provider>
+      );
+
+      const horizontalScrolling = wrapper.find('HorizontalScrolling');
+      horizontalScrolling.exists().should.be.true();
+
+      const trrSummaryWidget = horizontalScrolling.find('Widget').last();
+      trrSummaryWidget.prop('widgetTitle').should.equal('TACTICAL RESPONSE REPORT SUMMARY');
+      const trrSummary = trrSummaryWidget.find('SummaryWidget');
+      trrSummary.prop('summaryItems').should.deepEqual([
+        { title: 'Unknown', count: 141 },
+        { title: 'Taser', count: 13 },
+      ]);
+    });
+  });
+
+  context('hasTRRSummary is false', function () {
+    it('should not render TRRSummaryContainer', function () {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <MemoryRouter>
+            <PinboardDataVisualization
+              pinboard={ { id: '1234abcd' } }
+              hasTRRSummary={ false }
             />
           </MemoryRouter>
         </Provider>

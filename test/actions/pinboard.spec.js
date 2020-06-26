@@ -33,6 +33,7 @@ import {
   removePinboard,
   viewPinboard,
   fetchComplaintSummary,
+  fetchTRRSummary,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -115,6 +116,9 @@ import {
   PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_START,
   PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_SUCCESS,
   PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_FAILURE,
+  PINBOARD_TRR_SUMMARY_FETCH_REQUEST_START,
+  PINBOARD_TRR_SUMMARY_FETCH_REQUEST_SUCCESS,
+  PINBOARD_TRR_SUMMARY_FETCH_REQUEST_FAILURE,
 } from 'actions/pinboard';
 import {
   PINBOARDS_API_ENDPOINT,
@@ -860,6 +864,25 @@ describe('pinboard actions', function () {
             adapter: undefined,
             params: undefined,
             url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}84ab47/complaint-summary/`,
+          },
+        },
+      });
+    });
+  });
+
+  describe('fetchTRRSummary', function () {
+    it('should return correct action', function () {
+      fetchTRRSummary('84ab47').should.deepEqual({
+        types: [
+          PINBOARD_TRR_SUMMARY_FETCH_REQUEST_START,
+          PINBOARD_TRR_SUMMARY_FETCH_REQUEST_SUCCESS,
+          PINBOARD_TRR_SUMMARY_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            adapter: undefined,
+            params: undefined,
+            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}84ab47/trr-summary/`,
           },
         },
       });
