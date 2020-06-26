@@ -4,7 +4,7 @@ import { stub, spy } from 'sinon';
 import { lorem, random } from 'faker';
 
 import withPinnable from 'components/common/with-pinnable';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 describe('ItemPinButton component', function () {
@@ -63,8 +63,8 @@ describe('ItemPinButton component', function () {
       <TestComponentWithPinnable
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardStub }
         items={ [
-          { type: constants.PINBOARD_PAGE.CR, id: firstCRID, isPinned: true },
-          { type: constants.PINBOARD_PAGE.CR, id: secondCRID, isPinned: true },
+          { type: PINBOARD_PAGE.CR, id: firstCRID, isPinned: true },
+          { type: PINBOARD_PAGE.CR, id: secondCRID, isPinned: true },
         ] }
       />
     );
@@ -74,12 +74,12 @@ describe('ItemPinButton component', function () {
 
     addOrRemoveItemInPinboardStub.should.be.calledTwice();
     addOrRemoveItemInPinboardStub.should.be.calledWith({
-      type: constants.PINBOARD_PAGE.CR,
+      type: PINBOARD_PAGE.CR,
       id: firstCRID,
       isPinned: true,
     });
     addOrRemoveItemInPinboardStub.should.be.calledWith({
-      type: constants.PINBOARD_PAGE.CR,
+      type: PINBOARD_PAGE.CR,
       id: secondCRID,
       isPinned: true,
     });
@@ -92,8 +92,8 @@ describe('ItemPinButton component', function () {
       <TestComponentWithPinnable
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardStub }
         items={ [
-          { type: constants.PINBOARD_PAGE.CR, id: firstCRID, isPinned: false },
-          { type: constants.PINBOARD_PAGE.CR, id: secondCRID, isPinned: false },
+          { type: PINBOARD_PAGE.CR, id: firstCRID, isPinned: false },
+          { type: PINBOARD_PAGE.CR, id: secondCRID, isPinned: false },
         ] }
       />
     );
@@ -103,12 +103,12 @@ describe('ItemPinButton component', function () {
 
     addOrRemoveItemInPinboardStub.should.be.calledTwice();
     addOrRemoveItemInPinboardStub.should.be.calledWith({
-      type: constants.PINBOARD_PAGE.CR,
+      type: PINBOARD_PAGE.CR,
       id: firstCRID,
       isPinned: false,
     });
     addOrRemoveItemInPinboardStub.should.be.calledWith({
-      type: constants.PINBOARD_PAGE.CR,
+      type: PINBOARD_PAGE.CR,
       id: secondCRID,
       isPinned: false,
     });
@@ -121,8 +121,8 @@ describe('ItemPinButton component', function () {
       <TestComponentWithPinnable
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboardStub }
         items={ [
-          { type: constants.PINBOARD_PAGE.CR, id: firstCRID, isPinned: true },
-          { type: constants.PINBOARD_PAGE.CR, id: secondCRID, isPinned: false },
+          { type: PINBOARD_PAGE.CR, id: firstCRID, isPinned: true },
+          { type: PINBOARD_PAGE.CR, id: secondCRID, isPinned: false },
         ] }
       />
     );
@@ -132,7 +132,7 @@ describe('ItemPinButton component', function () {
 
     addOrRemoveItemInPinboardStub.should.be.calledOnce();
     addOrRemoveItemInPinboardStub.should.be.calledWith({
-      type: constants.PINBOARD_PAGE.CR,
+      type: PINBOARD_PAGE.CR,
       id: secondCRID,
       isPinned: false,
     });

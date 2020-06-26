@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 import { COMPLAINT_PATH } from 'constants/paths';
 import style from './complaint-document-card.sass';
 import ItemPinButton from 'components/common/item-pin-button';
@@ -35,7 +35,7 @@ class ComplaintDocumentCard extends React.Component {
           addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
           showHint={ false }
           item={ {
-            type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+            type: PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
             id: allegation.crid,
             isPinned: allegation.isPinned,
           } }

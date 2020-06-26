@@ -4,12 +4,11 @@ import React, { Component } from 'react';
 import { get, noop } from 'lodash';
 import cx from 'classnames';
 
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 import styles from './with-undo-card.sass';
 
-const UNDO_CARD_THEMES = constants.PINBOARD_PAGE.UNDO_CARD_THEMES;
-const UNDO_CARD_VISIBLE_TIME = constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME;
 
+const UNDO_CARD_THEMES = PINBOARD_PAGE.UNDO_CARD_THEMES;
 
 export default function withUndoCard(
   WrappedComponent,
@@ -50,7 +49,7 @@ export default function withUndoCard(
         });
 
         get(this.props, actionName, noop)(item);
-      }, UNDO_CARD_VISIBLE_TIME);
+      }, PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME);
     };
 
     undo = () => {

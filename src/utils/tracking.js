@@ -2,7 +2,7 @@ import { throttle, isEmpty, pick } from 'lodash';
 
 import axiosClient from 'utils/axios-client';
 import { v2Url } from 'utils/url-util';
-import constants from 'constants';
+import { TRACKING_API_ENDPOINT } from 'constants';
 
 
 const analyticTrackingParams = ({ clickyData, gaData }) => {
@@ -34,7 +34,7 @@ const analyticTracking = ({ clickyData, gaData }) => {
   }
 
   if (!isEmpty(serverSideTrackingData)) {
-    axiosClient.post(v2Url(constants.TRACKING_API_ENDPOINT), analyticTrackingParams(serverSideTrackingData));
+    axiosClient.post(v2Url(TRACKING_API_ENDPOINT), analyticTrackingParams(serverSideTrackingData));
   }
 
   if (global.clicky && !clickyData.defaultTracking) {

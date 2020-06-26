@@ -1,7 +1,7 @@
 import { filter, find, get, isUndefined } from 'lodash';
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import constants from 'constants';
+import { MONTH_NAME_DAY_YEAR_FORMAT } from 'constants';
 import {
   isItemPinned,
   pinboardPinnedItemsMapping,
@@ -30,7 +30,7 @@ export const rawPinboardsSelector = createSelector(
 const pinboardItemTransform = (pinboard, id, itemType) => ({
   id: pinboard['id'].toString(),
   title: get(pinboard, 'title', ''),
-  createdAt: moment(pinboard['created_at']).format(constants.MONTH_NAME_DAY_YEAR_FORMAT),
+  createdAt: moment(pinboard['created_at']).format(MONTH_NAME_DAY_YEAR_FORMAT),
   isPinned: isItemPinned(itemType, id, pinboardPinnedItemsMapping(pinboardPinnedItemsTransform(pinboard))),
   isCurrent: get(pinboard, 'is_current', false),
 });

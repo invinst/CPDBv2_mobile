@@ -3,7 +3,13 @@ import { CancelToken } from 'axios';
 import { map, entries } from 'lodash';
 
 import { get, post, put, deleteRequest } from 'actions/common/async-action';
-import constants from 'constants';
+import {
+  PINBOARDS_API_ENDPOINT,
+  SOCIAL_GRAPH_API_ENDPOINT,
+  SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT,
+  SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT,
+  PINBOARD_PAGE_CMS_API_ENDPOINT,
+} from 'constants';
 import { v2Url } from 'utils/url-util';
 import { REQUEST_CANCEL_MESSAGE } from 'utils/axios-client';
 
@@ -160,7 +166,7 @@ const cancelFetchRequests = (newRequest) => (...args) => {
 
 export const createPinboard = cancelFetchRequests(
   ({ officerIds, crids, trrIds }) => post(
-    v2Url(constants.PINBOARDS_API_ENDPOINT),
+    v2Url(PINBOARDS_API_ENDPOINT),
     [
       PINBOARD_CREATE_REQUEST_START,
       PINBOARD_CREATE_REQUEST_SUCCESS,
@@ -172,7 +178,7 @@ export const createPinboard = cancelFetchRequests(
 
 export const createNewPinboard = cancelFetchRequests(
   ({ officerIds, crids, trrIds, sourcePinboardId }) => post(
-    v2Url(constants.PINBOARDS_API_ENDPOINT),
+    v2Url(PINBOARDS_API_ENDPOINT),
     [
       PINBOARD_CREATE_NEW_REQUEST_START,
       PINBOARD_CREATE_NEW_REQUEST_SUCCESS,
@@ -184,7 +190,7 @@ export const createNewPinboard = cancelFetchRequests(
 
 export const updatePinboard = cancelFetchRequests(
   ({ id, title, description, officerIds, crids, trrIds }) => put(
-    `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/`,
+    `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/`,
     [
       PINBOARD_UPDATE_REQUEST_START,
       PINBOARD_UPDATE_REQUEST_SUCCESS,
@@ -196,7 +202,7 @@ export const updatePinboard = cancelFetchRequests(
 
 export const updatePinboardFromSource = cancelFetchRequests(
   (id, sourcePinboardId) => put(
-    `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/`,
+    `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/`,
     [
       PINBOARD_UPDATE_FROM_SOURCE_REQUEST_START,
       PINBOARD_UPDATE_FROM_SOURCE_REQUEST_SUCCESS,
@@ -208,7 +214,7 @@ export const updatePinboardFromSource = cancelFetchRequests(
 
 export const fetchPinboard = cancelFetchRequests(
   id => get(
-    `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/`,
+    `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/`,
     [
       PINBOARD_FETCH_REQUEST_START,
       PINBOARD_FETCH_REQUEST_SUCCESS,
@@ -219,7 +225,7 @@ export const fetchPinboard = cancelFetchRequests(
 );
 
 export const fetchPinboardComplaints = id => get(
-  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/complaints/`,
+  `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/complaints/`,
   [
     PINBOARD_COMPLAINTS_FETCH_REQUEST_START,
     PINBOARD_COMPLAINTS_FETCH_REQUEST_SUCCESS,
@@ -230,7 +236,7 @@ export const fetchPinboardComplaints = id => get(
 )();
 
 export const fetchPinboardOfficers = id => get(
-  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/officers/`,
+  `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/officers/`,
   [
     PINBOARD_OFFICERS_FETCH_REQUEST_START,
     PINBOARD_OFFICERS_FETCH_REQUEST_SUCCESS,
@@ -241,7 +247,7 @@ export const fetchPinboardOfficers = id => get(
 )();
 
 export const fetchPinboardTRRs = id => get(
-  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/trrs/`,
+  `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/trrs/`,
   [
     PINBOARD_TRRS_FETCH_REQUEST_START,
     PINBOARD_TRRS_FETCH_REQUEST_SUCCESS,
@@ -252,7 +258,7 @@ export const fetchPinboardTRRs = id => get(
 )();
 
 export const fetchPinboardSocialGraph = id => get(
-  `${v2Url(constants.SOCIAL_GRAPH_API_ENDPOINT)}network/?pinboard_id=${id}`,
+  `${v2Url(SOCIAL_GRAPH_API_ENDPOINT)}network/?pinboard_id=${id}`,
   [
     PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_START,
     PINBOARD_SOCIAL_GRAPH_FETCH_REQUEST_SUCCESS,
@@ -265,7 +271,7 @@ export const fetchPinboardSocialGraph = id => get(
 export const fetchPinboardGeographic = createAction(PINBOARD_GEOGRAPHIC_FETCH_REQUEST_START);
 
 export const fetchFirstPagePinboardGeographicCrs = (params) => get(
-  v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT),
+  v2Url(SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT),
   [
     FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_START,
     FIRST_PAGE_PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_SUCCESS,
@@ -276,7 +282,7 @@ export const fetchFirstPagePinboardGeographicCrs = (params) => get(
 )(params);
 
 export const fetchFirstPagePinboardGeographicTrrs = (params) => get(
-  v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT),
+  v2Url(SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT),
   [
     FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_START,
     FIRST_PAGE_PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_SUCCESS,
@@ -287,7 +293,7 @@ export const fetchFirstPagePinboardGeographicTrrs = (params) => get(
 )(params);
 
 export const fetchOtherPagesPinboardGeographicCrs = (params) => get(
-  v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT),
+  v2Url(SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT),
   [
     PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_START,
     PINBOARD_GEOGRAPHIC_CRS_FETCH_REQUEST_SUCCESS,
@@ -298,7 +304,7 @@ export const fetchOtherPagesPinboardGeographicCrs = (params) => get(
 )(params);
 
 export const fetchOtherPagesPinboardGeographicTrrs = (params) => get(
-  v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT),
+  v2Url(SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT),
   [
     PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_START,
     PINBOARD_GEOGRAPHIC_TRRS_FETCH_REQUEST_SUCCESS,
@@ -310,7 +316,7 @@ export const fetchOtherPagesPinboardGeographicTrrs = (params) => get(
 
 const getWithPaginate = (pinboardRelevantAPI, types) => (id, params) => {
   const queryString = map(entries(params), ([key, val]) => `${key}=${val}`).join('&');
-  const url = `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/${pinboardRelevantAPI}/?${queryString}`;
+  const url = `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/${pinboardRelevantAPI}/?${queryString}`;
 
   return get(url, types, pinboardSource && pinboardSource.token)();
 };
@@ -344,7 +350,7 @@ export const fetchPinboardRelevantComplaints = getWithPaginate(
 );
 
 export const fetchLatestRetrievedPinboard = get(
-  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}latest-retrieved-pinboard/`,
+  `${v2Url(PINBOARDS_API_ENDPOINT)}latest-retrieved-pinboard/`,
   [
     PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_START,
     PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
@@ -353,7 +359,7 @@ export const fetchLatestRetrievedPinboard = get(
 );
 
 export const fetchPinboards = (params) => get(
-  v2Url(constants.PINBOARDS_API_ENDPOINT),
+  v2Url(PINBOARDS_API_ENDPOINT),
   [
     PINBOARDS_FETCH_REQUEST_START,
     PINBOARDS_FETCH_REQUEST_SUCCESS,
@@ -362,7 +368,7 @@ export const fetchPinboards = (params) => get(
 )(params);
 
 export const removePinboard = (id) => deleteRequest(
-  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/`,
+  `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/`,
   [
     REMOVE_PINBOARD_REQUEST_START,
     REMOVE_PINBOARD_REQUEST_SUCCESS,
@@ -371,7 +377,7 @@ export const removePinboard = (id) => deleteRequest(
 )();
 
 export const viewPinboard = (id) => post(
-  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/view/`,
+  `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/view/`,
   [
     VIEW_PINBOARD_REQUEST_START,
     VIEW_PINBOARD_REQUEST_SUCCESS,
@@ -387,6 +393,6 @@ export const PINBOARD_PAGE_CMS_REQUEST_START = 'PINBOARD_PAGE_CMS_REQUEST_START'
 export const PINBOARD_PAGE_CMS_REQUEST_SUCCESS = 'PINBOARD_PAGE_CMS_REQUEST_SUCCESS';
 export const PINBOARD_PAGE_CMS_REQUEST_FAILURE = 'PINBOARD_PAGE_CMS_REQUEST_FAILURE';
 
-export const requestCMS = get(v2Url(constants.PINBOARD_PAGE_CMS_API_ENDPOINT), [
+export const requestCMS = get(v2Url(PINBOARD_PAGE_CMS_API_ENDPOINT), [
   PINBOARD_PAGE_CMS_REQUEST_START, PINBOARD_PAGE_CMS_REQUEST_SUCCESS, PINBOARD_PAGE_CMS_REQUEST_FAILURE,
 ]);

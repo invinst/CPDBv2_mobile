@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 
-import constants from 'constants';
+import { CAROUSEL_TYPES } from 'constants';
 import CarouselWrapper from '../carousel-wrapper';
 import ComplaintSummaryCard from './complaint-summary-card';
 
@@ -24,7 +24,7 @@ export default class ComplaintSummaries extends Component {
       <CarouselWrapper
         title={ title }
         description={ description }
-        trackingContentType={ constants.CAROUSEL_TYPES.COMPLAINT }
+        trackingContentType={ CAROUSEL_TYPES.COMPLAINT }
       >
         {
           complaintSummaries.map(allegation => (

@@ -1,18 +1,23 @@
-import constants from 'constants';
+import { OFFICERS_API_ENDPOINT } from 'constants';
 import { v2Url } from 'utils/url-util';
-import * as actions from 'actions/embed';
+import {
+  requestOfficers,
+  OFFICERS_REQUEST_START,
+  OFFICERS_REQUEST_SUCCESS,
+  OFFICERS_REQUEST_FAILURE,
+} from 'actions/embed';
 
 describe('officers', function () {
   it('should return right action', function () {
-    actions.requestOfficers('1,2,3').should.eql({
+    requestOfficers('1,2,3').should.eql({
       types: [
-        actions.OFFICERS_REQUEST_START,
-        actions.OFFICERS_REQUEST_SUCCESS,
-        actions.OFFICERS_REQUEST_FAILURE,
+        OFFICERS_REQUEST_START,
+        OFFICERS_REQUEST_SUCCESS,
+        OFFICERS_REQUEST_FAILURE,
       ],
       payload: {
         request: {
-          url: `${v2Url(constants.OFFICERS_API_ENDPOINT)}`,
+          url: `${v2Url(OFFICERS_API_ENDPOINT)}`,
           adapter: undefined,
           params: { ids: '1,2,3' },
         },

@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import { get, map, filter, isUndefined, isEmpty, forEach } from 'lodash';
 
-import constants from 'constants';
+import { SEARCH_CATEGORY_PREFIXES, PINBOARD_PAGE, MONTH_DATE_YEAR_FORMAT, SEARCH_CATEGORIES } from 'constants';
 import { COMPLAINT_PATH, TRR_PATH } from 'constants/paths';
 import { PIN_BUTTON_INTRODUCTION_INDEX } from 'constants';
 import { extractLatestPercentile } from 'selectors/common/percentile';
@@ -19,7 +19,7 @@ export const getCancelPathname = state => state.suggestionApp.cancelPathname;
 
 export const queryPrefixSelector = createSelector(
   getChosenCategory,
-  (chosenCategory) => constants.SEARCH_CATEGORY_PREFIXES[chosenCategory]
+  (chosenCategory) => SEARCH_CATEGORY_PREFIXES[chosenCategory]
 );
 
 export const officerFormatter = (officer, pinboardItems) => ({
@@ -29,7 +29,7 @@ export const officerFormatter = (officer, pinboardItems) => ({
   percentile: extractLatestPercentile(officer),
   url: officerUrl(officer.id, officer.name),
   isPinned: isItemPinned('OFFICER', officer.id, pinboardItems),
-  type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+  type: PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
   recentItemData: officer,
 });
 
@@ -57,10 +57,10 @@ const crFormatter = (cr, pinboardItems) => ({
   crid: cr.crid,
   id: cr.crid,
   url: `${COMPLAINT_PATH}${cr.crid}/`,
-  incidentDate: moment(cr.incident_date).format(constants.MONTH_DATE_YEAR_FORMAT),
+  incidentDate: moment(cr.incident_date).format(MONTH_DATE_YEAR_FORMAT),
   category: cr.category,
   isPinned: isItemPinned('CR', cr.crid, pinboardItems),
-  type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+  type: PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
   recentItemData: cr,
 });
 
@@ -83,7 +83,7 @@ const trrFormatter = (trr, pinboardItems) => ({
   id: trr.id,
   url: `${ TRR_PATH }${ trr.id }/`,
   isPinned: isItemPinned('TRR', trr.id, pinboardItems),
-  type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR,
+  type: PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR,
   recentItemData: trr,
 });
 
@@ -202,7 +202,7 @@ const showIntroductionTransform = (categories) => {
   let hasFirstIntroduction = false;
   return map(categories, ({ items, ...remain }) => {
     const showIntroduction = !hasFirstIntroduction
-      && (!isUndefined(constants.PINBOARD_PAGE.PINNED_ITEM_TYPES[remain.path]) || remain.name === 'RECENT');
+      && (!isUndefined(PINBOARD_PAGE.PINNED_ITEM_TYPES[remain.path]) || remain.name === 'RECENT');
     if (showIntroduction) {
       hasFirstIntroduction = true;
     }
@@ -235,14 +235,14 @@ export const categoriesSelector = createSelector(
         }];
       }
     } else if (chosenCategory !== '') {
-      const category = constants.SEARCH_CATEGORIES.filter(cat => cat.id === chosenCategory)[0];
+      const category = SEARCH_CATEGORIES.filter(cat => cat.id === chosenCategory)[0];
       categories = [{
         ...category,
         items: get(suggestionGroups, category.id, []),
         showAllButton: false,
       }];
     } else {
-      categories = constants.SEARCH_CATEGORIES.map((cat) => ({
+      categories = SEARCH_CATEGORIES.map((cat) => ({
         ...cat,
         items: get(suggestionGroups, cat.id, []).slice(0, 5),
         showAllButton: true,

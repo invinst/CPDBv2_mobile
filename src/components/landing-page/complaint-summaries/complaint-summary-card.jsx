@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 import { COMPLAINT_PATH } from 'constants/paths';
 import style from './complaint-summary-card.sass';
 import ItemPinButton from 'components/common/item-pin-button';
@@ -20,7 +20,7 @@ const ComplaintSummaryCard = ({ allegation, addOrRemoveItemInPinboard }) => {
         addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
         showHint={ false }
         item={ {
-          type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+          type: PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
           id: allegation.crid,
           isPinned: allegation.isPinned,
         } }

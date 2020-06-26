@@ -9,7 +9,7 @@ import {
   OFFICER_PAGE_CMS_REQUEST_FAILURE,
   resetTimelineFilter,
 } from 'actions/officer-page';
-import constants from 'constants';
+import { OFFICER_API_ENDPOINT, OFFICER_PAGE_CMS_API_ENDPOINT } from 'constants';
 import { v2Url } from 'utils/url-util';
 import { RESET_TIME_LINE_FILTER } from 'constants/officer-page';
 
@@ -22,7 +22,7 @@ describe('officer actions', function () {
         types: [OFFICER_REQUEST_START, OFFICER_REQUEST_SUCCESS, OFFICER_REQUEST_FAILURE],
         payload: {
           request: {
-            url: `${v2Url(constants.OFFICER_API_ENDPOINT)}11/`,
+            url: `${v2Url(OFFICER_API_ENDPOINT)}11/`,
             adapter: undefined,
             params: {},
           },
@@ -37,7 +37,7 @@ describe('officer actions', function () {
         types: [OFFICER_PAGE_CMS_REQUEST_START, OFFICER_PAGE_CMS_REQUEST_SUCCESS, OFFICER_PAGE_CMS_REQUEST_FAILURE],
         payload: {
           request: {
-            url: v2Url(constants.OFFICER_PAGE_CMS_API_ENDPOINT),
+            url: v2Url(OFFICER_PAGE_CMS_API_ENDPOINT),
             adapter: undefined,
             params: undefined,
           },

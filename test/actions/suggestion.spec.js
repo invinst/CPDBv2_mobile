@@ -20,7 +20,10 @@ import {
   FETCH_RECENT_SEARCH_ITEMS_FAILURE, FETCH_RECENT_SEARCH_ITEMS_START, FETCH_RECENT_SEARCH_ITEMS_SUCCESS,
   SET_RECENT_SUGGESTIONS_REQUESTED,
 } from 'actions/suggestion';
-import constants from 'constants';
+import {
+  SUGGESTION_API_ENDPOINT,
+  RECENT_SEARCH_ITEMS_API_ENDPOINT,
+} from 'constants';
 import { v2Url } from 'utils/url-util';
 
 
@@ -31,7 +34,7 @@ describe('suggestions actions', function () {
         types: [SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS, SUGGESTION_REQUEST_FAILURE],
         payload: {
           request: {
-            url: v2Url(constants.SUGGESTION_API_ENDPOINT),
+            url: v2Url(SUGGESTION_API_ENDPOINT),
             adapter: undefined,
             params: undefined,
           },
@@ -50,7 +53,7 @@ describe('suggestions actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(constants.RECENT_SEARCH_ITEMS_API_ENDPOINT),
+            url: v2Url(RECENT_SEARCH_ITEMS_API_ENDPOINT),
             adapter: undefined,
             params: {
               'officer_ids': [8562],

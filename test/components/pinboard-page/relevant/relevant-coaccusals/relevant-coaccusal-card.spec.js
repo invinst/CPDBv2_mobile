@@ -9,7 +9,7 @@ import RelevantCoaccusalCard, { RelevantCoaccusalCardWithUndo }
   from 'components/pinboard-page/relevant/relevant-coaccusals/relevant-coaccusal-card';
 import StaticRadarChart from 'components/common/radar-chart';
 import PlusButton from 'components/pinboard-page/relevant/common/plus-button';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 describe('<RelevantCoaccusalCard />', function () {
@@ -150,7 +150,7 @@ describe('<RelevantCoaccusalCard />', function () {
 
       plusButton.simulate('click');
 
-      clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME + 50);
+      clock.tick(PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME + 50);
 
       wrapper.update();
 

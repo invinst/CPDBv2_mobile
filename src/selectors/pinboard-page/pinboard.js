@@ -2,7 +2,7 @@ import { get, map, isEmpty } from 'lodash';
 import { createSelector } from 'reselect';
 
 import { generatePinboardUrl, isEmptyPinboard } from 'utils/pinboard';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 export const getInitialRequested = state => get(state, 'pinboardPage.initialRequested', false);
 
@@ -38,9 +38,9 @@ export const getPinboard = createSelector(
 export const getPinboardId = state => get(state, 'pinboardPage.pinboard.id');
 
 export const pinboardPinnedItemsMapping = ({ officerIds, crids, trrIds }) => ({
-  [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER]: officerIds,
-  [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR]: crids,
-  [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR]: trrIds,
+  [PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER]: officerIds,
+  [PINBOARD_PAGE.PINNED_ITEM_TYPES.CR]: crids,
+  [PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR]: trrIds,
 });
 
 export const pinboardItemsSelector = createSelector(
