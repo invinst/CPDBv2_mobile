@@ -74,6 +74,46 @@ const summarySectionSelectorByTitle = (title) => (
   `//div[contains(@class, "widget__widget")]/div[contains(text(), "${title}")]/..`
 );
 
+const summaryWidgetSection = (title) => {
+  const parentSelector = summarySectionSelectorByTitle(title);
+  const firstSummaryItemSelector = `(${parentSelector}//div[@class="summary-item"])[1]`;
+  const secondSummaryItemSelector = `(${parentSelector}//div[@class="summary-item"])[2]`;
+  return {
+    locateStrategy: 'xpath',
+    selector: parentSelector,
+    elements: {
+      widgetTitle: {
+        locateStrategy: 'xpath',
+        selector: `${parentSelector}//div[contains(@class, "widget-title")]`,
+      },
+      spinner: {
+        locateStrategy: 'xpath',
+        selector: `${parentSelector}//*[contains(@class, "widget__widget-spinner")]`,
+      },
+      firstSummaryItemTitle: {
+        locateStrategy: 'xpath',
+        selector: `${firstSummaryItemSelector}//div[contains(@class, "item-title")]`,
+      },
+      firstSummaryItemCount: {
+        locateStrategy: 'xpath',
+        selector: `${firstSummaryItemSelector}//div[contains(@class, "item-count")]`,
+      },
+      secondSummaryItemTitle: {
+        locateStrategy: 'xpath',
+        selector: `${secondSummaryItemSelector}//div[contains(@class, "item-title")]`,
+      },
+      secondSummaryItemCount: {
+        locateStrategy: 'xpath',
+        selector: `${secondSummaryItemSelector}//div[contains(@class, "item-count")]`,
+      },
+      summaryItems: {
+        locateStrategy: 'xpath',
+        selector: `${parentSelector}//div[@class="summary-item"]`,
+      },
+    },
+  };
+};
+
 module.exports = {
   url: function (pinboardId, queryString) {
     if (queryString) {
@@ -247,6 +287,7 @@ module.exports = {
       locateStrategy: 'xpath',
       selector: summarySectionSelectorByTitle('GEOGRAPHIC MAP'),
     },
+    complaintSummaryWidget: summaryWidgetSection('COMPLAINT SUMMARY'),
     graphNodes: {
       selector: '.node',
     },

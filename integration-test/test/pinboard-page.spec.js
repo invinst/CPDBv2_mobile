@@ -9,6 +9,7 @@ const { TIMEOUT } = require(__dirname + '/../constants');
 var mockData = require(__dirname + '/../mock-data/pinboard-page');
 const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationResponse');
 const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
+const { complaintSummary } = require(__dirname + '/../mock-data/widgets');
 
 
 describe('Pinboard Page', function () {
@@ -1662,6 +1663,40 @@ describe('Pinboard Page', function () {
             client.assert.urlContains('/pinboard/273f2a/');
           });
         });
+      });
+    });
+  });
+
+  context('Summary widgets', function () {
+    context('Complaint Summary section', function () {
+      it('should render complaint summary section', function (client) {
+        api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaint-summary/', 200, complaintSummary, 3000);
+        client.resizeWindow(500, 1000);
+        const complaintSummaryWidget = this.pinboardPage.section.complaintSummaryWidget;
+
+        client.assertInViewport(complaintSummaryWidget.selector, complaintSummaryWidget.locateStrategy, false);
+
+        this.pinboardPage.waitForElementVisible('@navigationNextButton');
+        this.pinboardPage.click('@navigationNextButton');
+        this.pinboardPage.waitForElementVisible('@navigationNextButton');
+        this.pinboardPage.click('@navigationNextButton');
+        client.waitForAnimationEnd(complaintSummaryWidget.selector, complaintSummaryWidget.locateStrategy);
+        client.assertInViewport(complaintSummaryWidget.selector, complaintSummaryWidget.locateStrategy);
+
+        complaintSummaryWidget.expect.element('@spinner').to.be.visible;
+        complaintSummaryWidget.expect.element('@spinner').to.not.be.present.before(5000);
+
+        complaintSummaryWidget.expect.element('@widgetTitle').text.to.equal('COMPLAINT SUMMARY');
+        const summaryItems = complaintSummaryWidget.elements.summaryItems;
+        client.elements(summaryItems.locateStrategy, summaryItems.selector, function (summaryItems) {
+          client.assert.equal(summaryItems.value.length, 8);
+        });
+        complaintSummaryWidget.expect.element('@firstSummaryItemTitle').text.to.equal(
+          'Operation/Personnel Violations'
+        );
+        complaintSummaryWidget.expect.element('@firstSummaryItemCount').text.to.equal('10');
+        complaintSummaryWidget.expect.element('@secondSummaryItemTitle').text.to.equal('Unknown');
+        complaintSummaryWidget.expect.element('@secondSummaryItemCount').text.to.equal('8');
       });
     });
   });

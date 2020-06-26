@@ -40,6 +40,12 @@ describe('PinboardDataVisualization component', function () {
           },
         ],
       },
+      widgets: {
+        complaintSummary: [
+          { category: 'Operation/Personnel Violations', count: 10 },
+          { category: 'Illegal Search', count: 4 },
+        ],
+      },
     },
   });
 
@@ -103,6 +109,52 @@ describe('PinboardDataVisualization component', function () {
       horizontalScrolling.exists().should.be.true();
 
       horizontalScrolling.find(AllegationsMap).exists().should.be.false();
+    });
+  });
+
+  context('hasComplaintSummary is true', function () {
+    it('should render ComplaintSummaryContainer', function () {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <MemoryRouter>
+            <PinboardDataVisualization
+              pinboard={ { id: '1234abcd' } }
+              hasComplaintSummary={ true }
+            />
+          </MemoryRouter>
+        </Provider>
+      );
+
+      const horizontalScrolling = wrapper.find('HorizontalScrolling');
+      horizontalScrolling.exists().should.be.true();
+
+      const complaintSummaryWidget = horizontalScrolling.find('Widget').at(1);
+      complaintSummaryWidget.prop('widgetTitle').should.equal('COMPLAINT SUMMARY');
+      const complaintSummary = complaintSummaryWidget.find('SummaryWidget');
+      complaintSummary.prop('summaryItems').should.deepEqual([
+        { title: 'Operation/Personnel Violations', count: 10 },
+        { title: 'Illegal Search', count: 4 },
+      ]);
+    });
+  });
+
+  context('hasComplaintSummary is false', function () {
+    it('should not render ComplaintSummaryContainer', function () {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <MemoryRouter>
+            <PinboardDataVisualization
+              pinboard={ { id: '1234abcd' } }
+              hasComplaintSummary={ false }
+            />
+          </MemoryRouter>
+        </Provider>
+      );
+
+      const horizontalScrolling = wrapper.find('HorizontalScrolling');
+      horizontalScrolling.exists().should.be.true();
+
+      horizontalScrolling.find('SummaryWidget').exists().should.be.false();
     });
   });
 });

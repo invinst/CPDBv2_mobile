@@ -18,6 +18,7 @@ import {
   fetchPinboardRelevantDocuments,
   fetchPinboardRelevantCoaccusals,
   fetchPinboardRelevantComplaints,
+  fetchComplaintSummary,
   fetchPinboardComplaints,
   fetchPinboardOfficers,
   fetchPinboardTRRs,
@@ -66,6 +67,8 @@ describe('pinboard utils', function () {
       store.dispatch.should.be.calledWith(fetchPinboardGeographic());
       store.dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicCrs({ 'pinboard_id': '66ef1560' }));
       store.dispatch.should.be.calledWith(fetchFirstPagePinboardGeographicTrrs({ 'pinboard_id': '66ef1560' }));
+
+      store.dispatch.should.be.calledWith(fetchComplaintSummary('66ef1560'));
 
       store.dispatch.should.be.calledWith(fetchPinboardRelevantDocuments('66ef1560'));
       store.dispatch.should.be.calledWith(fetchPinboardRelevantCoaccusals('66ef1560'));

@@ -3,6 +3,7 @@ import { kebabCase, isEmpty, isNil, every, get, map } from 'lodash';
 import {
   fetchPinboardSocialGraph,
   fetchPinboardGeographic,
+  fetchComplaintSummary,
   fetchFirstPagePinboardGeographicCrs,
   fetchOtherPagesPinboardGeographicCrs,
   fetchFirstPagePinboardGeographicTrrs,
@@ -52,6 +53,7 @@ export const dispatchFetchPinboardPageData = (store, pinboardId) => {
     fetchOtherPagesPinboardGeographicTrrs,
     store,
   );
+  store.dispatch(fetchComplaintSummary(pinboardId));
   store.dispatch(fetchPinboardRelevantDocuments(pinboardId));
   store.dispatch(fetchPinboardRelevantCoaccusals(pinboardId));
   store.dispatch(fetchPinboardRelevantComplaints(pinboardId));
