@@ -70,6 +70,10 @@ const nthPinboardItem = (index) => {
   };
 };
 
+const summarySectionSelectorByTitle = (title) => (
+  `//div[contains(@class, "widget__widget")]/div[contains(text(), "${title}")]/..`
+);
+
 module.exports = {
   url: function (pinboardId, queryString) {
     if (queryString) {
@@ -237,11 +241,11 @@ module.exports = {
     },
     animatedSocialGraphSection: {
       locateStrategy: 'xpath',
-      selector: '(//div[contains(@class, "visualization-item")])[1]',
+      selector: summarySectionSelectorByTitle('SOCIAL GRAPH'),
     },
     geographicSection: {
       locateStrategy: 'xpath',
-      selector: '(//div[contains(@class, "visualization-item")])[2]',
+      selector: summarySectionSelectorByTitle('GEOGRAPHIC MAP'),
     },
     graphNodes: {
       selector: '.node',

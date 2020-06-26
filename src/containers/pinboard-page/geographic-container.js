@@ -16,6 +16,7 @@ function mapStateToProps(state, ownProps) {
     markerGroups: mapMarkerGroupsSelector(state),
     clearAllMarkers: getClearAllMarkers(state),
     requesting: geographicDataRequestingSelector(state),
+    navigationControlPosition: 'top-right',
   };
 }
 

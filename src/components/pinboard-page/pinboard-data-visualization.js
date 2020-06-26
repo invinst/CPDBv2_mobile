@@ -5,6 +5,7 @@ import GeographicContainer from 'containers/pinboard-page/geographic-container';
 import SocialGraphContainer from 'containers/pinboard-page/social-graph-container';
 import styles from './pinboard-data-visualization.sass';
 import HorizontalScrolling from 'components/common/horizontal-scrolling';
+import Widget from 'components/common/pinboard/widgets/widget';
 
 
 export default function PinboardDataVisualization(props) {
@@ -21,15 +22,15 @@ export default function PinboardDataVisualization(props) {
         spaceBetween={ 4 }
         hasPagination={ true }
       >
-        <div className='visualization-item'>
+        <Widget widgetTitle='SOCIAL GRAPH' isVisualization={ true }>
           <SocialGraphContainer />
-        </div>
+        </Widget>
         {
           hasMapMarker &&
           (
-            <div className='visualization-item'>
+            <Widget widgetTitle='GEOGRAPHIC MAP' isVisualization={ true }>
               <GeographicContainer />
-            </div>
+            </Widget>
           )
         }
       </HorizontalScrolling>
