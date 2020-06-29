@@ -6,13 +6,14 @@ import SocialGraphContainer from 'containers/pinboard-page/social-graph-containe
 import ComplaintSummaryContainer from 'containers/pinboard-page/widgets/complaint-summary-container';
 import TRRSummaryContainer from 'containers/pinboard-page/widgets/trr-summary-container';
 import OfficersSummaryContainer from 'containers/pinboard-page/widgets/officers-summary-container';
+import ComplainantsSummaryContainer from 'containers/pinboard-page/widgets/complainants-summary-container';
 import styles from './pinboard-data-visualization.sass';
 import HorizontalScrolling from 'components/common/horizontal-scrolling';
 import Widget from 'components/common/pinboard/widgets/widget';
 
 
 export default function PinboardDataVisualization(props) {
-  const { hasMapMarker, hasComplaintSummary, hasTRRSummary, hasOfficersSummary } = props;
+  const { hasMapMarker, hasComplaintSummary, hasTRRSummary, hasOfficersSummary, hasComplainantsSummary } = props;
   const slideOptions = {
     slidesOffsetAfter: 0,
   };
@@ -56,6 +57,13 @@ export default function PinboardDataVisualization(props) {
             </Widget>
           )
         }
+        {
+          hasComplainantsSummary && (
+            <Widget widgetTitle='COMPLAINANTS'>
+              <ComplainantsSummaryContainer />
+            </Widget>
+          )
+        }
       </HorizontalScrolling>
     </div>
   );
@@ -66,6 +74,7 @@ PinboardDataVisualization.propTypes = {
   hasComplaintSummary: PropTypes.bool,
   hasTRRSummary: PropTypes.bool,
   hasOfficersSummary: PropTypes.bool,
+  hasComplainantsSummary: PropTypes.bool,
 };
 
 PinboardDataVisualization.defaultProps = {

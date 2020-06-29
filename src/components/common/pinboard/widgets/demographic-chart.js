@@ -8,12 +8,15 @@ import * as styles from './demographic-chart.sass';
 
 
 const BAR_CHART_WIDTH = 196;
-const BAR_CHART_RIGHT_PADDING = 12;
-const PERCENTAGE_PADDING = 8;
+const LABEL_WIDTH = 78;
 const SHORT_BAR_WIDTH = 25;
-const SHORT_BAR_PERCENTAGE_PADDING = 4;
+
 const BAR_HEIGHT = 17;
 const BAR_LINE_HEIGHT = BAR_HEIGHT + 6;
+
+const BAR_CHART_RIGHT_PADDING = 12;
+const PERCENTAGE_PADDING = 8;
+const SHORT_BAR_PERCENTAGE_PADDING = 4;
 const PERCENTAGE_TOP_PADDING = 3;
 
 class DemographicChart extends Component {
@@ -28,7 +31,6 @@ class DemographicChart extends Component {
 
     this.svg = d3.select(ReactDOM.findDOMNode(this.chart))
       .append('svg:svg')
-      .attr('class', styles.demographicChart)
       .attr('width', '100%')
       .attr('height', barChartHeight);
 
@@ -42,7 +44,7 @@ class DemographicChart extends Component {
 
     const chartContainer = this.svg
       .append('g')
-      .attr('transform', 'translate(90, 0)');
+      .attr('transform', `translate(${LABEL_WIDTH}, 0)`);
 
     // Background
     chartContainer
@@ -91,11 +93,12 @@ class DemographicChart extends Component {
       .append('g')
       .attr('class', 'bar-chart-label')
       .call(yAxis)
-      .call(g => g.select('.domain').remove());
+      .call(g => g.select('.domain').remove())
+      .call(g => g.selectAll('text').attr('x', 0));
   }
 
   render() {
-    return <div ref={ el => this.chart = el } />;
+    return <div className={ styles.demographicChart } ref={ el => this.chart = el } />;
   }
 }
 

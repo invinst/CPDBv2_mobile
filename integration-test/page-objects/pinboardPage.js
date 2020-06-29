@@ -352,6 +352,7 @@ module.exports = {
     complaintSummaryWidget: summaryWidgetSection('COMPLAINT SUMMARY'),
     trrSummaryWidget: summaryWidgetSection('TACTICAL RESPONSE REPORT SUMMARY'),
     officersSummaryWidget: demographicWidgetSection('OFFICERS'),
+    complainantsSummaryWidget: demographicWidgetSection('COMPLAINANTS'),
     graphNodes: {
       selector: '.node',
     },

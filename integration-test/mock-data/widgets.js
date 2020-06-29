@@ -99,8 +99,40 @@ const officersSummary = {
   ],
 };
 
+const complainantsSummary = {
+  'race': [
+    {
+      'race': 'Black',
+      'percentage': 0.67,
+    },
+    {
+      'race': 'White',
+      'percentage': 0.27,
+    },
+    {
+      'race': 'Other',
+      'percentage': 0.05,
+    },
+  ],
+  'gender': [
+    {
+      'gender': 'F',
+      'percentage': 0.49,
+    },
+    {
+      'gender': 'M',
+      'percentage': 0.47,
+    },
+    {
+      'gender': '',
+      'percentage': 0.04,
+    },
+  ],
+};
+
 module.exports = {
   complaintSummary,
   trrSummary,
   officersSummary,
+  complainantsSummary,
 };

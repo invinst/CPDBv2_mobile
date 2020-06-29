@@ -59,6 +59,17 @@ describe('PinboardDataVisualization component', function () {
             { gender: 'M', percentage: 0.47 },
           ],
         },
+        complainantsSummary: {
+          race: [
+            { race: 'Black', percentage: 0.77 },
+            { race: 'White', percentage: 0.12 },
+            { race: 'Other', percentage: 0.11 },
+          ],
+          gender: [
+            { gender: 'F', percentage: 0.81 },
+            { gender: 'M', percentage: 0.19 },
+          ],
+        },
       },
     },
   });
@@ -266,6 +277,61 @@ describe('PinboardDataVisualization component', function () {
       const horizontalScrolling = wrapper.find('HorizontalScrolling');
       horizontalScrolling.exists().should.be.true();
 
+      horizontalScrolling.find('DemographicWidget').exists().should.be.false();
+    });
+  });
+
+  context('hasComplainantsSummary is true', function () {
+    it('should render OfficersSummaryContainer', function () {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <MemoryRouter>
+            <PinboardDataVisualization
+              pinboard={ { id: '1234abcd' } }
+              hasComplainantsSummary={ true }
+            />
+          </MemoryRouter>
+        </Provider>
+      );
+
+      const horizontalScrolling = wrapper.find('HorizontalScrolling');
+      horizontalScrolling.exists().should.be.true();
+
+      const complainantsSummaryWidget = horizontalScrolling.find('Widget').last();
+      complainantsSummaryWidget.prop('widgetTitle').should.equal('COMPLAINANTS');
+      const complainantsSummary = complainantsSummaryWidget.find('DemographicWidget');
+      complainantsSummary.prop('demographicData').should.deepEqual({
+        race: [
+          { name: 'Black', percentage: 0.77 },
+          { name: 'White', percentage: 0.12 },
+          { name: 'Other', percentage: 0.11 },
+        ],
+        gender: [
+          { name: 'F', percentage: 0.81 },
+          { name: 'M', percentage: 0.19 },
+        ],
+      });
+    });
+  });
+
+  context('hasComplainantsSummary is false', function () {
+    it('should not render TRRSummaryContainer', function () {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <MemoryRouter>
+            <PinboardDataVisualization
+              pinboard={ { id: '1234abcd' } }
+              hasComplainantsSummary={ false }
+            />
+          </MemoryRouter>
+        </Provider>
+      );
+
+      const horizontalScrolling = wrapper.find('HorizontalScrolling');
+      horizontalScrolling.exists().should.be.true();
+
+      wrapper.find(AnimatedSocialGraph).exists().should.be.true();
+      wrapper.find(AllegationsMap).exists().should.be.false();
       horizontalScrolling.find('DemographicWidget').exists().should.be.false();
     });
   });

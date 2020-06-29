@@ -9,7 +9,12 @@ const { TIMEOUT } = require(__dirname + '/../constants');
 var mockData = require(__dirname + '/../mock-data/pinboard-page');
 const { getPaginationResponse } = require(__dirname + '/../utils/getPaginationResponse');
 const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
-const { complaintSummary, trrSummary, officersSummary } = require(__dirname + '/../mock-data/widgets');
+const {
+  complaintSummary,
+  trrSummary,
+  officersSummary,
+  complainantsSummary,
+} = require(__dirname + '/../mock-data/widgets');
 
 
 describe('Pinboard Page', function () {
@@ -1799,6 +1804,87 @@ describe('Pinboard Page', function () {
         genderSection.expect.element('@secondPercentage').text.to.equal('4%');
         genderSection.expect.element('@secondPercentage').to.have.attribute('class').which.contains('short-bar');
         genderSection.expect.element('@secondLabel').text.to.equal('F');
+      });
+    });
+
+    context('Complainants Summary section', function () {
+      it('should render Complainants summary section', function (client) {
+        api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complainants-summary/', 200, complainantsSummary, 3000);
+        client.resizeWindow(500, 1000);
+        const complainantsSummaryWidget = this.pinboardPage.section.complainantsSummaryWidget;
+
+        client.assertInViewport(complainantsSummaryWidget.selector, complainantsSummaryWidget.locateStrategy, false);
+
+        this.pinboardPage.waitForElementVisible('@navigationNextButton');
+        this.pinboardPage.click('@navigationNextButton');
+        this.pinboardPage.waitForElementVisible('@navigationNextButton');
+        this.pinboardPage.click('@navigationNextButton');
+        client.waitForAnimationEnd(complainantsSummaryWidget.selector, complainantsSummaryWidget.locateStrategy);
+        client.assertInViewport(complainantsSummaryWidget.selector, complainantsSummaryWidget.locateStrategy);
+
+        complainantsSummaryWidget.expect.element('@spinner').to.be.visible;
+        complainantsSummaryWidget.expect.element('@spinner').to.not.be.present.before(5000);
+
+        complainantsSummaryWidget.expect.element('@widgetTitle').text.to.equal('COMPLAINANTS');
+
+        const raceSection = complainantsSummaryWidget.section.raceSection;
+        const genderSection = complainantsSummaryWidget.section.genderSection;
+        const raceCharts = raceSection.elements.charts;
+        const genderCharts = genderSection.elements.charts;
+
+        client.elements(raceCharts.locateStrategy, raceCharts.selector, function (charts) {
+          client.assert.equal(charts.value.length, 3);
+        });
+
+        raceSection.getAttribute('@firstBar', 'width', function (result) {
+          client.assert.equal(parseInt(result.value), 184);
+        });
+        raceSection.expect.element('@firstPercentage').text.to.equal('67%');
+        raceSection.expect.element('@firstPercentage').to.have.attribute('class').which.does.not.contains('short-bar');
+        raceSection.expect.element('@firstLabel').text.to.equal('Black');
+
+        raceSection.getAttribute('@secondBar', 'width', function (result) {
+          client.assert.equal(parseInt(result.value), 74);
+        });
+        raceSection.expect.element('@secondPercentage').text.to.equal('27%');
+        raceSection.expect.element('@secondPercentage').to.have.attribute('class').which.does.not.contains('short-bar');
+        raceSection.expect.element('@secondLabel').text.to.equal('White');
+
+        raceSection.getAttribute('@thirdBar', 'width', function (result) {
+          client.assert.equal(parseInt(result.value), 13);
+        });
+        raceSection.expect.element('@thirdPercentage').text.to.equal('5%');
+        raceSection.expect.element('@thirdPercentage').to.have.attribute('class').which.contains('short-bar');
+        raceSection.expect.element('@thirdLabel').text.to.equal('Other');
+
+        client.elements(genderCharts.locateStrategy, genderCharts.selector, function (charts) {
+          client.assert.equal(charts.value.length, 3);
+        });
+
+        genderSection.getAttribute('@firstBar', 'width', function (result) {
+          client.assert.equal(parseInt(result.value), 184);
+        });
+        genderSection.expect.element('@firstPercentage').text.to.equal('49%');
+        genderSection.expect.element('@firstPercentage').to.have.attribute('class').which.does.not.contains(
+          'short-bar'
+        );
+        genderSection.expect.element('@firstLabel').text.to.equal('F');
+
+        genderSection.getAttribute('@secondBar', 'width', function (result) {
+          client.assert.equal(parseInt(result.value), 176);
+        });
+        genderSection.expect.element('@secondPercentage').text.to.equal('47%');
+        genderSection.expect.element('@secondPercentage').to.have.attribute('class').which.does.not.contains(
+          'short-bar'
+        );
+        genderSection.expect.element('@secondLabel').text.to.equal('M');
+
+        genderSection.getAttribute('@thirdBar', 'width', function (result) {
+          client.assert.equal(parseInt(result.value), 15);
+        });
+        genderSection.expect.element('@thirdPercentage').text.to.equal('4%');
+        genderSection.expect.element('@thirdPercentage').to.have.attribute('class').which.contains('short-bar');
+        genderSection.expect.element('@thirdLabel').text.to.equal('Unknown');
       });
     });
   });
