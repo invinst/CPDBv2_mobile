@@ -5,6 +5,7 @@ import {
   fetchPinboardGeographic,
   fetchComplaintSummary,
   fetchTRRSummary,
+  fetchOfficersSummary,
   fetchFirstPagePinboardGeographicCrs,
   fetchOtherPagesPinboardGeographicCrs,
   fetchFirstPagePinboardGeographicTrrs,
@@ -56,6 +57,7 @@ export const dispatchFetchPinboardPageData = (store, pinboardId) => {
   );
   store.dispatch(fetchComplaintSummary(pinboardId));
   store.dispatch(fetchTRRSummary(pinboardId));
+  store.dispatch(fetchOfficersSummary(pinboardId));
   store.dispatch(fetchPinboardRelevantDocuments(pinboardId));
   store.dispatch(fetchPinboardRelevantCoaccusals(pinboardId));
   store.dispatch(fetchPinboardRelevantComplaints(pinboardId));

@@ -4,6 +4,7 @@ import PinboardDataVisualization from 'components/pinboard-page/pinboard-data-vi
 import { hasMapMarkersSelector } from 'selectors/pinboard-page/geographic-data';
 import { hasComplaintSummarySelector } from 'selectors/pinboard-page/widgets/complaint-summary';
 import { hasTRRSummarySelector } from 'selectors/pinboard-page/widgets/trr-summary';
+import { hasOfficersSummarySelector } from 'selectors/pinboard-page/widgets/officers-summary';
 
 
 function mapStateToProps(state, ownProps) {
@@ -11,6 +12,7 @@ function mapStateToProps(state, ownProps) {
     hasMapMarker: hasMapMarkersSelector(state),
     hasComplaintSummary: hasComplaintSummarySelector(state),
     hasTRRSummary: hasTRRSummarySelector(state),
+    hasOfficersSummary: hasOfficersSummarySelector(state),
   };
 }
 

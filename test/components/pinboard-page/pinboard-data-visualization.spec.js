@@ -49,6 +49,16 @@ describe('PinboardDataVisualization component', function () {
           { 'force_type': 'Unknown', count: 141 },
           { 'force_type': 'Taser', count: 13 },
         ],
+        officersSummary: {
+          race: [
+            { race: 'Black', percentage: 0.67 },
+            { race: 'Other', percentage: 0.14 },
+          ],
+          gender: [
+            { gender: '', percentage: 0.49 },
+            { gender: 'M', percentage: 0.47 },
+          ],
+        },
       },
     },
   });
@@ -205,6 +215,58 @@ describe('PinboardDataVisualization component', function () {
       horizontalScrolling.exists().should.be.true();
 
       horizontalScrolling.find('SummaryWidget').exists().should.be.false();
+    });
+  });
+
+  context('hasOfficersSummary is true', function () {
+    it('should render OfficersSummaryContainer', function () {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <MemoryRouter>
+            <PinboardDataVisualization
+              pinboard={ { id: '1234abcd' } }
+              hasOfficersSummary={ true }
+            />
+          </MemoryRouter>
+        </Provider>
+      );
+
+      const horizontalScrolling = wrapper.find('HorizontalScrolling');
+      horizontalScrolling.exists().should.be.true();
+
+      const officersSummaryWidget = horizontalScrolling.find('Widget').last();
+      officersSummaryWidget.prop('widgetTitle').should.equal('OFFICERS');
+      const officersSummary = officersSummaryWidget.find('DemographicWidget');
+      officersSummary.prop('demographicData').should.deepEqual({
+        race: [
+          { name: 'Black', percentage: 0.67 },
+          { name: 'Other', percentage: 0.14 },
+        ],
+        gender: [
+          { name: 'Unknown', percentage: 0.49 },
+          { name: 'M', percentage: 0.47 },
+        ],
+      });
+    });
+  });
+
+  context('hasOfficersSummary is false', function () {
+    it('should not render TRRSummaryContainer', function () {
+      const wrapper = mount(
+        <Provider store={ store }>
+          <MemoryRouter>
+            <PinboardDataVisualization
+              pinboard={ { id: '1234abcd' } }
+              hasOfficersSummary={ false }
+            />
+          </MemoryRouter>
+        </Provider>
+      );
+
+      const horizontalScrolling = wrapper.find('HorizontalScrolling');
+      horizontalScrolling.exists().should.be.true();
+
+      horizontalScrolling.find('DemographicWidget').exists().should.be.false();
     });
   });
 });

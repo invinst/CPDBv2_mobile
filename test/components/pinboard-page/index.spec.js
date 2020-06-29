@@ -46,6 +46,7 @@ describe('<PinboardPage />', function () {
       pinboards: [],
       widgets: {
         complainantsSummary: {},
+        officersSummary: {},
       },
     },
   });
