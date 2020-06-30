@@ -14,6 +14,7 @@ import pinnedItemsRequested from './pinned-items-requested';
 import cms from './cms';
 import pinboards from './pinboards';
 import isShownPinboardsList from './is-shown-pinboards-list';
+import creatingNewPinboard from './creating-new-pinboard';
 
 
 export default combineReducers({
@@ -31,4 +32,5 @@ export default combineReducers({
   cms,
   pinboards,
   isShownPinboardsList,
+  creatingNewPinboard,
 });

@@ -22,7 +22,7 @@ const Investigator = ({ investigators=[] }) => {
             <SafeLink
               key={ idx }
               to={ investigator['officer_id'] ? officerUrl(investigator['officer_id'], investigator['full_name']) :
-                `/search/?terms=${investigator['full_name']}`
+                `/search/?q=${investigator['full_name']}`
               }
               className='investigator-row'
             >

@@ -58,17 +58,24 @@ const buildApi = function () {
     handleMap[method][uri][hashBody(body)] = resolveFunc;
   };
 
-  const mockPostPutNoBody = function (uri, status, data, method) {
+  const mockPostPutNoBody = function (uri, status, data, method, delay) {
     if (!(method in handleMap)) {
       handleMap[method] = {};
     }
 
-    handleMap[method][uri] = response => response.status(status).send(data);
+    const resolveFunc = function (response) {
+      setTimeout(
+        () => response.status(status).send(data),
+        delay,
+      );
+    };
+
+    handleMap[method][uri] = resolveFunc;
   };
 
   const mockPost = function (uri, status, body, data, delay=0, sideEffects) {
     if (isNil(body)) {
-      mockPostPutNoBody(uri, status, data, 'POST');
+      mockPostPutNoBody(uri, status, data, 'POST', delay);
     } else {
       mockPostPut(uri, status, body, data, delay, sideEffects, 'POST');
     }
@@ -76,7 +83,7 @@ const buildApi = function () {
 
   const mockPut = function (uri, status, body, data, delay = 0, sideEffects) {
     if (isNil(body)) {
-      mockPostPutNoBody(uri, status, data, 'PUT');
+      mockPostPutNoBody(uri, status, data, 'PUT', delay);
     } else {
       mockPostPut(uri, status, body, data, delay, sideEffects, 'PUT');
     }

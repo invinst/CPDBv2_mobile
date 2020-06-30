@@ -3,99 +3,144 @@
 
 $pinboards-list-top: $pinboard-page-header-height + $pinboard-page-search-bar-height
 
-\:local(.pinboards)
-  position: fixed
-  top: $pinboards-list-top
-  left: 0
-  width: calc(100% - 8px)
-  height: calc(100% - #{$pinboards-list-top} - 4px)
-  margin: 0 4px
-  border: 1px solid $silver-chalice-color
-  overflow: auto
-  background-color: $wild-sand-color
-  border-radius: 2px
-  z-index: 2
+\:local(.pinboards-overlay)
+  z-index: 1
+  width: 100%
+  height: 100%
+  position: absolute
+  top: 0
+  background-color: $alto-darker-50-color
 
-  &:before
-    box-sizing: border-box
-    content: ""
-    height: 8px
-    width: 8px
-    right: 28px
-    background-color: white
-    position: fixed
-    margin-top: -5px
-    border-top-left-radius: 4px
-    border-left: 1px solid $silver-chalice-color
-    border-top: 1px solid $silver-chalice-color
-    transform: rotate(45deg)
-    z-index: -1
+\:local(.pinboards-wrapper)
+  .pinboards
+    position: absolute
+    width: calc(100% - 8px)
+    left: 0
+    top: $pinboards-list-top
+    border: 1px solid $silver-chalice-color
+    height: auto
+    max-height: 384px
+    overflow: auto
+    border-radius: 2px
+    margin: 0 4px
+    padding: 0
+    outline: none
+    background: white
 
-  .pinboards-title
-    background-color: white
-    padding: 48px 8px 17px 8px
-    line-height: 31px
-    font-size: 26px
-
-    .new-pinboard-btn
-      width: 48px
-      height: 32px
-      display: inline-block
-      border: 1px solid $alto-color
+    &:before
       box-sizing: border-box
-      background: url('/img/ic-add-blue.svg') no-repeat center
-      border-radius: 2px
-      float: right
+      content: ""
+      height: 8px
+      width: 8px
+      right: 28px
+      background-color: white
+      position: fixed
+      margin-top: -5px
+      border-top-left-radius: 4px
+      border-left: 1px solid $silver-chalice-color
+      border-top: 1px solid $silver-chalice-color
+      transform: rotate(45deg)
+      z-index: 3
 
-  .pinboard-item
-    display: block
-    height: 64px
-    box-sizing: border-box
-    background-color: white
-    padding: 16px 15px 16px 8px
+    .pinboards-title
+      background-color: white
+      padding: 48px 8px 17px 8px
+      line-height: 31px
+      font-size: 26px
 
-    .pinboard-info
-      width: calc(100% - 23px)
-      padding-right: 16px
-      box-sizing: border-box
+      .new-pinboard-btn
+        width: 48px
+        height: 32px
+        display: inline-block
+        border: 1px solid $alto-color
+        box-sizing: border-box
+        background: url('/img/ic-add-blue.svg') no-repeat center
+        border-radius: 2px
+        float: right
+
+    .spinner
       display: inline-block
       vertical-align: top
+      margin: 24px 7px 0 8px
+      width: 17px
+      height: 17px
 
-      .pinboard-title
-        color: $blue-ribbon-color
-        font-weight: 300
-        line-height: 16px
-        margin-bottom: 2px
-        text-overflow: ellipsis
-        white-space: nowrap
-        overflow: hidden
+    .pinboard-item
+      display: block
+      height: 64px
+      box-sizing: border-box
+      background-color: white
 
-      .pinboard-created-at
-        color: $boulder-color
-        font-size: 12px
-        line-height: 14px
+      .pinboard-info
+        width: calc(100% - 64px)
+        padding: 16px 0 16px 8px
+        box-sizing: border-box
+        display: inline-block
+        vertical-align: top
 
-    .duplicate-pinboard-btn
-      display: inline-block
-      width: 32px
-      height: 32px
-      margin-right: -9px
-      background: url('/img/ic-copy.svg') no-repeat center
+        .pinboard-title
+          color: $blue-ribbon-color
+          font-weight: 300
+          line-height: 17px
+          font-size: 14px
+          margin-bottom: 1px
+          text-overflow: ellipsis
+          white-space: nowrap
+          overflow: hidden
 
-    &.untitled-pinboard
-      .pinboard-created-at
-        color: $blue-ribbon-color
-        font-size: 14px
-        line-height: 32px
+        .pinboard-viewed-at
+          color: $boulder-color
+          font-size: 12px
+          line-height: 14px
+
+        &.has-loading-spinner
+          width: calc(100% - 96px)
+          font-size: 14px
+          line-height: 17px
+          font-weight: 300
+          padding: 24px 0 23px 0
+
+      .pinboard-item-actions-container
+        padding: 16px 8px
+        display: inline-block
+        position: relative
+
+        .pinboard-item-actions-btn
+          width: 48px
+          height: 32px
+          background: url('/img/ic-ellipsis-black.svg') no-repeat center
+          border: 1px solid $alto-color
+          border-radius: 2px
+
+          &.focused
+            background: $blue-ribbon-color url('/img/ic-ellipsis-white.svg') no-repeat center
+            border: none
+
+        .pinboard-item-actions-menu
+          position: absolute
+          top: 44px
+          right: 12px
+          width: 200px
+          line-height: 40px
+          border-radius: 4px
+          background: white
+          font-weight: 300
+          z-index: 2
+          border: 1px solid $alto-color
+
+          .duplicate-pinboard-btn
+            color: $blue-ribbon-color
+
+          .remove-pinboard-btn
+            color: $pomegranate-color
+
+          .duplicate-pinboard-btn, .remove-pinboard-btn
+            padding: 0 16px
+
+          &.top
+            top: -62px
 
       &.is-current
-        .pinboard-created-at
+        background: $gin-fizz-color
+        .pinboard-title
           color: $thunder-color
-
-    &.is-current
-      background: $gin-fizz-color
-      .pinboard-created-at
-        color: $thunder-color
-
-      .pinboard-title
-        color: $thunder-color

@@ -30,6 +30,8 @@ import {
   duplicatePinboard,
   createNewEmptyPinboard,
   hideShowPinboardsList,
+  removePinboard,
+  viewPinboard,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -103,6 +105,12 @@ import {
   PINBOARDS_FETCH_REQUEST_SUCCESS,
   PINBOARDS_FETCH_REQUEST_FAILURE,
   HIDE_SHOW_PINBOARDS_LIST,
+  VIEW_PINBOARD_REQUEST_START,
+  VIEW_PINBOARD_REQUEST_SUCCESS,
+  VIEW_PINBOARD_REQUEST_FAILURE,
+  REMOVE_PINBOARD_REQUEST_START,
+  REMOVE_PINBOARD_REQUEST_SUCCESS,
+  REMOVE_PINBOARD_REQUEST_FAILURE,
 } from 'actions/pinboard';
 import constants from 'constants';
 import { v2Url } from 'utils/url-util';
@@ -786,6 +794,46 @@ describe('pinboard actions', function () {
       hideShowPinboardsList(true).should.deepEqual({
         type: HIDE_SHOW_PINBOARDS_LIST,
         payload: true,
+      });
+    });
+  });
+
+  describe('removePinboard', function () {
+    it('should return correct action', function () {
+      removePinboard('123f56').should.deepEqual({
+        types: [
+          REMOVE_PINBOARD_REQUEST_START,
+          REMOVE_PINBOARD_REQUEST_SUCCESS,
+          REMOVE_PINBOARD_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            adapter: undefined,
+            data: undefined,
+            method: 'DELETE',
+            url: '/mobile/pinboards/123f56/',
+          },
+        },
+      });
+    });
+  });
+
+  describe('viewPinboard', function () {
+    it('should return correct action', function () {
+      viewPinboard('123f78').should.deepEqual({
+        types: [
+          VIEW_PINBOARD_REQUEST_START,
+          VIEW_PINBOARD_REQUEST_SUCCESS,
+          VIEW_PINBOARD_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            adapter: undefined,
+            data: undefined,
+            method: 'POST',
+            url: '/mobile/pinboards/123f78/view/',
+          },
+        },
       });
     });
   });
