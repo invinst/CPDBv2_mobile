@@ -53,7 +53,7 @@ module.exports = {
   url: function (query = '') {
     let result = `${this.api.globals.clientUrl}/search/`;
     if (query)
-      result = `${result}?q=${query}`;
+      result = `${result}?${query}`;
     return result;
   },
 
