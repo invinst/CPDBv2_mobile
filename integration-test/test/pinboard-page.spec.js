@@ -1761,49 +1761,63 @@ describe('Pinboard Page', function () {
         const genderCharts = genderSection.elements.charts;
 
         client.elements(raceCharts.locateStrategy, raceCharts.selector, function (charts) {
-          client.assert.equal(charts.value.length, 3);
+          client.assert.equal(charts.value.length, 4);
         });
 
         raceSection.getAttribute('@firstBar', 'width', function (result) {
-          client.assert.equal(parseInt(result.value), 184);
+          client.assert.equal(parseInt(result.value), 3);
         });
-        raceSection.expect.element('@firstPercentage').text.to.equal('55%');
-        raceSection.expect.element('@firstPercentage').to.have.attribute('class').which.does.not.contains('short-bar');
+        raceSection.expect.element('@firstPercentage').text.to.equal('2%');
+        raceSection.expect.element('@firstPercentage').to.have.attribute('class').which.contains('short-bar');
         raceSection.expect.element('@firstLabel').text.to.equal('Black');
 
         raceSection.getAttribute('@secondBar', 'width', function (result) {
-          client.assert.equal(parseInt(result.value), 143);
+          client.assert.equal(parseInt(result.value), 180);
         });
-        raceSection.expect.element('@secondPercentage').text.to.equal('43%');
+        raceSection.expect.element('@secondPercentage').text.to.equal('98%');
         raceSection.expect.element('@secondPercentage').to.have.attribute('class').which.does.not.contains('short-bar');
         raceSection.expect.element('@secondLabel').text.to.equal('White');
 
         raceSection.getAttribute('@thirdBar', 'width', function (result) {
-          client.assert.equal(parseInt(result.value), 6);
+          client.assert.equal(parseInt(result.value), 0);
         });
-        raceSection.expect.element('@thirdPercentage').text.to.equal('2%');
+        raceSection.expect.element('@thirdPercentage').text.to.equal('0%');
         raceSection.expect.element('@thirdPercentage').to.have.attribute('class').which.contains('short-bar');
-        raceSection.expect.element('@thirdLabel').text.to.equal('Other');
+        raceSection.expect.element('@thirdLabel').text.to.equal('Hispanic');
+
+        raceSection.getAttribute('@fourthBar', 'width', function (result) {
+          client.assert.equal(parseInt(result.value), 0);
+        });
+        raceSection.expect.element('@fourthPercentage').text.to.equal('0%');
+        raceSection.expect.element('@fourthPercentage').to.have.attribute('class').which.contains('short-bar');
+        raceSection.expect.element('@fourthLabel').text.to.equal('Other');
 
         client.elements(genderCharts.locateStrategy, genderCharts.selector, function (charts) {
-          client.assert.equal(charts.value.length, 2);
+          client.assert.equal(charts.value.length, 3);
         });
 
         genderSection.getAttribute('@firstBar', 'width', function (result) {
           client.assert.equal(parseInt(result.value), 184);
         });
-        genderSection.expect.element('@firstPercentage').text.to.equal('96%');
+        genderSection.expect.element('@firstPercentage').text.to.equal('100%');
         genderSection.expect.element('@firstPercentage').to.have.attribute('class').which.does.not.contains(
           'short-bar'
         );
         genderSection.expect.element('@firstLabel').text.to.equal('M');
 
         genderSection.getAttribute('@secondBar', 'width', function (result) {
-          client.assert.equal(parseInt(result.value), 7);
+          client.assert.equal(parseInt(result.value), 0);
         });
-        genderSection.expect.element('@secondPercentage').text.to.equal('4%');
+        genderSection.expect.element('@secondPercentage').text.to.equal('0%');
         genderSection.expect.element('@secondPercentage').to.have.attribute('class').which.contains('short-bar');
         genderSection.expect.element('@secondLabel').text.to.equal('F');
+
+        genderSection.getAttribute('@thirdBar', 'width', function (result) {
+          client.assert.equal(parseInt(result.value), 0);
+        });
+        genderSection.expect.element('@thirdPercentage').text.to.equal('0%');
+        genderSection.expect.element('@thirdPercentage').to.have.attribute('class').which.contains('short-bar');
+        genderSection.expect.element('@thirdLabel').text.to.equal('Unknown');
       });
     });
 
@@ -1833,56 +1847,63 @@ describe('Pinboard Page', function () {
         const genderCharts = genderSection.elements.charts;
 
         client.elements(raceCharts.locateStrategy, raceCharts.selector, function (charts) {
-          client.assert.equal(charts.value.length, 3);
+          client.assert.equal(charts.value.length, 4);
         });
 
         raceSection.getAttribute('@firstBar', 'width', function (result) {
-          client.assert.equal(parseInt(result.value), 184);
+          client.assert.equal(parseInt(result.value), 115);
         });
-        raceSection.expect.element('@firstPercentage').text.to.equal('67%');
+        raceSection.expect.element('@firstPercentage').text.to.equal('63%');
         raceSection.expect.element('@firstPercentage').to.have.attribute('class').which.does.not.contains('short-bar');
         raceSection.expect.element('@firstLabel').text.to.equal('Black');
 
         raceSection.getAttribute('@secondBar', 'width', function (result) {
-          client.assert.equal(parseInt(result.value), 74);
+          client.assert.equal(parseInt(result.value), 22);
         });
-        raceSection.expect.element('@secondPercentage').text.to.equal('27%');
-        raceSection.expect.element('@secondPercentage').to.have.attribute('class').which.does.not.contains('short-bar');
+        raceSection.expect.element('@secondPercentage').text.to.equal('12%');
+        raceSection.expect.element('@secondPercentage').to.have.attribute('class').which.contains('short-bar');
         raceSection.expect.element('@secondLabel').text.to.equal('White');
 
         raceSection.getAttribute('@thirdBar', 'width', function (result) {
-          client.assert.equal(parseInt(result.value), 13);
+          client.assert.equal(parseInt(result.value), 18);
         });
-        raceSection.expect.element('@thirdPercentage').text.to.equal('5%');
+        raceSection.expect.element('@thirdPercentage').text.to.equal('10%');
         raceSection.expect.element('@thirdPercentage').to.have.attribute('class').which.contains('short-bar');
-        raceSection.expect.element('@thirdLabel').text.to.equal('Other');
+        raceSection.expect.element('@thirdLabel').text.to.equal('Hispanic');
+
+        raceSection.getAttribute('@fourthBar', 'width', function (result) {
+          client.assert.equal(parseInt(result.value), 27);
+        });
+        raceSection.expect.element('@fourthPercentage').text.to.equal('15%');
+        raceSection.expect.element('@fourthPercentage').to.have.attribute('class').which.contains('short-bar');
+        raceSection.expect.element('@fourthLabel').text.to.equal('Other');
 
         client.elements(genderCharts.locateStrategy, genderCharts.selector, function (charts) {
           client.assert.equal(charts.value.length, 3);
         });
 
         genderSection.getAttribute('@firstBar', 'width', function (result) {
-          client.assert.equal(parseInt(result.value), 184);
+          client.assert.equal(parseInt(result.value), 114);
         });
-        genderSection.expect.element('@firstPercentage').text.to.equal('49%');
+        genderSection.expect.element('@firstPercentage').text.to.equal('62%');
         genderSection.expect.element('@firstPercentage').to.have.attribute('class').which.does.not.contains(
           'short-bar'
         );
-        genderSection.expect.element('@firstLabel').text.to.equal('F');
+        genderSection.expect.element('@firstLabel').text.to.equal('M');
 
         genderSection.getAttribute('@secondBar', 'width', function (result) {
-          client.assert.equal(parseInt(result.value), 176);
+          client.assert.equal(parseInt(result.value), 58);
         });
-        genderSection.expect.element('@secondPercentage').text.to.equal('47%');
+        genderSection.expect.element('@secondPercentage').text.to.equal('32%');
         genderSection.expect.element('@secondPercentage').to.have.attribute('class').which.does.not.contains(
           'short-bar'
         );
-        genderSection.expect.element('@secondLabel').text.to.equal('M');
+        genderSection.expect.element('@secondLabel').text.to.equal('F');
 
         genderSection.getAttribute('@thirdBar', 'width', function (result) {
-          client.assert.equal(parseInt(result.value), 15);
+          client.assert.equal(parseInt(result.value), 11);
         });
-        genderSection.expect.element('@thirdPercentage').text.to.equal('4%');
+        genderSection.expect.element('@thirdPercentage').text.to.equal('6%');
         genderSection.expect.element('@thirdPercentage').to.have.attribute('class').which.contains('short-bar');
         genderSection.expect.element('@thirdLabel').text.to.equal('Unknown');
       });

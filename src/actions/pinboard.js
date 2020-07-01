@@ -404,7 +404,7 @@ export const viewPinboard = (id) => post(
 )();
 
 export const fetchComplaintSummary = (id) => get(
-  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/complaint-summary/`,
+  `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/complaint-summary/`,
   [
     PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_START,
     PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_SUCCESS,
@@ -413,7 +413,7 @@ export const fetchComplaintSummary = (id) => get(
 )();
 
 export const fetchTRRSummary = (id) => get(
-  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/trr-summary/`,
+  `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/trr-summary/`,
   [
     PINBOARD_TRR_SUMMARY_FETCH_REQUEST_START,
     PINBOARD_TRR_SUMMARY_FETCH_REQUEST_SUCCESS,
@@ -422,7 +422,7 @@ export const fetchTRRSummary = (id) => get(
 )();
 
 export const fetchOfficersSummary = (id) => get(
-  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/officers-summary/`,
+  `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/officers-summary/`,
   [
     PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_START,
     PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_SUCCESS,
@@ -431,7 +431,7 @@ export const fetchOfficersSummary = (id) => get(
 )();
 
 export const fetchComplainantsSummary = (id) => get(
-  `${v2Url(constants.PINBOARDS_API_ENDPOINT)}${id}/complainants-summary/`,
+  `${v2Url(PINBOARDS_API_ENDPOINT)}${id}/complainants-summary/`,
   [
     PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_START,
     PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_SUCCESS,

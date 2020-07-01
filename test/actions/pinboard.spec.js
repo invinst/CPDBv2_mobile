@@ -871,7 +871,7 @@ describe('pinboard actions', function () {
           request: {
             adapter: undefined,
             params: undefined,
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}84ab47/complaint-summary/`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/complaint-summary/`,
           },
         },
       });
@@ -890,7 +890,7 @@ describe('pinboard actions', function () {
           request: {
             adapter: undefined,
             params: undefined,
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}84ab47/trr-summary/`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/trr-summary/`,
           },
         },
       });
@@ -909,7 +909,7 @@ describe('pinboard actions', function () {
           request: {
             adapter: undefined,
             params: undefined,
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}84ab47/officers-summary/`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/officers-summary/`,
           },
         },
       });
@@ -928,7 +928,7 @@ describe('pinboard actions', function () {
           request: {
             adapter: undefined,
             params: undefined,
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}84ab47/complainants-summary/`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/complainants-summary/`,
           },
         },
       });
