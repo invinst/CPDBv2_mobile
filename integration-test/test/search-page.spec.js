@@ -570,7 +570,7 @@ describe('SearchPageTest', function () {
     });
 
     it('should able to show INVESTIGATOR > CR results via query parameter', function () {
-      this.searchPage.navigate(this.searchPage.url('Kelvin'));
+      this.searchPage.navigate(this.searchPage.url('q=Kelvin'));
 
       this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR → CR');
 
@@ -769,17 +769,41 @@ describe('SearchPageTest', function () {
       this.searchPage.expect.element('@trrsHeader').to.be.not.present;
     });
 
-    it('should match result with search term from url', function () {
-      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+    context('should match result with search term from url', function () {
+      beforeEach(function (client, done) {
+        api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+        done();
+      });
 
-      this.searchPage.navigate(this.searchPage.url('officer:2004-04-23 ke'));
+      it('should search with correct query using q', function () {
+        api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
 
-      this.searchPage.waitForElementVisible('@officersHeader', TIMEOUT);
-      this.searchPage.expect.element('@dateCRsHeader').to.be.not.present;
-      this.searchPage.expect.element('@dateTRRsHeader').to.be.not.present;
-      this.searchPage.expect.element('@dateOfficersHeader').to.be.not.present;
-      this.searchPage.expect.element('@crsHeader').to.be.not.present;
-      this.searchPage.expect.element('@trrsHeader').to.be.not.present;
+        this.searchPage.navigate(this.searchPage.url('q=officer:2004-04-23 ke'));
+
+        this.searchPage.waitForElementVisible('@officersHeader', TIMEOUT);
+        this.searchPage.expect.element('@dateCRsHeader').to.be.not.present;
+        this.searchPage.expect.element('@dateTRRsHeader').to.be.not.present;
+        this.searchPage.expect.element('@dateOfficersHeader').to.be.not.present;
+        this.searchPage.expect.element('@crsHeader').to.be.not.present;
+        this.searchPage.expect.element('@trrsHeader').to.be.not.present;
+
+        this.searchPage.expect.element('@queryInput').value.to.equal('officer:2004-04-23 ke');
+      });
+
+      it('should search with correct query using terms', function () {
+        api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+
+        this.searchPage.navigate(this.searchPage.url('terms=officer:2004-04-23 ke'));
+
+        this.searchPage.waitForElementVisible('@officersHeader', TIMEOUT);
+        this.searchPage.expect.element('@dateCRsHeader').to.be.not.present;
+        this.searchPage.expect.element('@dateTRRsHeader').to.be.not.present;
+        this.searchPage.expect.element('@dateOfficersHeader').to.be.not.present;
+        this.searchPage.expect.element('@crsHeader').to.be.not.present;
+        this.searchPage.expect.element('@trrsHeader').to.be.not.present;
+
+        this.searchPage.expect.element('@queryInput').value.to.equal('officer:2004-04-23 ke');
+      });
     });
   });
 

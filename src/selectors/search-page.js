@@ -57,7 +57,7 @@ const crFormatter = (cr, pinboardItems) => ({
   crid: cr.crid,
   id: cr.crid,
   url: `${COMPLAINT_PATH}${cr.crid}/`,
-  incidentDate: moment(cr.incident_date).format(constants.SEARCH_INCIDENT_DATE_FORMAT),
+  incidentDate: moment(cr.incident_date).format(constants.MONTH_DATE_YEAR_FORMAT),
   category: cr.category,
   isPinned: isItemPinned('CR', cr.crid, pinboardItems),
   type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,

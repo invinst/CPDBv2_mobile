@@ -32,16 +32,43 @@ const baseRelevantComplaints = (type) => ({
   },
 });
 
-const nthPinboardItemTitle = (index) => ({
-  selector: `//div[contains(@class, "pinboard-item")][${index}]//div[@class="pinboard-title"]`,
-  locateStrategy: 'xpath',
-});
-
-const nthPinboardItemCreatedAt = (index) => ({
-  selector: `//div[contains(@class, "pinboard-item")][${index}]//div[@class="pinboard-created-at"]`,
-  locateStrategy: 'xpath',
-});
-
+const nthPinboardItem = (index) => {
+  const parentSelector = `(//div[contains(@class, "Modal")]/div/div[contains(@class, "pinboard-item")])[${index}]`;
+  return {
+    selector: parentSelector,
+    locateStrategy: 'xpath',
+    elements: {
+      title: {
+        selector: `${parentSelector}//div[@class="pinboard-title"]`,
+        locateStrategy: 'xpath',
+      },
+      viewedAt: {
+        selector: `${parentSelector}//div[@class="pinboard-viewed-at"]`,
+        locateStrategy: 'xpath',
+      },
+      actionsButton: {
+        selector: `${parentSelector}//div[contains(@class, "pinboard-item-actions-btn")]`,
+        locateStrategy: 'xpath',
+      },
+      actionsPane: {
+        selector: `${parentSelector}//div[contains(@class, "pinboard-item-actions-menu")]`,
+        locateStrategy: 'xpath',
+      },
+      duplicateButton: {
+        selector: `${parentSelector}//div[@class="duplicate-pinboard-btn"]`,
+        locateStrategy: 'xpath',
+      },
+      removeButton: {
+        selector: `${parentSelector}//div[@class="remove-pinboard-btn"]`,
+        locateStrategy: 'xpath',
+      },
+      spinner: {
+        selector: `${parentSelector}//img[@class="spinner"]`,
+        locateStrategy: 'xpath',
+      },
+    },
+  };
+};
 
 module.exports = {
   url: function (pinboardId, queryString) {
@@ -274,17 +301,24 @@ module.exports = {
       elements: {
         pinboardsTitle: '.pinboards-title',
         createNewPinboardButton: '.new-pinboard-btn',
-        firstDuplicatePinboardButton: {
+        pinboardActionsPane: {
+          selector: '//div[@class="pinboard-item-actions-menu"]',
+          locateStrategy: 'xpath',
+        },
+        duplicatePinboardButton: {
           selector: '(//a[contains(@class, "duplicate-pinboard-btn")])[1]',
           locateStrategy: 'xpath',
         },
-        firstPinboardItemTitle: nthPinboardItemTitle(1),
-        firstPinboardItemCreatedAt: nthPinboardItemCreatedAt(1),
-        secondPinboardItemTitle: nthPinboardItemTitle(2),
-        secondPinboardItemCreatedAt: nthPinboardItemCreatedAt(2),
-        thirdPinboardItemTitle: nthPinboardItemTitle(3),
-        thirdPinboardItemCreatedAt: nthPinboardItemCreatedAt(3),
+        removePinboardButton: {
+          selector: '(//a[contains(@class, "remove-pinboard-btn")])[1]',
+          locateStrategy: 'xpath',
+        },
         pinboardItems: '.pinboard-item',
+      },
+      sections: {
+        firstPinboardItem: nthPinboardItem(1),
+        secondPinboardItem: nthPinboardItem(2),
+        thirdPinboardItem: nthPinboardItem(3),
       },
     },
   },

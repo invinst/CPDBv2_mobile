@@ -19,7 +19,7 @@ const formatDate = (date) => {
   if (!date) {
     return null;
   }
-  return moment(date).format(constants.SIMPLE_DATE_FORMAT);
+  return moment(date).format(constants.MONTH_NAME_DAY_YEAR_FORMAT);
 };
 
 const getDemographicString = ({ race, gender, age }) =>

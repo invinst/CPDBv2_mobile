@@ -1,45 +1,34 @@
-import { reduce, values } from 'lodash';
+import { LOCATION_CHANGE } from 'connected-react-router';
 
-import { ROUTE_CHANGED } from 'actions/navigation';
+import browserHistory from 'utils/history';
 import {
-  SEARCH_QUERY_CHANGED,
-  SUGGEST_ALL_REQUEST_SUCCESS,
-  SUGGESTION_REQUEST_SUCCESS,
-  SUGGESTION_SINGLE_REQUEST_SUCCESS,
-} from 'actions/suggestion';
-import * as tracking from 'utils/tracking';
+  PINBOARD_FETCH_REQUEST_SUCCESS,
+  viewPinboard,
+} from 'actions/pinboard';
+import { onPinboardPage } from 'utils/paths';
+import { getPinboardID } from 'middleware/fetch-and-redirect-pinboard-middleware';
+import { getPinboard } from 'selectors/pinboard-page/pinboard';
 
 
-const EVENTS = {
-  [ROUTE_CHANGED]: (store, action) => {
-    tracking.trackPageView(action.payload.to);
-  },
-
-  [SEARCH_QUERY_CHANGED]: (store, action) => {
-    tracking.trackSearchQuery(action.payload);
-  },
-
-  [SUGGEST_ALL_REQUEST_SUCCESS]: (store, action) => {
-    const category = Object.keys(action.payload)[0];
-    tracking.trackSearchResultsCount(action.payload[category].length);
-  },
-
-  [SUGGESTION_REQUEST_SUCCESS]: (store, action) => {
-    const count = reduce(values(action.payload), (sum, array) => sum + array.length, 0);
-    tracking.trackSearchResultsCount(count);
-  },
-  [SUGGESTION_SINGLE_REQUEST_SUCCESS]: (store, action) => {
-    const { contentType, term } = action.request.params;
-    tracking.trackSingleSearchResults(contentType, term, action.payload.results.length);
-  },
-};
-
-const trackingMiddleware = store => next => action => {
-  if (Object.prototype.hasOwnProperty.call(EVENTS, action.type)) {
-    EVENTS[action.type](store, action);
+export default store => next => action => {
+  const result = next(action);
+  if (action.type === PINBOARD_FETCH_REQUEST_SUCCESS) {
+    const pathname = browserHistory.location.pathname;
+    if (onPinboardPage(pathname)) {
+      store.dispatch(viewPinboard(action.payload.id));
+    }
   }
 
-  return next(action);
-};
+  if (action.type === LOCATION_CHANGE) {
+    const pathname = action.payload.location.pathname;
+    if (onPinboardPage(pathname)) {
+      const idOnPath = getPinboardID(action.payload.location.pathname);
+      const idOnStore = getPinboard(store.getState()).id;
+      if (idOnPath === idOnStore) {
+        store.dispatch(viewPinboard(idOnStore));
+      }
+    }
+  }
 
-export default trackingMiddleware;
+  return result;
+};

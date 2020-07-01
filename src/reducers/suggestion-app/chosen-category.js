@@ -18,7 +18,7 @@ export default handleActions({
   [UPDATE_CHOSEN_CATEGORY]: (state, action) => action.payload,
   [SEARCH_INPUT_CHANGED]: (state, action) => getChosenCategory(action.payload),
   [LOCATION_CHANGE]: (state, action) => {
-    const { terms } = queryString.parse(action.payload.location.search);
-    return getChosenCategory(terms);
+    const query = queryString.parse(action.payload.location.search);
+    return getChosenCategory(query.q || query.terms);
   },
 }, '');

@@ -32,6 +32,15 @@ describe('query reducer', function () {
       type: LOCATION_CHANGE,
       payload: {
         location: {
+          search: `q=${queryString}`,
+        },
+      },
+    }).should.eql(queryString);
+
+    query('', {
+      type: LOCATION_CHANGE,
+      payload: {
+        location: {
           search: `terms=${queryString}`,
         },
       },
@@ -39,6 +48,15 @@ describe('query reducer', function () {
   });
 
   it('should handle LOCATION_CHANGE with prefix', function () {
+    query('', {
+      type: LOCATION_CHANGE,
+      payload: {
+        location: {
+          search: 'q=officer:123',
+        },
+      },
+    }).should.eql('123');
+
     query('', {
       type: LOCATION_CHANGE,
       payload: {

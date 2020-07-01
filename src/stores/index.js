@@ -8,6 +8,7 @@ import configuredAxiosMiddleware from 'middleware/configured-axios-middleware';
 import rootReducer from 'reducers/root-reducer';
 import localStorageConfig from './local-storage-config';
 import scrollPositionMiddleware from 'middleware/scroll-position-middleware';
+import analyticTrackingMiddleware from 'middleware/analytic-tracking-middleware';
 import trackingMiddleware from 'middleware/tracking-middleware';
 import restoreCreateOrUpdatePinboardMiddleware from 'middleware/restore-create-or-update-pinboard-middleware';
 import fetchAndRedirectPinboardMiddleware from 'middleware/fetch-and-redirect-pinboard-middleware';
@@ -25,6 +26,7 @@ function configureStore(initialState) {
     thunk,
     configuredAxiosMiddleware,
     scrollPositionMiddleware,
+    analyticTrackingMiddleware,
     trackingMiddleware,
     fetchAndRedirectPinboardMiddleware,
     fetchToastMiddleware,

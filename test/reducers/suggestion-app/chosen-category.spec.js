@@ -35,6 +35,15 @@ describe('chosenCategory reducer', function () {
       type: LOCATION_CHANGE,
       payload: {
         location: {
+          search: 'q=officer:123',
+        },
+      },
+    }).should.eql('officers');
+
+    chosenCategory('', {
+      type: LOCATION_CHANGE,
+      payload: {
+        location: {
           search: 'terms=officer:123',
         },
       },
@@ -42,6 +51,15 @@ describe('chosenCategory reducer', function () {
   });
 
   it('should handle LOCATION_CHANGE with terms does not match SEARCH_QUERY_PREFIX_REGEX', function () {
+    chosenCategory('', {
+      type: LOCATION_CHANGE,
+      payload: {
+        location: {
+          search: 'q=abc:123',
+        },
+      },
+    }).should.eql('');
+
     chosenCategory('', {
       type: LOCATION_CHANGE,
       payload: {
