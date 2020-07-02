@@ -5,13 +5,13 @@ import { noop } from 'lodash';
 import styles from './pinboards-menu.sass';
 import { redirectToCreatedPinboard } from 'utils/pinboard';
 import PinboardMenuItem from './pinboard-menu-item';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 const PINBOARD_PINNED_ITEM_TYPE_MAPPING = {
-  [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER]: 'officerIds',
-  [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR]: 'crids',
-  [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR]: 'trrIds',
+  [PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER]: 'officerIds',
+  [PINBOARD_PAGE.PINNED_ITEM_TYPES.CR]: 'crids',
+  [PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR]: 'trrIds',
 };
 
 export default class PinboardsMenu extends Component {

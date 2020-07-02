@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import constants from 'constants';
+import { QUERY_INPUT_HEIGHT, SEARCH_CATEGORY_LINKS_HEIGHT, NEW_DIVIDER_WEIGHT } from 'constants';
 import { getCurrentScrollPosition, instantScrollToTop } from 'utils/navigation-util';
 import SearchResult from 'components/search-page/search-result';
 import RecentItems from './recent-items';
@@ -11,7 +11,7 @@ import style from './search-category.sass';
 
 
 const fixedHeaderHeight = (
-  constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + 2 * constants.NEW_DIVIDER_WEIGHT
+  QUERY_INPUT_HEIGHT + SEARCH_CATEGORY_LINKS_HEIGHT + 2 * NEW_DIVIDER_WEIGHT
 );
 
 const resultComponentMappings = {

@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import * as _ from 'lodash';
+import { every, reject, sortBy, findIndex } from 'lodash';
 
 import {
   PINBOARD_COMPLAINTS_FETCH_REQUEST_SUCCESS,
@@ -22,7 +22,7 @@ export default handleActions({
     const currentItems = state;
     if (action.payload.type === 'CR') {
       const item = action.payload;
-      if (_.every(currentItems, currentItem => currentItem.crid !== item.id)) {
+      if (every(currentItems, currentItem => currentItem.crid !== item.id)) {
         return currentItems.concat(toRawCR(item));
       }
     }
@@ -33,7 +33,7 @@ export default handleActions({
     const { id, type } = action.payload;
 
     if (type === 'CR') {
-      return _.reject(currentItems, { crid: id });
+      return reject(currentItems, { crid: id });
     }
     return currentItems;
   },
@@ -42,7 +42,7 @@ export default handleActions({
     const { ids, type } = action.payload;
 
     if (type === 'CR') {
-      return _.sortBy(currentItems, item => _.findIndex(ids, id => id === item.crid));
+      return sortBy(currentItems, item => findIndex(ids, id => id === item.crid));
     }
     return currentItems;
   },

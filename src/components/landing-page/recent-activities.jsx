@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 
 import OfficerCard from 'components/common/officer-card';
 import CarouselWrapper from './carousel-wrapper';
-import constants from 'constants';
+import { CAROUSEL_TYPES } from 'constants';
 
 
 export default class RecentActivities extends Component {
@@ -24,7 +24,7 @@ export default class RecentActivities extends Component {
       <CarouselWrapper
         title={ title }
         description={ description }
-        trackingContentType={ constants.CAROUSEL_TYPES.ACTIVITY }
+        trackingContentType={ CAROUSEL_TYPES.ACTIVITY }
       >
         {
           recentActivities.map(officer =>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 import RadarChart from 'components/common/radar-chart';
 import ItemPinButton from 'components/common/item-pin-button';
 import style from './base-officer-card.sass';
@@ -41,7 +41,7 @@ export class BaseOfficerCard extends Component {
             addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard }
             showHint={ false }
             item={ {
-              type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+              type: PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
               id: officerId,
               isPinned,
               fullName,

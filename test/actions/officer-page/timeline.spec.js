@@ -1,4 +1,4 @@
-import constants from 'constants';
+import { OFFICER_API_ENDPOINT } from 'constants';
 import { v2Url } from 'utils/url-util';
 import {
   OFFICER_TIMELINE_ITEMS_REQUEST_START,
@@ -21,7 +21,7 @@ describe('timeline actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.OFFICER_API_ENDPOINT)}11/new-timeline-items/`,
+            url: `${v2Url(OFFICER_API_ENDPOINT)}11/new-timeline-items/`,
             adapter: undefined,
             params: {},
           },

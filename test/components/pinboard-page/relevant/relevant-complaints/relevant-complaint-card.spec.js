@@ -8,7 +8,7 @@ import { mountWithRouter } from 'utils/tests';
 import RelevantComplaintCard, { RelevantComplaintCardWithUndo }
   from 'components/pinboard-page/relevant/relevant-complaints/relevant-complaint-card';
 import BaseComplaintCard from 'components/pinboard-page/relevant/common/base-complaint-card';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 import PlusButton from 'components/pinboard-page/relevant/common/plus-button';
 
 
@@ -154,7 +154,7 @@ describe('<RelevantComplaintCard />', function () {
 
       plusButton.simulate('click');
 
-      clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME + 50);
+      clock.tick(PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME + 50);
       wrapper.update();
 
       wrapper.isEmptyRender().should.be.true();

@@ -7,14 +7,14 @@ import { Provider } from 'react-redux';
 import MockStore from 'redux-mock-store';
 
 import { mountWithRouter } from 'utils/tests';
-import constants from 'constants';
+import { QUERY_INPUT_HEIGHT, SEARCH_CATEGORY_LINKS_HEIGHT, NEW_DIVIDER_WEIGHT } from 'constants';
 import SearchCategory from 'components/search-page/search-category';
 import SearchResult from 'components/search-page/search-result';
 import RecentItems from 'components/search-page/recent-items';
 
 
 const fixedHeaderHeight = (
-  constants.QUERY_INPUT_HEIGHT + constants.SEARCH_CATEGORY_LINKS_HEIGHT + 2 * constants.NEW_DIVIDER_WEIGHT
+  QUERY_INPUT_HEIGHT + SEARCH_CATEGORY_LINKS_HEIGHT + 2 * NEW_DIVIDER_WEIGHT
 );
 
 describe('<SearchCategory />', function () {

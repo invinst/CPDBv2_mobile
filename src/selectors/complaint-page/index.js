@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import { get, compact, sortBy, isEmpty, each } from 'lodash';
 
-import constants from 'constants';
+import { MONTH_NAME_DAY_YEAR_FORMAT, PINBOARD_PAGE } from 'constants';
 import { getFindingOutcomeMix } from './finding-outcome-mix';
 import { extractLatestPercentile } from 'selectors/common/percentile';
 import { cmsSelector } from 'selectors/common/cms';
@@ -19,7 +19,7 @@ const formatDate = (date) => {
   if (!date) {
     return null;
   }
-  return moment(date).format(constants.MONTH_NAME_DAY_YEAR_FORMAT);
+  return moment(date).format(MONTH_NAME_DAY_YEAR_FORMAT);
 };
 
 const getDemographicString = ({ race, gender, age }) =>
@@ -94,7 +94,7 @@ const getCoaccusedSelector = createWithIsPinnedSelector(
       );
     }
   ),
-  constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER
+  PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER
 );
 
 const attachmentTransform = attachment => ({
@@ -167,7 +167,7 @@ export const getIsCrPinned = (state, props) => (
 export const pinnableCrSelector = createSelector(
   getComplaint,
   (complaint) => ({
-    type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+    type: PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
     id: complaint.crid,
   })
 );

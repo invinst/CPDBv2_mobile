@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './relevant-document-card.sass';
 import BaseComplaintCard from 'components/pinboard-page/relevant/common/base-complaint-card';
 import withUndoCard from 'components/pinboard-page/cards/with-undo-card';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 export default function RelevantDocumentCard(props) {
@@ -50,7 +50,7 @@ export const RelevantDocumentCardWithUndo = withUndoCard(
   () => 'Document added.',
   'addItemInPinboardPage',
   {
-    theme: constants.PINBOARD_PAGE.UNDO_CARD_THEMES.DARK,
+    theme: PINBOARD_PAGE.UNDO_CARD_THEMES.DARK,
     keepVisible: true,
     hasWrapper: true,
   },

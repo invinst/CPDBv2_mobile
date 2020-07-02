@@ -1,6 +1,4 @@
-let c = 0;
-
-const SEARCH_CATEGORIES = [
+export const SEARCH_CATEGORIES = [
   {
     name: 'DATE → COMPLAINT RECORDS',
     filter: 'DATE > CR',
@@ -58,113 +56,102 @@ const SEARCH_CATEGORIES = [
   },
 ];
 
-const SEARCH_CATEGORY_PREFIXES = SEARCH_CATEGORIES.reduce((result, searchCategory) => {
+export const SEARCH_CATEGORY_PREFIXES = SEARCH_CATEGORIES.reduce((result, searchCategory) => {
   return { ...result, [searchCategory.id]: searchCategory.queryPrefix };
 }, {});
 
-const SEARCH_QUERY_PREFIX_REGEX = new RegExp(`^(${Object.values(SEARCH_CATEGORY_PREFIXES).join('|')}):`);
+export const SEARCH_QUERY_PREFIX_REGEX = new RegExp(`^(${Object.values(SEARCH_CATEGORY_PREFIXES).join('|')}):`);
 
 const SEARCH_PATH = '/search/';
 
-export default {
-  // App events
-  SEARCH_INPUT_CHANGED: c++,
-  SEARCH_FOCUS: c++,
-  SEARCH_BLUR: c++,
-  SEARCH_CLEAR: c++,
+// API endpoints
+export const OFFICER_API_ENDPOINT = '/mobile/officers/';
+export const SUGGESTION_API_ENDPOINT = '/search-mobile/';
+export const RECENT_SEARCH_ITEMS_API_ENDPOINT = '/search-mobile/recent-search-items/';
+export const SINGLE_SEARCH_API_ENDPOINT = '/search-mobile/single/';
+export const LANDING_PAGE_CMS_API_ENDPOINT = '/cms-pages/landing-page/';
+export const OFFICER_PAGE_CMS_API_ENDPOINT = '/cms-pages/officer-page/';
+export const COMPLAINT_PAGE_CMS_API_ENDPOINT = '/cms-pages/cr-page/';
+export const TRR_PAGE_CMS_API_ENDPOINT = '/cms-pages/trr-page/';
+export const PINBOARD_PAGE_CMS_API_ENDPOINT = '/cms-pages/pinboard-page/';
+export const COMPLAINT_API_ENDPOINT = '/mobile/cr/';
+export const TRR_API_ENDPOINT = '/mobile/trr/';
+export const TOP_OFFICERS_BY_ALLEGATION_ENDPOINT = '/officers/top-by-allegation/';
+export const OFFICERS_API_ENDPOINT = '/mobile/officers/';
+export const RECENT_ACTIVITIES_ENDPOINT = '/activity-grid/';
+export const NEW_DOCUMENT_ALLEGATIONS_ENDPOINT = '/cr/list-by-new-document/';
+export const COMPLAINT_SUMMARIES_ENDPOINT = '/cr/complaint-summaries/';
+export const PINBOARDS_API_ENDPOINT = '/mobile/pinboards/';
+export const SOCIAL_GRAPH_API_ENDPOINT = '/mobile/social-graph/';
+export const SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT = '/mobile/social-graph/geographic-crs/';
+export const SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT = '/mobile/social-graph/geographic-trrs/';
+export const TOAST_API_ENDPOINT = '/mobile/toast/';
+export const TRACKING_API_ENDPOINT = '/tracking/';
+export const APP_CONFIG_API_ENDPOINT = '/app-config/';
 
-  // API endpoints
-  OFFICER_API_ENDPOINT: '/mobile/officers/',
-  SUGGESTION_API_ENDPOINT: '/search-mobile/',
-  RECENT_SEARCH_ITEMS_API_ENDPOINT: '/search-mobile/recent-search-items/',
-  SINGLE_SEARCH_API_ENDPOINT: '/search-mobile/single/',
-  LANDING_PAGE_CMS_API_ENDPOINT: '/cms-pages/landing-page/',
-  OFFICER_PAGE_CMS_API_ENDPOINT: '/cms-pages/officer-page/',
-  COMPLAINT_PAGE_CMS_API_ENDPOINT: '/cms-pages/cr-page/',
-  TRR_PAGE_CMS_API_ENDPOINT: '/cms-pages/trr-page/',
-  PINBOARD_PAGE_CMS_API_ENDPOINT: '/cms-pages/pinboard-page/',
-  COMPLAINT_API_ENDPOINT: '/mobile/cr/',
-  TRR_API_ENDPOINT: '/mobile/trr/',
-  TOP_OFFICERS_BY_ALLEGATION_ENDPOINT: '/officers/top-by-allegation/',
-  OFFICERS_API_ENDPOINT: '/mobile/officers/',
-  RECENT_ACTIVITIES_ENDPOINT: '/activity-grid/',
-  NEW_DOCUMENT_ALLEGATIONS_ENDPOINT: '/cr/list-by-new-document/',
-  COMPLAINT_SUMMARIES_ENDPOINT: '/cr/complaint-summaries/',
-  PINBOARDS_API_ENDPOINT: '/mobile/pinboards/',
-  SOCIAL_GRAPH_API_ENDPOINT: '/mobile/social-graph/',
-  SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT: '/mobile/social-graph/geographic-crs/',
-  SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT: '/mobile/social-graph/geographic-trrs/',
-  TOAST_API_ENDPOINT: '/mobile/toast/',
-  TRACKING_API_ENDPOINT: '/tracking/',
-  APP_CONFIG_API_ENDPOINT: '/app-config/',
+//Time format
+export const MONTH_NAME_DAY_YEAR_FORMAT = 'MMM DD, YYYY';
+export const MONTH_DATE_YEAR_FORMAT = 'MM/DD/YYYY';
+export const SIMPLE_DATE_FORMAT = 'DD/MM/YYYY';
+export const PINBOARD_VIEWED_DATE_TIME_FORMAT = 'DD/MM/YYYY [at] hh:mm A';
 
-  //Time format
-  MONTH_NAME_DAY_YEAR_FORMAT: 'MMM DD, YYYY',
-  MONTH_DATE_YEAR_FORMAT: 'MM/DD/YYYY',
-  SIMPLE_DATE_FORMAT: 'DD/MM/YYYY',
-  PINBOARD_VIEWED_DATE_TIME_FORMAT: 'DD/MM/YYYY [at] hh:mm A',
+// These should match their SASS counterparts in styles/Variables.sass
+export const QUERY_INPUT_HEIGHT = 48;
+export const SEARCH_CATEGORY_LINKS_HEIGHT = 40;
+export const NEW_DIVIDER_WEIGHT = 2;
+export const INVINST_GITHUB_URL = 'https://github.com/invinst/';
+export const QA_URL = 'http://how.cpdp.works/';
+export const CAROUSEL_TYPES = {
+  'COMPLAINT': 'COMPLAINT',
+  'ACTIVITY': 'ACTIVITY',
+  'ALLEGATION': 'ALLEGATION',
+  'DOCUMENT': 'DOCUMENT',
+};
 
-  SEARCH_CATEGORIES: SEARCH_CATEGORIES,
-  SEARCH_CATEGORY_PREFIXES: SEARCH_CATEGORY_PREFIXES,
-  SEARCH_QUERY_PREFIX_REGEX: SEARCH_QUERY_PREFIX_REGEX,
-
-  // These should match their SASS counterparts in styles/Variables.sass
-  QUERY_INPUT_HEIGHT: 48,
-  SEARCH_CATEGORY_LINKS_HEIGHT: 40,
-  NEW_DIVIDER_WEIGHT: 2,
-  INVINST_GITHUB_URL: 'https://github.com/invinst/',
-  QA_URL: 'http://how.cpdp.works/',
-  CAROUSEL_TYPES: {
-    'COMPLAINT': 'COMPLAINT',
-    'ACTIVITY': 'ACTIVITY',
-    'ALLEGATION': 'ALLEGATION',
-    'DOCUMENT': 'DOCUMENT',
+export const PINBOARD_PAGE = {
+  UNDO_CARD_VISIBLE_TIME: 1000,
+  UNDO_CARD_THEMES: {
+    LIGHT: 'light',
+    DARK: 'dark',
   },
+  TAB_NAMES: {
+    NETWORK: 'NETWORK',
+    GEOGRAPHIC: 'GEOGRAPHIC',
+  },
+  PINNED_ITEM_TYPES: {
+    'CR': 'CR',
+    'DATE > CR': 'CR',
+    'INVESTIGATOR > CR': 'CR',
+    'OFFICER': 'OFFICER',
+    'UNIT > OFFICERS': 'OFFICER',
+    'DATE > OFFICERS': 'OFFICER',
+    'TRR': 'TRR',
+    'DATE > TRR': 'TRR',
+  },
+};
 
-  // Pinboard page constants
-  PINBOARD_PAGE: {
-    UNDO_CARD_VISIBLE_TIME: 1000,
-    UNDO_CARD_THEMES: {
-      LIGHT: 'light',
-      DARK: 'dark',
-    },
-    TAB_NAMES: {
-      NETWORK: 'NETWORK',
-      GEOGRAPHIC: 'GEOGRAPHIC',
-    },
-    PINNED_ITEM_TYPES: {
-      'CR': 'CR',
-      'DATE > CR': 'CR',
-      'INVESTIGATOR > CR': 'CR',
-      'OFFICER': 'OFFICER',
-      'UNIT > OFFICERS': 'OFFICER',
-      'DATE > OFFICERS': 'OFFICER',
-      'TRR': 'TRR',
-      'DATE > TRR': 'TRR',
-    },
-  },
+export const MAP_ITEMS = {
+  CR: 'CR',
+  FORCE: 'FORCE',
+};
 
-  // Map constants
-  MAP_ITEMS: {
-    CR: 'CR',
-    FORCE: 'FORCE',
-  },
-  MAP_INFO: {
-    CENTER_LAT: 41.85677,
-    CENTER_LNG: -87.6024055,
-    ZOOM1: 9,
-    ZOOM2: 13,
-  },
-  MAPBOX_STYLE: 'mapbox://styles/invisibleinstitute/cj8ugtswqe8dx2ss2kwhfnvte',
+export const MAP_INFO = {
+  CENTER_LAT: 41.85677,
+  CENTER_LNG: -87.6024055,
+  ZOOM1: 9,
+  ZOOM2: 13,
+};
 
-  BREADCRUMB_DEFAULT_MAPPING: {
-    [SEARCH_PATH]: 'Search',
-  },
-  ELLIPSIS_CONFIG: {
-    basedOn: 'words',
-    ellipsis: '...',
-    maxLine: '3',
-  },
+export const MAPBOX_STYLE = 'mapbox://styles/invisibleinstitute/cj8ugtswqe8dx2ss2kwhfnvte';
+
+export const BREADCRUMB_DEFAULT_MAPPING = {
+  [SEARCH_PATH]: 'Search',
+};
+
+export const ELLIPSIS_CONFIG = {
+  basedOn: 'words',
+  ellipsis: '...',
+  maxLine: '3',
 };
 
 export const PIN_BUTTON_INTRODUCTION_INDEX = 3;

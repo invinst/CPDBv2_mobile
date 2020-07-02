@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import ComplaintSummaryCard from 'components/landing-page/complaint-summaries/complaint-summary-card';
 import ItemPinButton from 'components/common/item-pin-button';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 describe('<ComplaintSummaryCard />', function () {
   it('should render enough contents', function () {
@@ -25,7 +25,7 @@ describe('<ComplaintSummaryCard />', function () {
     const itemPinButton = wrapper.find(ItemPinButton);
     itemPinButton.props().item.should.eql(
       {
-        type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+        type: PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
         id: allegation.crid,
         isPinned: allegation.isPinned,
       }

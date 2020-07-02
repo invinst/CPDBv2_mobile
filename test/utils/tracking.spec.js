@@ -2,11 +2,11 @@ import { spy, stub, useFakeTimers } from 'sinon';
 
 import * as tracking from 'utils/tracking';
 import axiosClient from 'utils/axios-client';
-import constants from 'constants';
+import { TRACKING_API_ENDPOINT } from 'constants';
 import { v2Url } from 'utils/url-util';
 
 
-const TRACKING_API_URL = v2Url(constants.TRACKING_API_ENDPOINT);
+const TRACKING_API_URL = v2Url(TRACKING_API_ENDPOINT);
 
 describe('tracking utils', function () {
   describe('ga and clicky script is loaded', function () {

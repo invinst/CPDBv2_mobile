@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import * as _ from 'lodash';
+import { every, reject, sortBy, findIndex, parseInt } from 'lodash';
 
 import {
   PINBOARD_OFFICERS_FETCH_REQUEST_SUCCESS,
@@ -21,7 +21,7 @@ const toRawOfficer = (item) => {
   }
 
   return {
-    'id': _.parseInt(id),
+    'id': parseInt(id),
     'full_name': fullName,
     rank,
     'complaint_count': complaintCount,
@@ -35,7 +35,7 @@ export default handleActions({
     const currentItems = state;
     if (action.payload.type === 'OFFICER') {
       const item = action.payload;
-      if (_.every(currentItems, currentItem => currentItem.id !== parseInt(item.id))) {
+      if (every(currentItems, currentItem => currentItem.id !== parseInt(item.id))) {
         return currentItems.concat(toRawOfficer(item));
       }
     }
@@ -46,7 +46,7 @@ export default handleActions({
     const { id, type } = action.payload;
 
     if (type === 'OFFICER') {
-      return _.reject(currentItems, { id: parseInt(id) });
+      return reject(currentItems, { id: parseInt(id) });
     }
     return currentItems;
   },
@@ -55,7 +55,7 @@ export default handleActions({
     const { ids, type } = action.payload;
 
     if (type === 'OFFICER') {
-      return _.sortBy(currentItems, item => _.findIndex(ids, id => id === item.id.toString()));
+      return sortBy(currentItems, item => findIndex(ids, id => id === item.id.toString()));
     }
     return currentItems;
   },

@@ -3,7 +3,7 @@ import { get, compact, chain, shuffle } from 'lodash';
 
 import { extractLatestPercentile } from 'selectors/common/percentile';
 import { formatDate } from 'utils/date';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
 
 
@@ -31,7 +31,7 @@ const topOfficerCardsSelector = createSelector(
 
 export const topOfficersByAllegationSelector = createWithIsPinnedSelector(
   topOfficerCardsSelector,
-  constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+  PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
 );
 
 // Mentioned on Twitter
@@ -45,7 +45,7 @@ const recentActivityOfficerCardsSelector = createSelector(
 
 export const recentActivitiesSelector = createWithIsPinnedSelector(
   recentActivityOfficerCardsSelector,
-  constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+  PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
 );
 
 // New Documents
@@ -64,7 +64,7 @@ export const newDocumentAllegationsSelector = createWithIsPinnedSelector(
       },
     }))
   ),
-  constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+  PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
 );
 
 // Complaint Summaries
@@ -81,7 +81,7 @@ const complaintSummariesCardsSelector = createSelector(
 
 export const complaintSummariesSelector = createWithIsPinnedSelector(
   complaintSummariesCardsSelector,
-  constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+  PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
 );
 
 // Others

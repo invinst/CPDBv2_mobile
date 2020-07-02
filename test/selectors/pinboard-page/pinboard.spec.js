@@ -11,7 +11,7 @@ import {
   pinboardPinnedItemsTransform,
 } from 'selectors/pinboard-page/pinboard';
 import { PinboardFactory } from 'utils/tests/factories/pinboard';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 describe('Pinboard selectors', function () {
@@ -375,9 +375,9 @@ describe('Pinboard selectors', function () {
         trrIds: ['12', '45', '98'],
       };
       pinboardPinnedItemsMapping(pinboard).should.eql({
-        [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER]: ['1', '2', '3'],
-        [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR]: ['4', '5', '6'],
-        [constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR]: ['12', '45', '98'],
+        [PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER]: ['1', '2', '3'],
+        [PINBOARD_PAGE.PINNED_ITEM_TYPES.CR]: ['4', '5', '6'],
+        [PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR]: ['12', '45', '98'],
       });
     });
   });

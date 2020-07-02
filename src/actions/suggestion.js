@@ -1,7 +1,11 @@
 import { createAction } from 'redux-actions';
 import { get } from 'actions/common/async-action';
 import { v2Url } from 'utils/url-util';
-import constants from 'constants';
+import {
+  SUGGESTION_API_ENDPOINT,
+  RECENT_SEARCH_ITEMS_API_ENDPOINT,
+  SINGLE_SEARCH_API_ENDPOINT,
+} from 'constants';
 
 
 export const SUGGESTION_REQUEST_START = 'SUGGESTION_REQUEST_START';
@@ -35,12 +39,12 @@ export const UPDATE_CHOSEN_CATEGORY = 'UPDATE_CHOSEN_CATEGORY';
 
 
 export const suggestTerm = get(
-  v2Url(constants.SUGGESTION_API_ENDPOINT), [SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS,
+  v2Url(SUGGESTION_API_ENDPOINT), [SUGGESTION_REQUEST_START, SUGGESTION_REQUEST_SUCCESS,
     SUGGESTION_REQUEST_FAILURE]
 );
 
 export const fetchRecentSearchItems = (officerIds, crids, trrIds) => get(
-  v2Url(constants.RECENT_SEARCH_ITEMS_API_ENDPOINT),
+  v2Url(RECENT_SEARCH_ITEMS_API_ENDPOINT),
   [
     FETCH_RECENT_SEARCH_ITEMS_START,
     FETCH_RECENT_SEARCH_ITEMS_SUCCESS,
@@ -49,7 +53,7 @@ export const fetchRecentSearchItems = (officerIds, crids, trrIds) => get(
 )({ 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds });
 
 export const getSuggestionWithContentType = (term, params, adapter) => get(
-  v2Url(constants.SINGLE_SEARCH_API_ENDPOINT),
+  v2Url(SINGLE_SEARCH_API_ENDPOINT),
   [
     SUGGESTION_SINGLE_REQUEST_START,
     SUGGESTION_SINGLE_REQUEST_SUCCESS,

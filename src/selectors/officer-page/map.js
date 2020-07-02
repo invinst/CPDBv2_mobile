@@ -2,7 +2,7 @@ import { get, isUndefined } from 'lodash';
 import { createSelector } from 'reselect';
 
 import { getOfficerInfo } from 'selectors/officer-page';
-import constants from 'constants';
+import { MAP_ITEMS } from 'constants';
 
 
 export const mapLegendSelector = createSelector(
@@ -17,8 +17,8 @@ export const mapLegendSelector = createSelector(
 const getMapMarkers = (state, officerId) => get(state.officerPage.timeline.data, String(officerId), []);
 
 const isMapMarker = item => (
-  item.kind === constants.MAP_ITEMS.CR && ['Not Sustained', 'Sustained'].includes(item.finding)
-  || item.kind === constants.MAP_ITEMS.FORCE
+  item.kind === MAP_ITEMS.CR && ['Not Sustained', 'Sustained'].includes(item.finding)
+  || item.kind === MAP_ITEMS.FORCE
 );
 
 export const rawMapMarkersSelector = createSelector(
@@ -56,10 +56,10 @@ export const mapMarkerGroupsSelector = createSelector(
   rawMapMarkersSelector,
   markers => {
     const geographicCrs = markers.filter(marker => {
-      return marker.kind === constants.MAP_ITEMS.CR;
+      return marker.kind === MAP_ITEMS.CR;
     });
     const geographicTrrs = markers.filter(marker => {
-      return marker.kind === constants.MAP_ITEMS.FORCE;
+      return marker.kind === MAP_ITEMS.FORCE;
     });
     return {
       crs: geographicCrs.map(crMapMarkersTransform),
