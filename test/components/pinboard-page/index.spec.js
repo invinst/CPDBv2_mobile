@@ -44,6 +44,10 @@ describe('<PinboardPage />', function () {
       trrItems: { requesting: false, items: [] },
       initialRequested: true,
       pinboards: [],
+      widgets: {
+        complainantsSummary: {},
+        officersSummary: {},
+      },
     },
   });
 

@@ -26,9 +26,10 @@ export const mapLegendSelector = createSelector(
 );
 
 export const hasMapMarkersSelector = createSelector(
+  geographicDataRequestingSelector,
   getGeographicCrs,
   getGeographicTrrs,
-  (geographicCrs, geographicTrrs) => !isEmpty(geographicCrs) || !isEmpty(geographicTrrs)
+  (requesting, geographicCrs, geographicTrrs) => requesting || !isEmpty(geographicCrs) || !isEmpty(geographicTrrs),
 );
 
 export const crMapMarkersTransform = geographicDatum => ({

@@ -32,6 +32,10 @@ import {
   hideShowPinboardsList,
   removePinboard,
   viewPinboard,
+  fetchComplaintSummary,
+  fetchTRRSummary,
+  fetchOfficersSummary,
+  fetchComplainantsSummary,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -111,6 +115,18 @@ import {
   REMOVE_PINBOARD_REQUEST_START,
   REMOVE_PINBOARD_REQUEST_SUCCESS,
   REMOVE_PINBOARD_REQUEST_FAILURE,
+  PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_START,
+  PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_SUCCESS,
+  PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_FAILURE,
+  PINBOARD_TRR_SUMMARY_FETCH_REQUEST_START,
+  PINBOARD_TRR_SUMMARY_FETCH_REQUEST_SUCCESS,
+  PINBOARD_TRR_SUMMARY_FETCH_REQUEST_FAILURE,
+  PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_START,
+  PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_SUCCESS,
+  PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_FAILURE,
+  PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_START,
+  PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_SUCCESS,
+  PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_FAILURE,
 } from 'actions/pinboard';
 import {
   PINBOARDS_API_ENDPOINT,
@@ -837,6 +853,82 @@ describe('pinboard actions', function () {
             data: undefined,
             method: 'POST',
             url: '/mobile/pinboards/123f78/view/',
+          },
+        },
+      });
+    });
+  });
+
+  describe('fetchComplaintSummary', function () {
+    it('should return correct action', function () {
+      fetchComplaintSummary('84ab47').should.deepEqual({
+        types: [
+          PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_START,
+          PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_SUCCESS,
+          PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            adapter: undefined,
+            params: undefined,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/complaint-summary/`,
+          },
+        },
+      });
+    });
+  });
+
+  describe('fetchTRRSummary', function () {
+    it('should return correct action', function () {
+      fetchTRRSummary('84ab47').should.deepEqual({
+        types: [
+          PINBOARD_TRR_SUMMARY_FETCH_REQUEST_START,
+          PINBOARD_TRR_SUMMARY_FETCH_REQUEST_SUCCESS,
+          PINBOARD_TRR_SUMMARY_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            adapter: undefined,
+            params: undefined,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/trr-summary/`,
+          },
+        },
+      });
+    });
+  });
+
+  describe('fetchOfficersSummary', function () {
+    it('should return correct action', function () {
+      fetchOfficersSummary('84ab47').should.deepEqual({
+        types: [
+          PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_START,
+          PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_SUCCESS,
+          PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            adapter: undefined,
+            params: undefined,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/officers-summary/`,
+          },
+        },
+      });
+    });
+  });
+
+  describe('fetchComplainantsSummary', function () {
+    it('should return correct action', function () {
+      fetchComplainantsSummary('84ab47').should.deepEqual({
+        types: [
+          PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_START,
+          PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_SUCCESS,
+          PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            adapter: undefined,
+            params: undefined,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/complainants-summary/`,
           },
         },
       });

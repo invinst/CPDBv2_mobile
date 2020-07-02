@@ -76,7 +76,7 @@ export default class AllegationsMap extends Component {
   }
 
   gotRef = (el) => {
-    const { attributionControlPosition } = this.props;
+    const { attributionControlPosition, navigationControlPosition } = this.props;
     if (el && !this.map) {
       this.map = new mapboxgl.Map({
         container: el,
@@ -88,7 +88,7 @@ export default class AllegationsMap extends Component {
         scrollZoom: false,
       });
       this.map.addControl(new mapboxgl.AttributionControl(), attributionControlPosition);
-      this.map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+      this.map.addControl(new mapboxgl.NavigationControl(), navigationControlPosition);
       if (isIOS) {
         /* istanbul ignore next */
         this.map.addControl(new MultiTouch());
@@ -265,6 +265,7 @@ AllegationsMap.propTypes = {
   }),
   clearAllMarkers: PropTypes.bool,
   attributionControlPosition: PropTypes.string,
+  navigationControlPosition: PropTypes.string,
 };
 
 AllegationsMap.defaultProps = {
@@ -275,6 +276,7 @@ AllegationsMap.defaultProps = {
   },
   clearAllMarkers: true,
   attributionControlPosition: 'bottom-right',
+  navigationControlPosition: 'top-left',
 };
 
 export const AllegationsMapWithSpinner = withLoadingSpinner(AllegationsMap, styles.allegationMapLoading);
