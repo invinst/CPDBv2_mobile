@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import * as _ from 'lodash';
+import { includes, identity, isEmpty, isEqual, get, map, difference, reject, parseInt } from 'lodash';
 
 import {
   PINBOARD_CREATE_REQUEST_START,
@@ -52,15 +52,15 @@ const defaultState = {
 };
 
 const getFormatId = (attr) => {
-  return _.includes(['officer_ids', 'trr_ids'], attr) ? _.parseInt : _.identity;
+  return includes(['officer_ids', 'trr_ids'], attr) ? parseInt : identity;
 };
 
 const hasPendingChanges = (currentPinboard, pinboard) => (
-  _.isEmpty(pinboard) || !_.isEqual(getRequestPinboard(currentPinboard), getRequestPinboard(pinboard))
+  isEmpty(pinboard) || !isEqual(getRequestPinboard(currentPinboard), getRequestPinboard(pinboard))
 );
 
 const hasTitlePendingChange = (currentPinboard, pinboard) => (
-  _.get(currentPinboard, 'title') !== _.get(pinboard, 'title')
+  get(currentPinboard, 'title') !== get(pinboard, 'title')
 );
 
 export default handleActions({
@@ -83,13 +83,13 @@ export default handleActions({
     isPinboardRestored: true,
   }),
   [PINBOARD_CREATE_REQUEST_SUCCESS]: (state, action) => {
-    const notFoundOfficerIds = _.get(action.payload, 'not_found_items.officer_ids', []);
-    const notFoundCrids = _.get(action.payload, 'not_found_items.crids', []);
-    const notFoundTrrIds = _.get(action.payload, 'not_found_items.trr_ids', []);
+    const notFoundOfficerIds = get(action.payload, 'not_found_items.officer_ids', []);
+    const notFoundCrids = get(action.payload, 'not_found_items.crids', []);
+    const notFoundTrrIds = get(action.payload, 'not_found_items.trr_ids', []);
 
-    const officerIds = _.difference(_.get(state, 'officer_ids', []), notFoundOfficerIds);
-    const crids = _.difference(_.get(state, 'crids', []), notFoundCrids);
-    const trrIds = _.difference(_.get(state, 'trr_ids', []), notFoundTrrIds);
+    const officerIds = difference(get(state, 'officer_ids', []), notFoundOfficerIds);
+    const crids = difference(get(state, 'crids', []), notFoundCrids);
+    const trrIds = difference(get(state, 'trr_ids', []), notFoundTrrIds);
     const pinboard = {
       ...state,
       'officer_ids': officerIds,
@@ -133,9 +133,9 @@ export default handleActions({
     };
   },
   [PINBOARD_CREATE_REQUEST_START]: (state, action) => {
-    const creatingData = _.get(action.payload, 'request.data', {});
-    creatingData['officer_ids'] = _.map(creatingData['officer_ids'], _.parseInt);
-    creatingData['trr_ids'] = _.map(creatingData['trr_ids'], _.parseInt);
+    const creatingData = get(action.payload, 'request.data', {});
+    creatingData['officer_ids'] = map(creatingData['officer_ids'], parseInt);
+    creatingData['trr_ids'] = map(creatingData['trr_ids'], parseInt);
     return {
       ...state,
       ...creatingData,
@@ -161,7 +161,7 @@ export default handleActions({
     const newId = format(action.payload.id);
     return {
       ...state,
-      [attr]: _.includes(ids, newId) ? ids : ids.concat(newId),
+      [attr]: includes(ids, newId) ? ids : ids.concat(newId),
       hasPendingChanges: true,
       needRefreshData: true,
     };
@@ -173,7 +173,7 @@ export default handleActions({
 
     return {
       ...state,
-      [attr]: _.reject(ids, id => id === format(action.payload.id)),
+      [attr]: reject(ids, id => id === format(action.payload.id)),
       hasPendingChanges: true,
       needRefreshData: true,
     };
@@ -185,7 +185,7 @@ export default handleActions({
 
     return {
       ...state,
-      [attr]: _.map(ids, format),
+      [attr]: map(ids, format),
       hasPendingChanges: true,
     };
   },

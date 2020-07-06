@@ -12,7 +12,7 @@ import {
   pinnableCrSelector,
 } from 'selectors/complaint-page';
 import { CoaccusedFactory } from 'utils/tests/factories/complaint';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 describe('complaint-page selectors', function () {
@@ -527,7 +527,7 @@ describe('complaint-page selectors', function () {
       };
 
       pinnableCrSelector(state, props).should.eql({
-        type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+        type: PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
         id: '2458',
       });
     });

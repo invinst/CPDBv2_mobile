@@ -5,7 +5,7 @@ import { isEmpty, noop } from 'lodash';
 import OfficerCard from 'components/common/officer-card';
 import { showIntercomLauncher } from 'utils/intercom';
 import CarouselWrapper from './carousel-wrapper';
-import constants from 'constants';
+import { CAROUSEL_TYPES } from 'constants';
 
 
 export default class TopOfficersByAllegation extends Component {
@@ -34,7 +34,7 @@ export default class TopOfficersByAllegation extends Component {
         title={ title }
         description={ description }
         embed={ embed }
-        trackingContentType={ constants.CAROUSEL_TYPES.ALLEGATION }
+        trackingContentType={ CAROUSEL_TYPES.ALLEGATION }
       >
         {
           topOfficersByAllegation.map(officer =>

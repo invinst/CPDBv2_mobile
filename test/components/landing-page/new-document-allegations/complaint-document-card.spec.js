@@ -9,7 +9,7 @@ import * as tracking from 'utils/tracking';
 import ComplaintDocumentCard from 'components/landing-page/new-document-allegations/complaint-document-card';
 import ItemPinButton from 'components/common/item-pin-button';
 import pinButtonStyles from 'components/common/item-pin-button.sass';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 describe('<ComplaintDocumentCard />', function () {
@@ -41,7 +41,7 @@ describe('<ComplaintDocumentCard />', function () {
     itemPinButton.props().addOrRemoveItemInPinboard.should.eql(addOrRemoveItemInPinboard);
     itemPinButton.props().showHint.should.be.false();
     itemPinButton.props().item.should.eql({
-      type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+      type: PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
       id: '123',
       isPinned: true,
     });

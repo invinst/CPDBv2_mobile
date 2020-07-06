@@ -2,12 +2,12 @@ import { handleActions } from 'redux-actions';
 import { LOCATION_CHANGE } from 'connected-react-router';
 import queryString from 'query-string';
 
-import constants from 'constants';
+import { SEARCH_QUERY_PREFIX_REGEX } from 'constants';
 import { SEARCH_INPUT_CHANGED, SEARCH_CLEAR, SEARCH_RESET } from 'actions/suggestion';
 
 
 const getSearchQuery = (searchText) => {
-  return searchText ? searchText.replace(constants.SEARCH_QUERY_PREFIX_REGEX, '') : searchText;
+  return searchText ? searchText.replace(SEARCH_QUERY_PREFIX_REGEX, '') : searchText;
 };
 
 export default handleActions({

@@ -8,7 +8,7 @@ import { spy, useFakeTimers } from 'sinon';
 import { mountWithRouter } from 'utils/tests';
 import OfficerCard, { OfficerCardWithUndo } from 'components/pinboard-page/cards/officer-card';
 import ItemUnpinButton from 'components/pinboard-page/item-unpin-button';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 describe('withUndoCard higher-order component', function () {
@@ -69,7 +69,7 @@ describe('withUndoCard higher-order component', function () {
       const unpinButton = instance.find(ItemUnpinButton);
       unpinButton.simulate('click');
 
-      clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME);
+      clock.tick(PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME);
       instance.update();
 
       instance.find('.undo-card-text').exists().should.be.false();
@@ -90,7 +90,7 @@ describe('withUndoCard higher-order component', function () {
       const unpinButton = instance.find(ItemUnpinButton);
       unpinButton.simulate('click');
 
-      clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME);
+      clock.tick(PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME);
 
       removeItemInPinboardPage.should.be.calledWith({
         type: 'OFFICER',
@@ -114,7 +114,7 @@ describe('withUndoCard higher-order component', function () {
       const undoButton = instance.find('.undo-button');
       undoButton.simulate('click');
 
-      clock.tick(constants.PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME);
+      clock.tick(PINBOARD_PAGE.UNDO_CARD_VISIBLE_TIME);
 
       removeItemInPinboardPage.should.not.be.called();
     });

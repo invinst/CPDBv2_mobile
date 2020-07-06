@@ -13,7 +13,7 @@ import EmptyPinboardContainer from 'containers/pinboard-page/empty-pinboard-cont
 import PinboardInfoContainer from 'containers/pinboard-page/pinboard-info';
 import styles from './pinboard-page.sass';
 import LoadingSpinner from 'components/common/loading-spinner';
-import PinboardDataVisualization from 'components/pinboard-page/pinboard-data-visualization';
+import PinboardDataVisualizationContainer from 'containers/pinboard-page/pinboard-data-visualization-container';
 
 
 export default class PinboardPage extends Component {
@@ -25,12 +25,10 @@ export default class PinboardPage extends Component {
 
   renderContent() {
     const {
-      hasMapMarker,
       params,
       initialRequested,
       isEmptyPinboard,
       pinboardPageLoading,
-      pinboard,
     } = this.props;
 
     if (!initialRequested) {
@@ -48,7 +46,7 @@ export default class PinboardPage extends Component {
     return (
       <div className='pinboard-content'>
         <PinboardInfoContainer />
-        <PinboardDataVisualization pinboard={ pinboard } hasMapMarker={ hasMapMarker }/>
+        <PinboardDataVisualizationContainer />
         <div className='pinned-section'>
           <PinnedOfficersContainer/>
           <PinnedCRsContainer/>
@@ -79,8 +77,6 @@ export default class PinboardPage extends Component {
 
 PinboardPage.propTypes = {
   params: PropTypes.object,
-  pinboard: PropTypes.object,
-  hasMapMarker: PropTypes.bool,
   initialRequested: PropTypes.bool,
   pinboardPageLoading: PropTypes.bool,
   isEmptyPinboard: PropTypes.bool,

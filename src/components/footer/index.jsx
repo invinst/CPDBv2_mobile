@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 
-import constants from 'constants';
+import { INVINST_GITHUB_URL } from 'constants';
 import { showIntercomMessages } from 'utils/intercom';
 import LegalModalContent from './legal-modal-content';
 import style from './footer.sass';
@@ -35,7 +35,7 @@ class Footer extends Component {
       <div className={ style.footer }>
         <div className='footer-items'>
           <div className='item legal-item' onClick={ this.openModal }>Legal</div>
-          <a className='item' target='_blank' href={ constants.INVINST_GITHUB_URL }>Github</a>
+          <a className='item' target='_blank' href={ INVINST_GITHUB_URL }>Github</a>
           <div className='item contact-item' onClick={ this.openContact }>Contact</div>
         </div>
         <a

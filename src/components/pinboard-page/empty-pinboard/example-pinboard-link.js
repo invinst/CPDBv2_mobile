@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 import marked from 'marked';
 
-import constants from 'constants';
+import { ELLIPSIS_CONFIG } from 'constants';
 import styles from 'components/pinboard-page/empty-pinboard/example-pinboard-link.sass';
 
 
@@ -21,7 +21,7 @@ export default class ExamplePinboardLink extends Component {
         <div className='wrapper'>
           <div className='title'>{ title }</div>
           <HTMLEllipsis
-            { ...constants.ELLIPSIS_CONFIG }
+            { ...ELLIPSIS_CONFIG }
             className='description'
             unsafeHTML={ marked(description) }
           />

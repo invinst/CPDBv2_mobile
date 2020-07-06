@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { unionBy, get } from 'lodash';
 
-import constants from 'constants';
+import { SEARCH_CATEGORIES } from 'constants';
 
 import {
   SUGGESTION_REQUEST_SUCCESS,
@@ -11,7 +11,7 @@ import {
   SUGGESTION_SINGLE_REQUEST_SUCCESS,
 } from 'actions/suggestion';
 
-const categories = constants.SEARCH_CATEGORIES.map((cat) => cat.path);
+const categories = SEARCH_CATEGORIES.map((cat) => cat.path);
 
 const defaultState = {};
 

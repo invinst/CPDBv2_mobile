@@ -16,7 +16,7 @@ const buildApi = function () {
     return response;
   };
 
-  const mock = function (method, uri, status, data) {
+  const mock = function (method, uri, status, data, delay=0) {
     if (!(method in handleMap)) {
       handleMap[method] = {};
     }
@@ -29,7 +29,9 @@ const buildApi = function () {
     }
 
     handleMap[method][uri].responses.push(function (response) {
-      response.status(status).send(data);
+      setTimeout(function () {
+        response.status(status).send(data);
+      }, delay);
     });
   };
 

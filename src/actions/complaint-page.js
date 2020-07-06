@@ -1,6 +1,6 @@
 import { get, post } from 'actions/common/async-action';
 import { v2Url } from 'utils/url-util';
-import constants from 'constants';
+import { COMPLAINT_API_ENDPOINT, COMPLAINT_PAGE_CMS_API_ENDPOINT } from 'constants';
 
 
 export const COMPLAINT_REQUEST_START = 'COMPLAINT_REQUEST_START';
@@ -16,7 +16,7 @@ export const COMPLAINT_PAGE_CMS_REQUEST_SUCCESS = 'COMPLAINT_PAGE_CMS_REQUEST_SU
 export const COMPLAINT_PAGE_CMS_REQUEST_FAILURE = 'COMPLAINT_PAGE_CMS_REQUEST_FAILURE';
 
 export const requestComplaint = (id) => get(
-  v2Url(constants.COMPLAINT_API_ENDPOINT),
+  v2Url(COMPLAINT_API_ENDPOINT),
   [
     COMPLAINT_REQUEST_START,
     COMPLAINT_REQUEST_SUCCESS,
@@ -25,11 +25,11 @@ export const requestComplaint = (id) => get(
 )(undefined, undefined, `${id}/`, { id });
 
 export const requestDocument = ({ id, email }) => post(
-  `${v2Url(constants.COMPLAINT_API_ENDPOINT)}${id}/request-document/`,
+  `${v2Url(COMPLAINT_API_ENDPOINT)}${id}/request-document/`,
   [COMPLAINT_REQUEST_DOC_REQUEST_START, COMPLAINT_REQUEST_DOC_REQUEST_SUCCESS, COMPLAINT_REQUEST_DOC_REQUEST_FAILURE]
 )({ email: email });
 
-export const requestCMS = get(v2Url(constants.COMPLAINT_PAGE_CMS_API_ENDPOINT), [
+export const requestCMS = get(v2Url(COMPLAINT_PAGE_CMS_API_ENDPOINT), [
   COMPLAINT_PAGE_CMS_REQUEST_START, COMPLAINT_PAGE_CMS_REQUEST_SUCCESS, COMPLAINT_PAGE_CMS_REQUEST_FAILURE,
 ]);
 

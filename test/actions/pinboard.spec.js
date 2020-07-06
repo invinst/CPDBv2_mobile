@@ -32,6 +32,10 @@ import {
   hideShowPinboardsList,
   removePinboard,
   viewPinboard,
+  fetchComplaintSummary,
+  fetchTRRSummary,
+  fetchOfficersSummary,
+  fetchComplainantsSummary,
   PINBOARD_CREATE_REQUEST_START,
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_CREATE_REQUEST_FAILURE,
@@ -111,8 +115,25 @@ import {
   REMOVE_PINBOARD_REQUEST_START,
   REMOVE_PINBOARD_REQUEST_SUCCESS,
   REMOVE_PINBOARD_REQUEST_FAILURE,
+  PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_START,
+  PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_SUCCESS,
+  PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_FAILURE,
+  PINBOARD_TRR_SUMMARY_FETCH_REQUEST_START,
+  PINBOARD_TRR_SUMMARY_FETCH_REQUEST_SUCCESS,
+  PINBOARD_TRR_SUMMARY_FETCH_REQUEST_FAILURE,
+  PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_START,
+  PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_SUCCESS,
+  PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_FAILURE,
+  PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_START,
+  PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_SUCCESS,
+  PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_FAILURE,
 } from 'actions/pinboard';
-import constants from 'constants';
+import {
+  PINBOARDS_API_ENDPOINT,
+  SOCIAL_GRAPH_API_ENDPOINT,
+  SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT,
+  SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT,
+} from 'constants';
 import { v2Url } from 'utils/url-util';
 
 
@@ -169,7 +190,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(constants.PINBOARDS_API_ENDPOINT),
+            url: v2Url(PINBOARDS_API_ENDPOINT),
             method: 'POST',
             adapter: undefined,
             cancelToken: 'token',
@@ -208,7 +229,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/`),
+            url: v2Url(`${PINBOARDS_API_ENDPOINT}66ef1560/`),
             method: 'PUT',
             adapter: undefined,
             data: {
@@ -332,7 +353,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/`),
+            url: v2Url(`${PINBOARDS_API_ENDPOINT}66ef1560/`),
             params: undefined,
             adapter: undefined,
             cancelToken: 'token',
@@ -353,7 +374,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/complaints/`),
+            url: v2Url(`${PINBOARDS_API_ENDPOINT}66ef1560/complaints/`),
             params: undefined,
             adapter: undefined,
             cancelToken: 'token',
@@ -374,7 +395,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/officers/`),
+            url: v2Url(`${PINBOARDS_API_ENDPOINT}66ef1560/officers/`),
             params: undefined,
             adapter: undefined,
             cancelToken: 'token',
@@ -395,7 +416,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(`${constants.PINBOARDS_API_ENDPOINT}66ef1560/trrs/`),
+            url: v2Url(`${PINBOARDS_API_ENDPOINT}66ef1560/trrs/`),
             params: undefined,
             adapter: undefined,
             cancelToken: 'token',
@@ -416,7 +437,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.SOCIAL_GRAPH_API_ENDPOINT)}network/?pinboard_id=268a5e58`,
+            url: `${v2Url(SOCIAL_GRAPH_API_ENDPOINT)}network/?pinboard_id=268a5e58`,
             params: undefined,
             adapter: undefined,
             cancelToken: 'token',
@@ -437,7 +458,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT),
+            url: v2Url(SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT),
             params: { 'pinboard_id': '268a5e58' },
             adapter: undefined,
             cancelToken: 'token',
@@ -458,7 +479,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT),
+            url: v2Url(SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT),
             params: { 'pinboard_id': '268a5e58' },
             adapter: undefined,
             cancelToken: 'token',
@@ -479,7 +500,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT),
+            url: v2Url(SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT),
             params: { 'pinboard_id': '268a5e58' },
             adapter: undefined,
             cancelToken: 'token',
@@ -500,7 +521,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(constants.SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT),
+            url: v2Url(SOCIAL_GRAPH_GEOGRAPHIC_TRRS_API_ENDPOINT),
             params: { 'pinboard_id': '268a5e58' },
             adapter: undefined,
             cancelToken: 'token',
@@ -521,7 +542,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-documents/?`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}66ef1560/relevant-documents/?`,
             params: undefined,
             adapter: undefined,
             cancelToken: 'token',
@@ -543,7 +564,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-documents/?limit=20&offset=20`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}66ef1560/relevant-documents/?limit=20&offset=20`,
             params: undefined,
             adapter: undefined,
             cancelToken: 'token',
@@ -564,7 +585,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-coaccusals/?`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}66ef1560/relevant-coaccusals/?`,
             params: undefined,
             adapter: undefined,
             cancelToken: 'token',
@@ -586,7 +607,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-coaccusals/?limit=20&offset=20`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}66ef1560/relevant-coaccusals/?limit=20&offset=20`,
             params: undefined,
             adapter: undefined,
             cancelToken: 'token',
@@ -607,7 +628,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-complaints/?`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}66ef1560/relevant-complaints/?`,
             params: undefined,
             adapter: undefined,
             cancelToken: 'token',
@@ -629,7 +650,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}66ef1560/relevant-complaints/?limit=20&offset=20`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}66ef1560/relevant-complaints/?limit=20&offset=20`,
             params: undefined,
             adapter: undefined,
             cancelToken: 'token',
@@ -649,7 +670,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}latest-retrieved-pinboard/`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}latest-retrieved-pinboard/`,
             params: undefined,
             adapter: undefined,
           },
@@ -668,7 +689,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.PINBOARDS_API_ENDPOINT)}abcd1234/`,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}abcd1234/`,
             method: 'PUT',
             adapter: undefined,
             data: {
@@ -690,7 +711,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(constants.PINBOARDS_API_ENDPOINT),
+            url: v2Url(PINBOARDS_API_ENDPOINT),
             method: 'POST',
             adapter: undefined,
             data: {
@@ -716,7 +737,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(constants.PINBOARDS_API_ENDPOINT),
+            url: v2Url(PINBOARDS_API_ENDPOINT),
             params: undefined,
             adapter: undefined,
           },
@@ -735,7 +756,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(constants.PINBOARDS_API_ENDPOINT),
+            url: v2Url(PINBOARDS_API_ENDPOINT),
             method: 'POST',
             adapter: undefined,
             data: {
@@ -767,7 +788,7 @@ describe('pinboard actions', function () {
         ],
         payload: {
           request: {
-            url: v2Url(constants.PINBOARDS_API_ENDPOINT),
+            url: v2Url(PINBOARDS_API_ENDPOINT),
             method: 'POST',
             adapter: undefined,
             data: {
@@ -832,6 +853,82 @@ describe('pinboard actions', function () {
             data: undefined,
             method: 'POST',
             url: '/mobile/pinboards/123f78/view/',
+          },
+        },
+      });
+    });
+  });
+
+  describe('fetchComplaintSummary', function () {
+    it('should return correct action', function () {
+      fetchComplaintSummary('84ab47').should.deepEqual({
+        types: [
+          PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_START,
+          PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_SUCCESS,
+          PINBOARD_COMPLAINT_SUMMARY_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            adapter: undefined,
+            params: undefined,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/complaint-summary/`,
+          },
+        },
+      });
+    });
+  });
+
+  describe('fetchTRRSummary', function () {
+    it('should return correct action', function () {
+      fetchTRRSummary('84ab47').should.deepEqual({
+        types: [
+          PINBOARD_TRR_SUMMARY_FETCH_REQUEST_START,
+          PINBOARD_TRR_SUMMARY_FETCH_REQUEST_SUCCESS,
+          PINBOARD_TRR_SUMMARY_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            adapter: undefined,
+            params: undefined,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/trr-summary/`,
+          },
+        },
+      });
+    });
+  });
+
+  describe('fetchOfficersSummary', function () {
+    it('should return correct action', function () {
+      fetchOfficersSummary('84ab47').should.deepEqual({
+        types: [
+          PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_START,
+          PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_SUCCESS,
+          PINBOARD_OFFICERS_SUMMARY_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            adapter: undefined,
+            params: undefined,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/officers-summary/`,
+          },
+        },
+      });
+    });
+  });
+
+  describe('fetchComplainantsSummary', function () {
+    it('should return correct action', function () {
+      fetchComplainantsSummary('84ab47').should.deepEqual({
+        types: [
+          PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_START,
+          PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_SUCCESS,
+          PINBOARD_COMPLAINANTS_SUMMARY_FETCH_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            adapter: undefined,
+            params: undefined,
+            url: `${v2Url(PINBOARDS_API_ENDPOINT)}84ab47/complainants-summary/`,
           },
         },
       });

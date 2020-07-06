@@ -1,5 +1,5 @@
 import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 describe('pinboard common selectors', function () {
@@ -17,7 +17,7 @@ describe('pinboard common selectors', function () {
       };
       const officerCardsSelector = state => state.officerCards;
       const withIsPinnedOfficerCardsSelector = createWithIsPinnedSelector(
-        officerCardsSelector, constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+        officerCardsSelector, PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
       );
 
       withIsPinnedOfficerCardsSelector(storeState).should.eql([
@@ -40,7 +40,7 @@ describe('pinboard common selectors', function () {
       };
       const trrCardsSelector = state => state.trrCards;
       const withIsPinnedTRRCardsSelector = createWithIsPinnedSelector(
-        trrCardsSelector, constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR,
+        trrCardsSelector, PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR,
       );
 
       withIsPinnedTRRCardsSelector(storeState).should.eql([
@@ -65,7 +65,7 @@ describe('pinboard common selectors', function () {
       };
       const crCardsSelector = state => state.crCards;
       const withIsPinnedCRCardsSelector = createWithIsPinnedSelector(
-        crCardsSelector, constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+        crCardsSelector, PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
       );
 
       withIsPinnedCRCardsSelector(storeState).should.eql([

@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 
 import ComplaintDocumentCard from './complaint-document-card';
 import CarouselWrapper from '../carousel-wrapper';
-import constants from 'constants';
+import { CAROUSEL_TYPES } from 'constants';
 
 
 export default class NewDocumentAllegations extends Component {
@@ -27,7 +27,7 @@ export default class NewDocumentAllegations extends Component {
       <CarouselWrapper
         title={ title }
         description={ description }
-        trackingContentType={ constants.CAROUSEL_TYPES.DOCUMENT }
+        trackingContentType={ CAROUSEL_TYPES.DOCUMENT }
       >
         {
           newDocumentAllegations.map(allegation => (

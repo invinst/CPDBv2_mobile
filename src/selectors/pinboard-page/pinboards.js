@@ -4,15 +4,15 @@ import moment from 'moment';
 
 import { generatePinboardUrl } from 'utils/pinboard';
 import { rawPinboardsSelector } from 'selectors/common/pinboards';
-import constants from 'constants';
+import { SIMPLE_DATE_FORMAT, PINBOARD_VIEWED_DATE_TIME_FORMAT } from 'constants';
 
 
 const pinboardItemTransform = (pinboard, creatingNewPinboard) => ({
   id: pinboard['id'].toString(),
   key: pinboard['id'].toString(),
   title: get(pinboard, 'title', ''),
-  createdAt: moment(pinboard['created_at']).format(constants.SIMPLE_DATE_FORMAT),
-  lastViewedAt: moment(pinboard['last_viewed_at']).format(constants.PINBOARD_VIEWED_DATE_TIME_FORMAT),
+  createdAt: moment(pinboard['created_at']).format(SIMPLE_DATE_FORMAT),
+  lastViewedAt: moment(pinboard['last_viewed_at']).format(PINBOARD_VIEWED_DATE_TIME_FORMAT),
   url: generatePinboardUrl(pinboard),
   isCurrent: !creatingNewPinboard && get(pinboard, 'is_current', false),
   hasPendingChanges: pinboard.hasPendingChanges,

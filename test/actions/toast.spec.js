@@ -5,7 +5,7 @@ import {
   TOAST_REQUEST_SUCCESS,
 } from 'actions/toast';
 import { v2Url } from 'utils/url-util';
-import constants from 'constants';
+import { TOAST_API_ENDPOINT } from 'constants';
 
 describe('toast actions', function () {
   describe('fetchToast', function () {
@@ -14,7 +14,7 @@ describe('toast actions', function () {
         types: [TOAST_REQUEST_START, TOAST_REQUEST_SUCCESS, TOAST_REQUEST_FAILURE],
         payload: {
           request: {
-            url: v2Url(constants.TOAST_API_ENDPOINT),
+            url: v2Url(TOAST_API_ENDPOINT),
             params: undefined,
             adapter: undefined,
           },
