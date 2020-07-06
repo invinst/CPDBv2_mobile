@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import constants from 'constants';
+import { INVINST_GITHUB_URL, QA_URL } from 'constants';
 import style from './legal-modal-content.sass';
 
 const LegalModalContent = ({ closeModal, openContact }) => {
@@ -19,9 +19,9 @@ const LegalModalContent = ({ closeModal, openContact }) => {
         </p>
         <p>
           We cannot guarantee the accuracy of this data - instead we commit ourselves to being
-          honest about flaws (<a target='_blank' className='legal-link' href={ constants.QA_URL }>Q&amp;A</a>),
+          honest about flaws (<a target='_blank' className='legal-link' href={ QA_URL }>Q&amp;A</a>),
           transparent in our publishing process
-          (<a target='_blank' className='legal-link' href={ constants.INVINST_GITHUB_URL }>GitHub</a>),
+          (<a target='_blank' className='legal-link' href={ INVINST_GITHUB_URL }>GitHub</a>),
           and welcoming of critiques
           (<span className='contact-link legal-link' onClick={ openContact } >contact</span>).
         </p>

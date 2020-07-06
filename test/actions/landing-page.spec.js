@@ -1,20 +1,47 @@
-import constants from 'constants';
+import {
+  COMPLAINT_SUMMARIES_ENDPOINT,
+  LANDING_PAGE_CMS_API_ENDPOINT,
+  TOP_OFFICERS_BY_ALLEGATION_ENDPOINT,
+  RECENT_ACTIVITIES_ENDPOINT,
+  NEW_DOCUMENT_ALLEGATIONS_ENDPOINT,
+} from 'constants';
 import { v2Url } from 'utils/url-util';
-import * as actions from 'actions/landing-page';
+import {
+  requestCMS,
+  requestTopOfficersByAllegation,
+  requestRecentActivities,
+  requestNewDocumentAllegations,
+  requestComplaintSummaries,
+  LANDING_PAGE_CMS_REQUEST_START,
+  LANDING_PAGE_CMS_REQUEST_SUCCESS,
+  LANDING_PAGE_CMS_REQUEST_FAILURE,
+  TOP_OFFICERS_BY_ALLEGATION_REQUEST_START,
+  TOP_OFFICERS_BY_ALLEGATION_REQUEST_SUCCESS,
+  TOP_OFFICERS_BY_ALLEGATION_REQUEST_FAILURE,
+  RECENT_ACTIVITIES_REQUEST_START,
+  RECENT_ACTIVITIES_REQUEST_SUCCESS,
+  RECENT_ACTIVITIES_REQUEST_FAILURE,
+  NEW_DOCUMENT_ALLEGATIONS_REQUEST_START,
+  NEW_DOCUMENT_ALLEGATIONS_REQUEST_SUCCESS,
+  NEW_DOCUMENT_ALLEGATIONS_REQUEST_FAILURE,
+  COMPLAINT_SUMMARIES_REQUEST_START,
+  COMPLAINT_SUMMARIES_REQUEST_SUCCESS,
+  COMPLAINT_SUMMARIES_REQUEST_FAILURE,
+} from 'actions/landing-page';
 
 
 describe('landing-page actions', function () {
   describe('requestCMS', function () {
     it('should return right action', function () {
-      actions.requestCMS().should.eql({
+      requestCMS().should.eql({
         types: [
-          actions.LANDING_PAGE_CMS_REQUEST_START,
-          actions.LANDING_PAGE_CMS_REQUEST_SUCCESS,
-          actions.LANDING_PAGE_CMS_REQUEST_FAILURE,
+          LANDING_PAGE_CMS_REQUEST_START,
+          LANDING_PAGE_CMS_REQUEST_SUCCESS,
+          LANDING_PAGE_CMS_REQUEST_FAILURE,
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.LANDING_PAGE_CMS_API_ENDPOINT)}`,
+            url: `${v2Url(LANDING_PAGE_CMS_API_ENDPOINT)}`,
             adapter: undefined,
             params: undefined,
           },
@@ -25,15 +52,15 @@ describe('landing-page actions', function () {
 
   describe('requestTopOfficersByAllegation', function () {
     it('should return right action', function () {
-      actions.requestTopOfficersByAllegation().should.eql({
+      requestTopOfficersByAllegation().should.eql({
         types: [
-          actions.TOP_OFFICERS_BY_ALLEGATION_REQUEST_START,
-          actions.TOP_OFFICERS_BY_ALLEGATION_REQUEST_SUCCESS,
-          actions.TOP_OFFICERS_BY_ALLEGATION_REQUEST_FAILURE,
+          TOP_OFFICERS_BY_ALLEGATION_REQUEST_START,
+          TOP_OFFICERS_BY_ALLEGATION_REQUEST_SUCCESS,
+          TOP_OFFICERS_BY_ALLEGATION_REQUEST_FAILURE,
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.TOP_OFFICERS_BY_ALLEGATION_ENDPOINT)}`,
+            url: `${v2Url(TOP_OFFICERS_BY_ALLEGATION_ENDPOINT)}`,
             adapter: undefined,
             params: undefined,
           },
@@ -44,15 +71,15 @@ describe('landing-page actions', function () {
 
   describe('requestRecentActivities', function () {
     it('should return right action', function () {
-      actions.requestRecentActivities().should.eql({
+      requestRecentActivities().should.eql({
         types: [
-          actions.RECENT_ACTIVITIES_REQUEST_START,
-          actions.RECENT_ACTIVITIES_REQUEST_SUCCESS,
-          actions.RECENT_ACTIVITIES_REQUEST_FAILURE,
+          RECENT_ACTIVITIES_REQUEST_START,
+          RECENT_ACTIVITIES_REQUEST_SUCCESS,
+          RECENT_ACTIVITIES_REQUEST_FAILURE,
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.RECENT_ACTIVITIES_ENDPOINT)}`,
+            url: `${v2Url(RECENT_ACTIVITIES_ENDPOINT)}`,
             adapter: undefined,
             params: undefined,
           },
@@ -63,15 +90,15 @@ describe('landing-page actions', function () {
 
   describe('requestNewDocumentAllegations', function () {
     it('should return right action', function () {
-      actions.requestNewDocumentAllegations().should.eql({
+      requestNewDocumentAllegations().should.eql({
         types: [
-          actions.NEW_DOCUMENT_ALLEGATIONS_REQUEST_START,
-          actions.NEW_DOCUMENT_ALLEGATIONS_REQUEST_SUCCESS,
-          actions.NEW_DOCUMENT_ALLEGATIONS_REQUEST_FAILURE,
+          NEW_DOCUMENT_ALLEGATIONS_REQUEST_START,
+          NEW_DOCUMENT_ALLEGATIONS_REQUEST_SUCCESS,
+          NEW_DOCUMENT_ALLEGATIONS_REQUEST_FAILURE,
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.NEW_DOCUMENT_ALLEGATIONS_ENDPOINT)}`,
+            url: `${v2Url(NEW_DOCUMENT_ALLEGATIONS_ENDPOINT)}`,
             adapter: undefined,
             params: undefined,
           },
@@ -82,15 +109,15 @@ describe('landing-page actions', function () {
 
   describe('requestComplaintSummaries', function () {
     it('should return right action', function () {
-      actions.requestComplaintSummaries().should.eql({
+      requestComplaintSummaries().should.eql({
         types: [
-          actions.COMPLAINT_SUMMARIES_REQUEST_START,
-          actions.COMPLAINT_SUMMARIES_REQUEST_SUCCESS,
-          actions.COMPLAINT_SUMMARIES_REQUEST_FAILURE,
+          COMPLAINT_SUMMARIES_REQUEST_START,
+          COMPLAINT_SUMMARIES_REQUEST_SUCCESS,
+          COMPLAINT_SUMMARIES_REQUEST_FAILURE,
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.COMPLAINT_SUMMARIES_ENDPOINT)}`,
+            url: `${v2Url(COMPLAINT_SUMMARIES_ENDPOINT)}`,
             adapter: undefined,
             params: undefined,
           },

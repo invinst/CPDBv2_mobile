@@ -70,6 +70,112 @@ const nthPinboardItem = (index) => {
   };
 };
 
+const summarySectionSelectorByTitle = (title) => (
+  `//div[contains(@class, "widget__widget")]/div[contains(text(), "${title}")]/..`
+);
+
+const summaryWidgetSection = (title) => {
+  const parentSelector = summarySectionSelectorByTitle(title);
+  const firstSummaryItemSelector = `(${parentSelector}//div[@class="summary-item"])[1]`;
+  const secondSummaryItemSelector = `(${parentSelector}//div[@class="summary-item"])[2]`;
+  return {
+    locateStrategy: 'xpath',
+    selector: parentSelector,
+    elements: {
+      widgetTitle: {
+        locateStrategy: 'xpath',
+        selector: `${parentSelector}//div[contains(@class, "widget-title")]`,
+      },
+      spinner: {
+        locateStrategy: 'xpath',
+        selector: `${parentSelector}//*[contains(@class, "widget__widget-spinner")]`,
+      },
+      firstSummaryItemTitle: {
+        locateStrategy: 'xpath',
+        selector: `${firstSummaryItemSelector}//div[contains(@class, "item-title")]`,
+      },
+      firstSummaryItemCount: {
+        locateStrategy: 'xpath',
+        selector: `${firstSummaryItemSelector}//div[contains(@class, "item-count")]`,
+      },
+      secondSummaryItemTitle: {
+        locateStrategy: 'xpath',
+        selector: `${secondSummaryItemSelector}//div[contains(@class, "item-title")]`,
+      },
+      secondSummaryItemCount: {
+        locateStrategy: 'xpath',
+        selector: `${secondSummaryItemSelector}//div[contains(@class, "item-count")]`,
+      },
+      summaryItems: {
+        locateStrategy: 'xpath',
+        selector: `${parentSelector}//div[@class="summary-item"]`,
+      },
+    },
+  };
+};
+
+const demographicBarSelector = (parentSelector, index) => ({
+  locateStrategy: 'xpath',
+  selector: `${parentSelector}//*[@class="bar-chart"]//*[${index}]`,
+});
+const demographicPercentageSelector = (parentSelector, index) => ({
+  locateStrategy: 'xpath',
+  selector: `${parentSelector}//*[contains(@class, "bar-chart-precentage")][${index}]`,
+});
+const demographicLabelSelector = (parentSelector, index) => ({
+  locateStrategy: 'xpath',
+  selector: `${parentSelector}//*[contains(@class, "bar-chart-label")]/*[${index}]`,
+});
+
+const demographicChartSection = (parentSelector, chartIndex) => {
+  const mainSelector = `(${parentSelector}//*[contains(@class, "demographic-chart__demographic-chart")])` +
+  `[${chartIndex}]`;
+  return {
+    locateStrategy: 'xpath',
+    selector: mainSelector,
+    elements: {
+      firstBar: demographicBarSelector(mainSelector, 1),
+      firstPercentage: demographicPercentageSelector(mainSelector, 1),
+      firstLabel: demographicLabelSelector(mainSelector, 1),
+      secondBar: demographicBarSelector(mainSelector, 2),
+      secondPercentage: demographicPercentageSelector(mainSelector, 2),
+      secondLabel: demographicLabelSelector(mainSelector, 2),
+      thirdBar: demographicBarSelector(mainSelector, 3),
+      thirdPercentage: demographicPercentageSelector(mainSelector, 3),
+      thirdLabel: demographicLabelSelector(mainSelector, 3),
+      fourthBar: demographicBarSelector(mainSelector, 4),
+      fourthPercentage: demographicPercentageSelector(mainSelector, 4),
+      fourthLabel: demographicLabelSelector(mainSelector, 4),
+      charts: {
+        locateStrategy: 'xpath',
+        selector: `${mainSelector}//*[@class="bar-chart"]/*`,
+      },
+    },
+  };
+};
+
+const demographicWidgetSection = (title) => {
+  const parentSelector = summarySectionSelectorByTitle(title);
+  return {
+    locateStrategy: 'xpath',
+    selector: parentSelector,
+    elements: {
+      widgetTitle: {
+        locateStrategy: 'xpath',
+        selector: `${parentSelector}//div[contains(@class, "widget-title")]`,
+      },
+      spinner: {
+        locateStrategy: 'xpath',
+        selector: `${parentSelector}//*[contains(@class, "widget__widget-spinner")]`,
+      },
+    },
+    sections: {
+      raceSection: demographicChartSection(parentSelector, 1),
+      genderSection: demographicChartSection(parentSelector, 2),
+    },
+  };
+};
+
 module.exports = {
   url: function (pinboardId, queryString) {
     if (queryString) {
@@ -237,12 +343,16 @@ module.exports = {
     },
     animatedSocialGraphSection: {
       locateStrategy: 'xpath',
-      selector: '(//div[contains(@class, "visualization-item")])[1]',
+      selector: summarySectionSelectorByTitle('SOCIAL GRAPH'),
     },
     geographicSection: {
       locateStrategy: 'xpath',
-      selector: '(//div[contains(@class, "visualization-item")])[2]',
+      selector: summarySectionSelectorByTitle('GEOGRAPHIC MAP'),
     },
+    complaintSummaryWidget: summaryWidgetSection('COMPLAINT SUMMARY'),
+    trrSummaryWidget: summaryWidgetSection('TACTICAL RESPONSE REPORT SUMMARY'),
+    officersSummaryWidget: demographicWidgetSection('OFFICERS'),
+    complainantsSummaryWidget: demographicWidgetSection('COMPLAINANTS'),
     graphNodes: {
       selector: '.node',
     },

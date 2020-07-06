@@ -7,7 +7,7 @@ import * as intercomUtils from 'utils/intercom';
 import Footer from 'components/footer';
 import LegalModalContent from 'components/footer/legal-modal-content';
 import IOSPeek from 'components/common/ios-peek';
-import constants from 'constants';
+import { INVINST_GITHUB_URL } from 'constants';
 
 
 describe('<Footer />', function () {
@@ -19,7 +19,7 @@ describe('<Footer />', function () {
     items.at(0).prop('className').should.containEql('legal-item');
     items.at(0).text().should.equal('Legal');
 
-    items.at(1).prop('href').should.equal(constants.INVINST_GITHUB_URL);
+    items.at(1).prop('href').should.equal(INVINST_GITHUB_URL);
     items.at(1).text().should.equal('Github');
 
     items.at(2).prop('className').should.containEql('contact-item');

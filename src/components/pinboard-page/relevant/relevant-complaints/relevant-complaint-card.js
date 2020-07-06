@@ -6,7 +6,7 @@ import styles from './relevant-complaint-card.sass';
 import BaseComplaintCard from 'components/pinboard-page/relevant/common/base-complaint-card';
 import { getComplaintMapUrl } from 'utils/mapbox';
 import withUndoCard from 'components/pinboard-page/cards/with-undo-card';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 export default function RelevantComplaintCard(props) {
@@ -60,7 +60,7 @@ export const RelevantComplaintCardWithUndo = withUndoCard(
   () => 'Complaint added.',
   'addItemInPinboardPage',
   {
-    theme: constants.PINBOARD_PAGE.UNDO_CARD_THEMES.DARK,
+    theme: PINBOARD_PAGE.UNDO_CARD_THEMES.DARK,
     keepVisible: false,
     hasWrapper: true,
   }

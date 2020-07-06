@@ -12,7 +12,7 @@ import {
   COMPLAINT_PAGE_CMS_REQUEST_SUCCESS,
   COMPLAINT_PAGE_CMS_REQUEST_FAILURE,
 } from 'actions/complaint-page';
-import constants from 'constants';
+import { COMPLAINT_API_ENDPOINT, COMPLAINT_PAGE_CMS_API_ENDPOINT } from 'constants';
 import { v2Url } from 'utils/url-util';
 
 
@@ -24,7 +24,7 @@ describe('ComplaintPage actions', function () {
         types: [COMPLAINT_REQUEST_START, COMPLAINT_REQUEST_SUCCESS, COMPLAINT_REQUEST_FAILURE],
         payload: {
           request: {
-            url: `${v2Url(constants.COMPLAINT_API_ENDPOINT)}123/`,
+            url: `${v2Url(COMPLAINT_API_ENDPOINT)}123/`,
             params: undefined,
             adapter: undefined,
           },
@@ -43,7 +43,7 @@ describe('ComplaintPage actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.COMPLAINT_API_ENDPOINT)}123/request-document/`,
+            url: `${v2Url(COMPLAINT_API_ENDPOINT)}123/request-document/`,
             data: {
               email: 'valid@email.com',
             },
@@ -65,7 +65,7 @@ describe('ComplaintPage actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.COMPLAINT_PAGE_CMS_API_ENDPOINT)}`,
+            url: `${v2Url(COMPLAINT_PAGE_CMS_API_ENDPOINT)}`,
             adapter: undefined,
             params: undefined,
           },

@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import pluralize from 'pluralize';
 
 import { officerCardTransform } from './officer-card';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 import { createWithIsPinnedSelector } from 'selectors/common/pinboard';
 
 
@@ -40,7 +40,7 @@ const mapCoaccusalToGroup = (coaccusal) => {
 };
 
 export const coaccusalGroupsSelector = createSelector(
-  createWithIsPinnedSelector(getCoaccusals, constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER),
+  createWithIsPinnedSelector(getCoaccusals, PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER),
   coaccusals => {
     const transformedCoaccusals = coaccusals.map(coaccusalTransform);
     const groupedCoaccusals = groupBy(transformedCoaccusals, mapCoaccusalToGroup);

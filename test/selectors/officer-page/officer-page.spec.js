@@ -7,7 +7,7 @@ import {
   getIsOfficerPinned,
   pinnableOfficerSelector,
 } from 'selectors/officer-page';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 describe('officer-page selectors', function () {
@@ -419,7 +419,7 @@ describe('officer-page selectors', function () {
       pinnableOfficerSelector(state, props).should.eql({
         fullName: 'Officer 739',
         id: 739,
-        type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+        type: PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
       });
     });
   });

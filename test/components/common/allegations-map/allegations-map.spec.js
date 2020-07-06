@@ -595,7 +595,12 @@ describe('Map component', function () {
 
   it('should call addControl when component render', function () {
     const wrapper = mount(
-      <AllegationsMap legend={ legend } markerGroups={ markerGroups } attributionControlPosition='bottom-left' />
+      <AllegationsMap
+        legend={ legend }
+        markerGroups={ markerGroups }
+        attributionControlPosition='bottom-left'
+        navigationControlPosition='top-right'
+      />
     );
     const instance = wrapper.instance();
 
@@ -606,6 +611,6 @@ describe('Map component', function () {
 
     const navigationControllArgs = instance.map.addControl.getCall(1).args;
     (navigationControllArgs[0] instanceof mapboxgl.NavigationControl).should.be.true();
-    navigationControllArgs[1].should.equal('top-left');
+    navigationControllArgs[1].should.equal('top-right');
   });
 });

@@ -6,7 +6,7 @@ import { Promise } from 'es6-promise';
 import MockStore from 'redux-mock-store';
 
 import PinboardsMenu from 'components/common/pinboard/pinboards-menu';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 import * as pinboardUtils from 'utils/pinboard';
 
 
@@ -67,7 +67,7 @@ describe('PinboardsMenu component', function () {
       <Provider store={ MockStore()({}) }>
         <PinboardsMenu
           pinboards={ pinboards }
-          item={ { type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER, id: 835 } }
+          item={ { type: PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER, id: 835 } }
           closeMenu={ closeMenuSpy }
           createPinboard={ createPinboardStub }/>
       </Provider>

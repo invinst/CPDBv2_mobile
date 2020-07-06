@@ -12,7 +12,7 @@ import {
   TRR_PAGE_CMS_REQUEST_START,
   TRR_PAGE_CMS_REQUEST_SUCCESS,
 } from 'actions/trr-page';
-import constants from 'constants';
+import { TRR_API_ENDPOINT, TRR_PAGE_CMS_API_ENDPOINT } from 'constants';
 import { v2Url } from 'utils/url-util';
 
 
@@ -25,7 +25,7 @@ describe('trr-page actions', function () {
         meta: { id: 11 },
         payload: {
           request: {
-            url: `${v2Url(constants.TRR_API_ENDPOINT)}11/`,
+            url: `${v2Url(TRR_API_ENDPOINT)}11/`,
             adapter: undefined,
             params: undefined,
           },
@@ -43,7 +43,7 @@ describe('trr-page actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.TRR_API_ENDPOINT)}123/request-document/`,
+            url: `${v2Url(TRR_API_ENDPOINT)}123/request-document/`,
             data: {
               email: 'valid@email.com',
             },
@@ -65,7 +65,7 @@ describe('trr-page actions', function () {
         ],
         payload: {
           request: {
-            url: `${v2Url(constants.TRR_PAGE_CMS_API_ENDPOINT)}`,
+            url: `${v2Url(TRR_PAGE_CMS_API_ENDPOINT)}`,
             adapter: undefined,
             params: undefined,
           },

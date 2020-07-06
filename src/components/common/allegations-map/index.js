@@ -6,7 +6,7 @@ import { isEmpty, isEqual } from 'lodash';
 import { isIOS } from 'react-device-detect';
 import MultiTouch from 'mapbox-gl-multitouch';
 
-import constants from 'constants';
+import { MAPBOX_STYLE, MAP_INFO } from 'constants';
 import { mapboxgl } from 'utils/mapbox';
 import Legend from './legend/index';
 import MarkerTooltip from './marker-tooltip';
@@ -76,19 +76,19 @@ export default class AllegationsMap extends Component {
   }
 
   gotRef = (el) => {
-    const { attributionControlPosition } = this.props;
+    const { attributionControlPosition, navigationControlPosition } = this.props;
     if (el && !this.map) {
       this.map = new mapboxgl.Map({
         container: el,
-        style: constants.MAPBOX_STYLE,
-        zoom: constants.MAP_INFO.ZOOM1,
-        center: [constants.MAP_INFO.CENTER_LNG, constants.MAP_INFO.CENTER_LAT],
+        style: MAPBOX_STYLE,
+        zoom: MAP_INFO.ZOOM1,
+        center: [MAP_INFO.CENTER_LNG, MAP_INFO.CENTER_LAT],
         attributionControl: false,
         interactive: true,
         scrollZoom: false,
       });
       this.map.addControl(new mapboxgl.AttributionControl(), attributionControlPosition);
-      this.map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+      this.map.addControl(new mapboxgl.NavigationControl(), navigationControlPosition);
       if (isIOS) {
         /* istanbul ignore next */
         this.map.addControl(new MultiTouch());
@@ -265,6 +265,7 @@ AllegationsMap.propTypes = {
   }),
   clearAllMarkers: PropTypes.bool,
   attributionControlPosition: PropTypes.string,
+  navigationControlPosition: PropTypes.string,
 };
 
 AllegationsMap.defaultProps = {
@@ -275,6 +276,7 @@ AllegationsMap.defaultProps = {
   },
   clearAllMarkers: true,
   attributionControlPosition: 'bottom-right',
+  navigationControlPosition: 'top-left',
 };
 
 export const AllegationsMapWithSpinner = withLoadingSpinner(AllegationsMap, styles.allegationMapLoading);

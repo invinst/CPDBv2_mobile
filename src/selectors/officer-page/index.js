@@ -4,7 +4,7 @@ import { startCase, get, map, compact, toLower, capitalize, isEmpty, isNil } fro
 import { extractPercentile } from 'selectors/common/percentile';
 import { getCareerDuration, getCurrentAge } from 'utils/date';
 import { pinboardItemsSelector, isItemPinned } from 'selectors/pinboard-page/pinboard';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 
 
 export const getOfficerId = (props) => props.match.params.id;
@@ -96,7 +96,7 @@ export const getIsOfficerPinned = (state, props) => (
 export const pinnableOfficerSelector = createSelector(
   getOfficer,
   (officer) => ({
-    type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+    type: PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
     id: officer['officer_id'],
     fullName: officer['full_name'],
   })

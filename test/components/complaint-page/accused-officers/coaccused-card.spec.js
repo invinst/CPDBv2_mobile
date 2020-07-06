@@ -6,7 +6,7 @@ import { random } from 'faker';
 import { mountWithRouter } from 'utils/tests';
 import ItemPinButton from 'components/common/item-pin-button';
 import pinButtonStyles from 'components/common/item-pin-button.sass';
-import constants from 'constants';
+import { PINBOARD_PAGE } from 'constants';
 import CoaccusedCard from 'components/complaint-page/accused-officers/coaccused-card';
 import BaseOfficerCard from 'components/common/base-officer-card';
 
@@ -55,7 +55,7 @@ describe('CoaccusedCard component', function () {
     itemPinButton.props().addOrRemoveItemInPinboard.should.equal(addOrRemoveItemInPinboard);
     itemPinButton.props().showHint.should.be.false();
     itemPinButton.props().item.should.eql({
-      type: constants.PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+      type: PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
       id: 13788,
       isPinned,
       fullName: officer.fullName,
