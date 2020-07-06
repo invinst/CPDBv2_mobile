@@ -207,11 +207,25 @@ describe('GeographicData selectors', function () {
       hasMapMarkersSelector(state).should.be.false();
     });
 
-    it('should return true if have marker', function () {
+    it('should return true if does not have marker and requesting is true', function () {
       const state = {
         pinboardPage: {
           geographicData: {
-            requesting: false,
+            crsRequesting: true,
+            trrsRequesting: true,
+            mapCrsData: [],
+          },
+        },
+      };
+      hasMapMarkersSelector(state).should.be.true();
+    });
+
+    it('should return true if have marker and not requesting', function () {
+      const state = {
+        pinboardPage: {
+          geographicData: {
+            crsRequesting: false,
+            trrsRequesting: false,
             mapCrsData: [{
               category: 'Illegal Search',
               kind: 'CR',
