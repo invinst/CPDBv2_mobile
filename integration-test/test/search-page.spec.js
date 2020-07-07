@@ -374,7 +374,6 @@ const expectResultCount = (client, rowsElement, count) => {
 
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
-    api.clean();
     api.onGet('/api/v2/search-mobile/?term=123').reply(200, mockSearchQueryResponseForRecentItems);
     api.onGet('/api/v2/mobile/toast/').reply(200, mockToasts);
     api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
@@ -384,11 +383,6 @@ describe('SearchPageTest', function () {
     this.pinboardPage = client.page.pinboardPage();
     this.searchPage.navigate();
     this.searchPage.expect.element('@body').to.be.present;
-    done();
-  });
-
-  afterEach(function (client, done) {
-    api.clean();
     done();
   });
 

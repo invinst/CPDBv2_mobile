@@ -42,11 +42,6 @@ describe('MainPageTest', function () {
     done();
   });
 
-  afterEach(function (client, done) {
-    api.clean();
-    done();
-  });
-
   it('should show homepage with logo and navigation links', function () {
     const mainPage = this.mainPage;
 

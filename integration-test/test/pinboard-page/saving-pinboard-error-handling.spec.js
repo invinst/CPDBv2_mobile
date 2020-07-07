@@ -8,8 +8,6 @@ const mockData = require(__dirname + '/../../mock-data/pinboard-page');
 
 describe('Session Creator Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.clean();
-
     api
       .onGet('/api/v2/mobile/pinboards/5cd06f2b/')
       .reply(200, mockData.pinboardData);
@@ -54,11 +52,6 @@ describe('Session Creator Pinboard Page', function () {
 
     this.pinboardPage = client.page.pinboardPage();
     this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
-    done();
-  });
-
-  afterEach(function (client, done) {
-    api.clean();
     done();
   });
 

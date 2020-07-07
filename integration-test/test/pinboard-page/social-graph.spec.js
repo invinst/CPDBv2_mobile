@@ -37,11 +37,6 @@ function checkGraphGroupColors(client, graphNodes, expectedNodeGroupColors) {
 }
 
 describe('Pinboard Social Graph', function () {
-  beforeEach(function (client, done) {
-    api.clean();
-    done();
-  });
-
   context('animatedSocialgraph section', function () {
     beforeEach(function (client, done) {
       api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);

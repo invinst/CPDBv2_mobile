@@ -550,7 +550,6 @@ describe('Disable pinboard feature', function () {
   });
 
   afterEach(function (client, done) {
-    api.clean();
     client.execute(
       function () {
         return localStorage.removeItem('PINBOARD_ENABLED');

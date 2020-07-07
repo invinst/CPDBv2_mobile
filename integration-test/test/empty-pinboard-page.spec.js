@@ -146,8 +146,6 @@ function mockUpdateEmptyPinboard() {
 
 describe('Empty Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.clean();
-
     mockPinboard(emptyPinboardId, emptyPinboard);
     mockCMS();
     mockUpdateEmptyPinboard();
@@ -226,7 +224,6 @@ describe('Empty Pinboard Page', function () {
 
 describe('No Id Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.clean();
     mockCMS();
 
     mockPinboard(emptyPinboardId, emptyPinboard);

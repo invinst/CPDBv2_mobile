@@ -76,7 +76,6 @@ const mockTopByAllegation = [
 
 describe('EmbedTopOfficerPage', function () {
   beforeEach(function (client, done) {
-    api.clean();
     api.onGet('/api/v2/cms-pages/landing-page/').reply(200, mockLandingPageCms);
     api.onGet('/api/v2/officers/top-by-allegation/').reply(200, mockTopByAllegation);
     api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);

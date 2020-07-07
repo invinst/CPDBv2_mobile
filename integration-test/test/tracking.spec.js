@@ -32,11 +32,6 @@ describe('Tracking', function () {
   const clicky = (client, callback) => client.execute('return window.clicky;', [], callback);
   const gaLoaded = (client, callback) => client.execute('return window.gaLoaded;', [], callback);
 
-  beforeEach(function (client, done) {
-    api.clean();
-    done();
-  });
-
   it('should assign gaLoaded, ga & clicky on load', function (client) {
     api.onGet('/api/v2/mobile/officers/123/').reply(200, mockData.officer123);
     api.onGet('/api/v2/mobile/pinboards/5cd06f2b/').reply(200, mockData.pinboardData);

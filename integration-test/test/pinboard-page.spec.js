@@ -19,7 +19,6 @@ const {
 
 describe('Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.clean();
     api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
     api.onGet('/api/v2/mobile/officers/123/').reply(200, mockData.officer123);
     api.onGet('/api/v2/mobile/pinboards/5cd06f2b/').reply(200, mockData.pinboardData);

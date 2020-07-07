@@ -7,7 +7,6 @@ var mockData = require(__dirname + '/../../mock-data/pinboard-page');
 
 describe('Session Creator Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.clean();
     api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
     api
       .onPost('/api/v2/mobile/pinboards/', mockData.createPinboardeeee7777Params)

@@ -387,7 +387,6 @@ function checkTimelineShowAllItems(timeline) {
 
 describe('OfficerPage test', function () {
   beforeEach(function (client, done) {
-    api.clean();
     api.onGet('/api/v2/mobile/toast/').reply(200, mockToasts);
     api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
     done();

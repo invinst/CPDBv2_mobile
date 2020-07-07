@@ -40,7 +40,6 @@ const mockTRR = {
 
 describe('TRRPageTest', function () {
   beforeEach(function (client, done) {
-    api.clean();
     api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
     api.onGet('/api/v2/mobile/trr/781/').reply(200, mockTRR);
     api

@@ -36,7 +36,6 @@ const mockOfficers = [
 
 describe('EmbedOfficerPage', function () {
   beforeEach(function (client, done) {
-    api.clean();
     api.onGet('/api/v2/mobile/officers/?ids=13788,8658').reply(200, mockOfficers);
     api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
     this.embedOfficersPage = client.page.embedOfficersPage();
