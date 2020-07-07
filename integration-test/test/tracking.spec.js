@@ -33,13 +33,13 @@ describe('Tracking', function () {
   const gaLoaded = (client, callback) => client.execute('return window.gaLoaded;', [], callback);
 
   beforeEach(function (client, done) {
-    api.cleanMock();
+    api.clean();
     done();
   });
 
   it('should assign gaLoaded, ga & clicky on load', function (client) {
-    api.mock('GET', '/api/v2/mobile/officers/123/', 200, mockData.officer123);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, mockData.pinboardData);
+    api.onGet('/api/v2/mobile/officers/123/').reply(200, mockData.officer123);
+    api.onGet('/api/v2/mobile/pinboards/5cd06f2b/').reply(200, mockData.pinboardData);
     this.pinboardPage = client.page.pinboardPage();
     this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
     this.pinboardPage.expect.element('@body').to.be.present;
@@ -60,7 +60,7 @@ describe('Tracking', function () {
 
   context('tracking script is unable to load', function () {
     it('should show results that match search query', function (client) {
-      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
+      api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
       this.searchPage = client.page.search();
       this.searchPage.navigate();
       this.searchPage.expect.element('@body').to.be.present;

@@ -36,9 +36,9 @@ const mockOfficers = [
 
 describe('EmbedOfficerPage', function () {
   beforeEach(function (client, done) {
-    api.cleanMock();
-    api.mock('GET', '/api/v2/mobile/officers/?ids=13788,8658', 200, mockOfficers);
-    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
+    api.clean();
+    api.onGet('/api/v2/mobile/officers/?ids=13788,8658').reply(200, mockOfficers);
+    api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
     this.embedOfficersPage = client.page.embedOfficersPage();
     this.embedOfficersPage.navigate(
       this.embedOfficersPage.url('?ids=13788,8658&title=Some%20title&description=Some%20description')

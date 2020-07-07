@@ -1,6 +1,6 @@
 var recursiveReadSync = require('recursive-readdir-sync');
 var path = require('path');
-var server = require(__dirname + '/mock-server');
+var startMockServer = require(__dirname + '/mock-server');
 var yargs = require('yargs-parser');
 var _ = require('lodash');
 
@@ -22,6 +22,8 @@ function importTest(name, path) {
     require(path);
   });
 }
+
+const server = startMockServer();
 
 describe('CPDBv2_mobile', function () {
   after(function (client, done) {

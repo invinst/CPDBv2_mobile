@@ -387,16 +387,16 @@ function checkTimelineShowAllItems(timeline) {
 
 describe('OfficerPage test', function () {
   beforeEach(function (client, done) {
-    api.cleanMock();
-    api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
-    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
+    api.clean();
+    api.onGet('/api/v2/mobile/toast/').reply(200, mockToasts);
+    api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
     done();
   });
 
   describe('OfficerPage not enough data for radar chart', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/cms-pages/officer-page/', 200, mockOfficerPageCms);
-      api.mock('GET', '/api/v2/mobile/officers/2234/', 200, officerNotEnoughPercentile);
+      api.onGet('/api/v2/cms-pages/officer-page/').reply(200, mockOfficerPageCms);
+      api.onGet('/api/v2/mobile/officers/2234/').reply(200, officerNotEnoughPercentile);
 
       this.officerPage = client.page.officerPage();
       this.officerPage.navigate(this.officerPage.url(2234));
@@ -416,15 +416,15 @@ describe('OfficerPage test', function () {
 
   describe('OfficerPage has radar chart', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/cms-pages/officer-page/', 200, mockOfficerPageCms);
-      api.mock('GET', '/api/v2/mobile/officers/2235/', 200, officer2235);
-      api.mock('GET', '/api/v2/mobile/officers/2234/', 200, officerNotEnoughPercentile);
-      api.mock('GET', '/api/v2/mobile/officers/2235/new-timeline-items/', 200, mockTimeline);
-      api.mock('GET', '/api/v2/mobile/officers/2235/coaccusals/', 200, mockCoaccusals);
+      api.onGet('/api/v2/cms-pages/officer-page/').reply(200, mockOfficerPageCms);
+      api.onGet('/api/v2/mobile/officers/2235/').reply(200, officer2235);
+      api.onGet('/api/v2/mobile/officers/2234/').reply(200, officerNotEnoughPercentile);
+      api.onGet('/api/v2/mobile/officers/2235/new-timeline-items/').reply(200, mockTimeline);
+      api.onGet('/api/v2/mobile/officers/2235/coaccusals/').reply(200, mockCoaccusals);
 
-      api.mock('GET', '/api/v2/mobile/officers/27778/', 200, officer27778);
-      api.mock('GET', '/api/v2/mobile/officers/27778/new-timeline-items/', 200, mockTimeline);
-      api.mock('GET', '/api/v2/mobile/officers/27778/coaccusals/', 200, mockCoaccusals);
+      api.onGet('/api/v2/mobile/officers/27778/').reply(200, officer27778);
+      api.onGet('/api/v2/mobile/officers/27778/new-timeline-items/').reply(200, mockTimeline);
+      api.onGet('/api/v2/mobile/officers/27778/coaccusals/').reply(200, mockCoaccusals);
 
       this.officerPage = client.page.officerPage();
       this.officerPage.navigate(this.officerPage.url(2235));
@@ -557,7 +557,7 @@ describe('OfficerPage test', function () {
         officerPage.expect.section('@triangleExplainer').to.be.not.present;
       });
 
-      it('should navigate between explainers when clicking in rightNav', function (client) {
+      it('should navigate between explainers when clicking in rightNav', function () {
         const officerPage = this.officerPage;
         const triangleExplainer = officerPage.section.triangleExplainer;
 
@@ -696,7 +696,7 @@ describe('OfficerPage test', function () {
         done();
       });
 
-      it('should render rank change and unit change', function (client) {
+      it('should render rank change and unit change', function () {
         const firstUnitChange = this.timeline.section.firstUnitChangeItem;
         const secondUnitChange = this.timeline.section.secondUnitChangeItem;
         const firstRankChange = this.timeline.section.firstRankChangeItem;
@@ -929,49 +929,28 @@ describe('OfficerPage test', function () {
 
     describe('Pinboard function', function () {
       beforeEach(function (client, done) {
-        api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-        api.mockPut(
-          '/api/v2/mobile/pinboards/5cd06f2b/',
-          200,
-          {
-            'officer_ids': [],
-            crids: [],
-            'trr_ids': [],
-            title: '',
-            description: '',
-          },
-          {
-            id: '5cd06f2b',
-            'officer_ids': [],
-            crids: [],
-            'trr_ids': [],
-            title: '',
-            description: '',
-          },
-        );
+        api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+        api
+          .onPut(
+            '/api/v2/mobile/pinboards/5cd06f2b/',
+            { 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' }
+          )
+          .reply(
+            200,
+            { id: '5cd06f2b', 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' }
+          );
         this.main = client.page.main();
         this.search = client.page.search();
         done();
       });
 
       it('should display toast when pinning a coaccusal', function (client) {
-        api.mockPost(
-          '/api/v2/mobile/pinboards/',
-          201,
-          {
-            'officer_ids': [27778],
-            crids: [],
-            'trr_ids': [],
-          },
-          {
-            id: '5cd06f2b',
-            'officer_ids': [27778],
-            crids: [],
-            'trr_ids': [],
-            title: '',
-            description: '',
-          },
-        );
+        api
+          .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [27778], crids: [], 'trr_ids': [] })
+          .reply(
+            201,
+            { id: '5cd06f2b', 'officer_ids': [27778], crids: [], 'trr_ids': [], title: '', description: '' }
+          );
 
         this.officerPage.waitForElementVisible('@coaccusalsTabButton', TIMEOUT);
         this.officerPage.click('@coaccusalsTabButton');
@@ -1014,22 +993,22 @@ describe('OfficerPage test', function () {
 
   context('current officer', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/cms-pages/officer-page/', 200, mockOfficerPageCms);
-      api.mock('GET', '/api/v2/mobile/officers/2235/', 200, officer2235);
-      api.mock('GET', '/api/v2/mobile/officers/2235/new-timeline-items/', 200, mockTimeline);
-      api.mock('GET', '/api/v2/mobile/officers/2235/coaccusals/', 200, mockCoaccusals);
-      api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/', 200, pinboards[0]);
-      api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/complaints/', 200, []);
-      api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/officers/', 200, []);
-      api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/trrs/', 200, []);
-      api.mockPut('/api/v2/mobile/pinboards/8d2daffe/', 200, updateRequestParams[0], updatedPinboards[0]);
+      api.onGet('/api/v2/cms-pages/officer-page/').reply(200, mockOfficerPageCms);
+      api.onGet('/api/v2/mobile/officers/2235/').reply(200, officer2235);
+      api.onGet('/api/v2/mobile/officers/2235/new-timeline-items/').reply(200, mockTimeline);
+      api.onGet('/api/v2/mobile/officers/2235/coaccusals/').reply(200, mockCoaccusals);
+      api.onGet('/api/v2/mobile/pinboards/8d2daffe/').reply(200, pinboards[0]);
+      api.onGet('/api/v2/mobile/pinboards/8d2daffe/complaints/').reply(200, []);
+      api.onGet('/api/v2/mobile/pinboards/8d2daffe/officers/').reply(200, []);
+      api.onGet('/api/v2/mobile/pinboards/8d2daffe/trrs/').reply(200, []);
+      api.onPut('/api/v2/mobile/pinboards/8d2daffe/', updateRequestParams[0]).reply(200, updatedPinboards[0]);
       done();
     });
 
     context('when user has one active pinboard', function () {
       beforeEach(function (client, done) {
-        api.mock('GET', '/api/v2/mobile/pinboards/?detail=true', 200, [pinboards[0]]);
-        api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, pinboards[0]);
+        api.onGet('/api/v2/mobile/pinboards/?detail=true').reply(200, [pinboards[0]]);
+        api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, pinboards[0]);
         this.officerPage = client.page.officerPage();
         this.mainPage = client.page.main();
         this.search = client.page.search();
@@ -1073,18 +1052,13 @@ describe('OfficerPage test', function () {
 
     context('when user has more than 1 pinboard', function () {
       beforeEach(function (client, done) {
-        api.mock('GET', '/api/v2/mobile/pinboards/?detail=true', 200, pinboards);
-        api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-        api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/', 200, createdPinboards[0]);
-        api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/complaints/', 200, []);
-        api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/officers/', 200, createdPinboardsOfficersData);
-        api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/trrs/', 200, []);
-        api.mockPost(
-          '/api/v2/mobile/pinboards/',
-          200,
-          createPinboardRequestParams[0],
-          createdPinboards[0],
-        );
+        api.onGet('/api/v2/mobile/pinboards/?detail=true').reply(200, pinboards);
+        api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+        api.onGet('/api/v2/mobile/pinboards/f7231a74/').reply(200, createdPinboards[0]);
+        api.onGet('/api/v2/mobile/pinboards/f7231a74/complaints/').reply(200, []);
+        api.onGet('/api/v2/mobile/pinboards/f7231a74/officers/').reply(200, createdPinboardsOfficersData);
+        api.onGet('/api/v2/mobile/pinboards/f7231a74/trrs/').reply(200, []);
+        api.onPost('/api/v2/mobile/pinboards/', createPinboardRequestParams[0]).reply(200, createdPinboards[0],);
         this.officerPage = client.page.officerPage();
         this.mainPage = client.page.main();
         this.search = client.page.search();
@@ -1121,7 +1095,7 @@ describe('OfficerPage test', function () {
         pinboardsMenu.waitForElementNotPresent('@firstItemTitle');
       });
 
-      it('should display toast and close pinboards menu when pinning', function (client) {
+      it('should display toast and close pinboards menu when pinning', function () {
         const pinboardsMenu = this.officerPage.section.pinboardsMenu;
 
         this.officerPage.click('@addToPinboardButton');

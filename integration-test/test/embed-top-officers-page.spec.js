@@ -76,10 +76,10 @@ const mockTopByAllegation = [
 
 describe('EmbedTopOfficerPage', function () {
   beforeEach(function (client, done) {
-    api.cleanMock();
-    api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
-    api.mock('GET', '/api/v2/officers/top-by-allegation/', 200, mockTopByAllegation);
-    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
+    api.clean();
+    api.onGet('/api/v2/cms-pages/landing-page/').reply(200, mockLandingPageCms);
+    api.onGet('/api/v2/officers/top-by-allegation/').reply(200, mockTopByAllegation);
+    api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
     this.embedTopOfficersPage = client.page.embedTopOfficersPage();
     this.embedTopOfficersPage.navigate();
     this.embedTopOfficersPage.expect.element('@body').to.be.present;

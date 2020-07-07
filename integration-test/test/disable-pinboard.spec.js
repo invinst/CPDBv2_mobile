@@ -537,7 +537,7 @@ const trr14487 = {
 
 describe('Disable pinboard feature', function () {
   beforeEach(function (client, done) {
-    api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
+    api.onGet('/api/v2/cms-pages/landing-page/').reply(200, mockLandingPageCms);
 
     client.page.main().navigate();
     client.execute(
@@ -550,7 +550,7 @@ describe('Disable pinboard feature', function () {
   });
 
   afterEach(function (client, done) {
-    api.cleanMock();
+    api.clean();
     client.execute(
       function () {
         return localStorage.removeItem('PINBOARD_ENABLED');
@@ -590,11 +590,11 @@ describe('Disable pinboard feature', function () {
 
   describe('Landing page', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-      api.mock('GET', '/api/v2/officers/top-by-allegation/', 200, mockTopOfficersByAllegation);
-      api.mock('GET', '/api/v2/activity-grid/', 200, mockRecentActivities);
-      api.mock('GET', '/api/v2/cr/list-by-new-document/', 200, mockNewDocuments);
-      api.mock('GET', '/api/v2/cr/complaint-summaries/', 200, mockComplaintSummaries);
+      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+      api.onGet('/api/v2/officers/top-by-allegation/').reply(200, mockTopOfficersByAllegation);
+      api.onGet('/api/v2/activity-grid/').reply(200, mockRecentActivities);
+      api.onGet('/api/v2/cr/list-by-new-document/').reply(200, mockNewDocuments);
+      api.onGet('/api/v2/cr/complaint-summaries/').reply(200, mockComplaintSummaries);
 
       this.mainPage = client.page.main();
       this.mainPage.navigate();
@@ -629,18 +629,16 @@ describe('Disable pinboard feature', function () {
 
   describe('Search page', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/search-mobile/?term=123', 200, mockSearchQueryResponseForRecentItems);
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
-      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
-      api.mock(
-        'GET', '/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487',
-        200,
-        mockNewRecentSearchItemsResponse,
-      );
-      api.mock('GET', '/api/v2/mobile/officers/8562/', 200, officer8562);
-      api.mock('GET', '/api/v2/mobile/cr/1002144/', 200, cr1002144);
-      api.mock('GET', '/api/v2/mobile/trr/14487/', 200, trr14487);
+      api.onGet('/api/v2/search-mobile/?term=123').reply(200, mockSearchQueryResponseForRecentItems);
+      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+      api.onGet('/api/v2/search-mobile/?term=2004-04-23+ke').reply(200, mockSearchQueryResponseWithDate);
+      api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
+      api
+        .onGet('/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487')
+        .reply(200, mockNewRecentSearchItemsResponse);
+      api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
+      api.onGet('/api/v2/mobile/cr/1002144/').reply(200, cr1002144);
+      api.onGet('/api/v2/mobile/trr/14487/').reply(200, trr14487);
 
       this.searchPage = client.page.search();
       this.searchPage.navigate(this.searchPage.url());
@@ -716,10 +714,10 @@ describe('Disable pinboard feature', function () {
 
   describe('Officer page', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/cms-pages/officer-page/', 200, mockOfficerPageCms);
-      api.mock('GET', '/api/v2/mobile/officers/2235/', 200, officer2235);
-      api.mock('GET', '/api/v2/mobile/officers/2235/new-timeline-items/', 200, mockTimeline);
-      api.mock('GET', '/api/v2/mobile/officers/2235/coaccusals/', 200, mockCoaccusals);
+      api.onGet('/api/v2/cms-pages/officer-page/').reply(200, mockOfficerPageCms);
+      api.onGet('/api/v2/mobile/officers/2235/').reply(200, officer2235);
+      api.onGet('/api/v2/mobile/officers/2235/new-timeline-items/').reply(200, mockTimeline);
+      api.onGet('/api/v2/mobile/officers/2235/coaccusals/').reply(200, mockCoaccusals);
 
       this.officerPage = client.page.officerPage();
       this.officerPage.navigate(this.officerPage.url(2235));
@@ -741,7 +739,7 @@ describe('Disable pinboard feature', function () {
 
   describe('CR page', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/mobile/cr/1053667/', 200, mockComplaint);
+      api.onGet('/api/v2/mobile/cr/1053667/').reply(200, mockComplaint);
 
       this.complaintPage = client.page.complaintPage();
       this.complaintPage.navigate(this.complaintPage.url('1053667'));

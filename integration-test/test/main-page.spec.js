@@ -9,6 +9,15 @@ const {
   mockNewDocuments,
   mockComplaintSummaries,
 } = require(__dirname + '/../mock-data/main-page');
+const {
+  emptyPinboard,
+  emptyPinboardData,
+  pinTopOfficerRequestData,
+  pinRecentActivityOfficerRequestData,
+  pinNewDocumentRequestData,
+  pinComplaintRequestData,
+} = require('../mock-data/main-page/pinboard-function');
+
 const { mockToasts } = require(__dirname + '/../mock-data/toasts');
 const { clearReduxStore } = require(__dirname + '/../utils');
 const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
@@ -16,14 +25,14 @@ const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 
 describe('MainPageTest', function () {
   beforeEach(function (client, done) {
-    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-    api.mock('GET', '/api/v2/cms-pages/landing-page/', 200, mockLandingPageCms);
-    api.mock('GET', '/api/v2/officers/top-by-allegation/', 200, mockTopOfficersByAllegation);
-    api.mock('GET', '/api/v2/activity-grid/', 200, mockRecentActivities);
-    api.mock('GET', '/api/v2/cr/list-by-new-document/', 200, mockNewDocuments);
-    api.mock('GET', '/api/v2/cr/complaint-summaries/', 200, mockComplaintSummaries);
-    api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
-    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
+    api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+    api.onGet('/api/v2/cms-pages/landing-page/').reply(200, mockLandingPageCms);
+    api.onGet('/api/v2/officers/top-by-allegation/').reply(200, mockTopOfficersByAllegation);
+    api.onGet('/api/v2/activity-grid/').reply(200, mockRecentActivities);
+    api.onGet('/api/v2/cr/list-by-new-document/').reply(200, mockNewDocuments);
+    api.onGet('/api/v2/cr/complaint-summaries/').reply(200, mockComplaintSummaries);
+    api.onGet('/api/v2/mobile/toast/').reply(200, mockToasts);
+    api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
 
     this.mainPage = client.page.main();
     this.search = client.page.search();
@@ -34,11 +43,11 @@ describe('MainPageTest', function () {
   });
 
   afterEach(function (client, done) {
-    api.cleanMock();
+    api.clean();
     done();
   });
 
-  it('should show homepage with logo and navigation links', function (client) {
+  it('should show homepage with logo and navigation links', function () {
     const mainPage = this.mainPage;
 
     mainPage.expect.element('@title').text.to.contain('Citizens Police Data Project');
@@ -88,7 +97,7 @@ describe('MainPageTest', function () {
   });
 
   describe('Recent Activity carousel', function () {
-    it('should render correct colors for radar chart', function (client) {
+    it('should render correct colors for radar chart', function () {
       const officersByAllegationCards = this.mainPage.section.topOfficersByAllegation.section.cards;
       officersByAllegationCards.expect.element('@firstRadarChart').to.have.css('background-color')
         .which.equal('rgba(245, 37, 36, 1)');
@@ -139,33 +148,21 @@ describe('MainPageTest', function () {
 
   describe('Pinboard function', function () {
     it('should display toast when pinning cards', function (client) {
-      api.mockPost(
-        '/api/v2/mobile/pinboards/',
-        201,
-        undefined,
-        {
-          id: '5cd06f2b',
-          'officer_ids': [],
-          crids: [],
-          'trr_ids': [],
-          title: '',
-          description: '',
-        },
-      );
-
-      api.mockPut(
-        '/api/v2/mobile/pinboards/5cd06f2b/',
-        200,
-        undefined,
-        {
-          id: '5cd06f2b',
-          'officer_ids': [],
-          crids: [],
-          'trr_ids': [],
-          title: '',
-          description: '',
-        },
-      );
+      api
+        .onPost('/api/v2/mobile/pinboards/', emptyPinboardData)
+        .reply(201, emptyPinboard);
+      api
+        .onPost('/api/v2/mobile/pinboards/', pinTopOfficerRequestData)
+        .reply(201, pinTopOfficerRequestData);
+      api
+        .onPut('/api/v2/mobile/pinboards/5cd06f2b/', pinRecentActivityOfficerRequestData)
+        .reply(200, pinRecentActivityOfficerRequestData);
+      api
+        .onPut('/api/v2/mobile/pinboards/5cd06f2b/', pinNewDocumentRequestData)
+        .reply(200, pinNewDocumentRequestData);
+      api
+        .onPut('/api/v2/mobile/pinboards/5cd06f2b/', pinComplaintRequestData)
+        .reply(200, pinComplaintRequestData);
 
       const checkPinToast = (parentSelector, messagePrefix) => {
         //Pin item
@@ -226,7 +223,7 @@ describe('MainPageTest', function () {
       done();
     });
 
-    it('should display Pinboard introduction on first visited', function (client) {
+    it('should display Pinboard introduction on first visited', function () {
       this.mainPage.section.pinboardButtonIntroduction.waitForElementPresent(
         '@introductionContent',
         PINBOARD_INTRODUCTION_DELAY

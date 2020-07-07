@@ -36,12 +36,12 @@ const generateRelevantComplaint = crid => ({
 });
 
 function mockPinboard(pinboardId, mockPinboard) {
-  api.mock('GET', `/api/v2/mobile/pinboards/${pinboardId}/`, 200, mockPinboard);
-  api.mock('GET', `/api/v2/mobile/pinboards/${pinboardId}/complaints/`, 200, []);
-  api.mock('GET', `/api/v2/mobile/pinboards/${pinboardId}/officers/`, 200, []);
-  api.mock('GET', `/api/v2/mobile/pinboards/${pinboardId}/trrs/`, 200, []);
-  api.mock('GET', `/api/v2/mobile/social-graph/network/?pinboard_id=${pinboardId}`, 200, {});
-  api.mock('GET', `/api/v2/mobile/social-graph/geographic/?pinboard_$id=${pinboardId}`, 200, []);
+  api.onGet(`/api/v2/mobile/pinboards/${pinboardId}/`).reply(200, mockPinboard);
+  api.onGet(`/api/v2/mobile/pinboards/${pinboardId}/complaints/`).reply(200, []);
+  api.onGet(`/api/v2/mobile/pinboards/${pinboardId}/officers/`).reply(200, []);
+  api.onGet(`/api/v2/mobile/pinboards/${pinboardId}/trrs/`).reply(200, []);
+  api.onGet(`/api/v2/mobile/social-graph/network/?pinboard_id=${pinboardId}`).reply(200, {});
+  api.onGet(`/api/v2/mobile/social-graph/geographic/?pinboard_$id=${pinboardId}`).reply(200, []);
 
   const baseRelevantDocumentsUrl = `/api/v2/mobile/pinboards/${pinboardId}/relevant-documents/?`;
   const relevantDocumentsResponse = getPaginationResponse(
@@ -49,7 +49,7 @@ function mockPinboard(pinboardId, mockPinboard) {
     (number) => _.range(0, number).map(generateRelevantDocument),
     4, 0, 4
   );
-  api.mock('GET', baseRelevantDocumentsUrl, 200, relevantDocumentsResponse);
+  api.onGet(baseRelevantDocumentsUrl).reply(200, relevantDocumentsResponse);
 
   const baseRelevantCoaccusalsUrl = `/api/v2/mobile/pinboards/${pinboardId}/relevant-coaccusals/?`;
   const relevantCoaccusalsResponse = getPaginationResponse(
@@ -57,7 +57,7 @@ function mockPinboard(pinboardId, mockPinboard) {
     (number) => _.range(0, number).map(generateRelevantCoaccusal),
     4, 0, 4
   );
-  api.mock('GET', baseRelevantCoaccusalsUrl, 200, relevantCoaccusalsResponse);
+  api.onGet(baseRelevantCoaccusalsUrl).reply(200, relevantCoaccusalsResponse);
 
   const baseRelevantComplaintsUrl = `/api/v2/mobile/pinboards/${pinboardId}/relevant-complaints/?`;
   const relevantComplaintsResponse = getPaginationResponse(
@@ -65,7 +65,7 @@ function mockPinboard(pinboardId, mockPinboard) {
     (number) => _.range(0, number).map(generateRelevantComplaint),
     4, 0, 4
   );
-  api.mock('GET', baseRelevantComplaintsUrl, 200, relevantComplaintsResponse);
+  api.onGet(baseRelevantComplaintsUrl).reply(200, relevantComplaintsResponse);
 }
 
 const emptyPinboardId = '11613bb2';
@@ -132,27 +132,21 @@ const updatedFromSourceSecondExamplePinboard = {
 };
 
 function mockCMS() {
-  api.mock('GET', '/api/v2/cms-pages/pinboard-page/', 200, pinboardMockData.mockCMSPinboardPage);
+  api.onGet('/api/v2/cms-pages/pinboard-page/').reply(200, pinboardMockData.mockCMSPinboardPage);
 }
 
 function mockUpdateEmptyPinboard() {
-  api.mockPut(
-    '/api/v2/mobile/pinboards/11613bb2/',
-    200,
-    { 'source_pinboard_id': 'b20c2c36' },
-    updatedFromSourceFirstExamplePinboard
-  );
-  api.mockPut(
-    '/api/v2/mobile/pinboards/11613bb2/',
-    200,
-    { 'source_pinboard_id': '22e66085' },
-    updatedFromSourceSecondExamplePinboard
-  );
+  api
+    .onPut('/api/v2/mobile/pinboards/11613bb2/', { 'source_pinboard_id': 'b20c2c36' })
+    .reply(200, updatedFromSourceFirstExamplePinboard);
+  api
+    .onPut('/api/v2/mobile/pinboards/11613bb2/', { 'source_pinboard_id': '22e66085' })
+    .reply(200, updatedFromSourceSecondExamplePinboard);
 }
 
 describe('Empty Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.cleanMock();
+    api.clean();
 
     mockPinboard(emptyPinboardId, emptyPinboard);
     mockCMS();
@@ -232,7 +226,7 @@ describe('Empty Pinboard Page', function () {
 
 describe('No Id Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.cleanMock();
+    api.clean();
     mockCMS();
 
     mockPinboard(emptyPinboardId, emptyPinboard);
@@ -243,7 +237,7 @@ describe('No Id Pinboard Page', function () {
   });
 
   it('should open empty pinboard page if no recent pinboard', function (client) {
-    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, emptyPinboard);
+    api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, emptyPinboard);
     this.noIdPinboardPage = client.page.emptyPinboardPage();
     this.noIdPinboardPage.navigate(this.noIdPinboardPage.url());
     client.waitForElementVisible('body', TIMEOUT);
@@ -259,7 +253,7 @@ describe('No Id Pinboard Page', function () {
   });
 
   it('should open a pinboard page if it is lasted pinboard', function (client) {
-    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, copyOfSkullcapPinboard);
+    api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, copyOfSkullcapPinboard);
     this.noIdPinboardPage = client.page.pinboardPage();
     this.noIdPinboardPage.navigate(this.noIdPinboardPage.url());
     client.waitForElementVisible('body', TIMEOUT);

@@ -40,21 +40,15 @@ const mockTRR = {
 
 describe('TRRPageTest', function () {
   beforeEach(function (client, done) {
-    api.cleanMock();
-    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
-    api.mock('GET', '/api/v2/mobile/trr/781/', 200, mockTRR);
-    api.mockPost(
-      '/api/v2/mobile/trr/781/request-document/',
-      200,
-      { email: 'valid@email.com' },
-      { 'message': 'Thanks for subscribing.', 'trr_id': 781 }
-    );
-    api.mockPost(
-      '/api/v2/mobile/trr/781/request-document/',
-      400,
-      { email: 'invalid#email.com' },
-      { 'message': 'Sorry, we can not subscribe your email' }
-    );
+    api.clean();
+    api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
+    api.onGet('/api/v2/mobile/trr/781/').reply(200, mockTRR);
+    api
+      .onPost('/api/v2/mobile/trr/781/request-document/', { email: 'valid@email.com' })
+      .reply(200, { 'message': 'Thanks for subscribing.', 'trr_id': 781 });
+    api
+      .onPost('/api/v2/mobile/trr/781/request-document/', { email: 'invalid#email.com' })
+      .reply(400, { 'message': 'Sorry, we can not subscribe your email' });
     this.trrPage = client.page.trrPage();
     this.trrPage.navigate(this.trrPage.url(781));
     this.trrPage.expect.element('@body').to.be.present;
