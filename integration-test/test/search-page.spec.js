@@ -374,10 +374,9 @@ const expectResultCount = (client, rowsElement, count) => {
 
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
-    api.cleanMock();
-    api.mock('GET', '/api/v2/search-mobile/?term=123', 200, mockSearchQueryResponseForRecentItems);
-    api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
-    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
+    api.onGet('/api/v2/search-mobile/?term=123').reply(200, mockSearchQueryResponseForRecentItems);
+    api.onGet('/api/v2/mobile/toast/').reply(200, mockToasts);
+    api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
     this.searchPage = client.page.search();
     this.pinboardPage = client.page.pinboardPage();
     this.officerPage = client.page.officerPage();
@@ -387,21 +386,14 @@ describe('SearchPageTest', function () {
     done();
   });
 
-  afterEach(function (client, done) {
-    api.cleanMock();
-    done();
-  });
-
-  it('should show recent items', function (client) {
-    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-    api.mock(
-      'GET', '/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487',
-      200,
-      mockNewRecentSearchItemsResponse,
-    );
-    api.mock('GET', '/api/v2/mobile/officers/8562/', 200, officer8562);
-    api.mock('GET', '/api/v2/mobile/cr/1002144/', 200, cr1002144);
-    api.mock('GET', '/api/v2/mobile/trr/14487/', 200, trr14487);
+  it('should show recent items', function () {
+    api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+    api
+      .onGet('/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487')
+      .reply(200, mockNewRecentSearchItemsResponse);
+    api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
+    api.onGet('/api/v2/mobile/cr/1002144/').reply(200, cr1002144);
+    api.onGet('/api/v2/mobile/trr/14487/').reply(200, trr14487);
     this.searchPage.setValue('@queryInput', '123');
     this.searchPage.section.officers.section.firstRow.click('@itemTitle');
 
@@ -451,7 +443,7 @@ describe('SearchPageTest', function () {
   });
 
   it('should keep search results after coming back from other page', function () {
-    api.mock('GET', '/api/v2/mobile/officers/8562/', 200, officer8562);
+    api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
     const firstOfficerRow = this.searchPage.section.officers.section.firstRow;
 
     this.searchPage.setValue('@queryInput', '123');
@@ -493,7 +485,7 @@ describe('SearchPageTest', function () {
     });
 
     it('should go to pinboard page if search page was opened via pinboard page', function (client) {
-      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, pinboardMockData.pinboardData);
+      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/').reply(200, pinboardMockData.pinboardData);
       const pinboardPage = client.page.pinboardPage();
       const pinboardUrl = pinboardPage.url('5cd06f2b');
 
@@ -508,7 +500,7 @@ describe('SearchPageTest', function () {
     });
 
     it('should go to officer page if search page was opened via breadcrumbs on officer page', function (client) {
-      api.mock('GET', '/api/v2/mobile/officers/8562/', 200, officer8562);
+      api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
       const officerPage = client.page.officerPage();
 
       this.searchPage.setValue('@queryInput', '123');
@@ -528,7 +520,7 @@ describe('SearchPageTest', function () {
 
   context('search for wh', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/search-mobile/?term=wh', 200, mockSearchQueryResponse);
+      api.onGet('/api/v2/search-mobile/?term=wh').reply(200, mockSearchQueryResponse);
       done();
     });
 
@@ -552,7 +544,7 @@ describe('SearchPageTest', function () {
 
   context('search for Kelvin', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
+      api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
       done();
     });
 
@@ -586,11 +578,11 @@ describe('SearchPageTest', function () {
 
   context('search for "2004-04-23 ke"', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+      api.onGet('/api/v2/search-mobile/?term=2004-04-23+ke').reply(200, mockSearchQueryResponseWithDate);
       done();
     });
 
-    it('should show date > cr and date > trr results that match search query', function (client) {
+    it('should show date > cr and date > trr results that match search query', function () {
       this.searchPage.setValue('@queryInput', '2004-04-23 ke');
 
       const dateCRs = this.searchPage.section.dateCRs;
@@ -645,19 +637,13 @@ describe('SearchPageTest', function () {
 
   context('single search', function () {
     it('should show single search result when click on "ALL"', function (client) {
-      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
-      api.mock(
-        'GET',
-        '/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER',
-        200,
-        mockOfficerSearchQueryResponse
-      );
-      api.mock(
-        'GET',
-        '/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=DATE+%3E+OFFICERS',
-        200,
-        mockDateOfficerSearchQueryResponse
-      );
+      api.onGet('/api/v2/search-mobile/?term=2004-04-23+ke').reply(200, mockSearchQueryResponseWithDate);
+      api
+        .onGet('/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER')
+        .reply(200, mockOfficerSearchQueryResponse);
+      api
+        .onGet('/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=DATE+%3E+OFFICERS')
+        .reply(200, mockDateOfficerSearchQueryResponse);
 
       this.searchPage.setValue('@queryInput', '2004-04-23 ke');
 
@@ -711,19 +697,13 @@ describe('SearchPageTest', function () {
     });
 
     it('should able to load more when scrolling down', function (client) {
-      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
-      api.mock(
-        'GET',
-        '/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER',
-        200,
-        mockFirstOfficersSearchQueryResponse
-      );
-      api.mock(
-        'GET',
-        '/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER&offset=30',
-        200,
-        mockSecondOfficersSearchQueryResponse
-      );
+      api.onGet('/api/v2/search-mobile/?term=2004-04-23+ke').reply(200, mockSearchQueryResponseWithDate);
+      api
+        .onGet('/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER')
+        .reply(200, mockFirstOfficersSearchQueryResponse);
+      api
+        .onGet('/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER&offset=30')
+        .reply(200, mockSecondOfficersSearchQueryResponse);
 
       this.searchPage.setValue('@queryInput', '2004-04-23 ke');
 
@@ -757,7 +737,7 @@ describe('SearchPageTest', function () {
     });
 
     it('should match result with search query prefix', function () {
-      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+      api.onGet('/api/v2/search-mobile/?term=2004-04-23+ke').reply(200, mockSearchQueryResponseWithDate);
 
       this.searchPage.setValue('@queryInput', 'officer:2004-04-23 ke');
 
@@ -771,12 +751,12 @@ describe('SearchPageTest', function () {
 
     context('should match result with search term from url', function () {
       beforeEach(function (client, done) {
-        api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+        api.onGet('/api/v2/search-mobile/?term=2004-04-23+ke').reply(200, mockSearchQueryResponseWithDate);
         done();
       });
 
       it('should search with correct query using q', function () {
-        api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+        api.onGet('/api/v2/search-mobile/?term=2004-04-23+ke').reply(200, mockSearchQueryResponseWithDate);
 
         this.searchPage.navigate(this.searchPage.url('q=officer:2004-04-23 ke'));
 
@@ -791,7 +771,7 @@ describe('SearchPageTest', function () {
       });
 
       it('should search with correct query using terms', function () {
-        api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
+        api.onGet('/api/v2/search-mobile/?term=2004-04-23+ke').reply(200, mockSearchQueryResponseWithDate);
 
         this.searchPage.navigate(this.searchPage.url('terms=officer:2004-04-23 ke'));
 
@@ -809,28 +789,25 @@ describe('SearchPageTest', function () {
 
   context('pinboard functionalities', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, emptyPinboard);
-      api.mockPost(
-        '/api/v2/mobile/pinboards/', 201,
-        { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
-        createPinboardResponse
-      );
-      api.mockPost(
-        '/api/v2/mobile/pinboards/', 201,
-        { 'officer_ids': [], crids: [], 'trr_ids': [] },
-        createEmptyPinboardResponse
-      );
-      api.mockPut(
-        '/api/v2/mobile/pinboards/5cd06f2b/', 200,
-        { 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' },
-        emptyPinboard
-      );
+      api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
+      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, emptyPinboard);
+      api
+        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
+        .reply(201, createPinboardResponse);
+      api
+        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: [], 'trr_ids': [] })
+        .reply(201, createEmptyPinboardResponse);
+      api
+        .onPut(
+          '/api/v2/mobile/pinboards/5cd06f2b/',
+          { 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' }
+        )
+        .reply(200, emptyPinboard);
       done();
     });
 
-    it('should display pinboard button with correct text when items are added/removed', function (client) {
+    it('should display pinboard button with correct text when items are added/removed', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
 
       const investigatorCRs = this.searchPage.section.investigatorCRs;
@@ -874,20 +851,17 @@ describe('SearchPageTest', function () {
 
   context('create new pinboard', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, mockNewCreatedPinboard);
-      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockPinboardComplaint);
+      api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
+      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, mockNewCreatedPinboard);
+      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/complaints/').reply(200, mockPinboardComplaint);
       done();
     });
 
     it('should go to pinboard detail page when clicking on success added toast', function (client) {
-      api.mockPost(
-        '/api/v2/mobile/pinboards/',
-        201,
-        { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
-        createPinboardResponse
-      );
+      api
+        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
+        .reply(201, createPinboardResponse);
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
@@ -902,18 +876,12 @@ describe('SearchPageTest', function () {
     });
 
     it('should go to pinboard detail page when clicking on error added toast', function (client) {
-      api.mockPost(
-        '/api/v2/mobile/pinboards/',
-        500,
-        { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
-        {}
-      );
-      api.mockPost(
-        '/api/v2/mobile/pinboards/',
-        201,
-        { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
-        createPinboardResponse
-      );
+      api
+        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
+        .reply(500, {});
+      api
+        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
+        .reply(201, createPinboardResponse);
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
@@ -930,13 +898,10 @@ describe('SearchPageTest', function () {
     });
 
     it('should go to pinboard detail page when clicking on long api call added toast', function (client) {
-      api.mockPost(
-        '/api/v2/mobile/pinboards/',
-        201,
-        { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] },
-        createPinboardResponse,
-        1000,
-      );
+      api
+        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
+        .delay(1000)
+        .reply(201, createPinboardResponse);
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
@@ -955,18 +920,17 @@ describe('SearchPageTest', function () {
 
   context('update current pinboard', function () {
     it('should go to pinboard detail page when clicking on success removed toast', function (client) {
-      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
-      api.mock(
-        'GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200,
-        mockComplaintPinnedItemPinboard
-      );
-      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockPinboardComplaints);
-      api.mockPut(
-        '/api/v2/mobile/pinboards/5cd06f2b/',
-        200,
-        { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' },
-        mockUpdatedComplaintPinnedItemPinboard
-      );
+      api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
+      api
+        .onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false')
+        .reply(200, mockComplaintPinnedItemPinboard);
+      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/complaints/').reply(200, mockPinboardComplaints);
+      api
+        .onPut(
+          '/api/v2/mobile/pinboards/5cd06f2b/',
+          { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
+        )
+        .reply(200, mockUpdatedComplaintPinnedItemPinboard);
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
@@ -981,24 +945,23 @@ describe('SearchPageTest', function () {
     });
 
     it('should go to pinboard detail page when clicking on error added toast', function (client) {
-      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
-      api.mock(
-        'GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200,
-        mockComplaintPinnedItemPinboard
-      );
-      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockPinboardComplaints);
-      api.mockPut(
-        '/api/v2/mobile/pinboards/5cd06f2b/',
-        500,
-        { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' },
-        {},
-      );
-      api.mockPut(
-        '/api/v2/mobile/pinboards/5cd06f2b/',
-        200,
-        { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' },
-        mockUpdatedComplaintPinnedItemPinboard,
-      );
+      api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
+      api
+        .onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false')
+        .reply(200, mockComplaintPinnedItemPinboard);
+      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/complaints/').reply(200, mockPinboardComplaints);
+      api
+        .onPut(
+          '/api/v2/mobile/pinboards/5cd06f2b/',
+          { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
+        )
+        .reply(500, {},);
+      api
+        .onPut(
+          '/api/v2/mobile/pinboards/5cd06f2b/',
+          { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
+        )
+        .reply(200, mockUpdatedComplaintPinnedItemPinboard,);
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
@@ -1014,19 +977,18 @@ describe('SearchPageTest', function () {
     });
 
     it('should go to pinboard detail page when clicking on long api call added toast', function (client) {
-      api.mock('GET', '/api/v2/search-mobile/?term=Kelvin', 200, mockInvestigatorCRSearchResponse);
-      api.mock(
-        'GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200,
-        mockComplaintPinnedItemPinboard
-      );
-      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockPinboardComplaints);
-      api.mockPut(
-        '/api/v2/mobile/pinboards/5cd06f2b/',
-        200,
-        { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' },
-        mockUpdatedComplaintPinnedItemPinboard,
-        1000
-      );
+      api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
+      api
+        .onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false')
+        .reply(200, mockComplaintPinnedItemPinboard);
+      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/complaints/').reply(200, mockPinboardComplaints);
+      api
+        .onPut(
+          '/api/v2/mobile/pinboards/5cd06f2b/',
+          { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
+        )
+        .delay(1000)
+        .reply(200, mockUpdatedComplaintPinnedItemPinboard);
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
@@ -1069,14 +1031,12 @@ describe('SearchPageTest', function () {
       this.searchPage.section.pinboardIntroduction.waitForElementVisible('@content');
     });
 
-    it('should display again after user remove all pinned items', function (client) {
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-      api.mockPost(
-        '/api/v2/mobile/pinboards/',
-        201,
-        createPinboardWithRecentItemsParams,
-        createPinboardWithRecentItemsResponse);
-      api.mock('GET', '/api/v2/mobile/officers/8562/', 200, officer8562);
+    it('should display again after user remove all pinned items', function () {
+      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+      api
+        .onPost('/api/v2/mobile/pinboards/', createPinboardWithRecentItemsParams)
+        .reply(201, createPinboardWithRecentItemsResponse);
+      api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
       this.searchPage.setValue('@queryInput', '123');
       this.searchPage.section.officers.section.firstRow.click('@itemTitle');
 
@@ -1104,7 +1064,7 @@ describe('SearchPageTest', function () {
       this.searchPage.section.pinboardIntroduction.waitForElementNotPresent('@content', 1000);
     });
 
-    it('should close pinboard introduction and redirect to pinboard page after click Get Started', function (client) {
+    it('should close pinboard introduction and redirect to pinboard page after click Get Started', function () {
       this.searchPage.section.pinboardIntroduction.waitForElementVisible('@content', 1000);
       this.searchPage.section.pinboardIntroduction.click('@getStartedButton');
       this.pinboardPage.waitForElementPresent('@searchBar');
@@ -1116,14 +1076,11 @@ describe('SearchPageTest', function () {
 
   context('PinButton introduction', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/search-mobile/?term=intr', 200, mockSearchQueryLongResponse);
-      api.mock('GET', '/api/v2/search-mobile/?term=2004-04-23+ke', 200, mockSearchQueryResponseWithDate);
-      api.mock(
-        'GET',
-        '/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER',
-        200,
-        mockFirstOfficersSearchQueryResponse
-      );
+      api.onGet('/api/v2/search-mobile/?term=intr').reply(200, mockSearchQueryLongResponse);
+      api.onGet('/api/v2/search-mobile/?term=2004-04-23+ke').reply(200, mockSearchQueryResponseWithDate);
+      api
+        .onGet('/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER')
+        .reply(200, mockFirstOfficersSearchQueryResponse);
       clearReduxStore(client);
       this.searchPage.waitForElementPresent('@body');
       done();
@@ -1245,15 +1202,13 @@ describe('SearchPageTest', function () {
     });
 
     it('should display PinButtonIntroduction on recent', function () {
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-      api.mock(
-        'GET', '/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487',
-        200,
-        mockNewRecentSearchItemsResponse,
-      );
-      api.mock('GET', '/api/v2/mobile/officers/8562/', 200, officer8562);
-      api.mock('GET', '/api/v2/mobile/cr/1002144/', 200, cr1002144);
-      api.mock('GET', '/api/v2/mobile/trr/14487/', 200, trr14487);
+      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+      api
+        .onGet('/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487')
+        .reply(200, mockNewRecentSearchItemsResponse,);
+      api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
+      api.onGet('/api/v2/mobile/cr/1002144/').reply(200, cr1002144);
+      api.onGet('/api/v2/mobile/trr/14487/').reply(200, trr14487);
       this.searchPage.setValue('@queryInput', '123');
       this.searchPage.section.officers.section.firstRow.click('@itemTitle');
 

@@ -37,49 +37,44 @@ function checkGraphGroupColors(client, graphNodes, expectedNodeGroupColors) {
 }
 
 describe('Pinboard Social Graph', function () {
-  beforeEach(function (client, done) {
-    api.cleanMock();
-    done();
-  });
-
   context('animatedSocialgraph section', function () {
     beforeEach(function (client, done) {
-      api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
-      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, mockData.pinboardData);
-      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
-      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, mockData.pinboardOfficersData);
-      api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, mockData.pinboardTRRsData);
-      api.mock('GET', '/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b', 200, mockData.socialGraphData);
-      api.mock(
-        'GET', '/api/v2/mobile/social-graph/geographic-crs/?pinboard_id=5cd06f2b', 200, mockData.geographicCrsData
-      );
-      api.mock(
-        'GET', '/api/v2/mobile/social-graph/geographic-trrs/?pinboard_id=5cd06f2b', 200, mockData.geographicTrrsData
-      );
+      api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
+      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/').reply(200, mockData.pinboardData);
+      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/complaints/').reply(200, mockData.pinboardCRsData);
+      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/officers/').reply(200, mockData.pinboardOfficersData);
+      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/trrs/').reply(200, mockData.pinboardTRRsData);
+      api.onGet('/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b').reply(200, mockData.socialGraphData);
+      api
+        .onGet('/api/v2/mobile/social-graph/geographic-crs/?pinboard_id=5cd06f2b')
+        .reply(200, mockData.geographicCrsData);
+      api
+        .onGet('/api/v2/mobile/social-graph/geographic-trrs/?pinboard_id=5cd06f2b')
+        .reply(200, mockData.geographicTrrsData);
 
-      api.mock('GET', mockData.baseRelevantDocumentsUrl, 200, mockData.firstRelevantDocumentsResponse);
-      api.mock(
-        'GET', `${mockData.baseRelevantDocumentsUrl}limit=4&offset=4`, 200, mockData.secondRelevantDocumentsResponse
-      );
-      api.mock(
-        'GET', `${mockData.baseRelevantDocumentsUrl}limit=4&offset=8`, 200, mockData.lastRelevantDocumentsResponse
-      );
+      api.onGet(mockData.baseRelevantDocumentsUrl).reply(200, mockData.firstRelevantDocumentsResponse);
+      api
+        .onGet(`${mockData.baseRelevantDocumentsUrl}limit=4&offset=4`)
+        .reply(200, mockData.secondRelevantDocumentsResponse);
+      api
+        .onGet(`${mockData.baseRelevantDocumentsUrl}limit=4&offset=8`)
+        .reply(200, mockData.lastRelevantDocumentsResponse);
 
-      api.mock('GET', mockData.baseRelevantCoaccusalsUrl, 200, mockData.firstRelevantCoaccusalsResponse);
-      api.mock(
-        'GET', `${mockData.baseRelevantCoaccusalsUrl}limit=4&offset=4`, 200, mockData.secondRelevantCoaccusalsResponse
-      );
-      api.mock(
-        'GET', `${mockData.baseRelevantCoaccusalsUrl}limit=4&offset=8`, 200, mockData.lastRelevantCoaccusalsResponse
-      );
+      api.onGet(mockData.baseRelevantCoaccusalsUrl).reply(200, mockData.firstRelevantCoaccusalsResponse);
+      api
+        .onGet(`${mockData.baseRelevantCoaccusalsUrl}limit=4&offset=4`)
+        .reply(200, mockData.secondRelevantCoaccusalsResponse);
+      api
+        .onGet(`${mockData.baseRelevantCoaccusalsUrl}limit=4&offset=8`)
+        .reply(200, mockData.lastRelevantCoaccusalsResponse);
 
-      api.mock('GET', mockData.baseRelevantComplaintsUrl, 200, mockData.firstRelevantComplaintsResponse);
-      api.mock(
-        'GET', `${mockData.baseRelevantComplaintsUrl}limit=4&offset=4`, 200, mockData.secondRelevantComplaintsResponse
-      );
-      api.mock(
-        'GET', `${mockData.baseRelevantComplaintsUrl}limit=4&offset=8`, 200, mockData.lastRelevantComplaintsResponse
-      );
+      api.onGet(mockData.baseRelevantComplaintsUrl).reply(200, mockData.firstRelevantComplaintsResponse);
+      api
+        .onGet(`${mockData.baseRelevantComplaintsUrl}limit=4&offset=4`)
+        .reply(200, mockData.secondRelevantComplaintsResponse);
+      api
+        .onGet(`${mockData.baseRelevantComplaintsUrl}limit=4&offset=8`)
+        .reply(200, mockData.lastRelevantComplaintsResponse);
 
       this.pinboardPage = client.page.pinboardPage();
       this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
