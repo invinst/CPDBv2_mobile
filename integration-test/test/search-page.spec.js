@@ -446,6 +446,7 @@ describe('SearchPageTest', function () {
     api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
     const firstOfficerRow = this.searchPage.section.officers.section.firstRow;
 
+    this.searchPage.waitForElementVisible('@queryInput');
     this.searchPage.setValue('@queryInput', '123');
 
     firstOfficerRow.waitForElementVisible('@itemTitle');
@@ -504,6 +505,7 @@ describe('SearchPageTest', function () {
       const officerPage = client.page.officerPage();
 
       this.searchPage.setValue('@queryInput', '123');
+      this.searchPage.section.officers.section.firstRow.waitForElementVisible('@itemTitle');
       this.searchPage.section.officers.section.firstRow.click('@itemTitle');
 
       officerPage.waitForElementVisible('@searchBreadcrumb');
@@ -825,6 +827,7 @@ describe('SearchPageTest', function () {
     it('should display pinboard button that links to pinboard page when pinboard is not empty', function (client) {
       this.searchPage.setValue('@queryInput', 'Kelvin');
 
+      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton');
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@pinboardBar', TIMEOUT);
       client.waitForAnimationEnd(this.searchPage.elements.pinboardBar.selector);
@@ -865,6 +868,7 @@ describe('SearchPageTest', function () {
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton');
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
@@ -885,6 +889,7 @@ describe('SearchPageTest', function () {
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton');
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
@@ -905,6 +910,7 @@ describe('SearchPageTest', function () {
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton');
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
@@ -965,6 +971,7 @@ describe('SearchPageTest', function () {
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.section.investigatorCRs.section.secondRow.waitForElementVisible('@pinButton');
       this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard\nGo to pinboard');
@@ -992,6 +999,7 @@ describe('SearchPageTest', function () {
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
+      this.searchPage.section.investigatorCRs.section.secondRow.waitForElementVisible('@pinButton');
       this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard\nGo to pinboard');
