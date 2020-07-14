@@ -69,6 +69,7 @@ describe('Tracking', function () {
         assert.equal(result.value, null);
       });
 
+      this.searchPage.waitForElementVisible('@queryInput');
       this.searchPage.setValue('@queryInput', 'Kelvin');
 
       this.searchPage.expect.element('@investigatorCRsHeader').text.to.equal('INVESTIGATOR → CR');

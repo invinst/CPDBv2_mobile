@@ -383,6 +383,7 @@ describe('SearchPageTest', function () {
     this.pinboardPage = client.page.pinboardPage();
     this.searchPage.navigate();
     this.searchPage.expect.element('@body').to.be.present;
+    this.searchPage.waitForElementVisible('@queryInput');
     done();
   });
 
@@ -445,8 +446,6 @@ describe('SearchPageTest', function () {
   it('should keep search results after coming back from other page', function () {
     api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
     const firstOfficerRow = this.searchPage.section.officers.section.firstRow;
-
-    this.searchPage.waitForElementVisible('@queryInput');
     this.searchPage.setValue('@queryInput', '123');
 
     firstOfficerRow.waitForElementVisible('@itemTitle');
@@ -649,7 +648,7 @@ describe('SearchPageTest', function () {
 
       this.searchPage.setValue('@queryInput', '2004-04-23 ke');
 
-      this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
+      this.searchPage.waitForElementPresent('@dateCRsHeader', TIMEOUT);
       this.searchPage.expect.element('@dateTRRsHeader').to.be.present;
       this.searchPage.expect.element('@dateOfficersHeader').to.be.present;
       this.searchPage.expect.element('@crsHeader').to.be.present;
@@ -673,7 +672,7 @@ describe('SearchPageTest', function () {
       expectResultCount(client, officersRows, 2);
 
       this.searchPage.click('@backToFullSearchLink');
-      this.searchPage.waitForElementVisible('@dateCRsHeader', TIMEOUT);
+      this.searchPage.waitForElementPresent('@dateCRsHeader', TIMEOUT);
       this.searchPage.expect.element('@dateTRRsHeader').to.be.present;
       this.searchPage.expect.element('@dateOfficersHeader').to.be.present;
       this.searchPage.expect.element('@crsHeader').to.be.present;
@@ -1022,7 +1021,7 @@ describe('SearchPageTest', function () {
   context('Pinboard introduction', function () {
     beforeEach(function (client, done) {
       clearReduxStore(client);
-      this.searchPage.waitForElementPresent('@body');
+      this.searchPage.waitForElementVisible('@queryInput');
       done();
     });
 
@@ -1049,6 +1048,7 @@ describe('SearchPageTest', function () {
       this.searchPage.section.officers.section.firstRow.click('@itemTitle');
 
       this.searchPage.click('@searchBreadcrumb');
+      this.searchPage.waitForElementVisible('@queryInput');
       this.searchPage.clearValue('@queryInput');
       // Empty value doesn't trigger change -> Set short query to show recent
       this.searchPage.setValue('@queryInput', '1');
@@ -1090,7 +1090,7 @@ describe('SearchPageTest', function () {
         .onGet('/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER')
         .reply(200, mockFirstOfficersSearchQueryResponse);
       clearReduxStore(client);
-      this.searchPage.waitForElementPresent('@body');
+      this.searchPage.waitForElementVisible('@queryInput');
       done();
     });
 
@@ -1221,12 +1221,15 @@ describe('SearchPageTest', function () {
       this.searchPage.section.officers.section.firstRow.click('@itemTitle');
 
       this.searchPage.click('@searchBreadcrumb');
+      this.searchPage.section.crs.section.firstRow.waitForElementVisible('@itemTitle');
       this.searchPage.section.crs.section.firstRow.click('@itemTitle');
 
       this.searchPage.click('@searchBreadcrumb');
+      this.searchPage.section.trrs.section.firstRow.waitForElementVisible('@itemTitle');
       this.searchPage.section.trrs.section.firstRow.click('@itemTitle');
 
       this.searchPage.click('@searchBreadcrumb');
+      this.searchPage.waitForElementVisible('@queryInput');
       this.searchPage.clearValue('@queryInput');
       // Empty value doesn't trigger change -> Set short query to show recent
       this.searchPage.setValue('@queryInput', '1');
