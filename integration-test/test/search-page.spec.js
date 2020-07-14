@@ -725,7 +725,7 @@ describe('SearchPageTest', function () {
       this.searchPage.expect.element('@dateOfficersHeader').to.be.not.present;
       this.searchPage.expect.element('@crsHeader').to.be.not.present;
       this.searchPage.expect.element('@trrsHeader').to.be.not.present;
-      this.searchPage.expect.element('@officersHeader').to.be.present;
+      this.searchPage.waitForElementPresent('@officersHeader');
 
       this.searchPage.expect.element('@queryInput').value.to.equal('officer:2004-04-23 ke');
 
@@ -1099,6 +1099,9 @@ describe('SearchPageTest', function () {
         const pinButtonIntroduction = this.searchPage.elements.pinButtonIntroduction;
         this.searchPage.setValue('@queryInput', 'intr');
         const officersRows = this.searchPage.section.officers.section.rows;
+        const firstOfficerRow = this.searchPage.section.officers.section.firstRow;
+
+        firstOfficerRow.waitForElementVisible('@itemTitle');
         expectResultCount(client, officersRows, 2);
         const crsRows = this.searchPage.section.crs.section.rows;
         expectResultCount(client, crsRows, 2);
@@ -1148,6 +1151,7 @@ describe('SearchPageTest', function () {
     it('should dismiss PinButtonIntroduction after click on introduction', function (client) {
       this.searchPage.setValue('@queryInput', '123');
       const firstOfficerRow = this.searchPage.section.officers.section.firstRow;
+      firstOfficerRow.waitForElementVisible('@itemTitle');
       firstOfficerRow.waitForElementVisible('@pinButtonIntroduction');
       firstOfficerRow.click('@pinButtonIntroduction');
       client.pause(PINBOARD_INTRODUCTION_DELAY);
