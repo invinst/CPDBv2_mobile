@@ -12,11 +12,16 @@ function waitForGraphAnimationEnd(pinboardPage, client) {
   pinboardPage.waitForElementVisible('@socialGraph', TIMEOUT);
   const graphLinks = pinboardPage.section.graphLinks;
   let graphLinksLength;
+  const checkGraphLoaded = () => {
+    client.elements(graphLinks.locateStrategy, graphLinks.selector, (result) => graphLinksLength = result.value.length);
+    return graphLinksLength > 0;
+  };
   const checkGraphLinksLength = () => {
     client.elements(graphLinks.locateStrategy, graphLinks.selector, (result) => graphLinksLength = result.value.length);
     return graphLinksLength === 37;
   };
 
+  client.waitForCondition(checkGraphLoaded, 30000);
   client.waitForCondition(checkGraphLinksLength, 3000);
 }
 
