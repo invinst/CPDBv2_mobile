@@ -374,6 +374,8 @@ const expectResultCount = (client, rowsElement, count) => {
 
 describe('SearchPageTest', function () {
   beforeEach(function (client, done) {
+    api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+    api.onGet('/api/v2/search-mobile/').reply(200, {});
     api.onGet('/api/v2/search-mobile/?term=123').reply(200, mockSearchQueryResponseForRecentItems);
     api.onGet('/api/v2/mobile/toast/').reply(200, mockToasts);
     api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
@@ -387,14 +389,16 @@ describe('SearchPageTest', function () {
     done();
   });
 
-  it('should show recent items', function () {
-    api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+  it('should show recent items', function (client) {
     api
       .onGet('/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487')
       .reply(200, mockNewRecentSearchItemsResponse);
     api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
     api.onGet('/api/v2/mobile/cr/1002144/').reply(200, cr1002144);
     api.onGet('/api/v2/mobile/trr/14487/').reply(200, trr14487);
+    clearReduxStore(client);
+    this.searchPage.waitForElementVisible('@queryInput');
+
     this.searchPage.setValue('@queryInput', '123');
     this.searchPage.section.officers.section.firstRow.click('@itemTitle');
 
@@ -538,6 +542,7 @@ describe('SearchPageTest', function () {
 
     it('should navigate to officer summary page when tapped', function (client) {
       this.searchPage.setValue('@queryInput', 'wh');
+      this.searchPage.section.officers.section.firstRow.waitForElementVisible('@itemTitle');
       this.searchPage.section.officers.section.firstRow.click('@itemTitle');
       client.assert.urlContains(this.officerPage.url(9876));
     });
@@ -791,7 +796,6 @@ describe('SearchPageTest', function () {
   context('pinboard functionalities', function () {
     beforeEach(function (client, done) {
       api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
-      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
       api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, emptyPinboard);
       api
         .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
@@ -812,7 +816,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
 
       const investigatorCRs = this.searchPage.section.investigatorCRs;
-      investigatorCRs.section.firstRow.waitForElementPresent('@pinButton');
+      investigatorCRs.section.firstRow.waitForElementVisible('@pinButton', TIMEOUT);
       this.searchPage.waitForElementNotVisible('@pinboardBar');
 
       investigatorCRs.section.firstRow.click('@pinButton');
@@ -826,7 +830,7 @@ describe('SearchPageTest', function () {
     it('should display pinboard button that links to pinboard page when pinboard is not empty', function (client) {
       this.searchPage.setValue('@queryInput', 'Kelvin');
 
-      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton');
+      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton', TIMEOUT);
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@pinboardBar', TIMEOUT);
       client.waitForAnimationEnd(this.searchPage.elements.pinboardBar.selector);
@@ -840,6 +844,7 @@ describe('SearchPageTest', function () {
       this.searchPage.setValue('@queryInput', 'Kelvin');
 
       const investigatorCRs = this.searchPage.section.investigatorCRs;
+      investigatorCRs.section.firstRow.waitForElementVisible('@pinButton', TIMEOUT);
       investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
@@ -854,7 +859,6 @@ describe('SearchPageTest', function () {
   context('create new pinboard', function () {
     beforeEach(function (client, done) {
       api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
-      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
       api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, mockNewCreatedPinboard);
       api.onGet('/api/v2/mobile/pinboards/5cd06f2b/complaints/').reply(200, mockPinboardComplaint);
       done();
@@ -867,7 +871,8 @@ describe('SearchPageTest', function () {
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
-      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton');
+
+      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton', TIMEOUT);
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
@@ -875,7 +880,12 @@ describe('SearchPageTest', function () {
       client.waitForAnimationEnd(this.searchPage.elements.toast.selector);
       this.searchPage.click('@toast');
       client.assert.urlContains('/pinboard/5cd06f2b/untitled-pinboard/');
-      client.assertCount(crs.section.card.selector, 1);
+      let cardsLength;
+      const checkItemLength = (item, expectedLength) => {
+        client.elements(item.locateStrategy, item.selector, (result) => cardsLength = result.value.length);
+        return cardsLength === expectedLength;
+      };
+      client.waitForCondition(() => checkItemLength(crs.section.card, 1), 30000);
     });
 
     it('should go to pinboard detail page when clicking on error added toast', function (client) {
@@ -888,7 +898,7 @@ describe('SearchPageTest', function () {
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
-      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton');
+      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton', TIMEOUT);
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
@@ -909,7 +919,7 @@ describe('SearchPageTest', function () {
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
-      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton');
+      this.searchPage.section.investigatorCRs.section.firstRow.waitForElementVisible('@pinButton', TIMEOUT);
       this.searchPage.section.investigatorCRs.section.firstRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR #123456 added to pinboard\nGo to pinboard');
@@ -970,7 +980,7 @@ describe('SearchPageTest', function () {
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
-      this.searchPage.section.investigatorCRs.section.secondRow.waitForElementVisible('@pinButton');
+      this.searchPage.section.investigatorCRs.section.secondRow.waitForElementVisible('@pinButton', TIMEOUT);
       this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard\nGo to pinboard');
@@ -998,7 +1008,7 @@ describe('SearchPageTest', function () {
 
       const crs = this.pinboardPage.section.pinnedSection.section.crs;
       this.searchPage.setValue('@queryInput', 'Kelvin');
-      this.searchPage.section.investigatorCRs.section.secondRow.waitForElementVisible('@pinButton');
+      this.searchPage.section.investigatorCRs.section.secondRow.waitForElementVisible('@pinButton', TIMEOUT);
       this.searchPage.section.investigatorCRs.section.secondRow.click('@pinButton');
       this.searchPage.waitForElementVisible('@toast', TIMEOUT);
       this.searchPage.expect.element('@toast').text.to.equal('CR #654321 added to pinboard\nGo to pinboard');
@@ -1039,7 +1049,6 @@ describe('SearchPageTest', function () {
     });
 
     it('should display again after user remove all pinned items', function () {
-      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
       api
         .onPost('/api/v2/mobile/pinboards/', createPinboardWithRecentItemsParams)
         .reply(201, createPinboardWithRecentItemsResponse);
@@ -1143,7 +1152,7 @@ describe('SearchPageTest', function () {
       this.searchPage.navigate();
       this.searchPage.waitForElementPresent('@queryInput');
       this.searchPage.setValue('@queryInput', 'intr');
-      secondOfficerRow.waitForElementVisible('@pinButton');
+      secondOfficerRow.waitForElementVisible('@pinButton', TIMEOUT);
       client.pause(PINBOARD_INTRODUCTION_DELAY);
       secondOfficerRow.waitForElementNotPresent('@pinButtonIntroduction');
     });
@@ -1161,7 +1170,7 @@ describe('SearchPageTest', function () {
       this.searchPage.navigate();
       this.searchPage.waitForElementPresent('@queryInput');
       this.searchPage.setValue('@queryInput', '123');
-      firstOfficerRow.waitForElementVisible('@pinButton');
+      firstOfficerRow.waitForElementVisible('@pinButton', TIMEOUT);
       client.pause(PINBOARD_INTRODUCTION_DELAY);
       firstOfficerRow.waitForElementNotPresent('@pinButtonIntroduction', 1000);
     });
@@ -1181,7 +1190,7 @@ describe('SearchPageTest', function () {
       this.searchPage.navigate();
       this.searchPage.waitForElementPresent('@queryInput');
       this.searchPage.setValue('@queryInput', 'intr');
-      secondOfficerRow.waitForElementVisible('@pinButton');
+      secondOfficerRow.waitForElementVisible('@pinButton', TIMEOUT);
       client.pause(PINBOARD_INTRODUCTION_DELAY);
       secondOfficerRow.waitForElementNotPresent('@pinButtonIntroduction');
       client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
@@ -1205,7 +1214,7 @@ describe('SearchPageTest', function () {
       this.searchPage.navigate();
       this.searchPage.waitForElementPresent('@queryInput');
       this.searchPage.setValue('@queryInput', 'intr');
-      secondOfficerRow.waitForElementVisible('@pinButton');
+      secondOfficerRow.waitForElementVisible('@pinButton', TIMEOUT);
       client.pause(PINBOARD_INTRODUCTION_DELAY);
       secondOfficerRow.waitForElementNotPresent('@pinButtonIntroduction');
       client.elements(pinButtonIntroduction.locateStrategy, pinButtonIntroduction.selector, function (result) {
@@ -1214,7 +1223,6 @@ describe('SearchPageTest', function () {
     });
 
     it('should display PinButtonIntroduction on recent', function () {
-      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
       api
         .onGet('/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487')
         .reply(200, mockNewRecentSearchItemsResponse,);
