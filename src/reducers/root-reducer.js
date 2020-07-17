@@ -11,7 +11,7 @@ import embed from './embed';
 import pinboardPage from './pinboard-page';
 import toasts from './toasts';
 import pinboardIntroduction from './pinboard-introduction';
-import appConfigRequesting from './common/app-config-requesting';
+import appConfigRequesting from './app-config-requesting';
 
 
 export default (history) => combineReducers({

@@ -145,22 +145,15 @@ const mockComplaint = {
 
 describe('ComplaintPageTest', function () {
   beforeEach(function (client, done) {
-    api.cleanMock();
-    api.mock('GET', '/api/v2/mobile/cr/1053667/', 200, mockComplaint);
-    api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
-    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
-    api.mockPost(
-      '/api/v2/mobile/cr/1053667/request-document/',
-      200,
-      { email: 'valid@email.com' },
-      { 'message': 'Thanks for subscribing.', crid: 1053667 }
-    );
-    api.mockPost(
-      '/api/v2/mobile/cr/1053667/request-document/',
-      400,
-      { email: 'invalid#email.com' },
-      { 'message': 'Sorry, we can not subscribe your email' }
-    );
+    api.onGet('/api/v2/mobile/cr/1053667/').reply(200, mockComplaint);
+    api.onGet('/api/v2/mobile/toast/').reply(200, mockToasts);
+    api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
+    api
+      .onPost('/api/v2/mobile/cr/1053667/request-document/', { email: 'valid@email.com' })
+      .reply(200, { 'message': 'Thanks for subscribing.', crid: 1053667 });
+    api
+      .onPost('/api/v2/mobile/cr/1053667/request-document/', { email: 'invalid#email.com' })
+      .reply(400, { 'message': 'Sorry, we can not subscribe your email' });
     this.complaintPage = client.page.complaintPage();
     done();
   });
@@ -172,14 +165,14 @@ describe('ComplaintPageTest', function () {
       done();
     });
 
-    it('should show proper header with CR title', function (client) {
+    it('should show proper header with CR title', function () {
       const comlaintCategory = this.complaintPage.section.complaintCategory;
       comlaintCategory.waitForElementVisible('@category', TIMEOUT);
       comlaintCategory.expect.element('@category').text.to.contain('Operation/Personnel Violations');
       comlaintCategory.expect.element('@subcategory').text.to.contain('Inventory Procedures');
     });
 
-    it('should show proper coaccusals', function (client) {
+    it('should show proper coaccusals', function () {
       const coaccusals = this.complaintPage.section.coaccusals;
       coaccusals.expect.element('@header').text.to.contain('3 ACCUSED OFFICERS');
       coaccusals.expect.element('@showAll').to.be.visible;
@@ -214,7 +207,7 @@ describe('ComplaintPageTest', function () {
       client.assert.urlContains('/officer/1/peter-parker');
     });
 
-    it('should show proper investigator which is an officer', function (client) {
+    it('should show proper investigator which is an officer', function () {
       const policeWitnessSection = this.complaintPage.section.policeWitnesses;
       policeWitnessSection.expect.element('@firstRadarChart').to.have.css('background-color')
         .which.equal('rgba(245, 37, 36, 1)');
@@ -294,45 +287,37 @@ describe('ComplaintPageTest', function () {
     });
 
     it('should display toast when pinning a coaccusal', function (client) {
-      api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
+      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
 
-      api.mockPut(
-        '/api/v2/mobile/pinboards/5cd06f2b/',
-        200,
-        {
-          'officer_ids': [],
-          crids: [],
-          'trr_ids': [],
-          title: '',
-          description: '',
-        },
-        {
-          id: '5cd06f2b',
-          'officer_ids': [],
-          crids: [],
-          'trr_ids': [],
-          title: '',
-          description: '',
-        },
-      );
+      api
+        .onPut(
+          '/api/v2/mobile/pinboards/5cd06f2b/',
+          {
+            'officer_ids': [],
+            crids: [],
+            'trr_ids': [],
+            title: '',
+            description: '',
+          }
+        )
+        .reply(
+          200,
+          {
+            id: '5cd06f2b',
+            'officer_ids': [],
+            crids: [],
+            'trr_ids': [],
+            title: '',
+            description: '',
+          },
+        );
 
-      api.mockPost(
-        '/api/v2/mobile/pinboards/',
-        201,
-        {
-          'officer_ids': [6493],
-          crids: [],
-          'trr_ids': [],
-        },
-        {
-          id: '5cd06f2b',
-          'officer_ids': [6493],
-          crids: [],
-          'trr_ids': [],
-          title: '',
-          description: '',
-        },
-      );
+      api
+        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [6493], crids: [], 'trr_ids': [] })
+        .reply(
+          201,
+          { id: '5cd06f2b', 'officer_ids': [6493], crids: [], 'trr_ids': [], title: '', description: '' },
+        );
 
       this.complaintPage.navigate(this.complaintPage.url('1053667'));
       this.complaintPage.waitForElementVisible('@body');
@@ -365,25 +350,25 @@ describe('ComplaintPageTest', function () {
 
     context('current complaint', function () {
       beforeEach(function (client, done) {
-        api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/', 200, pinboards[0]);
-        api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/complaints/', 200, []);
-        api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/officers/', 200, []);
-        api.mock('GET', '/api/v2/mobile/pinboards/8d2daffe/trrs/', 200, []);
+        api.onGet('/api/v2/mobile/pinboards/8d2daffe/').reply(200, pinboards[0]);
+        api.onGet('/api/v2/mobile/pinboards/8d2daffe/complaints/').reply(200, []);
+        api.onGet('/api/v2/mobile/pinboards/8d2daffe/officers/').reply(200, []);
+        api.onGet('/api/v2/mobile/pinboards/8d2daffe/trrs/').reply(200, []);
         done();
       });
 
       context('when user has one active pinboard', function () {
         beforeEach(function (client, done) {
-          api.mock('GET', '/api/v2/mobile/pinboards/?detail=true', 200, [pinboards[0]]);
-          api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, pinboards[0]);
-          api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, pinboards[0]);
-          api.mockPut('/api/v2/mobile/pinboards/8d2daffe/', 200, updateRequestParams[1], updatedPinboards[1]);
+          api.onGet('/api/v2/mobile/pinboards/?detail=true').reply(200, [pinboards[0]]);
+          api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, pinboards[0]);
+          api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, pinboards[0]);
+          api.onPut('/api/v2/mobile/pinboards/8d2daffe/', updateRequestParams[1]).reply(200, updatedPinboards[1]);
           this.complaintPage.navigate(this.complaintPage.url('1053667'));
           this.complaintPage.expect.element('@body').to.be.present;
           done();
         });
 
-        it('should display toast when pinning', function (client) {
+        it('should display toast when pinning', function () {
           this.complaintPage.click('@pinButton');
           this.complaintPage.waitForElementVisible('@lastToast');
           this.complaintPage.expect.element('@lastToast').text.to.equal(
@@ -397,7 +382,7 @@ describe('ComplaintPageTest', function () {
           this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (4)');
         });
 
-        it('should display toast when unpinning', function (client) {
+        it('should display toast when unpinning', function () {
           this.complaintPage.click('@pinButton');
           this.complaintPage.waitForElementVisible('@lastToast');
           this.complaintPage.expect.element('@lastToast').text.to.equal(
@@ -420,19 +405,14 @@ describe('ComplaintPageTest', function () {
 
       context('when user has more than 1 pinboard', function () {
         beforeEach(function (client, done) {
-          api.mock('GET', '/api/v2/mobile/pinboards/?detail=true', 200, pinboards);
-          api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, {});
-          api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/', 200, createdPinboards[0]);
-          api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/complaints/', 200, createdPinboardsComplaintsData);
-          api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/officers/', 200, []);
-          api.mock('GET', '/api/v2/mobile/pinboards/f7231a74/trrs/', 200, []);
-          api.mockPut('/api/v2/mobile/pinboards/8d2daffe/', 200, updateRequestParams[1], updatedPinboards[1]);
-          api.mockPost(
-            '/api/v2/mobile/pinboards/',
-            200,
-            createPinboardRequestParams[1],
-            createdPinboards[1],
-          );
+          api.onGet('/api/v2/mobile/pinboards/?detail=true').reply(200, pinboards);
+          api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+          api.onGet('/api/v2/mobile/pinboards/f7231a74/').reply(200, createdPinboards[0]);
+          api.onGet('/api/v2/mobile/pinboards/f7231a74/complaints/').reply(200, createdPinboardsComplaintsData);
+          api.onGet('/api/v2/mobile/pinboards/f7231a74/officers/').reply(200, []);
+          api.onGet('/api/v2/mobile/pinboards/f7231a74/trrs/').reply(200, []);
+          api.onPut('/api/v2/mobile/pinboards/8d2daffe/', updateRequestParams[1]).reply(200, updatedPinboards[1]);
+          api.onPost('/api/v2/mobile/pinboards/', createPinboardRequestParams[1]).reply(200, createdPinboards[1],);
           this.complaintPage = client.page.complaintPage();
           this.main = client.page.main();
           this.search = client.page.search();
@@ -469,7 +449,7 @@ describe('ComplaintPageTest', function () {
           pinboardsMenu.waitForElementNotPresent('@firstItemTitle');
         });
 
-        it('should display toast and close pinboards menu when pinning', function (client) {
+        it('should display toast and close pinboards menu when pinning', function () {
           const pinboardsMenu = this.complaintPage.section.pinboardsMenu;
 
           this.complaintPage.click('@addToPinboardButton');
@@ -489,7 +469,7 @@ describe('ComplaintPageTest', function () {
           this.search.expect.element('@pinboardBar').text.to.equal('Pinboard (4)');
         });
 
-        it('should display toast when unpinning', function (client) {
+        it('should display toast when unpinning', function () {
           const pinboardsMenu = this.complaintPage.section.pinboardsMenu;
 
           this.complaintPage.click('@addToPinboardButton');
