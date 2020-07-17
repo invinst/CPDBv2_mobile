@@ -38,7 +38,30 @@ describe('pinnedItemsRequested', function () {
   it('should handle LOCATION_CHANGE', function () {
     pinnedItemsRequested(
       true,
-      { type: LOCATION_CHANGE }
+      {
+        type: LOCATION_CHANGE,
+        payload: { action: 'PUSH' },
+      }
+    ).should.be.false();
+  });
+
+  it('should handle LOCATION_CHANGE with REPLACE action when state is true', function () {
+    pinnedItemsRequested(
+      true,
+      {
+        type: LOCATION_CHANGE,
+        payload: { action: 'REPLACE' },
+      }
+    ).should.be.true();
+  });
+
+  it('should handle LOCATION_CHANGE with REPLACE action when state is false', function () {
+    pinnedItemsRequested(
+      false,
+      {
+        type: LOCATION_CHANGE,
+        payload: { action: 'REPLACE' },
+      }
     ).should.be.false();
   });
 });
