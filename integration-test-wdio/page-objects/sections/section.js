@@ -7,6 +7,9 @@ export default class Section {
   constructor(parentSelector = '', mainElementSelector = '') {
     this.parentSelector = parentSelector;
     this.mainElementSelector = `${ this.parentSelector }${ mainElementSelector }`;
+    if (this.mainElementSelector) {
+      this._defineProperty('mainElement', this._buildSelector(''));
+    }
   }
 
   _buildSelector(rawSelector) {
@@ -14,6 +17,21 @@ export default class Section {
       return `(${ this.mainElementSelector }${ rawSelector.substring(1) }`;
     }
     return `${ this.mainElementSelector }${ rawSelector }`;
+  }
+
+  _defineProperty(key, selector) {
+    Object.defineProperty(this, key, {
+      get: function () {
+        const element = $(selector);
+        element.selector = selector;
+        Object.defineProperty(element, 'count', {
+          get: function () {
+            return $$(selector).length;
+          },
+        });
+        return element;
+      },
+    });
   }
 
   // If you want to use mainElement or parentSelector,
@@ -30,18 +48,7 @@ export default class Section {
         } else if (typeof elements[key] === 'string') {
           const selector = this._buildSelector(elements[key]);
           if (selector) {
-            Object.defineProperty(this, key, {
-              get: function () {
-                const element = $(selector);
-                element.selector = selector;
-                Object.defineProperty(element, 'count', {
-                  get: function () {
-                    return $$(selector).length;
-                  },
-                });
-                return element;
-              },
-            });
+            this._defineProperty(key, selector);
           }
         }
       }

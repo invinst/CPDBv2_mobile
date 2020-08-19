@@ -9,6 +9,7 @@ class LandingPage extends Page {
     this.prepareElementGetters({
       title: '//div[@class="site-title"]',
       description: '//div[@class="site-desc"]',
+      searchLink: 'a[href="/search/"]',
     });
   }
 

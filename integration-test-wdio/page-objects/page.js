@@ -15,6 +15,8 @@ export default class Page extends Section {
       clickyNoJavascriptGIF:
         '//*[name()="noscript"' +
         ' and contains(text(), \'<img alt="Clicky" width="1" height="1" src="//in.getclicky.com/\')]',
+
+      lastToast: '(//div[contains(@class, "Toastify__toast-body")])[last()]',
     });
   }
 
