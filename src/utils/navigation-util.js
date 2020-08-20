@@ -18,14 +18,12 @@ export function animatedScrollTo(element, to, duration) {
   }, 10);
 }
 
-
 export function scrollToTop(ast=animatedScrollTo) {
   return () => {
     ast(document.body, 0, 100);
     ast(document.documentElement, 0, 100);
   };
 }
-
 
 export function instantScrollToTop() {
   window.scrollTo(0, 0);
@@ -35,8 +33,8 @@ export function getCurrentScrollPosition() {
   return document.body.scrollTop || document.documentElement.scrollTop;
 }
 
-export function instantScrollTo(y) {
-  window.scrollTo(0, y);
+export function scrollToElement(element) {
+  window.scrollTo(0, element.offsetTop);
 }
 
 export function getPageYBottomOffset() {

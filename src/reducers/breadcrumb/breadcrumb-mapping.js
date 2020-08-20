@@ -4,6 +4,7 @@ import { kebabCase } from 'lodash';
 import { OFFICER_REQUEST_SUCCESS } from 'actions/officer-page';
 import { COMPLAINT_REQUEST_SUCCESS } from 'actions/complaint-page';
 import { TRR_REQUEST_SUCCESS } from 'actions/trr-page';
+import { LAWSUIT_FETCH_SUCCESS } from 'actions/lawsuit-page';
 import {
   PINBOARD_CREATE_REQUEST_SUCCESS,
   PINBOARD_UPDATE_REQUEST_SUCCESS,
@@ -33,6 +34,10 @@ const breadcrumbMapping = handleActions({
   [TRR_REQUEST_SUCCESS]: (state, action) => ({
     ...state,
     [`/trr/${action.payload.id}/`]: `TRR ${action.payload.id}`,
+  }),
+  [LAWSUIT_FETCH_SUCCESS]: (state, action) => ({
+    ...state,
+    [`/lawsuit/${action.payload['case_no']}/`]: `Case ${action.payload['case_no']}`,
   }),
   [PINBOARD_CREATE_REQUEST_SUCCESS]: buildPinboardBreadcrumbs,
   [PINBOARD_FETCH_REQUEST_SUCCESS]: buildPinboardBreadcrumbs,
