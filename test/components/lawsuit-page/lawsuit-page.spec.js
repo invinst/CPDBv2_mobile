@@ -9,6 +9,7 @@ import { spy, stub } from 'sinon';
 import LawsuitPage from 'components/lawsuit-page';
 import InvolvedOfficers from 'components/lawsuit-page/involved-officers';
 import WithHeader from 'components/shared/with-header';
+import Summary from 'components/lawsuit-page/summary';
 import * as NavigationUtil from 'utils/navigation-util';
 
 describe('LawsuitPage component', function () {
@@ -154,6 +155,13 @@ describe('LawsuitPage component', function () {
       addOrRemoveItemInPinboard: addOrRemoveItemInPinboardSpy,
       officers: officers,
     });
+
+    const summary = wrapper.find(Summary);
+    summary.exists().should.be.true();
+    summary.prop('summary').should.equal(
+      'Hutchinson was shot and killed outside a bar near the Addison Red Line stop.'
+    );
+    summary.prop('className').should.equal('summary-info');
 
     const shareableHeader = wrapper.find(WithHeader);
     shareableHeader.exists().should.be.true();

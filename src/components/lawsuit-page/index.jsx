@@ -10,6 +10,7 @@ import { getLawsuitMapUrl } from 'utils/mapbox';
 import { imageStyle } from 'components/common/shared.style';
 import InvolvedOfficers from './involved-officers';
 import { scrollToElement } from 'utils/navigation-util';
+import Summary from './summary';
 
 
 export default class LawsuitPage extends Component {
@@ -84,7 +85,7 @@ export default class LawsuitPage extends Component {
                 <div className='total-payments-summary-value'>${totalPaymentsDisplayShort}</div>
                 <div className='total-payments-summary-label'>Total payments</div>
               </div>
-              <div className='summary-section'>{summary}</div>
+              <Summary summary={ summary } className='summary-info' />
 
               <div className='officers-section section'>
                 <div className='section-label'>
