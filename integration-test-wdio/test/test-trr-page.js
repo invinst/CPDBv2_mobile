@@ -1,14 +1,14 @@
 import trrPage from '../page-objects/trr-page';
 import api from '../../integration-test/mock-api';
-import { mockGetAppConfig } from '../../integration-test/mock-data/app-config';
 import { mockTRR } from '../mock-data/trr-page';
 import { TIMEOUT } from '../constants';
+import { mockCommonApi } from '../mock-data/utils';
 
 
 describe('TRRPageTest', function () {
   beforeEach(function () {
     api.clean();
-    api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
+    mockCommonApi();
     api.onGet('/api/v2/mobile/trr/781/').reply(200, mockTRR);
     api
       .onPost('/api/v2/mobile/trr/781/request-document/', { email: 'valid@email.com' })
