@@ -4,8 +4,6 @@ import landingPage from '../page-objects/landing-page';
 import pinboardPage from '../page-objects/pinboard-page';
 import api from '../../integration-test/mock-api';
 import { TIMEOUT } from '../constants';
-import { mockToasts } from '../../integration-test/mock-data/toasts';
-import { mockGetAppConfig } from '../../integration-test/mock-data/app-config';
 const {
   pinboards,
   updatedPinboards,
@@ -15,14 +13,14 @@ const {
   createdPinboardsComplaintsData,
 } = require(__dirname + '/../../integration-test/mock-data/pinboard-page').pinboardsMenu;
 import { complaintData } from '../mock-data/complaint-page';
+import { mockCommonApi } from '../mock-data/utils';
 
 
 describe('ComplaintPageTest', function () {
   beforeEach(function () {
     api.clean();
+    mockCommonApi();
     api.onGet('/api/v2/mobile/cr/1053667/').reply(200, complaintData);
-    api.onGet('/api/v2/mobile/toast/').reply(200, mockToasts);
-    api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
     api
       .onPost('/api/v2/mobile/cr/1053667/request-document/', { email: 'valid@email.com' })
       .reply(200, { 'message': 'Thanks for subscribing.', crid: 1053667 });

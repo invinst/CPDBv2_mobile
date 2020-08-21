@@ -4,7 +4,6 @@ import landingPage from '../page-objects/landing-page';
 import pinboardPage from '../page-objects/pinboard-page';
 import api from '../../integration-test/mock-api';
 import { TIMEOUT } from '../constants';
-import { mockToasts } from '../../integration-test/mock-data/toasts';
 const {
   pinboards,
   updatedPinboards,
@@ -13,9 +12,9 @@ const {
   createPinboardRequestParams,
   createdPinboardsOfficersData,
 } = require(__dirname + '/../../integration-test/mock-data/pinboard-page').pinboardsMenu;
-import { mockGetAppConfig } from '../../integration-test/mock-data/app-config';
 import { officer2235, officer27778, officerNotEnoughPercentile, mockTimeline, mockCoaccusals, mockOfficerPageCms }
-  from '../mock-data/officer-page'
+  from '../mock-data/officer-page';
+import { mockCommonApi } from '../mock-data/utils';
 
 
 function checkTimelineShowChangesOnly(timeline) {
@@ -45,8 +44,8 @@ function checkTimelineShowAllItems(timeline) {
 
 describe('OfficerPage test', function () {
   beforeEach(function () {
-    api.onGet('/api/v2/mobile/toast/').reply(200, mockToasts);
-    api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
+    api.clean();
+    mockCommonApi();
   });
 
   describe('OfficerPage not enough data for radar chart', function () {
