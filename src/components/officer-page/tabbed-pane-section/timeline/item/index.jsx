@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
 import Cr from './cr';
+import Lawsuit from './lawsuit';
 import Trr from './trr';
 import Award from './award';
 import UnitChange from './unit-change';
@@ -21,6 +22,10 @@ export default class Item extends Component {
       [TIMELINE_ITEMS.CR]: {
         className: 'normal-item',
         Component: Cr,
+      },
+      [TIMELINE_ITEMS.LAWSUIT]: {
+        className: 'normal-item',
+        Component: Lawsuit,
       },
       [TIMELINE_ITEMS.FORCE]: {
         className: 'normal-item',

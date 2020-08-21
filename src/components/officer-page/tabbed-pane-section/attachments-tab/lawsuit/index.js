@@ -1,18 +1,19 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import Attachment from '../attachment';
 import Heading from './heading';
-import style from './complaint.sass';
+import styles from './lawsuit.sass';
 
 
-export default function Complaint(props) {
-  const { complaint, onTrackingAttachment, pathname } = props;
+export default function Lawsuit(props) {
+  const { lawsuit, onTrackingAttachment, pathname } = props;
   return (
-    <div className={ style.officerAttachmentsTabComplaint }>
-      <Heading complaint={ complaint } />
+    <div className={ styles.lawsuit }>
+      <Heading lawsuit={ lawsuit } />
       <div className='attachments'>
         {
-          complaint.attachments.map((attachment, index) =>
+          lawsuit.attachments.map((attachment, index) =>
             <Attachment
               attachment={ attachment }
               key={ index }
@@ -26,8 +27,8 @@ export default function Complaint(props) {
   );
 }
 
-Complaint.propTypes = {
-  complaint: PropTypes.object,
+Lawsuit.propTypes = {
+  lawsuit: PropTypes.object,
   onTrackingAttachment: PropTypes.func,
   pathname: PropTypes.string,
 };

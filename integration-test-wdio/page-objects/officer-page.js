@@ -128,8 +128,14 @@ class AttachmentsSections extends Section {
     super('', '//div[contains(@class, "attachments-tab__officer-attachments-tab")]');
 
     this.prepareElementGetters({
-      firstComplaintAttachment: '//a[contains(@class, "attachment__officer-attachments-tab-complaint-attachment")]',
-      firstComplaintHeading: '//a[contains(@class, "heading__officer-attachments-tab-complaint-heading")]',
+      firstComplaintAttachment: '//div[contains(@class, "complaint__officer-attachments-tab-complaint")]' +
+        ' //a[contains(@class, "attachment__officer-attachments-tab-complaint-attachment")]',
+      firstComplaintHeading: ' //div[contains(@class, "complaint__officer-attachments-tab-complaint")]' +
+        ' //a[contains(@class, "heading__officer-attachments-tab-complaint-heading")]',
+      firstLawsuitAttachment: ' //*[contains(@class, "lawsuit__lawsuit")]' +
+        ' //*[contains(@class, "attachment__officer-attachments-tab-complaint-attachment")]',
+      firstLawsuitHeading: ' //*[contains(@class, "lawsuit__lawsuit")]' +
+        ' //*[contains(@class, "heading__heading")]',
     });
   }
 }
@@ -146,7 +152,8 @@ class Filter extends Section {
       sustained: '(//div[@class="dropdown-menu-item"])[2]',
       force: '(//div[@class="dropdown-menu-item"])[3]',
       awards: '(//div[@class="dropdown-menu-item"])[4]',
-      changes: '(//div[@class="dropdown-menu-item"])[5]',
+      lawsuits: '(//div[@class="dropdown-menu-item"])[5]',
+      changes: '(//div[@class="dropdown-menu-item"])[6]',
     });
   }
 }
@@ -191,11 +198,14 @@ class TimelineSection extends Section {
       crItem: '//a[contains(@class, "cr__wrapper") and contains(@class, "normal-item")]',
       trrItem: '//a[contains(@class, "trr__wrapper") and contains(@class, "normal-item")]',
       awardItem: '//div[contains(@class, "award__wrapper") and contains(@class, "normal-item")]',
+      lawsuitItem: ' //a[contains(@class, "lawsuit__lawsuit")]',
       joinedItem: '//span[contains(@class, "joined__wrapper") and contains(@class, "joined-item")]',
       yearItem: '//div[contains(@class, "year__wrapper") and contains(@class, "normal-item")]',
       unitChangeItem: '//span[contains(@class, "unit-change__wrapper") and contains(@class, "change-item")]',
       rankChangeItem: '//span[contains(@class, "rank-change__wrapper") and contains(@class, "change-item")]',
-      attachmentThumbnail: '//div[contains(@class, "test--attachments")]//div[contains(@class, "image")]',
+      lawsuitAttachmentThumbnail: ' //*[contains(@class, "lawsuit-item-content")] //div[contains(@class, "image")]',
+      complaintAttachmentThumbnail: '//a[contains(@class, "cr__wrapper")] //div[contains(@class, "image")]',
+      moreComplaintAttachment: '//div[@class, "cr-item-content"] //div[@class, "more-attachment"]',
       crItems: '//a[contains(@class, "cr__wrapper") and contains(@class, "normal-item")]',
     });
   }

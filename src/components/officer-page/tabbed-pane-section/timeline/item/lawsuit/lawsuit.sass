@@ -1,0 +1,47 @@
+@import variables
+@import '../base'
+
+$height: 58px
+
+\:local(.lawsuit-row)
+  @extend  %base-wrapper
+  height: $height
+  line-height: $height - 1px
+
+  .lawsuit-item-content
+    .item-wrapper-kind
+      display: inline-block
+
+      .lawsuit-item-kind
+        @extend %base-kind
+        border-color: $thunder-color
+        height: 24px
+        background: $thunder-color url("/img/ic-coin-stack.svg") no-repeat center center
+        background-size: 16px 16px
+        border-radius: 2px
+        color: white
+
+    .lawsuit-detail
+      @extend %base-detail
+      display: inline-block
+      vertical-align: middle
+
+      .lawsuit-item-title
+        @extend %base-category
+        color: $thunder-color
+
+      .lawsuit-item-subtitle
+        font-weight: 300
+        line-height: 14px
+        font-size: 12px
+        color: $boulder-color
+
+    .lawsuit-right
+      @extend %base-right
+
+      .lawsuit-item-date
+        @extend %base-date
+        font-size: 12px
+        color: $thunder-color
+        font-weight: 300
+        float: none

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { spy } from 'sinon';
 
 import Cr from 'components/officer-page/tabbed-pane-section/timeline/item/cr';
-import Attachments from 'components/officer-page/tabbed-pane-section/timeline/item/cr/attachments';
+import Attachments from 'components/officer-page/tabbed-pane-section/timeline/item/attachments';
 
 
 describe('Cr component', function () {

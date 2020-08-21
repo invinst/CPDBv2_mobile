@@ -1,7 +1,7 @@
 import {
   attachmentsComplaintTransform,
   complaintsWithAttachmentsSelector,
-  hasAttachmentSelector,
+  hasAttachmentsSelector,
 } from 'selectors/officer-page/attachments';
 
 
@@ -122,7 +122,7 @@ describe('Officer attachments selectors', function () {
           },
         },
       };
-      hasAttachmentSelector(state, 1).should.be.false();
+      hasAttachmentsSelector(state, 1).should.be.false();
     });
 
     it('should return true if any complaint has attachment', function () {
@@ -135,7 +135,7 @@ describe('Officer attachments selectors', function () {
           },
         },
       };
-      hasAttachmentSelector(state, 1).should.be.true();
+      hasAttachmentsSelector(state, 1).should.be.true();
     });
   });
 });
