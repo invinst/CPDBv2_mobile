@@ -21,12 +21,17 @@ $height: 68px
         color: white
 
     .lawsuit-detail
+      width: calc(100% - 121px)
+
       @extend %base-detail
       display: inline-block
       vertical-align: middle
 
       .lawsuit-item-title
         @extend %base-category
+        white-space: nowrap
+        text-overflow: ellipsis
+        overflow: hidden
         color: $thunder-color
 
       .lawsuit-item-subtitle
