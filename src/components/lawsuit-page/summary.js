@@ -25,7 +25,6 @@ export default class Summary extends Component {
     const { expanded } = this.state;
     return (
       <div className={ cx(style.summary, className, { 'expanded': expanded }) }>
-        <div className='summary-title'>Summary</div>
         <div className='summary-text'>{ summary }</div>
         {
           !expanded

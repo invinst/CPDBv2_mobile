@@ -1,5 +1,7 @@
 @import 'variables'
 
+$field-row-label-width: 104px
+
 \:local(.lawsuit-page)
   font-size: 14px
   line-height: 17px
@@ -55,17 +57,21 @@
 
     .field-row
       padding: 12px 0 11px 0
-      display: flex
 
       & + .field-row
         border-top: 1px solid $alto-color
 
       .field-row-label
-        width: 86px
+        vertical-align: top
+        display: inline-block
+        width: $field-row-label-width
         color: $boulder-color
+        box-sizing: border-box
+        padding-right: 8px
 
       .field-row-value
-        flex-grow: 1
+        display: inline-block
+        width: calc(100% - #{$field-row-label-width})
 
     .summary-section
       margin-top: 16px
@@ -127,13 +133,7 @@
         border: 1px solid $alto-color
         padding: 0 8px
 
-      .field-row-label
-        margin-right: 26px
-
     .case-details-section
-      .field-row-label
-        margin-right: 18px
-
       .lawsuit-map
         width: 200px
         height: 133px

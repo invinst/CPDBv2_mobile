@@ -2,6 +2,8 @@
 @import '../base'
 
 $height: 68px
+$lawsuit-kind-width: 40px
+$lawsuit-right-width: 81px
 
 \:local(.lawsuit-row)
   @extend  %base-wrapper
@@ -21,7 +23,7 @@ $height: 68px
         color: white
 
     .lawsuit-detail
-      width: calc(100% - 121px)
+      width: calc(100% - #{lawsuit-kind-width} - #{$lawsuit-right-width})
 
       @extend %base-detail
       display: inline-block

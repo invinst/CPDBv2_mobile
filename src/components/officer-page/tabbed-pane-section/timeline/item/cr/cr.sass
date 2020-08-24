@@ -2,6 +2,8 @@
 @import '../base'
 
 $height: 68px
+$cr-kind-width: 40px
+$cr-right-width: 81px
 
 \:local(.wrapper)
   @extend %base-wrapper
@@ -20,12 +22,17 @@ $height: 68px
         background-color: $champagne-color
 
     .detail
+      width: calc(100% - #{$cr-kind-width} - #{$cr-right-width})
+
       @extend %base-detail
       display: inline-block
       vertical-align: middle
 
       .category
         @extend %base-category
+        white-space: nowrap
+        text-overflow: ellipsis
+        overflow: hidden
         color: $thunder-color
 
       .finding
