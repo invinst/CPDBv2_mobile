@@ -4,9 +4,8 @@ import pinboardPage from '../page-objects/pinboard-page';
 import landingPage from '../page-objects/landing-page';
 import api from '../../integration-test/mock-api';
 const { TIMEOUT, PINBOARD_INTRODUCTION_DELAY } = require(__dirname + '/../constants');
-const assert = require('assert');
 const pinboardMockData = require(__dirname + '/../../integration-test/mock-data/pinboard-page');
-const {
+import {
   createPinboardWithRecentItemsParams,
   createPinboardWithRecentItemsResponse,
   mockSearchQueryResponse,
@@ -30,7 +29,7 @@ const {
   mockUpdatedComplaintPinnedItemPinboard,
   mockPinboardComplaints,
   mockSearchQueryLongResponse,
-} = require(__dirname + '/../../integration-test/mock-data/search');
+} from '../mock-data/search-page';
 import { mockCommonApi } from '../mock-data/utils';
 
 

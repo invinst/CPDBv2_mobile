@@ -1,18 +1,18 @@
-const { range } = require('lodash');
+import { range } from 'lodash';
 
-const createPinboardWithRecentItemsParams = {
+export const createPinboardWithRecentItemsParams = {
   'crids': ['1002144'],
   'officer_ids': [8562],
   'trr_ids': [14487],
 };
 
-const createPinboardWithRecentItemsResponse = {
+export const createPinboardWithRecentItemsResponse = {
   'id': 'eeee7777',
   'title': '',
   'description': '',
 };
 
-const mockSearchQueryResponse = {
+export const mockSearchQueryResponse = {
   'OFFICER': [
     {
       id: 9876,
@@ -22,7 +22,7 @@ const mockSearchQueryResponse = {
   ],
 };
 
-const mockSearchQueryResponseForRecentItems = {
+export const mockSearchQueryResponseForRecentItems = {
   'OFFICER': [
     {
       id: 8562,
@@ -44,7 +44,7 @@ const mockSearchQueryResponseForRecentItems = {
   ],
 };
 
-const mockSearchQueryResponseWithDate = {
+export const mockSearchQueryResponseWithDate = {
   'DATE > CR': [
     {
       crid: '297449',
@@ -117,7 +117,7 @@ const mockSearchQueryResponseWithDate = {
   ],
 };
 
-const mockOfficerSearchQueryResponse = {
+export const mockOfficerSearchQueryResponse = {
   count: 35,
   next: 'http://localhost:8000/api/v2/search-mobile/single/?contentType=OFFICER&offset=30&term=2004-04-23+ke',
   previous: null,
@@ -143,7 +143,7 @@ const mockOfficerSearchQueryResponse = {
   ],
 };
 
-const mockFirstOfficersSearchQueryResponse = {
+export const mockFirstOfficersSearchQueryResponse = {
   count: 35,
   next: 'http://localhost:8000/api/v2/search-mobile/single/?contentType=OFFICER&offset=30&term=2004-04-23+ke',
   previous: null,
@@ -158,7 +158,7 @@ const mockFirstOfficersSearchQueryResponse = {
   })),
 };
 
-const mockSecondOfficersSearchQueryResponse = {
+export const mockSecondOfficersSearchQueryResponse = {
   count: 35,
   next: null,
   previous: 'http://localhost:8000/api/v2/search-mobile/single/?contentType=OFFICER&limit=30&term=2004-04-23+ke',
@@ -173,7 +173,7 @@ const mockSecondOfficersSearchQueryResponse = {
   })),
 };
 
-const mockDateOfficerSearchQueryResponse = {
+export const mockDateOfficerSearchQueryResponse = {
   count: 3,
   next: null,
   previous: null,
@@ -208,7 +208,7 @@ const mockDateOfficerSearchQueryResponse = {
   ],
 };
 
-const mockInvestigatorCRSearchResponse = {
+export const mockInvestigatorCRSearchResponse = {
   'INVESTIGATOR > CR': [
     {
       crid: '123456',
@@ -231,7 +231,7 @@ const mockInvestigatorCRSearchResponse = {
   ],
 };
 
-const emptyPinboard = {
+export const emptyPinboard = {
   'id': '5cd06f2b',
   'title': '',
   'officer_ids': [],
@@ -240,7 +240,7 @@ const emptyPinboard = {
   'description': '',
 };
 
-const createPinboardResponse = {
+export const createPinboardResponse = {
   'id': '5cd06f2b',
   'title': '',
   'officer_ids': [],
@@ -249,7 +249,7 @@ const createPinboardResponse = {
   'description': '',
 };
 
-const createEmptyPinboardResponse = {
+export const createEmptyPinboardResponse = {
   'id': 1,
   'title': '',
   'officer_ids': [],
@@ -258,7 +258,7 @@ const createEmptyPinboardResponse = {
   'description': 'Description',
 };
 
-const mockNewRecentSearchItemsResponse = [
+export const mockNewRecentSearchItemsResponse = [
   {
     'id': 8562,
     'name': 'Jerome Finnigan',
@@ -278,23 +278,23 @@ const mockNewRecentSearchItemsResponse = [
   },
 ];
 
-const officer8562 = {
+export const officer8562 = {
   'officer_id': 8562,
   'full_name': 'Jerome Finnigan',
   'badge': '5167',
 };
 
-const cr1002144 = {
+export const cr1002144 = {
   'crid': '1002144',
   'incident_date': '2006-05-29',
   'category': 'False Arrest',
 };
 
-const trr14487 = {
+export const trr14487 = {
   'id': 14487,
 };
 
-const mockNewCreatedPinboard = {
+export const mockNewCreatedPinboard = {
   'id': '5cd06f2b',
   'title': '',
   'officer_ids': [],
@@ -303,7 +303,7 @@ const mockNewCreatedPinboard = {
   'description': '',
 };
 
-const mockPinboardComplaint = [
+export const mockPinboardComplaint = [
   {
     'crid': '123456',
     'incident_date': '2010-01-01',
@@ -312,7 +312,7 @@ const mockPinboardComplaint = [
   },
 ];
 
-const mockComplaintPinnedItemPinboard = {
+export const mockComplaintPinnedItemPinboard = {
   'id': '5cd06f2b',
   'title': '',
   'officer_ids': [],
@@ -321,7 +321,7 @@ const mockComplaintPinnedItemPinboard = {
   'description': '',
 };
 
-const mockUpdatedComplaintPinnedItemPinboard = {
+export const mockUpdatedComplaintPinnedItemPinboard = {
   'id': '5cd06f2b',
   'title': '',
   'officer_ids': [],
@@ -330,7 +330,7 @@ const mockUpdatedComplaintPinnedItemPinboard = {
   'description': '',
 };
 
-const mockPinboardComplaints = [
+export const mockPinboardComplaints = [
   {
     'crid': '123456',
     'incident_date': '2010-01-01',
@@ -345,7 +345,7 @@ const mockPinboardComplaints = [
   },
 ];
 
-const mockSearchQueryLongResponse = {
+export const mockSearchQueryLongResponse = {
   'OFFICER': [
     {
       id: 9876,
@@ -362,30 +362,4 @@ const mockSearchQueryLongResponse = {
     cr1002144,
     trr14487,
   ],
-};
-
-module.exports = {
-  createPinboardWithRecentItemsParams,
-  createPinboardWithRecentItemsResponse,
-  mockSearchQueryResponse,
-  mockSearchQueryResponseForRecentItems,
-  mockSearchQueryResponseWithDate,
-  mockOfficerSearchQueryResponse,
-  mockFirstOfficersSearchQueryResponse,
-  mockSecondOfficersSearchQueryResponse,
-  mockDateOfficerSearchQueryResponse,
-  mockInvestigatorCRSearchResponse,
-  emptyPinboard,
-  createPinboardResponse,
-  createEmptyPinboardResponse,
-  mockNewRecentSearchItemsResponse,
-  officer8562,
-  cr1002144,
-  trr14487,
-  mockNewCreatedPinboard,
-  mockPinboardComplaint,
-  mockComplaintPinnedItemPinboard,
-  mockUpdatedComplaintPinnedItemPinboard,
-  mockPinboardComplaints,
-  mockSearchQueryLongResponse,
 };
