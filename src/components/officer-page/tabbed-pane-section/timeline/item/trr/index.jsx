@@ -14,7 +14,9 @@ export default function Trr(props) {
       <div className='content'>
         <span className='kind'>F</span>
         <span className='category'>{ item.category }</span>
-        <span className='date'>{ item.date }</span>
+        <span className='ttr-right'>
+          <span className='date'>{ item.date }</span>
+        </span>
       </div>
     </Link>
   );

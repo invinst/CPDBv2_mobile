@@ -15,7 +15,7 @@ import { hasCoaccusalSelector, isCoaccusalSuccess } from 'selectors/officer-page
 import { isTimelineSuccess } from 'selectors/officer-page/timeline';
 import { getOfficerTimeline } from 'actions/officer-page/timeline';
 import { getOfficerCoaccusals } from 'actions/officer-page/coaccusals';
-import { hasAttachmentSelector, numAttachmentsSelector } from 'selectors/officer-page/attachments';
+import { hasAttachmentsSelector, numAttachmentsSelector } from 'selectors/officer-page/attachments';
 import { hasMapMarkersSelector } from 'selectors/officer-page/map';
 
 
@@ -42,7 +42,7 @@ function mapStateToProps(state, ownProps) {
     hasCMS: hasCMS(state, 'officerPage'),
     noDataCMSContent: cmsSelector(state, 'officerPage', 'no_data_explain_text'),
     hasCoaccusal: hasCoaccusalSelector(state, pk),
-    hasAttachment: hasAttachmentSelector(state, pk),
+    hasAttachment: hasAttachmentsSelector(state, pk),
     hasMapMarker: hasMapMarkersSelector(state, pk),
     isCoaccusalSuccess: isCoaccusalSuccess(state, pk),
     isTimelineSuccess: isTimelineSuccess(state, pk),

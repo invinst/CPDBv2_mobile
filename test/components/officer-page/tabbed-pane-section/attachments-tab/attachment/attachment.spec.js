@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import ClampLines from 'react-clamp-lines';
 import { stub } from 'sinon';
 
-import Attachment from 'components/officer-page/tabbed-pane-section/attachments-tab/complaint/attachment';
+import Attachment from 'components/officer-page/tabbed-pane-section/attachments-tab/attachment';
 import * as tracking from 'utils/tracking';
 
 

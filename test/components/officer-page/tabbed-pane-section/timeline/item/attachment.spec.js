@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme';
 import { stub } from 'sinon';
 import * as tracking from 'utils/tracking';
 
-import Attachments from 'components/officer-page/tabbed-pane-section/timeline/item/cr/attachments';
+import Attachments from 'components/officer-page/tabbed-pane-section/timeline/item/attachments';
 
 
 describe('Attachments component', function () {

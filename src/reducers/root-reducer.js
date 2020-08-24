@@ -5,6 +5,7 @@ import suggestionApp from './suggestion-app';
 import officerPage from './officer-page';
 import landingPage from './landing-page';
 import complaintPage from './complaint-page';
+import lawsuitPage from 'reducers/lawsuit-page';
 import trrPage from './trr-page';
 import breadcrumb from './breadcrumb';
 import embed from './embed';
@@ -21,6 +22,7 @@ export default (history) => combineReducers({
   officerPage,
   landingPage,
   complaintPage,
+  lawsuitPage,
   trrPage,
   embed,
   pinboardPage,

@@ -75,6 +75,7 @@ export const COMPLAINT_PAGE_CMS_API_ENDPOINT = '/cms-pages/cr-page/';
 export const TRR_PAGE_CMS_API_ENDPOINT = '/cms-pages/trr-page/';
 export const PINBOARD_PAGE_CMS_API_ENDPOINT = '/cms-pages/pinboard-page/';
 export const COMPLAINT_API_ENDPOINT = '/mobile/cr/';
+export const LAWSUIT_API_ENDPOINT = '/lawsuit/';
 export const TRR_API_ENDPOINT = '/mobile/trr/';
 export const TOP_OFFICERS_BY_ALLEGATION_ENDPOINT = '/officers/top-by-allegation/';
 export const OFFICERS_API_ENDPOINT = '/mobile/officers/';

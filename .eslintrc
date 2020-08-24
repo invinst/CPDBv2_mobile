@@ -208,7 +208,8 @@
   ],
   "globals": {
     "L": true,
-    "ga": true
+    "ga": true,
+    "browser": false
   },
   "settings": {
     "react": {
