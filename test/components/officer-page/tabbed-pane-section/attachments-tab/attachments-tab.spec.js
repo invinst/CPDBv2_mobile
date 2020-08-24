@@ -83,5 +83,6 @@ describe('AttachmentsTab component', function () {
 
     const lawsuitComponent1 = lawsuitComponents.at(1);
     lawsuitComponent1.prop('lawsuit').should.eql(lawsuit1);
-    lawsuitComponent1.prop('pathname').should.eql('/officer/32218/joseph-nega/documents/');  });
+    lawsuitComponent1.prop('pathname').should.eql('/officer/32218/joseph-nega/documents/');
+  });
 });
