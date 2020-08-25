@@ -3,7 +3,7 @@ import searchPage from '../page-objects/search-page';
 import pinboardPage from '../page-objects/pinboard-page';
 import landingPage from '../page-objects/landing-page';
 import api from '../../integration-test/mock-api';
-const { TIMEOUT, PINBOARD_INTRODUCTION_DELAY } = require(__dirname + '/../constants');
+import { TIMEOUT, PINBOARD_INTRODUCTION_DELAY } from '../constants';
 const pinboardMockData = require(__dirname + '/../../integration-test/mock-data/pinboard-page');
 import {
   createPinboardWithRecentItemsParams,
