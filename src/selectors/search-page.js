@@ -3,7 +3,7 @@ import moment from 'moment';
 import { get, map, filter, isUndefined, isEmpty, forEach } from 'lodash';
 
 import { SEARCH_CATEGORY_PREFIXES, PINBOARD_PAGE, MONTH_DATE_YEAR_FORMAT, SEARCH_CATEGORIES } from 'constants';
-import { COMPLAINT_PATH, TRR_PATH } from 'constants/paths';
+import { COMPLAINT_PATH, TRR_PATH, LAWSUIT_PATH } from 'constants/paths';
 import { PIN_BUTTON_INTRODUCTION_INDEX } from 'constants';
 import { extractLatestPercentile } from 'selectors/common/percentile';
 import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
@@ -96,6 +96,25 @@ export const trrsSelector = createSelector(
   trrsFormatter
 );
 
+const lawsuitFormatter = (lawsuit) => ({
+  id: lawsuit.id,
+  url: `${ LAWSUIT_PATH }${ lawsuit.case_no }/`,
+  caseNo: lawsuit.case_no,
+  primaryCause: lawsuit.primary_cause,
+  incidentDate: lawsuit.incident_date && moment(lawsuit.incident_date).format(MONTH_DATE_YEAR_FORMAT),
+  summary: lawsuit.summary,
+  type: PINBOARD_PAGE.PINNED_ITEM_TYPES.LAWSUIT,
+  recentItemData: lawsuit,
+});
+
+const lawsuitsFormatter = (lawsuits) =>
+  map(lawsuits, (lawsuit) => lawsuitFormatter(lawsuit));
+
+export const lawsuitsSelector = createSelector(
+  (state) => state.suggestionApp.suggestions.LAWSUIT,
+  lawsuitsFormatter
+);
+
 export const dateTRRsSelector = createSelector(
   (state) => state.suggestionApp.suggestions['DATE > TRR'],
   pinboardItemsSelector,
@@ -109,6 +128,7 @@ const recentItemFormatterMapping = {
   'OFFICER': officerFormatter,
   'CR': crFormatter,
   'TRR': trrFormatter,
+  'LAWSUIT': lawsuitFormatter,
 };
 
 export const recentSuggestionsSelector = createSelector(
@@ -130,6 +150,7 @@ const RECENT_SUGGESTION_TYPES = {
   officerIds: 'OFFICER',
   crids: 'CR',
   trrIds: 'TRR',
+  lawsuitIds: 'LAWSUIT',
 };
 
 export const recentSuggestionIdsSelector = createSelector(
@@ -187,7 +208,8 @@ const suggestionGroupsSelector = createSelector(
   dateOfficersSelector,
   crsSelector,
   trrsSelector,
-  (officers, dateCRs, investigatorCRs, dateTRRs, dateOfficers, crs, trrs) => ({
+  lawsuitsSelector,
+  (officers, dateCRs, investigatorCRs, dateTRRs, dateOfficers, crs, trrs, lawsuits) => ({
     officers: officers || [],
     dateCRs: dateCRs || [],
     investigatorCRs: investigatorCRs || [],
@@ -195,6 +217,7 @@ const suggestionGroupsSelector = createSelector(
     dateOfficers: dateOfficers || [],
     crs: crs || [],
     trrs: trrs || [],
+    lawsuits: lawsuits || []
   })
 );
 

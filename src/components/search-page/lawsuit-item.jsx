@@ -1,48 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import SearchItemContainer from 'containers/search-page/search-item-container';
 import searchItemStyle from './search-item.sass';
 
 
-const TrrItem = ({ item, query }) => {
+const LawsuitItem = ({ item, query }) => {
   return (
     <SearchItemContainer
       url={ item.url }
-      hasPinButton={ true }
-      showIntroduction={ item.showIntroduction }
+      hasPinButton={ false }
       id={ item.id }
       query={ query }
       itemRank={ item.itemRank }
-      isPinned={ item.isPinned }
+      isPinned={ false }
       type={ item.type }
       recentItemData={ item.recentItemData }
     >
-      <div className={ cx(searchItemStyle.itemInfo, 'inline') }>
-        <div className='item-title'>TRR</div>
-        <div className='item-subtitle'>{ item.id }</div>
+      <div className={ searchItemStyle.itemInfo }>
+        <div className='item-title'>{ item.primaryCause }</div>
+        <div className='item-subtitle'>{ item.caseNo }{item.incidentDate && ` • ${item.incidentDate}`}</div>
       </div>
     </SearchItemContainer>
   );
 };
 
-TrrItem.propTypes = {
+LawsuitItem.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    id: PropTypes.number,
+    caseNo: PropTypes.string,
+    primaryCause: PropTypes.string,
+    incidentDate: PropTypes.string,
     url: PropTypes.string,
     isPinned: PropTypes.bool,
     type: PropTypes.string,
     recentItemData: PropTypes.object,
     itemRank: PropTypes.number,
-    showIntroduction: PropTypes.bool,
   }),
   query: PropTypes.string,
 };
 
-TrrItem.defaultProps = {
+LawsuitItem.defaultProps = {
   saveToRecent: () => {},
   item: {},
 };
 
-export default TrrItem;
+export default LawsuitItem;
