@@ -156,6 +156,7 @@
     "moment": "^2.13.0",
     "muuri": "^0.7.1",
     "normalize.css": "^4.0.0",
+    "numeral": "^2.0.6",
     "object-assign": "^4.1.0",
     "pluralize": "^2.0.0",
     "prop-types": "^15.7.2",
