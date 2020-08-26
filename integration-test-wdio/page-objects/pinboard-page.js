@@ -43,14 +43,23 @@ class PinnedOfficers extends Section {
 class PinboardPinnedSection extends Section {
   crs = new PinnedCRs();
   officers = new PinnedOfficers();
-
-  constructor() {
-    super();
-  }
 }
 
 class PinboardPage extends Page {
   pinnedSection = new PinboardPinnedSection();
+
+  constructor() {
+    super();
+
+    this.prepareElementGetters({
+      searchBar: '.search-box',
+      pinboardTitle: '.pinboard-title',
+    });
+  }
+
+  open(id) {
+    super.open(`/pinboard/${id}/`);
+  }
 }
 
 module.exports = new PinboardPage();

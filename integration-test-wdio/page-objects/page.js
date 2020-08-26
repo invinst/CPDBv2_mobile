@@ -25,4 +25,9 @@ export default class Page extends Section {
     browser.url(path);
     $('body').waitForDisplayed();
   }
+
+  get currentBasePath() {
+    const url = browser.getUrl();
+    return url.replace(/https?:\/\/[^/]+/, '');
+  }
 }
