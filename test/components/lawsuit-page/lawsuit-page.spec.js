@@ -28,7 +28,7 @@ describe('LawsuitPage component', function () {
       plaintiffs: [],
       officers: [],
       payments: [],
-      totalPaymentsDisplayShort: '',
+      totalPaymentsDisplay: '',
       totalPayments: {
         total: '',
         totalSettlement: '',
@@ -125,9 +125,9 @@ describe('LawsuitPage component', function () {
       { payee: 'Genre Wilson', settlement: '-', legalFees: '2500000000.00' },
       { payee: 'Lucy Bells', settlement: '7500.00', legalFees: '-' },
     ],
-    totalPaymentsDisplayShort: '2.5B',
-    totalPayments: {
-      total: '2,500,200,000.00',
+    totalPaymentsDisplay: '2.5B',
+    totalPaymentsDetails: {
+      totalPayments: '2,500,200,000.00',
       totalSettlement: '200,000.00',
       totalLegalFees: '2500,000,000.00',
       mustBeAcceptedByCouncilCity: true,
@@ -179,8 +179,8 @@ describe('LawsuitPage component', function () {
               lawsuit={ {
                 ...lawsuit,
                 caseNo: '00-L-5230',
-                totalPayments: {
-                  total: '2,500,090,000.00',
+                totalPaymentsDetails: {
+                  totalPayments: '2,500,090,000.00',
                   totalSettlement: '90,000.00',
                   totalLegalFees: '2500,000,000.00',
                   mustBeAcceptedByCouncilCity: false,

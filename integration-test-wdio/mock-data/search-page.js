@@ -332,14 +332,6 @@ export const lawsuit00L5230 = {
   'primary_cause': 'EXCESSIVE FORCE/MINOR',
   'summary': 'Lawsuit summary',
   'incident_date': '2016-10-11',
-  'plaintiffs': [],
-  'interactions': [],
-  'services': [],
-  'misconducts': [],
-  'violences': [],
-  'outcomes': [],
-  'payments': [],
-  'total_payments': {},
 };
 
 export const mockNewCreatedPinboard = {

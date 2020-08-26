@@ -58,13 +58,13 @@ const attachmentTransform = attachment => ({
   id: attachment['id'],
 });
 
-const totalPaymentsTransform = (totalPayments) => {
-  const totalSettlement = totalPayments['total_settlement'] || 0;
+const totalPaymentsDetailsTransform = (lawsuit) => {
+  const totalSettlement = lawsuit['total_settlement'] || 0;
 
   return {
-    total: moneyFormat(totalPayments['total']),
+    totalPayments: moneyFormat(lawsuit['total_payments']),
     totalSettlement: moneyFormat(totalSettlement),
-    totalLegalFees: moneyFormat(totalPayments['total_legal_fees']),
+    totalLegalFees: moneyFormat(lawsuit['total_legal_fees']),
     mustBeAcceptedByCouncilCity: totalSettlement > MUST_BE_ACCEPTED_BY_COUNCIL_CITY_THRESHOLD,
   };
 };
@@ -76,8 +76,6 @@ export const lawsuitSelector = createSelector(
     if (isEmpty(lawsuit)) {
       return null;
     }
-
-    const totalPayments = lawsuit['total_payments'] || {};
 
     return {
       caseNo: lawsuit['case_no'],
@@ -95,8 +93,8 @@ export const lawsuitSelector = createSelector(
       plaintiffs: map(lawsuit['plaintiffs'], plaintiffTransform),
       officers: map(lawsuit['officers'], (officer) => officerTransform(officer, pinboardItems)),
       payments: map(lawsuit['payments'], paymentTransform),
-      totalPaymentsDisplayShort: moneyFormatShort(totalPayments['total']),
-      totalPayments: totalPaymentsTransform(totalPayments),
+      totalPaymentsDisplay: moneyFormatShort(lawsuit['total_payments']),
+      totalPaymentsDetails: totalPaymentsDetailsTransform(lawsuit),
       attachment: lawsuit['attachment'] && attachmentTransform(lawsuit['attachment']),
     };
   },
