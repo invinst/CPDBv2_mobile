@@ -217,7 +217,7 @@ const suggestionGroupsSelector = createSelector(
     dateOfficers: dateOfficers || [],
     crs: crs || [],
     trrs: trrs || [],
-    lawsuits: lawsuits || []
+    lawsuits: lawsuits || [],
   })
 );
 

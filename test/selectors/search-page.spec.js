@@ -19,6 +19,7 @@ import {
   nextParamsSelector,
   getCancelPathname,
   categoriesSelector,
+  lawsuitsSelector,
 } from 'selectors/search-page';
 
 
@@ -219,6 +220,63 @@ describe('search-page selectors', function () {
       };
 
       dateCRsSelector(state).should.be.eql(expectedDateCrs);
+    });
+  });
+
+  describe('lawsuitSelector', function () {
+    it('should return empty when there are no lawsuit', function () {
+      const state = {
+        suggestionApp: {
+          suggestions: {},
+        },
+        pinboardPage: {
+          pinboard: null,
+        },
+      };
+
+      lawsuitsSelector(state).should.be.eql([]);
+    });
+
+    it('should return lawsuit data when there are lawsuit', function () {
+      const lawsuit = {
+        type: 'LAWSUIT',
+        id: 234567,
+        'case_no': '00-L-5230',
+        'primary_cause': 'Excessive force',
+        'summary': 'Lawsuit summary',
+        'incident_date': '2016-09-11',
+      };
+      const expectedLawsuits = [
+        {
+          caseNo: '00-L-5230',
+          id: 234567,
+          url: '/lawsuit/00-L-5230/',
+          incidentDate: '09/11/2016',
+          primaryCause: 'Excessive force',
+          recentItemData: lawsuit,
+          summary: 'Lawsuit summary',
+          type: 'LAWSUIT',
+        },
+      ];
+
+      const state = {
+        suggestionApp: {
+          suggestions: {
+            'LAWSUIT': [lawsuit],
+          },
+        },
+        pinboardPage: {
+          pinboard: {
+            id: 99,
+            'officer_ids': [],
+            crids: [],
+            'trr_ids': [],
+            'lawsuit_ids': [234567],
+          },
+        },
+      };
+
+      lawsuitsSelector(state).should.be.eql(expectedLawsuits);
     });
   });
 
@@ -532,6 +590,18 @@ describe('search-page selectors', function () {
                 id: 123456,
               },
             },
+            {
+              type: 'LAWSUIT',
+              id: 234567,
+              data: {
+                type: 'LAWSUIT',
+                id: 234567,
+                'case_no': '00-L-5230',
+                'primary_cause': 'Excessive force',
+                'summary': 'Lawsuit summary',
+                'incident_date': '2016-09-11',
+              },
+            },
           ],
         },
       };
@@ -578,6 +648,23 @@ describe('search-page selectors', function () {
             id: 123456,
           },
         },
+        {
+          caseNo: '00-L-5230',
+          id: 234567,
+          incidentDate: '09/11/2016',
+          primaryCause: 'Excessive force',
+          recentItemData: {
+            'case_no': '00-L-5230',
+            id: 234567,
+            'incident_date': '2016-09-11',
+            'primary_cause': 'Excessive force',
+            summary: 'Lawsuit summary',
+            type: 'LAWSUIT',
+          },
+          summary: 'Lawsuit summary',
+          type: 'LAWSUIT',
+          url: '/lawsuit/00-L-5230/',
+        },
       ]);
     });
   });
@@ -590,6 +677,7 @@ describe('search-page selectors', function () {
             { type: 'OFFICER', id: 8562, data: {} },
             { type: 'CR', id: '271235', data: {} },
             { type: 'TRR', id: 123, data: {} },
+            { type: 'LAWSUIT', id: 234567, data: {} },
           ],
         },
       };
@@ -598,6 +686,7 @@ describe('search-page selectors', function () {
         officerIds: [8562],
         crids: ['271235'],
         trrIds: [123],
+        lawsuitIds: [234567],
       });
     });
 
@@ -608,6 +697,7 @@ describe('search-page selectors', function () {
             { type: 'OFFICER', id: 8562, data: {} },
             { type: 'CR', data: {} },
             { type: 'TRR', id: 123, data: {} },
+            { type: 'LAWSUIT', id: 234567, data: {} },
           ],
         },
       };
@@ -615,6 +705,7 @@ describe('search-page selectors', function () {
       recentSuggestionIdsSelector(state).should.eql({
         officerIds: [8562],
         trrIds: [123],
+        lawsuitIds: [234567],
       });
     });
   });
@@ -728,6 +819,7 @@ describe('search-page selectors', function () {
             'officer_ids': [8562],
             crids: ['317'],
             'trr_ids': [123456],
+            'lawsuit_ids': [234567],
           },
         },
         suggestionApp: {
@@ -760,6 +852,18 @@ describe('search-page selectors', function () {
               data: {
                 type: 'TRR',
                 id: 123456,
+              },
+            },
+            {
+              type: 'LAWSUIT',
+              id: 234567,
+              data: {
+                type: 'LAWSUIT',
+                id: 234567,
+                'case_no': '00-L-5230',
+                'primary_cause': 'Excessive force',
+                'summary': 'Lawsuit summary',
+                'incident_date': '2016-09-11',
               },
             },
           ],
@@ -833,6 +937,25 @@ describe('search-page selectors', function () {
             showIntroduction: true,
             type: 'TRR',
             url: '/trr/123456/',
+          },
+          {
+            caseNo: '00-L-5230',
+            id: 234567,
+            incidentDate: '09/11/2016',
+            itemRank: 4,
+            primaryCause: 'Excessive force',
+            recentItemData: {
+              'case_no': '00-L-5230',
+              id: 234567,
+              'incident_date': '2016-09-11',
+              'primary_cause': 'Excessive force',
+              summary: 'Lawsuit summary',
+              type: 'LAWSUIT',
+            },
+            showIntroduction: false,
+            summary: 'Lawsuit summary',
+            type: 'LAWSUIT',
+            url: '/lawsuit/00-L-5230/',
           },
         ],
         showAllButton: false,
