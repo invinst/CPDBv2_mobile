@@ -25,5 +25,5 @@ Factory.define('BaseOfficerFactory')
 
 export const InvolvedOfficerFactory = Factory.define('InvolvedOfficerFactory')
   .extend('BaseOfficerFactory')
-  .attr('lawsuitPayment', () => random.number())
+  .attr('totalLawsuitSettlements', () => random.number())
   .attr('lawsuitCount', () => random.number());

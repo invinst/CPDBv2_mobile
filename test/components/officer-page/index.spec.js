@@ -45,7 +45,7 @@ describe('<OfficerPage />', function () {
       trrCount: 7,
       majorAwardCount: 5,
       trrPercentile: 9.0,
-      civilianComplimentCount: 10,
+      totalLawsuitSettlements: '$10.0M',
     };
   });
 
@@ -393,7 +393,7 @@ describe('<OfficerPage />', function () {
               badge: '8548',
               'historic_badges': ['8547', '8546'],
               'birth_year': 1957,
-              'civilian_compliment_count': 4,
+              'total_lawsuit_settlements': '10000000.00',
               'percentile_allegation': '99.8950',
               'percentile_trr': '0.0460',
               'date_of_appt': '1993-12-13',
@@ -462,7 +462,7 @@ describe('<OfficerPage />', function () {
               badge: '',
               'historic_badges': ['8547', '8546'],
               'birth_year': 1957,
-              'civilian_compliment_count': 4,
+              'total_lawsuit_settlements': '10000000.00',
               'complaint_percentile': '99.8950',
               'percentile_trr': '0.0460',
               'date_of_appt': '1993-12-13',
@@ -531,7 +531,7 @@ describe('<OfficerPage />', function () {
               badge: '8548',
               'historic_badges': [],
               'birth_year': 1957,
-              'civilian_compliment_count': 4,
+              'total_lawsuit_settlements': '10000000.00',
               'percentile_allegation': '99.8950',
               'percentile_trr': '0.0460',
               'date_of_appt': '1993-12-13',
@@ -600,7 +600,7 @@ describe('<OfficerPage />', function () {
               badge: '',
               'historic_badges': [],
               'birth_year': 1957,
-              'civilian_compliment_count': 4,
+              'total_lawsuit_settlements': '10000000.00',
               'percentile_allegation': 99.895,
               'date_of_appt': '1993-12-13',
               'date_of_resignation': '2017-01-15',
@@ -844,7 +844,7 @@ describe('<OfficerPage />', function () {
       metricsProp[2].value.should.equal(3);
       metricsProp[2].description.should.equal('More than 0% of other officers');
 
-      metricsProp[3].value.should.equal(4);
+      metricsProp[3].value.should.equal('$10.0M');
 
       metricsProp[4].name.should.equal('Major Awards');
       metricsProp[4].value.should.equal(0);
@@ -872,7 +872,7 @@ describe('<OfficerPage />', function () {
                 badge: '8548',
                 'historic_badges': ['8547', '8546'],
                 'birth_year': 1957,
-                'civilian_compliment_count': 1,
+                'total_lawsuit_settlements': '10000000.00',
                 'percentile_allegation': 99.895,
                 'date_of_appt': '1993-12-13',
                 'date_of_resignation': '2017-01-15',
@@ -1022,7 +1022,7 @@ describe('<OfficerPage />', function () {
       metricsProp[2].value.should.equal('N/A');
       should(metricsProp[2].description).be.null();
 
-      metricsProp[3].value.should.equal('N/A');
+      metricsProp[3].value.should.equal('$0');
 
       metricsProp[4].name.should.equal('Major Awards');
       metricsProp[4].value.should.equal('N/A');

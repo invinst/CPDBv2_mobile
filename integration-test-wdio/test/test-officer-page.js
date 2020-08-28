@@ -140,8 +140,8 @@ describe('OfficerPage test', function () {
       metrics.trrName.getText().should.equal('Use of Force Report');
       metrics.trrDescription.getText().should.equal('More than 0% of other officers');
 
-      metrics.complimentCount.getText().should.equal('4');
-      metrics.complimentName.getText().should.equal('Civilian\nCompliments');
+      metrics.totalLawsuitSettlements.getText().should.equal('$10.0M');
+      metrics.lawsuitSettlementsName.getText().should.equal('Total Lawsuit Settlements');
 
       metrics.awardCount.getText().should.equal('1');
       metrics.awardName.getText().should.equal('Major Award');

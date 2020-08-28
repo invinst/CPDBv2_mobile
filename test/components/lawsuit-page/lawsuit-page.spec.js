@@ -70,7 +70,7 @@ describe('LawsuitPage component', function () {
       gender: 'm',
       rank: 'Detective',
       lawsuitCount: 3,
-      lawsuitPayment: '7.5b',
+      totalLawsuitSettlements: '7.5b',
     },
     {
       complaintCount: 4,
@@ -104,7 +104,7 @@ describe('LawsuitPage component', function () {
       gender: 'm',
       rank: 'Detective',
       lawsuitCount: 3,
-      lawsuitPayment: '7.5b',
+      totalLawsuitSettlements: '7.5b',
     },
   ];
 

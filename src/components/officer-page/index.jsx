@@ -115,7 +115,7 @@ class OfficerPage extends Component {
       disciplineCount,
       trrCount,
       trrPercentile,
-      civilianComplimentCount,
+      totalLawsuitSettlements,
       honorableMentionCount,
       majorAwardCount,
       honorableMentionPercentile,
@@ -143,8 +143,8 @@ class OfficerPage extends Component {
           : null,
       },
       {
-        name: <span>Civilian<br/>{ pluralize('Compliment', civilianComplimentCount) }</span>,
-        value: civilianComplimentCount,
+        name: 'Total Lawsuit Settlements',
+        value: totalLawsuitSettlements,
       },
       {
         name: `Major ${pluralize('Award', majorAwardCount)}`,
