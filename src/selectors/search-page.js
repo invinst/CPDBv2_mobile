@@ -100,7 +100,7 @@ const lawsuitFormatter = (lawsuit) => ({
   id: lawsuit.id,
   url: `${ LAWSUIT_PATH }${ lawsuit.case_no }/`,
   caseNo: lawsuit.case_no,
-  primaryCause: lawsuit.primary_cause,
+  primaryCause: lawsuit.primary_cause || 'Unknown',
   incidentDate: lawsuit.incident_date && moment(lawsuit.incident_date).format(MONTH_DATE_YEAR_FORMAT),
   summary: lawsuit.summary,
   type: PINBOARD_PAGE.PINNED_ITEM_TYPES.LAWSUIT,

@@ -224,6 +224,28 @@ describe('search-page selectors', function () {
   });
 
   describe('lawsuitSelector', function () {
+    const lawsuit = {
+      type: 'LAWSUIT',
+      id: 234567,
+      'case_no': '00-L-5230',
+      'primary_cause': 'Excessive force',
+      'summary': 'Lawsuit summary',
+      'incident_date': '2016-09-11',
+    };
+
+    const expectedLawsuits = [
+      {
+        caseNo: '00-L-5230',
+        id: 234567,
+        url: '/lawsuit/00-L-5230/',
+        incidentDate: '09/11/2016',
+        primaryCause: 'Excessive force',
+        recentItemData: lawsuit,
+        summary: 'Lawsuit summary',
+        type: 'LAWSUIT',
+      },
+    ];
+
     it('should return empty when there are no lawsuit', function () {
       const state = {
         suggestionApp: {
@@ -237,46 +259,49 @@ describe('search-page selectors', function () {
       lawsuitsSelector(state).should.be.eql([]);
     });
 
-    it('should return lawsuit data when there are lawsuit', function () {
-      const lawsuit = {
-        type: 'LAWSUIT',
-        id: 234567,
-        'case_no': '00-L-5230',
-        'primary_cause': 'Excessive force',
-        'summary': 'Lawsuit summary',
-        'incident_date': '2016-09-11',
-      };
-      const expectedLawsuits = [
-        {
-          caseNo: '00-L-5230',
-          id: 234567,
-          url: '/lawsuit/00-L-5230/',
-          incidentDate: '09/11/2016',
-          primaryCause: 'Excessive force',
-          recentItemData: lawsuit,
-          summary: 'Lawsuit summary',
-          type: 'LAWSUIT',
-        },
-      ];
-
-      const state = {
-        suggestionApp: {
-          suggestions: {
-            'LAWSUIT': [lawsuit],
+    describe('should return lawsuit data when there are lawsuit', function () {
+      it('with primary_cause is not null', function () {
+        const state = {
+          suggestionApp: {
+            suggestions: {
+              'LAWSUIT': [lawsuit],
+            },
           },
-        },
-        pinboardPage: {
-          pinboard: {
-            id: 99,
-            'officer_ids': [],
-            crids: [],
-            'trr_ids': [],
-            'lawsuit_ids': [234567],
+          pinboardPage: {
+            pinboard: {
+              id: 99,
+              'officer_ids': [],
+              crids: [],
+              'trr_ids': [],
+              'lawsuit_ids': [234567],
+            },
           },
-        },
-      };
+        };
 
-      lawsuitsSelector(state).should.be.eql(expectedLawsuits);
+        lawsuitsSelector(state).should.be.eql(expectedLawsuits);
+      });
+
+      it('with primary_cause is null', function () {
+        const lawsuitWithNullPrimaryCause = { ...lawsuit, 'primary_cause': null };
+        const state = {
+          suggestionApp: {
+            suggestions: {
+              'LAWSUIT': [lawsuitWithNullPrimaryCause],
+            },
+          },
+          pinboardPage: {
+            pinboard: {
+              id: 99,
+              'officer_ids': [],
+              crids: [],
+              'trr_ids': [],
+              'lawsuit_ids': [234567],
+            },
+          },
+        };
+
+        lawsuitsSelector(state)[0].primaryCause.should.be.eql('Unknown');
+      });
     });
   });
 
