@@ -1,21 +1,15 @@
 import { createSelector } from 'reselect';
 import { map, toLower, isEmpty, get } from 'lodash';
-import numeral from 'numeral';
 
 import { extractLatestPercentile } from 'selectors/common/percentile';
 import { officerUrl } from 'utils/url-util';
 import { getCurrentAgeString } from 'utils/date';
+import { moneyFormat, moneyFormatShort } from 'utils/money';
 import { PINBOARD_PAGE } from 'constants';
 import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 
 
-const MONEY_FORMAT = '0,0.00';
-const MONEY_FORMAT_SHORT = '0.0a';
 const MUST_BE_ACCEPTED_BY_COUNCIL_CITY_THRESHOLD = 100000;
-
-const moneyFormat = (money) => money ? numeral(money).format(MONEY_FORMAT) : null;
-
-const moneyFormatShort = (money) => money ? numeral(money).format(MONEY_FORMAT_SHORT) : '0';
 
 const getLawsuit = state => state.lawsuitPage.lawsuit;
 

@@ -324,9 +324,11 @@ export const lawsuitData = {
     {
       payee: 'Genre Wilson',
       'legal_fees': '2500000000.00',
+      settlement: '0.00',
     },
     {
       payee: 'Lucy Bells',
+      'legal_fees': '0.00',
       settlement: '7500.00',
     },
   ],
