@@ -22,6 +22,7 @@ const resultComponentMappings = {
   crs: SearchResult,
   investigatorCRs: SearchResult,
   trrs: SearchResult,
+  lawsuits: SearchResult,
   recent: RecentItems,
 };
 

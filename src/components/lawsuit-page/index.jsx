@@ -47,8 +47,8 @@ export default class LawsuitPage extends Component {
       plaintiffs,
       officers,
       payments,
-      totalPayments,
-      totalPaymentsDisplayShort,
+      totalPaymentsDetails,
+      totalPaymentsDisplay,
       point,
       attachment,
     } = lawsuit;
@@ -82,7 +82,7 @@ export default class LawsuitPage extends Component {
                 <div className='clearfix'/>
               </div>
               <div className='total-payments-summary' onClick={ this.handleTotalPaymentsSummaryClick }>
-                <div className='total-payments-summary-value'>${totalPaymentsDisplayShort}</div>
+                <div className='total-payments-summary-value'>${totalPaymentsDisplay}</div>
                 <div className='total-payments-summary-label'>Total payments</div>
               </div>
               <Summary summary={ summary } className='summary-info' />
@@ -99,17 +99,17 @@ export default class LawsuitPage extends Component {
                 <div className='payment-breakdown-table'>
                   <div className='payment-row total-payments'>
                     <div className='row-label'>Total Payments</div>
-                    <div className='row-value'>${totalPayments.total}</div>
+                    <div className='row-value'>${totalPaymentsDetails.totalPayments}</div>
                   </div>
                   <div className='subtotals payment-row'>
                     <div className='row-label'>Settlements</div>
                     <div className='row-value'>
                       <span className='highlight-value'>
-                        {totalPayments.mustBeAcceptedByCouncilCity && '*'}${totalPayments.totalSettlement}
+                        {totalPaymentsDetails.mustBeAcceptedByCouncilCity && '*'}${totalPaymentsDetails.totalSettlement}
                       </span>
                     </div>
                     {
-                      totalPayments.mustBeAcceptedByCouncilCity && (
+                      totalPaymentsDetails.mustBeAcceptedByCouncilCity && (
                         <div className='must-be-accepted-by-council-city-description'>
                           *Lawsuits over 100K must be approved by City Council
                         </div>
@@ -129,7 +129,7 @@ export default class LawsuitPage extends Component {
                   <div className='subtotals payment-row'>
                     <div className='row-label'>Legal Fees</div>
                     <div className='row-value'>
-                      <span className='highlight-value'>${totalPayments.totalLegalFees}</span>
+                      <span className='highlight-value'>${totalPaymentsDetails.totalLegalFees}</span>
                     </div>
                   </div>
                   {
@@ -247,13 +247,13 @@ LawsuitPage.propTypes = {
         legalFees: PropTypes.string,
       })
     ),
-    totalPayments: PropTypes.shape({
-      total: PropTypes.string,
+    totalPaymentsDetails: PropTypes.shape({
+      totalPayments: PropTypes.string,
       totalSettlement: PropTypes.string,
       totalLegalFees: PropTypes.string,
       mustBeAcceptedByCouncilCity: PropTypes.bool,
     }),
-    totalPaymentsDisplayShort: PropTypes.string,
+    totalPaymentsDisplay: PropTypes.string,
     attachment: PropTypes.shape({
       url: PropTypes.string,
       previewImageUrl: PropTypes.string,
@@ -267,7 +267,7 @@ LawsuitPage.defaultProps = {
   lawsuit: {
     officers: [],
     payments: [],
-    totalPayments: {},
+    totalPaymentsDetails: {},
     interactions: [],
     services: [],
     misconducts: [],

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { map, toLower, isEmpty } from 'lodash';
+import { map, toLower, isEmpty, get } from 'lodash';
 import numeral from 'numeral';
 
 import { extractLatestPercentile } from 'selectors/common/percentile';
@@ -36,7 +36,7 @@ const officerTransform = (officer, pinboardItems) => {
     race: officer['race'],
     rank: officer['rank'],
     lawsuitCount: officer['lawsuit_count'],
-    lawsuitPayment: moneyFormatShort(officer['lawsuit_payment']),
+    totalLawsuitSettlements: moneyFormatShort(officer['total_lawsuit_settlements']),
     url: officerUrl(officer.id, officer['full_name']),
     complaintCount: officer['allegation_count'],
     percentile,
@@ -58,13 +58,13 @@ const attachmentTransform = attachment => ({
   id: attachment['id'],
 });
 
-const totalPaymentsTransform = (totalPayments) => {
-  const totalSettlement = totalPayments['total_settlement'] || 0;
+const totalPaymentsDetailsTransform = (lawsuit) => {
+  const totalSettlement = lawsuit['total_settlement'] || 0;
 
   return {
-    total: moneyFormat(totalPayments['total']),
+    totalPayments: moneyFormat(lawsuit['total_payments']),
     totalSettlement: moneyFormat(totalSettlement),
-    totalLegalFees: moneyFormat(totalPayments['total_legal_fees']),
+    totalLegalFees: moneyFormat(lawsuit['total_legal_fees']),
     mustBeAcceptedByCouncilCity: totalSettlement > MUST_BE_ACCEPTED_BY_COUNCIL_CITY_THRESHOLD,
   };
 };
@@ -77,26 +77,24 @@ export const lawsuitSelector = createSelector(
       return null;
     }
 
-    const totalPayments = lawsuit['total_payments'] || {};
-
     return {
       caseNo: lawsuit['case_no'],
       summary: lawsuit['summary'],
-      primaryCause: lawsuit['primary_cause'],
+      primaryCause: lawsuit['primary_cause'] || 'Unknown',
       address: lawsuit['address'],
       location: lawsuit['location'],
-      interactions: lawsuit['interactions'],
-      services: lawsuit['services'],
-      misconducts: lawsuit['misconducts'],
-      violences: lawsuit['violences'],
-      outcomes: lawsuit['outcomes'],
+      interactions: get(lawsuit, 'interactions', []),
+      services: get(lawsuit, 'services', []),
+      misconducts: get(lawsuit, 'misconducts', []),
+      violences: get(lawsuit, 'violences', []),
+      outcomes: get(lawsuit, 'outcomes', []),
       incidentDate: lawsuit['incident_date'],
       point: lawsuit['point'],
-      plaintiffs: map(lawsuit['plaintiffs'], plaintiffTransform),
-      officers: map(lawsuit['officers'], (officer) => officerTransform(officer, pinboardItems)),
-      payments: map(lawsuit['payments'], paymentTransform),
-      totalPaymentsDisplayShort: moneyFormatShort(totalPayments['total']),
-      totalPayments: totalPaymentsTransform(totalPayments),
+      plaintiffs: map(get(lawsuit, 'plaintiffs', []), plaintiffTransform),
+      officers: map(get(lawsuit, 'officers', []), (officer) => officerTransform(officer, pinboardItems)),
+      payments: map(get(lawsuit, 'payments', []), paymentTransform),
+      totalPaymentsDisplay: moneyFormatShort(lawsuit['total_payments']),
+      totalPaymentsDetails: totalPaymentsDetailsTransform(lawsuit),
       attachment: lawsuit['attachment'] && attachmentTransform(lawsuit['attachment']),
     };
   },

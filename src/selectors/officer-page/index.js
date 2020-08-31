@@ -5,6 +5,7 @@ import { extractPercentile } from 'selectors/common/percentile';
 import { getCareerDuration, getCurrentAge } from 'utils/date';
 import { pinboardItemsSelector, isItemPinned } from 'selectors/pinboard-page/pinboard';
 import { PINBOARD_PAGE } from 'constants';
+import { moneyFormatShort } from 'utils/money';
 
 
 export const getOfficerId = (props) => props.match.params.id;
@@ -84,7 +85,7 @@ export const officerMetricsSelector = createSelector(
       trrCount: formatValue(officer.trr_count),
       majorAwardCount: formatValue(officer.major_award_count),
       trrPercentile: formatValue(officer.percentile_trr),
-      civilianComplimentCount: formatValue(officer.civilian_compliment_count),
+      totalLawsuitSettlements: `$${moneyFormatShort(officer.total_lawsuit_settlements).toUpperCase()}`,
     };
   }
 );

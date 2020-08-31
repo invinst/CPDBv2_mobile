@@ -97,8 +97,8 @@ class MetricsSection extends Section {
       trrName: metricPaneNameSelector(2, 1),
       trrDescription: metricPaneDescriptionSelector(2, 1),
 
-      complimentCount: metricPaneValueSelector(2, 2),
-      complimentName: metricPaneNameSelector(2, 2),
+      totalLawsuitSettlements: metricPaneValueSelector(2, 2),
+      lawsuitSettlementsName: metricPaneNameSelector(2, 2),
 
       awardCount: metricPaneValueSelector(3, 1),
       awardName: metricPaneNameSelector(3, 1),
