@@ -5,6 +5,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import OfficerItem from './officer-item';
 import CrItem from './cr-item';
 import TrrItem from './trr-item';
+import LawsuitItem from './lawsuit-item';
 
 
 const ItemTypeMaps = {
@@ -15,6 +16,7 @@ const ItemTypeMaps = {
   investigatorCRs: CrItem,
   dateTRRs: TrrItem,
   trrs: TrrItem,
+  lawsuits: LawsuitItem,
 };
 
 const SearchResult = (

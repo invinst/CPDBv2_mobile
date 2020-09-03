@@ -54,6 +54,13 @@ export const SEARCH_CATEGORIES = [
     path: 'INVESTIGATOR > CR',
     queryPrefix: 'investigator-cr',
   },
+  {
+    name: 'LAWSUIT',
+    filter: 'LAWSUIT',
+    id: 'lawsuits',
+    path: 'LAWSUIT',
+    queryPrefix: 'lawsuit',
+  },
 ];
 
 export const SEARCH_CATEGORY_PREFIXES = SEARCH_CATEGORIES.reduce((result, searchCategory) => {
@@ -128,6 +135,7 @@ export const PINBOARD_PAGE = {
     'DATE > OFFICERS': 'OFFICER',
     'TRR': 'TRR',
     'DATE > TRR': 'TRR',
+    'LAWSUIT': 'LAWSUIT',
   },
 };
 

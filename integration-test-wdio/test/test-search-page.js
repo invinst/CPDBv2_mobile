@@ -23,6 +23,7 @@ import {
   officer8562,
   cr1002144,
   trr14487,
+  lawsuit00L5230,
   mockNewCreatedPinboard,
   mockPinboardComplaint,
   mockComplaintPinnedItemPinboard,
@@ -46,15 +47,20 @@ describe('SearchPageTest', function () {
 
   it('should show recent items', function () {
     api
-      .onGet('/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487')
+      .onGet('/api/v2/search-mobile/recent-search-items/?' +
+        'officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487&lawsuit_ids[]=234567')
       .reply(200, mockNewRecentSearchItemsResponse);
     api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
     api.onGet('/api/v2/mobile/cr/1002144/').reply(200, cr1002144);
     api.onGet('/api/v2/mobile/trr/14487/').reply(200, trr14487);
+    api.onGet('/api/v2/lawsuit/00-L-5230/').reply(200, lawsuit00L5230);
     browser.clearReduxStore();
     searchPage.queryInput.waitForDisplayed();
 
     searchPage.queryInput.setValue('123');
+    searchPage.lawsuits.firstRow.itemTitle.click();
+
+    searchPage.searchBreadcrumb.click();
     searchPage.officers.firstRow.itemTitle.click();
 
     searchPage.searchBreadcrumb.click();
@@ -76,6 +82,8 @@ describe('SearchPageTest', function () {
     recentItems.secondRecentItem.itemSubtitle.getText().should.equal('CRID 1002144 • 05/29/2006');
     recentItems.thirdRecentItem.itemTitle.getText().should.equal('Jerome Finnigan');
     recentItems.thirdRecentItem.itemSubtitle.getText().should.equal('Badge #5167');
+    recentItems.fourthRecentItem.itemTitle.getText().should.equal('EXCESSIVE FORCE/MINOR');
+    recentItems.fourthRecentItem.itemSubtitle.getText().should.equal('00-L-5230 • 09/11/2016');
     browser.pause(PINBOARD_INTRODUCTION_DELAY);
     recentItems.thirdRecentItem.pinButtonIntroduction.waitForDisplayed();
 
@@ -98,6 +106,61 @@ describe('SearchPageTest', function () {
     recentItems.secondRecentItem.itemSubtitle.getText().should.equal('CRID 1002144 • 05/29/2010');
     recentItems.thirdRecentItem.itemTitle.getText().should.equal('Jerome Finnigan');
     recentItems.thirdRecentItem.itemSubtitle.getText().should.equal('Badge #123456');
+    recentItems.fourthRecentItem.itemTitle.getText().should.equal('EXCESSIVE FORCE/MINOR');
+    recentItems.fourthRecentItem.itemSubtitle.getText().should.equal('00-L-5230 • 09/11/2016');
+  });
+
+  it('should go to detail page when click on recent items', function () {
+    api
+      .onGet('/api/v2/search-mobile/recent-search-items/?' +
+        'officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487&lawsuit_ids[]=234567')
+      .reply(200, mockNewRecentSearchItemsResponse);
+    api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
+    api.onGet('/api/v2/mobile/cr/1002144/').reply(200, cr1002144);
+    api.onGet('/api/v2/mobile/trr/14487/').reply(200, trr14487);
+    api.onGet('/api/v2/lawsuit/00-L-5230/').reply(200, lawsuit00L5230);
+    browser.clearReduxStore();
+    searchPage.queryInput.waitForDisplayed();
+
+    searchPage.queryInput.setValue('123');
+    searchPage.lawsuits.firstRow.itemTitle.click();
+
+    searchPage.searchBreadcrumb.click();
+    searchPage.officers.firstRow.itemTitle.click();
+
+    searchPage.searchBreadcrumb.click();
+    searchPage.crs.firstRow.itemTitle.click();
+
+    searchPage.searchBreadcrumb.click();
+    searchPage.trrs.firstRow.itemTitle.click();
+
+    searchPage.searchBreadcrumb.click();
+    // Empty value doesn't trigger change -> Set short query to show recent
+    searchPage.queryInput.setValue('1');
+
+    searchPage.recentHeader.waitForExist();
+    let recentItems = searchPage.recent;
+
+    recentItems.firstRecentItem.itemTitle.getText().should.equal('TRR');
+    recentItems.firstRecentItem.itemSubtitle.getText().should.equal('14487');
+    recentItems.secondRecentItem.itemTitle.getText().should.equal('False Arrest');
+    recentItems.secondRecentItem.itemSubtitle.getText().should.equal('CRID 1002144 • 05/29/2006');
+    recentItems.thirdRecentItem.itemTitle.getText().should.equal('Jerome Finnigan');
+    recentItems.thirdRecentItem.itemSubtitle.getText().should.equal('Badge #5167');
+    recentItems.fourthRecentItem.itemTitle.getText().should.equal('EXCESSIVE FORCE/MINOR');
+    recentItems.fourthRecentItem.itemSubtitle.getText().should.equal('00-L-5230 • 09/11/2016');
+
+    recentItems.firstRecentItem.itemTitle.click();
+    browser.getUrl().should.containEql('/trr/14487');
+    searchPage.searchBreadcrumb.click();
+    recentItems.secondRecentItem.itemTitle.click();
+    browser.getUrl().should.containEql('/complaint/1002144');
+    searchPage.searchBreadcrumb.click();
+    recentItems.thirdRecentItem.itemTitle.click();
+    browser.getUrl().should.containEql('/officer/8562/jerome-finnigan');
+    searchPage.searchBreadcrumb.click();
+    recentItems.fourthRecentItem.itemTitle.click();
+    browser.getUrl().should.containEql('/lawsuit/00-L-5230');
   });
 
   it('should keep search results after coming back from other page', function () {
