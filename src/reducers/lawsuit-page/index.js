@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-import lawsuit from './lawsuit';
+import lawsuits from './lawsuits';
 
 
 export default combineReducers({
-  lawsuit,
+  lawsuits,
 });
