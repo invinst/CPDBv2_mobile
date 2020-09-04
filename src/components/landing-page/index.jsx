@@ -10,6 +10,7 @@ import TopOfficersByAllegation from 'containers/landing-page/top-officers-by-all
 import RecentActivities from 'containers/landing-page/recent-activities';
 import NewDocumentAllegations from 'containers/landing-page/new-document-allegations';
 import ComplaintSummaries from 'containers/landing-page/complaint-summaries';
+import TopLawsuits from 'containers/landing-page/top-lawsuits';
 import style from './landing-page.sass';
 import Footer from 'components/footer';
 import HeaderLinks from './header-links';
@@ -45,6 +46,7 @@ export default class LandingPage extends Component {
           <RecentActivities />
           <NewDocumentAllegations />
           <ComplaintSummaries />
+          <TopLawsuits />
           <BottomPadding />
           <Footer />
         </div>

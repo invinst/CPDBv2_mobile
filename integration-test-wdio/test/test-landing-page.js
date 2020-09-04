@@ -9,6 +9,7 @@ const {
   mockRecentActivities,
   mockNewDocuments,
   mockComplaintSummaries,
+  mockTopLawsuits,
 } = require(__dirname + '/../../integration-test/mock-data/main-page');
 import {
   emptyPinboard,
@@ -31,6 +32,7 @@ describe('LandingPage test', function () {
     api.onGet('/api/v2/activity-grid/').reply(200, mockRecentActivities);
     api.onGet('/api/v2/cr/list-by-new-document/').reply(200, mockNewDocuments);
     api.onGet('/api/v2/cr/complaint-summaries/').reply(200, mockComplaintSummaries);
+    api.onGet('/api/v2/lawsuit/top-lawsuits/').reply(200, mockTopLawsuits);
 
     landingPage.open();
     landingPage.body.waitForExist();
@@ -42,8 +44,8 @@ describe('LandingPage test', function () {
   });
 
   it('should navigate to Search page when user clicks on fake search box', function () {
-    landingPage.searchLink.click()
-    browser.getUrl().should.containEql('/search')
+    landingPage.searchLink.click();
+    browser.getUrl().should.containEql('/search');
   });
 
   it('should show footer link and invist logo', function () {
@@ -120,6 +122,14 @@ describe('LandingPage test', function () {
       landingPage.complaintSummaries.cards.count.should.equal(2);
       landingPage.complaintSummaries.firstCard.click();
       browser.getUrl().should.match(/\/complaint\/\w+\/$/);
+    });
+  });
+
+  describe('Top Lawsuits Carousel', function () {
+    it('should go to lawsuit page when click to card', function () {
+      landingPage.topLawsuits.cards.count.should.equal(2);
+      landingPage.topLawsuits.firstCard.click();
+      browser.getUrl().should.containEql('/lawsuit/00-L-1234');
     });
   });
 

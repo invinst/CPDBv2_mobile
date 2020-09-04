@@ -89,6 +89,12 @@ class LandingPage extends Page {
     '//a[contains(@class, "complaint-summary-card__complaint-summary-card")]',
     '[.//div[contains(@class, "incident-date") and text()="Nov 30, 2016"]]'
   );
+  topLawsuits = new BaseCarouselSection(
+    '//div[contains(@class, "carousel-wrapper__carousel-wrapper") ' +
+      'and contains(.//a/@class, "top-lawsuit-card__top-lawsuit-card")]',
+    '//a[contains(@class, "top-lawsuit-card__top-lawsuit-card")]',
+    null
+  );
 
   constructor() {
     super();

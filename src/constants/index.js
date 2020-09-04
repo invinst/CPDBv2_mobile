@@ -89,6 +89,7 @@ export const OFFICERS_API_ENDPOINT = '/mobile/officers/';
 export const RECENT_ACTIVITIES_ENDPOINT = '/activity-grid/';
 export const NEW_DOCUMENT_ALLEGATIONS_ENDPOINT = '/cr/list-by-new-document/';
 export const COMPLAINT_SUMMARIES_ENDPOINT = '/cr/complaint-summaries/';
+export const TOP_LAWSUITS_ENDPOINT = '/lawsuit/top-lawsuits/';
 export const PINBOARDS_API_ENDPOINT = '/mobile/pinboards/';
 export const SOCIAL_GRAPH_API_ENDPOINT = '/mobile/social-graph/';
 export const SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT = '/mobile/social-graph/geographic-crs/';
@@ -114,6 +115,7 @@ export const CAROUSEL_TYPES = {
   'ACTIVITY': 'ACTIVITY',
   'ALLEGATION': 'ALLEGATION',
   'DOCUMENT': 'DOCUMENT',
+  'LAWSUIT': 'LAWSUIT',
 };
 
 export const PINBOARD_PAGE = {

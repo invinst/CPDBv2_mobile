@@ -296,10 +296,24 @@ const mockComplaintSummaries = [
   },
 ];
 
+const mockTopLawsuits = [
+  {
+    'case_no': '00-L-1234',
+    summary: 'Hutchinson was shot and killed outside a bar near the Addison Red Line stop.',
+    'incident_date': '2000-03-16',
+  },
+  {
+    'case_no': '00-L-1235',
+    summary: 'ackson was walking into his home when he was stopped by Officer Papke.',
+    'incident_date': '2012-11-02',
+  },
+];
+
 module.exports = {
   mockLandingPageCms: mockLandingPageCms,
   mockTopOfficersByAllegation: mockTopOfficersByAllegation,
   mockRecentActivities: mockRecentActivities,
   mockNewDocuments: mockNewDocuments,
   mockComplaintSummaries: mockComplaintSummaries,
+  mockTopLawsuits: mockTopLawsuits,
 };
