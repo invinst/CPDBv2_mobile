@@ -3,12 +3,13 @@ import moment from 'moment';
 import { get, map, filter, isUndefined, isEmpty, forEach } from 'lodash';
 
 import { SEARCH_CATEGORY_PREFIXES, PINBOARD_PAGE, MONTH_DATE_YEAR_FORMAT, SEARCH_CATEGORIES } from 'constants';
-import { COMPLAINT_PATH, TRR_PATH, LAWSUIT_PATH } from 'constants/paths';
+import { COMPLAINT_PATH, TRR_PATH } from 'constants/paths';
 import { PIN_BUTTON_INTRODUCTION_INDEX } from 'constants';
 import { extractLatestPercentile } from 'selectors/common/percentile';
 import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
 import extractQuery from 'utils/extract-query';
+import { lawsuitPath } from 'utils/paths';
 
 
 export const getChosenCategory = (state) => state.suggestionApp.chosenCategory;
@@ -98,7 +99,7 @@ export const trrsSelector = createSelector(
 
 const lawsuitFormatter = (lawsuit) => ({
   id: lawsuit.id,
-  url: `${ LAWSUIT_PATH }${ lawsuit.case_no }/`,
+  url: lawsuitPath(lawsuit.case_no),
   caseNo: lawsuit.case_no,
   primaryCause: lawsuit.primary_cause || 'Unknown',
   incidentDate: lawsuit.incident_date && moment(lawsuit.incident_date).format(MONTH_DATE_YEAR_FORMAT),
