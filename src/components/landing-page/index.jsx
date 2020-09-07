@@ -42,11 +42,11 @@ export default class LandingPage extends Component {
             </Link>
             <HeaderLinks />
           </div>
+          <TopLawsuits />
           <TopOfficersByAllegation />
           <RecentActivities />
           <NewDocumentAllegations />
           <ComplaintSummaries />
-          <TopLawsuits />
           <BottomPadding />
           <Footer />
         </div>
