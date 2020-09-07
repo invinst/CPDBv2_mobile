@@ -1,5 +1,12 @@
 export const SEARCH_CATEGORIES = [
   {
+    name: 'LAWSUIT',
+    filter: 'LAWSUIT',
+    id: 'lawsuits',
+    path: 'LAWSUIT',
+    queryPrefix: 'lawsuit',
+  },
+  {
     name: 'DATE → COMPLAINT RECORDS',
     filter: 'DATE > CR',
     id: 'dateCRs',
@@ -53,13 +60,6 @@ export const SEARCH_CATEGORIES = [
     id: 'investigatorCRs',
     path: 'INVESTIGATOR > CR',
     queryPrefix: 'investigator-cr',
-  },
-  {
-    name: 'LAWSUIT',
-    filter: 'LAWSUIT',
-    id: 'lawsuits',
-    path: 'LAWSUIT',
-    queryPrefix: 'lawsuit',
   },
 ];
 
@@ -118,6 +118,22 @@ export const CAROUSEL_TYPES = {
   'LAWSUIT': 'LAWSUIT',
 };
 
+const PINNED_ITEM_TYPES = {
+  'CR': 'CR',
+  'DATE > CR': 'CR',
+  'INVESTIGATOR > CR': 'CR',
+  'OFFICER': 'OFFICER',
+  'UNIT > OFFICERS': 'OFFICER',
+  'DATE > OFFICERS': 'OFFICER',
+  'TRR': 'TRR',
+  'DATE > TRR': 'TRR',
+};
+
+export const SEARCH_ITEM_TYPES = {
+  ...PINNED_ITEM_TYPES,
+  LAWSUIT: 'LAWSUIT',
+};
+
 export const PINBOARD_PAGE = {
   UNDO_CARD_VISIBLE_TIME: 1000,
   UNDO_CARD_THEMES: {
@@ -128,17 +144,7 @@ export const PINBOARD_PAGE = {
     NETWORK: 'NETWORK',
     GEOGRAPHIC: 'GEOGRAPHIC',
   },
-  PINNED_ITEM_TYPES: {
-    'CR': 'CR',
-    'DATE > CR': 'CR',
-    'INVESTIGATOR > CR': 'CR',
-    'OFFICER': 'OFFICER',
-    'UNIT > OFFICERS': 'OFFICER',
-    'DATE > OFFICERS': 'OFFICER',
-    'TRR': 'TRR',
-    'DATE > TRR': 'TRR',
-    'LAWSUIT': 'LAWSUIT',
-  },
+  PINNED_ITEM_TYPES: PINNED_ITEM_TYPES,
 };
 
 export const MAP_ITEMS = {
