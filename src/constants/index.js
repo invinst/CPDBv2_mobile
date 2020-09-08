@@ -1,5 +1,12 @@
 export const SEARCH_CATEGORIES = [
   {
+    name: 'LAWSUIT',
+    filter: 'LAWSUIT',
+    id: 'lawsuits',
+    path: 'LAWSUIT',
+    queryPrefix: 'lawsuit',
+  },
+  {
     name: 'DATE → COMPLAINT RECORDS',
     filter: 'DATE > CR',
     id: 'dateCRs',
@@ -54,13 +61,6 @@ export const SEARCH_CATEGORIES = [
     path: 'INVESTIGATOR > CR',
     queryPrefix: 'investigator-cr',
   },
-  {
-    name: 'LAWSUIT',
-    filter: 'LAWSUIT',
-    id: 'lawsuits',
-    path: 'LAWSUIT',
-    queryPrefix: 'lawsuit',
-  },
 ];
 
 export const SEARCH_CATEGORY_PREFIXES = SEARCH_CATEGORIES.reduce((result, searchCategory) => {
@@ -89,6 +89,7 @@ export const OFFICERS_API_ENDPOINT = '/mobile/officers/';
 export const RECENT_ACTIVITIES_ENDPOINT = '/activity-grid/';
 export const NEW_DOCUMENT_ALLEGATIONS_ENDPOINT = '/cr/list-by-new-document/';
 export const COMPLAINT_SUMMARIES_ENDPOINT = '/cr/complaint-summaries/';
+export const TOP_LAWSUITS_ENDPOINT = '/lawsuit/top-lawsuits/';
 export const PINBOARDS_API_ENDPOINT = '/mobile/pinboards/';
 export const SOCIAL_GRAPH_API_ENDPOINT = '/mobile/social-graph/';
 export const SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT = '/mobile/social-graph/geographic-crs/';
@@ -114,6 +115,23 @@ export const CAROUSEL_TYPES = {
   'ACTIVITY': 'ACTIVITY',
   'ALLEGATION': 'ALLEGATION',
   'DOCUMENT': 'DOCUMENT',
+  'LAWSUIT': 'LAWSUIT',
+};
+
+const PINNED_ITEM_TYPES = {
+  'CR': 'CR',
+  'DATE > CR': 'CR',
+  'INVESTIGATOR > CR': 'CR',
+  'OFFICER': 'OFFICER',
+  'UNIT > OFFICERS': 'OFFICER',
+  'DATE > OFFICERS': 'OFFICER',
+  'TRR': 'TRR',
+  'DATE > TRR': 'TRR',
+};
+
+export const SEARCH_ITEM_TYPES = {
+  ...PINNED_ITEM_TYPES,
+  LAWSUIT: 'LAWSUIT',
 };
 
 export const PINBOARD_PAGE = {
@@ -126,17 +144,7 @@ export const PINBOARD_PAGE = {
     NETWORK: 'NETWORK',
     GEOGRAPHIC: 'GEOGRAPHIC',
   },
-  PINNED_ITEM_TYPES: {
-    'CR': 'CR',
-    'DATE > CR': 'CR',
-    'INVESTIGATOR > CR': 'CR',
-    'OFFICER': 'OFFICER',
-    'UNIT > OFFICERS': 'OFFICER',
-    'DATE > OFFICERS': 'OFFICER',
-    'TRR': 'TRR',
-    'DATE > TRR': 'TRR',
-    'LAWSUIT': 'LAWSUIT',
-  },
+  PINNED_ITEM_TYPES: PINNED_ITEM_TYPES,
 };
 
 export const MAP_ITEMS = {

@@ -11,7 +11,7 @@ import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pin
 
 const MUST_BE_ACCEPTED_BY_COUNCIL_CITY_THRESHOLD = 100000;
 
-const getLawsuit = state => state.lawsuitPage.lawsuit;
+const getLawsuit = (state, props) => state.lawsuitPage.lawsuits[props.match.params.lawsuitCaseNo];
 
 const plaintiffTransform = (plaintiff) => ({
   name: plaintiff['name'],
