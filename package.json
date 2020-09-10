@@ -173,6 +173,7 @@
     "react-modal": "^3.11.1",
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.1.2",
+    "react-scroll": "^1.8.1",
     "react-toastify": "5.4.0",
     "redux": "^4.0.5",
     "redux-actions": "^0.10.0",

@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import { noop, isEmpty } from 'lodash';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import Scroll from 'react-scroll';
 
 import WithHeader from 'components/shared/with-header';
 import style from './lawsuit-page.sass';
 import { getLawsuitMapUrl } from 'utils/mapbox';
 import { imageStyle } from 'components/common/shared.style';
 import InvolvedOfficers from './involved-officers';
-import { scrollToElement } from 'utils/navigation-util';
+import { animatedScrollToName } from 'utils/navigation-util';
 import Summary from './summary';
+import { BREADCRUMB_HEIGHT } from 'constants/index';
+
+const ScrollElement = Scroll.Element;
 
 
 export default class LawsuitPage extends Component {
@@ -22,7 +26,7 @@ export default class LawsuitPage extends Component {
   }
 
   handleTotalPaymentsSummaryClick = () => {
-    scrollToElement(this.refs.paymentSection);
+    animatedScrollToName('paymentSection', { offset: -BREADCRUMB_HEIGHT });
   };
 
   render() {
@@ -94,56 +98,59 @@ export default class LawsuitPage extends Component {
                 <InvolvedOfficers officers={ officers } addOrRemoveItemInPinboard={ addOrRemoveItemInPinboard } />
               </div>
 
-              <div className='payment-section section' ref='paymentSection'>
-                <div className='section-label'>Payment Breakdown</div>
-                <div className='payment-breakdown-table'>
-                  <div className='payment-row total-payments'>
-                    <div className='row-label'>Total Payments</div>
-                    <div className='row-value'>${totalPaymentsDetails.totalPayments}</div>
-                  </div>
-                  <div className='subtotals payment-row'>
-                    <div className='row-label'>Settlements</div>
-                    <div className='row-value'>
-                      <span className='highlight-value'>
-                        {totalPaymentsDetails.mustBeAcceptedByCouncilCity && '*'}${totalPaymentsDetails.totalSettlement}
-                      </span>
+              <ScrollElement name='paymentSection'>
+                <div className='payment-section section' ref='paymentSection'>
+                  <div className='section-label'>Payment Breakdown</div>
+                  <div className='payment-breakdown-table'>
+                    <div className='payment-row total-payments'>
+                      <div className='row-label'>Total Payments</div>
+                      <div className='row-value'>${totalPaymentsDetails.totalPayments}</div>
+                    </div>
+                    <div className='subtotals payment-row'>
+                      <div className='row-label'>Settlements</div>
+                      <div className='row-value'>
+                        <span className='highlight-value'>
+                          {totalPaymentsDetails.mustBeAcceptedByCouncilCity && '*'}
+                          ${totalPaymentsDetails.totalSettlement}
+                        </span>
+                      </div>
+                      {
+                        totalPaymentsDetails.mustBeAcceptedByCouncilCity && (
+                          <div className='must-be-accepted-by-council-city-description'>
+                            *Lawsuits over 100K must be approved by City Council
+                          </div>
+                        )
+                      }
                     </div>
                     {
-                      totalPaymentsDetails.mustBeAcceptedByCouncilCity && (
-                        <div className='must-be-accepted-by-council-city-description'>
-                          *Lawsuits over 100K must be approved by City Council
-                        </div>
-                      )
+                      payments.map(({ payee, settlement }, index) => (
+                        settlement && (
+                          <div key={ index } className='payment-row detail-row'>
+                            <div className='row-label'>{payee}</div>
+                            <div className='row-value'>${settlement}</div>
+                          </div>
+                        )
+                      ))
+                    }
+                    <div className='subtotals payment-row'>
+                      <div className='row-label'>Legal Fees</div>
+                      <div className='row-value'>
+                        <span className='highlight-value'>${totalPaymentsDetails.totalLegalFees}</span>
+                      </div>
+                    </div>
+                    {
+                      payments.map(({ payee, legalFees }, index) => (
+                        legalFees && (
+                          <div key={ index } className='payment-row detail-row'>
+                            <div className='row-label'>{payee}</div>
+                            <div className='row-value'>${legalFees}</div>
+                          </div>
+                        )
+                      ))
                     }
                   </div>
-                  {
-                    payments.map(({ payee, settlement }, index) => (
-                      settlement && (
-                        <div key={ index } className='payment-row detail-row'>
-                          <div className='row-label'>{payee}</div>
-                          <div className='row-value'>${settlement}</div>
-                        </div>
-                      )
-                    ))
-                  }
-                  <div className='subtotals payment-row'>
-                    <div className='row-label'>Legal Fees</div>
-                    <div className='row-value'>
-                      <span className='highlight-value'>${totalPaymentsDetails.totalLegalFees}</span>
-                    </div>
-                  </div>
-                  {
-                    payments.map(({ payee, legalFees }, index) => (
-                      legalFees && (
-                        <div key={ index } className='payment-row detail-row'>
-                          <div className='row-label'>{payee}</div>
-                          <div className='row-value'>${legalFees}</div>
-                        </div>
-                      )
-                    ))
-                  }
                 </div>
-              </div>
+              </ScrollElement>
 
               <div className='case-breakdown-section section'>
                 <div className='section-label'>Case Breakdown</div>

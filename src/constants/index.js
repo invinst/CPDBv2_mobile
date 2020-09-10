@@ -186,3 +186,5 @@ export const PERCENTILE_FIELDS = [
 ];
 
 export const PINBOARD_ACTIONS_PANE_SPACE = 78;
+
+export const BREADCRUMB_HEIGHT = 40;
