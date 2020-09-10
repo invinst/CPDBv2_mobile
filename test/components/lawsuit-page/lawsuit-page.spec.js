@@ -11,6 +11,7 @@ import InvolvedOfficers from 'components/lawsuit-page/involved-officers';
 import WithHeader from 'components/shared/with-header';
 import Summary from 'components/lawsuit-page/summary';
 import * as NavigationUtil from 'utils/navigation-util';
+import { BREADCRUMB_HEIGHT } from 'constants/index';
 
 describe('LawsuitPage component', function () {
   const mockStore = MockStore();
@@ -275,7 +276,7 @@ describe('LawsuitPage component', function () {
   });
 
   it('should scroll to payment section when click on total payment', function () {
-    const scrollElementStub = stub(NavigationUtil, 'scrollToElement');
+    const animatedScrollToNameStub = stub(NavigationUtil, 'animatedScrollToName');
 
     const wrapper = mount(
       <Provider store={ store }>
@@ -291,6 +292,6 @@ describe('LawsuitPage component', function () {
 
     const totalPayment = wrapper.find('.total-payments-summary');
     totalPayment.simulate('click');
-    scrollElementStub.should.be.calledOnce();
+    animatedScrollToNameStub.should.be.calledWith('paymentSection', { offset: -BREADCRUMB_HEIGHT });
   });
 });

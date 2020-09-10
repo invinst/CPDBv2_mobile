@@ -53,6 +53,7 @@ class PaymentSection extends Section {
     super('', '//*[contains(@class, "payment-section")]');
 
     this.prepareElementGetters({
+      breakdownTable: '//*[contains(@class, "payment-breakdown-table")]',
       detailRowSettlements: '.detail-row .settlement',
       detailRowLegalFees: '.detail-row .legal-fees',
       subtotalsSettlements: '(//*[contains(@class, "subtotals")] //*[contains(@class, "highlight-value")])[1]',
