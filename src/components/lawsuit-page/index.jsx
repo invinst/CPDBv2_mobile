@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import WithHeader from 'components/shared/with-header';
 import style from './lawsuit-page.sass';
-import { getLawsuitMapUrl } from 'utils/mapbox';
+import { getStreetMapUrl } from 'utils/mapbox';
 import { imageStyle } from 'components/common/shared.style';
 import InvolvedOfficers from './involved-officers';
 import { scrollToElement } from 'utils/navigation-util';
@@ -198,7 +198,7 @@ export default class LawsuitPage extends Component {
                     <div
                       className='lawsuit-map'
                       style={ point ? {
-                        background: `url("${getLawsuitMapUrl(point.lat, point.lon, 234, 130)}") no-repeat center/cover`,
+                        background: `url("${getStreetMapUrl(point.lat, point.lon, 234, 130)}") no-repeat center/cover`,
                       }: null }
                     />
                   </div>
