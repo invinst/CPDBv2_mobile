@@ -97,8 +97,10 @@ describe('Lawsuit page', function () {
     });
 
     it('should navigate to payment section when we click on total payments', function () {
+      browser.setWindowRect(0, 0, 1200, 300);
+      lawsuitPage.payment.breakdownTable.isDisplayedInViewport().should.be.false();
       lawsuitPage.totalPaymentSummary.click();
-      // expect something
+      lawsuitPage.payment.breakdownTable.waitForDisplayedInViewport(5000);
     });
 
     describe('Pinboard function', function () {
