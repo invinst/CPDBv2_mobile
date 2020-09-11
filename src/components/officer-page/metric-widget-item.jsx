@@ -7,7 +7,7 @@ import style from './metric-widget-item.sass';
 
 export default function MetricWidgetItem(props) {
   const { value, name, description, isHighlight, firstChunk, lastChunk } = props;
-  const active = value > 0;
+  const active = value !== 0;
 
   return (
     <div

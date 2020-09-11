@@ -50,6 +50,7 @@ class RecentSection extends Section {
   firstRecentItem = new NthRecentItem(1);
   secondRecentItem = new NthRecentItem(2);
   thirdRecentItem = new NthRecentItem(3);
+  fourthRecentItem = new NthRecentItem(4);
 }
 
 class PinboardIntroductionSection extends Section {
@@ -71,6 +72,7 @@ class SearchPage extends Page {
   dateOfficers = new ResultsSection('dateOfficers');
   officers = new ResultsSection('officers');
   crs = new ResultsSection('crs');
+  lawsuits = new ResultsSection('lawsuits');
   investigatorCRs = new ResultsSection('investigatorCRs');
   trrs = new ResultsSection('trrs');
   pinboardIntroduction = new PinboardIntroductionSection();

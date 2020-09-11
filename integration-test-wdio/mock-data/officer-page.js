@@ -6,7 +6,7 @@ export const officer2235 = {
   badge: '8548',
   'historic_badges': ['8547', '8546'],
   'birth_year': 1957,
-  'civilian_compliment_count': 4,
+  'total_lawsuit_settlements': '10000000.00',
   'percentile_allegation': '99.8950',
   'percentile_trr': '0.0431',
   'date_of_appt': '1993-12-13',
@@ -60,7 +60,6 @@ export const officerNotEnoughPercentile = {
   badge: '8548',
   'historic_badges': ['8547', '8546'],
   'birth_year': 1957,
-  'civilian_compliment_count': 4,
   'percentile_allegation': 99.895,
   'date_of_appt': '1993-12-13',
   'date_of_resignation': '2017-01-15',
@@ -229,6 +228,24 @@ export const mockTimeline = [
     kind: 'JOINED',
     'unit_description': 'Recruit Training Section',
     date: '2000-02-05',
+  },
+  {
+    date: '2000-08-06',
+    kind: 'LAWSUIT',
+    rank: 'Detective',
+    'unit_description': 'Recruit Training Section',
+    'unit_name': '044',
+    'case_no': '00-L-5230',
+    'primary_cause': 'Excessive force, Racial epithets',
+    attachments: [
+      {
+        title: 'Phone subject information organization off important.',
+        url: 'https://assets.documentcloud.org/documents/6246754/CRID-1086093-CR-COPA-Summary-Report.pdf',
+        'preview_image_url': 'https://assets.documentcloud.org/documents/6246754/pages/CRID.gif',
+        'file_type': 'document',
+        'id': '95637',
+      },
+    ],
   },
 ];
 

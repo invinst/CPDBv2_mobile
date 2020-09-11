@@ -42,6 +42,15 @@ export const mockSearchQueryResponseForRecentItems = {
       id: 14487,
     },
   ],
+  'LAWSUIT': [
+    {
+      id: 234567,
+      'case_no': '00-L-5230',
+      'primary_cause': 'EXCESSIVE FORCE/MINOR',
+      'summary': 'Lawsuit summary',
+      'incident_date': '2016-09-11',
+    },
+  ],
 };
 
 export const mockSearchQueryResponseWithDate = {
@@ -114,6 +123,22 @@ export const mockSearchQueryResponseWithDate = {
   'TRR': [
     { id: '867' },
     { id: '873' },
+  ],
+  'LAWSUIT': [
+    {
+      id: 234567,
+      'case_no': '00-L-5230',
+      'primary_cause': 'Excessive force',
+      'summary': 'Lawsuit summary',
+      'incident_date': '2016-09-11',
+    },
+    {
+      id: 234568,
+      'case_no': '00-L-5231',
+      'primary_cause': 'Excessive force',
+      'summary': 'Lawsuit summary',
+      'incident_date': '2016-10-11',
+    },
   ],
 };
 
@@ -276,6 +301,14 @@ export const mockNewRecentSearchItemsResponse = [
     'id': 14487,
     'type': 'TRR',
   },
+  {
+    'id': 234567,
+    'case_no': '00-L-5230',
+    'primary_cause': 'EXCESSIVE FORCE/MINOR',
+    'summary': 'Lawsuit summary',
+    'incident_date': '2016-09-11',
+    'type': 'LAWSUIT',
+  },
 ];
 
 export const officer8562 = {
@@ -292,6 +325,13 @@ export const cr1002144 = {
 
 export const trr14487 = {
   'id': 14487,
+};
+
+export const lawsuit00L5230 = {
+  'case_no': '00-L-5230',
+  'primary_cause': 'EXCESSIVE FORCE/MINOR',
+  'summary': 'Lawsuit summary',
+  'incident_date': '2016-10-11',
 };
 
 export const mockNewCreatedPinboard = {

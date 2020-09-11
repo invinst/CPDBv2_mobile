@@ -1,0 +1,147 @@
+@import 'variables'
+
+$field-row-label-width: 104px
+
+\:local(.lawsuit-page)
+  font-size: 14px
+  line-height: 17px
+  font-weight: 300
+
+  .lawsuit-content
+    color: $thunder-color
+    margin: 12px 8px 140px 8px
+
+    .lawsuit-label
+      color: $gray-color
+
+    .basic-info
+      margin: 19px 0 17px 0
+
+      .attachment-image-href
+        float: left
+        margin-right: 7px
+
+        .attachment-image
+          border: 1px solid $alto-color
+          box-sizing: border-box
+          width: 75px
+          height: 92px
+          background-size: contain
+
+      .lawsuit-title
+        float: left
+        width: calc(100% - 82px)
+
+        .case-no, .primary-cause
+          font-size: 26px
+          line-height: 31px
+          text-transform: uppercase
+
+        .primary-cause
+          color: $gray-color
+
+    .total-payments-summary
+      box-sizing: border-box
+      border-radius: 2px
+      color: white
+      width: 150px
+      height: 62px
+      padding: 11px 0 0 36px
+      background: $mine-shaft-dark-color url('/img/ic-coin-stack.svg') no-repeat 9px 21px
+
+      .total-payments-summary-value
+        text-transform: uppercase
+        font-weight: 500
+        font-size: 18px
+        line-height: 21px
+
+    .field-row
+      padding: 12px 0 11px 0
+
+      & + .field-row
+        border-top: 1px solid $alto-color
+
+      .field-row-label
+        vertical-align: top
+        display: inline-block
+        width: $field-row-label-width
+        color: $boulder-color
+        box-sizing: border-box
+        padding-right: 8px
+
+      .field-row-value
+        display: inline-block
+        width: calc(100% - #{$field-row-label-width})
+
+    .summary-section
+      margin-top: 16px
+
+    .section
+      .section-label
+        padding: 36px 0 11px 0
+        color: $boulder-color
+
+    .officers-section
+      width: auto
+
+    .payment-section
+      .payment-breakdown-table
+        border: 1px solid $alto-color
+
+        .payment-row
+          padding: 12px 8px 11px 8px
+
+          &.detail-row
+            padding: 12px 0 11px 0
+            margin: 0 8px
+            border-top: 1px solid $alto-color
+
+          .row-label
+            vertical-align: top
+            width: calc(100% - 128px)
+            display: inline-block
+            padding-right: 8px
+            box-sizing: border-box
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+
+          .row-value
+            vertical-align: top
+            width: 128px
+            display: inline-block
+            text-align: right
+
+            .highlight-value
+              background-color: $alto-color
+
+          &.subtotals
+            font-weight: 500
+            padding-top: 36px
+
+          &.total-payments
+            background-color: $alto-color
+            font-weight: 500
+
+        .must-be-accepted-by-council-city-description
+          padding-top: 2px
+          color: $boulder-color
+          font-weight: 300
+
+    .case-breakdown-section
+      .case-breakdown-table
+        border: 1px solid $alto-color
+        padding: 0 8px
+
+    .case-details-section
+      .lawsuit-map
+        width: 200px
+        height: 133px
+        margin-top: 11px
+        border-radius: 2px
+        border: 1px solid $alto-color
+        box-sizing: border-box
+
+      .location-description + .field-row
+        .field-row-label
+          visibility: hidden

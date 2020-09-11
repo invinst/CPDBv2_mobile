@@ -2,13 +2,17 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import { get, map, filter, isUndefined, isEmpty, forEach } from 'lodash';
 
-import { SEARCH_CATEGORY_PREFIXES, PINBOARD_PAGE, MONTH_DATE_YEAR_FORMAT, SEARCH_CATEGORIES } from 'constants';
+import {
+  SEARCH_CATEGORY_PREFIXES, PINBOARD_PAGE,
+  MONTH_DATE_YEAR_FORMAT, SEARCH_CATEGORIES,
+  SEARCH_ITEM_TYPES, PIN_BUTTON_INTRODUCTION_INDEX,
+} from 'constants';
 import { COMPLAINT_PATH, TRR_PATH } from 'constants/paths';
-import { PIN_BUTTON_INTRODUCTION_INDEX } from 'constants';
 import { extractLatestPercentile } from 'selectors/common/percentile';
 import { isItemPinned, pinboardItemsSelector } from 'selectors/pinboard-page/pinboard';
 import { officerUrl } from 'utils/url-util';
 import extractQuery from 'utils/extract-query';
+import { lawsuitPath } from 'utils/paths';
 
 
 export const getChosenCategory = (state) => state.suggestionApp.chosenCategory;
@@ -29,7 +33,7 @@ export const officerFormatter = (officer, pinboardItems) => ({
   percentile: extractLatestPercentile(officer),
   url: officerUrl(officer.id, officer.name),
   isPinned: isItemPinned('OFFICER', officer.id, pinboardItems),
-  type: PINBOARD_PAGE.PINNED_ITEM_TYPES.OFFICER,
+  type: SEARCH_ITEM_TYPES.OFFICER,
   recentItemData: officer,
 });
 
@@ -60,7 +64,7 @@ const crFormatter = (cr, pinboardItems) => ({
   incidentDate: moment(cr.incident_date).format(MONTH_DATE_YEAR_FORMAT),
   category: cr.category,
   isPinned: isItemPinned('CR', cr.crid, pinboardItems),
-  type: PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
+  type: SEARCH_ITEM_TYPES.CR,
   recentItemData: cr,
 });
 
@@ -83,7 +87,7 @@ const trrFormatter = (trr, pinboardItems) => ({
   id: trr.id,
   url: `${ TRR_PATH }${ trr.id }/`,
   isPinned: isItemPinned('TRR', trr.id, pinboardItems),
-  type: PINBOARD_PAGE.PINNED_ITEM_TYPES.TRR,
+  type: SEARCH_ITEM_TYPES.TRR,
   recentItemData: trr,
 });
 
@@ -94,6 +98,25 @@ export const trrsSelector = createSelector(
   (state) => state.suggestionApp.suggestions.TRR,
   pinboardItemsSelector,
   trrsFormatter
+);
+
+const lawsuitFormatter = (lawsuit) => ({
+  id: lawsuit.id,
+  url: lawsuitPath(lawsuit.case_no),
+  caseNo: lawsuit.case_no,
+  primaryCause: lawsuit.primary_cause || 'Unknown',
+  incidentDate: lawsuit.incident_date && moment(lawsuit.incident_date).format(MONTH_DATE_YEAR_FORMAT),
+  summary: lawsuit.summary,
+  type: SEARCH_ITEM_TYPES.LAWSUIT,
+  recentItemData: lawsuit,
+});
+
+const lawsuitsFormatter = (lawsuits) =>
+  map(lawsuits, (lawsuit) => lawsuitFormatter(lawsuit));
+
+export const lawsuitsSelector = createSelector(
+  (state) => state.suggestionApp.suggestions.LAWSUIT,
+  lawsuitsFormatter
 );
 
 export const dateTRRsSelector = createSelector(
@@ -109,6 +132,7 @@ const recentItemFormatterMapping = {
   'OFFICER': officerFormatter,
   'CR': crFormatter,
   'TRR': trrFormatter,
+  'LAWSUIT': lawsuitFormatter,
 };
 
 export const recentSuggestionsSelector = createSelector(
@@ -130,6 +154,7 @@ const RECENT_SUGGESTION_TYPES = {
   officerIds: 'OFFICER',
   crids: 'CR',
   trrIds: 'TRR',
+  lawsuitIds: 'LAWSUIT',
 };
 
 export const recentSuggestionIdsSelector = createSelector(
@@ -187,7 +212,8 @@ const suggestionGroupsSelector = createSelector(
   dateOfficersSelector,
   crsSelector,
   trrsSelector,
-  (officers, dateCRs, investigatorCRs, dateTRRs, dateOfficers, crs, trrs) => ({
+  lawsuitsSelector,
+  (officers, dateCRs, investigatorCRs, dateTRRs, dateOfficers, crs, trrs, lawsuits) => ({
     officers: officers || [],
     dateCRs: dateCRs || [],
     investigatorCRs: investigatorCRs || [],
@@ -195,6 +221,7 @@ const suggestionGroupsSelector = createSelector(
     dateOfficers: dateOfficers || [],
     crs: crs || [],
     trrs: trrs || [],
+    lawsuits: lawsuits || [],
   })
 );
 

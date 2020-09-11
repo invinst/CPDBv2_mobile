@@ -19,6 +19,7 @@ class Attachment extends Component {
 
   render() {
     const { title, url, previewImageUrl, fileType } = this.props.attachment;
+
     return (
       <a
         href={ url }

@@ -9,6 +9,7 @@ import {
   PINBOARD_FETCH_REQUEST_SUCCESS,
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
 } from 'actions/pinboard';
+import { LAWSUIT_FETCH_SUCCESS } from 'actions/lawsuit-page';
 
 
 describe('breadcrumbMapping', function () {
@@ -42,6 +43,15 @@ describe('breadcrumbMapping', function () {
         id: '123',
       },
     }).should.eql({ '/trr/123/': 'TRR 123' });
+  });
+
+  it('should store lawsuit breadcrumb text', function () {
+    breadcrumbMapping({}, {
+      type: LAWSUIT_FETCH_SUCCESS,
+      payload: {
+        'case_no': '123',
+      },
+    }).should.eql({ '/lawsuit/123/': 'Case 123' });
   });
 
   it('should store pinboard breadcrumb text when successfully creating pinboard ', function () {

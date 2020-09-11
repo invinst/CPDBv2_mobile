@@ -13,7 +13,9 @@ export default function Award(props) {
       <div className='content'>
         <span className='kind'>A</span>
         <span className='category'>{ item.category }</span>
-        <span className='date'>{ item.date }</span>
+        <span className='award-right'>
+          <span className='date'>{ item.date }</span>
+        </span>
       </div>
     </div>
   );

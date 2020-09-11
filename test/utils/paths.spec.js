@@ -1,4 +1,4 @@
-import { getPathNameKey, onOfficerPage, onCrPage, onPinboardPage } from 'utils/paths';
+import { getPathNameKey, onOfficerPage, onCrPage, onPinboardPage, lawsuitPath } from 'utils/paths';
 
 
 describe('path utils', function () {
@@ -44,6 +44,12 @@ describe('path utils', function () {
       onPinboardPage('/pinboard/f306ed76/untitled-pinboard/').should.be.true();
       onPinboardPage('/complaint/259069/').should.be.false();
       onPinboardPage('/officer/12074/keith-herrera/').should.be.false();
+    });
+  });
+
+  describe('lawsuitPath', function () {
+    it('should return correct value', function () {
+      lawsuitPath('00-L-1234').should.equal('/lawsuit/00-L-1234/');
     });
   });
 });
