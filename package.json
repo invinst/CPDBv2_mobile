@@ -110,7 +110,7 @@
     "eslint-plugin-mocha": "^6.0.0",
     "flux": "^2.1.1",
     "growl": "^1.10.5",
-    "handlebars": "^4.1.2",
+    "handlebars": "^4.5.3",
     "hashids": "^1.0.2",
     "history": "^2.1.2",
     "leaflet": "^1.0.3",
