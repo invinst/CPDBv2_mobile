@@ -137,7 +137,7 @@
     "handlebars": "^4.7.6",
     "hashids": "^1.0.2",
     "leaflet": "^1.0.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mapbox-gl": "^1.7.0",
     "mapbox-gl-multitouch": "^1.0.3",
     "marked": "^0.7.0",
