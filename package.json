@@ -170,7 +170,7 @@
     "reselect": "^2.5.4",
     "should-sinon": "^0.0.6",
     "superagent": "^3.7.0",
-    "swiper": "^4.4.6",
+    "swiper": "^6.5.1",
     "web-animations-js": "^2.3.1",
     "webpack-cli": "^3.3.6",
     "yargs-parser": "^5.0.0"
