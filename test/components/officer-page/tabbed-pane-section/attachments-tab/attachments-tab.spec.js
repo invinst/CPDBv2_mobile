@@ -9,7 +9,7 @@ describe('AttachmentsTab component', function () {
   const attachment0 = {
     title: 'CRID 1071970 OCIR 2 of 3',
     url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-2-of-3.html',
-    previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
+    previewImageUrl: 'https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
     fileType: 'document',
   };
   const attachment1 = {

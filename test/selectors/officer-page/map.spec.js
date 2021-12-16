@@ -43,7 +43,7 @@ describe('Officer map selectors', function () {
     attachments: [
       {
         url: 'https://www.documentcloud.org/documents/3518948-CRID-294619-CR.html',
-        'preview_image_url': 'https://assets.documentcloud.org/documents/3518948/pages/CRID-294619-CR-p1-normal.gif',
+        'preview_image_url': 'https://s3.documentcloud.org/documents/3518948/pages/CRID-294619-CR-p1-normal.gif',
         title: 'CRID 294619 CR',
       },
     ],

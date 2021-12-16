@@ -73,12 +73,12 @@ describe('<RelevantDocuments />', function () {
     const documents = [{
       allegation: firstAllegation,
       url: 'https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf',
-      previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif',
+      previewImageUrl: 'https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif',
       pinned: true,
     }, {
       allegation: secondAllegation,
       url: 'https://www.documentcloud.org/documents/3518950-CRID-294088-CR.html',
-      previewImageUrl: 'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif',
+      previewImageUrl: 'https://s3.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif',
       pinned: false,
     }];
     const addItemInPinboardPageStub = stub();
@@ -110,7 +110,7 @@ describe('<RelevantDocuments />', function () {
       'https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
     );
     relevantDocumentCards.at(0).prop('previewImageUrl').should.eql(
-      'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
+      'https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
     );
     relevantDocumentCards.at(0).prop('allegation').should.eql(firstAllegation);
     relevantDocumentCards.at(0).prop('pinned').should.be.true();
@@ -120,7 +120,7 @@ describe('<RelevantDocuments />', function () {
       'https://www.documentcloud.org/documents/3518950-CRID-294088-CR.html'
     );
     relevantDocumentCards.at(1).prop('previewImageUrl').should.eql(
-      'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif'
+      'https://s3.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif'
     );
     relevantDocumentCards.at(1).prop('allegation').should.eql(secondAllegation);
     relevantDocumentCards.at(1).prop('pinned').should.be.false();

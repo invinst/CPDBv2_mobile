@@ -359,8 +359,8 @@ describe('complaint-page selectors', function () {
             '123': {
               crid: '123',
               attachments: [{
-                url: 'https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf',
-                'preview_image_url': 'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088.pdf',
+                url: 'https://s3.documentcloud.org/documents/3518950/CRID-294088-CR.pdf',
+                'preview_image_url': 'https://s3.documentcloud.org/documents/3518950/pages/CRID-294088.pdf',
                 title: 'CRID 294088 CR',
                 'file_type': 'document',
               }],
@@ -447,8 +447,8 @@ describe('complaint-page selectors', function () {
             '123': {
               crid: '123',
               attachments: [{
-                url: 'https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf',
-                'preview_image_url': 'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088.pdf',
+                url: 'https://s3.documentcloud.org/documents/3518950/CRID-294088-CR.pdf',
+                'preview_image_url': 'https://s3.documentcloud.org/documents/3518950/pages/CRID-294088.pdf',
                 title: 'CRID 294088 CR',
                 'file_type': 'document',
               }],

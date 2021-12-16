@@ -22,14 +22,14 @@ describe('Officer attachments selectors', function () {
       {
         title: 'CRID 1004717 CR',
         url: 'https://www.documentcloud.org/documents/3518956-CRID-1004717-CR.html',
-        'preview_image_url': 'https://assets.documentcloud.org/documents/3518956/pages/CRID-1004717-CR-p1.gif',
+        'preview_image_url': 'https://s3.documentcloud.org/documents/3518956/pages/CRID-1004717-CR-p1.gif',
         'file_type': 'document',
         'id': '123456',
       },
       {
         title: 'CRID 303350 CR',
         url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.html',
-        'preview_image_url': 'https://assets.documentcloud.org/documents/3518955/pages/CRID-303350-CR-p1.gif',
+        'preview_image_url': 'https://s3.documentcloud.org/documents/3518955/pages/CRID-303350-CR-p1.gif',
         'file_type': 'document',
         'id': '654321',
       },
@@ -61,14 +61,14 @@ describe('Officer attachments selectors', function () {
       {
         title: 'CRID 1004717 CR',
         url: 'https://www.documentcloud.org/documents/3518956-CRID-1004717-CR.html',
-        previewImageUrl: 'https://assets.documentcloud.org/documents/3518956/pages/CRID-1004717-CR-p1.gif',
+        previewImageUrl: 'https://s3.documentcloud.org/documents/3518956/pages/CRID-1004717-CR-p1.gif',
         fileType: 'document',
         id: '123456',
       },
       {
         title: 'CRID 303350 CR',
         url: 'https://www.documentcloud.org/documents/3518955-CRID-303350-CR.html',
-        previewImageUrl: 'https://assets.documentcloud.org/documents/3518955/pages/CRID-303350-CR-p1.gif',
+        previewImageUrl: 'https://s3.documentcloud.org/documents/3518955/pages/CRID-303350-CR-p1.gif',
         fileType: 'document',
         id: '654321',
       },

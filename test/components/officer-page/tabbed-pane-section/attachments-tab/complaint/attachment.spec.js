@@ -11,7 +11,7 @@ describe('Attachment component', function () {
   const attachment = {
     title: 'CRID 1071970 OCIR 2 of 3',
     url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-3-of-3.html',
-    previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
+    previewImageUrl: 'https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
     fileType: 'document',
   };
 
@@ -24,7 +24,7 @@ describe('Attachment component', function () {
 
     const previewImage = wrapper.find('.attachment-thumbnail');
     previewImage.prop('style').backgroundImage.should.containEql(
-      'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif'
+      'https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif'
     );
 
     const title = wrapper.find(ClampLines);
@@ -39,7 +39,7 @@ describe('Attachment component', function () {
     const previewImage = wrapper.find('.attachment-thumbnail');
     previewImage.prop('className').should.containEql('document');
     previewImage.prop('style').backgroundImage.should.containEql(
-      'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif'
+      'https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif'
     );
   });
 
@@ -76,7 +76,7 @@ describe('Attachment component', function () {
     const attachment = {
       title: 'CRID 1071970 OCIR 2 of 3',
       url: 'https://www.documentcloud.org/documents/3108232-CRID-1071970-OCIR-3-of-3.html',
-      previewImageUrl: 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
+      previewImageUrl: 'https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
       fileType: 'document',
       id: '123456',
     };

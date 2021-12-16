@@ -94,8 +94,8 @@ describe('relevantDocuments reducer', function () {
     }];
     const newDocuments = [{
       'id': 14665,
-      'preview_image_url': 'https://assets.documentcloud.org//CRID-1074534-CR-Tactical-p1-normal.gif',
-      'url': 'https://assets.documentcloud.org/documents/5679695/CRID-1074534-CR-Tactical.pdf',
+      'preview_image_url': 'https://s3.documentcloud.org//CRID-1074534-CR-Tactical-p1-normal.gif',
+      'url': 'https://s3.documentcloud.org/documents/5679695/CRID-1074534-CR-Tactical.pdf',
       'allegation': {
         'crid': '1074534',
         'category': 'Unknown',
@@ -104,8 +104,8 @@ describe('relevantDocuments reducer', function () {
       },
     }, {
       'id': 14660,
-      'preview_image_url': 'https://assets.documentcloud.org/documents/CRID-1074534-CR-Arrest.gif',
-      'url': 'https://assets.documentcloud.org/documents/5679691/CRID-1074534-CR-Arrest.pdf',
+      'preview_image_url': 'https://s3.documentcloud.org/documents/CRID-1074534-CR-Arrest.gif',
+      'url': 'https://s3.documentcloud.org/documents/5679691/CRID-1074534-CR-Arrest.pdf',
       'allegation': {
         'crid': '1074534',
         'category': 'Unknown',

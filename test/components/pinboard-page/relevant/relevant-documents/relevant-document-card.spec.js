@@ -64,7 +64,7 @@ describe('<RelevantDocumentCard />', function () {
     const wrapper = mountWithRouter(
       <RelevantDocumentCard
         url='https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
-        previewImageUrl='https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
+        previewImageUrl='https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
         allegation={ allegation }
         addItemInPinboardPage={ addItemInPinboardPageStub }
         pinned={ false }
@@ -87,7 +87,7 @@ describe('<RelevantDocumentCard />', function () {
 
     const previewImg = wrapper.find('.document-card-thumbnail-img');
     previewImg.prop('src').should.eql(
-      'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
+      'https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
     );
   });
 
@@ -103,7 +103,7 @@ describe('<RelevantDocumentCard />', function () {
       const wrapper = mountWithRouter(
         <RelevantDocumentCardWithUndo
           url='https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
-          previewImageUrl='https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
+          previewImageUrl='https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
           allegation={ allegation }
           addItemInPinboardPage={ addItemInPinboardPageStub }
           pinned={ false }
@@ -121,7 +121,7 @@ describe('<RelevantDocumentCard />', function () {
       const wrapper = mountWithRouter(
         <RelevantDocumentCardWithUndo
           url='https://www.documentcloud.org/documents/3108640/CRID-1078616-TRR-Rialmo.pdf'
-          previewImageUrl='https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
+          previewImageUrl='https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p2-normal.gif'
           allegation={ allegation }
           addItemInPinboardPage={ addItemInPinboardPageStub }
           pinned={ false }

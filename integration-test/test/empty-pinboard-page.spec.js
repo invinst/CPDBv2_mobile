@@ -11,7 +11,7 @@ var pinboardMockData = require(__dirname + '/../mock-data/pinboard-page');
 const generateRelevantDocument = (id) => ({
   id,
   'preview_image_url': 'http://via.placeholder.com/121x157',
-  'url': 'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf',
+  'url': 'https://s3.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf',
   'allegation': {
     'crid': '1079876',
     'category': 'Operations/Personnel Violation',

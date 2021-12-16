@@ -130,8 +130,8 @@ const mockTimeline = [
     outcome: 'No Action Taken',
     attachments: [
       {
-        url: 'https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf',
-        'preview_image_url': 'https://assets.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif',
+        url: 'https://s3.documentcloud.org/documents/3518950/CRID-294088-CR.pdf',
+        'preview_image_url': 'https://s3.documentcloud.org/documents/3518950/pages/CRID-294088-CR-p1-normal.gif',
         title: 'CRID 294088 CR',
         'file_type': 'document',
       },
@@ -171,8 +171,8 @@ const mockTimeline = [
         'file_type': 'video',
       },
       {
-        url: 'https://assets.documentcloud.org/documents/3518954/CRID-299780-CR.pdf',
-        'preview_image_url': 'https://assets.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
+        url: 'https://s3.documentcloud.org/documents/3518954/CRID-299780-CR.pdf',
+        'preview_image_url': 'https://s3.documentcloud.org/documents/3518954/pages/CRID-299780-CR-p1-normal.gif',
         title: 'CRID 294088 CR',
         'file_type': 'document',
       },

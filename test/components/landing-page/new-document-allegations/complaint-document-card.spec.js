@@ -20,7 +20,7 @@ describe('<ComplaintDocumentCard />', function () {
       category: 'Operation/Personnel Violations',
       incidentDate: 'Jan 23, 2000',
       document: {
-        previewImageUrl: 'https://assets.documentcloud.org/CRID-303350-CR-p1-normal.gif',
+        previewImageUrl: 'https://s3.documentcloud.org/CRID-303350-CR-p1-normal.gif',
       },
       isPinned: true,
     };
@@ -31,7 +31,7 @@ describe('<ComplaintDocumentCard />', function () {
     const element = wrapper.find(Link);
     element.prop('to').should.equal('/complaint/123/');
     element.find('.preview-image').prop('src').should.equal(
-      'https://assets.documentcloud.org/CRID-303350-CR-p1-normal.gif'
+      'https://s3.documentcloud.org/CRID-303350-CR-p1-normal.gif'
     );
     element.find('.complaint-info-incident-date').text().should.equal('Jan 23, 2000');
     element.find('.complaint-info-category').text().should.equal('Operation/Personnel Violations');
