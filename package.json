@@ -142,7 +142,7 @@
     "mapbox-gl-multitouch": "^1.0.3",
     "marked": "^0.7.0",
     "memoize-one": "^5.1.1",
-    "moment": "^2.13.0",
+    "moment": "^2.29.4",
     "muuri": "^0.7.1",
     "normalize.css": "^4.0.0",
     "object-assign": "^4.1.0",
