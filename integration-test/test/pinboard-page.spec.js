@@ -506,7 +506,7 @@ describe('Pinboard Page', function () {
       relevantDocumentsSection.section.documentCard.click('@leftHalf');
       client.switchToRecentTab();
       client.assert.urlEquals(
-        'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf'
+        'https://s3.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf'
       );
     });
 

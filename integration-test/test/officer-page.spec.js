@@ -722,7 +722,7 @@ describe('OfficerPage test', function () {
         this.timeline.waitForElementVisible('@attachmentThumbnail', TIMEOUT);
         this.timeline.click('@attachmentThumbnail');
         client.switchToRecentTab();
-        client.assert.urlEquals('https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf');
+        client.assert.urlEquals('https://s3.documentcloud.org/documents/3518950/CRID-294088-CR.pdf');
       });
 
       it('should go to trr page when clicking on an trr timeline item', function (client) {
@@ -904,7 +904,7 @@ describe('OfficerPage test', function () {
         this.attachments.section.firstComplaint.click('@firstAttachment');
         client.switchToRecentTab();
         client.assert.urlEquals(
-          'https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf'
+          'https://s3.documentcloud.org/documents/3518950/CRID-294088-CR.pdf'
         );
       });
 
