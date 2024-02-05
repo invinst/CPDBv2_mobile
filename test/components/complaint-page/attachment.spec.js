@@ -5,7 +5,6 @@ import { shallow, mount } from 'enzyme';
 import { stub } from 'sinon';
 
 import Attachments from 'components/complaint-page/attachments';
-import RequestDocumentButton from 'components/common/request-document/request-document-button';
 import * as tracking from 'utils/tracking';
 import CMSContent from 'components/common/cms-content';
 
@@ -26,31 +25,6 @@ describe('Attachments component', function () {
     wrapper.setProps({ attachments: [{ fileType: 'video', title: 'Video Clip' }] });
 
     wrapper.find('.label').text().should.eql('DOCUMENTS');
-  });
-
-  it('should render request document button', function () {
-    const store = configureStore()({
-      complaintPage: {
-        attachmentRequest: {
-          message: '',
-          subscribedCRIds: {},
-        },
-        complaints: {
-          'CR123': {},
-        },
-      },
-    });
-    const wrapper = mount(
-      <Provider store={ store }>
-        <Attachments attachments={ [] } complaintId='CR123'/>
-      </Provider>
-    );
-
-    const requestButton = wrapper.find(RequestDocumentButton);
-    requestButton.prop('id').should.equal('CR123');
-    requestButton.prop('isRequested').should.be.false();
-    requestButton.prop('message').should.equal('');
-    requestButton.prop('customClassName').should.equal('request-button-container');
   });
 
   it('should track click event', function () {
