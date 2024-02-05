@@ -69,26 +69,12 @@ class LocationSection extends Section {
   }
 }
 
-class RequestDocumentFormSection extends Section {
-  constructor() {
-    super('', '//form[contains(@class, "request-document-content")]');
-
-    this.prepareElementGetters({
-        emailInput: '//input[contains(@class, "email-input")]',
-        requestButton: '//input[contains(@class, "request-button")]',
-        cancelButton: '//a[contains(@class, "cancel-button")]',
-        messageBox: '//div[contains(@class, "message-box")]',
-    });
-  }
-}
-
 class ComplaintPage extends Page {
   complaintCategory = new ComplaintCategorySection();
   coaccusals = new CoaccusalsSection();
   firstCoaccusal = new FirstCoaccusalSection();
   policeWitnesses = new PoliceWitnessesSection();
   location = new LocationSection();
-  requestDocumentForm = new RequestDocumentFormSection();
   pinboardsMenu = new PinboardsMenuSection();
 
   constructor() {
@@ -105,7 +91,6 @@ class ComplaintPage extends Page {
       secondInvestigator: '(//*[contains(@class, "investigator-row")])[2]',
       lastToast: '(//div[contains(@class, "Toastify__toast-body")])[last()]',
       landingPageBreadCrumb: '//a[@href="/" and .="cpdp"]',
-      requestDocumentButton: '.request-button',
       incidentDate: '.incident-date-value',
     });
   }

@@ -30,41 +30,6 @@ describe('TRRPageTest', function () {
     browser.waitForUrl(url => url.should.containEql('/officer/583/donovan-markiewicz/'), 3000);
   });
 
-  it('should show request document modal when clicks on "Request Document"', function () {
-    trrPage.requestDocumentForm.emailInput.waitForExist(3000, true);
-
-    trrPage.trrInfoSection.requestDocumentButton.click();
-    trrPage.requestDocumentForm.emailInput.waitForExist(3000);
-
-    trrPage.requestDocumentForm.cancelButton.click();
-    trrPage.requestDocumentForm.emailInput.waitForExist(3000, true);
-  });
-
-  it('should accept valid email, and close modal after 1.5s', function () {
-    trrPage.trrInfoSection.requestDocumentButton.getText().should.equal('Request Documents');
-    trrPage.trrInfoSection.requestDocumentButton.click();
-    trrPage.requestDocumentForm.emailInput.waitForExist();
-
-    trrPage.requestDocumentForm.emailInput.setValue('valid@email.com');
-    trrPage.requestDocumentForm.requestButton.click();
-    trrPage.requestDocumentForm.messageBox.waitForDisplayed(TIMEOUT);
-    trrPage.requestDocumentForm.messageBox.getText().should.equal('Thanks for subscribing.');
-
-    browser.pause(2000);
-    trrPage.requestDocumentForm.emailInput.waitForExist(500, true);
-    trrPage.trrInfoSection.requestDocumentButton.getText().should.equal('Documents Requested✔');
-  });
-
-  it('should ignore invalid email', function () {
-    trrPage.trrInfoSection.requestDocumentButton.click();
-    trrPage.requestDocumentForm.emailInput.waitForExist();
-
-    trrPage.requestDocumentForm.emailInput.setValue('invalid#email.com');
-    trrPage.requestDocumentForm.requestButton.click();
-    trrPage.requestDocumentForm.messageBox.waitForDisplayed(TIMEOUT);
-    trrPage.requestDocumentForm.messageBox.getText().should.equal('Sorry, we can not subscribe your email');
-  });
-
   it('should have clicky installed ', function () {
     trrPage.clickyScript.waitForExist();
     trrPage.clickySiteIdsScript.waitForExist();

@@ -50,9 +50,6 @@ module.exports = {
     landingPageBreadCrumb: {
       selector: '//a[@href="/" and .="cpdp"]',
       locateStrategy: 'xpath',
-    },
-    requestDocumentButton: '.request-button',
-    incidentDate: '.incident-date-value',
   },
 
   sections: {
@@ -105,16 +102,6 @@ module.exports = {
         address: '.address .info',
         type: '.type .info',
         beat: '.beat .info',
-      },
-    },
-    requestDocumentForm: {
-      selector: '//form[contains(@class, "request-document-content")]',
-      locateStrategy: 'xpath',
-      elements: {
-        emailInput: '.email-input',
-        requestButton: '.request-button',
-        cancelButton: '.cancel-button',
-        messageBox: '.message-box',
       },
     },
     pinboardsMenu: {

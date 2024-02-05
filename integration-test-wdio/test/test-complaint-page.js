@@ -103,44 +103,6 @@ describe('ComplaintPageTest', function () {
       location.beat.getText().should.containEql('1034');
     });
 
-    it('should show request document modal when clicks on "Request Document"', function () {
-      complaintPage.requestDocumentForm.emailInput.isExisting().should.be.false();
-
-      complaintPage.requestDocumentButton.click();
-      complaintPage.requestDocumentForm.emailInput.waitForDisplayed();
-
-      complaintPage.requestDocumentForm.cancelButton.click();
-      complaintPage.requestDocumentForm.emailInput.isExisting().should.be.false();
-    });
-
-    it('should accept valid email, and close modal after 1.5s', function () {
-      complaintPage.requestDocumentButton.getText().should.equal('Request Documents');
-      complaintPage.requestDocumentButton.click();
-      complaintPage.requestDocumentForm.emailInput.waitForDisplayed();
-
-      const requestDocumentForm = complaintPage.requestDocumentForm;
-      requestDocumentForm.emailInput.setValue('valid@email.com');
-      requestDocumentForm.requestButton.click();
-      requestDocumentForm.messageBox.waitForDisplayed(TIMEOUT);
-      requestDocumentForm.messageBox.getText().should.equal('Thanks for subscribing.');
-
-      complaintPage.requestDocumentForm.emailInput.waitForDisplayed(2000, true);
-      complaintPage.requestDocumentButton.getText().should.equal('Documents Requested✔');
-    });
-
-    it('should ignore invalid email', function () {
-      complaintPage.requestDocumentButton.click();
-      complaintPage.requestDocumentForm.emailInput.waitForDisplayed();
-
-      const requestDocumentForm = complaintPage.requestDocumentForm;
-      requestDocumentForm.emailInput.setValue('invalid#email.com');
-      requestDocumentForm.requestButton.click();
-      requestDocumentForm.messageBox.waitForDisplayed(TIMEOUT);
-      requestDocumentForm.messageBox.getText().should.equal(
-        'Sorry, we can not subscribe your email'
-      );
-    });
-
     it('should have clicky installed', function () {
       complaintPage.clickyScript.waitForExist();
       complaintPage.clickySiteIdsScript.waitForExist();
