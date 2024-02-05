@@ -4,6 +4,8 @@ import cx from 'classnames';
 import styles from './attachments.sass';
 import * as tracking from 'utils/tracking';
 import { thumbnailStyle } from './attachments.style';
+import CMSContent from 'components/common/cms-content';
+
 
 class Attachments extends Component {
   handleClick = (url, id) => {
@@ -13,11 +15,21 @@ class Attachments extends Component {
   };
 
   render() {
-    const { attachments, complaintId, noAttachmentMessage } = this.props;
+    const { attachments, noAttachmentMessage } = this.props;
     const noAttachment = attachments.length === 0;
 
     return (
       <div className={ styles.attachments }>
+        <div className={ cx('header', { 'no-attachment': noAttachment }) }>
+          <div className='label'>
+            {
+              noAttachment ?
+                <CMSContent
+                  content={ noAttachmentMessage }
+                /> : 'DOCUMENTS'
+            }
+          </div>
+        </div>
         <div className='attachment-list'>
           {
             attachments.map((attachment, idx) => (

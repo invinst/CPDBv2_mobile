@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import style from './attachment.sass';
-import TRRRequestDocumentButtonContainer from 'containers/common/trr-request-document-container';
-
 
 function Attachment(props) {
 
