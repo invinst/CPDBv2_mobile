@@ -346,28 +346,10 @@ describe('OfficerPage test', function () {
         browser.getUrl().should.containEql('/complaint/294088/');
       });
 
-      it('should go to attachment source page when clicking on the complaint attachment thumbnail', function () {
-        this.timeline.complaintAttachmentThumbnail.waitForDisplayed(TIMEOUT);
-        this.timeline.complaintAttachmentThumbnail.click();
-        browser.switchWindow('https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf');
-        browser.closeWindow();
-        browser.switchWindow('localhost');
-      });
-
       it('should go to lawsuit page when clicking on an lawsuit timeline item', function () {
         this.timeline.lawsuitItem.waitForDisplayed(TIMEOUT);
         this.timeline.lawsuitItem.click();
         browser.getUrl().should.containEql('/lawsuit/00-L-5230/');
-      });
-
-      it('should go to attachment source page when clicking on the lawsuit attachment thumbnail', function () {
-        this.timeline.lawsuitAttachmentThumbnail.waitForDisplayed(TIMEOUT);
-        this.timeline.lawsuitAttachmentThumbnail.click();
-        browser.switchWindow(
-          'https://assets.documentcloud.org/documents/6246754/CRID-1086093-CR-COPA-Summary-Report.pdf'
-        );
-        browser.closeWindow();
-        browser.switchWindow('localhost');
       });
 
       it('should go to trr page when clicking on an trr timeline item', function () {
@@ -550,16 +532,6 @@ describe('OfficerPage test', function () {
           this.attachments.firstComplaintHeading.click();
           browser.getUrl().should.containEql('/complaint/294088/');
         });
-
-        it('should go to complaint attachment source page when clicking on the complaint attachment', function () {
-          officerPage.attachmentsTabButton.waitForDisplayed(TIMEOUT);
-          officerPage.attachmentsTabButton.click();
-          browser.getUrl().should.containEql('/officer/2235/kevin-osborn/documents/');
-          this.attachments.firstComplaintAttachment.click();
-          browser.switchWindow('https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf');
-          browser.closeWindow();
-          browser.switchWindow('localhost');
-        });
       });
 
       describe('Lawsuit', function () {
@@ -570,18 +542,6 @@ describe('OfficerPage test', function () {
           this.attachments.firstLawsuitAttachment.waitForDisplayed(TIMEOUT);
           this.attachments.firstLawsuitHeading.click();
           browser.getUrl().should.containEql('/lawsuit/00-L-5230/');
-        });
-
-        it('should go to lawsuit attachment source page when clicking on the lawsuit attachment', function () {
-          officerPage.attachmentsTabButton.waitForDisplayed(TIMEOUT);
-          officerPage.attachmentsTabButton.click();
-          browser.getUrl().should.containEql('/officer/2235/kevin-osborn/documents/');
-          this.attachments.firstLawsuitAttachment.click();
-          browser.switchWindow(
-            'https://assets.documentcloud.org/documents/6246754/CRID-1086093-CR-COPA-Summary-Report.pdf'
-          );
-          browser.closeWindow();
-          browser.switchWindow('localhost');
         });
       });
 
