@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-
-import CRRequestDocumentButtonContainer from 'containers/common/cr-request-document-container';
 import styles from './attachments.sass';
 import * as tracking from 'utils/tracking';
 import { thumbnailStyle } from './attachments.style';
-import CMSContent from 'components/common/cms-content';
-
 
 class Attachments extends Component {
   handleClick = (url, id) => {
@@ -22,20 +18,6 @@ class Attachments extends Component {
 
     return (
       <div className={ styles.attachments }>
-        <div className={ cx('header', { 'no-attachment': noAttachment }) }>
-          <div className='label'>
-            {
-              noAttachment ?
-                <CMSContent
-                  content={ noAttachmentMessage }
-                /> : 'DOCUMENTS'
-            }
-          </div>
-          <CRRequestDocumentButtonContainer
-            crid={ complaintId }
-            customClassName='request-button-container'
-          />
-        </div>
         <div className='attachment-list'>
           {
             attachments.map((attachment, idx) => (

@@ -13,7 +13,6 @@ function Attachment(props) {
         <div className='title'>
           There are no documents that have been made public yet.
         </div>
-        <TRRRequestDocumentButtonContainer trrId={ props.trrId } customClassName='request-button-container' />
       </div>
     </div>
   );
