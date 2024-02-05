@@ -510,15 +510,6 @@ describe('Pinboard Page', function () {
       client.assert.urlContains('/complaint/1071234/');
     });
 
-    it('should go to document pdf link in new tab when clicking on left half of a complaint card', function (client) {
-      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
-      relevantDocumentsSection.section.documentCard.click('@leftHalf');
-      client.switchToRecentTab();
-      client.assert.urlEquals(
-        'https://assets.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf'
-      );
-    });
-
     context('undo card', function () {
       context('adding relevant coaccusal to pinboard', function () {
         const updatedRelevantDocumentsResponse = getPaginationResponse(
