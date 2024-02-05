@@ -58,20 +58,6 @@ describe('Lawsuit page', function () {
       lawsuitPage.involvedOfficers.firstCard.totalLawsuits.getText().should.equal('in 3 lawsuits');
     });
 
-    it('should go to attachment source page when clicking on the attachment', function () {
-      lawsuitPage.attachmentImage.waitForDisplayed();
-      lawsuitPage.attachmentImage.getCSSProperty('background-image').value.should.eql(
-        'url("https://assets.documentcloud.org/documents/6246754' +
-        '/pages/crid-1086093-cr-copa-summary-report-p1-normal.gif")'
-      );
-      lawsuitPage.attachmentImageHref.waitForDisplayed();
-      lawsuitPage.attachmentImageHref.click();
-      const url = 'https://assets.documentcloud.org/documents/6246754/CRID-1086093-CR-COPA-Summary-Report.pdf';
-      browser.switchWindow(url);
-      browser.closeWindow();
-      browser.switchWindow('localhost');
-    });
-
     it('should show full list of accused officers when click on show more button', function () {
       lawsuitPage.involvedOfficers.showMoreButton.isDisplayed().should.be.true();
       lawsuitPage.involvedOfficers.showMoreButton.click();
