@@ -1,10 +1,7 @@
 import React from 'react';
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import Attachment from 'components/trr-page/attachment';
-import RequestDocumentButton from 'components/common/request-document/request-document-button';
 
 
 describe('<Attachment />', function () {

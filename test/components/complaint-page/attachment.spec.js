@@ -5,7 +5,6 @@ import { shallow, mount } from 'enzyme';
 import { stub } from 'sinon';
 
 import Attachments from 'components/complaint-page/attachments';
-import RequestDocumentButton from 'components/common/request-document/request-document-button';
 import * as tracking from 'utils/tracking';
 import CMSContent from 'components/common/cms-content';
 
