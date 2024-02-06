@@ -2,7 +2,6 @@
 
 const api = require(__dirname + '/../mock-api');
 const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
-const { TIMEOUT } = require(__dirname + '/../constants');
 
 
 const mockTRR = {
