@@ -27,15 +27,5 @@ module.exports = {
         requestDocumentButton: '.request-button',
       },
     },
-    requestDocumentForm: {
-      selector: '//form[contains(@class, "request-document-content")]',
-      locateStrategy: 'xpath',
-      elements: {
-        emailInput: '.email-input',
-        requestButton: '.request-button',
-        cancelButton: '.cancel-button',
-        messageBox: '.message-box',
-      },
-    },
   },
 };

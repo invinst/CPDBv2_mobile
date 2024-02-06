@@ -77,44 +77,6 @@ describe('TRRPageTest', function () {
     client.assert.urlContains('/officer/583/donovan-markiewicz/');
   });
 
-  it('should show request document modal when clicks on "Request Document"', function () {
-    this.trrPage.expect.section('@requestDocumentForm').to.be.not.present;
-
-    this.trrPage.section.info.click('@requestDocumentButton');
-    this.trrPage.expect.section('@requestDocumentForm').to.be.present;
-
-    this.trrPage.section.requestDocumentForm.click('@cancelButton');
-    this.trrPage.expect.section('@requestDocumentForm').to.be.not.present;
-  });
-
-  it('should accept valid email, and close modal after 1.5s', function () {
-    this.trrPage.section.info.expect.element('@requestDocumentButton').text.to.equal('Request Documents');
-    this.trrPage.section.info.click('@requestDocumentButton');
-    this.trrPage.expect.section('@requestDocumentForm').to.be.present;
-
-    const requestDocumentForm = this.trrPage.section.requestDocumentForm;
-    requestDocumentForm.setValue('@emailInput', 'valid@email.com');
-    requestDocumentForm.click('@requestButton');
-    requestDocumentForm.waitForElementVisible('@messageBox', TIMEOUT);
-    requestDocumentForm.expect.element('@messageBox').text.to.equal('Thanks for subscribing.');
-
-    this.trrPage.expect.section('@requestDocumentForm').to.be.not.present.after(2000);
-    this.trrPage.section.info.expect.element('@requestDocumentButton').text.to.equal('Documents Requested✔');
-  });
-
-  it('should ignore invalid email', function () {
-    this.trrPage.section.info.click('@requestDocumentButton');
-    this.trrPage.expect.section('@requestDocumentForm').to.be.present;
-
-    const requestDocumentForm = this.trrPage.section.requestDocumentForm;
-    requestDocumentForm.setValue('@emailInput', 'invalid#email.com');
-    requestDocumentForm.click('@requestButton');
-    requestDocumentForm.waitForElementVisible('@messageBox', TIMEOUT);
-    requestDocumentForm.expect.element('@messageBox').text.to.equal(
-      'Sorry, we can not subscribe your email'
-    );
-  });
-
   it('should have clicky installed ', function (client) {
     const page = client.page.common();
     page.waitForElementPresent('@clickyScript');

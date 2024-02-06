@@ -107,16 +107,6 @@ module.exports = {
         beat: '.beat .info',
       },
     },
-    requestDocumentForm: {
-      selector: '//form[contains(@class, "request-document-content")]',
-      locateStrategy: 'xpath',
-      elements: {
-        emailInput: '.email-input',
-        requestButton: '.request-button',
-        cancelButton: '.cancel-button',
-        messageBox: '.message-box',
-      },
-    },
     pinboardsMenu: {
       selector: '//div[contains(@class, "pinboards-menu")]',
       locateStrategy: 'xpath',

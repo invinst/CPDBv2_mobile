@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-
-import CRRequestDocumentButtonContainer from 'containers/common/cr-request-document-container';
 import styles from './attachments.sass';
 import * as tracking from 'utils/tracking';
 import { thumbnailStyle } from './attachments.style';
@@ -17,7 +15,7 @@ class Attachments extends Component {
   };
 
   render() {
-    const { attachments, complaintId, noAttachmentMessage } = this.props;
+    const { attachments, noAttachmentMessage } = this.props;
     const noAttachment = attachments.length === 0;
 
     return (
@@ -31,10 +29,6 @@ class Attachments extends Component {
                 /> : 'DOCUMENTS'
             }
           </div>
-          <CRRequestDocumentButtonContainer
-            crid={ complaintId }
-            customClassName='request-button-container'
-          />
         </div>
         <div className='attachment-list'>
           {

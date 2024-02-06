@@ -28,31 +28,6 @@ describe('Attachments component', function () {
     wrapper.find('.label').text().should.eql('DOCUMENTS');
   });
 
-  it('should render request document button', function () {
-    const store = configureStore()({
-      complaintPage: {
-        attachmentRequest: {
-          message: '',
-          subscribedCRIds: {},
-        },
-        complaints: {
-          'CR123': {},
-        },
-      },
-    });
-    const wrapper = mount(
-      <Provider store={ store }>
-        <Attachments attachments={ [] } complaintId='CR123'/>
-      </Provider>
-    );
-
-    const requestButton = wrapper.find(RequestDocumentButton);
-    requestButton.prop('id').should.equal('CR123');
-    requestButton.prop('isRequested').should.be.false();
-    requestButton.prop('message').should.equal('');
-    requestButton.prop('customClassName').should.equal('request-button-container');
-  });
-
   it('should track click event', function () {
     const store = configureStore()({
       complaintPage: {
