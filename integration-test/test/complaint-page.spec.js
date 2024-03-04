@@ -50,7 +50,6 @@ const mockComplaint = {
       'percentile_allegation_internal': 99.6468,
       'officer_id': 8658,
     },
-
     {
       'involved_type': 'police_witness',
       'full_name': 'Charles Toussas',
