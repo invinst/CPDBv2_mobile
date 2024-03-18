@@ -1,3 +1,7 @@
+import Scroll from 'react-scroll';
+
+const scroller = Scroll.scroller;
+
 export function animatedScrollTo(element, to, duration) {
   if (duration <= 0) {
     return;
@@ -18,14 +22,12 @@ export function animatedScrollTo(element, to, duration) {
   }, 10);
 }
 
-
 export function scrollToTop(ast=animatedScrollTo) {
   return () => {
     ast(document.body, 0, 100);
     ast(document.documentElement, 0, 100);
   };
 }
-
 
 export function instantScrollToTop() {
   window.scrollTo(0, 0);
@@ -35,8 +37,17 @@ export function getCurrentScrollPosition() {
   return document.body.scrollTop || document.documentElement.scrollTop;
 }
 
-export function instantScrollTo(y) {
-  window.scrollTo(0, y);
+export function scrollToElement(element) {
+  window.scrollTo(0, element.offsetTop);
+}
+
+export function animatedScrollToName(name, options) {
+  scroller.scrollTo(name, {
+    duration: 1500,
+    delay: 100,
+    smooth: true,
+    ...options,
+  });
 }
 
 export function getPageYBottomOffset() {

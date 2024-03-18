@@ -1,7 +1,7 @@
 @import 'variables'
 @import '../base'
 
-$height: 24px
+$height: 40px
 
 \:local(.wrapper)
   @extend %base-wrapper
@@ -11,8 +11,8 @@ $height: 24px
 
   .unit-change
     display: inline-block
-    width: calc(100% - 44px)
-    font-size: 12px
+    width: calc(100% - 57px)
+    font-size: 16px
     overflow: hidden
     text-overflow: ellipsis
     white-space: nowrap
@@ -31,6 +31,7 @@ $height: 24px
 
   .date
     @extend %base-date
-    font-size: 12px
+    line-height: $height - 1px
+    vertical-align: middle
     color: $thunder-color
     font-weight: 300

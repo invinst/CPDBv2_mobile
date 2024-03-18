@@ -71,14 +71,15 @@ describe('NavigationUtil', function () {
   });
 
 
-  describe('instantScrollTo', function () {
+  describe('scrollToElement', function () {
     beforeEach(function () {
       this.stubScrollTo = stub(window, 'scrollTo');
     });
 
     it('should call window.scrollTo', function () {
-      NavigationUtil.instantScrollTo(111);
-      this.stubScrollTo.calledWith(0, 111).should.be.true();
+      const element = { offsetTop: 99 };
+      NavigationUtil.scrollToElement(element);
+      this.stubScrollTo.calledWith(0, 99).should.be.true();
     });
   });
 

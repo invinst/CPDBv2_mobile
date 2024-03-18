@@ -6,6 +6,7 @@ import {
   recentActivitiesSelector,
   newDocumentAllegationsSelector,
   complaintSummariesSelector,
+  topLawsuitsSelector,
   getCMSRequested,
   getEmbed,
   shuffled,
@@ -136,6 +137,39 @@ describe('landing page selectors', function () {
 
       stubShuffle.should.be.calledWith(lodash.range(0, 12));
       stubShuffle.should.be.calledWith(lodash.range(12, 40));
+    });
+  });
+
+  describe('topLawsuitsSelector', function () {
+    it('should return empty result', function () {
+      topLawsuitsSelector(state).should.eql([]);
+    });
+
+    it('should return correct result', function () {
+      state.landingPage.topLawsuits = [
+        {
+          'case_no': '00-L-1234',
+          'summary': 'summary',
+          'incident_date': '2016-04-18',
+        },
+        {
+          'case_no': '00-L-1235',
+          'summary': 'summary',
+          'incident_date': null,
+        },
+      ];
+      sortBy(topLawsuitsSelector(state), 'caseNo').should.deepEqual([
+        {
+          caseNo: '00-L-1234',
+          summary: 'summary',
+          incidentDate: 'Apr 18, 2016',
+        },
+        {
+          caseNo: '00-L-1235',
+          summary: 'summary',
+          incidentDate: null,
+        },
+      ]);
     });
   });
 

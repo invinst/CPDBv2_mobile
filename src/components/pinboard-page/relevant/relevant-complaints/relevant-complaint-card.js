@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import styles from './relevant-complaint-card.sass';
 import BaseComplaintCard from 'components/pinboard-page/relevant/common/base-complaint-card';
-import { getComplaintMapUrl } from 'utils/mapbox';
+import { getStreetMapUrl } from 'utils/mapbox';
 import withUndoCard from 'components/pinboard-page/cards/with-undo-card';
 import { PINBOARD_PAGE } from 'constants';
 
@@ -24,7 +24,7 @@ export default function RelevantComplaintCard(props) {
       to={ `/complaint/${crid}/` }
       className={ styles.relevantComplaintMap }
       style={ point ? {
-        background: `url("${getComplaintMapUrl(point.lat, point.lon, 130, 176)}") no-repeat center/cover`,
+        background: `url("${getStreetMapUrl(point.lat, point.lon, 130, 176)}") no-repeat center/cover`,
       }: null }
     />
   );

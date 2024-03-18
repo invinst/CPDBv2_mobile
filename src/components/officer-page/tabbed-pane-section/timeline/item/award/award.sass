@@ -2,7 +2,7 @@
 @import '../base'
 
 
-$height: 58px
+$height: 68px
 
 \:local(.wrapper)
   @extend %base-wrapper
@@ -19,14 +19,18 @@ $height: 58px
 
     .category
       @extend %base-category
+      width: calc(100% - 97px)
+      overflow: hidden
       display: inline-block
       vertical-align: middle
-      font-size: 12px
       color: $boulder-color
       font-weight: 300
 
-    .date
-      @extend %base-date
-      font-size: 12px
-      color: $boulder-color
-      font-weight: 300
+    .award-right
+      @extend %base-right
+
+      .date
+        @extend %base-date
+        color: $boulder-color
+        font-weight: 300
+

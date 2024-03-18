@@ -15,6 +15,7 @@ import TopOfficersByAllegation from 'components/landing-page/top-officers-by-all
 import RecentActivities from 'components/landing-page/recent-activities';
 import NewDocumentAllegations from 'components/landing-page/new-document-allegations';
 import ComplaintSummaries from 'components/landing-page/complaint-summaries';
+import TopLawsuits from 'components/landing-page/top-lawsuits';
 import SearchPage from 'components/search-page';
 import OfficerPage from 'components/officer-page';
 import ComplaintPage from 'components/complaint-page';
@@ -43,6 +44,7 @@ describe('RouterRoot', function () {
     stub(RecentActivities.prototype, 'componentDidMount').returns(noop);
     stub(NewDocumentAllegations.prototype, 'componentDidMount').returns(noop);
     stub(ComplaintSummaries.prototype, 'componentDidMount').returns(noop);
+    stub(TopLawsuits.prototype, 'componentDidMount').returns(noop);
     renderRouter('/').find(LandingPage).exists().should.be.true();
   });
 

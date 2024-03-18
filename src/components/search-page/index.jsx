@@ -27,8 +27,7 @@ export default class SearchPage extends Component {
       if (isEmpty(recentSuggestionIds)) {
         fetchedEmptyRecentSearchItems();
       } else {
-        const { officerIds, crids, trrIds } = recentSuggestionIds;
-        fetchRecentSearchItems(officerIds, crids, trrIds);
+        fetchRecentSearchItems(recentSuggestionIds);
       }
     }
 

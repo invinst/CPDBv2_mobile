@@ -75,6 +75,13 @@ export const crTransform = (item, index) => ({
   attachments: attachmentsTransform(item.attachments),
 });
 
+export const lawsuitTransform = (item, index) => ({
+  ...baseTransform(item, index),
+  caseNo: item['case_no'],
+  primaryCause: item['primary_cause'] || 'Unknown',
+  attachments: attachmentsTransform(item['attachments']),
+});
+
 export const trrTransform = (item, index) => ({
   ...baseTransform(item, index),
   trrId: item['trr_id'],
@@ -88,6 +95,7 @@ export const awardTransform = (item, index) => ({
 
 const transformMap = {
   [TIMELINE_ITEMS.CR]: crTransform,
+  [TIMELINE_ITEMS.LAWSUIT]: lawsuitTransform,
   [TIMELINE_ITEMS.FORCE]: trrTransform,
   [TIMELINE_ITEMS.JOINED]: baseTransform,
   [TIMELINE_ITEMS.UNIT_CHANGE]: baseTransform,

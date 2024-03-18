@@ -4,13 +4,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const http = require('http');
 const nightwatchConfig = require('../nightwatch.json');
-const port = process.env.MOCK_SERVER_PORT || 9002;
 
 // FIXME: Refactor the path here
 const api = require(__dirname + '/mock-api');
-api.port = port;
-
-console.info(`API Server has been started at port ${port}`);
 
 const server = http.createServer(app);
 
@@ -24,10 +20,12 @@ app.use(cors({
 // We haven't handle our api-server for specific params yet
 // TODO: Handle parameters here
 app.use('/*', function (req, res) {
-  api.call(req)(res);
+  api.getResponse(req)(res);
 });
 
 
-server.listen(port);
-
-module.exports = server;
+module.exports = function (domainPort=9002) {
+  console.info(`API Server has been started at port ${domainPort}`);
+  server.listen(domainPort);
+  return server;
+};

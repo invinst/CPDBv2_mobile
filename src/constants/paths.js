@@ -2,6 +2,7 @@
 export const SEARCH_PATH = '/search/';
 export const OFFICER_PATH = '/officer/';
 export const COMPLAINT_PATH = '/complaint/';
+export const LAWSUIT_PATH = '/lawsuit/';
 export const TRR_PATH = '/trr/';
 export const PINBOARD_PATH = '/pinboard/';
 
@@ -9,6 +10,7 @@ export const PINBOARD_PATH = '/pinboard/';
 export const SEARCH_ROUTER_PATH = SEARCH_PATH;
 export const OFFICER_ROUTER_PATH = `${OFFICER_PATH}:id/:firstParam?/:secondParam?`;
 export const COMPLAINT_ROUTER_PATH = `${COMPLAINT_PATH}:complaintId/`;
+export const LAWSUIT_ROUTER_PATH = `${LAWSUIT_PATH}:lawsuitCaseNo/`;
 export const TRR_ROUTER_PATH = `${TRR_PATH}:trrId/`;
 export const PINBOARD_ROUTER_PATH = `${PINBOARD_PATH}:pinboardId?/:pinboardTitle?/`;
 export const PINBOARD_REDIRECT_ROUTER_PATH = `${PINBOARD_PATH}:pinboardId/`;

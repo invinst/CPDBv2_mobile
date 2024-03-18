@@ -37,7 +37,8 @@ function getDefaultModules() {
             loader: 'sass-loader',
             options: {
               outputStyle: 'expanded',
-              indentedSyntax: true
+              indentedSyntax: true,
+              includePaths: ['src/styles'],
             }
           },
         ]
@@ -58,6 +59,7 @@ function getDefaultModules() {
             loader: 'sass-loader',
             options: {
               outputStyle: 'expanded',
+              includePaths: ['src/styles'],
             }
           }
         ]

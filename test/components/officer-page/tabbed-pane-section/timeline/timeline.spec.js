@@ -53,6 +53,7 @@ describe('Timeline component', function () {
     const filterCount = {
       ALL: 1,
       CRS: 1,
+      LAWSUITS: 0,
       SUSTAINED: 0,
       FORCE: 0,
       AWARDS: 0,
@@ -74,6 +75,7 @@ describe('Timeline component', function () {
     const filterCount = {
       ALL: 10,
       CRS: 4,
+      LAWSUITS: 0,
       SUSTAINED: 3,
       FORCE: 2,
       AWARDS: 1,
@@ -86,11 +88,19 @@ describe('Timeline component', function () {
     const filterDropdown = wrapper.find(Dropdown);
     filterDropdown.prop('defaultValue').should.eql('All');
     filterDropdown.prop('options').should.eql(
-      ['All', 'Complaints', 'Sustained', 'Use Of Force', 'Awards', 'Rank/Unit Changes']
+      ['All', 'Complaints', 'Sustained', 'Use Of Force', 'Awards', 'Lawsuits', 'Rank/Unit Changes']
     );
     filterDropdown.prop('className').should.eql('timeline-filter');
     filterDropdown.prop('labels').should.eql(
-      ['All (10)', 'Complaints (4)', 'Sustained (3)', 'Use Of Force (2)', 'Awards (1)', 'Rank/Unit Changes']
+      [
+        'All (10)',
+        'Complaints (4)',
+        'Sustained (3)',
+        'Use Of Force (2)',
+        'Awards (1)',
+        'Lawsuits (0)',
+        'Rank/Unit Changes',
+      ]
     );
   });
 

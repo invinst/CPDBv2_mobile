@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import OfficerItem from './officer-item';
 import CrItem from './cr-item';
 import TrrItem from './trr-item';
+import LawsuitItem from './lawsuit-item';
 import style from './recent-items.sass';
 
 
@@ -12,6 +13,7 @@ const RecentItems = ({ items, query }) => {
     'OFFICER': OfficerItem,
     'CR': CrItem,
     'TRR': TrrItem,
+    'LAWSUIT': LawsuitItem,
   };
 
   return (

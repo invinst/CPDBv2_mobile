@@ -28,9 +28,9 @@ function configureStore(initialState) {
     scrollPositionMiddleware,
     analyticTrackingMiddleware,
     trackingMiddleware,
+    appConfigMiddleware,
     fetchAndRedirectPinboardMiddleware,
     fetchToastMiddleware,
-    appConfigMiddleware,
     fetchPinboardsMiddleware,
   ];
   if (isPinboardFeatureEnabled()) {

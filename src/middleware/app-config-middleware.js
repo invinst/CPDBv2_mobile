@@ -1,6 +1,6 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
 
-import { APP_CONFIG_FETCH_SUCCESS, fetchAppConfig } from 'actions/common/app-config';
+import { APP_CONFIG_FETCH_SUCCESS, fetchAppConfig, appConfigLoaded } from 'actions/common/app-config';
 import appConfig from 'utils/app-config';
 import { APP_CONFIG_KEYS } from 'constants';
 
@@ -25,6 +25,7 @@ const appConfigMiddleware = store => next => action => {
   }
   if (action.type === APP_CONFIG_FETCH_SUCCESS) {
     appConfig.set(appConfigTransform(action.payload));
+    store.dispatch(appConfigLoaded());
   }
 
   return result;

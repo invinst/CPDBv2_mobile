@@ -146,18 +146,18 @@ export const complaintSelector = createSelector(
 
 export const getCMSRequested = state => state.complaintPage.cmsRequested;
 
-const hasAttachmentSelector = createSelector(
+const hasAttachmentsSelector = createSelector(
   (state, props) => state.complaintPage.complaints[props.crid],
   complaint => !isEmpty(get(complaint, 'attachments'))
 );
 
 export const requestDocumentButtonMessage = (state, props) => (
-  hasAttachmentSelector(state, props) ? cmsSelector(state, 'complaintPage', 'new_document_notification') :
+  hasAttachmentsSelector(state, props) ? cmsSelector(state, 'complaintPage', 'new_document_notification') :
     cmsSelector(state, 'complaintPage', 'document_request_instruction')
 );
 
 export const buttonText = (state, props) => (
-  hasAttachmentSelector(state, props) ? 'New Document Notifications': 'Request Documents'
+  hasAttachmentsSelector(state, props) ? 'New Document Notifications': 'Request Documents'
 );
 
 export const getIsCrPinned = (state, props) => (

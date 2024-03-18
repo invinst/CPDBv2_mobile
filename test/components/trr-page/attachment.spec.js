@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 
 import Attachment from 'components/trr-page/attachment';
 
-
 describe('<Attachment />', function () {
 
   it('should render enough contents', function () {

@@ -60,6 +60,7 @@ describe('recentSuggestions reducer', function () {
       { type: 'TRR', id: 123, data: {} },
       { type: 'CR', id: '1088234', data: {} },
       { type: 'OFFICER', id: 15499, data: {} },
+      { type: 'LAWSUIT', id: 25, data: {} },
     ], {
       type: FETCH_RECENT_SEARCH_ITEMS_SUCCESS,
       payload: [
@@ -79,6 +80,14 @@ describe('recentSuggestions reducer', function () {
         {
           'id': 123,
           'type': 'TRR',
+        },
+        {
+          'id': 25,
+          'case_no': '00-L-5230',
+          'type': 'LAWSUIT',
+          'primary_cause': 'Excessive force',
+          'summary': 'Lawsuit summary',
+          'incident_date': '2016-09-11',
         },
       ],
     }).should.eql([
@@ -109,6 +118,18 @@ describe('recentSuggestions reducer', function () {
           'name': 'Arthur La Pointe',
           'badge': '67',
           'type': 'OFFICER',
+        },
+      },
+      {
+        type: 'LAWSUIT',
+        id: 25,
+        data: {
+          type: 'LAWSUIT',
+          id: 25,
+          'case_no': '00-L-5230',
+          'primary_cause': 'Excessive force',
+          'summary': 'Lawsuit summary',
+          'incident_date': '2016-09-11',
         },
       },
     ]);

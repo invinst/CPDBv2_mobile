@@ -6,6 +6,7 @@ import topOfficersByAllegation from './top-officers-by-allegation';
 import recentActivities from './recent-activities';
 import newDocumentAllegations from './new-document-allegations';
 import complaintSummaries from './complaint-summaries';
+import topLawsuits from './top-lawsuits';
 
 
 export default combineReducers({
@@ -15,4 +16,5 @@ export default combineReducers({
   recentActivities,
   newDocumentAllegations,
   complaintSummaries,
+  topLawsuits,
 });

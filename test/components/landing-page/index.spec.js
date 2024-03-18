@@ -42,6 +42,7 @@ describe('<LandingPage />', function () {
         recentActivities: [{ kind: 'single_officer' }],
         newDocumentAllegations: [1],
         complaintSummaries: [1],
+        topLawsuits: [1],
         cmsRequested: true,
       },
       pinboardIntroduction: {},

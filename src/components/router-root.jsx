@@ -12,6 +12,7 @@ import 'styles/helper.sass';
 import SearchPageContainer from 'containers/search-page-container';
 import OfficerPageContainer from 'containers/officer-page-container';
 import ComplaintPageContainer from 'containers/complaint-page-container';
+import LawsuitPageContainer from 'containers/lawsuit-page-container';
 import TRRPageContainer from 'containers/trr-page-container';
 import LandingPageContainer from 'containers/landing-page-container';
 import TopOfficersByAllegationContainer from 'containers/landing-page/top-officers-by-allegation';
@@ -21,6 +22,7 @@ import {
   SEARCH_ROUTER_PATH,
   OFFICER_ROUTER_PATH,
   COMPLAINT_ROUTER_PATH,
+  LAWSUIT_ROUTER_PATH,
   TRR_ROUTER_PATH,
   PINBOARD_ROUTER_PATH,
   PINBOARD_SOCIAL_GRAPH_REDIRECT_ROUTER_PATH,
@@ -56,6 +58,11 @@ export default function RouterRoot(props) {
       <Route
         path={ COMPLAINT_ROUTER_PATH }
         component={ ComplaintPageContainer }
+      />
+
+      <Route
+        path={ LAWSUIT_ROUTER_PATH }
+        component={ LawsuitPageContainer }
       />
 
       <Route

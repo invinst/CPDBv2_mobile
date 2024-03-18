@@ -1,0 +1,52 @@
+@import variables
+@import '../base'
+
+$height: 68px
+$lawsuit-kind-width: 40px
+$lawsuit-right-width: 81px
+
+\:local(.lawsuit-row)
+  @extend  %base-wrapper
+  height: $height
+  line-height: $height - 1px
+
+  .lawsuit-item-content
+    .item-wrapper-kind
+      display: inline-block
+
+      .lawsuit-item-kind
+        @extend %base-kind
+        border-color: $thunder-color
+        background: $thunder-color url("/img/ic-coin-stack.svg") no-repeat center center
+        background-size: 16px 16px
+        border-radius: 2px
+        color: white
+
+    .lawsuit-detail
+      width: calc(100% - #{lawsuit-kind-width} - #{$lawsuit-right-width})
+
+      @extend %base-detail
+      display: inline-block
+      vertical-align: middle
+
+      .lawsuit-item-title
+        @extend %base-category
+        white-space: nowrap
+        text-overflow: ellipsis
+        overflow: hidden
+        color: $thunder-color
+
+      .lawsuit-item-subtitle
+        font-weight: 300
+        line-height: 14px
+        font-size: 16px
+        color: $boulder-color
+
+    .lawsuit-right
+      @extend %base-right
+
+      .lawsuit-item-date
+        @extend %base-date
+        color: $boulder-color
+        font-weight: 300
+        float: none

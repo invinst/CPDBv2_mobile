@@ -43,14 +43,14 @@ export const suggestTerm = get(
     SUGGESTION_REQUEST_FAILURE]
 );
 
-export const fetchRecentSearchItems = (officerIds, crids, trrIds) => get(
+export const fetchRecentSearchItems = ({ officerIds, crids, trrIds, lawsuitIds }) => get(
   v2Url(RECENT_SEARCH_ITEMS_API_ENDPOINT),
   [
     FETCH_RECENT_SEARCH_ITEMS_START,
     FETCH_RECENT_SEARCH_ITEMS_SUCCESS,
     FETCH_RECENT_SEARCH_ITEMS_FAILURE,
   ],
-)({ 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds });
+)({ 'officer_ids': officerIds, crids: crids, 'trr_ids': trrIds, 'lawsuit_ids': lawsuitIds });
 
 export const getSuggestionWithContentType = (term, params, adapter) => get(
   v2Url(SINGLE_SEARCH_API_ENDPOINT),

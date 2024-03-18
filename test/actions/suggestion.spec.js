@@ -45,7 +45,12 @@ describe('suggestions actions', function () {
 
   describe('fetchRecentSearchItems', function () {
     it('should return right action', function () {
-      fetchRecentSearchItems([8562], ['271235'], [123]).should.eql({
+      fetchRecentSearchItems({
+        officerIds: [8562],
+        crids: ['271235'],
+        trrIds: [123],
+        lawsuitIds: [234567],
+      }).should.eql({
         types: [
           FETCH_RECENT_SEARCH_ITEMS_START,
           FETCH_RECENT_SEARCH_ITEMS_SUCCESS,
@@ -59,6 +64,7 @@ describe('suggestions actions', function () {
               'officer_ids': [8562],
               crids: ['271235'],
               'trr_ids': [123],
+              'lawsuit_ids': [234567],
             },
           },
         },

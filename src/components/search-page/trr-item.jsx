@@ -38,7 +38,6 @@ TrrItem.propTypes = {
     showIntroduction: PropTypes.bool,
   }),
   query: PropTypes.string,
-  showIntroduction: PropTypes.bool,
 };
 
 TrrItem.defaultProps = {

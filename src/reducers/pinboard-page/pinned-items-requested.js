@@ -11,5 +11,5 @@ export default handleActions({
   [PINBOARD_COMPLAINTS_FETCH_REQUEST_START]: (state, action) => true,
   [PINBOARD_OFFICERS_FETCH_REQUEST_START]: (state, action) => true,
   [PINBOARD_TRRS_FETCH_REQUEST_START]: (state, action) => true,
-  [LOCATION_CHANGE]: (state, action) => false,
+  [LOCATION_CHANGE]: (state, action) => action.payload.action === 'REPLACE' && state,
 }, false);

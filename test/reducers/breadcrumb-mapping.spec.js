@@ -8,6 +8,7 @@ import {
   PINBOARD_LATEST_RETRIEVED_FETCH_REQUEST_SUCCESS,
 } from 'actions/pinboard';
 import breadcrumbMapping from 'reducers/breadcrumb/breadcrumb-mapping';
+import { LAWSUIT_FETCH_SUCCESS } from 'actions/lawsuit-page';
 
 
 describe('breadcrumbMapping reducer', function () {
@@ -39,6 +40,15 @@ describe('breadcrumbMapping reducer', function () {
       payload: { crid: 123 },
     }).should.deepEqual({
       '/complaint/123/': 'CR 123',
+    });
+  });
+
+  it('should handle LAWSUIT_FETCH_SUCCESS', function () {
+    breadcrumbMapping({}, {
+      type: LAWSUIT_FETCH_SUCCESS,
+      payload: { 'case_no': 123 },
+    }).should.deepEqual({
+      '/lawsuit/123/': 'Case 123',
     });
   });
 

@@ -67,7 +67,8 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               outputStyle: 'expanded',
-              indentedSyntax: true
+              indentedSyntax: true,
+              includePaths: ['src/styles'],
             }
           },
         ]
@@ -88,6 +89,7 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               outputStyle: 'expanded',
+              includePaths: ['src/styles'],
             }
           }
         ]

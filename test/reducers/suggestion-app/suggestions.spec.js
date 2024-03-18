@@ -15,6 +15,7 @@ describe('suggestions reducer', function () {
       'DATE > TRR': [],
       'DATE > OFFICERS': [],
       'INVESTIGATOR > CR': [],
+      LAWSUIT: [],
       CR: [],
       TRR: [],
       OFFICER: [],
@@ -32,6 +33,7 @@ describe('suggestions reducer', function () {
       TRR: [3, 4],
       OFFICER: [5, 6],
       UNIT: [9, 10],
+      LAWSUIT: [11, 12],
     };
 
     suggestions({}, {
@@ -46,6 +48,7 @@ describe('suggestions reducer', function () {
       TRR: [3, 4],
       OFFICER: [5, 6],
       UNIT: [9, 10],
+      LAWSUIT: [11, 12],
     });
   });
 

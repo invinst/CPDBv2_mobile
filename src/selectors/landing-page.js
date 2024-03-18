@@ -84,6 +84,18 @@ export const complaintSummariesSelector = createWithIsPinnedSelector(
   PINBOARD_PAGE.PINNED_ITEM_TYPES.CR,
 );
 
+//Lawsuits
+const getTopLawsuits = state => get(state, 'landingPage.topLawsuits', []);
+
+export const topLawsuitsSelector = createSelector(
+  getTopLawsuits,
+  lawsuits => lawsuits.map(lawsuit => ({
+    caseNo: lawsuit.case_no,
+    summary: lawsuit.summary,
+    incidentDate: formatDate(get(lawsuit, 'incident_date'), false),
+  }))
+);
+
 // Others
 export const getCMSRequested = state => state.landingPage.cmsRequested;
 export const getEmbed = (props) => compact(get(props, 'location.pathname', '').split('/'))[0] === 'embed';

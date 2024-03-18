@@ -4,6 +4,7 @@ import {
   TOP_OFFICERS_BY_ALLEGATION_ENDPOINT,
   RECENT_ACTIVITIES_ENDPOINT,
   NEW_DOCUMENT_ALLEGATIONS_ENDPOINT,
+  TOP_LAWSUITS_ENDPOINT,
 } from 'constants';
 import { v2Url } from 'utils/url-util';
 import {
@@ -12,6 +13,7 @@ import {
   requestRecentActivities,
   requestNewDocumentAllegations,
   requestComplaintSummaries,
+  requestTopLawsuits,
   LANDING_PAGE_CMS_REQUEST_START,
   LANDING_PAGE_CMS_REQUEST_SUCCESS,
   LANDING_PAGE_CMS_REQUEST_FAILURE,
@@ -27,6 +29,9 @@ import {
   COMPLAINT_SUMMARIES_REQUEST_START,
   COMPLAINT_SUMMARIES_REQUEST_SUCCESS,
   COMPLAINT_SUMMARIES_REQUEST_FAILURE,
+  TOP_LAWSUITS_REQUEST_START,
+  TOP_LAWSUITS_REQUEST_SUCCESS,
+  TOP_LAWSUITS_REQUEST_FAILURE,
 } from 'actions/landing-page';
 
 
@@ -118,6 +123,25 @@ describe('landing-page actions', function () {
         payload: {
           request: {
             url: `${v2Url(COMPLAINT_SUMMARIES_ENDPOINT)}`,
+            adapter: undefined,
+            params: undefined,
+          },
+        },
+      });
+    });
+  });
+
+  describe('requestTopLawsuits', function () {
+    it('should return right action', function () {
+      requestTopLawsuits().should.eql({
+        types: [
+          TOP_LAWSUITS_REQUEST_START,
+          TOP_LAWSUITS_REQUEST_SUCCESS,
+          TOP_LAWSUITS_REQUEST_FAILURE,
+        ],
+        payload: {
+          request: {
+            url: `${v2Url(TOP_LAWSUITS_ENDPOINT)}`,
             adapter: undefined,
             params: undefined,
           },

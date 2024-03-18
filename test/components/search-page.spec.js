@@ -65,6 +65,7 @@ describe('<SearchPage />', function () {
           officerIds: [8562],
           crids: ['123456'],
           trrIds: [456789],
+          lawsuitIds: [234567],
         };
         mount(
           <SearchPage
@@ -74,11 +75,12 @@ describe('<SearchPage />', function () {
           />
         );
 
-        fetchRecentSearchItemsSpy.should.be.calledWith(
-          [8562],
-          ['123456'],
-          [456789],
-        );
+        fetchRecentSearchItemsSpy.should.be.calledWith({
+          officerIds: [8562],
+          crids: ['123456'],
+          trrIds: [456789],
+          lawsuitIds: [234567],
+        });
       });
 
       it('should not be called if recentSuggestionIds is empty', function () {
