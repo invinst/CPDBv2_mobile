@@ -149,18 +149,6 @@ describe('ComplaintPageTest', function () {
     api.mock('GET', '/api/v2/mobile/cr/1053667/', 200, mockComplaint);
     api.mock('GET', '/api/v2/mobile/toast/', 200, mockToasts);
     api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
-    api.mockPost(
-      '/api/v2/mobile/cr/1053667/request-document/',
-      200,
-      { email: 'valid@email.com' },
-      { 'message': 'Thanks for subscribing.', crid: 1053667 }
-    );
-    api.mockPost(
-      '/api/v2/mobile/cr/1053667/request-document/',
-      400,
-      { email: 'invalid#email.com' },
-      { 'message': 'Sorry, we can not subscribe your email' }
-    );
     this.complaintPage = client.page.complaintPage();
     done();
   });
