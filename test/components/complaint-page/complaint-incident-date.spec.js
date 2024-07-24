@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+
 import ComplaintIncidentDate from 'components/complaint-page/complaint-incident-date';
 
 describe('ComplaintIncidentDate component', function () {
