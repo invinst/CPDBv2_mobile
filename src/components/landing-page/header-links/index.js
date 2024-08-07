@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { QA_URL } from 'constants/index';
-import PinboardButtonContainer from 'containers/landing-page/header-links/pinboard-button-container';
 import styles from './header-links.sass';
 
 
