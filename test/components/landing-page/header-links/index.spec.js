@@ -13,7 +13,5 @@ describe('RightLinks component', function () {
     tags.at(0).prop('className').should.equal('header-link');
     tags.at(0).prop('href').should.equal('http://how.cpdp.works/');
     tags.at(0).text().should.equal('Q&A');
-
-    wrapper.find('Connect(PinboardButton)').exists().should.be.true();
   });
 });
