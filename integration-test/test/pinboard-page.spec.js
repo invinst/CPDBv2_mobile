@@ -510,18 +510,6 @@ describe('Pinboard Page', function () {
       client.assert.urlContains('/complaint/1071234/');
     });
 
-<<<<<<< HEAD
-    it('should go to document pdf link in new tab when clicking on left half of a complaint card', function (client) {
-      const relevantDocumentsSection = this.pinboardPage.section.relevantDocuments;
-      relevantDocumentsSection.section.documentCard.click('@leftHalf');
-      client.switchToRecentTab();
-      client.assert.urlEquals(
-        'https://s3.documentcloud.org/documents/5680384/CRID-1083633-CR-CRID-1083633-CR-Tactical.pdf'
-      );
-    });
-
-=======
->>>>>>> staging
     context('undo card', function () {
       context('adding relevant coaccusal to pinboard', function () {
         const updatedRelevantDocumentsResponse = getPaginationResponse(
@@ -1051,28 +1039,6 @@ describe('Pinboard Page', function () {
       pinboardsListSection.waitForElementNotPresent('@pinboardsTitle');
     });
 
-<<<<<<< HEAD
-=======
-    context('go from home page to pinboard page', function () {
-      it('should render the pinboards list', function (client) {
-        api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, mockData.pinboardData);
-        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
-        const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
-        const mainPage = client.page.main();
-        mainPage.navigate();
-        mainPage.section.pinboardButtonIntroduction.click('@pinboardButton');
-        this.pinboardPage.waitForElementVisible('@pinboardsListButton');
-        this.pinboardPage.click('@pinboardsListButton');
-        firstPinboardItem.waitForElementVisible('@title');
-
-        const pinboardItems = pinboardsListSection.elements.pinboardItems;
-        client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
-          assert.equal(result.value.length, 3);
-        });
-      });
-    });
-
->>>>>>> staging
     context('go from search page to pinboard page', function () {
       it('should render the pinboards list', function (client) {
         api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, mockData.pinboardData);
