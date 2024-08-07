@@ -1,121 +1,165 @@
-const { isNil } = require('lodash');
+const {
+  isUndefined, has, get,
+  isArray, isEmpty, times,
+  concat, map, isFunction, reduce, trimEnd,
+} = require('lodash');
 
-const hashBody = (body) => JSON.stringify(body, Object.keys(body).sort());
+const sortObjectValues = (obj) => reduce(obj || {}, (sortedObject, value, key) => {
+  if (isArray(value)) {
+    sortedObject[key] = value.sort();
+  } else {
+    sortedObject[key] = value;
+  }
+  return sortedObject;
+}, {});
+
+const hashBody = (body) => isEmpty(body) ? '' : JSON.stringify(sortObjectValues(body), Object.keys(body).sort());
 const return404 = (response) => response.status(404).send();
 
-const buildApi = function () {
-  let handleMap = {};
-
-  const getCurrentResponse = function (responseObj) {
-    if (responseObj === undefined) {
-      return null;
-    }
-    let counter = responseObj.responses.length === 1 ? 0 : responseObj.counter;
-    let response = responseObj.responses[counter];
-    responseObj.counter++;
-    return response;
-  };
-
-  const mock = function (method, uri, status, data, delay=0) {
-    if (!(method in handleMap)) {
-      handleMap[method] = {};
-    }
-
-    if (!(uri in handleMap[method])) {
-      handleMap[method][uri] = {
-        counter: 0,
-        responses: [],
-      };
-    }
-
-    handleMap[method][uri].responses.push(function (response) {
-      setTimeout(function () {
-        response.status(status).send(data);
-      }, delay);
-    });
-  };
-
-  const mockPostPut = function (uri, status, body, data, delay=0, sideEffects, method) {
-    if (!(method in handleMap)) {
-      handleMap[method] = {};
-    }
-    if (!(uri in handleMap[method])) {
-      handleMap[method][uri] = {};
-    }
-
-    const resolveFunc = function (response) {
-      const responseIndex = Math.min(resolveFunc.responses.length -1, resolveFunc.counter);
-      const content = resolveFunc.responses[responseIndex];
-      resolveFunc.counter += 1;
-      setTimeout(
-        () => (typeof content === 'undefined') ?
-          return404(response) :
-          response.status(status).send(content),
-        delay
-      );
-    };
-    resolveFunc.counter = 0;
-    resolveFunc.responses = sideEffects || [data];
-
-    handleMap[method][uri][hashBody(body)] = resolveFunc;
-  };
-
-  const mockPostPutNoBody = function (uri, status, data, method, delay) {
-    if (!(method in handleMap)) {
-      handleMap[method] = {};
-    }
-
-    const resolveFunc = function (response) {
-      setTimeout(
-        () => response.status(status).send(data),
-        delay,
-      );
-    };
-
-    handleMap[method][uri] = resolveFunc;
-  };
-
-  const mockPost = function (uri, status, body, data, delay=0, sideEffects) {
-    if (isNil(body)) {
-      mockPostPutNoBody(uri, status, data, 'POST', delay);
+const parseUrlParams = (paramsString) => {
+  if (isUndefined(paramsString)) {
+    return {};
+  }
+  const params = {};
+  for (const [key, value] of new URLSearchParams(paramsString)) {
+    if (key.endsWith('[]')) {
+      const splitKey = key.substr(0, key.length - 2);
+      params[splitKey] = [...(params[splitKey] || []), value];
     } else {
-      mockPostPut(uri, status, body, data, delay, sideEffects, 'POST');
+      params[key] = value;
     }
-  };
-
-  const mockPut = function (uri, status, body, data, delay = 0, sideEffects) {
-    if (isNil(body)) {
-      mockPostPutNoBody(uri, status, data, 'PUT', delay);
-    } else {
-      mockPostPut(uri, status, body, data, delay, sideEffects, 'PUT');
-    }
-  };
-
-  const cleanMock = function () {
-    handleMap = {};
-  };
-
-  const call = function (req) {
-    const uri = req.originalUrl;
-    if (req.method === 'POST' || req.method === 'PUT') {
-      const handler = (handleMap[req.method] || {})[uri] || {};
-      if (typeof handler === 'function') {
-        return handler;
-      }
-      return handler[hashBody(req.body)] || return404;
-    } else {
-      return getCurrentResponse((handleMap[req.method] || {})[uri]) || return404;
-    }
-  };
-
-  return {
-    mock: mock,
-    mockPost: mockPost,
-    mockPut: mockPut,
-    cleanMock: cleanMock,
-    call: call,
-    handleMap: handleMap,
-  };
+  }
+  return params;
 };
 
-module.exports = buildApi();
+const splitGetUrl = (requestUrl) => {
+  const splittedUrl = requestUrl.split('?');
+  const url = splittedUrl[0];
+  const params = parseUrlParams(splittedUrl[1]);
+  return { url, params };
+};
+
+const stringifyObject = obj => reduce(obj || {}, (stringifiedObj, value, key) => {
+  if (isArray(value)) {
+    stringifiedObj[key] = map(value, v => v.toString());
+  } else {
+    stringifiedObj[key] = value.toString();
+  }
+  return stringifiedObj;
+}, {});
+
+function Request(handleMap, method, url, requestBody) {
+  this.method = method;
+  this.url = url;
+  this.duration = 0;
+  this.requestBody = requestBody;
+  this.handleMap = handleMap;
+  this.responseTimes = -1;
+}
+
+Request.prototype.getURLHandlers = function () {
+  if (!has(this.handleMap, this.method)) {
+    this.handleMap[this.method] = {};
+  }
+  const methodHandlers = this.handleMap[this.method];
+  if (!has(methodHandlers, this.url)) {
+    methodHandlers[this.url] = {};
+  }
+  return methodHandlers[this.url];
+};
+
+Request.prototype.reply = function (status, responseBody) {
+  const urlHandlers = this.getURLHandlers();
+  const delayDuration = this.duration;
+  const response = function (request) {
+    return function (res) {
+      setTimeout(function () {
+        if (isFunction(status)) {
+          const result = status(request);
+
+          res.status(result[0]).send(result[1]);
+        } else {
+          res.status(status).send(responseBody);
+        }
+      }, delayDuration);
+    };
+  };
+  const handlers = urlHandlers[this.requestBody];
+  const replyAll = this.responseTimes === -1;
+  if (replyAll) {
+    urlHandlers[this.requestBody] = response;
+  } else {
+    const responses = times(this.responseTimes, () => response);
+    if (isUndefined(handlers) || !isArray(handlers)) {
+      urlHandlers[this.requestBody] = responses;
+    } else {
+      urlHandlers[this.requestBody] = concat(handlers, responses);
+    }
+  }
+};
+
+Request.prototype.replyOnce = function (status, responseObj) {
+  this.responseTimes = 1;
+  this.reply(status, responseObj);
+};
+
+Request.prototype.delay = function (duration) {
+  this.duration = duration;
+  return this;
+};
+
+Request.prototype.times = function (times) {
+  this.responseTimes = times;
+  return this;
+};
+
+function Mockapi() {
+  this.data = {};
+}
+
+Mockapi.prototype.getResponse = function (request) {
+  const urlHandlers = get(this.data, request.method, {})[trimEnd(request.baseUrl, '/')];
+
+  if (isUndefined(urlHandlers)) {
+    return return404;
+  }
+  const hashedBody = hashBody(request.method === 'GET' ? request.query : request.body);
+  const handlers = urlHandlers[hashedBody] || urlHandlers[''];
+  if (isUndefined(handlers) || (isArray(handlers) && handlers.length === 0)) {
+    return return404;
+  }
+  const reponseHandler = isArray(handlers) ? handlers.shift() : handlers;
+  return reponseHandler(request);
+};
+
+Mockapi.prototype.clean = function () {
+  this.data = {};
+};
+
+Mockapi.prototype.request = function (method, url, requestBody) {
+  const hashedBody = hashBody(requestBody);
+  return new Request(this.data, method, trimEnd(url, '/'), hashedBody);
+};
+
+Mockapi.prototype.onGet = function (url, params) {
+  const { url: requestUrl, params: urlParams } = splitGetUrl(url);
+  return this.request('GET', requestUrl, { ...urlParams, ...stringifyObject(params) });
+};
+
+Mockapi.prototype.onPost = function (url, params) {
+  return this.request('POST', url, params);
+};
+
+Mockapi.prototype.onPut = function (url, params) {
+  return this.request('PUT', url, params);
+};
+
+Mockapi.prototype.onPatch = function (url, params) {
+  return this.request('PATCH', url, params);
+};
+
+Mockapi.prototype.onDelete = function (url, params) {
+  return this.request('DELETE', url, params);
+};
+
+module.exports = new Mockapi();

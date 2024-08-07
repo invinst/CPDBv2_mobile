@@ -1,7 +1,9 @@
 import {
   attachmentsComplaintTransform,
   complaintsWithAttachmentsSelector,
-  hasAttachmentSelector,
+  hasAttachmentsSelector,
+  attachmentsLawsuitTransform,
+  lawsuitsWithAttachmentsSelector,
 } from 'selectors/officer-page/attachments';
 
 
@@ -50,7 +52,7 @@ describe('Officer attachments selectors', function () {
     'unit_name': '153',
   };
 
-  const result = {
+  const complaintResult = {
     date: 'JAN 27, 2005',
     category: 'CR',
     crid: '303350',
@@ -75,9 +77,53 @@ describe('Officer attachments selectors', function () {
     ],
   };
 
+  const lawsuit = {
+    date: '2000-08-06',
+    kind: 'LAWSUIT',
+    rank: 'Detective',
+    'unit_description': 'Recruit Training Section',
+    'unit_name': '044',
+    'case_no': '00-L-5230',
+    'primary_cause': 'Excessive force, Racial epithets',
+    attachments: [
+      {
+        title: 'Phone subject information organization off important.',
+        url: 'https://assets.documentcloud.org/documents/6246754/CRID-1086093-CR-COPA-Summary-Report.pdf',
+        'preview_image_url': 'https://assets.documentcloud.org/documents/6246754/pages/CRID.gif',
+        'file_type': '',
+        'id': '95637',
+      },
+    ],
+  };
+
+  const lawsuitWithoutAttachment = {
+    date: '2000-08-07',
+    kind: 'LAWSUIT',
+    rank: 'Detective',
+    'unit_description': 'Recruit Training Section',
+    'unit_name': '044',
+    'case_no': '00-L-5231',
+    'primary_cause': 'Excessive force, Racial epithets',
+  };
+
+  const lawsuitResult = {
+    date: 'AUG 6, 2000',
+    caseNo: '00-L-5230',
+    primaryCause: 'Excessive force, Racial epithets',
+    attachments: [
+      {
+        title: 'Phone subject information organization off important.',
+        url: 'https://assets.documentcloud.org/documents/6246754/CRID-1086093-CR-COPA-Summary-Report.pdf',
+        previewImageUrl: 'https://assets.documentcloud.org/documents/6246754/pages/CRID.gif',
+        fileType: '',
+        id: '95637',
+      },
+    ],
+  };
+
   describe('attachmentsComplaintTransform', function () {
     it('should return correct result', function () {
-      attachmentsComplaintTransform(complaint).should.eql(result);
+      attachmentsComplaintTransform(complaint).should.eql(complaintResult);
     });
   });
 
@@ -107,9 +153,10 @@ describe('Officer attachments selectors', function () {
         },
       };
 
-      complaintsWithAttachmentsSelector(state, 1).should.eql([result]);
+      complaintsWithAttachmentsSelector(state, 1).should.eql([complaintResult]);
     });
   });
+
 
   describe('hasComplaintSelector', function () {
     it('should return false if complaint has no attachment', function () {
@@ -122,7 +169,7 @@ describe('Officer attachments selectors', function () {
           },
         },
       };
-      hasAttachmentSelector(state, 1).should.be.false();
+      hasAttachmentsSelector(state, 1).should.be.false();
     });
 
     it('should return true if any complaint has attachment', function () {
@@ -135,7 +182,44 @@ describe('Officer attachments selectors', function () {
           },
         },
       };
-      hasAttachmentSelector(state, 1).should.be.true();
+      hasAttachmentsSelector(state, 1).should.be.true();
+    });
+  });
+
+  describe('attachmentsLawsuitTransform', function () {
+    it('should return correct result', function () {
+      attachmentsLawsuitTransform(lawsuit).should.eql(lawsuitResult);
+    });
+  });
+
+  describe('lawsuitsWithAttachmentsSelector', function () {
+    it('should return correct result when primary_cause is not null', function () {
+      const state = {
+        officerPage: {
+          timeline: {
+            data: {
+              1: [lawsuit, lawsuitWithoutAttachment],
+            },
+          },
+        },
+      };
+
+      lawsuitsWithAttachmentsSelector(state, 1).should.eql([lawsuitResult]);
+    });
+
+    it('should return correct result when primary_cause is null', function () {
+      const lawsuitWithNullPrimaryCause = { ...lawsuit, 'primary_cause': null };
+      const state = {
+        officerPage: {
+          timeline: {
+            data: {
+              1: [lawsuitWithNullPrimaryCause, lawsuitWithoutAttachment],
+            },
+          },
+        },
+      };
+
+      lawsuitsWithAttachmentsSelector(state, 1)[0].primaryCause.should.eql('Unknown');
     });
   });
 });

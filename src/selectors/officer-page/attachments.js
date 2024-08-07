@@ -17,19 +17,33 @@ export const attachmentsComplaintTransform = item => ({
 
 const getItems = (state, officerId) => state.officerPage.timeline.data[officerId] || [];
 
-const attachedComplaint = item => !isEmpty(get(item, 'attachments'));
+const attachedComplaint = item => (item.kind == 'CR') && !isEmpty(get(item, 'attachments'));
 
 export const complaintsWithAttachmentsSelector = createSelector(
   getItems,
   items => items.filter(attachedComplaint).map(attachmentsComplaintTransform)
 );
 
-export const hasAttachmentSelector = createSelector(
+export const hasAttachmentsSelector = createSelector(
   getItems,
-  items => !isUndefined(items.find(attachedComplaint))
+  items => !isUndefined(items.find(attachedComplaint) || items.find(attachedLawsuit))
 );
 
 export const numAttachmentsSelector = createSelector(
   getItems,
   items => sum(items.map(item => (item.attachments || []).length))
+);
+
+export const attachmentsLawsuitTransform = item => ({
+  caseNo: item.case_no,
+  date: moment(item.date).format('MMM D, YYYY').toUpperCase(),
+  primaryCause: item.primary_cause || 'Unknown',
+  attachments: attachmentsTransform(item.attachments),
+});
+
+const attachedLawsuit = item => (item.kind == 'LAWSUIT') && !isEmpty(get(item, 'attachments'));
+
+export const lawsuitsWithAttachmentsSelector = createSelector(
+  getItems,
+  items => items.filter(attachedLawsuit).map(attachmentsLawsuitTransform)
 );

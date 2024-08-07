@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import cx from 'classnames';
 
-import Attachments from './attachments';
+import Attachments from '../attachments';
 import styles from './cr.sass';
 
 

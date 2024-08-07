@@ -8,39 +8,50 @@ const mockData = require(__dirname + '/../../mock-data/pinboard-page');
 
 describe('Session Creator Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.cleanMock();
+    api
+      .onGet('/api/v2/mobile/pinboards/5cd06f2b/')
+      .reply(200, mockData.pinboardData);
+    api
+      .onGet('/api/v2/mobile/pinboards/5cd06f2b/complaints/')
+      .reply(200, mockData.pinboardCRsData);
+    api
+      .onGet('/api/v2/mobile/pinboards/5cd06f2b/officers/')
+      .reply(200, mockData.pinboardOfficersData);
+    api
+      .onGet('/api/v2/mobile/pinboards/5cd06f2b/trrs/')
+      .reply(200, mockData.pinboardTRRsData);
+    api
+      .onGet('/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b')
+      .reply(200, mockData.socialGraphData);
+    api
+      .onGet('/api/v2/mobile/social-graph/geographic-crs/?pinboard_id=5cd06f2b')
+      .reply(200, mockData.geographicCrsData);
+    api
+      .onGet('/api/v2/mobile/social-graph/geographic-trrs/?pinboard_id=5cd06f2b')
+      .reply(200, mockData.geographicTrrsData);
+    api
+      .onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true')
+      .reply(200, mockData.pinboardData);
 
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/', 200, mockData.pinboardData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/complaints/', 200, mockData.pinboardCRsData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/officers/', 200, mockData.pinboardOfficersData);
-    api.mock('GET', '/api/v2/mobile/pinboards/5cd06f2b/trrs/', 200, mockData.pinboardTRRsData);
-    api.mock('GET', '/api/v2/mobile/social-graph/network/?pinboard_id=5cd06f2b', 200, mockData.socialGraphData);
-    api.mock(
-      'GET', '/api/v2/mobile/social-graph/geographic-crs/?pinboard_id=5cd06f2b', 200, mockData.geographicCrsData
-    );
-    api.mock(
-      'GET', '/api/v2/mobile/social-graph/geographic-trrs/?pinboard_id=5cd06f2b', 200, mockData.geographicTrrsData
-    );
-    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, mockData.pinboardData);
+    api
+      .onGet(mockData.baseRelevantCoaccusalsUrl)
+      .reply(200, mockData.firstRelevantCoaccusalsResponse);
+    api
+      .onGet(`${mockData.baseRelevantCoaccusalsUrl}limit=4&offset=4`)
+      .reply(200, mockData.secondRelevantCoaccusalsResponse);
+    api
+      .onGet(`${mockData.baseRelevantCoaccusalsUrl}limit=4&offset=8`)
+      .reply(200, mockData.lastRelevantCoaccusalsResponse);
 
-    api.mock('GET', mockData.baseRelevantCoaccusalsUrl, 200, mockData.firstRelevantCoaccusalsResponse);
-    api.mock(
-      'GET', `${mockData.baseRelevantCoaccusalsUrl}limit=4&offset=4`, 200, mockData.secondRelevantCoaccusalsResponse
-    );
-    api.mock(
-      'GET', `${mockData.baseRelevantCoaccusalsUrl}limit=4&offset=8`, 200, mockData.lastRelevantCoaccusalsResponse
-    );
-
-    api.mock('GET', mockData.baseRelevantDocumentsUrl, 200, mockData.emptyPaginationResponse);
-    api.mock('GET', mockData.baseRelevantComplaintsUrl, 200, mockData.emptyPaginationResponse);
+    api
+      .onGet(mockData.baseRelevantDocumentsUrl)
+      .reply(200, mockData.emptyPaginationResponse);
+    api
+      .onGet(mockData.baseRelevantComplaintsUrl)
+      .reply(200, mockData.emptyPaginationResponse);
 
     this.pinboardPage = client.page.pinboardPage();
     this.pinboardPage.navigate(this.pinboardPage.url('5cd06f2b'));
-    done();
-  });
-
-  afterEach(function (client, done) {
-    api.cleanMock();
     done();
   });
 
@@ -81,25 +92,16 @@ describe('Session Creator Pinboard Page', function () {
         title: 'Pinboard Title',
         description: 'Pinboard Description',
       };
-      const sideEffects = [
-        ...new Array(10),
-        {
-          id: '5cd06f2b',
-          'officer_ids': ['1234', '123'],
-          crids: ['1234567'],
-          'trr_ids': ['1234'],
-          title: 'Pinboard Title',
-          description: 'Pinboard Description',
-        },
-      ];
-      api.mockPut(
-        '/api/v2/mobile/pinboards/5cd06f2b/',
-        200,
-        requestBody,
-        undefined,
-        undefined,
-        sideEffects
-      );
+      const successResponse = {
+        id: '5cd06f2b',
+        'officer_ids': ['1234', '123'],
+        crids: ['1234567'],
+        'trr_ids': ['1234'],
+        title: 'Pinboard Title',
+        description: 'Pinboard Description',
+      };
+      api.onPut('/api/v2/mobile/pinboards/5cd06f2b/', requestBody).times(10).reply(404);
+      api.onPut('/api/v2/mobile/pinboards/5cd06f2b/', requestBody).replyOnce(200, successResponse);
 
       // according to this issue https://github.com/nightwatchjs/nightwatch/issues/1824
       // nightwatchjs hasn't supported network condition yet
@@ -143,25 +145,16 @@ describe('Session Creator Pinboard Page', function () {
         title: 'Pinboard Title',
         description: 'Pinboard Description',
       };
-      const sideEffects = [
-        ...new Array(4),
-        {
-          id: '5cd06f2b',
-          'officer_ids': ['1234', '123'],
-          crids: ['1234567'],
-          'trr_ids': ['1234'],
-          title: 'Pinboard Title',
-          description: 'Pinboard Description',
-        },
-      ];
-      api.mockPut(
-        '/api/v2/mobile/pinboards/5cd06f2b/',
-        200,
-        requestBody,
-        undefined,
-        undefined,
-        sideEffects
-      );
+      const successResponse = {
+        id: '5cd06f2b',
+        'officer_ids': ['1234', '123'],
+        crids: ['1234567'],
+        'trr_ids': ['1234'],
+        title: 'Pinboard Title',
+        description: 'Pinboard Description',
+      };
+      api.onPut('/api/v2/mobile/pinboards/5cd06f2b/', requestBody).times(4).reply(404);
+      api.onPut('/api/v2/mobile/pinboards/5cd06f2b/', requestBody).replyOnce(200, successResponse);
 
       // according to this issue https://github.com/nightwatchjs/nightwatch/issues/1824
       // nightwatchjs hasn't supported network condition yet
@@ -235,25 +228,17 @@ describe('Session Creator Pinboard Page', function () {
         title: 'Pinboard Title',
         description: 'Pinboard Description',
       };
-      const sideEffects = [
-        ...new Array(130),
-        {
-          id: '5cd06f2b',
-          'officer_ids': ['1234', '123'],
-          crids: ['1234567'],
-          'trr_ids': ['1234'],
-          title: 'Pinboard Title',
-          description: 'Pinboard Description',
-        },
-      ];
-      api.mockPut(
-        '/api/v2/mobile/pinboards/5cd06f2b/',
-        200,
-        requestBody,
-        undefined,
-        undefined,
-        sideEffects
-      );
+
+      const successResponse = {
+        id: '5cd06f2b',
+        'officer_ids': ['1234', '123'],
+        crids: ['1234567'],
+        'trr_ids': ['1234'],
+        title: 'Pinboard Title',
+        description: 'Pinboard Description',
+      };
+      api.onPut('/api/v2/mobile/pinboards/5cd06f2b/', requestBody).times(130).reply(404);
+      api.onPut('/api/v2/mobile/pinboards/5cd06f2b/', requestBody).replyOnce(200, successResponse);
 
       const relevantCoaccusalsSection = this.pinboardPage.section.relevantCoaccusals;
       const firstCoaccusalCard = relevantCoaccusalsSection.section.coaccusalCard;

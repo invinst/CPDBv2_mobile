@@ -1,5 +1,12 @@
 export const SEARCH_CATEGORIES = [
   {
+    name: 'LAWSUIT',
+    filter: 'LAWSUIT',
+    id: 'lawsuits',
+    path: 'LAWSUIT',
+    queryPrefix: 'lawsuit',
+  },
+  {
     name: 'DATE → COMPLAINT RECORDS',
     filter: 'DATE > CR',
     id: 'dateCRs',
@@ -75,12 +82,14 @@ export const COMPLAINT_PAGE_CMS_API_ENDPOINT = '/cms-pages/cr-page/';
 export const TRR_PAGE_CMS_API_ENDPOINT = '/cms-pages/trr-page/';
 export const PINBOARD_PAGE_CMS_API_ENDPOINT = '/cms-pages/pinboard-page/';
 export const COMPLAINT_API_ENDPOINT = '/mobile/cr/';
+export const LAWSUIT_API_ENDPOINT = '/lawsuit/';
 export const TRR_API_ENDPOINT = '/mobile/trr/';
 export const TOP_OFFICERS_BY_ALLEGATION_ENDPOINT = '/officers/top-by-allegation/';
 export const OFFICERS_API_ENDPOINT = '/mobile/officers/';
 export const RECENT_ACTIVITIES_ENDPOINT = '/activity-grid/';
 export const NEW_DOCUMENT_ALLEGATIONS_ENDPOINT = '/cr/list-by-new-document/';
 export const COMPLAINT_SUMMARIES_ENDPOINT = '/cr/complaint-summaries/';
+export const TOP_LAWSUITS_ENDPOINT = '/lawsuit/top-lawsuits/';
 export const PINBOARDS_API_ENDPOINT = '/mobile/pinboards/';
 export const SOCIAL_GRAPH_API_ENDPOINT = '/mobile/social-graph/';
 export const SOCIAL_GRAPH_GEOGRAPHIC_CRS_API_ENDPOINT = '/mobile/social-graph/geographic-crs/';
@@ -106,6 +115,23 @@ export const CAROUSEL_TYPES = {
   'ACTIVITY': 'ACTIVITY',
   'ALLEGATION': 'ALLEGATION',
   'DOCUMENT': 'DOCUMENT',
+  'LAWSUIT': 'LAWSUIT',
+};
+
+const PINNED_ITEM_TYPES = {
+  'CR': 'CR',
+  'DATE > CR': 'CR',
+  'INVESTIGATOR > CR': 'CR',
+  'OFFICER': 'OFFICER',
+  'UNIT > OFFICERS': 'OFFICER',
+  'DATE > OFFICERS': 'OFFICER',
+  'TRR': 'TRR',
+  'DATE > TRR': 'TRR',
+};
+
+export const SEARCH_ITEM_TYPES = {
+  ...PINNED_ITEM_TYPES,
+  LAWSUIT: 'LAWSUIT',
 };
 
 export const PINBOARD_PAGE = {
@@ -118,16 +144,7 @@ export const PINBOARD_PAGE = {
     NETWORK: 'NETWORK',
     GEOGRAPHIC: 'GEOGRAPHIC',
   },
-  PINNED_ITEM_TYPES: {
-    'CR': 'CR',
-    'DATE > CR': 'CR',
-    'INVESTIGATOR > CR': 'CR',
-    'OFFICER': 'OFFICER',
-    'UNIT > OFFICERS': 'OFFICER',
-    'DATE > OFFICERS': 'OFFICER',
-    'TRR': 'TRR',
-    'DATE > TRR': 'TRR',
-  },
+  PINNED_ITEM_TYPES: PINNED_ITEM_TYPES,
 };
 
 export const MAP_ITEMS = {
@@ -169,3 +186,5 @@ export const PERCENTILE_FIELDS = [
 ];
 
 export const PINBOARD_ACTIONS_PANE_SPACE = 78;
+
+export const BREADCRUMB_HEIGHT = 40;

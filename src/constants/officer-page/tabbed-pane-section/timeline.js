@@ -3,6 +3,7 @@ export const TIMELINE_ITEMS = {
   CR: 'CR',
   FORCE: 'FORCE',
   AWARD: 'AWARD',
+  LAWSUIT: 'LAWSUIT',
   UNIT_CHANGE: 'UNIT_CHANGE',
   RANK_CHANGE: 'RANK_CHANGE',
   JOINED: 'JOINED',
@@ -19,7 +20,7 @@ export const ATTACHMENT_TYPES = {
 export const TIMELINE_FILTERS = {
   ALL: {
     label: 'All',
-    kind: [TIMELINE_ITEMS.CR, TIMELINE_ITEMS.FORCE, TIMELINE_ITEMS.AWARD],
+    kind: [TIMELINE_ITEMS.CR, TIMELINE_ITEMS.FORCE, TIMELINE_ITEMS.AWARD, TIMELINE_ITEMS.LAWSUIT],
   },
   CRS: {
     label: 'Complaints',
@@ -37,6 +38,10 @@ export const TIMELINE_FILTERS = {
   AWARDS: {
     label: 'Awards',
     kind: [TIMELINE_ITEMS.AWARD],
+  },
+  LAWSUITS: {
+    label: 'Lawsuits',
+    kind: [TIMELINE_ITEMS.LAWSUIT],
   },
   RANK_UNIT_CHANGES: {
     label: 'Rank/Unit Changes',

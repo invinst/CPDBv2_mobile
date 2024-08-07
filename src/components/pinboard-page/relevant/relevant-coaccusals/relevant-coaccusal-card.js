@@ -2,12 +2,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import pluralize from 'pluralize';
-import { kebabCase, get } from 'lodash';
+import { get } from 'lodash';
 
 import StaticRadarChart from 'components/common/radar-chart';
 import styles from './relevant-coaccusal-card.sass';
 import PlusButton from 'components/pinboard-page/relevant/common/plus-button';
 import withUndoCard from 'components/pinboard-page/cards/with-undo-card';
+import { officerUrl } from 'utils/url-util';
 import { PINBOARD_PAGE } from 'constants';
 
 
@@ -41,12 +42,11 @@ export default class RelevantCoaccusalCard extends Component {
       rank,
       coaccusalCount,
     } = this.props;
-    const officerSlug = kebabCase(fullName);
     const chartData = percentile && percentile.items;
 
     return (
       <Link
-        to={ `/officer/${id}/${officerSlug}/` }
+        to={ officerUrl(id, fullName) }
         className={ styles.relevantCoaccusalCard }
       >
         <div className='no-print radar-chart-wrapper'>

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Attachment from './attachment';
+import Attachment from '../attachment';
 import Heading from './heading';
 import style from './complaint.sass';
 

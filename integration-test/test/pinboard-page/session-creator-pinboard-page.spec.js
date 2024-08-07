@@ -7,29 +7,22 @@ var mockData = require(__dirname + '/../../mock-data/pinboard-page');
 
 describe('Session Creator Pinboard Page', function () {
   beforeEach(function (client, done) {
-    api.cleanMock();
-    api.mock('GET', '/api/v2/app-config/', 200, mockGetAppConfig);
-    api.mockPost(
-      '/api/v2/mobile/pinboards/',
-      200,
-      mockData.createPinboardeeee7777Params,
-      mockData.createPinboardeeee7777Data,
-    );
-    api.mock('GET', '/api/v2/mobile/pinboards/eeee7777/complaints/', 200, mockData.pinboardeeee7777CRsData);
-    api.mock('GET', '/api/v2/mobile/pinboards/eeee7777/officers/', 200, mockData.pinboardeeee7777OfficersData);
-    api.mock('GET', '/api/v2/mobile/pinboards/eeee7777/trrs/', 200, mockData.pinboardeeee7777TRRsData);
+    api.onGet('/api/v2/app-config/').reply(200, mockGetAppConfig);
+    api
+      .onPost('/api/v2/mobile/pinboards/', mockData.createPinboardeeee7777Params)
+      .reply(200, mockData.createPinboardeeee7777Data,);
+    api.onGet('/api/v2/mobile/pinboards/eeee7777/complaints/').reply(200, mockData.pinboardeeee7777CRsData);
+    api.onGet('/api/v2/mobile/pinboards/eeee7777/officers/').reply(200, mockData.pinboardeeee7777OfficersData);
+    api.onGet('/api/v2/mobile/pinboards/eeee7777/trrs/').reply(200, mockData.pinboardeeee7777TRRsData);
 
-    api.mockPost(
-      '/api/v2/mobile/pinboards/',
-      200,
-      mockData.createPinboardffff6666Params,
-      mockData.createPinboardffff6666Data,
-    );
-    api.mock('GET', '/api/v2/mobile/pinboards/ffff6666/complaints/', 200, mockData.pinboardffff6666CRsData);
-    api.mock('GET', '/api/v2/mobile/pinboards/ffff6666/officers/', 200, mockData.pinboardffff6666OfficersData);
-    api.mock('GET', '/api/v2/mobile/pinboards/ffff6666/trrs/', 200, mockData.pinboardffff6666TRRsData);
+    api
+      .onPost('/api/v2/mobile/pinboards/', mockData.createPinboardffff6666Params)
+      .reply(200, mockData.createPinboardffff6666Data,);
+    api.onGet('/api/v2/mobile/pinboards/ffff6666/complaints/').reply(200, mockData.pinboardffff6666CRsData);
+    api.onGet('/api/v2/mobile/pinboards/ffff6666/officers/').reply(200, mockData.pinboardffff6666OfficersData);
+    api.onGet('/api/v2/mobile/pinboards/ffff6666/trrs/').reply(200, mockData.pinboardffff6666TRRsData);
 
-    api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, mockData.pinboardData);
+    api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, mockData.pinboardData);
 
     this.pinboardPage = client.page.pinboardPage();
     done();
