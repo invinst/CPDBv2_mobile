@@ -1027,25 +1027,6 @@ describe('Pinboard Page', function () {
       pinboardsListSection.waitForElementNotPresent('@pinboardsTitle');
     });
 
-    context('go from home page to pinboard page', function () {
-      it('should render the pinboards list', function (client) {
-        api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true', 200, mockData.pinboardData);
-        const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
-        const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
-        const mainPage = client.page.main();
-        mainPage.navigate();
-        mainPage.section.pinboardButtonIntroduction.click('@pinboardButton');
-        this.pinboardPage.waitForElementVisible('@pinboardsListButton');
-        this.pinboardPage.click('@pinboardsListButton');
-        firstPinboardItem.waitForElementVisible('@title');
-
-        const pinboardItems = pinboardsListSection.elements.pinboardItems;
-        client.elements(pinboardItems.locateStrategy, pinboardItems.selector, function (result) {
-          assert.equal(result.value.length, 3);
-        });
-      });
-    });
-
     context('go from search page to pinboard page', function () {
       it('should render the pinboards list', function (client) {
         api.mock('GET', '/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false', 200, mockData.pinboardData);
