@@ -10,7 +10,6 @@ export default function HeaderLinks() {
   return (
     <div className={ styles.headerLinks }>
       <a href={ QA_URL } className='header-link'>Q&A</a>
-      <PinboardButtonContainer />
     </div>
   );
 }
