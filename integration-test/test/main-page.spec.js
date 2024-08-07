@@ -1,7 +1,7 @@
 'use strict';
 
 var api = require(__dirname + '/../mock-api');
-const { TIMEOUT, PINBOARD_INTRODUCTION_DELAY } = require(__dirname + '/../constants');
+const { TIMEOUT } = require(__dirname + '/../constants');
 const {
   mockLandingPageCms,
   mockTopOfficersByAllegation,
