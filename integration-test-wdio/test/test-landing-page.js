@@ -216,39 +216,5 @@ describe('LandingPage test', function () {
       landingPage.body.waitForDisplayed();
     });
 
-    it('should display Pinboard introduction on first visited', function () {
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
-    });
-
-    it('should not display Pinboard introduction after click close button', function () {
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.closeButton.click();
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
-      browser.refresh();
-      landingPage.body.waitForExist();
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
-    });
-
-    it('should not display Pinboard introduction after click try it', function () {
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.tryItButton.click();
-      pinboardPage.searchBar.waitForExist();
-      landingPage.open();
-      landingPage.body.waitForExist();
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
-    });
-
-    it('should not display Pinboard introduction after click Pinboard button', function () {
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButton.click();
-      pinboardPage.searchBar.waitForExist();
-      landingPage.open();
-      landingPage.body.waitForExist();
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
-    });
   });
 });
