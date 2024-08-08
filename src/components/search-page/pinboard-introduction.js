@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
-
-import styles from './pinboard-introduction.sass';
 import browserHistory from 'utils/history';
 
 export default class PinboardIntroduction extends Component {
@@ -16,7 +13,7 @@ export default class PinboardIntroduction extends Component {
   };
 
   render() {
-    return (null)
+    return (null);
   }
 }
 
