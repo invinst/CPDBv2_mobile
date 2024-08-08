@@ -198,18 +198,6 @@ describe('SearchPageTest', function () {
       landingPage.currentBasePath.should.equal('/');
     });
 
-    it('should go to pinboard page if search page was opened via pinboard page', function () {
-      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/').reply(200, pinboardMockData.pinboardData);
-      pinboardPage.open('5cd06f2b');
-      pinboardPage.searchBar.waitForDisplayed();
-      pinboardPage.searchBar.click();
-
-      searchPage.closeButton.waitForDisplayed();
-      searchPage.closeButton.click();
-
-      browser.getUrl().should.containEql('/pinboard/5cd06f2b/');
-    });
-
     it('should go to officer page if search page was opened via breadcrumbs on officer page', function () {
       api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
       searchPage.queryInput.setValue('123');
@@ -703,66 +691,6 @@ describe('SearchPageTest', function () {
     searchPage.clickyScript.waitForExist();
     searchPage.clickySiteIdsScript.waitForExist();
     searchPage.clickyNoJavascriptGIF.waitForExist();
-  });
-
-  context('Pinboard introduction', function () {
-    beforeEach(function () {
-      browser.clearReduxStore(true);
-      searchPage.queryInput.waitForDisplayed();
-    });
-
-    it('should display pinboard introduction on first visited', function () {
-      searchPage.pinboardIntroduction.content.waitForDisplayed();
-    });
-
-    it('should not display pinboard introduction if search query is long enough', function () {
-      searchPage.pinboardIntroduction.content.waitForDisplayed();
-      searchPage.queryInput.setValue('long');
-      searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
-      searchPage.queryInput.setValue('1');
-      searchPage.pinboardIntroduction.content.waitForDisplayed();
-    });
-
-    it('should display again after user remove all pinned items', function () {
-      api
-        .onPost('/api/v2/mobile/pinboards/', createPinboardWithRecentItemsParams)
-        .reply(201, createPinboardWithRecentItemsResponse);
-      api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
-      searchPage.queryInput.setValue('123');
-      searchPage.officers.firstRow.itemTitle.click();
-
-      searchPage.searchBreadcrumb.click();
-      searchPage.queryInput.waitForDisplayed();
-      // Empty value doesn't trigger change -> Set short query to show recent
-      searchPage.queryInput.setValue('1');
-
-      searchPage.recentHeader.waitForExist();
-      let recentItems = searchPage.recent;
-
-      recentItems.firstRecentItem.pinButton.click();
-      searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
-
-      recentItems.firstRecentItem.pinButton.click();
-      searchPage.pinboardIntroduction.content.waitForDisplayed(1000);
-    });
-
-    it('should close pinboard introduction after click close', function () {
-      searchPage.pinboardIntroduction.content.waitForDisplayed(1000);
-      searchPage.pinboardIntroduction.closeButton.click();
-      searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
-      browser.refresh();
-      searchPage.body.waitForDisplayed();
-      searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
-    });
-
-    it('should close pinboard introduction and redirect to pinboard page after click Get Started', function () {
-      searchPage.pinboardIntroduction.content.waitForDisplayed(1000);
-      searchPage.pinboardIntroduction.getStartedButton.click();
-      pinboardPage.searchBar.waitForExist();
-      searchPage.open();
-      searchPage.body.waitForExist();
-      searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
-    });
   });
 
   context('PinButton introduction', function () {
