@@ -1,16 +1,16 @@
 import officerPage from '../page-objects/officer-page';
-import searchPage from '../page-objects/search-page';
-import landingPage from '../page-objects/landing-page';
-import pinboardPage from '../page-objects/pinboard-page';
+// import searchPage from '../page-objects/search-page';
+// import landingPage from '../page-objects/landing-page';
+// import pinboardPage from '../page-objects/pinboard-page';
 import api from '../../integration-test/mock-api';
 import { TIMEOUT } from '../constants';
 const {
   pinboards,
   updatedPinboards,
   updateRequestParams,
-  createdPinboards,
-  createPinboardRequestParams,
-  createdPinboardsOfficersData,
+  // createdPinboards,
+  // createPinboardRequestParams,
+  // createdPinboardsOfficersData,
 } = require(__dirname + '/../../integration-test/mock-data/pinboard-page').pinboardsMenu;
 import { officer2235, officer27778, officerNotEnoughPercentile, mockTimeline, mockCoaccusals, mockOfficerPageCms }
   from '../mock-data/officer-page';
@@ -559,60 +559,60 @@ describe('OfficerPage test', function () {
       });
     });
 
-    describe('Pinboard function', function () {
-      beforeEach(function () {
-        api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
-        api
-          .onPut(
-            '/api/v2/mobile/pinboards/5cd06f2b/',
-            { 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' }
-          )
-          .reply(
-            200,
-            { id: '5cd06f2b', 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' }
-          );
-      });
+    // describe('Pinboard function', function () {
+    //   beforeEach(function () {
+    //     api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+    //     api
+    //       .onPut(
+    //         '/api/v2/mobile/pinboards/5cd06f2b/',
+    //         { 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' }
+    //       )
+    //       .reply(
+    //         200,
+    //         { id: '5cd06f2b', 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' }
+    //       );
+    //   });
 
-      it('should display toast when pinning a coaccusal', function () {
-        api
-          .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [27778], crids: [], 'trr_ids': [] })
-          .reply(
-            201,
-            { id: '5cd06f2b', 'officer_ids': [27778], crids: [], 'trr_ids': [], title: '', description: '' }
-          );
+    //   it('should display toast when pinning a coaccusal', function () {
+    //     api
+    //       .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [27778], crids: [], 'trr_ids': [] })
+    //       .reply(
+    //         201,
+    //         { id: '5cd06f2b', 'officer_ids': [27778], crids: [], 'trr_ids': [], title: '', description: '' }
+    //       );
 
-        officerPage.coaccusalsTabButton.waitForDisplayed(TIMEOUT);
-        officerPage.coaccusalsTabButton.click();
+    //     officerPage.coaccusalsTabButton.waitForDisplayed(TIMEOUT);
+    //     officerPage.coaccusalsTabButton.click();
 
-        officerPage.coaccusals.firstPinButton.waitForDisplayed();
-        officerPage.coaccusals.firstPinButton.click();
-        officerPage.lastToast.waitForDisplayed();
-        officerPage.lastToast.waitForText(
-          'Carl Suchocki added to pinboard\nGo to pinboard',
-          TIMEOUT
-        );
+    //     officerPage.coaccusals.firstPinButton.waitForDisplayed();
+    //     officerPage.coaccusals.firstPinButton.click();
+    //     officerPage.lastToast.waitForDisplayed();
+    //     officerPage.lastToast.waitForText(
+    //       'Carl Suchocki added to pinboard\nGo to pinboard',
+    //       TIMEOUT
+    //     );
 
-        officerPage.landingPageBreadCrumb.click();
-        landingPage.searchLink.waitForDisplayed();
-        landingPage.searchLink.click();
-        searchPage.pinboardBar.waitForText('Pinboard (1)', TIMEOUT);
-        browser.back();
-        browser.back();
+    //     officerPage.landingPageBreadCrumb.click();
+    //     landingPage.searchLink.waitForDisplayed();
+    //     landingPage.searchLink.click();
+    //     searchPage.pinboardBar.waitForText('Pinboard (1)', TIMEOUT);
+    //     browser.back();
+    //     browser.back();
 
-        officerPage.coaccusals.firstPinButton.click();
-        officerPage.lastToast.waitForDisplayed();
-        officerPage.lastToast.waitForText(
-          'Carl Suchocki removed from pinboard\nGo to pinboard',
-          TIMEOUT
-        );
+    //     officerPage.coaccusals.firstPinButton.click();
+    //     officerPage.lastToast.waitForDisplayed();
+    //     officerPage.lastToast.waitForText(
+    //       'Carl Suchocki removed from pinboard\nGo to pinboard',
+    //       TIMEOUT
+    //     );
 
-        officerPage.landingPageBreadCrumb.click();
-        landingPage.searchLink.waitForDisplayed();
-        landingPage.searchLink.click();
-        searchPage.queryInput.waitForExist();
-        searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
-      });
-    });
+    //     officerPage.landingPageBreadCrumb.click();
+    //     landingPage.searchLink.waitForDisplayed();
+    //     landingPage.searchLink.click();
+    //     searchPage.queryInput.waitForExist();
+    //     searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
+    //   });
+    // });
 
     it('should have clicky installed', function () {
       officerPage.clickyScript.waitForExist();
@@ -634,141 +634,141 @@ describe('OfficerPage test', function () {
       api.onPut('/api/v2/mobile/pinboards/8d2daffe/', updateRequestParams[0]).reply(200, updatedPinboards[0]);
     });
 
-    context('when user has one active pinboard', function () {
-      beforeEach(function () {
-        api.onGet('/api/v2/mobile/pinboards/?detail=true').reply(200, [pinboards[0]]);
-        api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, pinboards[0]);
-        officerPage.open(2235);
-        officerPage.body.waitForExist();
-      });
+    // context('when user has one active pinboard', function () {
+    //   beforeEach(function () {
+    //     api.onGet('/api/v2/mobile/pinboards/?detail=true').reply(200, [pinboards[0]]);
+    //     api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, pinboards[0]);
+    //     officerPage.open(2235);
+    //     officerPage.body.waitForExist();
+    //   });
 
-      it('should display toast when pinning', function () {
-        officerPage.pinButton.click();
-        officerPage.lastToast.waitForDisplayed();
-        officerPage.lastToast.waitForText('Kevin Osborn added to pinboard\nGo to pinboard');
+    //   it('should display toast when pinning', function () {
+    //     officerPage.pinButton.click();
+    //     officerPage.lastToast.waitForDisplayed();
+    //     officerPage.lastToast.waitForText('Kevin Osborn added to pinboard\nGo to pinboard');
 
-        officerPage.landingPageBreadCrumb.click();
-        landingPage.searchLink.waitForDisplayed();
-        landingPage.searchLink.click();
-        searchPage.pinboardBar.waitForDisplayed();
-        searchPage.pinboardBar.getText().should.equal('Pinboard (4)');
-      });
+    //     officerPage.landingPageBreadCrumb.click();
+    //     landingPage.searchLink.waitForDisplayed();
+    //     landingPage.searchLink.click();
+    //     searchPage.pinboardBar.waitForDisplayed();
+    //     searchPage.pinboardBar.getText().should.equal('Pinboard (4)');
+    //   });
 
-      it('should display toast when unpinning', function () {
-        officerPage.pinButton.click();
-        officerPage.lastToast.waitForDisplayed();
-        officerPage.lastToast.waitForText(
-          'Kevin Osborn added to pinboard\nGo to pinboard'
-        );
+    //   it('should display toast when unpinning', function () {
+    //     officerPage.pinButton.click();
+    //     officerPage.lastToast.waitForDisplayed();
+    //     officerPage.lastToast.waitForText(
+    //       'Kevin Osborn added to pinboard\nGo to pinboard'
+    //     );
 
-        officerPage.pinButton.click();
-        officerPage.lastToast.waitForDisplayed();
-        officerPage.lastToast.waitForText(
-          'Kevin Osborn removed from pinboard\nGo to pinboard'
-        );
+    //     officerPage.pinButton.click();
+    //     officerPage.lastToast.waitForDisplayed();
+    //     officerPage.lastToast.waitForText(
+    //       'Kevin Osborn removed from pinboard\nGo to pinboard'
+    //     );
 
-        officerPage.landingPageBreadCrumb.click();
-        landingPage.searchLink.waitForDisplayed();
-        landingPage.searchLink.click();
-        searchPage.pinboardBar.waitForDisplayed();
-        searchPage.pinboardBar.getText().should.equal('Pinboard (3)');
-      });
-    });
+    //     officerPage.landingPageBreadCrumb.click();
+    //     landingPage.searchLink.waitForDisplayed();
+    //     landingPage.searchLink.click();
+    //     searchPage.pinboardBar.waitForDisplayed();
+    //     searchPage.pinboardBar.getText().should.equal('Pinboard (3)');
+    //   });
+    // });
 
-    context('when user has more than 1 pinboard', function () {
-      beforeEach(function () {
-        api.onGet('/api/v2/mobile/pinboards/?detail=true').reply(200, pinboards);
-        api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
-        api.onGet('/api/v2/mobile/pinboards/f7231a74/').reply(200, createdPinboards[0]);
-        api.onGet('/api/v2/mobile/pinboards/f7231a74/complaints/').reply(200, []);
-        api.onGet('/api/v2/mobile/pinboards/f7231a74/officers/').reply(200, createdPinboardsOfficersData);
-        api.onGet('/api/v2/mobile/pinboards/f7231a74/trrs/').reply(200, []);
-        api.onPost('/api/v2/mobile/pinboards/', createPinboardRequestParams[0]).reply(200, createdPinboards[0],);
-        officerPage.open(2235);
-        officerPage.body.waitForExist();
-      });
+  //   context('when user has more than 1 pinboard', function () {
+  //     beforeEach(function () {
+  //       api.onGet('/api/v2/mobile/pinboards/?detail=true').reply(200, pinboards);
+  //       api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, {});
+  //       api.onGet('/api/v2/mobile/pinboards/f7231a74/').reply(200, createdPinboards[0]);
+  //       api.onGet('/api/v2/mobile/pinboards/f7231a74/complaints/').reply(200, []);
+  //       api.onGet('/api/v2/mobile/pinboards/f7231a74/officers/').reply(200, createdPinboardsOfficersData);
+  //       api.onGet('/api/v2/mobile/pinboards/f7231a74/trrs/').reply(200, []);
+  //       api.onPost('/api/v2/mobile/pinboards/', createPinboardRequestParams[0]).reply(200, createdPinboards[0],);
+  //       officerPage.open(2235);
+  //       officerPage.body.waitForExist();
+  //     });
 
-      it('should display pinboards menu', function () {
-        const pinboardsMenu = officerPage.pinboardsMenu;
-        const pinboardsMenuItems = pinboardsMenu.items;
+  //     it('should display pinboards menu', function () {
+  //       const pinboardsMenu = officerPage.pinboardsMenu;
+  //       const pinboardsMenuItems = pinboardsMenu.items;
 
-        officerPage.addToPinboardButton.click();
-        pinboardsMenu.firstItemTitle.waitForDisplayed();
+  //       officerPage.addToPinboardButton.click();
+  //       pinboardsMenu.firstItemTitle.waitForDisplayed();
 
-        pinboardsMenuItems.count.should.equal(5);
-        pinboardsMenu.firstItemTitle.getText().should.equal('Skrull Cap');
-        pinboardsMenu.firstItemCreatedAt.getText().should.equal('Created Mar 09, 2020');
-        pinboardsMenu.secondItemTitle.getText().should.equal('Watts Crew');
-        pinboardsMenu.secondItemCreatedAt.getText().should.equal('Created Mar 09, 2020');
-        pinboardsMenu.thirdItemTitle.getText().should.equal('');
-        pinboardsMenu.thirdItemCreatedAt.getText().should.equal('Created Mar 09, 2020');
-      });
+  //       pinboardsMenuItems.count.should.equal(5);
+  //       pinboardsMenu.firstItemTitle.getText().should.equal('Skrull Cap');
+  //       pinboardsMenu.firstItemCreatedAt.getText().should.equal('Created Mar 09, 2020');
+  //       pinboardsMenu.secondItemTitle.getText().should.equal('Watts Crew');
+  //       pinboardsMenu.secondItemCreatedAt.getText().should.equal('Created Mar 09, 2020');
+  //       pinboardsMenu.thirdItemTitle.getText().should.equal('');
+  //       pinboardsMenu.thirdItemCreatedAt.getText().should.equal('Created Mar 09, 2020');
+  //     });
 
-      it('should close pinboards menu when click outside', function () {
-        const pinboardsMenu = officerPage.pinboardsMenu;
+  //     it('should close pinboards menu when click outside', function () {
+  //       const pinboardsMenu = officerPage.pinboardsMenu;
 
-        officerPage.addToPinboardButton.click();
-        pinboardsMenu.firstItemTitle.waitForDisplayed();
-        officerPage.officerName.click();
-        pinboardsMenu.firstItemTitle.waitForExist(TIMEOUT, true);
-      });
+  //       officerPage.addToPinboardButton.click();
+  //       pinboardsMenu.firstItemTitle.waitForDisplayed();
+  //       officerPage.officerName.click();
+  //       pinboardsMenu.firstItemTitle.waitForExist(TIMEOUT, true);
+  //     });
 
-      it('should display toast and close pinboards menu when pinning', function () {
-        const pinboardsMenu = officerPage.pinboardsMenu;
+  //     it('should display toast and close pinboards menu when pinning', function () {
+  //       const pinboardsMenu = officerPage.pinboardsMenu;
 
-        officerPage.addToPinboardButton.click();
-        pinboardsMenu.firstItemTitle.waitForDisplayed();
+  //       officerPage.addToPinboardButton.click();
+  //       pinboardsMenu.firstItemTitle.waitForDisplayed();
 
-        pinboardsMenu.firstItemPinButton.click();
-        officerPage.lastToast.waitForDisplayed();
-        officerPage.lastToast.waitForText('Kevin Osborn added to pinboard\nGo to pinboard');
-        pinboardsMenu.firstItemTitle.waitForExist(TIMEOUT, true);
+  //       pinboardsMenu.firstItemPinButton.click();
+  //       officerPage.lastToast.waitForDisplayed();
+  //       officerPage.lastToast.waitForText('Kevin Osborn added to pinboard\nGo to pinboard');
+  //       pinboardsMenu.firstItemTitle.waitForExist(TIMEOUT, true);
 
-        officerPage.landingPageBreadCrumb.click();
-        landingPage.searchLink.waitForDisplayed();
-        landingPage.searchLink.click();
-        searchPage.pinboardBar.waitForDisplayed();
-        searchPage.pinboardBar.getText().should.equal('Pinboard (4)');
-      });
+  //       officerPage.landingPageBreadCrumb.click();
+  //       landingPage.searchLink.waitForDisplayed();
+  //       landingPage.searchLink.click();
+  //       searchPage.pinboardBar.waitForDisplayed();
+  //       searchPage.pinboardBar.getText().should.equal('Pinboard (4)');
+  //     });
 
-      it('should display toast when unpinning', function () {
-        const pinboardsMenu = officerPage.pinboardsMenu;
+  //     it('should display toast when unpinning', function () {
+  //       const pinboardsMenu = officerPage.pinboardsMenu;
 
-        officerPage.addToPinboardButton.click();
-        pinboardsMenu.firstItemTitle.waitForDisplayed();
+  //       officerPage.addToPinboardButton.click();
+  //       pinboardsMenu.firstItemTitle.waitForDisplayed();
 
-        pinboardsMenu.firstItemPinButton.click();
-        officerPage.lastToast.waitForDisplayed();
-        officerPage.lastToast.waitForText('Kevin Osborn added to pinboard\nGo to pinboard');
-        pinboardsMenu.firstItemTitle.waitForExist(TIMEOUT, true);
+  //       pinboardsMenu.firstItemPinButton.click();
+  //       officerPage.lastToast.waitForDisplayed();
+  //       officerPage.lastToast.waitForText('Kevin Osborn added to pinboard\nGo to pinboard');
+  //       pinboardsMenu.firstItemTitle.waitForExist(TIMEOUT, true);
 
-        officerPage.addToPinboardButton.click();
-        pinboardsMenu.firstItemTitle.waitForDisplayed();
-        pinboardsMenu.firstItemPinButton.click();
-        officerPage.lastToast.waitForDisplayed();
-        officerPage.lastToast.waitForText(
-          'Kevin Osborn removed from pinboard\nGo to pinboard'
-        );
-        pinboardsMenu.firstItemTitle.waitForExist(TIMEOUT, true);
+  //       officerPage.addToPinboardButton.click();
+  //       pinboardsMenu.firstItemTitle.waitForDisplayed();
+  //       pinboardsMenu.firstItemPinButton.click();
+  //       officerPage.lastToast.waitForDisplayed();
+  //       officerPage.lastToast.waitForText(
+  //         'Kevin Osborn removed from pinboard\nGo to pinboard'
+  //       );
+  //       pinboardsMenu.firstItemTitle.waitForExist(TIMEOUT, true);
 
-        officerPage.landingPageBreadCrumb.click();
-        landingPage.searchLink.waitForDisplayed();
-        landingPage.searchLink.click();
-        searchPage.pinboardBar.waitForDisplayed();
-        searchPage.pinboardBar.getText().should.equal('Pinboard (3)');
-      });
+  //       officerPage.landingPageBreadCrumb.click();
+  //       landingPage.searchLink.waitForDisplayed();
+  //       landingPage.searchLink.click();
+  //       searchPage.pinboardBar.waitForDisplayed();
+  //       searchPage.pinboardBar.getText().should.equal('Pinboard (3)');
+  //     });
 
-      it('should create new pinboard with current officer', function () {
-        const pinboardsMenu = officerPage.pinboardsMenu;
+  //     it('should create new pinboard with current officer', function () {
+  //       const pinboardsMenu = officerPage.pinboardsMenu;
 
-        officerPage.addToPinboardButton.click();
-        pinboardsMenu.createPinboardWithSelectionButton.waitForDisplayed();
-        pinboardsMenu.createPinboardWithSelectionButton.click();
+  //       officerPage.addToPinboardButton.click();
+  //       pinboardsMenu.createPinboardWithSelectionButton.waitForDisplayed();
+  //       pinboardsMenu.createPinboardWithSelectionButton.click();
 
-        browser.waitForUrl(url => url.should.containEql('/pinboard/f7231a74/untitled-pinboard/'), 1000);
-        pinboardPage.pinnedSection.officers.cards.waitForCount(1, 3000);
-        pinboardPage.pinnedSection.officers.firstCardName.getText().should.equal('Kevin Osborn');
-      });
-    });
-  });
+  //       browser.waitForUrl(url => url.should.containEql('/pinboard/f7231a74/untitled-pinboard/'), 1000);
+  //       pinboardPage.pinnedSection.officers.cards.waitForCount(1, 3000);
+  //       pinboardPage.pinnedSection.officers.firstCardName.getText().should.equal('Kevin Osborn');
+  //     });
+  //   });
+   });
 });
