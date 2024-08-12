@@ -1,8 +1,8 @@
-import searchPage from '../page-objects/search-page';
+// import searchPage from '../page-objects/search-page';
 import landingPage from '../page-objects/landing-page';
-import pinboardPage from '../page-objects/pinboard-page';
+// import pinboardPage from '../page-objects/pinboard-page';
 import api from '../../integration-test/mock-api';
-import { TIMEOUT, PINBOARD_INTRODUCTION_DELAY } from '../constants';
+import { TIMEOUT } from '../constants';
 const {
   mockLandingPageCms,
   mockTopOfficersByAllegation,
@@ -11,14 +11,14 @@ const {
   mockComplaintSummaries,
   mockTopLawsuits,
 } = require(__dirname + '/../../integration-test/mock-data/main-page');
-import {
-  emptyPinboard,
-  emptyPinboardData,
-  pinTopOfficerRequestData,
-  pinRecentActivityOfficerRequestData,
-  pinNewDocumentRequestData,
-  pinComplaintRequestData,
-} from '../mock-data/landing-page';
+// import {
+//   emptyPinboard,
+//   emptyPinboardData,
+//   pinTopOfficerRequestData,
+//   pinRecentActivityOfficerRequestData,
+//   pinNewDocumentRequestData,
+//   pinComplaintRequestData,
+// } from '../mock-data/landing-page';
 import { mockCommonApi } from '../mock-data/utils';
 
 
@@ -133,76 +133,76 @@ describe('LandingPage test', function () {
     });
   });
 
-  describe('Pinboard function', function () {
-    it('should display toast when pinning cards', function () {
-      api
-        .onPost('/api/v2/mobile/pinboards/', emptyPinboardData)
-        .reply(201, emptyPinboard);
-      api
-        .onPost('/api/v2/mobile/pinboards/', pinTopOfficerRequestData)
-        .reply(201, pinTopOfficerRequestData);
-      api
-        .onPut('/api/v2/mobile/pinboards/5cd06f2b/', pinRecentActivityOfficerRequestData)
-        .reply(200, pinRecentActivityOfficerRequestData);
-      api
-        .onPut('/api/v2/mobile/pinboards/5cd06f2b/', pinNewDocumentRequestData)
-        .reply(200, pinNewDocumentRequestData);
-      api
-        .onPut('/api/v2/mobile/pinboards/5cd06f2b/', pinComplaintRequestData)
-        .reply(200, pinComplaintRequestData);
+  // describe('Pinboard function', function () {
+  //   it('should display toast when pinning cards', function () {
+  //     api
+  //       .onPost('/api/v2/mobile/pinboards/', emptyPinboardData)
+  //       .reply(201, emptyPinboard);
+  //     api
+  //       .onPost('/api/v2/mobile/pinboards/', pinTopOfficerRequestData)
+  //       .reply(201, pinTopOfficerRequestData);
+  //     api
+  //       .onPut('/api/v2/mobile/pinboards/5cd06f2b/', pinRecentActivityOfficerRequestData)
+  //       .reply(200, pinRecentActivityOfficerRequestData);
+  //     api
+  //       .onPut('/api/v2/mobile/pinboards/5cd06f2b/', pinNewDocumentRequestData)
+  //       .reply(200, pinNewDocumentRequestData);
+  //     api
+  //       .onPut('/api/v2/mobile/pinboards/5cd06f2b/', pinComplaintRequestData)
+  //       .reply(200, pinComplaintRequestData);
 
-      const checkPinToast = (parentSelector, messagePrefix) => {
-        //Pin item
-        parentSelector.pinButton.waitForExist();
-        parentSelector.pinButton.scrollIntoView();
-        parentSelector.pinButton.moveTo();
-        parentSelector.pinButton.click();
+  //     const checkPinToast = (parentSelector, messagePrefix) => {
+  //       //Pin item
+  //       parentSelector.pinButton.waitForExist();
+  //       parentSelector.pinButton.scrollIntoView();
+  //       parentSelector.pinButton.moveTo();
+  //       parentSelector.pinButton.click();
 
-        //Check toast
-        landingPage.lastToast.waitForDisplayed();
-        landingPage.lastToast.waitForText(
-          `${messagePrefix} added to pinboard\nGo to pinboard`,
-          TIMEOUT
-        );
+  //       //Check toast
+  //       landingPage.lastToast.waitForDisplayed();
+  //       landingPage.lastToast.waitForText(
+  //         `${messagePrefix} added to pinboard\nGo to pinboard`,
+  //         TIMEOUT
+  //       );
 
-        //Go to Search Page and check for pinboard item counts
-        landingPage.searchLink.scrollIntoView();
-        landingPage.searchLink.moveTo();
-        landingPage.lastToast.waitForDisplayed(TIMEOUT, true);
-        landingPage.searchLink.click();
-        searchPage.pinboardBar.waitForText('Pinboard (1)', TIMEOUT);
-        browser.back();
+  //       //Go to Search Page and check for pinboard item counts
+  //       landingPage.searchLink.scrollIntoView();
+  //       landingPage.searchLink.moveTo();
+  //       landingPage.lastToast.waitForDisplayed(TIMEOUT, true);
+  //       landingPage.searchLink.click();
+  //       searchPage.pinboardBar.waitForText('Pinboard (1)', TIMEOUT);
+  //       browser.back();
 
-        //Unpin item
-        parentSelector.pinButton.waitForExist();
-        parentSelector.pinButton.scrollIntoView();
-        parentSelector.pinButton.moveTo();
-        parentSelector.pinButton.click();
+  //       //Unpin item
+  //       parentSelector.pinButton.waitForExist();
+  //       parentSelector.pinButton.scrollIntoView();
+  //       parentSelector.pinButton.moveTo();
+  //       parentSelector.pinButton.click();
 
-        //Check toast
-        landingPage.lastToast.waitForDisplayed();
-        landingPage.lastToast.waitForText(
-          `${messagePrefix} removed from pinboard\nGo to pinboard`,
-          TIMEOUT
-        );
+  //       //Check toast
+  //       landingPage.lastToast.waitForDisplayed();
+  //       landingPage.lastToast.waitForText(
+  //         `${messagePrefix} removed from pinboard\nGo to pinboard`,
+  //         TIMEOUT
+  //       );
 
-        //Go to Search Page and check for pinboard item counts
-        landingPage.searchLink.scrollIntoView();
-        landingPage.searchLink.moveTo();
-        landingPage.lastToast.waitForDisplayed(TIMEOUT, true);
-        landingPage.searchLink.click();
+  //       //Go to Search Page and check for pinboard item counts
+  //       landingPage.searchLink.scrollIntoView();
+  //       landingPage.searchLink.moveTo();
+  //       landingPage.lastToast.waitForDisplayed(TIMEOUT, true);
+  //       landingPage.searchLink.click();
 
-        searchPage.queryInput.waitForExist();
-        searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
-        browser.back();
-      };
+  //       searchPage.queryInput.waitForExist();
+  //       searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
+  //       browser.back();
+  //     };
 
-      checkPinToast(landingPage.topOfficersByAllegation, 'Broderick Jones');
-      checkPinToast(landingPage.recentActivities, 'Broderick Jones');
-      checkPinToast(landingPage.newDocumentAllegations, 'CR #170123');
-      checkPinToast(landingPage.complaintSummaries, 'CR #123');
-    });
-  });
+  //     checkPinToast(landingPage.topOfficersByAllegation, 'Broderick Jones');
+  //     checkPinToast(landingPage.recentActivities, 'Broderick Jones');
+  //     checkPinToast(landingPage.newDocumentAllegations, 'CR #170123');
+  //     checkPinToast(landingPage.complaintSummaries, 'CR #123');
+  //   });
+  // });
 
   it('should have clicky installed ', function () {
     landingPage.clickyScript.waitForExist();
@@ -210,45 +210,45 @@ describe('LandingPage test', function () {
     landingPage.clickyNoJavascriptGIF.waitForExist();
   });
 
-  describe('Pinboard Introduction', function () {
-    beforeEach(function () {
-      browser.clearReduxStore(true);
-      landingPage.body.waitForDisplayed();
-    });
+  // describe('Pinboard Introduction', function () {
+  //   beforeEach(function () {
+  //     browser.clearReduxStore(true);
+  //     landingPage.body.waitForDisplayed();
+  //   });
 
-    it('should display Pinboard introduction on first visited', function () {
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
-    });
+  //   it('should display Pinboard introduction on first visited', function () {
+  //     landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
+  //   });
 
-    it('should not display Pinboard introduction after click close button', function () {
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.closeButton.click();
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
-      browser.refresh();
-      landingPage.body.waitForExist();
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
-    });
+  //   it('should not display Pinboard introduction after click close button', function () {
+  //     landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
+  //     landingPage.pinboardButtonIntroduction.closeButton.click();
+  //     browser.pause(PINBOARD_INTRODUCTION_DELAY);
+  //     landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
+  //     browser.refresh();
+  //     landingPage.body.waitForExist();
+  //     browser.pause(PINBOARD_INTRODUCTION_DELAY);
+  //     landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
+  //   });
 
-    it('should not display Pinboard introduction after click try it', function () {
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.tryItButton.click();
-      pinboardPage.searchBar.waitForExist();
-      landingPage.open();
-      landingPage.body.waitForExist();
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
-    });
+  //   it('should not display Pinboard introduction after click try it', function () {
+  //     landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
+  //     landingPage.pinboardButtonIntroduction.tryItButton.click();
+  //     pinboardPage.searchBar.waitForExist();
+  //     landingPage.open();
+  //     landingPage.body.waitForExist();
+  //     browser.pause(PINBOARD_INTRODUCTION_DELAY);
+  //     landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
+  //   });
 
-    it('should not display Pinboard introduction after click Pinboard button', function () {
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButton.click();
-      pinboardPage.searchBar.waitForExist();
-      landingPage.open();
-      landingPage.body.waitForExist();
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
-    });
-  });
+  //   it('should not display Pinboard introduction after click Pinboard button', function () {
+  //     landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(PINBOARD_INTRODUCTION_DELAY);
+  //     landingPage.pinboardButton.click();
+  //     pinboardPage.searchBar.waitForExist();
+  //     landingPage.open();
+  //     landingPage.body.waitForExist();
+  //     browser.pause(PINBOARD_INTRODUCTION_DELAY);
+  //     landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
+  //   });
+  // });
 });

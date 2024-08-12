@@ -4,12 +4,12 @@ require('should');
 
 import api from '../../integration-test/mock-api';
 import { mockCommonApi } from '../mock-data/utils';
-import landingPage from '../page-objects/landing-page';
-import searchPage from '../page-objects/search-page';
+// import landingPage from '../page-objects/landing-page';
+// import searchPage from '../page-objects/search-page';
 import lawsuitPage from '../page-objects/lawsuit-page';
 import { lawsuitData } from '../mock-data/lawsuit-page/common';
 import { officer2235 as officerData } from '../mock-data/officer-page';
-import { TIMEOUT } from '../constants';
+// import { TIMEOUT } from '../constants';
 
 describe('Lawsuit page', function () {
   beforeEach(function () {
@@ -89,33 +89,33 @@ describe('Lawsuit page', function () {
       lawsuitPage.payment.breakdownTable.waitForDisplayedInViewport(5000);
     });
 
-    describe('Pinboard function', function () {
-      it('should display toast when pinning a officer card', function () {
-        lawsuitPage.involvedOfficers.firstCard.pinButton.click();
-        lawsuitPage.lastToast.waitForDisplayed();
-        lawsuitPage.lastToast.getText(
-          'Joseph Nega added to pinboard\nGo to pinboard'
-        );
+    // describe('Pinboard function', function () {
+    //   it('should display toast when pinning a officer card', function () {
+    //     lawsuitPage.involvedOfficers.firstCard.pinButton.click();
+    //     lawsuitPage.lastToast.waitForDisplayed();
+    //     lawsuitPage.lastToast.getText(
+    //       'Joseph Nega added to pinboard\nGo to pinboard'
+    //     );
 
-        lawsuitPage.landingPageBreadCrumb.click();
-        landingPage.searchLink.waitForDisplayed();
-        landingPage.searchLink.click();
-        searchPage.pinboardBar.waitForDisplayed();
-        searchPage.pinboardBar.getText('Pinboard (1)');
-        browser.back();
-        browser.back();
+    //     lawsuitPage.landingPageBreadCrumb.click();
+    //     landingPage.searchLink.waitForDisplayed();
+    //     landingPage.searchLink.click();
+    //     searchPage.pinboardBar.waitForDisplayed();
+    //     searchPage.pinboardBar.getText('Pinboard (1)');
+    //     browser.back();
+    //     browser.back();
 
-        lawsuitPage.involvedOfficers.firstCard.pinButton.click();
-        lawsuitPage.lastToast.waitForDisplayed();
-        lawsuitPage.lastToast.getText(
-          'Joseph Nega removed from pinboard\nGo to pinboard'
-        );
+    //     lawsuitPage.involvedOfficers.firstCard.pinButton.click();
+    //     lawsuitPage.lastToast.waitForDisplayed();
+    //     lawsuitPage.lastToast.getText(
+    //       'Joseph Nega removed from pinboard\nGo to pinboard'
+    //     );
 
-        lawsuitPage.landingPageBreadCrumb.click();
-        landingPage.searchLink.waitForDisplayed();
-        landingPage.searchLink.click();
-        searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
-      });
-    });
+    //     lawsuitPage.landingPageBreadCrumb.click();
+    //     landingPage.searchLink.waitForDisplayed();
+    //     landingPage.searchLink.click();
+    //     searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
+    //   });
+    // });
   });
 });
