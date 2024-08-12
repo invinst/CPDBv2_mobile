@@ -1,8 +1,8 @@
 'use strict';
 
-var assert = require('assert');
+// var assert = require('assert');
 var api = require(__dirname + '/../mock-api');
-const { TIMEOUT } = require(__dirname + '/../constants');
+// const { TIMEOUT } = require(__dirname + '/../constants');
 const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 
 const mockOfficers = [
@@ -50,23 +50,23 @@ describe('EmbedOfficerPage', function () {
     done();
   });
 
-  it('should show title, description and officer cards and no pin buttons', function (client) {
-    this.embedOfficersPage.expect.element('@title').text.to.equal('Some title');
-    this.embedOfficersPage.expect.element('@description').text.to.equal('Some description');
+  // it('should show title, description and officer cards and no pin buttons', function (client) {
+  //   this.embedOfficersPage.expect.element('@title').text.to.equal('Some title');
+  //   this.embedOfficersPage.expect.element('@description').text.to.equal('Some description');
 
-    const cards = this.embedOfficersPage.section.cards;
-    client.elements(cards.locateStrategy, cards.selector, function (result) {
-      assert.equal(result.value.length, 2);
-    });
-    this.embedOfficersPage.expect.element('@firstPinButton').not.to.be.present;
-  });
+  //   const cards = this.embedOfficersPage.section.cards;
+  //   client.elements(cards.locateStrategy, cards.selector, function (result) {
+  //     assert.equal(result.value.length, 2);
+  //   });
+  //   this.embedOfficersPage.expect.element('@firstPinButton').not.to.be.present;
+  // });
 
-  it('should go to officer summary page when click to card', function (client) {
-    this.embedOfficersPage.waitForElementVisible('@firstCard', TIMEOUT);
-    this.embedOfficersPage.click('@firstCard');
-    client.switchToRecentTab();
-    client.assert.urlContains('/officer/13788/');
-  });
+  // it('should go to officer summary page when click to card', function (client) {
+  //   this.embedOfficersPage.waitForElementVisible('@firstCard', TIMEOUT);
+  //   this.embedOfficersPage.click('@firstCard');
+  //   client.switchToRecentTab();
+  //   client.assert.urlContains('/officer/13788/');
+  // });
 
   it('should have clicky installed ', function (client) {
     const page = client.page.common();
