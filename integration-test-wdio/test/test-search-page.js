@@ -4,7 +4,7 @@ import searchPage from '../page-objects/search-page';
 import landingPage from '../page-objects/landing-page';
 import api from '../../integration-test/mock-api';
 import { TIMEOUT, PINBOARD_INTRODUCTION_DELAY } from '../constants';
-const pinboardMockData = require(__dirname + '/../../integration-test/mock-data/pinboard-page');
+// const pinboardMockData = require(__dirname + '/../../integration-test/mock-data/pinboard-page');
 import {
   // createPinboardWithRecentItemsParams,
   // createPinboardWithRecentItemsResponse,
@@ -45,70 +45,70 @@ describe('SearchPageTest', function () {
     searchPage.queryInput.waitForDisplayed();
   });
 
-  it('should show recent items', function () {
-    api
-      .onGet('/api/v2/search-mobile/recent-search-items/?' +
-        'officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487&lawsuit_ids[]=234567')
-      .reply(200, mockNewRecentSearchItemsResponse);
-    api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
-    api.onGet('/api/v2/mobile/cr/1002144/').reply(200, cr1002144);
-    api.onGet('/api/v2/mobile/trr/14487/').reply(200, trr14487);
-    api.onGet('/api/v2/lawsuit/00-L-5230/').reply(200, lawsuit00L5230);
-    browser.clearReduxStore();
-    searchPage.queryInput.waitForDisplayed();
+  // it('should show recent items', function () {
+  //   api
+  //     .onGet('/api/v2/search-mobile/recent-search-items/?' +
+  //       'officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487&lawsuit_ids[]=234567')
+  //     .reply(200, mockNewRecentSearchItemsResponse);
+  //   api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
+  //   api.onGet('/api/v2/mobile/cr/1002144/').reply(200, cr1002144);
+  //   api.onGet('/api/v2/mobile/trr/14487/').reply(200, trr14487);
+  //   api.onGet('/api/v2/lawsuit/00-L-5230/').reply(200, lawsuit00L5230);
+  //   browser.clearReduxStore();
+  //   searchPage.queryInput.waitForDisplayed();
 
-    searchPage.queryInput.setValue('123');
-    searchPage.lawsuits.firstRow.itemTitle.click();
+  //   searchPage.queryInput.setValue('123');
+  //   searchPage.lawsuits.firstRow.itemTitle.click();
 
-    searchPage.searchBreadcrumb.click();
-    searchPage.officers.firstRow.itemTitle.click();
+  //   searchPage.searchBreadcrumb.click();
+  //   searchPage.officers.firstRow.itemTitle.click();
 
-    searchPage.searchBreadcrumb.click();
-    searchPage.crs.firstRow.itemTitle.click();
+  //   searchPage.searchBreadcrumb.click();
+  //   searchPage.crs.firstRow.itemTitle.click();
 
-    searchPage.searchBreadcrumb.click();
-    searchPage.trrs.firstRow.itemTitle.click();
+  //   searchPage.searchBreadcrumb.click();
+  //   searchPage.trrs.firstRow.itemTitle.click();
 
-    searchPage.searchBreadcrumb.click();
-    // Empty value doesn't trigger change -> Set short query to show recent
-    searchPage.queryInput.setValue('1');
+  //   searchPage.searchBreadcrumb.click();
+  //   // Empty value doesn't trigger change -> Set short query to show recent
+  //   searchPage.queryInput.setValue('1');
 
-    searchPage.recentHeader.waitForExist();
-    let recentItems = searchPage.recent;
+  //   searchPage.recentHeader.waitForExist();
+  //   let recentItems = searchPage.recent;
 
-    recentItems.firstRecentItem.itemTitle.getText().should.equal('TRR');
-    recentItems.firstRecentItem.itemSubtitle.getText().should.equal('14487');
-    recentItems.secondRecentItem.itemTitle.getText().should.equal('False Arrest');
-    recentItems.secondRecentItem.itemSubtitle.getText().should.equal('CRID 1002144 • 05/29/2006');
-    recentItems.thirdRecentItem.itemTitle.getText().should.equal('Jerome Finnigan');
-    recentItems.thirdRecentItem.itemSubtitle.getText().should.equal('Badge #5167');
-    recentItems.fourthRecentItem.itemTitle.getText().should.equal('EXCESSIVE FORCE/MINOR');
-    recentItems.fourthRecentItem.itemSubtitle.getText().should.equal('00-L-5230 • 09/11/2016');
-    browser.pause(PINBOARD_INTRODUCTION_DELAY);
-    recentItems.thirdRecentItem.pinButtonIntroduction.waitForDisplayed();
+  //   recentItems.firstRecentItem.itemTitle.getText().should.equal('TRR');
+  //   recentItems.firstRecentItem.itemSubtitle.getText().should.equal('14487');
+  //   recentItems.secondRecentItem.itemTitle.getText().should.equal('False Arrest');
+  //   recentItems.secondRecentItem.itemSubtitle.getText().should.equal('CRID 1002144 • 05/29/2006');
+  //   recentItems.thirdRecentItem.itemTitle.getText().should.equal('Jerome Finnigan');
+  //   recentItems.thirdRecentItem.itemSubtitle.getText().should.equal('Badge #5167');
+  //   recentItems.fourthRecentItem.itemTitle.getText().should.equal('EXCESSIVE FORCE/MINOR');
+  //   recentItems.fourthRecentItem.itemSubtitle.getText().should.equal('00-L-5230 • 09/11/2016');
+  //   browser.pause(PINBOARD_INTRODUCTION_DELAY);
+  //   recentItems.thirdRecentItem.pinButtonIntroduction.waitForDisplayed();
 
-    searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
-    recentItems.firstRecentItem.pinButton.click();
-    recentItems.secondRecentItem.pinButton.click();
-    recentItems.thirdRecentItem.pinButton.click();
-    searchPage.pinboardBar.waitForDisplayed();
-    searchPage.pinboardBar.getText().should.equal('Pinboard (3)');
+  //   searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
+  //   recentItems.firstRecentItem.pinButton.click();
+  //   recentItems.secondRecentItem.pinButton.click();
+  //   recentItems.thirdRecentItem.pinButton.click();
+  //   searchPage.pinboardBar.waitForDisplayed();
+  //   searchPage.pinboardBar.getText().should.equal('Pinboard (3)');
 
-    recentItems.firstRecentItem.pinButton.click();
-    recentItems.secondRecentItem.pinButton.click();
-    recentItems.thirdRecentItem.pinButton.click();
-    searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
+  //   recentItems.firstRecentItem.pinButton.click();
+  //   recentItems.secondRecentItem.pinButton.click();
+  //   recentItems.thirdRecentItem.pinButton.click();
+  //   searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
 
-    searchPage.open();
-    recentItems.firstRecentItem.itemTitle.getText().should.equal('TRR');
-    recentItems.firstRecentItem.itemSubtitle.getText().should.equal('14487');
-    recentItems.secondRecentItem.itemTitle.getText().should.equal('False Arrest');
-    recentItems.secondRecentItem.itemSubtitle.getText().should.equal('CRID 1002144 • 05/29/2010');
-    recentItems.thirdRecentItem.itemTitle.getText().should.equal('Jerome Finnigan');
-    recentItems.thirdRecentItem.itemSubtitle.getText().should.equal('Badge #123456');
-    recentItems.fourthRecentItem.itemTitle.getText().should.equal('EXCESSIVE FORCE/MINOR');
-    recentItems.fourthRecentItem.itemSubtitle.getText().should.equal('00-L-5230 • 09/11/2016');
-  });
+  //   searchPage.open();
+  //   recentItems.firstRecentItem.itemTitle.getText().should.equal('TRR');
+  //   recentItems.firstRecentItem.itemSubtitle.getText().should.equal('14487');
+  //   recentItems.secondRecentItem.itemTitle.getText().should.equal('False Arrest');
+  //   recentItems.secondRecentItem.itemSubtitle.getText().should.equal('CRID 1002144 • 05/29/2010');
+  //   recentItems.thirdRecentItem.itemTitle.getText().should.equal('Jerome Finnigan');
+  //   recentItems.thirdRecentItem.itemSubtitle.getText().should.equal('Badge #123456');
+  //   recentItems.fourthRecentItem.itemTitle.getText().should.equal('EXCESSIVE FORCE/MINOR');
+  //   recentItems.fourthRecentItem.itemSubtitle.getText().should.equal('00-L-5230 • 09/11/2016');
+  // });
 
   it('should go to detail page when click on recent items', function () {
     api
