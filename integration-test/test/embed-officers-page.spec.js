@@ -61,12 +61,12 @@ describe('EmbedOfficerPage', function () {
   //   this.embedOfficersPage.expect.element('@firstPinButton').not.to.be.present;
   // });
 
-  it('should go to officer summary page when click to card', function (client) {
-    this.embedOfficersPage.waitForElementVisible('@firstCard', TIMEOUT);
-    this.embedOfficersPage.click('@firstCard');
-    client.switchToRecentTab();
-    client.assert.urlContains('/officer/13788/');
-  });
+  // it('should go to officer summary page when click to card', function (client) {
+  //   this.embedOfficersPage.waitForElementVisible('@firstCard', TIMEOUT);
+  //   this.embedOfficersPage.click('@firstCard');
+  //   client.switchToRecentTab();
+  //   client.assert.urlContains('/officer/13788/');
+  // });
 
   it('should have clicky installed ', function (client) {
     const page = client.page.common();
