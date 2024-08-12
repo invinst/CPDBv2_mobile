@@ -8,7 +8,7 @@
 // import * as appConfig from 'utils/app-config';
 
 
-const PINBOARD_INTRODUCTION_DELAY = 2000;
+// const PINBOARD_INTRODUCTION_DELAY = 2000;
 
 describe('PinboardButton component', function () {
   // let wrapper;
