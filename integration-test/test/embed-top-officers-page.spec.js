@@ -1,6 +1,6 @@
 'use strict';
 
-const assert = require('assert');
+// const assert = require('assert');
 const api = require(__dirname + '/../mock-api');
 const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 
