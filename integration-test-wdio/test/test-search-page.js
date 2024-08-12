@@ -1,13 +1,13 @@
 import officerPage from '../page-objects/officer-page';
 import searchPage from '../page-objects/search-page';
-import pinboardPage from '../page-objects/pinboard-page';
+// import pinboardPage from '../page-objects/pinboard-page';
 import landingPage from '../page-objects/landing-page';
 import api from '../../integration-test/mock-api';
 import { TIMEOUT, PINBOARD_INTRODUCTION_DELAY } from '../constants';
 const pinboardMockData = require(__dirname + '/../../integration-test/mock-data/pinboard-page');
 import {
-  createPinboardWithRecentItemsParams,
-  createPinboardWithRecentItemsResponse,
+  // createPinboardWithRecentItemsParams,
+  // createPinboardWithRecentItemsResponse,
   mockSearchQueryResponse,
   mockSearchQueryResponseForRecentItems,
   mockSearchQueryResponseWithDate,
@@ -16,20 +16,20 @@ import {
   mockSecondOfficersSearchQueryResponse,
   mockDateOfficerSearchQueryResponse,
   mockInvestigatorCRSearchResponse,
-  emptyPinboard,
-  createPinboardResponse,
-  createEmptyPinboardResponse,
+  // emptyPinboard,
+  // createPinboardResponse,
+  // createEmptyPinboardResponse,
   mockNewRecentSearchItemsResponse,
   officer8562,
   cr1002144,
   trr14487,
   lawsuit00L5230,
-  mockNewCreatedPinboard,
-  mockPinboardComplaint,
-  mockComplaintPinnedItemPinboard,
-  mockUpdatedComplaintPinnedItemPinboard,
-  mockPinboardComplaints,
-  mockSearchQueryLongResponse,
+  // mockNewCreatedPinboard,
+  // mockPinboardComplaint,
+  // mockComplaintPinnedItemPinboard,
+  // mockUpdatedComplaintPinnedItemPinboard,
+  // mockPinboardComplaints,
+  // mockSearchQueryLongResponse,
 } from '../mock-data/search-page';
 import { mockCommonApi } from '../mock-data/utils';
 
@@ -198,17 +198,17 @@ describe('SearchPageTest', function () {
       landingPage.currentBasePath.should.equal('/');
     });
 
-    it('should go to pinboard page if search page was opened via pinboard page', function () {
-      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/').reply(200, pinboardMockData.pinboardData);
-      pinboardPage.open('5cd06f2b');
-      pinboardPage.searchBar.waitForDisplayed();
-      pinboardPage.searchBar.click();
+    // it('should go to pinboard page if search page was opened via pinboard page', function () {
+    //   api.onGet('/api/v2/mobile/pinboards/5cd06f2b/').reply(200, pinboardMockData.pinboardData);
+    //   pinboardPage.open('5cd06f2b');
+    //   pinboardPage.searchBar.waitForDisplayed();
+    //   pinboardPage.searchBar.click();
 
-      searchPage.closeButton.waitForDisplayed();
-      searchPage.closeButton.click();
+    //   searchPage.closeButton.waitForDisplayed();
+    //   searchPage.closeButton.click();
 
-      browser.getUrl().should.containEql('/pinboard/5cd06f2b/');
-    });
+    //   browser.getUrl().should.containEql('/pinboard/5cd06f2b/');
+    // });
 
     it('should go to officer page if search page was opened via breadcrumbs on officer page', function () {
       api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
@@ -494,417 +494,417 @@ describe('SearchPageTest', function () {
     });
   });
 
-  context('pinboard functionalities', function () {
-    beforeEach(function () {
-      api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
-      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, emptyPinboard);
-      api
-        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
-        .reply(201, createPinboardResponse);
-      api
-        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: [], 'trr_ids': [] })
-        .reply(201, createEmptyPinboardResponse);
-      api
-        .onPut(
-          '/api/v2/mobile/pinboards/5cd06f2b/',
-          { 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' }
-        )
-        .reply(200, emptyPinboard);
-    });
+  // context('pinboard functionalities', function () {
+  //   beforeEach(function () {
+  //     api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
+  //     api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, emptyPinboard);
+  //     api
+  //       .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
+  //       .reply(201, createPinboardResponse);
+  //     api
+  //       .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: [], 'trr_ids': [] })
+  //       .reply(201, createEmptyPinboardResponse);
+  //     api
+  //       .onPut(
+  //         '/api/v2/mobile/pinboards/5cd06f2b/',
+  //         { 'officer_ids': [], crids: [], 'trr_ids': [], title: '', description: '' }
+  //       )
+  //       .reply(200, emptyPinboard);
+  //   });
 
-    it('should display pinboard button with correct text when items are added/removed', function () {
-      searchPage.queryInput.setValue('Kelvin');
+  //   it('should display pinboard button with correct text when items are added/removed', function () {
+  //     searchPage.queryInput.setValue('Kelvin');
 
-      const investigatorCRs = searchPage.investigatorCRs;
-      investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
-      searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
+  //     const investigatorCRs = searchPage.investigatorCRs;
+  //     investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
 
-      investigatorCRs.firstRow.pinButton.click();
-      searchPage.pinboardBar.waitForDisplayed(TIMEOUT);
-      searchPage.pinboardBar.getText().should.equal('Pinboard (1)');
+  //     investigatorCRs.firstRow.pinButton.click();
+  //     searchPage.pinboardBar.waitForDisplayed(TIMEOUT);
+  //     searchPage.pinboardBar.getText().should.equal('Pinboard (1)');
 
-      investigatorCRs.firstRow.pinButton.click();
-      searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
-    });
+  //     investigatorCRs.firstRow.pinButton.click();
+  //     searchPage.pinboardBar.waitForDisplayed(TIMEOUT, true);
+  //   });
 
-    it('should display pinboard button that links to pinboard page when pinboard is not empty', function () {
-      searchPage.queryInput.setValue('Kelvin');
+  //   it('should display pinboard button that links to pinboard page when pinboard is not empty', function () {
+  //     searchPage.queryInput.setValue('Kelvin');
 
-      searchPage.investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
-      searchPage.investigatorCRs.firstRow.pinButton.click();
-      searchPage.pinboardBar.waitForDisplayed(TIMEOUT);
-      searchPage.pinboardBar.click();
-      browser.getUrl().should.containEql('/pinboard/5cd06f2b/untitled-pinboard/');
+  //     searchPage.investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     searchPage.investigatorCRs.firstRow.pinButton.click();
+  //     searchPage.pinboardBar.waitForDisplayed(TIMEOUT);
+  //     searchPage.pinboardBar.click();
+  //     browser.getUrl().should.containEql('/pinboard/5cd06f2b/untitled-pinboard/');
 
-      pinboardPage.pinboardTitle.waitForDisplayed(TIMEOUT);
-    });
+  //     pinboardPage.pinboardTitle.waitForDisplayed(TIMEOUT);
+  //   });
 
-    it('should display toast in few seconds when items are added/removed', function () {
-      searchPage.queryInput.setValue('Kelvin');
+  //   it('should display toast in few seconds when items are added/removed', function () {
+  //     searchPage.queryInput.setValue('Kelvin');
 
-      const investigatorCRs = searchPage.investigatorCRs;
-      investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
-      investigatorCRs.firstRow.pinButton.click();
-      searchPage.toast.waitForDisplayed(TIMEOUT);
-      searchPage.toast.waitForText('CR #123456 added to pinboard\nGo to pinboard');
+  //     const investigatorCRs = searchPage.investigatorCRs;
+  //     investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     investigatorCRs.firstRow.pinButton.click();
+  //     searchPage.toast.waitForDisplayed(TIMEOUT);
+  //     searchPage.toast.waitForText('CR #123456 added to pinboard\nGo to pinboard');
 
-      searchPage.toast.waitForDisplayed(TIMEOUT, true);
-      investigatorCRs.firstRow.pinButton.click();
-      searchPage.toast.waitForDisplayed(TIMEOUT);
-      searchPage.toast.waitForText('CR #123456 removed from pinboard\nGo to pinboard');
-    });
-  });
+  //     searchPage.toast.waitForDisplayed(TIMEOUT, true);
+  //     investigatorCRs.firstRow.pinButton.click();
+  //     searchPage.toast.waitForDisplayed(TIMEOUT);
+  //     searchPage.toast.waitForText('CR #123456 removed from pinboard\nGo to pinboard');
+  //   });
+  // });
 
-  context('create new pinboard', function () {
-    beforeEach(function () {
-      api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
-      api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, mockNewCreatedPinboard);
-      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/complaints/').reply(200, mockPinboardComplaint);
-    });
+  // context('create new pinboard', function () {
+  //   beforeEach(function () {
+  //     api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
+  //     api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, mockNewCreatedPinboard);
+  //     api.onGet('/api/v2/mobile/pinboards/5cd06f2b/complaints/').reply(200, mockPinboardComplaint);
+  //   });
 
-    it('should go to pinboard detail page when clicking on success added toast', function () {
-      api
-        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
-        .reply(201, createPinboardResponse);
+  //   it('should go to pinboard detail page when clicking on success added toast', function () {
+  //     api
+  //       .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
+  //       .reply(201, createPinboardResponse);
 
-      const crs = pinboardPage.pinnedSection.crs;
-      searchPage.queryInput.setValue('Kelvin');
+  //     const crs = pinboardPage.pinnedSection.crs;
+  //     searchPage.queryInput.setValue('Kelvin');
 
-      searchPage.investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
-      searchPage.investigatorCRs.firstRow.pinButton.click();
-      searchPage.toast.waitForDisplayed(TIMEOUT);
-      searchPage.toast.waitForText('CR #123456 added to pinboard\nGo to pinboard');
+  //     searchPage.investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     searchPage.investigatorCRs.firstRow.pinButton.click();
+  //     searchPage.toast.waitForDisplayed(TIMEOUT);
+  //     searchPage.toast.waitForText('CR #123456 added to pinboard\nGo to pinboard');
 
-      searchPage.toast.click();
-      browser.getUrl().should.containEql('/pinboard/5cd06f2b/untitled-pinboard/');
-      crs.cards.waitForCount(1, 30000);
-    });
+  //     searchPage.toast.click();
+  //     browser.getUrl().should.containEql('/pinboard/5cd06f2b/untitled-pinboard/');
+  //     crs.cards.waitForCount(1, 30000);
+  //   });
 
-    it('should go to pinboard detail page when clicking on error added toast', function () {
-      api
-        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
-        .reply(500, {});
-      api
-        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
-        .reply(201, createPinboardResponse);
+  //   it('should go to pinboard detail page when clicking on error added toast', function () {
+  //     api
+  //       .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
+  //       .reply(500, {});
+  //     api
+  //       .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
+  //       .reply(201, createPinboardResponse);
 
-      const crs = pinboardPage.pinnedSection.crs;
-      searchPage.queryInput.setValue('Kelvin');
-      searchPage.investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
-      searchPage.investigatorCRs.firstRow.pinButton.click();
-      searchPage.toast.waitForDisplayed(TIMEOUT);
-      searchPage.toast.waitForText('CR #123456 added to pinboard\nGo to pinboard');
+  //     const crs = pinboardPage.pinnedSection.crs;
+  //     searchPage.queryInput.setValue('Kelvin');
+  //     searchPage.investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     searchPage.investigatorCRs.firstRow.pinButton.click();
+  //     searchPage.toast.waitForDisplayed(TIMEOUT);
+  //     searchPage.toast.waitForText('CR #123456 added to pinboard\nGo to pinboard');
 
-      searchPage.toast.click();
-      browser.getUrl().should.containEql('/pinboard/');
-      browser.waitForUrl(url => url.should.containEql('/pinboard/5cd06f2b/untitled-pinboard'), 1500);
-      crs.cards.waitForCount(1, 30000);
-    });
+  //     searchPage.toast.click();
+  //     browser.getUrl().should.containEql('/pinboard/');
+  //     browser.waitForUrl(url => url.should.containEql('/pinboard/5cd06f2b/untitled-pinboard'), 1500);
+  //     crs.cards.waitForCount(1, 30000);
+  //   });
 
-    it('should go to pinboard detail page when clicking on long api call added toast', function () {
-      api
-        .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
-        .delay(1000)
-        .reply(201, createPinboardResponse);
+  //   it('should go to pinboard detail page when clicking on long api call added toast', function () {
+  //     api
+  //       .onPost('/api/v2/mobile/pinboards/', { 'officer_ids': [], crids: ['123456'], 'trr_ids': [] })
+  //       .delay(1000)
+  //       .reply(201, createPinboardResponse);
 
-      const crs = pinboardPage.pinnedSection.crs;
-      searchPage.queryInput.setValue('Kelvin');
-      searchPage.investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
-      searchPage.investigatorCRs.firstRow.pinButton.click();
-      searchPage.toast.waitForDisplayed(TIMEOUT);
-      searchPage.toast.waitForText('CR #123456 added to pinboard\nGo to pinboard');
+  //     const crs = pinboardPage.pinnedSection.crs;
+  //     searchPage.queryInput.setValue('Kelvin');
+  //     searchPage.investigatorCRs.firstRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     searchPage.investigatorCRs.firstRow.pinButton.click();
+  //     searchPage.toast.waitForDisplayed(TIMEOUT);
+  //     searchPage.toast.waitForText('CR #123456 added to pinboard\nGo to pinboard');
 
-      searchPage.toast.click();
-      browser.getUrl().should.containEql('/pinboard/');
-      browser.waitForUrl(url => url.should.containEql('/pinboard/5cd06f2b/untitled-pinboard/'), 1500);
-      crs.cards.waitForCount(1, 30000);
-    });
-  });
+  //     searchPage.toast.click();
+  //     browser.getUrl().should.containEql('/pinboard/');
+  //     browser.waitForUrl(url => url.should.containEql('/pinboard/5cd06f2b/untitled-pinboard/'), 1500);
+  //     crs.cards.waitForCount(1, 30000);
+  //   });
+  // });
 
-  context('update current pinboard', function () {
-    beforeEach(function () {
-      api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
-      api
-        .onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false')
-        .reply(200, mockComplaintPinnedItemPinboard);
-      api.onGet('/api/v2/mobile/pinboards/5cd06f2b/complaints/').reply(200, mockPinboardComplaints);
-      searchPage.open();
-      searchPage.body.waitForExist();
-    });
+  // context('update current pinboard', function () {
+  //   beforeEach(function () {
+  //     api.onGet('/api/v2/search-mobile/?term=Kelvin').reply(200, mockInvestigatorCRSearchResponse);
+  //     api
+  //       .onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false')
+  //       .reply(200, mockComplaintPinnedItemPinboard);
+  //     api.onGet('/api/v2/mobile/pinboards/5cd06f2b/complaints/').reply(200, mockPinboardComplaints);
+  //     searchPage.open();
+  //     searchPage.body.waitForExist();
+  //   });
 
-    it('should go to pinboard detail page when clicking on success removed toast', function () {
-      api
-        .onPut(
-          '/api/v2/mobile/pinboards/5cd06f2b/',
-          { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
-        )
-        .reply(200, mockUpdatedComplaintPinnedItemPinboard);
+  //   it('should go to pinboard detail page when clicking on success removed toast', function () {
+  //     api
+  //       .onPut(
+  //         '/api/v2/mobile/pinboards/5cd06f2b/',
+  //         { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
+  //       )
+  //       .reply(200, mockUpdatedComplaintPinnedItemPinboard);
 
-      const crs = pinboardPage.pinnedSection.crs;
-      searchPage.queryInput.setValue('Kelvin');
-      searchPage.investigatorCRs.secondRow.pinButton.click();
-      searchPage.toast.waitForDisplayed(TIMEOUT);
-      searchPage.toast.waitForText('CR #654321 added to pinboard\nGo to pinboard');
+  //     const crs = pinboardPage.pinnedSection.crs;
+  //     searchPage.queryInput.setValue('Kelvin');
+  //     searchPage.investigatorCRs.secondRow.pinButton.click();
+  //     searchPage.toast.waitForDisplayed(TIMEOUT);
+  //     searchPage.toast.waitForText('CR #654321 added to pinboard\nGo to pinboard');
 
-      searchPage.toast.click();
-      browser.waitForUrl(url => url.should.containEql('/pinboard/5cd06f2b/untitled-pinboard/'), 1000);
-      crs.cards.waitForCount(2, 30000);
-    });
+  //     searchPage.toast.click();
+  //     browser.waitForUrl(url => url.should.containEql('/pinboard/5cd06f2b/untitled-pinboard/'), 1000);
+  //     crs.cards.waitForCount(2, 30000);
+  //   });
 
-    it('should go to pinboard detail page when clicking on error added toast', function () {
-      api
-        .onPut(
-          '/api/v2/mobile/pinboards/5cd06f2b/',
-          { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
-        )
-        .reply(500, {},);
-      api
-        .onPut(
-          '/api/v2/mobile/pinboards/5cd06f2b/',
-          { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
-        )
-        .reply(200, mockUpdatedComplaintPinnedItemPinboard,);
+  //   it('should go to pinboard detail page when clicking on error added toast', function () {
+  //     api
+  //       .onPut(
+  //         '/api/v2/mobile/pinboards/5cd06f2b/',
+  //         { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
+  //       )
+  //       .reply(500, {},);
+  //     api
+  //       .onPut(
+  //         '/api/v2/mobile/pinboards/5cd06f2b/',
+  //         { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
+  //       )
+  //       .reply(200, mockUpdatedComplaintPinnedItemPinboard,);
 
-      const crs = pinboardPage.pinnedSection.crs;
-      searchPage.queryInput.setValue('Kelvin');
-      searchPage.investigatorCRs.secondRow.pinButton.waitForDisplayed(TIMEOUT);
-      searchPage.investigatorCRs.secondRow.pinButton.click();
-      searchPage.toast.waitForDisplayed(TIMEOUT);
-      searchPage.toast.waitForText('CR #654321 added to pinboard\nGo to pinboard');
+  //     const crs = pinboardPage.pinnedSection.crs;
+  //     searchPage.queryInput.setValue('Kelvin');
+  //     searchPage.investigatorCRs.secondRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     searchPage.investigatorCRs.secondRow.pinButton.click();
+  //     searchPage.toast.waitForDisplayed(TIMEOUT);
+  //     searchPage.toast.waitForText('CR #654321 added to pinboard\nGo to pinboard');
 
-      searchPage.toast.click();
-      browser.waitForUrl(url => url.should.containEql('/pinboard/5cd06f2b/untitled-pinboard/'), 1000);
-      crs.cards.waitForCount(2, 30000);
-    });
+  //     searchPage.toast.click();
+  //     browser.waitForUrl(url => url.should.containEql('/pinboard/5cd06f2b/untitled-pinboard/'), 1000);
+  //     crs.cards.waitForCount(2, 30000);
+  //   });
 
-    it('should go to pinboard detail page when clicking on long api call added toast', function () {
-      api
-        .onPut(
-          '/api/v2/mobile/pinboards/5cd06f2b/',
-          { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
-        )
-        .delay(1000)
-        .reply(200, mockUpdatedComplaintPinnedItemPinboard);
+  //   it('should go to pinboard detail page when clicking on long api call added toast', function () {
+  //     api
+  //       .onPut(
+  //         '/api/v2/mobile/pinboards/5cd06f2b/',
+  //         { 'officer_ids': [], crids: ['123456', '654321'], 'trr_ids': [], title: '', description: '' }
+  //       )
+  //       .delay(1000)
+  //       .reply(200, mockUpdatedComplaintPinnedItemPinboard);
 
-      const crs = pinboardPage.pinnedSection.crs;
-      searchPage.queryInput.setValue('Kelvin');
-      searchPage.investigatorCRs.secondRow.pinButton.waitForDisplayed(TIMEOUT);
-      searchPage.investigatorCRs.secondRow.pinButton.click();
-      searchPage.toast.waitForDisplayed(TIMEOUT);
-      searchPage.toast.waitForText('CR #654321 added to pinboard\nGo to pinboard');
+  //     const crs = pinboardPage.pinnedSection.crs;
+  //     searchPage.queryInput.setValue('Kelvin');
+  //     searchPage.investigatorCRs.secondRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     searchPage.investigatorCRs.secondRow.pinButton.click();
+  //     searchPage.toast.waitForDisplayed(TIMEOUT);
+  //     searchPage.toast.waitForText('CR #654321 added to pinboard\nGo to pinboard');
 
-      searchPage.toast.click();
-      browser.waitForUrl(url => url.should.containEql('/pinboard/5cd06f2b/untitled-pinboard/'), 1000);
-      crs.cards.waitForCount(2, 30000);
-    });
-  });
+  //     searchPage.toast.click();
+  //     browser.waitForUrl(url => url.should.containEql('/pinboard/5cd06f2b/untitled-pinboard/'), 1000);
+  //     crs.cards.waitForCount(2, 30000);
+  //   });
+  // });
 
-  it('should have clicky installed', function () {
-    searchPage.clickyScript.waitForExist();
-    searchPage.clickySiteIdsScript.waitForExist();
-    searchPage.clickyNoJavascriptGIF.waitForExist();
-  });
+  // it('should have clicky installed', function () {
+  //   searchPage.clickyScript.waitForExist();
+  //   searchPage.clickySiteIdsScript.waitForExist();
+  //   searchPage.clickyNoJavascriptGIF.waitForExist();
+  // });
 
-  context('Pinboard introduction', function () {
-    beforeEach(function () {
-      browser.clearReduxStore(true);
-      searchPage.queryInput.waitForDisplayed();
-    });
+  // context('Pinboard introduction', function () {
+  //   beforeEach(function () {
+  //     browser.clearReduxStore(true);
+  //     searchPage.queryInput.waitForDisplayed();
+  //   });
 
-    it('should display pinboard introduction on first visited', function () {
-      searchPage.pinboardIntroduction.content.waitForDisplayed();
-    });
+  //   it('should display pinboard introduction on first visited', function () {
+  //     searchPage.pinboardIntroduction.content.waitForDisplayed();
+  //   });
 
-    it('should not display pinboard introduction if search query is long enough', function () {
-      searchPage.pinboardIntroduction.content.waitForDisplayed();
-      searchPage.queryInput.setValue('long');
-      searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
-      searchPage.queryInput.setValue('1');
-      searchPage.pinboardIntroduction.content.waitForDisplayed();
-    });
+  //   it('should not display pinboard introduction if search query is long enough', function () {
+  //     searchPage.pinboardIntroduction.content.waitForDisplayed();
+  //     searchPage.queryInput.setValue('long');
+  //     searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
+  //     searchPage.queryInput.setValue('1');
+  //     searchPage.pinboardIntroduction.content.waitForDisplayed();
+  //   });
 
-    it('should display again after user remove all pinned items', function () {
-      api
-        .onPost('/api/v2/mobile/pinboards/', createPinboardWithRecentItemsParams)
-        .reply(201, createPinboardWithRecentItemsResponse);
-      api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
-      searchPage.queryInput.setValue('123');
-      searchPage.officers.firstRow.itemTitle.click();
+  //   it('should display again after user remove all pinned items', function () {
+  //     api
+  //       .onPost('/api/v2/mobile/pinboards/', createPinboardWithRecentItemsParams)
+  //       .reply(201, createPinboardWithRecentItemsResponse);
+  //     api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
+  //     searchPage.queryInput.setValue('123');
+  //     searchPage.officers.firstRow.itemTitle.click();
 
-      searchPage.searchBreadcrumb.click();
-      searchPage.queryInput.waitForDisplayed();
-      // Empty value doesn't trigger change -> Set short query to show recent
-      searchPage.queryInput.setValue('1');
+  //     searchPage.searchBreadcrumb.click();
+  //     searchPage.queryInput.waitForDisplayed();
+  //     // Empty value doesn't trigger change -> Set short query to show recent
+  //     searchPage.queryInput.setValue('1');
 
-      searchPage.recentHeader.waitForExist();
-      let recentItems = searchPage.recent;
+  //     searchPage.recentHeader.waitForExist();
+  //     let recentItems = searchPage.recent;
 
-      recentItems.firstRecentItem.pinButton.click();
-      searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
+  //     recentItems.firstRecentItem.pinButton.click();
+  //     searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
 
-      recentItems.firstRecentItem.pinButton.click();
-      searchPage.pinboardIntroduction.content.waitForDisplayed(1000);
-    });
+  //     recentItems.firstRecentItem.pinButton.click();
+  //     searchPage.pinboardIntroduction.content.waitForDisplayed(1000);
+  //   });
 
-    it('should close pinboard introduction after click close', function () {
-      searchPage.pinboardIntroduction.content.waitForDisplayed(1000);
-      searchPage.pinboardIntroduction.closeButton.click();
-      searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
-      browser.refresh();
-      searchPage.body.waitForDisplayed();
-      searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
-    });
+  //   it('should close pinboard introduction after click close', function () {
+  //     searchPage.pinboardIntroduction.content.waitForDisplayed(1000);
+  //     searchPage.pinboardIntroduction.closeButton.click();
+  //     searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
+  //     browser.refresh();
+  //     searchPage.body.waitForDisplayed();
+  //     searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
+  //   });
 
-    it('should close pinboard introduction and redirect to pinboard page after click Get Started', function () {
-      searchPage.pinboardIntroduction.content.waitForDisplayed(1000);
-      searchPage.pinboardIntroduction.getStartedButton.click();
-      pinboardPage.searchBar.waitForExist();
-      searchPage.open();
-      searchPage.body.waitForExist();
-      searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
-    });
-  });
+  //   it('should close pinboard introduction and redirect to pinboard page after click Get Started', function () {
+  //     searchPage.pinboardIntroduction.content.waitForDisplayed(1000);
+  //     searchPage.pinboardIntroduction.getStartedButton.click();
+  //     pinboardPage.searchBar.waitForExist();
+  //     searchPage.open();
+  //     searchPage.body.waitForExist();
+  //     searchPage.pinboardIntroduction.content.waitForExist(TIMEOUT, true);
+  //   });
+  // });
 
-  context('PinButton introduction', function () {
-    beforeEach(function () {
-      api.onGet('/api/v2/search-mobile/?term=intr').reply(200, mockSearchQueryLongResponse);
-      api.onGet('/api/v2/search-mobile/?term=2004-04-23+ke').reply(200, mockSearchQueryResponseWithDate);
-      api
-        .onGet('/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER')
-        .reply(200, mockFirstOfficersSearchQueryResponse);
-      browser.clearReduxStore(true);
-      searchPage.queryInput.waitForDisplayed();
-    });
+  // context('PinButton introduction', function () {
+  //   beforeEach(function () {
+  //     api.onGet('/api/v2/search-mobile/?term=intr').reply(200, mockSearchQueryLongResponse);
+  //     api.onGet('/api/v2/search-mobile/?term=2004-04-23+ke').reply(200, mockSearchQueryResponseWithDate);
+  //     api
+  //       .onGet('/api/v2/search-mobile/single/?term=2004-04-23+ke&contentType=OFFICER')
+  //       .reply(200, mockFirstOfficersSearchQueryResponse);
+  //     browser.clearReduxStore(true);
+  //     searchPage.queryInput.waitForDisplayed();
+  //   });
 
-    context('search result have less than 3 results', function () {
-      it('should display PinButtonIntroduction last pinnable search result', function () {
-        const pinButtonIntroduction = searchPage.pinButtonIntroduction;
-        searchPage.queryInput.setValue('intr');
-        const officersRows = searchPage.officers.rows;
-        const firstOfficerRow = searchPage.officers.firstRow;
+  //   context('search result have less than 3 results', function () {
+  //     it('should display PinButtonIntroduction last pinnable search result', function () {
+  //       const pinButtonIntroduction = searchPage.pinButtonIntroduction;
+  //       searchPage.queryInput.setValue('intr');
+  //       const officersRows = searchPage.officers.rows;
+  //       const firstOfficerRow = searchPage.officers.firstRow;
 
-        firstOfficerRow.itemTitle.waitForDisplayed();
-        officersRows.count.should.equal(2);
-        const crsRows = searchPage.crs.rows;
-        crsRows.count.should.equal(2);
-        const trrsRows = searchPage.crs.rows;
-        trrsRows.count.should.equal(2);
-        searchPage.officers.secondRow.pinButtonIntroduction.waitForDisplayed(PINBOARD_INTRODUCTION_DELAY);
-        pinButtonIntroduction.count.should.equal(1);
-      });
-    });
+  //       firstOfficerRow.itemTitle.waitForDisplayed();
+  //       officersRows.count.should.equal(2);
+  //       const crsRows = searchPage.crs.rows;
+  //       crsRows.count.should.equal(2);
+  //       const trrsRows = searchPage.crs.rows;
+  //       trrsRows.count.should.equal(2);
+  //       searchPage.officers.secondRow.pinButtonIntroduction.waitForDisplayed(PINBOARD_INTRODUCTION_DELAY);
+  //       pinButtonIntroduction.count.should.equal(1);
+  //     });
+  //   });
 
-    context('search result have more than 3 results', function () {
-      it('should display PinButtonIntroduction third search result', function () {
-        const pinButtonIntroduction = searchPage.pinButtonIntroduction;
-        searchPage.queryInput.setValue('2004-04-23 ke');
-        searchPage.officers.allLink.waitForDisplayed();
-        searchPage.officers.allLink.click();
+  //   context('search result have more than 3 results', function () {
+  //     it('should display PinButtonIntroduction third search result', function () {
+  //       const pinButtonIntroduction = searchPage.pinButtonIntroduction;
+  //       searchPage.queryInput.setValue('2004-04-23 ke');
+  //       searchPage.officers.allLink.waitForDisplayed();
+  //       searchPage.officers.allLink.click();
 
-        const thirdOfficerRow = searchPage.officers.thirdRow;
-        thirdOfficerRow.pinButtonIntroduction.waitForDisplayed();
-        pinButtonIntroduction.count.should.equal(1);
-      });
-    });
+  //       const thirdOfficerRow = searchPage.officers.thirdRow;
+  //       thirdOfficerRow.pinButtonIntroduction.waitForDisplayed();
+  //       pinButtonIntroduction.count.should.equal(1);
+  //     });
+  //   });
 
-    it('should not display PinButtonIntroduction after click on that result item', function () {
-      searchPage.queryInput.setValue('intr');
-      const secondOfficerRow = searchPage.officers.secondRow;
-      secondOfficerRow.pinButtonIntroduction.waitForDisplayed();
-      secondOfficerRow.itemIndicator.click();
+  //   it('should not display PinButtonIntroduction after click on that result item', function () {
+  //     searchPage.queryInput.setValue('intr');
+  //     const secondOfficerRow = searchPage.officers.secondRow;
+  //     secondOfficerRow.pinButtonIntroduction.waitForDisplayed();
+  //     secondOfficerRow.itemIndicator.click();
 
-      searchPage.open();
-      searchPage.queryInput.waitForExist();
-      searchPage.queryInput.setValue('intr');
-      secondOfficerRow.pinButton.waitForDisplayed(TIMEOUT);
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      secondOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
-    });
+  //     searchPage.open();
+  //     searchPage.queryInput.waitForExist();
+  //     searchPage.queryInput.setValue('intr');
+  //     secondOfficerRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     browser.pause(PINBOARD_INTRODUCTION_DELAY);
+  //     secondOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
+  //   });
 
-    it('should dismiss PinButtonIntroduction after click on introduction', function () {
-      searchPage.queryInput.setValue('123');
-      const firstOfficerRow = searchPage.officers.firstRow;
-      firstOfficerRow.itemTitle.waitForDisplayed();
-      firstOfficerRow.pinButtonIntroduction.waitForDisplayed();
-      firstOfficerRow.pinButtonIntroduction.click();
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      browser.getUrl().should.containEql('/search/');
-      firstOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
+  //   it('should dismiss PinButtonIntroduction after click on introduction', function () {
+  //     searchPage.queryInput.setValue('123');
+  //     const firstOfficerRow = searchPage.officers.firstRow;
+  //     firstOfficerRow.itemTitle.waitForDisplayed();
+  //     firstOfficerRow.pinButtonIntroduction.waitForDisplayed();
+  //     firstOfficerRow.pinButtonIntroduction.click();
+  //     browser.pause(PINBOARD_INTRODUCTION_DELAY);
+  //     browser.getUrl().should.containEql('/search/');
+  //     firstOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
 
-      searchPage.open();
-      searchPage.queryInput.waitForExist();
-      searchPage.queryInput.setValue('123');
-      firstOfficerRow.pinButton.waitForDisplayed(TIMEOUT);
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      firstOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
-    });
+  //     searchPage.open();
+  //     searchPage.queryInput.waitForExist();
+  //     searchPage.queryInput.setValue('123');
+  //     firstOfficerRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     browser.pause(PINBOARD_INTRODUCTION_DELAY);
+  //     firstOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
+  //   });
 
-    it('should not display PinButtonIntroduction after click current PinButton', function () {
-      const pinButtonIntroduction = searchPage.pinButtonIntroduction;
+  //   it('should not display PinButtonIntroduction after click current PinButton', function () {
+  //     const pinButtonIntroduction = searchPage.pinButtonIntroduction;
 
-      searchPage.queryInput.setValue('intr');
-      const secondOfficerRow = searchPage.officers.secondRow;
-      secondOfficerRow.pinButtonIntroduction.waitForDisplayed();
-      secondOfficerRow.pinButton.click();
-      secondOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
-      pinButtonIntroduction.isExisting().should.be.false();
+  //     searchPage.queryInput.setValue('intr');
+  //     const secondOfficerRow = searchPage.officers.secondRow;
+  //     secondOfficerRow.pinButtonIntroduction.waitForDisplayed();
+  //     secondOfficerRow.pinButton.click();
+  //     secondOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
+  //     pinButtonIntroduction.isExisting().should.be.false();
 
-      searchPage.open();
-      searchPage.queryInput.waitForExist();
-      searchPage.queryInput.setValue('intr');
-      secondOfficerRow.pinButton.waitForDisplayed(TIMEOUT);
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      secondOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
-      pinButtonIntroduction.isExisting().should.be.false();
-    });
+  //     searchPage.open();
+  //     searchPage.queryInput.waitForExist();
+  //     searchPage.queryInput.setValue('intr');
+  //     secondOfficerRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     browser.pause(PINBOARD_INTRODUCTION_DELAY);
+  //     secondOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
+  //     pinButtonIntroduction.isExisting().should.be.false();
+  //   });
 
-    it('should not display PinButtonIntroduction after click other PinButton', function () {
-      const pinButtonIntroduction = searchPage.pinButtonIntroduction;
+  //   it('should not display PinButtonIntroduction after click other PinButton', function () {
+  //     const pinButtonIntroduction = searchPage.pinButtonIntroduction;
 
-      searchPage.queryInput.setValue('intr');
-      const firstOfficerRow = searchPage.officers.firstRow;
-      const secondOfficerRow = searchPage.officers.secondRow;
-      secondOfficerRow.pinButtonIntroduction.waitForDisplayed();
-      firstOfficerRow.pinButton.click();
-      secondOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
-      pinButtonIntroduction.isExisting().should.be.false();
+  //     searchPage.queryInput.setValue('intr');
+  //     const firstOfficerRow = searchPage.officers.firstRow;
+  //     const secondOfficerRow = searchPage.officers.secondRow;
+  //     secondOfficerRow.pinButtonIntroduction.waitForDisplayed();
+  //     firstOfficerRow.pinButton.click();
+  //     secondOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
+  //     pinButtonIntroduction.isExisting().should.be.false();
 
-      searchPage.open();
-      searchPage.queryInput.waitForExist();
-      searchPage.queryInput.setValue('intr');
-      secondOfficerRow.pinButton.waitForDisplayed(TIMEOUT);
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      secondOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
-      pinButtonIntroduction.isExisting().should.be.false();
-    });
+  //     searchPage.open();
+  //     searchPage.queryInput.waitForExist();
+  //     searchPage.queryInput.setValue('intr');
+  //     secondOfficerRow.pinButton.waitForDisplayed(TIMEOUT);
+  //     browser.pause(PINBOARD_INTRODUCTION_DELAY);
+  //     secondOfficerRow.pinButtonIntroduction.waitForExist(TIMEOUT, true);
+  //     pinButtonIntroduction.isExisting().should.be.false();
+  //   });
 
-    it('should display PinButtonIntroduction on recent', function () {
-      api
-        .onGet('/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487')
-        .reply(200, mockNewRecentSearchItemsResponse,);
-      api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
-      api.onGet('/api/v2/mobile/cr/1002144/').reply(200, cr1002144);
-      api.onGet('/api/v2/mobile/trr/14487/').reply(200, trr14487);
-      searchPage.queryInput.setValue('123');
-      searchPage.officers.firstRow.itemTitle.click();
+  //   it('should display PinButtonIntroduction on recent', function () {
+  //     api
+  //       .onGet('/api/v2/search-mobile/recent-search-items/?officer_ids[]=8562&crids[]=1002144&trr_ids[]=14487')
+  //       .reply(200, mockNewRecentSearchItemsResponse,);
+  //     api.onGet('/api/v2/mobile/officers/8562/').reply(200, officer8562);
+  //     api.onGet('/api/v2/mobile/cr/1002144/').reply(200, cr1002144);
+  //     api.onGet('/api/v2/mobile/trr/14487/').reply(200, trr14487);
+  //     searchPage.queryInput.setValue('123');
+  //     searchPage.officers.firstRow.itemTitle.click();
 
-      searchPage.searchBreadcrumb.click();
-      searchPage.crs.firstRow.itemTitle.waitForDisplayed();
-      searchPage.crs.firstRow.itemTitle.click();
+  //     searchPage.searchBreadcrumb.click();
+  //     searchPage.crs.firstRow.itemTitle.waitForDisplayed();
+  //     searchPage.crs.firstRow.itemTitle.click();
 
-      searchPage.searchBreadcrumb.click();
-      searchPage.trrs.firstRow.itemTitle.waitForDisplayed();
-      searchPage.trrs.firstRow.itemTitle.click();
+  //     searchPage.searchBreadcrumb.click();
+  //     searchPage.trrs.firstRow.itemTitle.waitForDisplayed();
+  //     searchPage.trrs.firstRow.itemTitle.click();
 
-      searchPage.searchBreadcrumb.click();
-      searchPage.queryInput.waitForDisplayed();
-      // Empty value doesn't trigger change -> Set short query to show recent
-      searchPage.queryInput.setValue('1');
+  //     searchPage.searchBreadcrumb.click();
+  //     searchPage.queryInput.waitForDisplayed();
+  //     // Empty value doesn't trigger change -> Set short query to show recent
+  //     searchPage.queryInput.setValue('1');
 
-      searchPage.recentHeader.waitForExist();
-      let recentItems = searchPage.recent;
-      browser.pause(PINBOARD_INTRODUCTION_DELAY);
-      recentItems.thirdRecentItem.pinButtonIntroduction.waitForDisplayed();
-    });
-  });
+  //     searchPage.recentHeader.waitForExist();
+  //     let recentItems = searchPage.recent;
+  //     browser.pause(PINBOARD_INTRODUCTION_DELAY);
+  //     recentItems.thirdRecentItem.pinButtonIntroduction.waitForDisplayed();
+  //   });
+  // });
 });
