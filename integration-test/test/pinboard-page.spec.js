@@ -1041,7 +1041,8 @@
 
 //     context('go from home page to pinboard page', function () {
 //       it('should render the pinboards list', function (client) {
-//         api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').reply(200, mockData.pinboardData);
+//         api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=true').
+// reply(200, mockData.pinboardData);
 //         const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
 //         const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
 //         const mainPage = client.page.main();
@@ -1060,7 +1061,8 @@
 
 //     context('go from search page to pinboard page', function () {
 //       it('should render the pinboards list', function (client) {
-//         api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').reply(200, mockData.pinboardData);
+//         api.onGet('/api/v2/mobile/pinboards/latest-retrieved-pinboard/?create=false').
+// reply(200, mockData.pinboardData);
 //         const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
 //         const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
 //         const searchPage = client.page.search();
@@ -1286,7 +1288,8 @@
 //             client.pause(500);
 //             client.assert.urlContains('pinboard/3a160339/untitled-pinboard/');
 //             this.pinboardPage.expect.element('@pinboardTitle').text.to.equal('').before(500);
-//             this.pinboardPage.expect.element('@pinboardDescription').text.to.equal('Pinboard Description').before(500);
+//             this.pinboardPage.expect.element('@pinboardDescription').
+// text.to.equal('Pinboard Description').before(500);
 //           });
 //         });
 
@@ -1563,7 +1566,8 @@
 //         });
 
 //         context('remove current pinboard', function () {
-//           it('should remove item from pinboards list and redirect to most recent viewed pinboard', function (client) {
+//           it('should remove item from pinboards list and redirect to
+// most recent viewed pinboard', function (client) {
 //             api.onDelete('/api/v2/mobile/pinboards/5cd06f2b/').reply(200);
 //             const pinboardsListSection = this.pinboardPage.section.pinboardsListSection;
 //             const firstPinboardItem = pinboardsListSection.section.firstPinboardItem;
@@ -1730,7 +1734,8 @@
 //           client.assert.equal(parseInt(result.value), 180);
 //         });
 //         raceSection.expect.element('@secondPercentage').text.to.equal('98%');
-//         raceSection.expect.element('@secondPercentage').to.have.attribute('class').which.does.not.contains('short-bar');
+//         raceSection.expect.element('@secondPercentage').to.have.attribute('class').
+// which.does.not.contains('short-bar');
 //         raceSection.expect.element('@secondLabel').text.to.equal('White');
 
 //         raceSection.getAttribute('@thirdBar', 'width', function (result) {
@@ -1812,7 +1817,8 @@
 //           client.assert.equal(parseInt(result.value), 115);
 //         });
 //         raceSection.expect.element('@firstPercentage').text.to.equal('63%');
-//         raceSection.expect.element('@firstPercentage').to.have.attribute('class').which.does.not.contains('short-bar');
+//         raceSection.expect.element('@firstPercentage').to.have.attribute('class').
+// which.does.not.contains('short-bar');
 //         raceSection.expect.element('@firstLabel').text.to.equal('Black');
 
 //         raceSection.getAttribute('@secondBar', 'width', function (result) {

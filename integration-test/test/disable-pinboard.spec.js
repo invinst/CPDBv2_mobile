@@ -261,7 +261,8 @@
 //           inlineStyleRanges: [],
 //           key: '2ff85',
 //           text: 'If an officer’s percentile rank for civilian complaints is 99% ' +
-//             'then this means that they were accused in more civilian complaints per year than 99% of other officers.',
+//             'then this means that they were accused in more civilian complaints
+// per year than 99% of other officers.',
 //           type: 'unstyled',
 //         }],
 //       },
