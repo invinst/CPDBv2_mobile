@@ -9,9 +9,9 @@ import { noop } from 'lodash';
 // import headerStyles from 'components/shared/with-header.sass';
 
 
-const PINBOARDS_MENU_PROPS = [
-  'pinboards', 'item', 'addOrRemoveItemInPinboard', 'createPinboard', 'fetchPinboard',
-];
+// const PINBOARDS_MENU_PROPS = [
+//   'pinboards', 'item', 'addOrRemoveItemInPinboard', 'createPinboard', 'fetchPinboard',
+// ];
 
 const HeaderPinButton = (props) => {
   // const { isPinned, addOrRemoveItemInPinboard, item, showSelectPinboards } = props;
