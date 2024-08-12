@@ -2,7 +2,7 @@
 
 // var assert = require('assert');
 var api = require(__dirname + '/../mock-api');
-const { TIMEOUT } = require(__dirname + '/../constants');
+// const { TIMEOUT } = require(__dirname + '/../constants');
 const { mockGetAppConfig } = require(__dirname + '/../mock-data/app-config');
 
 const mockOfficers = [
