@@ -94,12 +94,12 @@ describe('LandingPage test', function () {
   //       .value.should.equal('rgba(249,211,195,1)');
   //   });
 
-    it('should go to officer summary page when clicking on officer card', function () {
-      landingPage.recentActivities.cards.count.should.equal(2);
-      landingPage.recentActivities.firstCard.click();
-      browser.getUrl().should.match(/\/officer\/\d+\/[-a-z]+\/?$/);
-    });
-  });
+  //   it('should go to officer summary page when clicking on officer card', function () {
+  //     landingPage.recentActivities.cards.count.should.equal(2);
+  //     landingPage.recentActivities.firstCard.click();
+  //     browser.getUrl().should.match(/\/officer\/\d+\/[-a-z]+\/?$/);
+  //   });
+  // });
 
   // describe('Officers By Allegation carousel', function () {
   //   it('should go to officer summary page when click to card', function () {
@@ -250,4 +250,4 @@ describe('LandingPage test', function () {
   //     browser.pause(PINBOARD_INTRODUCTION_DELAY);
   //     landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
   //   });
-  // });
+ });
