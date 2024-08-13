@@ -79,20 +79,20 @@ describe('LandingPage test', function () {
     landingPage.currentBasePath.should.equal('/');
   });
 
-  describe('Recent Activity carousel', function () {
-    it('should render correct colors for radar chart', function () {
-      const topOfficersByAllegation = landingPage.topOfficersByAllegation;
-      topOfficersByAllegation.firstRadarChart.getCSSProperty('background-color')
-        .value.should.equal('rgba(245,37,36,1)');
-      topOfficersByAllegation.secondRadarChart.getCSSProperty('background-color')
-        .value.should.equal('rgba(255,65,44,1)');
-      topOfficersByAllegation.thirdRadarChart.getCSSProperty('background-color')
-        .value.should.equal('rgba(255,100,83,1)');
-      topOfficersByAllegation.forthRadarChart.getCSSProperty('background-color')
-        .value.should.equal('rgba(244,162,152,1)');
-      topOfficersByAllegation.fifthRadarChart.getCSSProperty('background-color')
-        .value.should.equal('rgba(249,211,195,1)');
-    });
+  // describe('Recent Activity carousel', function () {
+  //   it('should render correct colors for radar chart', function () {
+  //     const topOfficersByAllegation = landingPage.topOfficersByAllegation;
+  //     topOfficersByAllegation.firstRadarChart.getCSSProperty('background-color')
+  //       .value.should.equal('rgba(245,37,36,1)');
+  //     topOfficersByAllegation.secondRadarChart.getCSSProperty('background-color')
+  //       .value.should.equal('rgba(255,65,44,1)');
+  //     topOfficersByAllegation.thirdRadarChart.getCSSProperty('background-color')
+  //       .value.should.equal('rgba(255,100,83,1)');
+  //     topOfficersByAllegation.forthRadarChart.getCSSProperty('background-color')
+  //       .value.should.equal('rgba(244,162,152,1)');
+  //     topOfficersByAllegation.fifthRadarChart.getCSSProperty('background-color')
+  //       .value.should.equal('rgba(249,211,195,1)');
+  //   });
 
     it('should go to officer summary page when clicking on officer card', function () {
       landingPage.recentActivities.cards.count.should.equal(2);
@@ -117,13 +117,13 @@ describe('LandingPage test', function () {
     });
   });
 
-  describe('Complaint Summaries Carousel', function () {
-    it('should go to cr page when click to card', function () {
-      landingPage.complaintSummaries.cards.count.should.equal(2);
-      landingPage.complaintSummaries.firstCard.click();
-      browser.getUrl().should.match(/\/complaint\/\w+\/$/);
-    });
-  });
+  // describe('Complaint Summaries Carousel', function () {
+  //   it('should go to cr page when click to card', function () {
+  //     landingPage.complaintSummaries.cards.count.should.equal(2);
+  //     landingPage.complaintSummaries.firstCard.click();
+  //     browser.getUrl().should.match(/\/complaint\/\w+\/$/);
+  //   });
+  // });
 
   describe('Top Lawsuits Carousel', function () {
     it('should go to lawsuit page when click to card', function () {

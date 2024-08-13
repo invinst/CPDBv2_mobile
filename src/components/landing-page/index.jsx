@@ -44,9 +44,9 @@ export default class LandingPage extends Component {
           </div>
           <TopLawsuits />
           <TopOfficersByAllegation />
-          <RecentActivities />
+          {/* <RecentActivities /> */}
           <NewDocumentAllegations />
-          <ComplaintSummaries />
+          {/* <ComplaintSummaries /> */}
           <BottomPadding />
           <Footer />
         </div>

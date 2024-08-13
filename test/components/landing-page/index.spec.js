@@ -39,9 +39,9 @@ describe('<LandingPage />', function () {
     const store = configureStore()({
       landingPage: {
         topOfficersByAllegation: [1],
-        recentActivities: [{ kind: 'single_officer' }],
+        // recentActivities: [{ kind: 'single_officer' }],
         newDocumentAllegations: [1],
-        complaintSummaries: [1],
+        // complaintSummaries: [1],
         topLawsuits: [1],
         cmsRequested: true,
       },
