@@ -251,4 +251,3 @@ describe('LandingPage test', function () {
   //     landingPage.pinboardButtonIntroduction.introductionContent.waitForExist(TIMEOUT, true);
   //   });
   // });
-});
