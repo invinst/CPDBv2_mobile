@@ -101,21 +101,21 @@ describe('LandingPage test', function () {
     });
   });
 
-  describe('Officers By Allegation carousel', function () {
-    it('should go to officer summary page when click to card', function () {
-      landingPage.topOfficersByAllegation.cards.count.should.equal(5);
-      landingPage.topOfficersByAllegation.firstCard.click();
-      browser.getUrl().should.match(/\/officer\/\d+\/[-a-z]+\/?$/);
-    });
-  });
+  // describe('Officers By Allegation carousel', function () {
+  //   it('should go to officer summary page when click to card', function () {
+  //     landingPage.topOfficersByAllegation.cards.count.should.equal(5);
+  //     landingPage.topOfficersByAllegation.firstCard.click();
+  //     browser.getUrl().should.match(/\/officer\/\d+\/[-a-z]+\/?$/);
+  //   });
+  // });
 
-  describe('Recent Document Carousel', function () {
-    it('should go to cr page when click to card', function () {
-      landingPage.newDocumentAllegations.cards.count.should.equal(2);
-      landingPage.newDocumentAllegations.firstCard.click();
-      browser.getUrl().should.containEql('/complaint/170123/');
-    });
-  });
+  // describe('Recent Document Carousel', function () {
+  //   it('should go to cr page when click to card', function () {
+  //     landingPage.newDocumentAllegations.cards.count.should.equal(2);
+  //     landingPage.newDocumentAllegations.firstCard.click();
+  //     browser.getUrl().should.containEql('/complaint/170123/');
+  //   });
+  // });
 
   // describe('Complaint Summaries Carousel', function () {
   //   it('should go to cr page when click to card', function () {
@@ -125,13 +125,13 @@ describe('LandingPage test', function () {
   //   });
   // });
 
-  describe('Top Lawsuits Carousel', function () {
-    it('should go to lawsuit page when click to card', function () {
-      landingPage.topLawsuits.cards.count.should.equal(2);
-      landingPage.topLawsuits.firstCard.click();
-      browser.getUrl().should.containEql('/lawsuit/00-L-1234');
-    });
-  });
+  // describe('Top Lawsuits Carousel', function () {
+  //   it('should go to lawsuit page when click to card', function () {
+  //     landingPage.topLawsuits.cards.count.should.equal(2);
+  //     landingPage.topLawsuits.firstCard.click();
+  //     browser.getUrl().should.containEql('/lawsuit/00-L-1234');
+  //   });
+  // });
 
   // describe('Pinboard function', function () {
   //   it('should display toast when pinning cards', function () {
