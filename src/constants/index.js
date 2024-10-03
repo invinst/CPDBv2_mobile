@@ -189,4 +189,4 @@ export const PINBOARD_ACTIONS_PANE_SPACE = 78;
 
 export const BREADCRUMB_HEIGHT = 40;
 
-export const NPI_URL = 'https://national.cpdp.co/'
+export const NPI_URL = 'https://national.cpdp.co/';
