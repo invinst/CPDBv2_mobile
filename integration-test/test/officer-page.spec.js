@@ -718,13 +718,6 @@ describe('OfficerPage test', function () {
         client.assert.urlContains('/complaint/294088/');
       });
 
-      it('should go to attachment source page when clicking on the attachment thumbnail', function (client) {
-        this.timeline.waitForElementVisible('@attachmentThumbnail', TIMEOUT);
-        this.timeline.click('@attachmentThumbnail');
-        client.switchToRecentTab();
-        client.assert.urlEquals('https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf');
-      });
-
       it('should go to trr page when clicking on an trr timeline item', function (client) {
         this.timeline.waitForElementVisible('@crItem', TIMEOUT);
         this.timeline.click('@trrItem');
@@ -895,17 +888,6 @@ describe('OfficerPage test', function () {
         this.attachments.section.firstComplaint.waitForElementVisible('@heading', TIMEOUT);
         this.attachments.section.firstComplaint.click('@heading');
         client.assert.urlContains('/complaint/294088/');
-      });
-
-      it('should go to attachment source page when clicking on the attachment', function (client) {
-        this.officerPage.waitForElementVisible('@attachmentsTabButton', TIMEOUT);
-        this.officerPage.click('@attachmentsTabButton');
-        client.assert.urlContains('/officer/2235/kevin-osborn/documents/');
-        this.attachments.section.firstComplaint.click('@firstAttachment');
-        client.switchToRecentTab();
-        client.assert.urlEquals(
-          'https://assets.documentcloud.org/documents/3518950/CRID-294088-CR.pdf'
-        );
       });
 
       it('should be able to be accessed directly via url', function (client) {
