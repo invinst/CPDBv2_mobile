@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <%= DISABLE_SEARCH_INDEX ? '<meta name="robots" content="noindex">' : '' %>
+  <meta name="robots" content="noindex">
 
   <!-- Favicon and browser manifests -->
   <!-- As iOS Safari does not pass mobile agent to the header -->
