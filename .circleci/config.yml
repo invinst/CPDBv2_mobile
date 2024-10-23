@@ -100,7 +100,7 @@ jobs:
             fi
             sed -e "s/{{DESKTOP_SERVER_NAME}}/$DESKTOP_SERVER_NAME/" nginx.conf.template > nginx.conf
             docker build -t cpdbdev/mobile-frontend:$(cat buildnum) .
-            docker login -u cpdbdev -p $DOCKER_PASSWORD
+            docker login -u cpdbdev -p $DOCKER_PASS
             docker push cpdbdev/mobile-frontend:$(cat buildnum)
 
   deploy:
